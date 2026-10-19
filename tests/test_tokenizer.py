@@ -3,12 +3,14 @@ from pathlib import Path
 
 from stt.tokenizer import (
     BLANK_ID,
+    TERMS_SHARE,
     decode,
     encode,
     load_tokenizer,
     tokenizer_stats,
     train_tokenizer,
     vocab_json,
+    weighted_term_lines,
 )
 
 #: Every charset character appears here, so ``character_coverage=1.0`` learns the full alphabet.
@@ -56,3 +58,12 @@ def test_tokenizer_stats(tmp_path: Path) -> None:
     assert stats["tokens_per_word"] > 0
     assert stats["tokens_per_second"] > 0
     assert 0.0 <= stats["terms_within_3_pieces"] <= 1.0
+
+
+def test_weighted_term_lines_reaches_share() -> None:
+    terms = ["meeting", "deploy", "kpi", "ticket"]
+    lines = weighted_term_lines(terms, n_lines=1000, share=0.05)
+    assert len(lines) == 52  # 13 repeats of 4 terms = 52 term lines (4.9% of the final corpus)
+    assert set(lines) == set(terms)
+    assert weighted_term_lines(terms, n_lines=1000, share=0.0) == []
+    assert weighted_term_lines([], n_lines=1000, share=TERMS_SHARE) == []
