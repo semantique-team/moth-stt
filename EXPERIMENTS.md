@@ -109,6 +109,14 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
 
 ## E-003 — H4 early: int8 export + browser RTFx (2026-10-19)
 
+> **Addendum (2026-10-19, CI):** the int8 numbers above are macOS ARM64. Controlled cross-platform
+> check (same seeded weights, byte-identical fp32 graph; macOS arm64 vs Linux x86_64 via Docker,
+> onnxruntime 1.31.0 both): the x86_64 int8 kernels deviate ≈40× more on random-weight tiny models
+> (max |Δ log_probs| 0.85 vs 0.02; top1 0.28–0.36 vs ≥0.98) — a kernel-behavior difference, not a
+> file or code difference. Unit tests must therefore bound int8 noise per platform (see
+> `tests/test_export.py` constants); **Task 7.1's real int8 gate must be measured on the target
+> platform**, not only on the Mac.
+
 - **Date**: 2026-10-19
 - **Hypothesis**: with a random-weight int8 ONNX export the browser WASM path (WAV → JS log-mel →
   `onnxruntime-web` → greedy decode) runs end to end, and RTFx on the M5 is ≥ 10× (`docs/04` H4,

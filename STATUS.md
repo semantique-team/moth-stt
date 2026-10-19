@@ -69,4 +69,7 @@
   ~10 GB di float16 per `mls_it_train` su 16 GB di RAM.
 - Audio raw: MLS IT + LibriSpeech cancellati dopo secondo spot check (72.524 file, ~22 GB liberati); FLEURS
   (1.7 GB) resta finché le baseline di 1.4 non sono chiuse, poi si può cancellare anche quello.
+- Test int8 dell'export: pesi seeded e bound per piattaforma — i kernel int8 x86_64 di onnxruntime derivano
+  ~40× di più che su ARM64 (misurato, E-003 addendum); il gate int8 vero (Task 7.1) va misurato sulla
+  piattaforma target.
 - Macchina: M5 16 GB; `torch 2.14.1` pinnato; `ffmpeg` installato; `uv` gestisce l'ambiente.

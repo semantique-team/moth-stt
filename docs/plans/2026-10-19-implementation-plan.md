@@ -431,7 +431,9 @@ everything else.**
 
 - [ ] **Export** the frozen candidate; verify export gate: ONNX fp32 vs PyTorch ≤ 1e-3; int8 greedy transcripts
       within the noise interval of fp32 on dev and the mixed test; total download ≤ 20 MB; every hash in
-      `config.json` verified by the loader.
+      `config.json` verified by the loader. **Measure the int8 gate on the target platform(s):** x86_64
+      onnxruntime int8 kernels deviate markedly more than ARM64 (measured 2026-10-19, see the E-003 addendum)
+      — a Mac-only pass is not a pass.
 - [ ] **Commit** `feat(export): freeze v0.1 release folder` + metrics.
 
 ### Task 7.2 — JS ports (mel parity, decode, hotword beam)
