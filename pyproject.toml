@@ -14,6 +14,7 @@ dependencies = [
     "num2words",
     "onnx",
     "onnxruntime",
+    "pyyaml",
 ]
 
 [dependency-groups]
