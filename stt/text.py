@@ -78,6 +78,9 @@ def normalize(text: str, lang_hint: str = "it") -> str:
     text = _NUMBERS.sub(lambda match: _number_to_words(match.group(0), lang_hint), text)
     text = _SEPARATORS.sub(" ", text)
     text = "".join(_fold(char) for char in text)
+    # Folding may expose whitespace after an apostrophe (e.g. ``Hira‘” on`` → ``hira' on``):
+    # re-apply the rule so normalize() stays idempotent.
+    text = _AFTER_APOSTROPHE_SPACE.sub("'", text)
     return " ".join(text.split())
 
 
