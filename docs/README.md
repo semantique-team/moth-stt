@@ -1,0 +1,83 @@
+# moth-stt — IT+EN code-switching speech-to-text (design)
+
+> **Status:** design approved section by section on 2026-10-18 (brainstorming session).
+> **Nothing is implemented yet** — no code, no data, no training has been done for this model.
+> These documents were drafted inside `ant-4b/NewModel/` and now live in `moth-stt/docs/` (moved 2026-10-19).
+> **Name:** **moth** — decided 2026-10-19, together with the repository name `moth-stt` (see `08-risks-and-open-questions.md`).
+
+## Summary
+
+A very small, open, locally runnable **speech-to-text model for Italian speech with English words mixed in**
+("ho spostato il *meeting* a domani", "mandami il *feedback* sul *deploy*"). It is part of a family of small open
+models, next to ANT-4B (the System-1 decision model in this repository), but it is a different kind of model
+and gets its own repository.
+
+The model is the **pretrained Whisper-tiny encoder (MIT) plus a new CTC head** over one shared Italian+English
+BPE vocabulary — the Whisper decoder is dropped. It has about 8 M parameters, ships as an int8 ONNX file of
+roughly 8–10 MB (hard ceiling: about 20 MB), and runs in the browser (WASM) and on any CPU through
+`onnxruntime`. It is fine-tuned on open human-transcribed Italian and English speech plus a small set of
+recorded Italian–English mixed sentences, **on the author's M5 MacBook Pro (16 GB) with PyTorch/MPS**.
+Kaggle/Colab are the fallback. The total paid-compute budget is **10 USD** and is expected to stay unspent.
+
+## Key facts
+
+| Item | Decision |
+|---|---|
+| Task | Speech-to-text. Italian with English words mixed in (code-switching) is the core use case. |
+| Model | Whisper-tiny encoder (pretrained, MIT) + linear CTC head over a shared IT+EN SentencePiece BPE (V = 1024 to start). No autoregressive decoder. |
+| Size | ≈ 8.0 M parameters; ≈ 8–10 MB at int8; hard ceiling ≈ 20 MB download. |
+| Output (v0.1) | Lowercase, no punctuation. |
+| Runtime | Browser (ONNX Runtime Web, WASM) and native `onnxruntime`. v0.1 is record-then-transcribe (clips ≤ 30 s). |
+| Training | Fine-tuning on an M5 MacBook Pro 16 GB (PyTorch MPS, bf16 autocast). Fallback: Kaggle (30 free GPU h/week) or Colab. Budget ≤ 10 USD. |
+| Data | Open human-transcribed IT (Common Voice, MLS) and EN (LibriSpeech or Common Voice), plus recorded IT+EN mixed sentences. No teacher/pseudo-labels in v0.1. |
+| Evaluation | Own mixed test set (≈ 600 utterances, ≥ 3 speakers, one held out), FLEURS IT/EN, Common Voice IT test, a 1-hour silence/noise set. Bars are relative to measured baselines. |
+| License | Code Apache-2.0; `NOTICE` for Whisper (MIT) and dataset attributions. |
+
+## Documents
+
+Read in order; each file is self-contained enough to be reviewed alone.
+
+| File | Contents |
+|---|---|
+| [`01-goals-and-decisions.md`](01-goals-and-decisions.md) | Problem, constraints, what exists and why it is not enough, approaches considered, why this one, success tiers, non-goals, budget. |
+| [`02-architecture.md`](02-architecture.md) | The model: layers, shapes, parameter arithmetic, tokenizer, CTC, decoding, size and compute budgets, variants and fallbacks. |
+| [`03-data.md`](03-data.md) | Every dataset, license, size, filter, split; mixed-sentence generation; the recording protocol; the test, dev and noise sets. |
+| [`04-training.md`](04-training.md) | Mac benchmark results, training environment, recipes for H1–H3, hyperparameters, checkpointing, cloud fallback, time estimates. |
+| [`05-evaluation.md`](05-evaluation.md) | Text normalization, metrics, manifests, baselines (H0), statistics, gates, reporting. |
+| [`06-export-and-web-runtime.md`](06-export-and-web-runtime.md) | ONNX export, int8, artifact format, browser pipeline, JS feature extractor, tests. |
+| [`07-repo-layout-and-roadmap.md`](07-repo-layout-and-roadmap.md) | New-repo layout with unit contracts, tooling, milestones M0–M8, `EXPERIMENTS.md` template. |
+| [`08-risks-and-open-questions.md`](08-risks-and-open-questions.md) | Risk register, open questions, follow-up backlog, stop/pivot criteria. |
+| [`09-research-notes.md`](09-research-notes.md) | The evidence behind the decisions, with links and a verified/unverified marker per claim. |
+
+## Decision log
+
+| # | Decision | Why |
+|---|---|---|
+| D1 | Build a speech-to-text model (not another decision model, not TTS). | The family needs a new *kind* of model; STT was the intended one. A TTS plan was researched and **shelved**, not deleted. |
+| D2 | Core job: Italian speech with English words mixed in. | This is where Whisper-class small models fail (language token per clip, hallucination at switches). |
+| D3 | As little training as possible, as small as possible. | Constraint from the author. |
+| D4 | Must run in the browser / on edge: ≈ 20 MB ceiling. | Constraint from the author. |
+| D5 | Own model — **not** a Cactus Whistle LoRA fine-tune. | Whistle is kept as baseline and architectural reference only. |
+| D6 | Compute budget ≤ 10 USD; Mac/Colab/Kaggle. | Constraint from the author; rules out the from-scratch Moonshine recipe (≈ 8×H100 for 1–3 days). |
+| D7 | Approach B: pretrained Whisper-tiny encoder + own CTC head/tokenizer/data/training. | Reuses acoustic knowledge we cannot afford to learn; drops the decoder that causes hallucinations and language-token problems. |
+| D8 | v0.1 uses human-transcribed audio only (no Parakeet pseudo-labeling). | Keeps the plan simple and cheap. |
+| D9 | Train on the author's M5 MacBook Pro 16 GB. | Measured feasible (see `04-training.md`). |
+| D10 | Evaluation bars are relative to measured baselines (Whisper-tiny, Whistle, Parakeet). | Absolute WER targets would be guesses before H0. |
+| D11 | v0.1 scope: record-then-transcribe; no streaming, no VAD, no punctuation, no WebGPU. | YAGNI. |
+| D12 | The project lives in a new repository, not in `ant-4b`. | Different model, dependencies and licenses. |
+| D13 | Model name **moth**; repository **`moth-stt`** (decided 2026-10-19). | Family naming thread with ANT (insects); the suffix names the task (speech-to-text), not the parameter scale. |
+
+## Glossary
+
+- **CTC** — connectionist temporal classification: the head emits a token or *blank* per encoder frame; a loss and a collapse rule turn frame outputs into text. No decoder loop.
+- **BPE** — byte-pair-encoding subword vocabulary (SentencePiece).
+- **WER** — word error rate, computed on normalized text (`05-evaluation.md`).
+- **ETA** — English-term accuracy: share of annotated English-origin reference words reproduced exactly.
+- **RTFx** — real-time factor, audio seconds processed per wall-clock second (higher is faster).
+- **H0–H3** — the experiment ladder: baselines, frozen-encoder probe, full fine-tune, code-switch data.
+- **S1/S2/S3** — the three recording speakers; S3 is held out from all training data.
+
+## Next step
+
+Next: write the implementation plan (writing-plans step). The `moth-stt` repository now exists and these documents
+live in its `docs/`.
