@@ -86,6 +86,55 @@ uv run recordings/generate_scripts.py mark-reviewed --kind T --reviewer tancredi
 
 Only fully-imported `T.jsonl` (with `reviewed: true` rows) may be recorded.
 
+## How to record
+
+Prerequisites: `brew install ffmpeg`; macOS asks for microphone permission the first time a
+terminal records (if denied: System Settings → Privacy & Security → Microphone → allow the
+terminal app).
+
+**Consent first.** Print `consent-template.md`, have every speaker read and sign it (their
+release choice goes in `data-card.md`).
+
+**Laptop path (S1, S2) — guided recorder:**
+
+```bash
+uv run recordings/record.py --speaker S1 --kind T
+```
+
+It shows one sentence at a time (`[12/200] T-0012  (single_word)`), Enter starts the recording,
+Enter stops it; after each take `[Enter]` = next, `p` = play back, `r` = redo the same sentence;
+`s` = skip, `q` = quit. Files land as `recordings/audio/S1/S1_0001.wav`; retakes and skips are
+appended to `recordings/audio/S1/session.log.jsonl`. Useful flags: `--start N` (resume),
+`--dry-run` (list only what is missing), `--overwrite`, `--device` (check
+`ffmpeg -f avfoundation -list_devices true -i ""` for the microphone index).
+
+**Phone path (S2, S3) — one memo per sentence:** read from the cue sheet, record one sentence per
+file, export, then convert and rename:
+
+```bash
+uv run recordings/build_manifest.py cue --kind T --speaker S3 --out recordings/cues/T-S3.txt
+# then, one by one (or with a small loop):
+ffmpeg -i memo.m4a -ac 1 -ar 48000 recordings/audio/S3/S3_0001.wav
+```
+
+The builder also accepts `.m4a` and `.flac` files that follow the `S3_0001.m4a` naming.
+
+**Sessions:** ~50–60 sentences per sitting (≈ 10–15 minutes of speech); natural conversational
+speed; English words pronounced the way you would say them in conversation; do not re-read a word
+that came out Italianized; retakes only for flubs (the recorder logs them). The first file of a
+speaker is a good moment to check level: aim for peaks around −12 to −6 dBFS, no clipping.
+
+**Check and build the manifest:**
+
+```bash
+uv run recordings/build_manifest.py build --kind T
+```
+
+It validates every file (naming, 1–30 s duration, silence, clipping ≤ 1%), writes
+`recordings/manifests/T.jsonl` and prints a per-speaker report (`2/3 clips, 12.5s total`, errors,
+warnings). Fix the flagged files and rerun. For the training script:
+`uv run recordings/build_manifest.py build --kind R --speaker S1`.
+
 ## Recording protocol (from `docs/03-data.md` §7)
 
 - **Speakers:** S1 (the author), S2 (a friend), S3 (a third person, **held out** from every

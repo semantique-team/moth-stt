@@ -17,6 +17,11 @@ runs/**/ckpt*.pt
 web/node_modules/
 web/test-results/
 
+# Recordings (audio, candidates and cue sheets are not versioned; scripts and manifests are)
+recordings/audio/
+recordings/candidates/
+recordings/cues/
+
 # macOS / editors
 .DS_Store
 .idea/
