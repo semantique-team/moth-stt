@@ -93,10 +93,14 @@ def main(argv: list[str] | None = None) -> int:
         prog="record.py",
         description="Guided recording session: one sentence per file.",
     )
-    parser.add_argument("--speaker", required=True, choices=["S1", "S2", "S3"])
-    parser.add_argument("--kind", required=True, choices=["T", "R"])
+    parser.add_argument("--speaker", required=True, choices=["S1", "S2", "S3", "S4"])
+    parser.add_argument("--kind", required=True, choices=["T", "R", "A"])
     parser.add_argument("--scripts-dir", default="recordings/scripts")
-    parser.add_argument("--audio-dir", default="recordings/audio")
+    parser.add_argument(
+        "--audio-dir",
+        default=None,
+        help="audio root (default recordings/audio, or recordings/audio/anchor for kind A)",
+    )
     parser.add_argument("--start", type=int, default=1, help="first cue index (1-based)")
     parser.add_argument("--overwrite", action="store_true", help="re-record existing files")
     parser.add_argument("--dry-run", action="store_true", help="only list the cues to record")
@@ -104,14 +108,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--device", default=":0", help="AVFoundation input (':0' = default mic)")
     args = parser.parse_args(argv)
 
+    audio_dir = args.audio_dir or (
+        "recordings/audio/anchor" if args.kind == "A" else "recordings/audio"
+    )
     script_speaker = args.speaker if args.kind == "R" else None
     rows = load_script(script_path(Path(args.scripts_dir), args.kind, script_speaker))
-    cues = [row for row in rows if args.kind == "R" or row.get("speaker") == args.speaker]
+    cues = [
+        row
+        for row in rows
+        if args.kind in ("R", "A") or row.get("speaker") == args.speaker
+    ]
     if not cues:
         print(f"no cues for {args.speaker} in the {args.kind} script — import the sentences first")
         return 1
 
-    planned = plan_session(args.audio_dir, args.speaker, len(cues), args.start, args.overwrite)
+    planned = plan_session(audio_dir, args.speaker, len(cues), args.start, args.overwrite)
     if args.dry_run:
         print(f"{args.speaker}: {len(cues)} cues, {len(planned)} to record")
         for index in planned:
@@ -125,7 +136,7 @@ def main(argv: list[str] | None = None) -> int:
         print("ffmpeg not found — install it first: brew install ffmpeg")
         return 1
 
-    log_path = Path(args.audio_dir) / args.speaker / "session.log.jsonl"
+    log_path = Path(audio_dir) / args.speaker / "session.log.jsonl"
     recorded = retakes = skips = 0
     print(f"{args.speaker} — {args.kind}: {len(planned)} sentences to record. Ctrl-C to stop early.\n")
     try:
@@ -141,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
                 append_session_log(log_path, {"id": cue["id"], "action": "skip"})
                 continue
             while True:
-                path = next_audio_path(args.audio_dir, args.speaker, index)
+                path = next_audio_path(audio_dir, args.speaker, index)
                 if not _record_once(path, args.device, args.max_seconds):
                     print("    niente file salvato — riprova")
                     continue

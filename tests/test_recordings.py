@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pytest
 import soundfile as sf
 
 from recordings.build_manifest import build_manifest, build_report, cues_for, find_audio
@@ -167,3 +168,35 @@ def test_append_session_log(tmp_path: Path) -> None:
     lines = log.read_text(encoding="utf-8").strip().splitlines()
     assert len(lines) == 2
     assert json.loads(lines[1])["action"] == "retake"
+
+
+def test_anchor_manifest_is_per_speaker(tmp_path: Path) -> None:
+    """Kind A: the same 60 anchor sentences recorded by every speaker, in their own folder."""
+    scripts = tmp_path / "scripts"
+    audio = tmp_path / "anchor"
+    _write_script(
+        scripts,
+        "A",
+        [
+            _cue("A-0001", "ho spostato il meeting a domani", "single_word"),
+            _cue("A-0002", "oggi leggo un libro", "control_it"),
+        ],
+    )
+    _wav(audio / "S1" / "S1_0001.wav")
+    _wav(audio / "S1" / "S1_0002.wav")
+    result = build_manifest("A", scripts, audio, speaker="S1")
+    assert result["errors"] == []
+    assert [(row["id"], row["speaker"]) for row in result["rows"]] == [
+        ("A-0001", "S1"),
+        ("A-0002", "S1"),
+    ]
+    assert result["rows"][0]["source"] == "recorded_a"
+    assert result["rows"][0]["split"] == "test"
+    assert result["speakers"]["S1"]["found"] == 2
+
+
+def test_anchor_requires_a_speaker(tmp_path: Path) -> None:
+    scripts = tmp_path / "scripts"
+    _write_script(scripts, "A", [_cue("A-0001", "oggi leggo un libro", "control_it")])
+    with pytest.raises(ValueError, match="needs --speaker"):
+        build_manifest("A", scripts, tmp_path / "anchor")

@@ -277,7 +277,7 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _speaker_group(speaker: str) -> str:
-    return "S1+S2" if speaker in ("S1", "S2") else speaker
+    return "S1+S2" if speaker in ("S1", "S2") else "S3+S4"
 
 
 def _errors(stats: dict) -> int:

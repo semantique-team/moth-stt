@@ -97,11 +97,19 @@ def test_stratified_assignment_balances_speakers() -> None:
     rows += [{"category": "phrase"} for _ in range(100)]
     rows += [{"category": "acronym"} for _ in range(60)]
     stratify_speakers(rows)
-    counts = {speaker: 0 for speaker in ("S1", "S2", "S3")}
+    counts = {speaker: 0 for speaker in ("S1", "S2", "S3", "S4")}
     for row in rows:
         counts[row["speaker"]] += 1
     assert sum(counts.values()) == 310
     assert max(counts.values()) - min(counts.values()) <= 1
+
+
+def test_stratify_keeps_existing_assignments() -> None:
+    rows = [{"category": "single_word", "speaker": "S1"} for _ in range(2)]
+    rows += [{"category": "single_word"} for _ in range(2)]
+    stratify_speakers(rows)
+    assert [row["speaker"] for row in rows[:2]] == ["S1", "S1"]
+    assert all(row["speaker"] in ("S2", "S3", "S4") for row in rows[2:])
 
 
 def test_stats_reports_quota_deltas(tmp_path: Path) -> None:
@@ -145,6 +153,6 @@ def test_import_cli_roundtrip(tmp_path: Path) -> None:
     assert main(["import", "--kind", "T", "--in", str(candidates), "--scripts-dir", str(scripts)]) == 0
     rows = load_script(scripts / "T.jsonl")
     assert rows[0]["id"] == "T-0001"
-    assert rows[0]["speaker"] in ("S1", "S2", "S3")
+    assert rows[0]["speaker"] in ("S1", "S2", "S3", "S4")
     assert rows[0]["reviewed"] is False
     assert main(["stats", "--scripts-dir", str(scripts)]) == 0

@@ -69,8 +69,10 @@ def build_manifest(
     allow_unreviewed: bool = False,
 ) -> dict:
     """Validate the audio for one recording set and return ``{"rows", "errors", "warnings", "speakers"}``."""
-    if kind not in ("T", "R"):
-        raise ValueError("kind must be 'T' or 'R' (the pool has no audio)")
+    if kind not in ("T", "R", "A"):
+        raise ValueError("kind must be 'T', 'R' or 'A' (the pool has no audio)")
+    if kind == "A" and speaker is None:
+        raise ValueError("kind 'A' needs --speaker (each speaker records the same anchor sentences)")
     scripts_dir, audio_dir = Path(scripts_dir), Path(audio_dir)
     script_rows = load_script(script_path(scripts_dir, kind, speaker))
     if not script_rows:
@@ -83,11 +85,11 @@ def build_manifest(
     per_speaker: dict[str, dict] = {}
 
     for current in speakers:
-        cues = script_rows if kind == "R" else cues_for(script_rows, current)
+        cues = script_rows if kind in ("R", "A") else cues_for(script_rows, current)
         found = 0
         seconds = 0.0
         for index, cue in enumerate(cues, start=1):
-            if kind == "T" and not cue.get("reviewed") and not allow_unreviewed:
+            if kind in ("T", "A") and not cue.get("reviewed") and not allow_unreviewed:
                 errors.append(f"{current}: cue {cue['id']} is not reviewed (see the review step)")
                 continue
             path = find_audio(audio_dir, current, index)
@@ -122,8 +124,8 @@ def build_manifest(
                     "text": cue["text"],
                     "norm": cue["text"],
                     "duration": round(measured["duration"], 3),
-                    "source": "recorded_t" if kind == "T" else "recorded_r",
-                    "split": "test" if kind == "T" else "train",
+                    "source": {"T": "recorded_t", "A": "recorded_a", "R": "recorded_r"}[kind],
+                    "split": "train" if kind == "R" else "test",
                     "speaker": current,
                     "lang": "mix",
                     "category": cue["category"],
@@ -178,15 +180,19 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
 
     build = sub.add_parser("build", help="validate audio and write the manifest")
-    build.add_argument("--kind", required=True, choices=["T", "R"])
-    build.add_argument("--speaker", default=None, help="S1 or S2 (required for kind R)")
+    build.add_argument("--kind", required=True, choices=["T", "R", "A"])
+    build.add_argument("--speaker", default=None, help="S1-S4 for kind A, S1/S2 for kind R")
     build.add_argument("--scripts-dir", default="recordings/scripts")
-    build.add_argument("--audio-dir", default="recordings/audio")
+    build.add_argument(
+        "--audio-dir",
+        default=None,
+        help="audio root (default recordings/audio, or recordings/audio/anchor for kind A)",
+    )
     build.add_argument("--out", default=None, help="output manifest (default recordings/manifests/<kind>.jsonl)")
     build.add_argument("--allow-unreviewed", action="store_true")
 
     cue = sub.add_parser("cue", help="write the printable cue sheet for one speaker")
-    cue.add_argument("--kind", required=True, choices=["T", "R"])
+    cue.add_argument("--kind", required=True, choices=["T", "R", "A"])
     cue.add_argument("--speaker", required=True)
     cue.add_argument("--scripts-dir", default="recordings/scripts")
     cue.add_argument("--out", required=True)
@@ -202,10 +208,13 @@ def main(argv: list[str] | None = None) -> int:
         print(f"wrote {count} cues to {args.out}")
         return 0
 
+    audio_dir = args.audio_dir or (
+        "recordings/audio/anchor" if args.kind == "A" else "recordings/audio"
+    )
     result = build_manifest(
         args.kind,
         args.scripts_dir,
-        args.audio_dir,
+        audio_dir,
         speaker=args.speaker,
         allow_unreviewed=args.allow_unreviewed,
     )

@@ -89,7 +89,7 @@ def test_score_rows_breakdown_and_speaker_groups() -> None:
     assert set(breakdown["category"]) == {"single_word", "phrase", "italianized"}
     assert breakdown["speaker"]["S1"]["n"] == 2
     assert breakdown["speaker_group"]["S1+S2"]["n"] == 2
-    assert breakdown["speaker_group"]["S3"]["n"] == 1
+    assert breakdown["speaker_group"]["S3+S4"]["n"] == 1
 
 
 def test_score_rows_noise_block() -> None:

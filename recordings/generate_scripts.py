@@ -59,28 +59,28 @@ CATEGORIES = (
     "control_en",
 )
 
-#: Fixed quotas for the test script T (sum = 600, three speakers × 200).
+#: Fixed quotas for the test script T (sum = 800, four speakers × 200).
 QUOTAS_T = {
-    "single_word": 150,
-    "phrase": 100,
-    "brand": 100,
-    "acronym": 60,
-    "italianized": 80,
-    "switch": 60,
-    "control_it": 30,
-    "control_en": 20,
+    "single_word": 200,
+    "phrase": 133,
+    "brand": 133,
+    "acronym": 80,
+    "italianized": 107,
+    "switch": 80,
+    "control_it": 40,
+    "control_en": 27,
 }
 
 #: Accepted size ranges for the other scripts.
 R_RANGE = (600, 1000)
 POOL_RANGE = (3000, 5000)
 
-T_SPEAKERS = ("S1", "S2", "S3")
+T_SPEAKERS = ("S1", "S2", "S3", "S4")
 
 #: Word-3-gram Jaccard above which two sentences are considered near-duplicates.
 NEAR_DUP_JACCARD = 0.8
 
-_SCRIPT_FILES = {"T": "T.jsonl", "R": "R-{speaker}.jsonl", "pool": "pool.jsonl"}
+_SCRIPT_FILES = {"T": "T.jsonl", "R": "R-{speaker}.jsonl", "A": "A.jsonl", "pool": "pool.jsonl"}
 
 #: Categories that must contain at least one English word, with the minimum span size.
 _EN_CATEGORY_MIN_WORDS = {"phrase": 2, "switch": 2, "brand": 1, "acronym": 1, "italianized": 1}
@@ -96,7 +96,7 @@ def script_path(scripts_dir: Path | str, kind: str, speaker: str | None = None) 
         raise ScriptError(f"unknown kind {kind!r} (expected one of {sorted(_SCRIPT_FILES)})")
     if kind == "R":
         if speaker not in ("S1", "S2"):
-            raise ScriptError("kind 'R' needs --speaker S1 or S2 (S3 is held out from training)")
+            raise ScriptError("kind 'R' needs --speaker S1 or S2 (S3/S4 are held out from training)")
         return Path(scripts_dir) / _SCRIPT_FILES["R"].format(speaker=speaker)
     return Path(scripts_dir) / _SCRIPT_FILES[kind]
 
@@ -201,11 +201,19 @@ def _save_script(path: Path, rows: list[dict]) -> None:
 
 
 def stratify_speakers(rows: list[dict], speakers: tuple[str, ...] = T_SPEAKERS) -> None:
-    """Assign T rows to speakers, balanced per category (greedy least-loaded, deterministic)."""
+    """Balance T rows across speakers, **keeping the assignments already stored**.
+
+    Existing rows must keep their speaker: the recorded files are mapped to cues by position
+    (``S1_0001.wav`` is the first S1 row), so re-stratifying them would break every take.
+    Unassigned rows (sentences added later) go to the least-loaded speaker, in script order.
+    """
     loads = {speaker: 0 for speaker in speakers}
+    for row in rows:
+        if row.get("speaker") in loads:
+            loads[row["speaker"]] += 1
     for category in CATEGORIES:
         for row in rows:
-            if row.get("category") != category:
+            if row.get("category") != category or row.get("speaker") in loads:
                 continue
             speaker = min(speakers, key=lambda s: (loads[s], speakers.index(s)))
             row["speaker"] = speaker
@@ -327,7 +335,7 @@ def mark_reviewed(rows: list[dict], reviewer: str, ids: list[str] | None = None)
 def _print_stats(stats: dict) -> None:
     for name, section in stats.items():
         if name == "T":
-            print(f"T: {section['total']}/600 sentences, reviewed {section['reviewed']}")
+            print(f"T: {section['total']}/{sum(QUOTAS_T.values())} sentences, reviewed {section['reviewed']}")
             for speaker, count in section["per_speaker"].items():
                 print(f"  {speaker}: {count} (target 200)")
             for category, entry in section["categories"].items():
