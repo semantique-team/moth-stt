@@ -6,8 +6,11 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# Project artifacts (never in git)
-data/
+# Project artifacts (never in git) — except the curated term list, the data README and the manifests
+data/*
+!data/en_terms.txt
+!data/README.md
+!data/manifests/
 models/
 release/
 *.onnx
