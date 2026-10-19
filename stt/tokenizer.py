@@ -20,17 +20,37 @@ import sentencepiece as spm
 
 __all__ = [
     "BLANK_ID",
+    "TERMS_SHARE",
     "decode",
     "encode",
     "load_tokenizer",
     "tokenizer_stats",
     "train_tokenizer",
     "vocab_json",
+    "weighted_term_lines",
 ]
 
 #: CTC blank id; SentencePiece ids shift by +1 (``unk`` is 0, so it maps to 1).
 BLANK_ID = 0
 _DEFAULT_VOCAB_SIZE = 1024
+
+#: Target share of the **final** corpus made of English-term lines (``docs/02`` §5: "multiple
+#: times (up-weight)" — the number is ours, recorded in the build report).
+TERMS_SHARE = 0.05
+
+
+def weighted_term_lines(terms: Iterable[str], n_lines: int, share: float = TERMS_SHARE) -> list[str]:
+    """Repeat ``terms`` so they make up ``share`` of the final corpus (base + term lines).
+
+    The old rule repeated the whole list ``n_lines // 5`` times, which on a ~100k-line corpus
+    means ~100M lines: the terms are up-weighted by *share*, not by a multiple of the corpus.
+    """
+    terms = [term for term in terms if term.strip()]
+    if not terms or n_lines <= 0 or share <= 0.0:
+        return []
+    target = round(n_lines * share / (1.0 - share))
+    repeat = max(1, round(target / len(terms)))
+    return terms * repeat
 
 
 def train_tokenizer(
@@ -38,19 +58,18 @@ def train_tokenizer(
     out_prefix: Path | str,
     vocab_size: int = _DEFAULT_VOCAB_SIZE,
     extra_weight_terms: Iterable[str] = (),
+    terms_share: float = TERMS_SHARE,
 ) -> Path:
     """Train the shared BPE model and return the ``.model`` path.
 
-    ``extra_weight_terms`` (the English-terms list) is appended ``len(texts) // 5`` times so BPE
-    prefers pieces that spell those words in few tokens.
+    ``extra_weight_terms`` (the English-terms list) is appended so that term lines are
+    ``terms_share`` of the final corpus (see :func:`weighted_term_lines`), so BPE prefers pieces
+    that spell those words in few tokens.
     """
     out_prefix = Path(out_prefix)
     out_prefix.parent.mkdir(parents=True, exist_ok=True)
     lines = [text for text in texts if text.strip()]
-    terms = [term for term in extra_weight_terms if term.strip()]
-    repeat = max(1, len(lines) // 5) if terms else 0
-    for _ in range(repeat):
-        lines.extend(terms)
+    lines.extend(weighted_term_lines(extra_weight_terms, len(lines), terms_share))
 
     corpus = out_prefix.with_suffix(".txt")
     corpus.write_text("\n".join(lines) + "\n", encoding="utf-8")

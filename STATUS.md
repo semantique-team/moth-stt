@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **194 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **200 test verdi**, `ruff` pulito.
 > Questo file dice **dove siamo**; il *come* e il *perché* stanno nei design doc (`docs/01`…`09`) e nel
 > piano (`docs/plans/2026-10-19-implementation-plan.md`, che ha una nota di sync in testa: i suoi checkbox
 > non sono mantenuti, questo file è la fonte live).
@@ -22,6 +22,8 @@
 | M0 | normalize, scorer (WER/ETA/bootstrap), manifest schema, E-000 | `stt/text.py`, `stt/eval.py`, `stt/manifest.py`, `EXPERIMENTS.md` |
 | M1 (1.1–1.3) | script generator (quote/dedupe/review), recorder guidato + manifest builder + consenso, runner baseline (Whisper/Whistle/Parakeet) | `recordings/`, `baselines/` |
 | Dati (2.1–2.4, 2.6) | registry+download+reader, filtri, BPE tokenizer (codice), log-mel con parità Whisper (+ asset 64 KB), dataset+augmentation | `stt/data/`, `stt/features.py`, `stt/tokenizer.py`, `stt/assets/`, `data/en_terms.txt` (580 termini) |
+| **2.3 tokenizer** | **BPE IT+EN addestrato**: 1024 pezzi, corpus 100.429 righe (MLS IT 169,9 h + LS EN 100 h pesati 70/30 per parole, pool, 580 termini al 5%), `tokens/word 1.945`, `tokens/s 4.70`, termini ≤3 pezzi 0.488; CLI `stt/data/build_tokenizer.py`, stats nel build report, 6 test | `data/tokenizer/` (gitignored), `data/manifests/build_report.json` (chiave `tokenizer`) |
+| **1.1 pool** | **pool.jsonl: 3.137 frasi** (8 categorie, 0 invalide, 58 doppioni scartati), generator `deepseek-v4.1-flash` | `recordings/scripts/pool.jsonl` |
 | **2.5 mel cache** | **cache reale costruita**: 9 set, **291.9 h** (mls_it_train 169.9 h, ls_en_train 100.0 h, dev/test 22 h), 16 GB, **0 errori**, spot check bit-exact su ogni set → `data/shards/`; report in E-002 | `stt/data/build_mel.py`, `EXPERIMENTS.md` (E-002) |
 | Modello (3.1–3.3) | encoder Whisper-tiny + testa CTC (8.027.009 param), conversione pesi + parità, decode greedy | `stt/model.py`, `stt/convert_whisper.py`, `stt/decode.py` |
 | Conversione (3.2) | **verificata sui pesi reali** e materializzata: `models/whisper_tiny_encoder.pt` (30,6 MB; parità 5,2e-4 vs gate 1e-3 contro eager con posizioni del checkpoint; errore relativo 2,8e-5) | `models/` (gitignored), docstring di `stt/convert_whisper.py`, `docs/02` §3 |
@@ -31,9 +33,9 @@
 
 ## In corso / fuori dal repo
 
-- **Registrazioni T**: S1 a **31/200**. Riprendere con:
+- **Registrazioni T**: S1 a **32/200**. Riprendere con:
   `uv run recordings/record.py --speaker S1 --kind T` — mancano S2 e S3 (200 ciascuno, S3 legge solo T).
-- **Da generare/importare (tu)**: R-S2 (600–1000) e pool (3–5k) con `recordings/generate_scripts.py`.
+- **Da generare/importare (tu)**: R-S2 (600–1000) con `recordings/generate_scripts.py` (il pool è fatto).
 - **Dati**: download completati e verificati (`data/raw/FETCH_OK`); manifest in `data/manifests/` (9 set +
   `build_report.json`, E-002). Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con
   `data/raw/fetch.sh`); resta **FLEURS (1.7 GB)** per le baseline di 1.4. Manca **Common Voice IT 27** (≈ 170 h,
@@ -43,20 +45,23 @@
 
 | Task | Cosa | Blocco |
 |---|---|---|
-| 2.3 → 2.7 | **training del tokenizer** (codice pronto, test pronti): testo = trascrizioni + pool + `en_terms` up-weighted; poi stats nel build report | **pool (utente)** |
-| 4.2 | H1 (`runs/E-004/config.yaml`): due bracci truncated/padded30, dev WER con CI, decisione al gate — **train.py e config sono pronti** | tokenizer |
+| 4.2 | **H1, ora sbloccato** (`runs/E-004/config.yaml`): due bracci truncated/padded30, dev WER con CI, decisione al gate — train.py, config, shard e tokenizer ci sono; lanciarlo dal checkout principale (shard e pesi non sono nei worktree leggeri) | nessuno |
 | 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, CV-IT, mixed T, noise | CLI Whistle/Parakeet; T registrato; CV IT |
 | M5–M8 | H2, H3, demo, release; il benchmark browser con **pesi veri** arriva con M7 | da piano |
 
 ## Serve da te
 
-- **Pool** (3–5k frasi, `recordings/generate_scripts.py`) → sblocca tokenizer → H1 (4.2). È l'unico vero blocco rimasto.
 - Registrazioni T per S2/S3 (quando vuoi); R-S2 per H3.
 - **Common Voice IT 27** (CC0): link dal sito Mozilla dopo aver accettato i termini → poi `stt.data.sources.download`.
 - `en_terms.txt` è a 580 voci (target design 1–2k): estendibile quando serve.
 
 ## Note di contesto utili
 
+- **Tokenizer**: 1024 pezzi, 1.945 token/parola e 4.70 token/s sulle trascrizioni (contro i 50 frame/s
+  dell'encoder); i termini inglesi entro 3 pezzi sono il 48.8% e alzare l'up-weight (0.05 → 0.30) non li
+  migliora (misurato): il limite è V=1024, non la quota. Pezzi, id ed encoding sono stabili fra run; i byte
+  del `.model` variano per rumore float, quindi il build report registra lo sha256 dell'artefatto costruito.
+  `data/tokenizer/` è gitignored: da rilanciare il CLI (~3 s) dove servono i file.
 - **Parità MPS↔CPU del CTC loss: Δ = 0.0** (identica) su modello e dati reali — il dubbio di `docs/04` §1 è risolto.
   Smoke di 3 step su MLS dev (MPS, bf16, batch 320 s): ~330 audio-s/s, ~6.5 GB peak (non è un benchmark).
 - **Posizioni**: la tabella `embed_positions` del checkpoint HF differisce dalla formula delle sinusoidi di 3,03e-4

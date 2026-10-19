@@ -8,8 +8,10 @@
 > **Status sync (2026-10-19):** the checkboxes below were not maintained while M0–M3 landed — [`STATUS.md`](../../STATUS.md)
 > is the live snapshot and the boxes are not reliable for those phases. Done at that date: **M0, M1 (1.1–1.3),
 > M2 code (2.1–2.6) + manifests (E-002) + the real mel cache (2.5: 291.9 h in `data/shards/`), M3 (3.1–3.5, incl.
-> E-003)**; 1.4 is partial (Whisper tiny only), 2.3's tokenizer training and 4.2's H1 run wait on the pool /
-> recordings (user side); 4.1 is done (`stt/train.py` + tests + `runs/E-004/config.yaml`).
+> E-003)**; 2.3 is done too (pool of 3,137 sentences + the BPE tokenizer built by `stt/data/build_tokenizer.py`,
+> stats in the build report), so **4.2 (H1) is ready to run**; 1.4 is partial (Whisper tiny only) and still waits
+> on the recordings, the Whistle/Parakeet CLIs and Common Voice IT; 4.1 is done (`stt/train.py` + tests +
+> `runs/E-004/config.yaml`).
 
 **Goal:** ship **moth v0.1** — a very small, open **Italian + English code-switching speech-to-text** model:
 pretrained Whisper-tiny encoder (MIT) + a linear CTC head over a shared IT+EN SentencePiece BPE (V = 1024),
