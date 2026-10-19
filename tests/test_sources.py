@@ -123,18 +123,32 @@ def test_read_mls_transcripts(tmp_path: Path) -> None:
 
 
 def test_read_fleurs_tsv(tmp_path: Path) -> None:
+    """Official layout: headerless, 7 columns; ids repeat, filenames are the unique key."""
     root = tmp_path / "it_it"
     (root / "audio" / "test").mkdir(parents=True)
     (root / "test.tsv").write_text(
-        "id\tfilename\ttranscription\traw_transcription\n"
-        "1\t1.wav\tciao a tutti\tCiao a tutti\n"
-        "2\t2.wav\t\t\n",
+        "1536\t1.wav\tCiao a tutti\tciao a tutti\ta | b\t16000\tFEMALE\n"
+        "1536\t2.wav\t\t\t\t\t\n",
         encoding="utf-8",
     )
     (root / "audio" / "test" / "1.wav").write_bytes(b"x")
     rows = read_fleurs_tsv(root, "test")
     assert [(row["id"], row["audio"], row["text"]) for row in rows] == [
-        ("fleurs-1", "audio/test/1.wav", "ciao a tutti")
+        ("fleurs-1", "audio/test/1.wav", "Ciao a tutti")
+    ]
+
+
+def test_read_fleurs_tsv_with_header_variant(tmp_path: Path) -> None:
+    root = tmp_path / "it_it"
+    (root / "audio" / "dev").mkdir(parents=True)
+    (root / "dev.tsv").write_text(
+        "id\tfilename\ttranscription\traw_transcription\n"
+        "7\t7.wav\tbuongiorno\tbuongiorno\n",
+        encoding="utf-8",
+    )
+    rows = read_fleurs_tsv(root, "dev")
+    assert rows == [
+        {"id": "fleurs-7", "audio": "audio/dev/7.wav", "text": "buongiorno", "speaker": None}
     ]
 
 

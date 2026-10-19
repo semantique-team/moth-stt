@@ -237,23 +237,37 @@ def read_mls_transcripts(root: Path | str) -> list[dict]:
 
 
 def read_fleurs_tsv(root: Path | str, split: str) -> list[dict]:
-    """FLEURS ``<split>.tsv`` with audio under ``audio/<split>/``."""
+    """FLEURS ``<split>.tsv``: **headerless** official layout ``id, filename, transcription,
+    raw_transcription, chars, num_samples, gender``; a headered variant is also accepted.
+
+    The ``id`` column is *not* unique across rows (it identifies the sentence, not the
+    recording), so the id used here is the filename stem, which is unique.
+    """
     root = Path(root)
-    rows: list[dict] = []
     lines = (root / f"{split}.tsv").read_text(encoding="utf-8").splitlines()
-    header = lines[0].split("\t")
-    index = {name: position for position, name in enumerate(header)}
-    for line in lines[1:]:
+    if not lines or not lines[0].strip():
+        return []
+    first = lines[0].split("\t")
+    if "transcription" in first:
+        index = {name: position for position, name in enumerate(first)}
+        data_lines = lines[1:]
+        id_pos, file_pos, text_pos = index["id"], index["filename"], index["transcription"]
+    else:
+        data_lines = lines
+        id_pos, file_pos, text_pos = 0, 1, 2
+    rows: list[dict] = []
+    for line in data_lines:
         fields = line.split("\t")
-        if len(fields) < len(header):
+        if len(fields) <= max(id_pos, file_pos, text_pos):
             continue
-        text = fields[index["transcription"]].strip()
+        text = fields[text_pos].strip()
         if not text:
             continue
+        filename = fields[file_pos].strip()
         rows.append(
             {
-                "id": f"fleurs-{fields[index['id']]}",
-                "audio": f"audio/{split}/{fields[index['filename']]}",
+                "id": f"fleurs-{Path(filename).stem}",
+                "audio": f"audio/{split}/{filename}",
                 "text": text,
                 "speaker": None,
             }
