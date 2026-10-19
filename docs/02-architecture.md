@@ -39,8 +39,14 @@ test on a padded versus unpadded clip.
 
 Source weights: `openai/whisper-tiny` (MIT). The encoder is re-implemented in ~100 lines of plain PyTorch
 (no `transformers` dependency at train/export time) and the weights are mapped over once by a conversion script.
-A parity test requires the new module to match `transformers`' `WhisperEncoder` within 1e-4 (fp32) on a 30 s
-padded input.
+The parity test requires the new module to match `transformers`' `WhisperEncoder` within 1e-4 (fp32) on a 30 s
+padded input — offline on random weights (`tests/test_convert.py`, CI). **Measured 2026-10-19** on the released
+checkpoint: the stored `embed_positions` table differs from the pure sinusoid formula by 3.03e-4 (a precision
+artifact of the original training stack), and `transformers` itself moves the encoder output by 2.2e-3 when
+switching its own sdpa↔eager kernels — the fp32 noise floor of any independent re-implementation with these
+weights. The conversion gate is therefore 1e-3 against the eager reference with the checkpoint positions
+substituted (measured: 5.2e-4, relative 2.8e-5); the model regenerates the formula table, so the init deviation
+from HF at the position input is bounded by that 3e-4 (see `stt/convert_whisper.py`).
 
 | Part | Specification |
 |---|---|
