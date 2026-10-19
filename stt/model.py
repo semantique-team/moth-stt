@@ -38,13 +38,13 @@ class EncoderConfig:
 
 
 def sinusoids(length: int, channels: int, max_timescale: float = 10000.0) -> torch.Tensor:
-    """Fixed sinusoidal table ``[length, channels]`` (Whisper's construction, float64 then fp32)."""
+    """Fixed sinusoidal table, computed like Whisper's (float32 arithmetic, not float64)."""
+    if channels % 2 != 0:
+        raise ValueError(f"channels must be even, got {channels}")
     log_timescale_increment = math.log(max_timescale) / (channels // 2 - 1)
-    inv_timescales = torch.exp(
-        -log_timescale_increment * torch.arange(channels // 2, dtype=torch.float64)
-    )
-    scaled_time = torch.arange(length, dtype=torch.float64)[:, None] * inv_timescales[None, :]
-    return torch.cat([torch.sin(scaled_time), torch.cos(scaled_time)], dim=1).to(torch.float32)
+    inv_timescales = torch.exp(-log_timescale_increment * torch.arange(channels // 2))
+    scaled_time = torch.arange(length)[:, None] * inv_timescales[None, :]
+    return torch.cat([torch.sin(scaled_time), torch.cos(scaled_time)], dim=1)
 
 
 class _Block(nn.Module):
