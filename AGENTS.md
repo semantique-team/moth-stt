@@ -16,6 +16,7 @@ pretrained Whisper-tiny encoder (MIT) + a linear CTC head over a shared IT+EN Se
 parameters, ≈ 8–10 MB int8 ONNX, record-then-transcribe in the browser (ONNX Runtime Web / WASM) and on CPU.
 
 - Design docs: [`docs/README.md`](docs/README.md), then `docs/01` … `docs/09`.
+- Current state (read first when resuming): [`STATUS.md`](STATUS.md) — done / in progress / next tasks.
 - Implementation plan: [`docs/plans/2026-10-19-implementation-plan.md`](docs/plans/2026-10-19-implementation-plan.md)
   — follow it task by task (`- [ ]` checkboxes); the design docs win over guesses.
 
