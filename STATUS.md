@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **179 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **185 test verdi**, `ruff` pulito.
 > Questo file dice **dove siamo**; il *come* e il *perché* stanno nei design doc (`docs/01`…`09`) e nel
 > piano (`docs/plans/2026-10-19-implementation-plan.md`).
 
@@ -22,6 +22,7 @@
 | M1 (1.1–1.3) | script generator (quote/dedupe/review), recorder guidato + manifest builder + consenso, runner baseline (Whisper/Whistle/Parakeet) | `recordings/`, `baselines/` |
 | Dati (2.1–2.6) | registry+download+reader, filtri, BPE tokenizer, log-mel con parità Whisper (+ asset 64 KB), shard float16, dataset+augmentation | `stt/data/`, `stt/features.py`, `stt/tokenizer.py`, `stt/assets/`, `data/en_terms.txt` (580 termini) |
 | Modello (3.1–3.3) | encoder Whisper-tiny + testa CTC (8.027.009 param), conversione pesi + parità offline, decode greedy | `stt/model.py`, `stt/convert_whisper.py`, `stt/decode.py` |
+| Export + web (3.4–3.5) | ONNX opset 17 (sinusoidi in-graph) + int8: **8.32 MB totali**; smoke browser Playwright; **RTFx 65–74×** (4 thread) / 33–38× (1 thread) con pesi random; E-003 | `stt/export.py`, `web/`, `runs/E-003/` |
 | Script | **T.jsonl** (600, riviste) e **R-S1.jsonl** (600) | `recordings/scripts/` |
 
 ## In corso / fuori dal repo
@@ -38,9 +39,7 @@
 |---|---|---|
 | 1.4 | E-001: H0 — Whisper tiny greedy fatto (IT **32.09 %**, EN **13.86 %** WER); restano base, beam 5, Whistle, Parakeet, CV-IT, mixed T, noise | CLI di Whistle/Parakeet; T registrato |
 | 2.7 | E-002 fatto (manifest + report); restano **tokenizer training** (serve il pool) e **mel shard** (possono partire ora) | pool per il tokenizer |
-| 3.4 | `export.py`: ONNX + int8 + `release/` | in corso nella sessione parallela |
-| 3.5 | smoke web + **H4 early** RTFX | in corso nella sessione parallela |
-| M4–M8 | H1, H2, H3, demo, release | da piano |
+| M4–M8 | H1 (`train.py` + probe frozen-encoder), H2, H3, demo e release; il benchmark browser con **pesi veri** arriva con M7 | da piano |
 
 ## Serve da te
 
