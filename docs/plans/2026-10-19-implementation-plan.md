@@ -6,7 +6,7 @@
 > on test data; every number reported comes from `eval.py` output committed under `runs/`.
 >
 > **Status sync (2026-10-19):** the checkboxes below were not maintained while M0–M3 landed — [`STATUS.md`](../../STATUS.md)
-> is the live snapshot and the boxes are not reliable for those phases. Done at that date: **M0, M1 (1.1–1.3),
+> is the live snapshot and the boxes are not reliable for those phases. Done at that date: **M0, M1 (1.1–1.3, with T grown to 800 for four speakers plus the 60-sentence anchor),
 > M2 code (2.1–2.6) + manifests (E-002) + the real mel cache (2.5: 291.9 h in `data/shards/`), M3 (3.1–3.5, incl.
 > E-003)**; 2.3 is done too (pool of 3,137 sentences + the BPE tokenizer built by `stt/data/build_tokenizer.py`,
 > stats in the build report), so **4.2 (H1) is ready to run**; 1.4 is partial (Whisper tiny only) and still waits

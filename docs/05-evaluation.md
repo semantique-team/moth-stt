@@ -51,7 +51,7 @@ errors, and (for our runs) the git SHA and config path.
 
 - **Paired bootstrap over utterances** (1,000 resamples, seeded): 95% CI of each WER and of the WER **difference** between two
   systems on the same set.
-- A gap is called a **tie** when its CI includes 0. With ≈ 600 utterances a difference below roughly 2–3 absolute WER
+- A gap is called a **tie** when its CI includes 0. With ≈ 800 utterances a difference below roughly 2–3 absolute WER
   points is expected to be noise — report the interval instead of the headline difference.
 - Dev sets are used for selection only; the test sets are scored **once per candidate** and each scoring is logged.
 

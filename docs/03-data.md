@@ -81,32 +81,32 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
   brands and apps, acronyms.
 - **Categories (also the evaluation categories):**
 
-| Category | Example | Test quota (of 600) |
+| Category | Example | Test quota (of 800) |
 |---|---|---|
-| `single_word` — one English word inside an Italian sentence | "ho spostato il meeting a domani" | 150 |
-| `phrase` — multi-word English phrase | "serve un quick update prima della call" | 100 |
-| `brand` — app/brand/product name | "apri Spotify e metti la playlist" | 100 |
-| `acronym` — spoken-letter or word-like acronym | "il KPI del trimestre" | 60 |
-| `italianized` — English stem with Italian morphology | "abbiamo deployato ieri sera" | 80 |
-| `switch` — clause-level switch | "va bene, let's talk about it domani mattina" | 60 |
-| `control_it` — pure Italian | — | 30 |
-| `control_en` — pure English | — | 20 |
+| `single_word` — one English word inside an Italian sentence | "ho spostato il meeting a domani" | 200 |
+| `phrase` — multi-word English phrase | "serve un quick update prima della call" | 133 |
+| `brand` — app/brand/product name | "apri Spotify e metti la playlist" | 133 |
+| `acronym` — spoken-letter or word-like acronym | "il KPI del trimestre" | 80 |
+| `italianized` — English stem with Italian morphology | "abbiamo deployato ieri sera" | 107 |
+| `switch` — clause-level switch | "va bene, let's talk about it domani mattina" | 80 |
+| `control_it` — pure Italian | — | 40 |
+| `control_en` — pure English | — | 27 |
 
 - **Annotation:** each sentence carries `category` and `en_spans` (English-origin words, including Italianized
   forms) in the manifest — the basis of ETA (`05`).
-- **Size:** ≈ 600 test sentences (script T), ≈ 600–1,000 sentences per training speaker (script R), and a pool of
+- **Size:** 800 test sentences (script T: 200 each for S1–S4), ≈ 600–1,000 sentences per training speaker (script R), and a pool of
   ≈ 3–5k further sentences for tokenizer text and later synthesis.
 - **Hygiene:** exact and near-duplicate removal across T / R / pool (normalized-text hash + word 3-gram
   Jaccard > 0.8); T text never appears anywhere else. Provenance is logged (generator, date, reviewer).
 
 ## 7. Recordings
 
-**Speakers:** S1 (the author), S2 (the friend), S3 (a third person, **held out** from every training use).
+**Speakers:** S1 (the author), S2 (the friend), S3 and S4 (**held out** from every training use).
 
 | Script | Content | Who reads | Use |
 |---|---|---|---|
-| **T** (test) | 600 unique sentences, stratified by category so each speaker gets 200 (≈ 1 h total) | S1: 200, S2: 200, S3: 200 | Test only. Once H3 trains on S1/S2's script-R recordings, S1/S2 rows measure *seen speaker, unseen text* and S3 rows *unseen speaker*; before H3 (H0–H2) all three are unseen speakers. Report both groups. |
-| **A** (anchor, optional) | 60 sentences from T read by all three | S1, S2, S3 | Separates speaker effect from sentence effect. |
+| **T** (test) | 800 unique sentences, stratified by category so each speaker gets 200 (≈ 1.5 h total) | S1: 200, S2: 200, S3: 200, S4: 200 | Test only. Once H3 trains on S1/S2's script-R recordings, S1/S2 rows measure *seen speaker, unseen text* and S3/S4 rows *unseen speaker*; before H3 (H0–H2) all four are unseen speakers. Report both groups. |
+| **A** (anchor) | 60 sentences from T read by every speaker (separate `A.jsonl`, audio under `recordings/audio/anchor/`, manifests `A-S1.jsonl` … `A-S4.jsonl`) | S1, S2, S3, S4 | Separates speaker effect from sentence effect: the same 60 sentences for everyone. |
 | **R** (train) | 600–1,000 sentences, disjoint from T | S1, S2 (S3 never) | H3 training (≈ 1–1.5 h each); 100 sentences held out as mixed-dev. |
 
 **Protocol**
@@ -116,7 +116,7 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 - Format: WAV, 16-bit mono (16 kHz or native); file name `S1_0001.wav`; one sentence per file; light silence trim only.
 - Read naturally at conversational speed; pronounce English words **the way you would in conversation** (accented or
   not); no re-reading to "fix" a word that came out Italianized; retakes only for flubs; the number of retakes is logged.
-- Time: ≈ 6 s per sentence → about 2 h of sessions per 600 sentences including retakes.
+- Time: ≈ 6 s per sentence → about 2.5 h of sessions per 800 sentences including retakes, plus ≈ 20 min for the anchor.
 - **Consent and licensing:** each speaker consents in writing to the intended release (CC-BY 4.0 for the dataset if
   published; private otherwise). The decision is recorded in the data card.
 - The test recordings can start **immediately**, in parallel with everything else (the milestone M1 depends on them).
@@ -125,7 +125,7 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 
 | Set | Size | Used for |
 |---|---|---|
-| Mixed test (T) | 600 utterances, 3 speakers | Primary metric, per-category and per-speaker tables |
+| Mixed test (T) | 800 utterances, 4 speakers | Primary metric, per-category and per-speaker tables |
 | FLEURS IT test / FLEURS EN test | a few thousand utterances each (full test splits) | Italian-only and English-only regression bars |
 | Common Voice IT test | official split | Comparison with published Italian figures |
 | Noise set | 1 h | Hallucination test |
