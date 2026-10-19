@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Project artifacts (never in git)
+data/
+models/
+release/
+*.onnx
+runs/**/ckpt*.pt
+
+# Web
+web/node_modules/
+web/test-results/
+
+# macOS / editors
+.DS_Store
+.idea/
+.vscode/
