@@ -97,8 +97,14 @@ def build_shards(
     workers: int = 1,
     limit: int | None = None,
     progress: Callable[[int, int], None] | None = None,
+    batch_size: int = 1024,
 ) -> dict:
-    """Write the float16 shards and ``index.json``; returns the build report."""
+    """Write the float16 shards and ``index.json``; returns the build report.
+
+    Results are consumed in bounded batches (``batch_size`` jobs in flight) so the parent
+    process holds ≈ ``batch_size`` mels at a time — a full-trainset materialization would be
+    several GB of float16 on a 16 GB machine.
+    """
     rows = rows[:limit] if limit else rows
     audio_root, out_dir = Path(audio_root), Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -111,6 +117,7 @@ def build_shards(
     shard_id = 0
     offset = 0
     seconds = 0.0
+    done = 0
 
     def flush() -> None:
         nonlocal buffer, buffered, shard_id, offset
@@ -123,14 +130,11 @@ def build_shards(
         buffer, buffered, shard_id, offset = [], 0, shard_id + 1, 0
 
     jobs = [(row, str(audio_root)) for row in rows]
-    if workers > 1:
-        with ProcessPoolExecutor(max_workers=workers) as executor:
-            results = executor.map(_safe_mel_job, jobs, chunksize=8)
-            results = list(results)
-    else:
-        results = [_safe_mel_job(job) for job in jobs]
+    total = len(jobs)
 
-    for position, result in enumerate(results, start=1):
+    def consume(result: dict) -> None:
+        nonlocal buffered, offset, seconds, done
+        done += 1
         if "error" in result:
             errors.append({"id": result["id"], "error": result["error"]})
         else:
@@ -149,7 +153,17 @@ def build_shards(
             offset += result["frames"]
             seconds += result["duration"]
         if progress is not None:
-            progress(position, len(results))
+            progress(done, total)
+
+    if workers > 1:
+        with ProcessPoolExecutor(max_workers=workers) as executor:
+            for start in range(0, total, batch_size):
+                chunk = jobs[start : start + batch_size]
+                for result in executor.map(_safe_mel_job, chunk, chunksize=8):
+                    consume(result)
+    else:
+        for job in jobs:
+            consume(_safe_mel_job(job))
     flush()
     write_index(index, out_dir)
 

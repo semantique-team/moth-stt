@@ -80,6 +80,30 @@ def test_build_shards_and_read_back_exactly(tmp_path: Path) -> None:
     assert 1.9 < index["c0"]["duration"] < 2.1
 
 
+def test_build_shards_chunked_consumption(tmp_path: Path) -> None:
+    """Batches smaller than the row count must not change the index or the shard layout."""
+    audio_dir = tmp_path / "audio"
+    audio_dir.mkdir()
+    rows = []
+    for index in range(3):
+        name = f"c{index}.wav"
+        sf.write(audio_dir / name, _sine(2.0, frequency=220.0 + 55.0 * index), 16000)
+        rows.append({"id": f"c{index}", "audio": name, "duration": 2.0})
+
+    out = tmp_path / "shards"
+    report = build_shards(rows, audio_dir, out, shard_bytes=64_000, workers=2, batch_size=1)
+    assert report["clips"] == 3
+    assert report["shards"] == 2  # 2 s ≈ 32 KB per clip, 64 KB per shard
+    assert report["errors"] == []
+
+    index = load_index(out / "index.json")
+    for row in rows:
+        got = read_clip(index, out, row["id"])
+        expected = log_mel(load_audio_16k(audio_dir / row["audio"])).astype(np.float16)
+        assert got.shape == (80, expected.shape[1])
+        assert np.array_equal(got, expected.astype(np.float32))
+
+
 def test_build_shards_records_errors_and_continues(tmp_path: Path) -> None:
     rows = [
         {"id": "bad", "audio": "missing.wav", "duration": 1.0},
