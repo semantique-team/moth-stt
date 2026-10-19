@@ -4,6 +4,12 @@
 > (`- [ ]`) syntax. Each task ends with a commit; run the listed tests before committing. When a step says
 > *record E-0NN*, add the `EXPERIMENTS.md` entry in the same commit (template: `docs/07` §4). Never train or tune
 > on test data; every number reported comes from `eval.py` output committed under `runs/`.
+>
+> **Status sync (2026-10-19):** the checkboxes below were not maintained while M0–M3 landed — [`STATUS.md`](../../STATUS.md)
+> is the live snapshot and the boxes are not reliable for those phases. Done at that date: **M0, M1 (1.1–1.3),
+> M2 code (2.1–2.6) + manifests (E-002) + the real mel cache (2.5: 291.9 h in `data/shards/`), M3 (3.1–3.5, incl.
+> E-003)**; 1.4 is partial (Whisper tiny only), 2.3's tokenizer training and 4.2's H1 run wait on the pool /
+> recordings (user side); 4.1 is done (`stt/train.py` + tests + `runs/E-004/config.yaml`).
 
 **Goal:** ship **moth v0.1** — a very small, open **Italian + English code-switching speech-to-text** model:
 pretrained Whisper-tiny encoder (MIT) + a linear CTC head over a shared IT+EN SentencePiece BPE (V = 1024),
@@ -300,7 +306,11 @@ everything else.**
 - [ ] **Implement** the one-off mapping `openai/whisper-tiny` (MIT) → own module; save
       `models/whisper_tiny_encoder.pt` (checksums recorded; the file itself is gitignored/heavy, re-fetched by script).
 - [ ] **Write the parity test** (dev extra `transformers`): own encoder vs `transformers.WhisperEncoder` on a
-      30 s padded input, fp32, max-abs ≤ 1e-4.
+      30 s padded input, fp32, max-abs ≤ 1e-4 — offline on random weights (CI). *Amended 2026-10-19 after
+      measuring the released checkpoint:* the strict 1e-4 holds only there; on real weights the reference is the
+      eager path with the checkpoint's position table substituted, gate 1e-3 (measured 5.2e-4, relative 2.8e-5)
+      because `transformers` itself moves 2.2e-3 between its own sdpa/eager kernels and the checkpoint's
+      positions differ from the formula by 3.03e-4 (see `docs/02` §3 and `stt/convert_whisper.py` docstring).
 - [ ] **Run**; **Commit** `feat(convert): add whisper-tiny weight mapping with parity test`.
 
 ### Task 3.3 — `stt/decode.py` — greedy
