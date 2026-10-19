@@ -1,0 +1,49 @@
+{
+  "experiment": "E-003",
+  "date": "2026-10-19",
+  "milestone": "M3-H4 early (Task 3.5)",
+  "hypothesis": "the browser WASM path runs end to end on a random-weight int8 export and RTFx >= 10x on the M5",
+  "model": {
+    "weights": "random (smoke test)",
+    "shape": "Whisper-tiny encoder + linear CTC head, V_sp=1024, V_ctc=1025, 8,027,009 params",
+    "opset": 17,
+    "batch": 1,
+    "time": "dynamic",
+    "sinusoids": "generated in-graph",
+    "quantization": "onnxruntime.quantization.quantize_dynamic, QInt8, per-channel"
+  },
+  "artifacts": {
+    "model.int8.onnx": {
+      "sha256": "a5d282787da79aa83f56bf6ec359ba5e44a79e580f83198e589b35a12d822d0f",
+      "bytes": 8232371
+    },
+    "vocab.json": {
+      "sha256": "db37638a11023502496a5d0cda87e9079856925aea5097caeddc70a1f04dcf4e",
+      "bytes": 23389
+    },
+    "mel_filters.bin": {
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e",
+      "bytes": 64320
+    }
+  },
+  "export_gates": {
+    "fp32_vs_pytorch_max_abs": 3.815e-06,
+    "fp32_gate": 0.001,
+    "int8_vs_pytorch_max_abs": 0.0293,
+    "int8_top1_agreement": 0.997,
+    "mel_js_vs_python_max_abs_manual": 1.07e-06
+  },
+  "browser": {
+    "engine": "Chromium 156.0.8078.4 headless (Playwright)",
+    "runtime": "onnxruntime-web 1.30.0, WASM + SIMD, cross-origin isolated (COOP/COEP)",
+    "threads": [
+      4,
+      1
+    ],
+    "load_ms": 135
+  },
+  "commands": {
+    "export": "uv run python -m stt.export --random --vocab-size 1024 --out release/",
+    "smoke": "cd web && npx playwright test"
+  }
+}

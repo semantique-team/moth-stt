@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moth — browser smoke test</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin: 2rem; max-width: 60rem; }
+      pre { background: color-mix(in srgb, currentColor 8%, transparent); padding: 1rem; white-space: pre-wrap; }
+      .ok { color: #0a8a3a; }
+      .bad { color: #c0392b; }
+    </style>
+  </head>
+  <body>
+    <h1>Moth — browser smoke test (Task 3.5)</h1>
+    <p id="status">loading release…</p>
+    <p>
+      <input type="file" id="file" accept="audio/*" />
+      <button id="run" disabled>Transcribe</button>
+      <button id="bench" disabled>Benchmark (2 warm-ups + 5 runs)</button>
+    </p>
+    <pre id="out">—</pre>
+
+    <script type="module">
+      import { computeMel } from "./mel.js";
+      import { createRunner, decodeTo16k } from "./ort.js";
+
+      const status = document.getElementById("status");
+      const output = document.getElementById("out");
+      const runButton = document.getElementById("run");
+      const benchButton = document.getElementById("bench");
+
+      window.moth = { ready: false, error: null, createRunner, decodeTo16k, computeMel };
+
+      let pcm = null;
+
+      function show(value) {
+        output.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+      }
+
+      try {
+        const params = new URLSearchParams(location.search);
+        const threadParam = params.get("threads");
+        const runner = await createRunner({
+          baseUrl: new URL("../release/", location.href).href,
+          threads: threadParam ? Number(threadParam) : null,
+        });
+        Object.assign(window.moth, {
+          runner,
+          transcribePcm: (samples) => runner.transcribe(samples),
+          benchmark: (samples, options) => runner.benchmark(samples, options),
+          ready: true,
+        });
+        status.className = "ok";
+        status.textContent =
+          `release loaded in ${runner.loadMs.toFixed(0)} ms — ` +
+          `isolated=${runner.crossOriginIsolated}, threads=${runner.numThreads}, SIMD=${runner.simd}`;
+      } catch (error) {
+        window.moth.error = String(error);
+        status.className = "bad";
+        status.textContent = `failed to load the release: ${error}`;
+      }
+
+      document.getElementById("file").addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        try {
+          pcm = await decodeTo16k(url);
+          runButton.disabled = benchButton.disabled = !window.moth.ready;
+          status.className = "ok";
+          status.textContent =
+            `${file.name}: ${(pcm.length / 16000).toFixed(2)} s @ 16 kHz mono`;
+        } catch (error) {
+          status.className = "bad";
+          status.textContent = `could not decode ${file.name}: ${error}`;
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      });
+
+      runButton.addEventListener("click", async () => {
+        if (!pcm || !window.moth.ready) return;
+        const result = await window.moth.transcribePcm(pcm);
+        show(result);
+      });
+
+      benchButton.addEventListener("click", async () => {
+        if (!pcm || !window.moth.ready) return;
+        const result = await window.moth.benchmark(pcm, { runs: 5, warmups: 2 });
+        show(result);
+      });
+    </script>
+  </body>
+</html>

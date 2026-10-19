@@ -1,0 +1,14 @@
+{
+  "name": "moth-stt-web",
+  "private": true,
+  "type": "module",
+  "description": "Browser smoke runtime (Task 3.5): JS log-mel, onnxruntime-web WASM, greedy decode, RTFx measurement.",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "onnxruntime-web": "^1.30.0"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "serve": "python3 server.py --root .. --port 8765"
+  }
+}

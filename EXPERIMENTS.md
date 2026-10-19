@@ -103,3 +103,45 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
 - **Findings**: FLEURS ships **headerless** TSVs with a non-unique `id` column (the id names the sentence, not the recording — several recordings share it); the manifest id is therefore the filename stem (verified unique). FLEURS transcripts contain digits far more often than expected (≈ 30–35 % of rows dropped as digits); FLEURS is evaluation-only and its numbers are written as digits, while the recorded test scripts spell them as words — metric comparability is handled by `normalize()`. MLS IT offers more than the estimated 214 h (247.4 h survive the text filters). **Zero** train rows dropped for overlap with dev/test.
 - **Result**: 269.9 h of training audio (169.9 h IT + 100.0 h EN) plus dev/test manifests; H0/H1/H2 are unblocked. CV IT 27 can add ≈ 170 h Italian later without reworking anything.
 - **Conclusion**: hypothesis confirmed, with one open scope note (CV IT pending). Proceed to E-001 (H0 baselines).
+
+---
+
+## E-003 — H4 early: int8 export + browser RTFx (2026-10-19)
+
+- **Date**: 2026-10-19
+- **Hypothesis**: with a random-weight int8 ONNX export the browser WASM path (WAV → JS log-mel →
+  `onnxruntime-web` → greedy decode) runs end to end, and RTFx on the M5 is ≥ 10× (`docs/04` H4,
+  `docs/06` §7) — measured **before** fine-tuning, so a miss could still change the architecture.
+- **Model configuration**: random weights in the default Moth shape (Whisper-tiny encoder + linear
+  CTC head, V_sp = 1024, V_ctc = 1025, 8,027,009 params); `stt/export.py` (opset 17, batch 1,
+  dynamic time, sinusoids generated in-graph) + `quantize_dynamic` (QInt8, per-channel). Artifacts:
+  `model.int8.onnx` 8.23 MB, `vocab.json` 0.02 MB, `mel_filters.bin` 0.06 MB → **8.32 MB total**
+  (< 20 MB ceiling). Export gates: fp32 vs PyTorch max |Δ| 3.8e-6 (gate 1e-3); int8 vs PyTorch
+  max |Δ| 2.9e-2 with 99.7 % top-1 agreement.
+- **Dataset**: none — the synthetic 5 s fixture `web/tests/fixtures/clip.wav`, tiled to 10/20 s.
+- **Training parameters**: n/a (random weights).
+- **Hardware**: Apple M5, 16 GB; Chromium 156.0.8078.4 headless (Playwright); `onnxruntime-web`
+  1.30.0 WASM, SIMD, cross-origin isolated (COOP/COEP); torch 2.14.1 export; macOS.
+- **Compute and cost**: ≈ 2 minutes wall-clock (export + smoke + table); 0 USD (ledger: 0 of 10).
+- **Metrics** (`runs/E-003/rtfx.json`; 3 warm-ups + median of 10 runs):
+
+| Clip | Threads | Feature | Inference | Decode | Total | RTFx |
+|---|---|---|---|---|---|---|
+| 5 s | 4 | 39.3 ms | 28.2 ms | 0.16 ms | 67.6 ms | **74.0×** |
+| 10 s | 4 | 78.5 ms | 61.4 ms | 0.32 ms | 140.8 ms | **71.0×** |
+| 20 s | 4 | 161.7 ms | 146.4 ms | 0.63 ms | 309.3 ms | **64.7×** |
+| 5 s | 1 | 36.6 ms | 95.1 ms | 0.15 ms | 131.9 ms | 37.9× |
+| 10 s | 1 | 75.0 ms | 221.5 ms | 0.32 ms | 302.6 ms | 33.1× |
+| 20 s | 1 | 145.3 ms | 465.2 ms | 0.58 ms | 611.1 ms | 32.7× |
+
+  Also: every `sha256:` line of `config.json` verified in the page; model load 135 ms; manual mel
+  parity of `web/mel.js` vs `stt/features.py` on the fixture max |Δ| 1.1e-6 (the committed parity
+  test is Task 7.2).
+- **Findings**: the direct 400-point DFT costs ≈ 40 ms per 5 audio-seconds (≈ 120× real time alone)
+  and is the larger half of the browser time; int8 inference scales linearly with clip length;
+  4 threads give ≈ 2.4× over single-thread and even the non-isolated fallback (1 thread) stays
+  ≈ 33×. Headless Chromium only — Safari and recorded clips come with the M7 benchmark (`docs/05` §3).
+- **Result**: browser RTFx ≈ 65–74× (4 threads) and ≈ 33–38× (1 thread) on the random-weight int8
+  export; both far above the 10× bar.
+- **Conclusion**: hypothesis confirmed; **no pooling escalation needed** (`docs/06` §7). Proceed to
+  H1 (E-004) after the H0 baselines (E-001).
