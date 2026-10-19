@@ -1,0 +1,105 @@
+{
+  "sets": {
+    "fleurs_it_dev": {
+      "source": "fleurs_it",
+      "split": "dev",
+      "rows_after_sampling": 391,
+      "kept": 334,
+      "dropped": {
+        "digits": 51,
+        "duration": 6
+      },
+      "hours": 1.25
+    },
+    "fleurs_it_test": {
+      "source": "fleurs_it",
+      "split": "test",
+      "rows_after_sampling": 865,
+      "kept": 697,
+      "dropped": {
+        "digits": 162,
+        "duration": 6
+      },
+      "hours": 2.74
+    },
+    "fleurs_en_dev": {
+      "source": "fleurs_en",
+      "split": "dev",
+      "rows_after_sampling": 394,
+      "kept": 343,
+      "dropped": {
+        "digits": 51
+      },
+      "hours": 0.88
+    },
+    "fleurs_en_test": {
+      "source": "fleurs_en",
+      "split": "test",
+      "rows_after_sampling": 647,
+      "kept": 525,
+      "dropped": {
+        "charset": 1,
+        "digits": 121
+      },
+      "hours": 1.39
+    },
+    "mls_it_dev": {
+      "source": "mls_it",
+      "split": "dev",
+      "rows_after_sampling": 1248,
+      "kept": 1248,
+      "dropped": {},
+      "hours": 5.18
+    },
+    "mls_it_test": {
+      "source": "mls_it",
+      "split": "test",
+      "rows_after_sampling": 1262,
+      "kept": 1262,
+      "dropped": {},
+      "hours": 5.27
+    },
+    "ls_en_dev": {
+      "source": "librispeech",
+      "split": "dev",
+      "rows_after_sampling": 2703,
+      "kept": 2691,
+      "dropped": {
+        "duration": 9,
+        "speaking_rate": 3
+      },
+      "hours": 5.31
+    },
+    "mls_it_train": {
+      "source": "mls_it",
+      "split": "train",
+      "rows_after_sampling": 40982,
+      "kept": 40953,
+      "dropped": {
+        "speaking_rate": 29
+      },
+      "hours": 169.89,
+      "sampling": {
+        "target_hours": 170.0,
+        "available_hours": 247.4,
+        "short": false
+      }
+    },
+    "ls_en_train": {
+      "source": "librispeech",
+      "split": "train",
+      "rows_after_sampling": 28372,
+      "kept": 28370,
+      "dropped": {
+        "speaking_rate": 2
+      },
+      "hours": 100.0,
+      "sampling": {
+        "target_hours": 100.0,
+        "available_hours": 100.6,
+        "short": false
+      }
+    }
+  },
+  "seed": 0
+}
