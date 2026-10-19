@@ -283,8 +283,8 @@ everything else.**
 
 **Files:** create `stt/model.py`; test `tests/test_model.py`. **Spec:** `docs/02` §3–4, §8.
 
-- [ ] **Write failing tests:** parameter count == `8_026_624` for V = 1024 (`conv1` 92,544; `conv2` 442,752;
-      4 blocks × 1,774,080 = 7,096,320; final LN 768; head 394,240); output length `T_enc = ceil(T_mel/2)`;
+- [ ] **Write failing tests:** parameter count == `8_027_009` for V_sp = 1024 (V_ctc = 1025; `conv1` 92,544; `conv2` 442,752;
+      4 blocks × 1,774,080 = 7,096,320; final LN 768; head 394,625); output length `T_enc = ceil(T_mel/2)`;
       batched+masked logits equal single-clip logits within tolerance; no `transformers` import at runtime.
 - [ ] **Implement** the ~100-line plain-PyTorch encoder: conv1 (k3, GELU), conv2 (k3, stride 2, GELU), sinusoidal
       positions sliced to `T_enc` (generated, not stored), 4 pre-LN blocks (width 384, 6 heads × 64, q/v/out

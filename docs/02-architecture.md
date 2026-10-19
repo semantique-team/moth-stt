@@ -65,7 +65,7 @@ Maximum length: 1500 frames = **30 s** (the sinusoid table). Longer audio is chu
   encoder contexts; because we drop the decoder, plain CTC fine-tuning on unpadded clips should suffice — H1
   verifies this (padded vs truncated), H2 trains on truncated input.
 
-## 4. Parameter arithmetic (V = 1024)
+## 4. Parameter arithmetic (V_sp = 1024, V_ctc = V_sp + 1 = 1025)
 
 | Part | Parameters |
 |---|---|
@@ -75,12 +75,12 @@ Maximum length: 1500 frames = **30 s** (the sinusoid table). Longer audio is chu
 | 4 blocks | 7,096,320 |
 | final LayerNorm | 768 |
 | **Whisper-tiny encoder** (without positions) | **7,632,384** |
-| CTC head `Linear(384, 1024)` | 394,240 |
-| **Total shipped** | **8,026,624** |
+| CTC head `Linear(384, V_ctc)` (V_ctc = 1025) | 394,625 |
+| **Total shipped** | **8,027,009** |
 | Sinusoidal positions (1500×384 = 576,000) | not parameters — generated in the graph |
 
 (The throw-away benchmark in `04-training.md` used PyTorch's `nn.TransformerEncoderLayer`, whose `k` projection has
-a bias: 8,028,160 parameters, 1,536 more — consistent with the table.)
+a bias: 8,028,160 parameters with a 1024-wide head — within 1,151 of the total above.)
 
 ## 5. Tokenizer and output vocabulary
 
