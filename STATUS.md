@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: `a37b33e`. Suite: **173 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **179 test verdi**, `ruff` pulito.
 > Questo file dice **dove siamo**; il *come* e il *perché* stanno nei design doc (`docs/01`…`09`) e nel
 > piano (`docs/plans/2026-10-19-implementation-plan.md`).
 
@@ -26,9 +26,8 @@
 
 ## In corso / fuori dal repo
 
-- **Download in background**: `data/raw/fetch.sh` (v2: LibriSpeech@elda, MLS@MetaS3, FLEURS@HF, in parallelo).
-  - fine = `ls data/raw/FETCH_OK`; log = `data/raw/fetch.log`
-  - se interrotto: `bash data/raw/fetch.sh` (riprende dai `.part`, salta i completati)
+- **Dati pronti**: download completati e verificati (23 GB, `data/raw/FETCH_OK`); manifest M2 costruiti in
+  `data/manifests/` (9 set + `build_report.json`, E-002). Manca **Common Voice IT 27** (≈ 170 h, lato utente).
 - **Registrazioni T**: S1 a **31/200**. Riprendere con:
   `uv run recordings/record.py --speaker S1 --kind T` — mancano S2 e S3 (200 ciascuno, S3 legge solo T).
 - **Da generare/importare (tu)**: R-S2 (600–1000) e pool (3–5k) con `recordings/generate_scripts.py`.
@@ -37,10 +36,10 @@
 
 | Task | Cosa | Blocco |
 |---|---|---|
-| 1.4 | E-001: baseline H0 sui manifest (interim FLEURS) | serve download FLEURS |
-| 2.7 | E-002: manifest reali (filtri) + training tokenizer + mel shard | serve download (+ CV IT) |
-| 3.4 | `export.py`: ONNX (sinusoidi in-graph) + int8 + `release/` con hash | nessuno |
-| 3.5 | smoke web + **H4 early** RTFX (node/npm presenti; installare `onnxruntime-web` + Playwright) | nessuno |
+| 1.4 | E-001: H0 — Whisper tiny greedy fatto (IT **32.09 %**, EN **13.86 %** WER); restano base, beam 5, Whistle, Parakeet, CV-IT, mixed T, noise | CLI di Whistle/Parakeet; T registrato |
+| 2.7 | E-002 fatto (manifest + report); restano **tokenizer training** (serve il pool) e **mel shard** (possono partire ora) | pool per il tokenizer |
+| 3.4 | `export.py`: ONNX + int8 + `release/` | in corso nella sessione parallela |
+| 3.5 | smoke web + **H4 early** RTFX | in corso nella sessione parallela |
 | M4–M8 | H1, H2, H3, demo, release | da piano |
 
 ## Serve da te

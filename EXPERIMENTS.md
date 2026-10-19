@@ -48,12 +48,35 @@ Compute ledger: 0 USD spent of the 10 USD budget; stop and review at 8 USD.
 
 | ID | Milestone | What | Design ref |
 |---|---|---|---|
-| E-001 | M1 | H0 baselines: Whisper tiny/base, Cactus Whistle, Parakeet v3 on all sets under `normalize()` | `docs/04` §5-H0, `docs/05` §7 |
 | E-003 | M3 | H4 early: random-weight int8 ONNX export, browser RTFx smoke (de-risks the ≥ 10× bar) | `docs/06`, `docs/04` §5-H4 |
 | E-004 | M4 | H1 probe: frozen encoder + linear head, truncated vs padded 30 s | `docs/04` §5-H1 |
 | E-005 | M5 | H2 full fine-tune on the IT+EN mix; gate vs Whisper-tiny (escalation ladder if it fails) | `docs/04` §5-H2 |
 | E-006 | M6 | H3a: gold mixed recordings (S1+S2 script R) | `docs/04` §5-H3 |
 | E-007 | M6 | H3b: gold + utterance-level splicing | `docs/04` §5-H3 |
+
+---
+
+## E-001 — H0 baselines: Whisper tiny (first pass)
+
+- **Date**: 2026-10-19
+- **Hypothesis**: Whisper tiny is a weak Italian baseline and collapses on English when the language is forced to Italian; auto language detection matches forced Italian on FLEURS-IT and wins on FLEURS-EN. The per-language best tiny variant becomes the concrete H2 bar.
+- **Model configuration**: `openai-whisper` tiny (39 M), greedy (beam 1), fp32 on CPU, `padded_30s: true`, no hotword interface. Variants: language **auto** vs forced **it**.
+- **Dataset**: `fleurs_it_test` (697 utterances, 16,035 reference words) and `fleurs_en_test` (525 utterances, 11,438 reference words), evaluation-only, scored under our `normalize()`.
+- **Procedure**: `baselines/whisper_runner.py` → hypothesis files → `stt/eval.py` (corpus WER, seeded paired bootstrap with 1,000 resamples). Paired differences are auto − forced-`it` on the same utterances.
+- **Hardware**: Apple M5, CPU only.
+- **Compute and cost**: ≈ 10 minutes wall-clock; 0 USD (ledger 0 of 10).
+- **Metrics**:
+
+| Variant | FLEURS-IT WER [95% CI] | FLEURS-EN WER [95% CI] | ins/100w IT | ins/100w EN | RTFx IT | RTFx EN |
+|---|---|---|---|---|---|---|
+| tiny, auto, greedy | 0.3212 [0.3096, 0.3338] | **0.1386** [0.1283, 0.1504] | 5.16 | 2.77 | 53.3 | 41.8 |
+| tiny, forced `it`, greedy | **0.3209** [0.3091, 0.3333] | 0.8190 [0.7863, 0.8490] | 5.13 | 2.43 | 65.5 | 8.7 |
+
+Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLEURS-EN **−68.1 pp** (not a tie).
+
+- **Findings**: forcing Italian on Italian audio changes nothing measurable (auto detects Italian anyway); forcing it on English breaks the model (81.9 % WER) — exactly the failure mode the one-language CTC vocabulary is meant to avoid. The forced-Italian English run is also ~7× slower (RTFx 8.7): the decoder hallucinates longer output. Greedy decoding is very fast overall (RTFx 41.8–65.5 on CPU).
+- **Result**: the H2 gate now has concrete numbers: beat **32.09 %** WER on FLEURS-IT and **13.86 %** on FLEURS-EN under our normalization.
+- **Conclusion**: hypothesis confirmed. Remaining H0 rows: Whisper base, beam 5, Cactus Whistle, Parakeet v3, CV-IT test, the mixed set T (once recorded) and the noise set; beam 5 and base will be filled before the H2 gate.
 
 ---
 
