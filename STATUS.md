@@ -25,6 +25,7 @@
 | **2.3 tokenizer** | **BPE IT+EN addestrato**: 1024 pezzi, corpus 100.429 righe (MLS IT 169,9 h + LS EN 100 h pesati 70/30 per parole, pool, 580 termini al 5%), `tokens/word 1.945`, `tokens/s 4.70`, termini ≤3 pezzi 0.488; CLI `stt/data/build_tokenizer.py`, stats nel build report, 6 test | `data/tokenizer/` (gitignored), `data/manifests/build_report.json` (chiave `tokenizer`) |
 | **1.1 pool** | **pool.jsonl: 3.137 frasi** (8 categorie, 0 invalide, 58 doppioni scartati), generator `deepseek-v4.1-flash` | `recordings/scripts/pool.jsonl` |
 | **T-S1** | **200 take di S1** (481 s, 12 retake, 48 kHz mono, 1,3–5,6 s) + manifest parziale (200/800) | `recordings/audio/S1/` (fuori git), `recordings/manifests/T.jsonl` |
+| **4.2 H1** | **probe completato** (E-004): encoder congelato + testa lineare su MLS IT. Dev WER: truncated 320 s **0.7577**, padded30 96 s **0.7079** (differenza appaiata −4,98 punti, CI [−5,32, −4,64]); controllo truncated 96 s a 1 epoca 0.7727 → a parità di step il padding vale ~3,2 punti. **Decisione: H2 usa padded30** | `stt/train.py`, `runs/E-004/`, `EXPERIMENTS.md` |
 | **T 800 + A** | T portato a **800 frasi (200 per S1–S4)** con quote per categoria; **anchor A** di 60 frasi; recorder/manifest supportano `S4` e `--kind A` | `recordings/scripts/T.jsonl`, `recordings/scripts/A.jsonl`, `recordings/`, docs |
 | **2.5 mel cache** | **cache reale costruita**: 9 set, **291.9 h** (mls_it_train 169.9 h, ls_en_train 100.0 h, dev/test 22 h), 16 GB, **0 errori**, spot check bit-exact su ogni set → `data/shards/`; report in E-002 | `stt/data/build_mel.py`, `EXPERIMENTS.md` (E-002) |
 | Modello (3.1–3.3) | encoder Whisper-tiny + testa CTC (8.027.009 param), conversione pesi + parità, decode greedy | `stt/model.py`, `stt/convert_whisper.py`, `stt/decode.py` |
@@ -52,9 +53,9 @@
 
 | Task | Cosa | Blocco |
 |---|---|---|
-| 4.2 | **H1, ora sbloccato** (`runs/E-004/config.yaml`): due bracci truncated/padded30, dev WER con CI, decisione al gate — train.py, config, shard e tokenizer ci sono; lanciarlo dal checkout principale (shard e pesi non sono nei worktree leggeri) | nessuno |
 | 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, CV-IT, mixed T, noise | S2/S3/S4 + anchor; CLI Whistle/Parakeet; CV IT |
-| M5–M8 | H2, H3, demo, release; il benchmark browser con **pesi veri** arriva con M7 | da piano |
+| M5 | **H2 full fine-tune** (`runs/E-005/config.yaml`): encoder sbloccato, misto IT 0.7 / EN 0.3, input **padded30** (decisione H1), ~440 h, 5–10 h+ | da piano |
+| M6–M8 | H3, demo, release; il benchmark browser con **pesi veri** arriva con M7 | da piano |
 
 ## Serve da te
 
@@ -65,6 +66,7 @@
 
 ## Note di contesto utili
 
+- **H1 (E-004)**: la testa lineare su encoder congelato arriva a 0.71 su MLS dev e si appiattisce; il padding a 30 s batte il troncamento oltre il rumore, quindi H2 usa finestre padded. Il padding costa ~4× di memoria per clip: batch piccoli (96 s / 8 clip) e ~2× di calcolo.
 - **Tokenizer**: 1024 pezzi, 1.945 token/parola e 4.70 token/s sulle trascrizioni (contro i 50 frame/s
   dell'encoder); i termini inglesi entro 3 pezzi sono il 48.8% e alzare l'up-weight (0.05 → 0.30) non li
   migliora (misurato): il limite è V=1024, non la quota. Pezzi, id ed encoding sono stabili fra run; i byte

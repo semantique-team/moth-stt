@@ -154,3 +154,54 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   export; both far above the 10× bar.
 - **Conclusion**: hypothesis confirmed; **no pooling escalation needed** (`docs/06` §7). Proceed to
   H1 (E-004) after the H0 baselines (E-001).
+
+---
+
+## E-004 — H1 probe: frozen encoder, truncated vs padded (2026-10-19)
+
+- **Date**: 2026-10-19
+- **Hypothesis**: a linear CTC head on the **frozen** Whisper-tiny encoder learns Italian from MLS
+  (dev WER clearly below the blank baseline, still falling) and truncating clips to their real
+  length is not worse than padding every clip to 30 s (`docs/04` §5-H1).
+- **Model configuration**: pretrained `openai/whisper-tiny` encoder (4 blocks, width 384, 6 heads,
+  frozen) + `Linear(384, 1025)` head, V_sp = 1024 (BPE task 2.3), V_ctc = 1025; **394,625 trainable**
+  parameters of 8,027,009. `stt/train.py`; bf16 autocast, fp32 CTC (blank 0), AdamW, warm-up 500 →
+  cosine to 5%, grad clip 1.0, light SpecAugment, MPS↔CPU CTC parity guard at start (Δ 3.8e-6).
+- **Dataset**: `mls_it_train` (MLS IT, 169.9 h, 40,953 clips), dev `mls_it_dev` (5.18 h, 1,248
+  clips, 40,407 reference words). Test and FLEURS never touched.
+- **Training parameters**: three arms, same seed 0, 3 epochs unless noted.
+
+| Arm | Input | Batch | Steps | Epochs | Wall time |
+|---|---|---|---|---|---|
+| A | `truncated` | 320 s, 64 clips | 5,871 (1,957/epoch) | 3 | 23 min |
+| B | `padded30` | 96 s, 8 clips | 20,970 (7,055/epoch) | 3 | 111 min |
+| C (control) | `truncated` | 96 s, 8 clips | 6,990 (6,990/epoch) | 1 | 11 min |
+
+  B and C use smaller batches on purpose: padded 30 s windows cost ~4× the attention memory per
+  clip, so the original 320 s / 64 clip batch needed ~17 GB (measured: 16.9 GB RSS and ~15 audio-s/s
+  with heavy swapping) and was stopped. C exists only to separate *padding* from *more steps*.
+- **Hardware**: Apple M5, 16 GB, AC power, `caffeinate -i`; torch 2.14.1, MPS, bf16; macOS.
+- **Compute and cost**: 145 min total wall-clock on the local machine; **0 USD** (ledger: 0 of 10).
+- **Metrics** (`runs/E-004/*/dev.metrics.json`, greedy, bootstrap 1,000):
+
+| Arm | Dev WER | 95% CI | Ins/100 w | Audio-s/s | Peak mem |
+|---|---|---|---|---|---|
+| A truncated, 3 ep | 0.7577 | [0.7522, 0.7630] | 2.05 | ≈590 | 4.3 GB |
+| B padded30, 3 ep | **0.7079** | [0.7019, 0.7141] | **1.00** | ≈310 | 5.2 GB |
+| C truncated, 1 ep | 0.7727 | [0.7675, 0.7780] | 1.81 | ≈1,200 | 1.1 GB |
+
+  Paired bootstrap (same 1,248 utterances): **B − A = −4.98 points, CI [−5.32, −4.64]** (not a tie).
+- **Findings**: the head learns from both inputs (blank baseline = 100% deletions; A/B/C are 24–29
+  points better) but the curves flatten late: B was 0.7079 at 18,000 and 19,500 steps, A still
+  improved by ~1.3 points over its last 2,871 steps. **At matched steps** (≈7,000, same 96 s
+  batches, same audio per step) C is 0.7727 while B interpolates to ≈0.741 between its 6,000- and
+  7,500-step evals: **padding is worth ≈3.2 points on its own**; the remaining ≈1.8 of B's 4.98
+  come from its 3× more optimizer steps. Truncation also cuts peak memory 4× (1.1 vs 4.2–5.2 GB)
+  and doubles throughput at equal batches, so it is much cheaper — but worse.
+- **Result**: H1 gate passed on the learning check and **failed on the input check**: truncated is
+  worse than padded beyond the noise interval, both at equal epochs and at matched steps.
+- **Conclusion**: **H2 trains on `padded30` windows** (per the plan's H1 rule), accepting the ~2×
+  compute and the small batches. The frozen-encoder probe tops out around 0.71 on MLS dev: the
+  real gain must come from unfreezing the encoder (H2), not from the head. Caveats: dev is read
+  Italian only, so the mixed test T remains the real judge; the matched-step 3.2-point figure is
+  interpolated from logged evals (B's 7k checkpoint was not kept), not a paired CI.

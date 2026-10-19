@@ -1,0 +1,75 @@
+{
+  "experiment": "E-004",
+  "date": "2026-10-19",
+  "dataset": "mls_it_dev",
+  "arms": {
+    "truncated_320s_3ep": {
+      "config": "runs/E-004/config.yaml",
+      "dev_wer": 0.7576904991709358,
+      "dev_wer_ci": [
+        0.7521546988304807,
+        0.7630171543895056
+      ],
+      "ins_per_100w": 2.05,
+      "steps": 5871,
+      "steps_per_epoch": 1957,
+      "wall_minutes": 23,
+      "peak_mem_mb": 4300,
+      "metrics": "runs/E-004/dev.metrics.json"
+    },
+    "padded30_96s_3ep": {
+      "config": "runs/E-004/arm-padded30/config.yaml",
+      "dev_wer": 0.7078971465340164,
+      "dev_wer_ci": [
+        0.7019,
+        0.7141
+      ],
+      "ins_per_100w": 1.0,
+      "steps": 20970,
+      "steps_per_epoch": 7055,
+      "wall_minutes": 111,
+      "peak_mem_mb": 5200,
+      "metrics": "runs/E-004/arm-padded30/dev.metrics.json"
+    },
+    "truncated_96s_1ep_control": {
+      "config": "runs/E-004/arm-truncated-96/config.yaml",
+      "dev_wer": 0.7726879006112802,
+      "dev_wer_ci": [
+        0.7674696445116301,
+        0.7779889469604141
+      ],
+      "ins_per_100w": 1.81,
+      "steps": 6990,
+      "steps_per_epoch": 6990,
+      "wall_minutes": 11,
+      "peak_mem_mb": 1100,
+      "metrics": "runs/E-004/arm-truncated-96/dev.metrics.json"
+    }
+  },
+  "paired": {
+    "padded30_minus_truncated_320s": {
+      "diff": -0.04981810082411464,
+      "ci": [
+        -0.0531577119611053,
+        -0.04638418631960073
+      ],
+      "tie": false
+    },
+    "truncated_96s_minus_padded30": {
+      "diff": 0.0648,
+      "ci": [
+        0.0611,
+        0.0686
+      ],
+      "tie": false,
+      "note": "control is 1 epoch, padded arm 3 epochs: use the matched-step reading"
+    },
+    "matched_7000_steps": {
+      "truncated_96s": 0.7727,
+      "padded30_interpolated": 0.7406,
+      "padding_effect": 0.0321,
+      "note": "interpolated from the 6,000 and 7,500 step evals"
+    }
+  },
+  "decision": "H2 uses padded30 input"
+}

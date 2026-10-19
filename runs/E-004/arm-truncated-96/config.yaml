@@ -1,0 +1,50 @@
+# E-004 — H1 probe: frozen Whisper-tiny encoder + linear CTC head (design: docs/04 §5-H1).
+# Control arm: same 96 s / 8 clip batches as arm B, but truncated input and 1 epoch.
+
+run: E-004-truncated96
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt   # stt/convert_whisper.py (gitignored, reproducible)
+  freeze_encoder: true                    # H1 trains the head only
+
+# Trained once the mixed pool exists (task 2.3); never contains test text.
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  # The H1 recipe says ≈ 100 h Italian (Common Voice + MLS); today MLS IT is the 169.9 h
+  # available in the mel cache and is used whole — Common Voice IT 27 joins when fetched.
+  train:
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+
+batch:
+  max_seconds: 96       # same batches as arm B, truncated input
+  max_clips: 8
+
+optimizer:
+  lr_head: 1.0e-3
+  lr_encoder: 1.0e-4      # unused while the encoder is frozen; kept for the H2 continuation
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 1
+  input: truncated
+  augment: light          # H1: frequency masks only (docs/04 §4)
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 20
+  keep_last: 3
+  max_nonfinite_steps: 20
+  eval_every_steps: 1500

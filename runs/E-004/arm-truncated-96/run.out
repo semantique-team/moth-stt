@@ -1,0 +1,28 @@
+{
+  "run": "E-004-truncated96",
+  "device": "mps",
+  "steps": 6990,
+  "first_loss": 70.34767150878906,
+  "last_loss": 3.445590019226074,
+  "dev": {
+    "wer": 0.7726879006112802,
+    "wer_ci": [
+      0.7674696445116301,
+      0.7779889469604141
+    ],
+    "n_utterances": 1248
+  },
+  "parity": {
+    "cpu_loss": 70.3552017211914,
+    "mps_loss": 70.35520935058594,
+    "max_abs_diff": 7.62939453125e-06,
+    "gate": 0.001
+  },
+  "resumed_from": null,
+  "epoch": 0,
+  "batch_cursor": 6990,
+  "skipped_nonfinite": 0,
+  "best_metric": 0.7726879006112802,
+  "checkpoint": "runs/E-004/arm-truncated-96/checkpoints/ckpt_0006990.pt",
+  "log": "runs/E-004/arm-truncated-96/train.log.jsonl"
+}
