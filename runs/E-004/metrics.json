@@ -44,6 +44,20 @@
       "wall_minutes": 11,
       "peak_mem_mb": 1100,
       "metrics": "runs/E-004/arm-truncated-96/dev.metrics.json"
+    },
+    "truncated_96s_1ep_sched3_control": {
+      "config": "runs/E-004/arm-truncated-96-sched3/config.yaml",
+      "dev_wer": 0.737520726606776,
+      "dev_wer_ci": [
+        0.7318681865697646,
+        0.743100679431748
+      ],
+      "ins_per_100w": 1.96,
+      "steps": 6990,
+      "steps_per_epoch": 6990,
+      "wall_minutes": 12,
+      "note": "same truncated 96 s / 8 clip batches as the control, 3-epoch cosine schedule, stopped at 1 epoch",
+      "metrics": "runs/E-004/arm-truncated-96-sched3/dev.metrics.json"
     }
   },
   "paired": {
@@ -68,8 +82,15 @@
       "truncated_96s": 0.7727,
       "padded30_interpolated": 0.7406,
       "padding_effect": 0.0321,
-      "note": "interpolated from the 6,000 and 7,500 step evals"
+      "note": "interpolated from the 6,000 and 7,500 step evals",
+      "superseded_by": "padded30_vs_schedule_corrected_truncated"
+    },
+    "padded30_vs_schedule_corrected_truncated": {
+      "padded30_6990_steps_interpolated": 0.7406,
+      "truncated_6990_steps": 0.7375,
+      "difference": -0.0031,
+      "note": "within noise (\u00b10.006 CI); the previous 3.2-point padding effect was the LR schedule"
     }
   },
-  "decision": "H2 uses padded30 input"
+  "decision": "H2 uses truncated input (schedule-corrected control: padding to 30 s is equivalent to batch-max padding)"
 }

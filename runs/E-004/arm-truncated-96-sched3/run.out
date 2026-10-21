@@ -1,0 +1,38 @@
+{
+  "run": "E-004-truncated96-sched3",
+  "device": "mps",
+  "steps": 6990,
+  "first_loss": 70.34767150878906,
+  "last_loss": 3.3667712211608887,
+  "dev": {
+    "wer": 0.737520726606776,
+    "n_utterances": 1248,
+    "sets": {
+      "it": {
+        "wer": 0.737520726606776,
+        "wer_ci": [
+          0.7318681865697646,
+          0.743100679431748
+        ],
+        "n_utterances": 1248
+      }
+    },
+    "wer_ci": [
+      0.7318681865697646,
+      0.743100679431748
+    ]
+  },
+  "parity": {
+    "cpu_loss": 70.3552017211914,
+    "mps_loss": 70.35520935058594,
+    "max_abs_diff": 7.62939453125e-06,
+    "gate": 0.001
+  },
+  "resumed_from": null,
+  "epoch": 0,
+  "batch_cursor": 6990,
+  "skipped_nonfinite": 0,
+  "best_metric": 0.737520726606776,
+  "checkpoint": "runs/E-004/arm-truncated-96-sched3/checkpoints/ckpt_0006990.pt",
+  "log": "runs/E-004/arm-truncated-96-sched3/train.log.jsonl"
+}
