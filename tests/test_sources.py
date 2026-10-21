@@ -79,8 +79,8 @@ def test_read_cv_tsv(tmp_path: Path) -> None:
     path.write_text(CV_TSV, encoding="utf-8")
     rows = read_cv_tsv(path, clips_dir="clips")
     assert [(row["id"], row["audio"], row["text"]) for row in rows] == [
-        ("cv-c1", "clips/clip_1.mp3", "Ciao come stai"),
-        ("cv-c3", "clips/clip_3.mp3", "Oggi piove"),
+        ("cv-clip_1", "clips/clip_1.mp3", "Ciao come stai"),
+        ("cv-clip_3", "clips/clip_3.mp3", "Oggi piove"),
     ]
     assert rows[0]["speaker"] == "c1"
 

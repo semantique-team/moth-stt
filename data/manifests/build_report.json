@@ -99,45 +99,49 @@
         "available_hours": 100.6,
         "short": false
       }
+    },
+    "cv_it_dev": {
+      "source": "cv_it_27",
+      "split": "dev",
+      "rows_after_sampling": 15185,
+      "kept": 14697,
+      "dropped": {
+        "charset": 27,
+        "duration": 1,
+        "speaking_rate": 460
+      },
+      "hours": 24.86
+    },
+    "cv_it_test": {
+      "source": "cv_it_27",
+      "split": "test",
+      "rows_after_sampling": 15183,
+      "kept": 14643,
+      "dropped": {
+        "charset": 22,
+        "speaking_rate": 518
+      },
+      "hours": 25.81
+    },
+    "cv_it_train": {
+      "source": "cv_it_27",
+      "split": "train",
+      "rows_after_sampling": 115076,
+      "kept": 113118,
+      "dropped": {
+        "charset": 146,
+        "duration": 1,
+        "empty": 2,
+        "overlap": 593,
+        "speaking_rate": 1216
+      },
+      "hours": 167.79,
+      "sampling": {
+        "target_hours": 170.0,
+        "available_hours": 256.7,
+        "short": false
+      }
     }
   },
-  "seed": 0,
-  "tokenizer": {
-    "model": "data/tokenizer/moth_bpe.model",
-    "vocab_json": "data/tokenizer/moth_bpe.vocab.json",
-    "vocab_size": 1024,
-    "it_share_requested": 0.7,
-    "terms_share": 0.05,
-    "seed": 0,
-    "terms": 580,
-    "corpus": {
-      "it_lines": 40953,
-      "it_lines_duplicated": 27969,
-      "en_lines": 28370,
-      "pool_lines": 3137,
-      "transcript_words": 3280246,
-      "pool_words": 17714,
-      "it_share_words": 0.700000853594517,
-      "pool_share_words": 0.005371199165544761
-    },
-    "stats": {
-      "texts": 69323,
-      "tokens_per_word": 1.9451492588163548,
-      "tokens_per_second": 4.701039498655874,
-      "terms": 580,
-      "terms_within_3_pieces": 0.4879310344827586
-    },
-    "pool_stats": {
-      "texts": 3137,
-      "tokens_per_word": 2.0440329682736817,
-      "tokens_per_second": 0.0,
-      "terms": 0,
-      "terms_within_3_pieces": 0.0
-    },
-    "reproducibility": "corpus assembly seeded; piece list and ids stable across runs (encodings stable, measured); serialized model bytes differ in float-score noise — sha256 identifies the built artifact",
-    "sha256": {
-      "data/tokenizer/moth_bpe.model": "d6e1054e9273915db4e706898286f90d4b97e6b703386ed8b84f0a148caed2fd",
-      "data/tokenizer/moth_bpe.vocab.json": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
-    }
-  }
+  "seed": 0
 }

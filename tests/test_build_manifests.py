@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-from stt.data.build_manifests import SetSpec, build_manifests
+from stt.data.build_manifests import SetSpec, build_manifests, existing_eval_hashes
 
 
 def _wav(path: Path, seconds: float = 2.0) -> None:
@@ -93,6 +93,28 @@ def test_build_writes_manifests_and_drops_overlap(tmp_path: Path) -> None:
     assert kept_dev[0]["split"] == "dev"
     assert kept_dev[0]["source"] == "mls_it"
     assert kept_dev[0]["audio"].startswith("mls_it/mls_italian/dev/audio/")
+
+
+def test_incremental_build_merges_report_and_guards_train(tmp_path: Path) -> None:
+    raw = tmp_path / "raw"
+    _tiny_raw_tree(raw)
+    out = tmp_path / "manifests"
+    build_manifests(raw, out, [spec for spec in _specs() if spec.split != "train"])
+
+    # Rebuild only the train set: the dev manifest must still provide the overlap guard.
+    train = [spec for spec in _specs() if spec.name == "mls_it_train"]
+    report = build_manifests(
+        raw,
+        out,
+        train,
+        extra_eval_hashes=existing_eval_hashes(out, exclude={"mls_it_train"}),
+        merge_report=True,
+    )
+
+    assert report["sets"]["mls_it_train"]["dropped"].get("overlap") == 1
+    assert report["sets"]["fleurs_it_dev"]["kept"] == 1  # preserved from the first build
+    written = json.loads((out / "build_report.json").read_text())
+    assert written["sets"]["mls_it_train"]["kept"] == 0
 
 
 def test_build_report_written(tmp_path: Path) -> None:

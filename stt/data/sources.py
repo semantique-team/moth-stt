@@ -184,7 +184,8 @@ def read_cv_tsv(path: Path | str, clips_dir: str = "clips") -> list[dict]:
         clip = fields[index["path"]].strip()
         rows.append(
             {
-                "id": f"cv-{fields[index['client_id']]}",
+                # One speaker records many clips: the clip name is unique, the client id is not.
+                "id": f"cv-{Path(clip).stem}",
                 "audio": f"{clips_dir}/{clip}",
                 "text": sentence,
                 "speaker": fields[index["client_id"]],
