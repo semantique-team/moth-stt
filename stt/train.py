@@ -256,6 +256,8 @@ def train(
             model, dataset, durations, max_seconds, max_clips, seed, tokenize, device_kind
         )
     model.to(device)
+    if resumed_from is not None:
+        _move_optimizer_state(optimizer, device)
 
     def save(best: bool = False) -> Path:
         nonlocal last_save
@@ -600,6 +602,14 @@ def _parity_guard(
     if difference > PARITY_GATE:
         raise RuntimeError(f"device parity guard failed: |Δ| = {difference:.2e} > {PARITY_GATE}")
     return report
+
+
+def _move_optimizer_state(optimizer: torch.optim.Optimizer, device: str) -> None:
+    """Move CPU-loaded Adam state to the model device; resume otherwise fails on MPS/CUDA."""
+    for state in optimizer.state.values():
+        for key, value in state.items():
+            if torch.is_tensor(value):
+                state[key] = value.to(device)
 
 
 def _apply_model_init(model: MothSTT, config: dict) -> None:

@@ -11,7 +11,14 @@ import torch
 
 from stt.data.build_mel import build_shards
 from stt.model import MothSTT
-from stt.train import _apply_model_init, iter_batches, load_config, load_sources, train
+from stt.train import (
+    _apply_model_init,
+    _move_optimizer_state,
+    iter_batches,
+    load_config,
+    load_sources,
+    train,
+)
 
 
 def _sine(seconds: float = 2.0, sample_rate: int = 16000, frequency: float = 220.0) -> np.ndarray:
@@ -281,6 +288,22 @@ def test_dev_en_is_scored_separately_and_selects_on_macro(tmp_path: Path) -> Non
         (dev["sets"]["it"]["wer"] + dev["sets"]["en"]["wer"]) / 2
     )
     assert dev["wer_ci"] is None
+
+
+def test_move_optimizer_state_follows_the_model_device() -> None:
+    model = MothSTT(vocab_size=16)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
+    for parameter in model.parameters():
+        optimizer.state[parameter] = {
+            "step": torch.tensor(1.0),
+            "exp_avg": torch.zeros_like(parameter),
+        }
+
+    _move_optimizer_state(optimizer, "meta")
+    for state in optimizer.state.values():
+        for value in state.values():
+            if torch.is_tensor(value):
+                assert value.device.type == "meta"
 
 
 def test_apply_model_init_loads_a_full_checkpoint(tmp_path: Path) -> None:
