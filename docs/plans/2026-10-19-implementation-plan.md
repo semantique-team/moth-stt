@@ -5,13 +5,14 @@
 > *record E-0NN*, add the `EXPERIMENTS.md` entry in the same commit (template: `docs/07` §4). Never train or tune
 > on test data; every number reported comes from `eval.py` output committed under `runs/`.
 >
-> **Status sync (2026-10-19):** the checkboxes below were not maintained while M0–M3 landed — [`STATUS.md`](../../STATUS.md)
-> is the live snapshot and the boxes are not reliable for those phases. Done at that date: **M0, M1 (1.1–1.3, with T grown to 800 for four speakers plus the 60-sentence anchor),
-> M2 code (2.1–2.6) + manifests (E-002) + the real mel cache (2.5: 291.9 h in `data/shards/`), M3 (3.1–3.5, incl.
-> E-003)**; 2.3 is done too (pool of 3,137 sentences + the BPE tokenizer built by `stt/data/build_tokenizer.py`,
-> stats in the build report); **4.2 (H1) is done too (E-004): padded30 beats truncated beyond the noise interval, so H2 uses padded windows**; 1.4 is partial (Whisper tiny only) and still waits
-> on the recordings, the Whistle/Parakeet CLIs and Common Voice IT; 4.1 is done (`stt/train.py` + tests +
-> `runs/E-004/config.yaml`).
+> **Status sync (2026-10-21):** the checkboxes below were not maintained while M0–M3 landed — [`STATUS.md`](../../STATUS.md)
+> is the live snapshot and the boxes are not reliable for those phases. Done: **M0, M1 (1.1–1.3, T grown to 800
+> for four speakers plus the 60-sentence anchor), M2 code (2.1–2.6) + manifests + the mel cache (509.8 h in
+> `data/shards/`, incl. Common Voice IT 27), M3 (3.1–3.5, incl. E-003)**; 2.3 is done (pool of 3,137 sentences +
+> the BPE tokenizer built by `stt/data/build_tokenizer.py`); **4.2 (H1) is done (E-004 + schedule-corrected
+> addendum): truncated and padded30 are equivalent at a matched schedule, so H2 uses truncated windows**;
+> 4.1 is done (`stt/train.py` + tests); 1.4 is partial (Whisper tiny only) and still waits on the recordings and
+> the Whistle/Parakeet CLIs. H2 (E-005) is running.
 
 **Goal:** ship **moth v0.1** — a very small, open **Italian + English code-switching speech-to-text** model:
 pretrained Whisper-tiny encoder (MIT) + a linear CTC head over a shared IT+EN SentencePiece BPE (V = 1024),

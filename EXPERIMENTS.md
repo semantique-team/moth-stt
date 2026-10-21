@@ -105,6 +105,30 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
 - **Mel cache (Task 2.5, 2026-10-19)**: `stt/data/build_mel.py` over all 9 manifests → **291.90 h** cached as float16 shards in `data/shards/<set>/` (18 `.npy` files, **16 GB**): `mls_it_train` 169.89 h / 7 shards / 9.1 GB, `ls_en_train` 100.00 h / 4 shards / 5.4 GB, dev/test sets (mls dev+test 10.45 h, ls dev 5.31 h, FLEURS 6.26 h) ≈ 1.2 GB. **0 decode errors** — the deferred audio-health checks (corrupt/silent/clipping) found nothing to drop. Spot check: 5 random clips per set re-computed from raw audio and compared bit-exact to the mmap read → all 9 sets pass. Wall-clock ≈ 90 s on 8 workers (M5, numpy FFT); peak parent memory bounded by the batched consumption added to `build_shards`. **Raw training audio deleted the same day after a second, explicit spot check (5 clips per set, bit-exact):** MLS IT (15 GB) and LibriSpeech (6.6 GB), 72,524 files — both re-downloadable via `data/raw/fetch.sh`. FLEURS (1.7 GB) is kept until the remaining H0 baselines (task 1.4: Whisper base/beam 5, Whistle, Parakeet) have run from it.
 - **Conclusion**: hypothesis confirmed, with one open scope note (CV IT pending). Proceed to E-001 (H0 baselines).
 
+> **Addendum (2026-10-21) — Common Voice IT 27.0 joins the mix.** Archive `cv-corpus-27.0-2026-09-11`
+> (9.8 GB, extracted to `data/raw/cv_it_27/it`, 11 GB). CV IT train has **256.7 h** available (not
+> 364 h: that figure includes non-train splits/other), sampled deterministically to 170 h:
+>
+> | Set | Kept / sampled | Hours | Dropped |
+> |---|---|---|---|
+> | `cv_it_train` | 113,118 / 115,076 | **167.79** | speaking_rate 1,216, overlap 593, charset 146, empty 2, duration 1 |
+> | `cv_it_dev` | 14,697 / 15,185 | 24.86 | speaking_rate 460, charset 27, duration 1 |
+> | `cv_it_test` | 14,643 / 15,183 | 25.81 | speaking_rate 518, charset 22 |
+>
+> The 593 train overlaps are the second-line guard at work: the incremental build seeds the train
+> filter with the existing dev/test manifests **and the T script hashes**, so no training row can
+> share a normalized sentence with an evaluation set. The official splits are speaker-disjoint
+> (0 client ids shared between train/dev/test). `read_cv_tsv` now uses the **clip stem** as id: the
+> old `cv-<client_id>` collided for every clip read by the same speaker.
+>
+> Mel shards: 167.31 h train (7 files, 9.0 GB), 24.83 h dev, 25.78 h test (1.3 + 1.4 GB), **0 decode
+> errors**, spot check pass — 217.92 h / 11.7 GB added, cache now **509.8 h / 27 GB**. The manifest
+> build needed an incremental path (`--only`, `existing_eval_hashes`, merged report) because the
+> MLS/LibriSpeech raw audio is deleted; building every set again would require re-downloading 22 GB.
+>
+> H2 data is now **437.7 h** (337.7 IT + 100 EN); the "70/30 by audio time" label in `docs/04` is
+> 77/23 in the design's own absolute budget (≈340 + 100 h), and H2 uses all of it.
+
 ---
 
 ## E-003 — H4 early: int8 export + browser RTFx (2026-10-19)
@@ -195,13 +219,35 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   points better) but the curves flatten late: B was 0.7079 at 18,000 and 19,500 steps, A still
   improved by ~1.3 points over its last 2,871 steps. **At matched steps** (≈7,000, same 96 s
   batches, same audio per step) C is 0.7727 while B interpolates to ≈0.741 between its 6,000- and
-  7,500-step evals: **padding is worth ≈3.2 points on its own**; the remaining ≈1.8 of B's 4.98
-  come from its 3× more optimizer steps. Truncation also cuts peak memory 4× (1.1 vs 4.2–5.2 GB)
-  and doubles throughput at equal batches, so it is much cheaper — but worse.
-- **Result**: H1 gate passed on the learning check and **failed on the input check**: truncated is
-  worse than padded beyond the noise interval, both at equal epochs and at matched steps.
-- **Conclusion**: **H2 trains on `padded30` windows** (per the plan's H1 rule), accepting the ~2×
-  compute and the small batches. The frozen-encoder probe tops out around 0.71 on MLS dev: the
-  real gain must come from unfreezing the encoder (H2), not from the head. Caveats: dev is read
-  Italian only, so the mixed test T remains the real judge; the matched-step 3.2-point figure is
-  interpolated from logged evals (B's 7k checkpoint was not kept), not a paired CI.
+  7,500-step evals: on paper **padding is worth ≈3.2 points on its own**; the remaining ≈1.8 of
+  B's 4.98 come from its 3× more optimizer steps. *This reading is wrong — C's LR schedule was
+  also different; the addendum below gives the corrected control.* Truncation cuts peak memory 4×
+  (1.1 vs 4.2–5.2 GB) and doubles throughput at equal batches.
+- **Result**: H1 gate passed on the learning check. The input check is **not** failed — see the
+  schedule-corrected control in the addendum below.
+- **Conclusion (superseded)**: the first reading was **H2 trains on `padded30`** (per the plan's H1
+  rule), accepting the ~2× compute and the small batches. The addendum retracts it: at a matched
+  schedule the two inputs are equivalent, so **H2 uses `truncated`**.
+
+> **Addendum (2026-10-21) — schedule-corrected control.** Arm C differed from B in the LR schedule,
+> not only in the input: C's cosine spanned 1 epoch (6,990 steps) while B's spanned 3 (20,970), so
+> at step 6,000 B was still at ~0.84 of peak LR and C was at ~0.10. The "matched steps" reading was
+> therefore confounded. A new arm **C2** (`runs/E-004/arm-truncated-96-sched3/`) uses the same
+> truncated 96 s / 8 clip batches as C but the 3-epoch cosine, stopped at 6,990 steps (`--max-steps`):
+>
+> | Step | B padded30 | C2 truncated, same schedule |
+> |---|---|---|
+> | 1,500 | 0.8203 | 0.8200 |
+> | 3,000 | 0.7971 | 0.7970 |
+> | 4,500 | 0.7769 | 0.7782 |
+> | 6,000 | 0.7642 | 0.7652 |
+> | 6,990 | ≈0.7406 (interpolated) | **0.7375** [0.7319, 0.7431] |
+>
+> The curves are the same within ±0.001 (the dev CI is ±0.006); if anything truncated is a hair
+> better at the end. This is what the architecture predicts: the encoder already masks padding and
+> uses generated sinusoids, so padding to 30 s and padding to the batch maximum compute the same
+> per-clip function — only the tensor is larger (and the conv sees a boundary difference at the last
+> frame). **The 3.2-point "padding effect" was the schedule, not the input.** Decision revised:
+> **H2 trains on `truncated`** (4× less memory than padded at equal clips, ~2.5× less compute, and
+> short Common Voice clips pack batches instead of wasting a 30 s tensor each). C2's artifacts:
+> `dev-hyp.jsonl`, `dev.metrics.json`, `train.log.jsonl`; wall time ≈12 min.

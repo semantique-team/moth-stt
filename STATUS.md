@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-19** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **200 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-21** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **206 test verdi**, `ruff` pulito.
 > Questo file dice **dove siamo**; il *come* e il *perché* stanno nei design doc (`docs/01`…`09`) e nel
 > piano (`docs/plans/2026-10-19-implementation-plan.md`, che ha una nota di sync in testa: i suoi checkbox
 > non sono mantenuti, questo file è la fonte live).
@@ -25,9 +25,10 @@
 | **2.3 tokenizer** | **BPE IT+EN addestrato**: 1024 pezzi, corpus 100.429 righe (MLS IT 169,9 h + LS EN 100 h pesati 70/30 per parole, pool, 580 termini al 5%), `tokens/word 1.945`, `tokens/s 4.70`, termini ≤3 pezzi 0.488; CLI `stt/data/build_tokenizer.py`, stats nel build report, 6 test | `data/tokenizer/` (gitignored), `data/manifests/build_report.json` (chiave `tokenizer`) |
 | **1.1 pool** | **pool.jsonl: 3.137 frasi** (8 categorie, 0 invalide, 58 doppioni scartati), generator `deepseek-v4.1-flash` | `recordings/scripts/pool.jsonl` |
 | **T-S1** | **200 take di S1** (481 s, 12 retake, 48 kHz mono, 1,3–5,6 s) + manifest parziale (200/800) | `recordings/audio/S1/` (fuori git), `recordings/manifests/T.jsonl` |
-| **4.2 H1** | **probe completato** (E-004): encoder congelato + testa lineare su MLS IT. Dev WER: truncated 320 s **0.7577**, padded30 96 s **0.7079** (differenza appaiata −4,98 punti, CI [−5,32, −4,64]); controllo truncated 96 s a 1 epoca 0.7727 → a parità di step il padding vale ~3,2 punti. **Decisione: H2 usa padded30** | `stt/train.py`, `runs/E-004/`, `EXPERIMENTS.md` |
+| **4.2 H1** | **probe completato** (E-004, poi corretto): encoder congelato + testa lineare su MLS IT. Padded30 96 s 0.7079 vs truncated 320 s 0.7577; il controllo a parità di schedule (C2: truncated 96 s, cosine 3 epoche, fermato a 1) fa **0.7375** [0.7319, 0.7431] contro ~0.7406 del padded → **padding e troncamento sono equivalenti**; i 3,2 punti iniziali erano lo schedule (cosine 1 vs 3 epoche). **Decisione: H2 usa truncated** | `stt/train.py`, `runs/E-004/`, `EXPERIMENTS.md` |
 | **T 800 + A** | T portato a **800 frasi (200 per S1–S4)** con quote per categoria; **anchor A** di 60 frasi; recorder/manifest supportano `S4` e `--kind A` | `recordings/scripts/T.jsonl`, `recordings/scripts/A.jsonl`, `recordings/`, docs |
-| **2.5 mel cache** | **cache reale costruita**: 9 set, **291.9 h** (mls_it_train 169.9 h, ls_en_train 100.0 h, dev/test 22 h), 16 GB, **0 errori**, spot check bit-exact su ogni set → `data/shards/`; report in E-002 | `stt/data/build_mel.py`, `EXPERIMENTS.md` (E-002) |
+| **2.5 mel cache** | **cache reale costruita**: **12 set, 509.8 h, 27 GB** (MLS 169.9, CV IT 167.3, LS EN 100, dev/test 72.6), **0 errori**, spot check bit-exact su ogni set → `data/shards/`; report in E-002 + addendum CV | `stt/data/build_mel.py`, `EXPERIMENTS.md` (E-002) |
+| **CV IT 27** | **scaricato e buildato** (2026-10-21): 256.7 h train disponibili → campione 170 h → **167.8 h / 113.118 clip** (593 overlap scartati contro dev/test/T), dev 24.86 h, test 25.81 h; split speaker-disjoint verificati (0 parlanti in comune); id clip univoci | `data/manifests/cv_it_*.jsonl`, `build_report.json`, `runs/E-005/` |
 | Modello (3.1–3.3) | encoder Whisper-tiny + testa CTC (8.027.009 param), conversione pesi + parità, decode greedy | `stt/model.py`, `stt/convert_whisper.py`, `stt/decode.py` |
 | Conversione (3.2) | **verificata sui pesi reali** e materializzata: `models/whisper_tiny_encoder.pt` (30,6 MB; parità 5,2e-4 vs gate 1e-3 contro eager con posizioni del checkpoint; errore relativo 2,8e-5) | `models/` (gitignored), docstring di `stt/convert_whisper.py`, `docs/02` §3 |
 | Export + web (3.4–3.5) | ONNX opset 17 (sinusoidi in-graph) + int8: **8.32 MB totali**; smoke browser Playwright; **RTFx 65–74×** (4 thread) / 33–38× (1 thread) con pesi random; E-003 | `stt/export.py`, `web/`, `runs/E-003/` |
@@ -44,29 +45,41 @@
 - **Review**: le 200 frasi nuove (T-0601…T-0800) sono `reviewed: false`; vanno riviste prima che S4 registri
   (`uv run recordings/generate_scripts.py review --kind T`).
 - **Da generare/importare (tu)**: R-S2 (600–1000) con `recordings/generate_scripts.py` (il pool è fatto).
-- **Dati**: download completati e verificati (`data/raw/FETCH_OK`); manifest in `data/manifests/` (9 set +
-  `build_report.json`, E-002). Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con
-  `data/raw/fetch.sh`); resta **FLEURS (1.7 GB)** per le baseline di 1.4. Manca **Common Voice IT 27** (≈ 170 h,
-  lato utente).
+- **H2 (E-005) in corso**: `runs/E-005/` — encoder sbloccato, init encoder + testa H1, 438 h (CV IT 167.8 +
+  MLS 169.9 + LS EN 100), **truncated 192 s / 32 clip**, 8 epoche (~72.6k step), selezione macro WER IT+EN.
+  Misurato: 430–520 audio-s/s, 4,2–8,4 GB con `empty_cache_every: 50`; stima **~8–9 h**. Log:
+  `runs/E-005/train.log.jsonl`.
+- **Dati**: CV IT 27 scaricato ed estratto in `data/raw/cv_it_27/` (11 GB di clip + archivio 9.8 GB, ancora su
+  disco); manifest **12 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache mel 27 GB.
+  Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con `data/raw/fetch.sh`); resta
+  **FLEURS (1.7 GB)** per le baseline di 1.4. Nessun dataset mancante.
 
 ## Da fare (prossimi task)
 
 | Task | Cosa | Blocco |
 |---|---|---|
-| 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, CV-IT, mixed T, noise | S2/S3/S4 + anchor; CLI Whistle/Parakeet; CV IT |
-| M5 | **H2 full fine-tune** (`runs/E-005/config.yaml`): encoder sbloccato, misto IT 0.7 / EN 0.3, input **padded30** (decisione H1), ~440 h, 5–10 h+ | da piano |
-| M6–M8 | H3, demo, release; il benchmark browser con **pesi veri** arriva con M7 | da piano |
+| 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, mixed T, noise; **CV-IT ora disponibile** (14.643 clip test) | S2/S3/S4 + anchor; CLI Whistle/Parakeet |
+| M6 | H3a/H3b dopo H2: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; richiede R-S1 (fatto) e R-S2 | H2 + registrazioni R-S2 |
+| M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Serve da te
 
 - Registrazioni T per **S2/S3/S4** e anchor per tutti (quando vuoi); R-S2 per H3.
 - Revisione a mano delle 200 frasi nuove di T prima che registri S4.
-- **Common Voice IT 27** (CC0): link dal sito Mozilla dopo aver accettato i termini → poi `stt.data.sources.download`.
 - `en_terms.txt` è a 580 voci (target design 1–2k): estendibile quando serve.
 
 ## Note di contesto utili
 
-- **H1 (E-004)**: la testa lineare su encoder congelato arriva a 0.71 su MLS dev e si appiattisce; il padding a 30 s batte il troncamento oltre il rumore, quindi H2 usa finestre padded. Il padding costa ~4× di memoria per clip: batch piccoli (96 s / 8 clip) e ~2× di calcolo.
+- **H1 (E-004, corretto)**: la testa lineare su encoder congelato arriva a 0.7079 su MLS dev e si appiattisce.
+  Il primo confronto dava 3,2 punti al padding, ma il controllo con lo **stesso schedule** (cosine 3 epoche,
+  fermato a 1) dà 0.7375 vs ~0.7406: **equivalente**. L'encoder maschera il padding e usa sinusoidi generate,
+  quindi i due input calcolano la stessa funzione per clip. H2 usa **truncated**: 4× meno memoria, ~2,5× meno
+  calcolo, e i clip corti di CV riempiono i batch. Vedi l'addendum in `EXPERIMENTS.md`.
+- **CV IT 27**: 256,7 h train disponibili, campione deterministico 170 h → 167,8 h dopo i filtri; dev/test
+  ufficiali 24,86/25,81 h; split **speaker-disjoint** (0 client_id condivisi); 593 righe train scartate per
+  overlap con dev/test/T. Gli id sono `cv-<stem del clip>` (il client_id non è univoco).
+- **MPS**: con batch a lunghezza variabile la cache dell'allocator cresce fino a 20 GB e va in swap;
+  `empty_cache_every: 50` la tiene a **4,2–8,4 GB** con **430–520 audio-s/s** (smoke E-005).
 - **Tokenizer**: 1024 pezzi, 1.945 token/parola e 4.70 token/s sulle trascrizioni (contro i 50 frame/s
   dell'encoder); i termini inglesi entro 3 pezzi sono il 48.8% e alzare l'up-weight (0.05 → 0.30) non li
   migliora (misurato): il limite è V=1024, non la quota. Pezzi, id ed encoding sono stabili fra run; i byte
