@@ -1,0 +1,53 @@
+# E-005 smoke: measures H2 memory and throughput with the encoder unfrozen (not a result).
+run: E-005-smoke
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-004/arm-padded30/checkpoints/ckpt_best.pt
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  train:
+    - manifest: data/manifests/cv_it_train.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 96
+  max_clips: 8
+
+optimizer:
+  lr_head: 1.0e-3
+  lr_encoder: 1.0e-4
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 1500
+  min_factor: 0.05
+
+train:
+  epochs: 8
+  input: padded30
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 25
+  checkpoint_minutes: 20
+  keep_last: 3
+  max_nonfinite_steps: 20
+  eval_every_steps: 2000

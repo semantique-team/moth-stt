@@ -1,0 +1,64 @@
+# E-005 — H2 full fine-tune (design: docs/04 §5-H2). Init = H1 encoder + head, encoder unfrozen.
+run: E-005
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt              # converted Whisper-tiny encoder (H1)
+  # H1 head + encoder (3 epochs, 0.7079 dev); gitignored. Reproduce with the E-004 padded arm, or
+  # start from the encoder above with a fresh head if the checkpoint is unavailable.
+  init_checkpoint: runs/E-004/arm-padded30/checkpoints/ckpt_best.pt
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  # ≈ 438 h: CV IT 167.8 + MLS IT 169.9 + LS EN 100. docs/04 calls this "70/30 by audio time",
+  # but the absolute budget (≈340 h IT + ≈100 h EN) is 77/23; hitting 70/30 exactly would drop
+  # >100 h of IT or repeat EN, so all the data is used and the deviation is recorded in E-005.
+  train:
+    - manifest: data/manifests/cv_it_train.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+  # Selection metric = macro-average of the IT and EN groups. mls_it_dev keeps the periodic
+  # evaluation cheap; cv_it_dev/test and FLEURS are final-eval only (the real gate).
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  # truncated: 30 s padding is equivalent at a matched schedule (E-004 addendum) but costs 4x the
+  # memory and ~2.5x the compute with the encoder unfrozen (smoke: 11.6 GB and swap at 96 s/8).
+  # 192 s / 32 clips measured 4.2-8.4 GB and ~430-520 audio-s/s in the smoke (empty_cache on).
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  lr_head: 1.0e-3
+  lr_encoder: 1.0e-4
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 1500
+  min_factor: 0.05
+
+train:
+  epochs: 8
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 20
+  keep_last: 3
+  max_nonfinite_steps: 20
+  empty_cache_every: 50   # MPS allocator cache grows with varying batch lengths; release it
+  eval_every_steps: 2000
