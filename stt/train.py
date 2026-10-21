@@ -170,6 +170,9 @@ def train(
     max_nonfinite = int(train_cfg.get("max_nonfinite_steps", 20))
     checkpoint_minutes = float(train_cfg.get("checkpoint_minutes", 20))
     keep_last = max(1, int(train_cfg.get("keep_last", 3)))
+    # MPS caches freed blocks; with variable-length batches the cache grows to the machine limit
+    # and swaps. Releasing it periodically keeps the footprint flat (a small sync, not a slowdown).
+    empty_cache_every = int(train_cfg.get("empty_cache_every", 0))
     eval_every = train_cfg.get("eval_every_steps")
 
     vocab_size = int(config["model"]["vocab_size"])
@@ -181,10 +184,7 @@ def train(
     dataset = MelDataset(index, shards_root, rows, augment=augment, seed=seed)
 
     model = MothSTT(vocab_size=vocab_size)
-    init_path = config["model"].get("init")
-    if init_path:
-        init = torch.load(init_path, map_location="cpu", weights_only=False)
-        model.encoder.load_state_dict(init["state_dict"], strict=True)
+    _apply_model_init(model, config)
     if bool(config["model"].get("freeze_encoder", False)):
         for parameter in model.encoder.parameters():
             parameter.requires_grad_(False)
@@ -202,10 +202,16 @@ def train(
                 for piece_id in range(processor.vocab_size())
             }
 
-    dev_dataset = None
-    if config["data"].get("dev"):
-        dev_index, dev_rows, dev_root = load_sources(config["data"]["dev"])
-        dev_dataset = MelDataset(dev_index, dev_root, dev_rows, augment=None, seed=seed)
+    # ``dev`` is the Italian group, ``dev_en`` the optional English one; the selection metric is
+    # their macro-average WER so that neither language collapses while the other improves.
+    dev_sets: list[tuple[str, MelDataset]] = []
+    for name, key in (("it", "dev"), ("en", "dev_en")):
+        sources = config["data"].get(key)
+        if sources:
+            dev_index, dev_rows, dev_root = load_sources(sources)
+            dev_sets.append(
+                (name, MelDataset(dev_index, dev_root, dev_rows, augment=None, seed=seed))
+            )
 
     steps_per_epoch = len(
         plan_batches(durations, max_seconds=max_seconds, max_clips=max_clips, seed=seed, epoch=0)
@@ -381,6 +387,8 @@ def train(
         scheduler.step()
 
         state.step += 1
+        if empty_cache_every and device_kind == "mps" and state.step % empty_cache_every == 0:
+            torch.mps.empty_cache()
         window_seconds += float(mel_lengths.sum()) / _MEL_FRAMES_PER_SECOND
         if summary["first_loss"] is None:
             summary["first_loss"] = loss_value
@@ -412,9 +420,9 @@ def train(
             window_seconds = 0.0
             window_started = time.monotonic()
 
-        if dev_dataset is not None and eval_every and state.step % int(eval_every) == 0:
-            metrics = _evaluate(
-                model, dev_dataset, pieces, device, max_seconds, max_clips, input_mode
+        if dev_sets and eval_every and state.step % int(eval_every) == 0:
+            metrics = _evaluate_all(
+                model, dev_sets, pieces, device, max_seconds, max_clips, input_mode
             )
             _append_log(log_path, {"event": "dev", "step": state.step, **metrics})
             summary["dev"] = metrics
@@ -425,9 +433,9 @@ def train(
         if time.monotonic() - last_save >= checkpoint_minutes * 60.0:
             save()
 
-    if dev_dataset is not None:
-        metrics = _evaluate(
-            model, dev_dataset, pieces, device, max_seconds, max_clips, input_mode, bootstrap=1000
+    if dev_sets:
+        metrics = _evaluate_all(
+            model, dev_sets, pieces, device, max_seconds, max_clips, input_mode, bootstrap=1000
         )
         _append_log(log_path, {"event": "dev", "step": state.step, "final": True, **metrics})
         summary["dev"] = metrics
@@ -592,6 +600,49 @@ def _parity_guard(
     if difference > PARITY_GATE:
         raise RuntimeError(f"device parity guard failed: |Δ| = {difference:.2e} > {PARITY_GATE}")
     return report
+
+
+def _apply_model_init(model: MothSTT, config: dict) -> None:
+    """Load the pretrained encoder (``init``) and/or a full Moth checkpoint (``init_checkpoint``).
+
+    H2 starts from the H1 run's encoder **and** head, so the full state dict is loaded; the older
+    ``init`` key keeps loading the converted Whisper-tiny encoder alone (H1).
+    """
+    init_path = config["model"].get("init")
+    if init_path:
+        init = torch.load(init_path, map_location="cpu", weights_only=False)
+        model.encoder.load_state_dict(init["state_dict"], strict=True)
+    checkpoint = config["model"].get("init_checkpoint")
+    if checkpoint:
+        payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
+        model.load_state_dict(payload["model"])
+
+
+def _evaluate_all(
+    model: MothSTT,
+    dev_sets: list[tuple[str, MelDataset]],
+    pieces: Mapping[int, str] | None,
+    device: str,
+    max_seconds: float,
+    max_clips: int,
+    input_mode: str,
+    bootstrap: int = 0,
+) -> dict:
+    """Score every dev group; ``wer`` is their macro-average (the checkpoint selection metric)."""
+    per_set = {
+        name: _evaluate(
+            model, dataset, pieces, device, max_seconds, max_clips, input_mode, bootstrap
+        )
+        for name, dataset in dev_sets
+    }
+    macro = sum(metrics["wer"] for metrics in per_set.values()) / len(per_set)
+    result: dict = {
+        "wer": macro,
+        "n_utterances": sum(metrics["n_utterances"] for metrics in per_set.values()),
+        "sets": per_set,
+    }
+    result["wer_ci"] = next(iter(per_set.values()))["wer_ci"] if len(per_set) == 1 else None
+    return result
 
 
 def _evaluate(

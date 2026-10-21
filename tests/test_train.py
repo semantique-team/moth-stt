@@ -10,7 +10,8 @@ import soundfile as sf
 import torch
 
 from stt.data.build_mel import build_shards
-from stt.train import iter_batches, load_config, load_sources, train
+from stt.model import MothSTT
+from stt.train import _apply_model_init, iter_batches, load_config, load_sources, train
 
 
 def _sine(seconds: float = 2.0, sample_rate: int = 16000, frequency: float = 220.0) -> np.ndarray:
@@ -257,3 +258,40 @@ def test_dev_evaluation_line_and_best_checkpoint(tmp_path: Path) -> None:
     assert np.isfinite(dev_lines[-1]["wer"]) and dev_lines[-1]["wer"] >= 0.0
     assert (out / "checkpoints" / "ckpt_best.pt").exists()
     assert summary["dev"]["wer"] == pytest.approx(dev_lines[-1]["wer"])
+
+
+def test_dev_en_is_scored_separately_and_selects_on_macro(tmp_path: Path) -> None:
+    data = _make_data(tmp_path, clips=3)
+    config = _config([data], eval_every_steps=1)
+    sources = [{"manifest": str(data["manifest"]), "shards": str(data["shards"])}]
+    config["data"]["dev"] = sources
+    config["data"]["dev_en"] = sources
+    out = tmp_path / "run"
+    summary = train(
+        config,
+        device="cpu",
+        max_steps=2,
+        tokenize=_tokenize,
+        pieces={identifier: f"p{identifier}" for identifier in range(17)},
+        out_dir=out,
+    )
+    dev = summary["dev"]
+    assert set(dev["sets"]) == {"it", "en"}
+    assert dev["wer"] == pytest.approx(
+        (dev["sets"]["it"]["wer"] + dev["sets"]["en"]["wer"]) / 2
+    )
+    assert dev["wer_ci"] is None
+
+
+def test_apply_model_init_loads_a_full_checkpoint(tmp_path: Path) -> None:
+    source = MothSTT(vocab_size=16)
+    with torch.no_grad():
+        for parameter in source.parameters():
+            parameter.add_(0.125)
+    checkpoint = tmp_path / "ckpt.pt"
+    torch.save({"model": source.state_dict()}, checkpoint)
+
+    target = MothSTT(vocab_size=16)
+    _apply_model_init(target, {"model": {"init_checkpoint": str(checkpoint)}})
+    for expected, actual in zip(source.state_dict().values(), target.state_dict().values()):
+        assert torch.equal(expected, actual)
