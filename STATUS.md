@@ -62,6 +62,22 @@
 | M6 | H3a/H3b dopo H2: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; richiede R-S1 (fatto) e R-S2 | H2 + registrazioni R-S2 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
+## Backlog ottimizzazioni (`docs/10`, living review)
+
+Il review **non cambia il piano** e non tocca H2: un item diventa un esperimento solo quando gira, con entry
+E-0NN (protocollo: 200 step, stessa config, una variabile). Snapshot del review: H2 a 42,6k step; i numeri
+live sono nei log.
+
+- **P0 — post-H2, worktree fresco da `main`:** fix `dataset.epoch` (oggi l'augmentation è identica a ogni
+  epoca), cache dei memmap, copie ridotte, prefetch 1–2 batch, eval con `inference_mode`/argmax su device.
+- **P1 — post-H2, pesi veri:** checkpoint averaging/EMA, SDPA + time-major + QKV fuso (con test di parità),
+  export int8 reale (WER + RTFx), beam/hotword.
+- **P2 — H3:** InterCTC (prima), CR-CTC short fine-tune, noise augmentation, frame-aware batching, LM
+  piccolo solo se l'ETA lo richiede.
+- **P3 — solo se il gate H2 fallisce:** conv head → +2 blocchi → 25 Hz+2 blocchi → Whisper-base.
+- **Vincolo:** niente merge di codice in `main` durante H2, soprattutto il fix `dataset.epoch`
+  (cambierebbe l'augmentation al resume delle epoche 5–8).
+
 ## Serve da te
 
 - Registrazioni T per **S2/S3/S4** e anchor per tutti (quando vuoi); R-S2 per H3.

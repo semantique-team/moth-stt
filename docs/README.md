@@ -48,6 +48,7 @@ Read in order; each file is self-contained enough to be reviewed alone.
 | [`07-repo-layout-and-roadmap.md`](07-repo-layout-and-roadmap.md) | New-repo layout with unit contracts, tooling, milestones M0–M8, `EXPERIMENTS.md` template. |
 | [`08-risks-and-open-questions.md`](08-risks-and-open-questions.md) | Risk register, open questions, follow-up backlog, stop/pivot criteria. |
 | [`09-research-notes.md`](09-research-notes.md) | The evidence behind the decisions, with links and a verified/unverified marker per claim. |
+| [`10-optimization-review.md`](10-optimization-review.md) | Architecture/code optimization review: loader, attention, CTC head, eval, export, capacity variants, recent STT papers, and what can safely run while H2 trains. |
 | [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points. |
 
 ## Decision log
