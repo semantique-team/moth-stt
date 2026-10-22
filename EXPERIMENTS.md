@@ -365,3 +365,49 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   IT/EN LM (cheapest remaining; expected to help FLEURS-IT and T), then conv head / 25 Hz+2 if needed.
   A Whisper-base variant (~20.35 M, ~21 MB int8, FLEURS-IT 18.27) stays the last resort and needs an
   explicit ceiling decision. H3 remains blocked on R-S1/R-S2 and S2/S3/S4 T recordings.
+
+## E-007 — CTC beam search + hotwords on E-006 (2026-10-22)
+
+- **Date**: 2026-10-22
+- **Hypothesis**: decode-side CTC beam search plus the curated English-term hotword list closes
+  part of the remaining FLEURS-IT gap and improves the mixed T set, without training or extra
+  model capacity.
+- **Method**: E-006 best (`runs/E-006/checkpoints/ckpt_best.pt`, step 36,296) frozen. Prefix beam
+  search over the first `ceil(mel/2)` frames, beam width 5, top-8 non-blank labels per frame plus
+  blank, terminal hotword bonus 1.0, no prefix bonus. Hotwords: 580 normalized terms from
+  `data/en_terms.txt` (the tokenizer-up-weighting list, not a T-specific list). Tuning on
+  `mls_it_dev` + `ls_en_dev` (200 clips each, seed 0); FLEURS, CV and T evaluated once after
+  fixing the hyperparameters. No LM in this experiment.
+- **Compute and cost**: decode-only, no training; full held-out eval ≈ 3 min on M5/MPS. **0 USD**.
+- **Metrics** (greedy E-006, beam only, beam + hotwords 1.0; bootstrap 1,000):
+
+| Set | Greedy E-006 | Beam 5 | Beam + hot 1.0 | Beam Δ vs greedy |
+|---|---|---|---|---|
+| Dev macro | 0.3127 | **0.3084** | 0.3084 | −0.44 |
+| FLEURS-IT **test** | 0.3411 | **0.3377** | 0.3380 | −0.34 |
+| FLEURS-EN **test** | 0.6145 | 0.6083 | **0.6078** | −0.62 |
+| CV IT **dev** | 0.3445 | **0.3398** | **0.3398** | −0.47 |
+| CV IT **test** | 0.3616 | **0.3568** | **0.3568** | −0.48 |
+| T (S1, 200) | 0.5950 | 0.5907 | **0.5873** | −0.43 |
+
+  T ETA: greedy **0.200**, beam **0.209**, beam + hotwords **0.218** — beam and hotwords improve
+  WER but make English-term acquisition worse, not better.
+- **Paired differences vs greedy E-006** (same utterances, 1,000 resamples):
+  FLEURS-IT beam **−0.34** [−0.50, −0.17]; FLEURS-EN **−0.62** [−0.86, −0.39]; CV dev **−0.47**
+  [−0.53, −0.41]; CV test **−0.48** [−0.54, −0.42]; T **−0.43** [−1.15, +0.18] (tie). Beam +
+  hotwords: FLEURS-IT −0.31 [−0.50, −0.11], FLEURS-EN −0.67 [−0.92, −0.43], CV unchanged, T
+  −0.77 [−1.57, 0.00] (tie).
+- **Findings**: beam search is a small but real win on FLEURS and CV (~1–1.5% relative), and the
+  gains are significant; it does not change the story on T (ETA slightly worse). The exact-BPE
+  hotword bonus is effectively neutral on FLEURS/CV and gives only a noisy T WER gain while
+  worsening ETA — the acoustic model often never produces the exact token sequence, so a
+  completion-only bonus cannot recover the term. FLEURS-IT is now **33.77%**, still **+1.68**
+  [0.50, 3.03] behind Whisper-tiny (32.09): the gate remains failed. CV dev is **33.98%**, i.e.
+  **14.55 points better** than Whisper-tiny (48.53).
+- **Result**: E-007 improves all WERs but does **not** pass the H2 gate; hotwords as implemented
+  are not a T lever and should not ship as-is. Beam can be an optional “quality” decode mode,
+  with greedy as the fast default.
+- **Conclusion**: the remaining FLEURS-IT gap is now ~1.7 points. Next: add a small IT/EN LM to
+  beam (E-008); if that does not close the gap, move to capacity (conv head / 25 Hz+2). Hotword
+  design can be revisited with prefix/fuzzy matching or a word-level lexicon, but it is not the
+  first lever. H3 still needs the missing recordings.

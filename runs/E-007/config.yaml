@@ -1,0 +1,42 @@
+# E-007 — decode-only CTC beam search + hotwords on the E-006 checkpoint.
+#
+# No training: the E-006 best checkpoint is frozen. Hyperparameters were selected on the two
+# selection-dev sets (200 clips each, random seed 0); FLEURS, CV and T were evaluated once after
+# fixing them. The hotword list is the same curated `data/en_terms.txt` used for tokenizer
+# up-weighting, not a T-specific list.
+run: E-007
+checkpoint: runs/E-006/checkpoints/ckpt_best.pt
+model_config: runs/E-006/config.yaml
+
+decode:
+  method: beam
+  beam_width: 5
+  top_k: 8
+  hotwords: data/en_terms.txt
+  hotword_terms: 580
+  hotword_bonus: 1.0
+  hotword_prefix_bonus: 0.0
+
+eval:
+  tuning_sets: mls_it_dev,ls_en_dev
+  tuning_limit: 200
+  final_sets: fleurs_it_test,fleurs_en_test,cv_it_dev,cv_it_test,recorded_t
+  bootstrap: 1000
+
+results:
+  beam_only:
+    dev_macro: 0.3084
+    fleurs_it_test: 0.3377
+    fleurs_en_test: 0.6083
+    cv_it_dev: 0.3398
+    cv_it_test: 0.3568
+    recorded_t: 0.5907
+    recorded_t_eta: 0.2090
+  beam_hotword_1.0:
+    dev_macro: 0.3084
+    fleurs_it_test: 0.3380
+    fleurs_en_test: 0.6078
+    cv_it_dev: 0.3398
+    cv_it_test: 0.3568
+    recorded_t: 0.5873
+    recorded_t_eta: 0.2179
