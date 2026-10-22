@@ -4,7 +4,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from stt.decode import greedy, greedy_ids, load_pieces
+from stt.decode import beam_search, greedy, greedy_ids, load_pieces
+from stt.hotwords import HotwordIndex
 
 PIECES = {1: "▁ho", 2: "▁spostato", 3: "▁il"}
 
@@ -41,6 +42,36 @@ def test_accepts_torch_tensor() -> None:
 def test_greedy_ids_matches_greedy() -> None:
     frames = np.array([1, 1, 0, 2, 2, 3, 0])
     assert greedy_ids(frames, PIECES) == greedy(_log_probs(frames.tolist()), len(frames), PIECES)
+
+
+def test_beam_matches_greedy_on_confident_frames() -> None:
+    frames = [1, 1, 0, 2, 2, 3, 0]
+    probs = _log_probs(frames)
+    assert beam_search(probs, len(frames), PIECES) == greedy(probs, len(frames), PIECES)
+
+
+def test_beam_preserves_repeated_labels_separated_by_blank() -> None:
+    # A label sequence may legitimately contain "ll"; only frame-level greedy collapse would
+    # merge the two labels, so the beam must join pieces without collapsing them.
+    assert beam_search(_log_probs([1, 0, 1], vocab=2), 3, {1: "l"}, beam_width=3) == "ll"
+
+
+def test_beam_hotword_bonus_prefers_the_term() -> None:
+    probs = np.full((1, 4), -10.0, dtype=np.float32)
+    probs[0, 1] = 0.0  # "▁meetin"
+    probs[0, 2] = 0.0  # "▁meeting"
+    index = HotwordIndex([(2,)])
+    pieces = {1: "▁meetin", 2: "▁meeting", 3: "▁x"}
+    assert (
+        beam_search(probs, 1, pieces, beam_width=2, hotwords=index, hotword_bonus=2.0)
+        == "meeting"
+    )
+
+
+def test_beam_accepts_torch_and_length_limit() -> None:
+    tensor = torch.from_numpy(_log_probs([1, 2, 3]))
+    assert beam_search(tensor, 2, PIECES) == "ho spostato"
+    assert beam_search(tensor, 0, PIECES) == ""
 
 
 def test_load_pieces_from_vocab_json(tmp_path: Path) -> None:

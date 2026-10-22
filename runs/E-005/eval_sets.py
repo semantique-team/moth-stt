@@ -10,15 +10,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 from pathlib import Path
 
 import torch
 
 from stt.data.dataset import MelDataset, plan_batches
-from stt.decode import greedy
+from stt.decode import beam_search, greedy
 from stt.eval import score_rows
+from stt.hotwords import HotwordIndex, load_hotwords
 from stt.model import MothSTT
-from stt.tokenizer import load_tokenizer
+from stt.tokenizer import encode, load_tokenizer
 from stt.train import _prepare_batch, load_config, load_sources
 
 SETS = {
@@ -32,7 +34,20 @@ SETS = {
 }
 
 
-def decode(ckpt: str, names: list[str], out_dir: Path, config_path: str) -> dict:
+def decode(
+    ckpt: str,
+    names: list[str],
+    out_dir: Path,
+    config_path: str,
+    *,
+    decoder: str = "greedy",
+    beam_width: int = 5,
+    top_k: int = 8,
+    hotwords_path: str | None = None,
+    hotword_bonus: float = 1.0,
+    hotword_prefix_bonus: float = 0.0,
+    limit: int = 0,
+) -> dict:
     config = load_config(config_path)
     batch = config["batch"]
     input_mode = config["train"]["input"]
@@ -40,6 +55,21 @@ def decode(ckpt: str, names: list[str], out_dir: Path, config_path: str) -> dict
 
     processor = load_tokenizer(config["tokenizer"])
     pieces = {i + 1: processor.id_to_piece(i) for i in range(processor.vocab_size())}
+    hotword_index = None
+    hotword_terms = 0
+    if hotwords_path:
+        terms = load_hotwords(hotwords_path)
+        hotword_index = HotwordIndex([encode(processor, term) for term in terms])
+        hotword_terms = len(terms)
+        print(
+            f"hotwords: {hotword_terms} terms, max {hotword_index.max_len} pieces",
+            flush=True,
+        )
+    print(
+        f"decoder: {decoder}"
+        + (f" (beam {beam_width}, top-k {top_k})" if decoder == "beam" else ""),
+        flush=True,
+    )
 
     model = MothSTT(
         vocab_size=int(config["model"]["vocab_size"]),
@@ -55,6 +85,8 @@ def decode(ckpt: str, names: list[str], out_dir: Path, config_path: str) -> dict
     for name in names:
         manifest, shards = SETS[name]
         index, rows, root = load_sources([{"manifest": manifest, "shards": shards}])
+        if limit and limit < len(rows):
+            rows = random.Random(0).sample(rows, limit)
         dataset = MelDataset(index, root, rows)
         batches = plan_batches(
             [float(row["duration"]) for row in rows],
@@ -71,7 +103,21 @@ def decode(ckpt: str, names: list[str], out_dir: Path, config_path: str) -> dict
                 )
                 log_probs, out_lengths = model(tensor.to(device), lengths.to(device))
                 for offset, row in enumerate(brows):
-                    hyps[row["id"]] = greedy(log_probs[offset], int(out_lengths[offset]), pieces)
+                    if decoder == "beam":
+                        hyps[row["id"]] = beam_search(
+                            log_probs[offset],
+                            int(out_lengths[offset]),
+                            pieces,
+                            beam_width=beam_width,
+                            top_k=top_k,
+                            hotwords=hotword_index,
+                            hotword_bonus=hotword_bonus,
+                            hotword_prefix_bonus=hotword_prefix_bonus,
+                        )
+                    else:
+                        hyps[row["id"]] = greedy(
+                            log_probs[offset], int(out_lengths[offset]), pieces
+                        )
         (out_dir / f"{name}.hyp.jsonl").write_text(
             "".join(json.dumps({"id": key, "hyp": value}, ensure_ascii=False) + "\n"
                     for key, value in hyps.items()),
@@ -82,6 +128,16 @@ def decode(ckpt: str, names: list[str], out_dir: Path, config_path: str) -> dict
             "checkpoint": ckpt,
             "set": name,
             "n_utterances": scored["n_utterances"],
+            "decode": {
+                "method": decoder,
+                "beam_width": beam_width if decoder == "beam" else None,
+                "top_k": top_k if decoder == "beam" else None,
+                "hotwords": hotwords_path,
+                "hotword_terms": hotword_terms,
+                "hotword_bonus": hotword_bonus if decoder == "beam" else None,
+                "hotword_prefix_bonus": hotword_prefix_bonus if decoder == "beam" else None,
+                "limit": limit,
+            },
             "overall": scored["overall"],
             "breakdown": scored["breakdown"],
             "noise": scored["noise"],
@@ -122,6 +178,13 @@ def main() -> int:
     parser.add_argument("--out", required=True)
     parser.add_argument("--config", default="runs/E-005/config.yaml")
     parser.add_argument("--average", default=None, help="comma list of checkpoints to average first")
+    parser.add_argument("--decoder", choices=("greedy", "beam"), default="greedy")
+    parser.add_argument("--beam-width", type=int, default=5)
+    parser.add_argument("--top-k", type=int, default=8)
+    parser.add_argument("--hotwords", default=None, help="one normalized term per line")
+    parser.add_argument("--hotword-bonus", type=float, default=1.0)
+    parser.add_argument("--hotword-prefix-bonus", type=float, default=0.0)
+    parser.add_argument("--limit", type=int, default=0, help="random subset per set (tuning only)")
     args = parser.parse_args()
 
     if args.average:
@@ -131,6 +194,13 @@ def main() -> int:
         [name.strip() for name in args.sets.split(",")],
         Path(args.out),
         args.config,
+        decoder=args.decoder,
+        beam_width=args.beam_width,
+        top_k=args.top_k,
+        hotwords_path=args.hotwords,
+        hotword_bonus=args.hotword_bonus,
+        hotword_prefix_bonus=args.hotword_prefix_bonus,
+        limit=args.limit,
     )
     return 0
 
