@@ -183,7 +183,9 @@ def train(
     augment = {"none": None, "light": AugmentConfig.light(), "full": AugmentConfig()}[augment_name]
     dataset = MelDataset(index, shards_root, rows, augment=augment, seed=seed)
 
-    model = MothSTT(vocab_size=vocab_size)
+    model = MothSTT(
+        vocab_size=vocab_size, head_blocks=int(config["model"].get("head_blocks", 0))
+    )
     _apply_model_init(model, config)
     if bool(config["model"].get("freeze_encoder", False)):
         for parameter in model.encoder.parameters():
@@ -493,9 +495,11 @@ def main(argv: list[str] | None = None) -> int:
 
 def _build_optimizer(model: MothSTT, config: dict) -> torch.optim.AdamW:
     settings = config["optimizer"]
+    head_params = [p for p in model.head.parameters() if p.requires_grad]
+    head_params += [p for p in model.head_blocks.parameters() if p.requires_grad]
     groups = [
         {
-            "params": [p for p in model.head.parameters() if p.requires_grad],
+            "params": head_params,
             "lr": float(settings["lr_head"]),
             "name": "head",
         }
@@ -626,7 +630,13 @@ def _apply_model_init(model: MothSTT, config: dict) -> None:
     checkpoint = config["model"].get("init_checkpoint")
     if checkpoint:
         payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
-        model.load_state_dict(payload["model"])
+        missing, unexpected = model.load_state_dict(payload["model"], strict=False)
+        allowed_missing = {name for name in missing if name.startswith("head_blocks.")}
+        if set(missing) - allowed_missing or unexpected:
+            raise RuntimeError(
+                f"checkpoint mismatch: missing {sorted(set(missing) - allowed_missing)}, "
+                f"unexpected {sorted(unexpected)}"
+            )
 
 
 def _evaluate_all(

@@ -47,6 +47,14 @@ def sinusoids(length: int, channels: int, max_timescale: float = 10000.0) -> tor
     return torch.cat([torch.sin(scaled_time), torch.cos(scaled_time)], dim=1)
 
 
+def _padding_mask(lengths: torch.Tensor, frames: int) -> torch.Tensor | None:
+    """``[B, 1, 1, T]`` boolean mask (True = real frame), or ``None`` when nothing is padded."""
+    if not bool((lengths < frames).any()):
+        return None
+    positions = torch.arange(frames, device=lengths.device)[None, :]
+    return (positions < lengths[:, None])[:, None, None, :]
+
+
 class _Block(nn.Module):
     """Pre-LN transformer block: ``x = x + Attn(LN1(x)); x = x + MLP(LN2(x))``."""
 
@@ -120,22 +128,27 @@ class WhisperTinyEncoder(nn.Module):
         enc_lengths = torch.div(lengths + 1, 2, rounding_mode="floor")
 
         x = x + self.positions[: x.shape[1]].to(x.dtype)
-        keep_mask = None
-        if bool((enc_lengths < x.shape[1]).any()):
-            positions = torch.arange(x.shape[1], device=x.device)[None, :]
-            keep_mask = (positions < enc_lengths[:, None])[:, None, None, :]
+        keep_mask = _padding_mask(enc_lengths, x.shape[1])
         for block in self.blocks:
             x = block(x, keep_mask)
         return self.final_ln(x), enc_lengths
 
 
 class MothSTT(nn.Module):
-    """The shippable model: encoder + ``Linear(width, V_ctc)`` head, ``V_ctc = vocab_size + 1``."""
+    """The shippable model: encoder + optional extra blocks + linear head (``V_ctc = V_sp + 1``)."""
 
-    def __init__(self, vocab_size: int = 1024, encoder_config: EncoderConfig | None = None) -> None:
+    def __init__(
+        self,
+        vocab_size: int = 1024,
+        encoder_config: EncoderConfig | None = None,
+        head_blocks: int = 0,
+    ) -> None:
         super().__init__()
         self.encoder_config = encoder_config or EncoderConfig()
         self.encoder = WhisperTinyEncoder(self.encoder_config)
+        self.head_blocks = nn.ModuleList(
+            _Block(self.encoder_config) for _ in range(max(0, head_blocks))
+        )
         self.head = nn.Linear(self.encoder_config.width, vocab_size + 1)
 
     def forward(
@@ -143,5 +156,9 @@ class MothSTT(nn.Module):
     ) -> tuple[torch.Tensor, torch.Tensor]:
         """``mel [B, 80, T]`` → ``log_probs [B, ceil(T/2), V_ctc]`` (fp32) + out lengths."""
         hidden, out_lengths = self.encoder(mel, mel_lengths)
+        if self.head_blocks:
+            keep_mask = _padding_mask(out_lengths, hidden.shape[1])
+            for block in self.head_blocks:
+                hidden = block(hidden, keep_mask)
         logits = self.head(hidden)
         return F.log_softmax(logits.float(), dim=-1), out_lengths

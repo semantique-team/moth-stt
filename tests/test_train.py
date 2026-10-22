@@ -14,6 +14,7 @@ from stt.data.dataset import MelDataset
 from stt.model import MothSTT
 from stt.train import (
     _apply_model_init,
+    _build_optimizer,
     _move_optimizer_state,
     iter_batches,
     load_config,
@@ -312,6 +313,26 @@ def test_training_updates_the_dataset_epoch(monkeypatch, tmp_path: Path) -> None
         out_dir=tmp_path / "run",
     )
     assert {0, 1} <= set(seen_epochs)
+
+
+def test_apply_model_init_allows_new_head_blocks(tmp_path: Path) -> None:
+    source = MothSTT(vocab_size=16)
+    checkpoint = tmp_path / "ckpt.pt"
+    torch.save({"model": source.state_dict()}, checkpoint)
+
+    target = MothSTT(vocab_size=16, head_blocks=2)
+    _apply_model_init(target, {"model": {"init_checkpoint": str(checkpoint)}})
+    assert torch.equal(target.encoder.conv1.weight, source.encoder.conv1.weight)
+    assert torch.equal(target.head.weight, source.head.weight)
+
+
+def test_optimizer_includes_head_blocks() -> None:
+    model = MothSTT(vocab_size=16, head_blocks=2)
+    optimizer = _build_optimizer(model, {"optimizer": {"lr_head": 1e-3, "lr_encoder": 1e-4}})
+    head_group = next(group for group in optimizer.param_groups if group["name"] == "head")
+    expected = sum(parameter.numel() for parameter in model.head.parameters())
+    expected += sum(parameter.numel() for parameter in model.head_blocks.parameters())
+    assert sum(parameter.numel() for parameter in head_group["params"]) == expected
 
 
 def test_move_optimizer_state_follows_the_model_device() -> None:

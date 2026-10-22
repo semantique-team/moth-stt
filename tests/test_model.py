@@ -20,6 +20,28 @@ def test_parameter_count_matches_design() -> None:
     assert total == encoder_params + head_params
 
 
+def test_head_blocks_add_parameters_and_keep_the_forward_contract() -> None:
+    model = MothSTT(vocab_size=1024, head_blocks=2)
+    assert sum(parameter.numel() for parameter in model.parameters()) == 11_575_169
+    model.eval()
+    with torch.no_grad():
+        log_probs, out_lengths = model(_mel(batch=2, frames=100), torch.tensor([100, 81]))
+    assert log_probs.shape == (2, 50, 1025)
+    assert out_lengths.tolist() == [50, 41]
+
+
+def test_head_block_padding_is_masked() -> None:
+    model = MothSTT(vocab_size=64, encoder_config=EncoderConfig(n_layers=2), head_blocks=2)
+    model.eval()
+    short = _mel(frames=60, seed=1)
+    long = _mel(frames=100, seed=2)
+    batch = torch.cat([torch.nn.functional.pad(short, (0, 40)), long], dim=0)
+    with torch.no_grad():
+        batched, _ = model(batch, torch.tensor([60, 100]))
+        single, _ = model(short, torch.tensor([60]))
+    assert torch.allclose(batched[0, :28], single[0, :28], atol=1e-4)
+
+
 def test_forward_shapes_and_log_probs() -> None:
     model = MothSTT(vocab_size=64, encoder_config=EncoderConfig(n_layers=2))
     model.eval()
