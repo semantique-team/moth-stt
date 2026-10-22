@@ -1,0 +1,38 @@
+{
+  "run": "E-006",
+  "device": "mps",
+  "steps": 36296,
+  "first_loss": 0.981747567653656,
+  "last_loss": 0.841433048248291,
+  "dev": {
+    "wer": 0.31272853838888426,
+    "n_utterances": 3939,
+    "sets": {
+      "it": {
+        "wer": 0.35555720543470193,
+        "wer_ci": [
+          0.3478119529882471,
+          0.36350093109869647
+        ],
+        "n_utterances": 1248
+      },
+      "en": {
+        "wer": 0.26989987134306653,
+        "wer_ci": [
+          0.265185731403816,
+          0.2749371800837599
+        ],
+        "n_utterances": 2691
+      }
+    },
+    "wer_ci": null
+  },
+  "parity": null,
+  "resumed_from": "runs/E-006/checkpoints/ckpt_0012000.pt",
+  "epoch": 3,
+  "batch_cursor": 9074,
+  "skipped_nonfinite": 0,
+  "best_metric": 0.31272853838888426,
+  "checkpoint": "runs/E-006/checkpoints/ckpt_0036296.pt",
+  "log": "runs/E-006/train.log.jsonl"
+}

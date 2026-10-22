@@ -1,0 +1,6 @@
+cv_it_dev_00: 2940 clips, 17852s audio, RTFx 24.4, 0 errors
+cv_it_dev_01: 2940 clips, 17897s audio, RTFx 32.2, 0 errors
+cv_it_dev_02: 2940 clips, 17940s audio, RTFx 31.7, 0 errors
+cv_it_dev_03: 2940 clips, 17917s audio, RTFx 30.9, 0 errors
+cv_it_dev_04: 2937 clips, 17893s audio, RTFx 32.7, 0 errors
+wrote runs/E-005/baselines/tiny_chunks

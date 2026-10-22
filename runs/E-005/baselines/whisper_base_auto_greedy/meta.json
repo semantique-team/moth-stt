@@ -1,0 +1,23 @@
+{
+  "system": "whisper-base",
+  "variant": "auto-greedy",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-22T08:33:22+0200",
+  "sets": {
+    "fleurs_en_test": {
+      "manifest": "data/manifests/fleurs_en_test.jsonl",
+      "n": 525,
+      "errors": [],
+      "audio_seconds": 4995.56,
+      "wall_seconds": 326.658,
+      "rtfx": 15.292934626641332,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "language": "auto",
+  "decode": "greedy",
+  "beam_size": 1,
+  "padded_30s": true,
+  "params_bytes": 287303680
+}

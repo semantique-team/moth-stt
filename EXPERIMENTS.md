@@ -251,3 +251,117 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
 > **H2 trains on `truncated`** (4× less memory than padded at equal clips, ~2.5× less compute, and
 > short Common Voice clips pack batches instead of wasting a 30 s tensor each). C2's artifacts:
 > `dev-hyp.jsonl`, `dev.metrics.json`, `train.log.jsonl`; wall time ≈12 min.
+
+---
+
+## E-005 — H2 full fine-tune: encoder + head on 438 h (2026-10-21)
+
+- **Date**: 2026-10-21
+- **Hypothesis**: full fine-tuning of the Whisper-tiny encoder plus the CTC head on the IT+EN mix
+  beats Whisper-tiny on Italian FLEURS and Common Voice dev (the H2 gate) and gives usable English.
+- **Model configuration**: Whisper-tiny encoder (4 blocks, width 384, 6 heads, sinusoidal positions)
+  + `Linear(384, 1025)` CTC head, V_sp = 1024 (BPE 2.3), 8,027,009 parameters, **all trainable**.
+  Init: converted Whisper-tiny encoder **and** the H1 head (E-004 padded arm, dev 0.7079).
+  bf16 autocast, fp32 CTC, AdamW, grad clip 1.0; `input: truncated` (E-004 addendum).
+- **Dataset**: 437.7 h — Common Voice IT 27 167.79 h (113,118 clips), MLS IT 169.89 h, LibriSpeech
+  EN 100.00 h. 77/23 IT/EN by audio time (the design's absolute budget is ≈340+100 h; exact 70/30
+  would discard >100 h of IT or repeat EN). Dev: `mls_it_dev` 5.18 h + `ls_en_dev` 5.31 h; FLEURS,
+  CV dev/test and T are held out.
+- **Training parameters**: 8 epochs, 9,074 steps/epoch, **72,592 steps**; batch 192 audio-s /
+  32 clips; head LR 1e-3, encoder 1e-4; warm-up 1,500 → cosine to 5%; full SpecAugment
+  (freq/time masks + tempo stretch); `empty_cache_every: 50` on MPS; checkpoint every ~20 min,
+  best by macro dev WER (IT+EN).
+- **Hardware**: Apple M5, 16 GB, AC power, `caffeinate -i`; torch 2.14.1, MPS, bf16.
+- **Compute and cost**: started 10:01, finished 19:23 (9 h 22 wall, **≈8 h of training** after two
+  external kills: macOS memory pressure at 13:48 and the worktree removal at 18:31, both resumed
+  from checkpoints; the first resume exposed and fixed the optimizer-state device bug). **0 USD**.
+- **Metrics** (greedy decode, bootstrap 1,000; `runs/E-005/eval/best/`):
+
+| Set | WER | 95% CI | Notes |
+|---|---|---|---|
+| `mls_it_dev` (best, 62k) | 0.3808 | [0.3731, 0.3879] | selection dev, IT |
+| `ls_en_dev` (best, 62k) | 0.2946 | [0.2899, 0.2999] | selection dev, EN |
+| macro dev | **0.3377** | — | best checkpoint; final 0.3386 |
+| FLEURS-IT **test** | 0.3741 | [0.3619, 0.3856] | Whisper tiny 0.3209 |
+| FLEURS-EN **test** | 0.6244 | [0.6108, 0.6396] | Whisper tiny auto 0.1386 |
+| CV IT **dev** | 0.3760 | [0.3723, 0.3797] | Whisper tiny 0.4853; paired **−10.93** [−11.33, −10.51] |
+| CV IT **test** | 0.3948 | [0.3909, 0.3985] | — |
+| T (S1, 200) | 0.6535 | [0.6201, 0.6906] | ETA 0.164 |
+
+  T breakdown: control_it 0.3889, control_en 0.6216, single_word 0.6655, phrase 0.6716, brand
+  0.7101, acronym 0.5676, italianized 0.7385, switch 0.6667. Checkpoint averaging (last 3:
+  68,352 + 71,646 + 72,592) gave dev macro 0.3386, so `ckpt_best` (62k, 0.3377) was kept.
+- **Paired differences vs Whisper-tiny** (same utterances, 1,000 resamples): FLEURS-IT **+5.32
+  points** [4.10, 6.69] worse; FLEURS-EN **+48.58 points** [47.19, 49.99] worse (vs auto). Neither
+  is a tie.
+- **Findings**: full fine-tuning is where the gain is — H1's frozen encoder ended at 0.7079 on MLS
+  dev, H2 reaches **0.3808** there (IT) and 0.2946 on LS dev (EN). But the model **misses the gate**:
+  FLEURS-IT is 5.3 points behind Whisper-tiny (37.4 vs 32.1), and English does not generalize from
+  LS audiobooks to FLEURS (62.4 vs 13.9). The curves plateaued after ~62k steps (best macro 0.3377;
+  final 0.3386; averaging did not help), so more epochs alone are unlikely to close 5 points. T is
+  at 65.4% WER with 16.4% ETA on the unseen speaker and never-trained mixed sentences — the baseline
+  H3 must beat, not a product number. Caveat: `MelDataset.epoch` was never updated by the training
+  loop, so all 8 epochs saw the same augmentation view of each clip (fixed for future runs; see
+  `docs/10` §4.2.1).
+- **Result**: **gate failed on FLEURS-IT only**. On CV dev the model **beats Whisper-tiny by 10.93
+  points** [10.51, 11.33] (37.60 vs 48.53), but the gate requires both sets, so it does not pass.
+  The model is still the best Moth checkpoint so far and the correct starting point for H3.
+- **Conclusion**: do **not** ship H2 as the final model. Escalation is needed; the plan's order is
+  more epochs/LR, +2 head blocks (11.6 M), BPE size, then Whisper-base. Given the plateau, the
+  review's cheaper capacity steps (conv head, then +2 blocks / 25 Hz+2) are more promising than more
+  epochs alone; decode-side beam/hotwords + a small LM are complementary (10–13% relative in the
+  literature) but unlikely to close 5 points by themselves. Measure the Whisper-base baseline before
+  deciding on the 20 MB ceiling. H3 (gold code-switch data) remains the unique product lever and can
+  run from this checkpoint while the capacity decision is made.
+
+## E-006 — +2 transformer blocks (11.58 M params), fine-tuned from E-005 (2026-10-22)
+
+- **Date**: 2026-10-22
+- **Hypothesis**: two extra pre-head transformer blocks (6 total) give enough capacity to halve the
+  FLEURS-IT gap to Whisper-tiny while keeping the model ≤ 20 MB int8; in-domain and T improve too.
+- **Model configuration**: Whisper-tiny encoder (4 blocks) + **`head_blocks: 2`** extra transformer
+  blocks before the CTC head, 6 blocks total, width 384, 6 heads; **11,575,169 parameters** (~12 MB
+  int8). Init from E-005 best (`runs/E-005/checkpoints/ckpt_best.pt`, 62k, dev macro 0.3377); the two
+  new blocks are randomly initialised; all parameters trainable.
+- **Dataset**: same 437.7 h IT+EN mix as E-005 (77/23 by audio time); dev `mls_it_dev` + `ls_en_dev`;
+  FLEURS, CV dev/test and T held out. E-006 sees the **fixed** `dataset.epoch` (augmentation varies by
+  epoch), unlike E-005; the delta vs E-005 is capacity + augmentation diversity, not capacity alone.
+- **Training parameters**: 4 epochs, **36,296 steps**; batch 192 audio-s / 32 clips; encoder LR 5e-5,
+  head/new blocks 1e-3; warm-up 500 → cosine to 5%; bf16 autocast, fp32 CTC, grad clip 1.0; full
+  SpecAugment; `empty_cache_every: 50`; checkpoint every ~20 min; best by macro dev WER.
+- **Hardware**: Apple M5, 16 GB, AC power, `caffeinate -i`; torch 2.14.1, MPS, bf16.
+- **Compute and cost**: finished 2026-10-22 17:38; ≈5.4 h of pure training at ~360 audio-s/s, wall
+  longer because of several external kills (macOS memory pressure and opencode session/server restarts),
+  each resumed from the latest checkpoint. **0 USD**.
+- **Metrics** (greedy decode, bootstrap 1,000; `runs/E-006/eval/best/`):
+
+| Set | WER | 95% CI | E-005 | Δ |
+|---|---|---|---|---|
+| `mls_it_dev` (best/final, 36,296) | 0.3556 | [0.3478, 0.3635] | 0.3808 | −2.52 |
+| `ls_en_dev` (best/final) | 0.2699 | [0.2652, 0.2749] | 0.2946 | −2.47 |
+| macro dev | **0.3127** | — | 0.3377 | **−2.50** |
+| FLEURS-IT **test** | 0.3411 | [0.3294, 0.3531] | 0.3741 | −3.30 |
+| FLEURS-EN **test** | 0.6145 | [0.6007, 0.6303] | 0.6244 | −0.99 |
+| CV IT **dev** | 0.3445 | [0.3409, 0.3479] | 0.3760 | −3.15 |
+| CV IT **test** | 0.3616 | [0.3578, 0.3652] | 0.3948 | −3.32 |
+| T (S1, 200) | 0.5950 | [0.5595, 0.6319] | 0.6535 | −5.85 |
+
+  T ETA: **0.200** (E-005 0.164) — overall WER better, English-term acquisition slightly worse.
+- **Paired differences vs E-005** (same utterances, 1,000 resamples): FLEURS-IT **−3.30** [−3.86,
+  −2.69]; FLEURS-EN **−0.99** [−1.64, −0.23]; CV dev **−3.15** [−3.33, −2.97]; CV test **−3.32**
+  [−3.51, −3.14]; T **−5.85** [−8.37, −3.28]. All significant (no tie).
+  Versus Whisper-tiny (same utterances): FLEURS-IT **+2.02** [0.80, 3.32] worse; CV dev **−14.08**
+  [−14.49, −13.69] better. The gate still fails on FLEURS-IT, with a CI that excludes zero.
+- **Findings**: capacity helps everywhere, most on T and CV; the best dev checkpoint is the final one,
+  so the cosine was still paying off. FLEURS-IT improves 37.41 → **34.11**, halving the gap to
+  Whisper-tiny (32.09) from +5.32 to **+2.02** — still short of the H2 gate. FLEURS-EN remains far from
+  Whisper-tiny auto (61.45 vs 13.86). On CV dev Moth is now **14.08 points better** than Whisper-tiny
+  (34.45 vs 48.53). T improves 65.35 → 59.50, but ETA slips 16.4% → 20.0%, so the mixed-set gain is
+  mostly Italian/fluency, not English terms.
+- **Result**: **E-006 is the new best Moth checkpoint**, but the H2 gate still fails on FLEURS-IT
+  (+2.02 vs Whisper-tiny). The +2 blocks captured ~3 points of the 5.3-point gap; the remaining gap
+  is small enough for decode-side work to matter.
+- **Conclusion**: keep +2 blocks (~12 MB int8). Next, in order: beam search + hotwords + a small
+  IT/EN LM (cheapest remaining; expected to help FLEURS-IT and T), then conv head / 25 Hz+2 if needed.
+  A Whisper-base variant (~20.35 M, ~21 MB int8, FLEURS-IT 18.27) stays the last resort and needs an
+  explicit ceiling decision. H3 remains blocked on R-S1/R-S2 and S2/S3/S4 T recordings.

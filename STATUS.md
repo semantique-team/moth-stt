@@ -1,6 +1,10 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-21** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **206 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-22** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **214 test verdi**, `ruff` pulito.
+>
+> **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
+> ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
+> o superiore) è rimandato a una fase successiva.
 > Questo file dice **dove siamo**; il *come* e il *perché* stanno nei design doc (`docs/01`…`09`) e nel
 > piano (`docs/plans/2026-10-19-implementation-plan.md`, che ha una nota di sync in testa: i suoi checkbox
 > non sono mantenuti, questo file è la fonte live).
@@ -26,6 +30,7 @@
 | **1.1 pool** | **pool.jsonl: 3.137 frasi** (8 categorie, 0 invalide, 58 doppioni scartati), generator `deepseek-v4.1-flash` | `recordings/scripts/pool.jsonl` |
 | **T-S1** | **200 take di S1** (481 s, 12 retake, 48 kHz mono, 1,3–5,6 s) + manifest parziale (200/800) | `recordings/audio/S1/` (fuori git), `recordings/manifests/T.jsonl` |
 | **4.2 H1** | **probe completato** (E-004, poi corretto): encoder congelato + testa lineare su MLS IT. Padded30 96 s 0.7079 vs truncated 320 s 0.7577; il controllo a parità di schedule (C2: truncated 96 s, cosine 3 epoche, fermato a 1) fa **0.7375** [0.7319, 0.7431] contro ~0.7406 del padded → **padding e troncamento sono equivalenti**; i 3,2 punti iniziali erano lo schedule (cosine 1 vs 3 epoche). **Decisione: H2 usa truncated** | `stt/train.py`, `runs/E-004/`, `EXPERIMENTS.md` |
+| **5.1–5.3 H2** | **E-005 completo**: encoder sbloccato, 437,7 h, **72.592 step**, truncated 192 s/32. Dev best macro **33,77%** (IT 38,08 / EN 29,46). Held-out: **FLEURS-IT 37,41%** vs Whisper-tiny 32,09% (**+5,32** [4,10, 6,69]), FLEURS-EN 62,44%, **CV dev 37,60% vs Whisper 48,53% (−10,93** [−11,33, −10,51]**)**, CV test 39,48%, **T S1 65,35% ETA 16,4%** → **gate fallito solo su FLEURS-IT** | `runs/E-005/`, `EXPERIMENTS.md` (E-005) |
 | **T 800 + A** | T portato a **800 frasi (200 per S1–S4)** con quote per categoria; **anchor A** di 60 frasi; recorder/manifest supportano `S4` e `--kind A` | `recordings/scripts/T.jsonl`, `recordings/scripts/A.jsonl`, `recordings/`, docs |
 | **2.5 mel cache** | **cache reale costruita**: **12 set, 509.8 h, 27 GB** (MLS 169.9, CV IT 167.3, LS EN 100, dev/test 72.6), **0 errori**, spot check bit-exact su ogni set → `data/shards/`; report in E-002 + addendum CV | `stt/data/build_mel.py`, `EXPERIMENTS.md` (E-002) |
 | **CV IT 27** | **scaricato e buildato** (2026-10-21): 256.7 h train disponibili → campione 170 h → **167.8 h / 113.118 clip** (593 overlap scartati contro dev/test/T), dev 24.86 h, test 25.81 h; split speaker-disjoint verificati (0 parlanti in comune); id clip univoci | `data/manifests/cv_it_*.jsonl`, `build_report.json`, `runs/E-005/` |
@@ -45,10 +50,16 @@
 - **Review**: le 200 frasi nuove (T-0601…T-0800) sono `reviewed: false`; vanno riviste prima che S4 registri
   (`uv run recordings/generate_scripts.py review --kind T`).
 - **Da generare/importare (tu)**: R-S2 (600–1000) con `recordings/generate_scripts.py` (il pool è fatto).
-- **H2 (E-005) in corso**: `runs/E-005/` — encoder sbloccato, init encoder + testa H1, 438 h (CV IT 167.8 +
-  MLS 169.9 + LS EN 100), **truncated 192 s / 32 clip**, 8 epoche (~72.6k step), selezione macro WER IT+EN.
-  Misurato: 430–520 audio-s/s, 4,2–8,4 GB con `empty_cache_every: 50`; stima **~8–9 h**. Log:
-  `runs/E-005/train.log.jsonl`.
+- **H2 (E-005) completato** (2026-10-21, 72.592 step, ~8 h di training): gate **fallito solo su FLEURS-IT**
+  (37,41% vs 32,09%); su CV dev batte Whisper-tiny (37,60% vs 48,53%). Artefatti: `runs/E-005/`,
+  `EXPERIMENTS.md` (E-005).
+- **E-006 (+2 blocchi) completato** (2026-10-22, 36.296 step, ~5,4 h di training): **nuovo best Moth**.
+  Dev **31,27%** (IT 35,56 / EN 26,99; E-005 33,77). Held-out: FLEURS-IT **34,11%** (E-005 37,41;
+  Whisper-tiny 32,09), FLEURS-EN 61,45%, CV dev **34,45%** (Whisper-tiny 48,53), CV test 36,16%,
+  T **59,50%** (ETA 20,0%, E-005 16,4%). Il gate H2 resta **fallito solo su FLEURS-IT (+2,02)**,
+  ma il gap è più che dimezzato. Artefatti: `runs/E-006/` (config, log, `eval/best/`), `EXPERIMENTS.md`
+  (E-006). Il codice P0 + `head_blocks` e gli artefatti E-005/E-006 sono **committati su `main`**
+  (2026-10-22).
 - **Dati**: CV IT 27 scaricato ed estratto in `data/raw/cv_it_27/` (11 GB di clip + archivio 9.8 GB, ancora su
   disco); manifest **12 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache mel 27 GB.
   Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con `data/raw/fetch.sh`); resta
@@ -59,7 +70,8 @@
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, mixed T, noise; **CV-IT ora disponibile** (14.643 clip test) | S2/S3/S4 + anchor; CLI Whistle/Parakeet |
-| M6 | H3a/H3b dopo H2: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; richiede R-S1 (fatto) e R-S2 | H2 + registrazioni R-S2 |
+| H2 esc. | **Gate H2 fallito solo su FLEURS-IT (+2,02 dopo E-006)**: FLEURS-IT 37,41→34,11. Prossimo: **beam + hotword + LM**; se non basta conv head / 25 Hz+2; Whisper-base resta l'ultima risorsa (tetto ~20 MB, decisione esplicita) | esperimento beam/LM |
+| M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto, manca R-S2 | registrazioni R-S2 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
@@ -68,13 +80,13 @@ Il review **non cambia il piano** e non tocca H2: un item diventa un esperimento
 E-0NN (protocollo: 200 step, stessa config, una variabile). Snapshot del review: H2 a 42,6k step; i numeri
 live sono nei log.
 
-- **P0 — post-H2, worktree fresco da `main`:** fix `dataset.epoch` (oggi l'augmentation è identica a ogni
-  epoca), cache dei memmap, copie ridotte, prefetch 1–2 batch, eval con `inference_mode`/argmax su device.
+- **P0 — fatto (2026-10-22):** fix `dataset.epoch` (+ regression test), cache memmap (nessun guadagno:
+  GPU-bound), eval con `inference_mode`/argmax su device; 214 test verdi.
 - **P1 — post-H2, pesi veri:** checkpoint averaging/EMA, SDPA + time-major + QKV fuso (con test di parità),
   export int8 reale (WER + RTFx), beam/hotword.
 - **P2 — H3:** InterCTC (prima), CR-CTC short fine-tune, noise augmentation, frame-aware batching, LM
   piccolo solo se l'ETA lo richiede.
-- **P3 — solo se il gate H2 fallisce:** conv head → +2 blocchi → 25 Hz+2 blocchi → Whisper-base.
+- **P3 — +2 blocchi fatti (E-006); restano:** conv head → 25 Hz+2 blocchi → Whisper-base.
 - **Vincolo:** niente merge di codice in `main` durante H2, soprattutto il fix `dataset.epoch`
   (cambierebbe l'augmentation al resume delle epoche 5–8).
 
@@ -86,6 +98,23 @@ live sono nei log.
 
 ## Note di contesto utili
 
+- **P0 (2026-10-22)**: fix `dataset.epoch` (l'augmentation ora varia ogni epoca), cache memmap per shard,
+  eval con `inference_mode` + argmax su device; 214 test verdi. La cache memmap **non** ha cambiato il
+  throughput (473 vs ~477 audio-s/s): il training è GPU-bound, non loader-bound.
+- **Whisper-base zero-shot** (riferimento per la futura variante grande): FLEURS-IT **18,27%**, FLEURS-EN
+  **9,88%**, ~20,35 M param → int8 ~21 MB, sopra il tetto dei 20 MB. Whisper-tiny: FLEURS-IT 32,09 / EN
+  13,86; CV dev 48,53.
+- **Working tree**: P0 + `head_blocks` + artefatti E-005/E-006 sono **committati e pushati** su `main`
+  (2026-10-22). Checkpoint, audio e shard mel restano fuori da git (`.gitignore`).
+- **H2 (E-005)**: full fine-tune 437,7 h, 72.592 step. Dev best macro **33,77%** (IT 38,08 / EN 29,46);
+  held-out **FLEURS-IT 37,41%** (Whisper-tiny 32,09%, differenza appaiata +5,32 [4,10, 6,69]),
+  FLEURS-EN 62,44%, **CV dev 37,60% vs Whisper-tiny 48,53% (−10,93 [−11,33, −10,51])**, CV test
+  39,48%, **T S1 65,35%** con ETA 16,4%. Il gate fallisce solo su FLEURS-IT; su CV dev il modello
+  piccolo batte già Whisper-tiny di ~11 punti. Il checkpoint migliore
+  è il 62k (0.3377), non l'ultimo; l'averaging degli ultimi 3 non aiuta. La curva si è appiattita dopo
+  ~62k: più epoche da sole difficilmente chiudono i 5 punti. `runs/E-005/eval/best/` ha ipotesi e metriche.
+- **`dataset.epoch`**: in H2 ogni epoca ha visto la stessa augmentation (`train.py` non aggiornava
+  l'epoca). **Corretto in P0** con regression test; E-006 è il primo run con augmentation variabile.
 - **H1 (E-004, corretto)**: la testa lineare su encoder congelato arriva a 0.7079 su MLS dev e si appiattisce.
   Il primo confronto dava 3,2 punti al padding, ma il controllo con lo **stesso schedule** (cosine 3 epoche,
   fermato a 1) dà 0.7375 vs ~0.7406: **equivalente**. L'encoder maschera il padding e usa sinusoidi generate,

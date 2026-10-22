@@ -1,0 +1,63 @@
+{
+  "system": "whisper-tiny",
+  "variant": "it-greedy",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-22T08:32:24+0200",
+  "sets": {
+    "cv_it_dev_00": {
+      "manifest": "runs/E-005/baselines/manifests/cv_it_dev_00.jsonl",
+      "n": 2940,
+      "errors": [],
+      "audio_seconds": 17851.7,
+      "wall_seconds": 732.488,
+      "rtfx": 24.371310891785107,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    },
+    "cv_it_dev_01": {
+      "manifest": "runs/E-005/baselines/manifests/cv_it_dev_01.jsonl",
+      "n": 2940,
+      "errors": [],
+      "audio_seconds": 17897.44,
+      "wall_seconds": 556.143,
+      "rtfx": 32.18135501450746,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    },
+    "cv_it_dev_02": {
+      "manifest": "runs/E-005/baselines/manifests/cv_it_dev_02.jsonl",
+      "n": 2940,
+      "errors": [],
+      "audio_seconds": 17939.96,
+      "wall_seconds": 566.26,
+      "rtfx": 31.681475873036625,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    },
+    "cv_it_dev_03": {
+      "manifest": "runs/E-005/baselines/manifests/cv_it_dev_03.jsonl",
+      "n": 2940,
+      "errors": [],
+      "audio_seconds": 17916.51,
+      "wall_seconds": 580.048,
+      "rtfx": 30.887980193966023,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    },
+    "cv_it_dev_04": {
+      "manifest": "runs/E-005/baselines/manifests/cv_it_dev_04.jsonl",
+      "n": 2937,
+      "errors": [],
+      "audio_seconds": 17893.46,
+      "wall_seconds": 546.991,
+      "rtfx": 32.71255899860709,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "language": "it",
+  "decode": "greedy",
+  "beam_size": 1,
+  "padded_30s": true,
+  "params_bytes": 148738560
+}

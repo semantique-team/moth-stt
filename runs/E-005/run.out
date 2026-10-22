@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/tancredi/Desktop/semantique/moth-stt/stt/train.py", line 739, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/tancredi/Desktop/semantique/moth-stt/stt/train.py", line 480, in main
+    summary = train(
+              ^^^^^^
+  File "/Users/tancredi/Desktop/semantique/moth-stt/stt/train.py", line 386, in train
+    optimizer.step()
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/lr_scheduler.py", line 166, in wrapper
+    return func.__get__(opt, opt.__class__)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/optimizer.py", line 549, in wrapper
+    out = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/optimizer.py", line 79, in _use_grad
+    ret = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/adam.py", line 248, in step
+    adam(
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/optimizer.py", line 157, in maybe_fallback
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/adam.py", line 970, in adam
+    func(
+  File "/Users/tancredi/Desktop/semantique/moth-stt/.venv/lib/python3.12/site-packages/torch/optim/adam.py", line 456, in _single_tensor_adam
+    exp_avg.lerp_(grad, 1 - device_beta1)
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, mps:0 and cpu!
+{
+  "run": "E-005",
+  "device": "mps",
+  "steps": 72592,
+  "first_loss": 0.8926537036895752,
+  "last_loss": 0.7985013723373413,
+  "dev": {
+    "wer": 0.3385566869410068,
+    "n_utterances": 3939,
+    "sets": {
+      "it": {
+        "wer": 0.38258222585195634,
+        "wer_ci": [
+          0.37439572035042085,
+          0.3899496509619828
+        ],
+        "n_utterances": 1248
+      },
+      "en": {
+        "wer": 0.29453114803005725,
+        "wer_ci": [
+          0.289615662717615,
+          0.2999867346358658
+        ],
+        "n_utterances": 2691
+      }
+    },
+    "wer_ci": null
+  },
+  "parity": null,
+  "resumed_from": "runs/E-005/checkpoints/ckpt_0065195.pt",
+  "epoch": 7,
+  "batch_cursor": 9074,
+  "skipped_nonfinite": 0,
+  "best_metric": 0.3377184692877565,
+  "checkpoint": "runs/E-005/checkpoints/ckpt_0072592.pt",
+  "log": "runs/E-005/train.log.jsonl"
+}
