@@ -188,10 +188,26 @@ def load_index(path: Path | str) -> dict[str, dict]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def read_clip(index: dict[str, dict], shards_dir: Path | str, uid: str) -> np.ndarray:
-    """One clip as float32 ``[80, T]`` from the memory-mapped shard."""
+def read_clip(
+    index: dict[str, dict],
+    shards_dir: Path | str,
+    uid: str,
+    cache: dict[str, np.ndarray] | None = None,
+) -> np.ndarray:
+    """One clip as float32 ``[80, T]`` from the memory-mapped shard.
+
+    ``cache`` (shard name → memmap) avoids re-opening and re-reading the header on every clip;
+    the returned array is always a copy, so callers may modify it.
+    """
     entry = index[uid]
-    array = np.load(Path(shards_dir) / entry["shard"], mmap_mode="r")
+    shard = entry["shard"]
+    if cache is not None:
+        array = cache.get(shard)
+        if array is None:
+            array = np.load(Path(shards_dir) / shard, mmap_mode="r")
+            cache[shard] = array
+    else:
+        array = np.load(Path(shards_dir) / shard, mmap_mode="r")
     start = entry["offset"] * MEL_BINS
     block = array[start : start + entry["frames"] * MEL_BINS]
     return np.asarray(block, dtype=np.float32).reshape(entry["frames"], MEL_BINS).T

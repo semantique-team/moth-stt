@@ -36,7 +36,7 @@ from torch import nn
 
 from stt.data.build_mel import load_index
 from stt.data.dataset import AugmentConfig, MelDataset, collate, plan_batches
-from stt.decode import greedy
+from stt.decode import greedy_ids
 from stt.eval import score_rows
 from stt.manifest import load_manifest
 from stt.model import MothSTT
@@ -338,6 +338,7 @@ def train(
         if state.step >= step_cap or epoch >= epochs:
             break
         state.epoch = epoch
+        dataset.epoch = epoch  # augmentation must differ across epochs (docs/10 §4.2.1)
         state.batch_cursor = batch_index + 1
 
         items = [dataset[position] for position in positions]
@@ -672,13 +673,16 @@ def _evaluate(
     was_training = model.training
     model.eval()
     hyps: dict[str, str] = {}
-    with torch.no_grad():
+    with torch.inference_mode():
         for positions in batches:
             items = [dataset[position] for position in positions]
             tensor, mel_lengths, rows = _prepare_batch(items, input_mode)
             log_probs, out_lengths = model(tensor.to(device), mel_lengths.to(device))
+            ids = log_probs.argmax(dim=-1)
             for offset, row in enumerate(rows):
-                hyps[row["id"]] = greedy(log_probs[offset], int(out_lengths[offset]), pieces)
+                hyps[row["id"]] = greedy_ids(
+                    ids[offset, : int(out_lengths[offset])].tolist(), pieces
+                )
     if was_training:
         model.train()
     scored = score_rows(dataset.rows, hyps, bootstrap=bootstrap, seed=0)

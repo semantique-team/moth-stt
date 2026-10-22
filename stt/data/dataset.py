@@ -184,13 +184,16 @@ class MelDataset:
         self.augment_config = augment
         self.seed = seed
         self.epoch = epoch
+        self._shard_cache: dict[str, np.ndarray] = {}
 
     def __len__(self) -> int:
         return len(self.rows)
 
     def raw_mel(self, position: int) -> np.ndarray:
         """The cached mel, without augmentation."""
-        return read_clip(self.index, self.shards_dir, self.rows[position]["id"])
+        return read_clip(
+            self.index, self.shards_dir, self.rows[position]["id"], self._shard_cache
+        )
 
     def __getitem__(self, position: int) -> dict:
         row = self.rows[position]

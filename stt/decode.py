@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-__all__ = ["BLANK_ID", "greedy", "load_pieces"]
+__all__ = ["BLANK_ID", "greedy", "greedy_ids", "load_pieces"]
 
 BLANK_ID = 0
 _SPACE_MARKER = "▁"
@@ -26,11 +26,10 @@ def load_pieces(vocab_path: Path | str) -> dict[int, str]:
     return {int(identifier): piece for identifier, piece in data.items()}
 
 
-def greedy(log_probs: object, length: int, pieces: Mapping[int, str] | Iterable[str]) -> str:
-    """Decode ``log_probs [T, V]`` (torch tensor or ndarray) with the first ``length`` frames."""
-    array = log_probs.detach().cpu().numpy() if hasattr(log_probs, "detach") else np.asarray(log_probs)
-    frame_ids = array[:length].argmax(axis=-1)
-
+def greedy_ids(
+    frame_ids: Iterable[int], pieces: Mapping[int, str] | Iterable[str]
+) -> str:
+    """Collapse a per-frame id sequence (already argmaxed) and join the pieces."""
     collapsed: list[int] = []
     previous = -1
     for identifier in frame_ids:
@@ -42,3 +41,9 @@ def greedy(log_probs: object, length: int, pieces: Mapping[int, str] | Iterable[
     piece_of = pieces.__getitem__ if isinstance(pieces, Mapping) else lambda index: list(pieces)[index]
     text = "".join(piece_of(identifier) for identifier in collapsed)
     return text.replace(_SPACE_MARKER, " ").strip()
+
+
+def greedy(log_probs: object, length: int, pieces: Mapping[int, str] | Iterable[str]) -> str:
+    """Decode ``log_probs [T, V]`` (torch tensor or ndarray) with the first ``length`` frames."""
+    array = log_probs.detach().cpu().numpy() if hasattr(log_probs, "detach") else np.asarray(log_probs)
+    return greedy_ids(array[:length].argmax(axis=-1), pieces)

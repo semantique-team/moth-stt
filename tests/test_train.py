@@ -10,6 +10,7 @@ import soundfile as sf
 import torch
 
 from stt.data.build_mel import build_shards
+from stt.data.dataset import MelDataset
 from stt.model import MothSTT
 from stt.train import (
     _apply_model_init,
@@ -288,6 +289,29 @@ def test_dev_en_is_scored_separately_and_selects_on_macro(tmp_path: Path) -> Non
         (dev["sets"]["it"]["wer"] + dev["sets"]["en"]["wer"]) / 2
     )
     assert dev["wer_ci"] is None
+
+
+def test_training_updates_the_dataset_epoch(monkeypatch, tmp_path: Path) -> None:
+    data = _make_data(tmp_path, clips=3)
+    config = _config([data], epochs=2, augment="light")
+    seen_epochs: list[int] = []
+    original = MelDataset.__getitem__
+
+    def spy(self, position):
+        if self.augment_config is not None:
+            seen_epochs.append(self.epoch)
+        return original(self, position)
+
+    monkeypatch.setattr(MelDataset, "__getitem__", spy)
+    train(
+        config,
+        device="cpu",
+        max_steps=4,
+        tokenize=_tokenize,
+        pieces={identifier: f"p{identifier}" for identifier in range(17)},
+        out_dir=tmp_path / "run",
+    )
+    assert {0, 1} <= set(seen_epochs)
 
 
 def test_move_optimizer_state_follows_the_model_device() -> None:

@@ -102,6 +102,26 @@ def test_augment_flags_and_determinism() -> None:
     assert np.array_equal(light_first, light_second)
 
 
+def test_read_clip_caches_shard_memmaps(tmp_path, monkeypatch) -> None:
+    index, _ = _tiny_cache(tmp_path)
+    shards = tmp_path / "shards"
+    cache: dict[str, np.ndarray] = {}
+    calls = []
+    original = np.load
+
+    def counting(*args, **kwargs):
+        calls.append(args[0])
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(np, "load", counting)
+    first = read_clip(index, shards, "c0", cache)
+    second = read_clip(index, shards, "c1", cache)
+
+    assert len(calls) == 1
+    assert set(cache) == {index["c0"]["shard"]}
+    assert first.shape[0] == 80 and second.shape[0] == 80
+
+
 def test_dataset_augments_training_and_never_eval(tmp_path) -> None:
     index, rows_by_id = _tiny_cache(tmp_path)
     shards = tmp_path / "shards"
