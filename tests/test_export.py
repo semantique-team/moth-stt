@@ -63,6 +63,20 @@ def test_fp32_parity_on_gate_clips(fp32_export: tuple[MothSTT, Path]) -> None:
         assert float(np.abs(expected - got).max()) <= FP32_GATE
 
 
+def test_export_model_includes_extra_head_blocks() -> None:
+    model = MothSTT(
+        vocab_size=16,
+        encoder_config=EncoderConfig(n_layers=1),
+        head_blocks=2,
+    ).eval()
+    export_model = ExportModel(model).eval()
+    with torch.no_grad():
+        log_probs = export_model(torch.from_numpy(_mel(1.0)))
+
+    assert log_probs.shape == (1, 50, 17)
+    assert len(model.head_blocks) == 2
+
+
 def test_graph_contract_and_in_graph_sinusoids(fp32_export: tuple[MothSTT, Path]) -> None:
     _, path = fp32_export
     graph = onnx.load(str(path)).graph

@@ -112,6 +112,8 @@ class ExportModel(nn.Module):
         for block in encoder.blocks:
             x = block(x, None)
         hidden = encoder.final_ln(x)
+        for block in self.model.head_blocks:
+            hidden = block(hidden, None)
         return F.log_softmax(self.model.head(hidden).float(), dim=-1)
 
 
@@ -374,6 +376,12 @@ def main(argv: list[str] | None = None) -> int:
         help="export a random-weight model (for the web smoke test, Task 3.5)",
     )
     parser.add_argument("--vocab-size", type=int, default=1024, help="with --random")
+    parser.add_argument(
+        "--head-blocks",
+        type=int,
+        default=None,
+        help="extra pre-head blocks; inferred from the checkpoint when omitted",
+    )
     parser.add_argument("--vocab", help="existing vocab.json (pieces by CTC id)")
     parser.add_argument("--tokenizer", help="SentencePiece .model to export vocab.json from")
     parser.add_argument("--version", default="0.1.0")
@@ -405,14 +413,25 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("pass --vocab or --tokenizer (or --random for a smoke-test export)")
 
     if args.checkpoint:
-        state = torch.load(args.checkpoint, map_location="cpu", weights_only=True)
-        if isinstance(state, dict) and "state_dict" in state:
-            state = state["state_dict"]
-        model = MothSTT(vocab_size=vocab_size)
+        state = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+        if isinstance(state, dict):
+            if "model" in state:
+                state = state["model"]
+            elif "state_dict" in state:
+                state = state["state_dict"]
+        head_blocks = args.head_blocks
+        if head_blocks is None:
+            indices = {
+                int(key.split(".")[1])
+                for key in state
+                if key.startswith("head_blocks.") and key.split(".")[1].isdigit()
+            }
+            head_blocks = max(indices) + 1 if indices else 0
+        model = MothSTT(vocab_size=vocab_size, head_blocks=head_blocks)
         model.load_state_dict(state)
     else:
         torch.manual_seed(args.seed)
-        model = MothSTT(vocab_size=vocab_size)
+        model = MothSTT(vocab_size=vocab_size, head_blocks=args.head_blocks or 0)
 
     report = write_release(
         args.out,
