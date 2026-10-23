@@ -19,6 +19,7 @@ from stt.data.dataset import MelDataset, plan_batches
 from stt.decode import beam_search, greedy
 from stt.eval import score_rows
 from stt.hotwords import HotwordIndex, load_hotwords
+from stt.lm import BPETrigramLM
 from stt.model import MothSTT
 from stt.tokenizer import encode, load_tokenizer
 from stt.train import _prepare_batch, load_config, load_sources
@@ -46,6 +47,8 @@ def decode(
     hotwords_path: str | None = None,
     hotword_bonus: float = 1.0,
     hotword_prefix_bonus: float = 0.0,
+    lm_path: str | None = None,
+    lm_weight: float = 0.0,
     limit: int = 0,
 ) -> dict:
     config = load_config(config_path)
@@ -65,6 +68,9 @@ def decode(
             f"hotwords: {hotword_terms} terms, max {hotword_index.max_len} pieces",
             flush=True,
         )
+    lm = BPETrigramLM.load(lm_path) if lm_path else None
+    if lm is not None:
+        print(f"lm: {lm_path} (weight {lm_weight})", flush=True)
     print(
         f"decoder: {decoder}"
         + (f" (beam {beam_width}, top-k {top_k})" if decoder == "beam" else ""),
@@ -113,6 +119,8 @@ def decode(
                             hotwords=hotword_index,
                             hotword_bonus=hotword_bonus,
                             hotword_prefix_bonus=hotword_prefix_bonus,
+                            lm=lm,
+                            lm_weight=lm_weight,
                         )
                     else:
                         hyps[row["id"]] = greedy(
@@ -136,6 +144,8 @@ def decode(
                 "hotword_terms": hotword_terms,
                 "hotword_bonus": hotword_bonus if decoder == "beam" else None,
                 "hotword_prefix_bonus": hotword_prefix_bonus if decoder == "beam" else None,
+                "lm": lm_path,
+                "lm_weight": lm_weight if decoder == "beam" else None,
                 "limit": limit,
             },
             "overall": scored["overall"],
@@ -184,6 +194,8 @@ def main() -> int:
     parser.add_argument("--hotwords", default=None, help="one normalized term per line")
     parser.add_argument("--hotword-bonus", type=float, default=1.0)
     parser.add_argument("--hotword-prefix-bonus", type=float, default=0.0)
+    parser.add_argument("--lm", default=None, help="BPE n-gram LM pickle (.pkl or .pkl.gz)")
+    parser.add_argument("--lm-weight", type=float, default=0.0)
     parser.add_argument("--limit", type=int, default=0, help="random subset per set (tuning only)")
     args = parser.parse_args()
 
@@ -200,6 +212,8 @@ def main() -> int:
         hotwords_path=args.hotwords,
         hotword_bonus=args.hotword_bonus,
         hotword_prefix_bonus=args.hotword_prefix_bonus,
+        lm_path=args.lm,
+        lm_weight=args.lm_weight,
         limit=args.limit,
     )
     return 0

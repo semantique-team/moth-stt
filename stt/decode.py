@@ -15,6 +15,7 @@ from pathlib import Path
 import numpy as np
 
 from stt.hotwords import HotwordIndex
+from stt.lm import BOS_ID, EOS_ID, BPETrigramLM
 
 __all__ = ["BLANK_ID", "beam_search", "greedy", "greedy_ids", "load_pieces"]
 
@@ -86,6 +87,19 @@ def _hotword_bonus(
     return (terminal_bonus if terminal else 0.0) + (prefix_bonus if is_prefix else 0.0)
 
 
+def _lm_bonus(
+    lm: BPETrigramLM | None,
+    prefix: tuple[int, ...],
+    token: int,
+    weight: float,
+) -> float:
+    if lm is None or weight == 0.0:
+        return 0.0
+    prev1 = prefix[-1] - 1 if prefix else BOS_ID
+    prev2 = prefix[-2] - 1 if len(prefix) >= 2 else BOS_ID
+    return weight * lm.score(prev2, prev1, token - 1)
+
+
 def beam_search(
     log_probs: object,
     length: int,
@@ -95,6 +109,8 @@ def beam_search(
     hotwords: HotwordIndex | None = None,
     hotword_bonus: float = 1.0,
     hotword_prefix_bonus: float = 0.0,
+    lm: BPETrigramLM | None = None,
+    lm_weight: float = 0.0,
 ) -> str:
     """CTC prefix beam search over the first ``length`` frames.
 
@@ -149,6 +165,7 @@ def beam_search(
                     bonus = _hotword_bonus(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
+                    bonus += _lm_bonus(lm, prefix, token, lm_weight)
                     new_entry = next_beams.get(new_prefix)
                     if new_entry is None:
                         new_entry = [_NEG_INF, _NEG_INF]
@@ -159,6 +176,7 @@ def beam_search(
                     bonus = _hotword_bonus(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
+                    bonus += _lm_bonus(lm, prefix, token, lm_weight)
                     new_entry = next_beams.get(new_prefix)
                     if new_entry is None:
                         new_entry = [_NEG_INF, _NEG_INF]
@@ -171,7 +189,17 @@ def beam_search(
         )
         beams = dict(ranked[:beam_width])
 
-    best_prefix = max(
-        beams.items(), key=lambda item: logaddexp(item[1][0], item[1][1])
-    )[0]
+    if lm is not None and lm_weight != 0.0:
+
+        def final_score(item: tuple[tuple[int, ...], list[float]]) -> float:
+            prefix, (p_blank, p_nonblank) = item
+            prev1 = prefix[-1] - 1 if prefix else BOS_ID
+            prev2 = prefix[-2] - 1 if len(prefix) >= 2 else BOS_ID
+            return logaddexp(p_blank, p_nonblank) + lm_weight * lm.score(prev2, prev1, EOS_ID)
+
+        best_prefix = max(beams.items(), key=final_score)[0]
+    else:
+        best_prefix = max(
+            beams.items(), key=lambda item: logaddexp(item[1][0], item[1][1])
+        )[0]
     return _ids_to_text(best_prefix, pieces)
