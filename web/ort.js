@@ -8,7 +8,8 @@
 
 import * as ort from "./node_modules/onnxruntime-web/dist/ort.wasm.min.mjs";
 
-import { greedy } from "./decode.js";
+import { beamSearch, greedy } from "./decode.js";
+import { loadLM } from "./lm.js";
 import { computeMel, N_MELS, N_FFT, SAMPLE_RATE } from "./mel.js";
 
 const FILTER_FLOATS = N_MELS * (N_FFT / 2 + 1);
@@ -77,6 +78,11 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
     `${root}${config.features.mel_filters}`,
     files[config.features.mel_filters],
   );
+  let lm = null;
+  if (config.decode?.lm) {
+    const lmBuffer = await fetchChecked(`${root}${config.decode.lm}`, files[config.decode.lm]);
+    lm = loadLM(lmBuffer);
+  }
 
   const vocabJson = JSON.parse(new TextDecoder().decode(vocabBuffer));
   const maxId = Math.max(...Object.keys(vocabJson).map(Number));
@@ -104,7 +110,16 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
     const t2 = performance.now();
     const output = outputs[config.model.output];
     const [, outFrames, vocabSize] = output.dims;
-    const text = greedy(output.data, outFrames, vocabSize, pieces);
+    const decodeConfig = config.decode ?? {};
+    const text =
+      decodeConfig.default === "beam"
+        ? beamSearch(output.data, outFrames, vocabSize, pieces, {
+            beamWidth: decodeConfig.beam ?? 5,
+            topK: decodeConfig.top_k ?? 8,
+            lm,
+            lmWeight: decodeConfig.lm_weight ?? 0,
+          })
+        : greedy(output.data, outFrames, vocabSize, pieces);
     const t3 = performance.now();
     const audioSeconds = pcm.length / SAMPLE_RATE;
     const totalMs = t3 - t0;
@@ -113,6 +128,7 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
       frames,
       outFrames,
       vocabSize,
+      decoder: decodeConfig.default ?? "greedy",
       audioSeconds,
       timings: {
         feature_ms: t1 - t0,

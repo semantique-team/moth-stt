@@ -34,6 +34,16 @@ def test_save_load_roundtrip(tmp_path: Path) -> None:
             assert loaded.score(*context, token) == pytest.approx(lm.score(*context, token))
 
 
+def test_save_browser_writes_the_binary_header(tmp_path: Path) -> None:
+    lm = BPETrigramLM.from_sequences([[1, 2], [1, 2]], min_bigram_count=1, min_trigram_count=1)
+    path = tmp_path / "lm.bin"
+    lm.save_browser(path)
+    data = path.read_bytes()
+
+    assert data[:8] == b"MOTHLMB1"
+    assert len(data) > 8 + 28 + 1026 * 4
+
+
 def test_beam_uses_the_lm_to_break_a_tie() -> None:
     probs = np.full((1, 4), -10.0, dtype=np.float32)
     probs[0, 1] = 0.0

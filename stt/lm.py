@@ -11,6 +11,7 @@ from __future__ import annotations
 import gzip
 import math
 import pickle
+import struct
 from collections import Counter, defaultdict
 from collections.abc import Iterable, Mapping, Sequence
 from pathlib import Path
@@ -153,6 +154,67 @@ class BPETrigramLM:
         else:
             with path.open("wb") as handle:
                 pickle.dump(payload, handle, protocol=4)
+
+    def save_browser(self, path: Path | str, log_scale: float = 0.01) -> None:
+        """Write the compact sparse binary consumed by ``web/lm.js``.
+
+        Layout: magic, header, float32 unigram log-probs, CSR bigrams (context = prev id),
+        CSR trigrams (sorted ``prev2 * V + prev1`` keys). Log-probs are int16-quantized;
+        absent entries fall back exactly like :meth:`score`.
+        """
+        if log_scale <= 0.0:
+            raise ValueError("log_scale must be positive")
+
+        def quantize(value: float) -> int:
+            return max(-32768, min(32767, round(value / log_scale)))
+
+        buffer = bytearray(b"MOTHLMB1")
+        buffer += struct.pack(
+            "<IIfIf",
+            1,
+            LM_VOCAB_SIZE,
+            self.backoff,
+            LM_VOCAB_SIZE,
+            log_scale,
+        )
+        buffer += self._unigram_log.astype("<f4").tobytes()
+
+        bigram_offsets = [0]
+        bigram_tokens: list[int] = []
+        bigram_logs: list[int] = []
+        for prev in range(LM_VOCAB_SIZE):
+            row = self._bigram_log.get(prev, {})
+            for token in sorted(row):
+                bigram_tokens.append(token)
+                bigram_logs.append(quantize(row[token]))
+            bigram_offsets.append(len(bigram_tokens))
+        buffer += struct.pack("<I", LM_VOCAB_SIZE)
+        buffer += struct.pack(f"<{len(bigram_offsets)}I", *bigram_offsets)
+        if bigram_tokens:
+            buffer += struct.pack(f"<{len(bigram_tokens)}H", *bigram_tokens)
+            buffer += struct.pack(f"<{len(bigram_logs)}h", *bigram_logs)
+        while len(buffer) % 4:
+            buffer.append(0)
+
+        contexts = sorted(self._trigram_log)
+        keys = [prev2 * LM_VOCAB_SIZE + prev1 for prev2, prev1 in contexts]
+        trigram_offsets = [0]
+        trigram_tokens: list[int] = []
+        trigram_logs: list[int] = []
+        for context in contexts:
+            row = self._trigram_log[context]
+            for token in sorted(row):
+                trigram_tokens.append(token)
+                trigram_logs.append(quantize(row[token]))
+            trigram_offsets.append(len(trigram_tokens))
+        buffer += struct.pack("<I", len(contexts))
+        if keys:
+            buffer += struct.pack(f"<{len(keys)}I", *keys)
+        buffer += struct.pack(f"<{len(trigram_offsets)}I", *trigram_offsets)
+        if trigram_tokens:
+            buffer += struct.pack(f"<{len(trigram_tokens)}H", *trigram_tokens)
+            buffer += struct.pack(f"<{len(trigram_logs)}h", *trigram_logs)
+        Path(path).write_bytes(buffer)
 
     @classmethod
     def load(cls, path: Path | str) -> BPETrigramLM:

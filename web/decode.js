@@ -1,12 +1,73 @@
 /**
- * Greedy CTC decode (docs/02 §6) — the JS twin of `stt/decode.py`.
+ * CTC decoders (docs/02 §6) — the JS twins of `stt/decode.py`.
  *
- * Argmax per frame → collapse consecutive repeats → drop blanks (id 0) → join the pieces
- * (`▁` becomes a space). `pieces` is indexed by CTC id, with `pieces[0] === ""` for blank.
+ * Greedy: argmax per frame → collapse consecutive repeats → drop blanks (id 0) → join pieces.
+ * Beam: prefix beam search with an optional BPE trigram LM (web/lm.js). `pieces` is indexed by
+ * CTC id, with `pieces[0] === ""` for blank.
  */
+
+import { LM_BOS_ID, LM_EOS_ID } from "./lm.js";
 
 export const BLANK_ID = 0;
 const SPACE_MARKER = "▁";
+
+function idsToText(ids, pieces) {
+  let text = "";
+  for (const id of ids) text += pieces[id] ?? "";
+  return text.split(SPACE_MARKER).join(" ").trim();
+}
+
+function logAddExp(a, b) {
+  if (a === -Infinity) return b;
+  if (b === -Infinity) return a;
+  if (a < b) {
+    const swap = a;
+    a = b;
+    b = swap;
+  }
+  return a + Math.log1p(Math.exp(b - a));
+}
+
+function topKLabels(logProbs, offset, vocabSize, topK) {
+  const top = [];
+  for (let id = 1; id < vocabSize; id += 1) {
+    const value = logProbs[offset + id];
+    if (top.length === topK && value <= top[top.length - 1].value) continue;
+    let position = top.length;
+    while (
+      position > 0 &&
+      (top[position - 1].value < value ||
+        (top[position - 1].value === value && top[position - 1].id > id))
+    ) {
+      position -= 1;
+    }
+    top.splice(position, 0, { id, value });
+    if (top.length > topK) top.pop();
+  }
+  return top;
+}
+
+function updateBeam(next, ids, pBlank, pNonblank) {
+  const key = ids.join(",");
+  let entry = next.get(key);
+  if (!entry) {
+    entry = { ids, pBlank: -Infinity, pNonblank: -Infinity };
+    next.set(key, entry);
+  }
+  if (pBlank !== null) entry.pBlank = logAddExp(entry.pBlank, pBlank);
+  if (pNonblank !== null) entry.pNonblank = logAddExp(entry.pNonblank, pNonblank);
+}
+
+function lmBonus(lm, ids, token, weight) {
+  if (!lm || weight === 0) return 0;
+  const prev1 = ids.length ? ids[ids.length - 1] - 1 : LM_BOS_ID;
+  const prev2 = ids.length >= 2 ? ids[ids.length - 2] - 1 : LM_BOS_ID;
+  return weight * lm.score(prev2, prev1, token - 1);
+}
+
+function beamScore(entry) {
+  return logAddExp(entry.pBlank, entry.pNonblank);
+}
 
 /**
  * @param {Float32Array} logProbs row-major `[frames, vocabSize]` log-probabilities
@@ -32,4 +93,80 @@ export function greedy(logProbs, frames, vocabSize, pieces) {
     previous = best;
   }
   return text.split(SPACE_MARKER).join(" ").trim();
+}
+
+/**
+ * CTC prefix beam search, a port of stt/decode.py.
+ *
+ * @param {Float32Array} logProbs row-major `[frames, vocabSize]`
+ * @param {number} frames usable frames
+ * @param {number} vocabSize `V_ctc`
+ * @param {string[]} pieces piece per CTC id; blank at 0
+ * @param {{beamWidth?: number, topK?: number, lm?: object, lmWeight?: number}} options
+ */
+export function beamSearch(
+  logProbs,
+  frames,
+  vocabSize,
+  pieces,
+  { beamWidth = 5, topK = 8, lm = null, lmWeight = 0 } = {},
+) {
+  if (beamWidth <= 0 || topK <= 0) throw new Error("beamWidth and topK must be positive");
+  if (frames <= 0) return "";
+
+  let beams = new Map([["", { ids: [], pBlank: 0, pNonblank: -Infinity }]]);
+  for (let frame = 0; frame < frames; frame += 1) {
+    const offset = frame * vocabSize;
+    const candidates = topKLabels(logProbs, offset, vocabSize, topK);
+    const blankLogp = logProbs[offset];
+    const next = new Map();
+
+    for (const beam of beams.values()) {
+      const { ids, pBlank, pNonblank } = beam;
+      const total = logAddExp(pBlank, pNonblank);
+      updateBeam(next, ids, total + blankLogp, null);
+
+      const last = ids.length ? ids[ids.length - 1] : -1;
+      for (const { id: token, value: logp } of candidates) {
+        if (token === last) {
+          updateBeam(next, ids, null, pNonblank + logp);
+          const extended = ids.concat(token);
+          updateBeam(
+            next,
+            extended,
+            null,
+            pBlank + logp + lmBonus(lm, ids, token, lmWeight),
+          );
+        } else {
+          const extended = ids.concat(token);
+          updateBeam(
+            next,
+            extended,
+            null,
+            total + logp + lmBonus(lm, ids, token, lmWeight),
+          );
+        }
+      }
+    }
+
+    const ranked = [...next.values()].sort((a, b) => beamScore(b) - beamScore(a));
+    beams = new Map(ranked.slice(0, beamWidth).map((entry) => [entry.ids.join(","), entry]));
+  }
+
+  let best = null;
+  let bestScore = -Infinity;
+  for (const entry of beams.values()) {
+    let score = beamScore(entry);
+    if (lm && lmWeight !== 0) {
+      const ids = entry.ids;
+      const prev1 = ids.length ? ids[ids.length - 1] - 1 : LM_BOS_ID;
+      const prev2 = ids.length >= 2 ? ids[ids.length - 2] - 1 : LM_BOS_ID;
+      score += lmWeight * lm.score(prev2, prev1, LM_EOS_ID);
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = entry;
+    }
+  }
+  return best ? idsToText(best.ids, pieces) : "";
 }
