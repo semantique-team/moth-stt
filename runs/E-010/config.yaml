@@ -1,0 +1,41 @@
+# E-010 — browser beam + LM port (quality path) on top of E-009.
+#
+# No model change. The release config switches to beam 5 + the E-008 BPE trigram LM (browser
+# binary), while the fast greedy path remains available by changing config.decode.default.
+run: E-010
+hypothesis: the E-008 beam + LM decode fits in the browser at >10x RTFx and preserves the
+  Python system's T-set WER within the noise of the int8/browser path.
+date: 2026-10-23
+
+model:
+  checkpoint: runs/E-006/checkpoints/ckpt_best.pt
+  release: release/
+  acoustic_int8_mb: 11.91
+  lm_binary_mb: 5.09
+  package_mb: 17.08
+
+decode:
+  method: beam
+  beam_width: 5
+  top_k: 8
+  lm: release/lm_bpe3.bin
+  lm_weight: 0.2
+
+browser:
+  runtime: onnxruntime-web 1.30.0, WASM, SIMD
+  browser: Chromium headless (Playwright)
+  rtfx_4_threads: {5s: 65.2, 10s: 63.3, 20s: 58.1}
+  rtfx_1_thread: {5s: 30.0, 10s: 28.3, 20s: 25.2}
+  decode_ms_4_threads: {5s: 4.3, 10s: 8.5, 20s: 15.6}
+
+e2e:
+  set: recordings/manifests/T.jsonl, all 200 rows
+  browser_wer: 0.5666
+  python_e008_wer: 0.5537
+  paired_diff: 0.0129
+  paired_diff_ci: [-0.0034, 0.0302]
+  tie: true
+  browser_eta: 0.2119
+  python_e008_eta: 0.2149
+  browser_rtfx_median: 65.0
+  note: per-clip transcripts differ because the browser uses int8 ONNX; the 200-clip WER difference is a tie.

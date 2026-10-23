@@ -494,3 +494,39 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
 - **Conclusion**: next step is the JS beam + LM port and a real-audio e2e parity test (browser vs
   Python E-008 transcripts), then a browser RTFx measurement for the quality path. The acoustic
   int8 export and the greedy fast path are ready.
+
+## E-010 — browser beam + LM quality path (2026-10-23)
+
+- **Date**: 2026-10-23
+- **Hypothesis**: the E-008 beam + LM decoder fits in the browser at >10× RTFx and preserves the
+  Python system's T-set WER within the noise of the int8/browser path.
+- **Method**: `stt/lm.py` grows `save_browser()`, a sparse CSR binary with int16-quantized
+  log-probs (**5.09 MB**) and a Python `BPETrigramLM` source. `web/lm.js` parses it; `web/decode.js`
+  adds a prefix beam port; `web/ort.js` loads the LM and selects beam/greedy from
+  `config.decode`. `runs/E-010/package_browser.py` patches the release config and hashes. Release:
+  E-006 acoustic int8 (11.91 MB) + LM binary (5.09 MB) + filters/vocab = **17.08 MB**.
+  Playwright Chromium headless, WASM SIMD, 3 warm-ups + median of 10 runs; same 5/10/20 s tiling
+  and 1/4 threads as E-009. Real-audio check: all 200 T clips through the browser, compared with
+  Python E-008 hypotheses.
+- **Browser RTFx** (quality path: feature + int8 inference + beam 5 + LM 0.2):
+
+| Threads | 5 s | 10 s | 20 s | decode (5/10/20 s) |
+|---|---|---|---|---|
+| 4 | **65.2×** | **63.3×** | **58.1×** | 4.3 / 8.5 / 15.6 ms |
+| 1 | **30.0×** | **28.3×** | **25.2×** | 4.1 / 8.2 / 15.3 ms |
+
+- **Real-audio parity**: on all 200 T clips the browser beam+LM reaches **56.66% WER** vs
+  **55.37%** for Python E-008; paired difference **+1.29** [−0.34, +3.02] is a **tie** (the browser
+  runs int8 ONNX, so per-clip transcripts differ). Browser ETA **21.19%** vs 21.49% Python — also
+  a tie; median browser RTFx on these short clips is **65.0×**. The quality loss is within the
+  int8/browser noise, not a parser/decoder mismatch.
+- **Findings**: the JS beam + LM cost is small relative to feature extraction and inference
+  (4–16 ms vs ~36–186 ms inference); the quality path still runs at 58–65× on 4 threads and
+  25–30× on 1 thread, comfortably above the 10× bar. The browser package is 17.08 MB, still under
+  the 20 MB ceiling. The fast greedy path can be restored from `config.decode.default`.
+- **Result**: the E-008 quality path now runs in the browser and matches the Python system's
+  aggregate T-set WER on the full 200-clip set (tie). The JSON/ONNX release is ready for a demo e2e.
+- **Caveats**: exact per-clip transcript equality is not expected with int8; hotwords are not
+  ported to JS; T ETA remains the weak spot (browser 21.19%, Python 21.49%).
+- **Conclusion**: next is a full 200-clip browser-vs-Python T e2e and final demo polish; then H3
+  recordings and T ETA work. No further model/capacity change is needed for the H2 gate.
