@@ -28,6 +28,11 @@ browser:
   rtfx_1_thread: {5s: 30.0, 10s: 28.3, 20s: 25.2}
   decode_ms_4_threads: {5s: 4.3, 10s: 8.5, 20s: 15.6}
 
+mic:
+  capture: AudioWorklet -> OfflineAudioContext 16 kHz mono
+  max_seconds: 30
+  test: Playwright fake device, 1.5 s recording -> PCM longer than 0.1 s
+
 e2e:
   set: recordings/manifests/T.jsonl, all 200 rows
   browser_wer: 0.5666

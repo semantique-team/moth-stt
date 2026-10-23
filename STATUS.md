@@ -83,7 +83,8 @@
   Release **17,08 MB**. RTFx quality path: **4T 65,2× / 63,3× / 58,1×** e **1T 30,0× / 28,3× /
   25,2×** su 5/10/20 s; decode 4–16 ms. Su **200 clip T**: WER browser **56,66%** vs Python E-008
   55,37% (diff +1,29 [−0,34, +3,02], **tie**); ETA 21,19% vs 21,49%. Differenze per-clip da int8.
-  Artefatti `runs/E-010/`. Prossimo: demo e2e + H3.
+  Demo: aggiunto **microfono** (AudioWorklet → 16 kHz, max 30 s), testato con fake device. Artefatti
+  `runs/E-010/`. Prossimo: demo e2e + H3.
 - **Dati**: CV IT 27 scaricato ed estratto in `data/raw/cv_it_27/` (11 GB di clip + archivio 9.8 GB, ancora su
   disco); manifest **12 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache mel 27 GB.
   Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con `data/raw/fetch.sh`); resta

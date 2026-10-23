@@ -520,6 +520,10 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   runs int8 ONNX, so per-clip transcripts differ). Browser ETA **21.19%** vs 21.49% Python — also
   a tie; median browser RTFx on these short clips is **65.0×**. The quality loss is within the
   int8/browser noise, not a parser/decoder mismatch.
+- **Mic capture**: the demo now has a guided **Registra / Stop** path: getUserMedia → AudioWorklet
+  PCM → OfflineAudioContext resample to 16 kHz mono, with a 30 s safety limit. Playwright with
+  Chromium's fake audio device records 1.5 s and verifies the resampled PCM; the UI restores the
+  file-input path and disables buttons during capture.
 - **Findings**: the JS beam + LM cost is small relative to feature extraction and inference
   (4–16 ms vs ~36–186 ms inference); the quality path still runs at 58–65× on 4 threads and
   25–30× on 1 thread, comfortably above the 10× bar. The browser package is 17.08 MB, still under
