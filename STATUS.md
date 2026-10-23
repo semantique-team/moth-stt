@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-23** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **224 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-23** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **225 test verdi**, `ruff` pulito.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -73,6 +73,11 @@
   (ETA 21,5%, ancora peggiore del greedy 20,0%). Dev macro **27,05%**. Totale ~15,5 MB
   (acustico ~12 + LM 3,53). Artefatti `runs/E-008/`, `EXPERIMENTS.md` (E-008). Prossimo:
   export LM/beam browser + RTFx; poi ETA su T e H3.
+- **E-009 (export/browser) fatto** (2026-10-23): E-006 int8 **11,91 MB**, fp32 Δ **2,17e-4**,
+  int8 top-1 100%; su 100 clip FLEURS-IT WER 30,65% vs 30,92% PyTorch. Browser WASM reale:
+  **4T 66,4× / 61,3× / 54,6×** e **1T 29,3× / 28,3× / 24,6×** su 5/10/20 s; load 138 ms.
+  Il browser misura ancora il path **greedy**: beam + LM JS non sono ancora portati; totale
+  previsto ~15,5 MB. Artefatti `runs/E-009/`.
 - **Dati**: CV IT 27 scaricato ed estratto in `data/raw/cv_it_27/` (11 GB di clip + archivio 9.8 GB, ancora su
   disco); manifest **12 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache mel 27 GB.
   Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con `data/raw/fetch.sh`); resta
@@ -83,7 +88,7 @@
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, mixed T, noise; **CV-IT ora disponibile** (14.643 clip test) | S2/S3/S4 + anchor; CLI Whistle/Parakeet |
-| H2 gate | **PASSATO a livello di sistema con E-008** (FLEURS-IT 29,02% < 32,09%; CV dev 28,39% < 48,53%). L'acustico E-006 da solo resta sopra Whisper-tiny su FLEURS-IT. Prossimo: export LM+beam browser, RTFx, ETA su T; capacity non più necessaria per il gate | export/browser |
+| H2 gate | **PASSATO a livello di sistema con E-008** (FLEURS-IT 29,02% < 32,09%; CV dev 28,39% < 48,53%). E-009: int8 11,91 MB, **RTFx 54,6–66,4× a 4 thread**. Il browser usa ancora greedy: prossimo **port JS beam+LM** ed e2e parity; ETA su T ancora debole | JS beam/LM |
 | M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto, manca R-S2 | registrazioni R-S2 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
@@ -95,9 +100,9 @@ live sono nei log.
 
 - **P0 — fatto (2026-10-22):** fix `dataset.epoch` (+ regression test), cache memmap (nessun guadagno:
   GPU-bound), eval con `inference_mode`/argmax su device; 214 test verdi.
-- **P1 — fatto in parte (E-007/E-008):** beam (+0,3–0,6 punti) e LM trigram (4–6 punti) implementati;
-  hotwords neutre/non utili sull'ETA. Restano checkpoint averaging/EMA, SDPA + time-major + QKV fuso
-  (con test di parità), export int8 reale (WER + RTFx), export LM/beam browser, redesign hotword.
+- **P1 — fatto in parte (E-007/E-008/E-009):** beam (+0,3–0,6), LM trigram (4–6), int8 reale
+  (11,91 MB, RTFx 54,6–66,4× 4T) implementati; hotwords neutre. Restano checkpoint averaging/EMA,
+  SDPA + time-major + QKV fuso, **port JS beam+LM** ed e2e parity, redesign hotword.
 - **P2 — H3:** InterCTC (prima), CR-CTC short fine-tune, noise augmentation, frame-aware batching;
   il LM piccolo è passato a E-008 (serve per FLEURS, non solo per l'ETA).
 - **P3 — +2 blocchi fatti (E-006); gate H2 passato con LM (E-008).** Capacity ulteriore

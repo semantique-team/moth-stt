@@ -458,3 +458,39 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   browser/ONNX path and measure RTFx; then address T ETA (word-level/contextual LM or better
   hotword design) and H3 recordings. Capacity escalation (conv head / 25 Hz+2) is no longer
   needed for the H2 gate.
+
+## E-009 — real-weight int8 export + browser RTFx (2026-10-23)
+
+- **Date**: 2026-10-23
+- **Hypothesis**: the real E-006 checkpoint (with the two extra head blocks) exports to int8 with
+  no material WER loss and passes the ≥10× browser RTFx bar (4 threads) on the M5.
+- **Method**: `stt/export.py` updated to include `head_blocks` in `ExportModel` and to accept the
+  training checkpoint's `"model"` payload; exported `runs/E-006/checkpoints/ckpt_best.pt` with
+  the real tokenizer to `release/` (int8 dynamic quantization). fp32 parity on 1/5/10/29 s clips;
+  int8 compared with PyTorch greedy on the first 100 FLEURS-IT clips. Browser path unchanged:
+  JS log-mel → onnxruntime-web WASM SIMD → greedy; Playwright Chromium headless, 3 warm-ups +
+  median of 10 runs, 5/10/20 s (fixture tiled), 1 and 4 threads.
+- **Artifact size**: `model.int8.onnx` **11.91 MB** (vs 7.9 MB for the old 4-block model), plus
+  vocab 0.02 MB and mel filters 0.06 MB → **11.99 MB**. With the E-008 LM (3.53 MB) the future
+  package is ≈ **15.5 MB**, still under the 20 MB ceiling.
+- **Export checks**: fp32 max |Δ| **2.17e-4** ≤ 1e-3; int8 top-1 agreement **100%** on the gate
+  clips; int8 max |Δ| 1.72 (logit scale). On 100 FLEURS-IT clips: PyTorch greedy WER **30.92%**,
+  int8 ONNX greedy WER **30.65%**, 50/100 identical transcripts — no material loss.
+- **Browser RTFx** (median, real weights):
+
+| Threads | 5 s | 10 s | 20 s |
+|---|---|---|---|
+| 4 | **66.4×** | **61.3×** | **54.6×** |
+| 1 | **29.3×** | **28.3×** | **24.6×** |
+
+  Load time 138 ms; cross-origin isolated, SIMD active. Feature extraction is roughly half the
+  total time; inference is the rest; greedy decode is <1 ms.
+- **Findings**: the real model is larger but still comfortably above the ≥10× bar; the 4-thread
+  path is 54–66× and the single-thread path is 25–29×. The current browser measurement is the
+  **greedy acoustic path**: E-008's beam + LM is not yet ported to JS, so its browser RTFx and
+  transcript parity remain to be measured. The model export itself is correct: the head blocks
+  are in the graph, and int8 quality is within noise on FLEURS-IT.
+- **Result**: export gate passes; H4 browser speed bar passes on both 1 and 4 threads.
+- **Conclusion**: next step is the JS beam + LM port and a real-audio e2e parity test (browser vs
+  Python E-008 transcripts), then a browser RTFx measurement for the quality path. The acoustic
+  int8 export and the greedy fast path are ready.

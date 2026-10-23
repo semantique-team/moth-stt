@@ -1,0 +1,8 @@
+{
+  "set": "fleurs_it_test",
+  "clips": 100,
+  "pytorch_greedy_wer": 0.3092,
+  "onnx_int8_greedy_wer": 0.3065,
+  "identical_transcripts": 50,
+  "note": "subset of 100 clips, no sorting; int8 difference is within the observed noise on this check"
+}

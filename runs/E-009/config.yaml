@@ -1,0 +1,34 @@
+# E-009 — real-weight ONNX int8 export and browser RTFx (E-006 acoustic model).
+#
+# No training. The browser path measured here is feature + int8 inference + greedy decode; the
+# E-008 beam + LM quality path is not yet ported to JS.
+run: E-009
+hypothesis: the real E-006 checkpoint exports to int8 without material WER loss and stays above
+  the 10x browser RTFx bar (4 threads) on the M5.
+date: 2026-10-23
+
+model:
+  checkpoint: runs/E-006/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  release: release/
+  int8_bytes: 11910000
+
+export:
+  command: uv run python stt/export.py --out release --checkpoint runs/E-006/checkpoints/ckpt_best.pt --tokenizer data/tokenizer/moth_bpe.model --head-blocks 2 --version 0.2.0
+  fp32_max_abs: 0.0002165
+  int8_max_abs: 1.724
+  int8_top1_agreement: 1.0
+  int8_100_fleurs_it:
+    pytorch_wer: 0.3092
+    onnx_int8_wer: 0.3065
+    identical_transcripts: 50
+    clips: 100
+
+browser:
+  runtime: onnxruntime-web 1.30.0, WASM, SIMD
+  browser: Chromium headless (Playwright)
+  fixture: web/tests/fixtures/clip.wav (5 s, tiled to 10/20 s)
+  protocol: 3 warm-ups + median of 10 runs
+  rtfx_4_threads: {5s: 66.4, 10s: 61.3, 20s: 54.6}
+  rtfx_1_thread: {5s: 29.3, 10s: 28.3, 20s: 24.6}
+  load_ms: 138
