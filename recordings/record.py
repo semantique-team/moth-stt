@@ -1,10 +1,11 @@
 """Guided recorder: one sentence per file, no fiddling with a DAW (design: ``docs/03-data.md`` §7).
 
 For every cue it shows the sentence to read, records with Enter (through ``ffmpeg`` /
-AVFoundation on the default microphone), and files it as ``<speaker>_<NNNN>.wav`` under
-``recordings/audio/<speaker>/``. Keys: Enter = record/next, ``r`` = redo the same sentence,
-``p`` = play back, ``s`` = skip, ``q`` = quit. Retakes and skips are appended to
-``session.log.jsonl`` next to the audio.
+AVFoundation on the default microphone), and files it as ``<speaker>_<NNNN>.wav``. T lives under
+``recordings/audio/<speaker>/``, A under ``recordings/audio/anchor/<speaker>/`` and R under
+``recordings/audio/R-<speaker>/<speaker>/`` so T and R never collide. Keys: Enter = record/next,
+``r`` = redo the same sentence, ``p`` = play back, ``s`` = skip, ``q`` = quit. Retakes and skips
+are appended to ``session.log.jsonl`` next to the audio.
 
 Prerequisites: ``brew install ffmpeg``; macOS asks for microphone permission the first time (if
 denied: System Settings → Privacy & Security → Microphone → enable for the terminal app).
@@ -19,7 +20,7 @@ import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 
-from recordings.build_manifest import find_audio, inspect_audio
+from recordings.build_manifest import default_audio_dir, find_audio, inspect_audio
 from recordings.generate_scripts import load_script, script_path
 
 __all__ = ["append_session_log", "main", "next_audio_path", "plan_session"]
@@ -108,9 +109,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--device", default=":0", help="AVFoundation input (':0' = default mic)")
     args = parser.parse_args(argv)
 
-    audio_dir = args.audio_dir or (
-        "recordings/audio/anchor" if args.kind == "A" else "recordings/audio"
-    )
+    audio_dir = args.audio_dir or default_audio_dir(args.kind, args.speaker)
     script_speaker = args.speaker if args.kind == "R" else None
     rows = load_script(script_path(Path(args.scripts_dir), args.kind, script_speaker))
     cues = [

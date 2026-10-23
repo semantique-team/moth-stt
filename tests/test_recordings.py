@@ -5,7 +5,13 @@ import numpy as np
 import pytest
 import soundfile as sf
 
-from recordings.build_manifest import build_manifest, build_report, cues_for, find_audio
+from recordings.build_manifest import (
+    build_manifest,
+    build_report,
+    cues_for,
+    default_audio_dir,
+    find_audio,
+)
 from recordings.generate_scripts import script_path
 from recordings.record import append_session_log, next_audio_path, plan_session
 
@@ -47,6 +53,15 @@ def test_cues_for_filters_and_orders() -> None:
     ]
     cues = cues_for(rows, "S1")
     assert [row["id"] for row in cues] == ["T-0002", "T-0003"]
+
+
+def test_default_audio_dirs_separate_t_and_r() -> None:
+    assert default_audio_dir("T", "S1") == Path("recordings/audio")
+    assert default_audio_dir("A", "S2") == Path("recordings/audio/anchor")
+    assert default_audio_dir("R", "S1") == Path("recordings/audio/R-S1")
+    assert default_audio_dir("R", "S2") == Path("recordings/audio/R-S2")
+    with pytest.raises(ValueError, match="S1 or S2"):
+        default_audio_dir("R", "S3")
 
 
 def test_find_audio_prefers_wav_and_finds_m4a(tmp_path: Path) -> None:

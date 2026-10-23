@@ -21,7 +21,16 @@ import soundfile as sf
 
 from recordings.generate_scripts import load_script, script_path
 
-__all__ = ["AUDIO_EXTENSIONS", "build_manifest", "build_report", "cues_for", "find_audio", "inspect_audio", "main"]
+__all__ = [
+    "AUDIO_EXTENSIONS",
+    "build_manifest",
+    "build_report",
+    "cues_for",
+    "default_audio_dir",
+    "find_audio",
+    "inspect_audio",
+    "main",
+]
 
 AUDIO_EXTENSIONS = (".wav", ".m4a", ".flac")
 
@@ -29,6 +38,21 @@ MIN_SECONDS = 1.0
 MAX_SECONDS = 30.0
 SILENCE_PEAK = 1e-3
 CLIPPING_RATIO = 0.01
+
+
+def default_audio_dir(kind: str, speaker: str | None = None) -> Path:
+    """Where a recording kind lives: T at the legacy root, A and R in separate trees.
+
+    T and R are different scripts for the same speaker; sharing ``recordings/audio/S1`` would
+    make ``<speaker>_<index>.wav`` ambiguous (and made a resume skip/overwrite the wrong cues).
+    """
+    if kind == "A":
+        return Path("recordings/audio/anchor")
+    if kind == "R":
+        if speaker not in ("S1", "S2"):
+            raise ValueError("kind R needs speaker S1 or S2")
+        return Path("recordings/audio") / f"R-{speaker}"
+    return Path("recordings/audio")
 
 
 def cues_for(rows: list[dict], speaker: str | None) -> list[dict]:
@@ -208,9 +232,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"wrote {count} cues to {args.out}")
         return 0
 
-    audio_dir = args.audio_dir or (
-        "recordings/audio/anchor" if args.kind == "A" else "recordings/audio"
-    )
+    if args.kind == "R" and not args.speaker:
+        parser.error("--speaker is required for kind R")
+    audio_dir = args.audio_dir or default_audio_dir(args.kind, args.speaker)
     result = build_manifest(
         args.kind,
         args.scripts_dir,

@@ -1,5 +1,8 @@
 # Recordings — protocol and sentence scripts
 
+> External speakers: see [`EXTERNAL-SPEAKERS.md`](EXTERNAL-SPEAKERS.md) for the Mac recorder,
+> the Windows/phone path, speaker roles and the privacy rules.
+
 This folder holds the recording protocol, the script tooling and (soon) the data card. Audio files
 never enter git; they live on Hugging Face once the dataset is published (see `docs/03-data.md` §7).
 
@@ -112,9 +115,11 @@ uv run recordings/record.py --speaker S1 --kind T
 
 It shows one sentence at a time (`[12/200] T-0012  (single_word)`), Enter starts the recording,
 Enter stops it; after each take `[Enter]` = next, `p` = play back, `r` = redo the same sentence;
-`s` = skip, `q` = quit. Files land as `recordings/audio/S1/S1_0001.wav`; retakes and skips are
-appended to `recordings/audio/S1/session.log.jsonl`. Useful flags: `--start N` (resume),
-`--dry-run` (list only what is missing), `--overwrite`, `--device` (check
+`s` = skip, `q` = quit. T files land as `recordings/audio/S1/S1_0001.wav`; R files under
+`recordings/audio/R-S1/S1/`, A under `recordings/audio/anchor/S1/`. Retakes and skips are
+appended to `session.log.jsonl` next to the audio. **Rerunning the same command resumes
+automatically**: existing files are skipped, so `--start N` is only an override. Useful flags:
+`--start N` (force an index), `--dry-run` (list only what is missing), `--overwrite`, `--device` (check
 `ffmpeg -f avfoundation -list_devices true -i ""` for the microphone index).
 
 **Phone path (S2, S3) — one memo per sentence:** read from the cue sheet, record one sentence per
