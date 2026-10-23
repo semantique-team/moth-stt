@@ -9,7 +9,14 @@ export default defineConfig({
   use: {
     baseURL: "http://127.0.0.1:8765",
     headless: true,
-    launchOptions: { args: ["--enable-features=SharedArrayBuffer"] },
+    permissions: ["microphone"],
+    launchOptions: {
+      args: [
+        "--enable-features=SharedArrayBuffer",
+        "--use-fake-device-for-media-stream",
+        "--use-fake-ui-for-media-stream",
+      ],
+    },
   },
   webServer: {
     command: "python3 server.py --root .. --port 8765",
