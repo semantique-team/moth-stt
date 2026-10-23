@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-22** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **221 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-23** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **224 test verdi**, `ruff` pulito.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -66,6 +66,13 @@
   T 59,07% (ETA 20,9%). Hotwords 580 termini, bonus 1,0: FLEURS/CV neutre, T 58,73% ma **ETA 21,8%**
   (peggio del greedy 20,0%): non bastano. Artefatti `runs/E-007/`, `EXPERIMENTS.md` (E-007).
   Prossimo: **LM piccolo (E-008)**; se non chiude, conv head / 25 Hz+2.
+- **E-008 (LM) completato** (2026-10-22, decode-only): BPE trigram **3,53 MB** (195k bigrammi,
+  800k trigrammi, backoff 0,4), shallow fusion α=0,2 sul beam E-007. **Il gate H2 passa a livello
+  di sistema**: FLEURS-IT **29,02%** vs Whisper-tiny 32,09% (−3,06 [−4,29, −1,71]); CV dev
+  **28,39%** vs 48,53% (−20,13 [−20,52, −19,70]); FLEURS-EN 56,99%, CV test 30,07%, T 55,37%
+  (ETA 21,5%, ancora peggiore del greedy 20,0%). Dev macro **27,05%**. Totale ~15,5 MB
+  (acustico ~12 + LM 3,53). Artefatti `runs/E-008/`, `EXPERIMENTS.md` (E-008). Prossimo:
+  export LM/beam browser + RTFx; poi ETA su T e H3.
 - **Dati**: CV IT 27 scaricato ed estratto in `data/raw/cv_it_27/` (11 GB di clip + archivio 9.8 GB, ancora su
   disco); manifest **12 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache mel 27 GB.
   Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con `data/raw/fetch.sh`); resta
@@ -76,7 +83,7 @@
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, mixed T, noise; **CV-IT ora disponibile** (14.643 clip test) | S2/S3/S4 + anchor; CLI Whistle/Parakeet |
-| H2 esc. | **Gate H2 fallito solo su FLEURS-IT (+1,68 dopo E-007 beam)**: FLEURS-IT 37,41→34,11→33,77. Beam aiuta ma non chiude; hotwords non migliorano l'ETA. Prossimo **LM (E-008)**; se non basta conv head / 25 Hz+2; Whisper-base resta l'ultima risorsa (tetto ~20 MB, decisione esplicita) | E-008 |
+| H2 gate | **PASSATO a livello di sistema con E-008** (FLEURS-IT 29,02% < 32,09%; CV dev 28,39% < 48,53%). L'acustico E-006 da solo resta sopra Whisper-tiny su FLEURS-IT. Prossimo: export LM+beam browser, RTFx, ETA su T; capacity non più necessaria per il gate | export/browser |
 | M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto, manca R-S2 | registrazioni R-S2 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
@@ -88,12 +95,14 @@ live sono nei log.
 
 - **P0 — fatto (2026-10-22):** fix `dataset.epoch` (+ regression test), cache memmap (nessun guadagno:
   GPU-bound), eval con `inference_mode`/argmax su device; 214 test verdi.
-- **P1 — fatto in parte (E-007):** beam implementato e misurato (utile ~0,3–0,6 punti); hotwords
-  implementate ma neutre/non utili sull'ETA. Restano checkpoint averaging/EMA, SDPA + time-major + QKV
-  fuso (con test di parità), export int8 reale (WER + RTFx), redesign hotword (prefix/fuzzy/word-level).
+- **P1 — fatto in parte (E-007/E-008):** beam (+0,3–0,6 punti) e LM trigram (4–6 punti) implementati;
+  hotwords neutre/non utili sull'ETA. Restano checkpoint averaging/EMA, SDPA + time-major + QKV fuso
+  (con test di parità), export int8 reale (WER + RTFx), export LM/beam browser, redesign hotword.
 - **P2 — H3:** InterCTC (prima), CR-CTC short fine-tune, noise augmentation, frame-aware batching;
   il LM piccolo è passato a E-008 (serve per FLEURS, non solo per l'ETA).
-- **P3 — +2 blocchi fatti (E-006); restano:** conv head → 25 Hz+2 blocchi → Whisper-base.
+- **P3 — +2 blocchi fatti (E-006); gate H2 passato con LM (E-008).** Capacity ulteriore
+  (conv head → 25 Hz+2) non serve per il gate; resta un'opzione se si vuole alzare la qualità
+  oltre il tetto attuale.
 - **Vincolo:** niente merge di codice durante un training attivo; E-006 è chiuso ed E-007 è
   decode-only, quindi il prossimo run (LM) può partire dal working tree attuale.
 

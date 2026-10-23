@@ -411,3 +411,50 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   beam (E-008); if that does not close the gap, move to capacity (conv head / 25 Hz+2). Hotword
   design can be revisited with prefix/fuzzy matching or a word-level lexicon, but it is not the
   first lever. H3 still needs the missing recordings.
+
+## E-008 — small BPE trigram LM in shallow fusion (2026-10-22)
+
+- **Date**: 2026-10-22
+- **Hypothesis**: a small, edge-sized n-gram LM added to E-007 beam search closes the remaining
+  FLEURS-IT gap and improves all domains without changing the acoustic model or training on
+  held-out text.
+- **Method**: E-006 best frozen. BPE trigram over the 1024-piece tokenizer vocabulary with
+  stupid backoff 0.4; counts pruned at 2 (195,403 bigram entries, 799,918 trigram entries;
+  **3.53 MB gzip**). Trained only on `cv_it_train`, `mls_it_train`, `ls_en_train` — 182,441
+  training utterances; no dev/test transcript is read. Shallow fusion in the E-007 beam
+  (width 5, top-8), `score = CTC log P + 0.2 · LM log P`; α=0.2 selected on dev (200-clip subset,
+  confirmed on full dev), held-out evaluated once. No hotwords in this run.
+- **Compute and cost**: LM build 6.2 s; decode-only eval ≈3 min on M5/MPS. **0 USD**.
+- **Metrics** (bootstrap 1,000; `runs/E-008/eval/w0.2/`):
+
+| Set | E-006 greedy | E-007 beam | E-008 beam + LM 0.2 |
+|---|---|---|---|
+| Dev macro | 0.3127 | 0.3084 | **0.2705** |
+| FLEURS-IT **test** | 0.3411 | 0.3377 | **0.2902** |
+| FLEURS-EN **test** | 0.6145 | 0.6083 | **0.5699** |
+| CV IT **dev** | 0.3445 | 0.3398 | **0.2839** |
+| CV IT **test** | 0.3616 | 0.3568 | **0.3007** |
+| T (S1, 200) | 0.5950 | 0.5907 | **0.5537** |
+
+  T ETA: 0.200 → 0.209 → **0.2149**. T WER improves, but English-term acquisition remains the
+  weak spot; the LM does not fix it.
+- **Paired differences vs E-006 greedy** (same utterances, 1,000 resamples): FLEURS-IT **−5.08**
+  [−5.61, −4.54]; FLEURS-EN **−4.46** [−5.07, −3.90]; CV dev **−6.05** [−6.22, −5.88]; CV test
+  **−6.08** [−6.25, −5.91]; T **−4.13** [−6.26, −2.25]. All significant.
+- **Versus Whisper-tiny**: FLEURS-IT **29.02 vs 32.09** = **−3.06** [−4.29, −1.71] (Moth better);
+  CV dev **28.39 vs 48.53** = **−20.13** [−20.52, −19.70] (Moth better). **Both H2 gate
+  conditions now pass at system level** with the LM-assisted decoder; the E-006 acoustic model
+  alone still fails FLEURS-IT.
+- **Findings**: the tiny LM is the largest single decode-side win on this model: it recovers
+  ~4–6 WER points across domains, far more than beam or hotwords, and puts FLEURS-IT below
+  Whisper-tiny for the first time. It is domain-sensitive (read/audiobook transcripts) but the
+  held-out FLEURS gain is large and significant. Size: ~12 MB int8 acoustic model + 3.53 MB LM
+  ≈ **15.5 MB**, still under the ~20 MB ceiling. Caveats: the LM is a Python pickle, not yet
+  exported to the browser; T ETA does not improve; a word-level/contextual LM may be needed for
+  the mixed English terms.
+- **Result**: **E-008 is the new best Moth system; the H2 gate passes on FLEURS-IT and CV dev.**
+  This is a system-level pass with the LM decoder, not an acoustic-only pass.
+- **Conclusion**: freeze E-008 as the quality configuration. Next: export the LM and beam to the
+  browser/ONNX path and measure RTFx; then address T ETA (word-level/contextual LM or better
+  hotword design) and H3 recordings. Capacity escalation (conv head / 25 Hz+2) is no longer
+  needed for the H2 gate.
