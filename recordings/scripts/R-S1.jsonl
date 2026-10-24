@@ -602,7 +602,7 @@
 {"text": "evita di chattare durante la riunione", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0602", "reviewed": false}
 {"text": "abbiamo prenotato una sala nel coworking", "category": "single_word", "en_spans": [[5, 6]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0603", "reviewed": false}
 {"text": "il coworking ha una stampante veloce", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0604", "reviewed": false}
-{"text": "la cpu del server è al limite", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0605", "reviewed": false}
+{"text": "la cpu del server è al limite", "category": "acronym", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0605", "reviewed": false}
 {"text": "controlla la temperatura della cpu", "category": "acronym", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0606", "reviewed": false}
 {"text": "devi downloadare l'allegato entro stasera", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0607", "reviewed": false}
 {"text": "riesci a downloadare il pacchetto completo", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0608", "reviewed": false}

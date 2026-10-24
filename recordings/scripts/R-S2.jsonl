@@ -169,7 +169,7 @@
 {"text": "domani vado in ufficio con il treno delle sette", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0169", "reviewed": false}
 {"text": "la riunione di famiglia è rimandata a domenica", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0170", "reviewed": false}
 {"text": "il museo apre alle nove e chiude alle sei", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0171", "reviewed": false}
-{"text": "abbiamo prenotato un tavolo per quattro persone", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0172", "reviewed": false}
+{"text": "ho prenotato il ristorante per sabato sera", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0172", "reviewed": false}
 {"text": "il treno per milano parte dal binario tre", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0173", "reviewed": false}
 {"text": "la biblioteca chiude per ferie ad agosto", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0174", "reviewed": false}
 {"text": "ho portato la macchina dal meccanico stamattina", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0175", "reviewed": false}
@@ -204,3 +204,141 @@
 {"text": "è inutile debuggare adesso", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0204", "reviewed": false}
 {"text": "dobbiamo testare tutto prima di uscire", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0205", "reviewed": false}
 {"text": "ho committato sul ramo sbagliato", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0206", "reviewed": false}
+{"text": "durante le ferie il backlog è cresciuto", "category": "single_word", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0207", "reviewed": false}
+{"text": "la release è bloccata da un controllo", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0208", "reviewed": false}
+{"text": "questo incident è chiuso in fretta", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0209", "reviewed": false}
+{"text": "il postmortem è stato utile a tutti", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0210", "reviewed": false}
+{"text": "la latency è salita dopo il cambio", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0211", "reviewed": false}
+{"text": "il firewall blocca il traffico in uscita", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0212", "reviewed": false}
+{"text": "il malware è entrato da un allegato", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0213", "reviewed": false}
+{"text": "il token scade dopo un'ora", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0214", "reviewed": false}
+{"text": "la cache va svuotata ogni tanto", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0215", "reviewed": false}
+{"text": "il cluster ha perso un nodo", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0216", "reviewed": false}
+{"text": "il container non parte più", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0217", "reviewed": false}
+{"text": "il log è pieno di avvisi", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0218", "reviewed": false}
+{"text": "un alert è arrivato troppo tardi", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0219", "reviewed": false}
+{"text": "il runbook spiega tutti i passi", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0220", "reviewed": false}
+{"text": "il playbook è stato aggiornato", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0221", "reviewed": false}
+{"text": "questo epic è troppo grande", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0222", "reviewed": false}
+{"text": "la story non è ancora stimata", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0223", "reviewed": false}
+{"text": "lo scope del progetto è cambiato", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0224", "reviewed": false}
+{"text": "il requirement principale è la velocità", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0225", "reviewed": false}
+{"text": "il wireframe è pronto per la revisione", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0226", "reviewed": false}
+{"text": "il mockup piace al cliente", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0227", "reviewed": false}
+{"text": "il survey ha raccolto poche risposte", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0228", "reviewed": false}
+{"text": "il processo di offboarding richiede due settimane", "category": "single_word", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0229", "reviewed": false}
+{"text": "quella invoice è stata pagata in ritardo", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0230", "reviewed": false}
+{"text": "il vendor ha consegnato in ritardo", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0231", "reviewed": false}
+{"text": "lo stakeholder vuole più dettagli", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0232", "reviewed": false}
+{"text": "il churn è sotto controllo", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0233", "reviewed": false}
+{"text": "la revenue è cresciuta del dieci per cento", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0234", "reviewed": false}
+{"text": "il downtime è durato tre ore", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0235", "reviewed": false}
+{"text": "il proof of concept è pronto", "category": "phrase", "en_spans": [[1, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0236", "reviewed": false}
+{"text": "serve una change request per questo", "category": "phrase", "en_spans": [[2, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0237", "reviewed": false}
+{"text": "la root cause non è chiara", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0238", "reviewed": false}
+{"text": "la code review è rimandata", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0239", "reviewed": false}
+{"text": "il pair programming aiuta molto", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0240", "reviewed": false}
+{"text": "il bug bounty è aperto a tutti", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0241", "reviewed": false}
+{"text": "il feature flag è spento", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0242", "reviewed": false}
+{"text": "il roll out è iniziato ieri", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0243", "reviewed": false}
+{"text": "il blue green deploy è più sicuro", "category": "phrase", "en_spans": [[1, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0244", "reviewed": false}
+{"text": "il load balancer è saturo", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0245", "reviewed": false}
+{"text": "il data breach va denunciato", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0246", "reviewed": false}
+{"text": "il pen test è fissato per venerdì", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0247", "reviewed": false}
+{"text": "il zero day è stato corretto", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0248", "reviewed": false}
+{"text": "il time sheet va compilato", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0249", "reviewed": false}
+{"text": "il business case non convince", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0250", "reviewed": false}
+{"text": "il break even è ancora lontano", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0251", "reviewed": false}
+{"text": "il cash flow è negativo", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0252", "reviewed": false}
+{"text": "il go to market è pronto", "category": "phrase", "en_spans": [[1, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0253", "reviewed": false}
+{"text": "il content marketing funziona", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0254", "reviewed": false}
+{"text": "la lead generation è ferma", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0255", "reviewed": false}
+{"text": "il churn rate è alto", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0256", "reviewed": false}
+{"text": "il net promoter score è salito", "category": "phrase", "en_spans": [[1, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0257", "reviewed": false}
+{"text": "il focus group ha dato spunti", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0258", "reviewed": false}
+{"text": "lo spreadsheet è su google sheets", "category": "brand", "en_spans": [[4, 6]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0259", "reviewed": false}
+{"text": "la bacheca è su monday", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0260", "reviewed": false}
+{"text": "il documento è su confluence", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0261", "reviewed": false}
+{"text": "la chat è su discord", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0262", "reviewed": false}
+{"text": "le note sono su obsidian", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0263", "reviewed": false}
+{"text": "il design è su sketch", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0264", "reviewed": false}
+{"text": "la fattura è su xero", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0265", "reviewed": false}
+{"text": "il pagamento è su revolut", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0266", "reviewed": false}
+{"text": "il pacco è su amazon", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0267", "reviewed": false}
+{"text": "la mappa è su waze", "category": "brand", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0268", "reviewed": false}
+{"text": "l'annuncio è su facebook", "category": "brand", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0269", "reviewed": false}
+{"text": "il dns non risolve il nome", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0270", "reviewed": false}
+{"text": "il dhcp assegna gli indirizzi", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0271", "reviewed": false}
+{"text": "la vlan è configurata male", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0272", "reviewed": false}
+{"text": "il sso aziendale non funziona", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0273", "reviewed": false}
+{"text": "la mfa è obbligatoria", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0274", "reviewed": false}
+{"text": "il tls va aggiornato", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0275", "reviewed": false}
+{"text": "il http risponde in chiaro", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0276", "reviewed": false}
+{"text": "il json è malformato", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0277", "reviewed": false}
+{"text": "il csv ha una colonna in più", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0278", "reviewed": false}
+{"text": "il xml è troppo grande", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0279", "reviewed": false}
+{"text": "il nas ha due dischi", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0280", "reviewed": false}
+{"text": "il pii va protetto", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0281", "reviewed": false}
+{"text": "il tco è troppo alto", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0282", "reviewed": false}
+{"text": "il capex è stato tagliato", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0283", "reviewed": false}
+{"text": "questo opex cresce ogni anno", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0284", "reviewed": false}
+{"text": "il psu è rumoroso", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0285", "reviewed": false}
+{"text": "il ssl è scaduto ieri", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0286", "reviewed": false}
+{"text": "il ftp non è sicuro", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0287", "reviewed": false}
+{"text": "il smtp è lento", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0288", "reviewed": false}
+{"text": "il nat complica la rete", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0289", "reviewed": false}
+{"text": "dobbiamo parsare i dati grezzi", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0290", "reviewed": false}
+{"text": "ho renderizzato il video", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0291", "reviewed": false}
+{"text": "dobbiamo triggerare il processo", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0292", "reviewed": false}
+{"text": "ho scriptato la procedura", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0293", "reviewed": false}
+{"text": "dobbiamo hashare la password", "category": "italianized", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0294", "reviewed": false}
+{"text": "hanno hostato il sito da noi", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0295", "reviewed": false}
+{"text": "dobbiamo settare la variabile", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0296", "reviewed": false}
+{"text": "ho loggato l'errore nel registro", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0297", "reviewed": false}
+{"text": "dobbiamo buildare l'immagine", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0298", "reviewed": false}
+{"text": "ho clonato il repository", "category": "italianized", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0299", "reviewed": false}
+{"text": "dobbiamo forkare il progetto", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0300", "reviewed": false}
+{"text": "hanno droppato la connessione", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0301", "reviewed": false}
+{"text": "dobbiamo pingare il server", "category": "italianized", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0302", "reviewed": false}
+{"text": "dobbiamo printare il risultato", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0303", "reviewed": false}
+{"text": "conviene wrappare tutto in una classe", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0304", "reviewed": false}
+{"text": "dobbiamo splittare il traffico", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0305", "reviewed": false}
+{"text": "dobbiamo schedulare il backup", "category": "italianized", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0306", "reviewed": false}
+{"text": "hanno cachato la pagina", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0307", "reviewed": false}
+{"text": "dobbiamo flippare la configurazione", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0308", "reviewed": false}
+{"text": "dobbiamo scannare la rete", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0309", "reviewed": false}
+{"text": "dobbiamo mockare il servizio", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0310", "reviewed": false}
+{"text": "hanno deployato senza avvisare", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0311", "reviewed": false}
+{"text": "dobbiamo rollbackare la modifica", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0312", "reviewed": false}
+{"text": "ho committato senza controllare", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0313", "reviewed": false}
+{"text": "dobbiamo stressare il sistema", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0314", "reviewed": false}
+{"text": "il backlog è pieno quindi serve un planning serio", "category": "switch", "en_spans": [[1, 2], [7, 8]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0315", "reviewed": false}
+{"text": "la release slitta e il team è stanco", "category": "switch", "en_spans": [[1, 2], [5, 6]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0316", "reviewed": false}
+{"text": "il feedback è buono ma il pricing è alto", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0317", "reviewed": false}
+{"text": "serve un hotfix prima della demo", "category": "switch", "en_spans": [[2, 3], [5, 6]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0318", "reviewed": false}
+{"text": "il budget è finito e il forecast è incerto", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0319", "reviewed": false}
+{"text": "la dashboard è lenta e il database è enorme", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0320", "reviewed": false}
+{"text": "il ticket è chiuso ma il bug resta", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0321", "reviewed": false}
+{"text": "il workshop è utile e il feedback è chiaro", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0322", "reviewed": false}
+{"text": "la deadline è saltata e il planning è aperto", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0323", "reviewed": false}
+{"text": "il manager è nuovo e il team è piccolo", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0324", "reviewed": false}
+{"text": "la feature è pronta e il rollout parte lunedì", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0325", "reviewed": false}
+{"text": "il server è acceso ma il deploy è fermo", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0326", "reviewed": false}
+{"text": "la pipeline è veloce e il build è stabile", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0327", "reviewed": false}
+{"text": "il report è pronto e il deck è quasi finito", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0328", "reviewed": false}
+{"text": "il meeting è lungo e il briefing è inutile", "category": "switch", "en_spans": [[1, 2], [6, 7]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0329", "reviewed": false}
+{"text": "domenica andiamo al mare con i bambini", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0330", "reviewed": false}
+{"text": "il fornaio apre alle sei del mattino", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0331", "reviewed": false}
+{"text": "ho lasciato le chiavi sul tavolo della cucina", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0332", "reviewed": false}
+{"text": "la partita è finita con un pareggio", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0333", "reviewed": false}
+{"text": "abbiamo piantato due alberi in giardino", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0334", "reviewed": false}
+{"text": "il medico mi ha consigliato di camminare", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0335", "reviewed": false}
+{"text": "la mostra fotografica chiude domenica", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0336", "reviewed": false}
+{"text": "preparo la cena per sette e mezza", "category": "control_it", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0337", "reviewed": false}
+{"text": "we should review the numbers before the meeting", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0338", "reviewed": false}
+{"text": "the client asked for a different design", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0339", "reviewed": false}
+{"text": "i will send the files tomorrow morning", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0340", "reviewed": false}
+{"text": "they moved the office to another building", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0341", "reviewed": false}
+{"text": "the project needs more time and money", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0342", "reviewed": false}
+{"text": "she explained the plan to the whole team", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0343", "reviewed": false}
+{"text": "our team fixed the problem in one hour", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S2-0344", "reviewed": false}
