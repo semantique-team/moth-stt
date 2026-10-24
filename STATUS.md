@@ -57,7 +57,7 @@
   `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
   che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
-- **R-S2**: **51 frasi** (le 54 sui termini rari meno 3 doppioni); ne mancano ~550, da **generare
+- **R-S2**: **206 frasi** (155 nette dal batch 1, 8 categorie, 18/18 termini rari, 0 doppioni); ne mancano ~394, da **generare
   nuovi** — il pool non si può riusare, `docs/03` §6 impone il dedupe su T/R/pool. Poi S2 registra
   `uv run recordings/record.py --speaker S2 --kind R`. R-S2 è il blocco residuo di H3a insieme a
   T S2–S4.
@@ -171,7 +171,7 @@ noise augmentation.
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
 | H2 gate | **ETA = copertura lessicale** (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
-| M6 | H3b fatto e respinto (E-014); **H3a (gold) pronto da eseguire**: R-S1 76/635, R-S2 51 (servono ~550 frasi nuove), T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
+| M6 | H3b fatto e respinto (E-014); **H3a (gold) pronto da eseguire**: R-S1 76/635, R-S2 206 (servono ~394 frasi nuove), T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
@@ -199,7 +199,7 @@ live sono nei log.
 - **Decisione bloccante (2026-10-24, aggiornata)**: il problema dell'ETA non è capacità né
   struttura: è **lessico mai sentito** (47/94 termini assenti dal training, 18 assenti dagli
   script). Piano concordato: **(2) gold prima** — R-S1 è a 76/635 (35 frasi nuove sui termini),
-  R-S2 a 51 e va completato con ~550 frasi nuove — poi **E-016** (fine-tune sul gold) misura se
+  R-S2 a 206 e va completato con ~394 frasi nuove — poi **E-016** (fine-tune sul gold) misura se
   l'ipotesi originale chiude l'ETA; **(1) distillazione** da Parakeet (78% sui termini rari) è
   pronta come protocollo (`runs/E-015/PLAN.md`) ma **bloccata sulla fonte audio**: gold, audio
   CC0/BY, o TTS (H3c) — serve una decisione di provenienza, non compute; **(3) re-scope** si
