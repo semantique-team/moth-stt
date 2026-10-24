@@ -53,7 +53,8 @@ Read in order; each file is self-contained enough to be reviewed alone.
 | [`09-research-notes.md`](09-research-notes.md) | The evidence behind the decisions, with links and a verified/unverified marker per claim. |
 | [`10-optimization-review.md`](10-optimization-review.md) | Architecture/code optimization review: loader, attention, CTC head, eval, export, capacity variants, recent STT papers, and what can safely run while H2 trains. |
 | [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) | What the project actually decided, rejected and corrected: executed decision log, negative results, self-corrections, threats to validity, reproduction index. |
-| [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points. |
+| [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Original implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points (historical; not maintained). |
+| [`plans/2026-10-24-post-E014-plan.md`](plans/2026-10-24-post-E014-plan.md) | **Current plan:** gold data first (E-016), distillation pilot (E-015), cross-speaker gold (E-017), then the re-scope decision, with acceptance criteria and time estimates. |
 | [`../STATUS.md`](../STATUS.md) | Live state: what is done, what is in progress, what is next. |
 | [`../EXPERIMENTS.md`](../EXPERIMENTS.md) | Experiment log E-000…E-014 with hypothesis, configuration, metrics and conclusion. |
 

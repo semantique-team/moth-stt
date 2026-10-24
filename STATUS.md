@@ -161,11 +161,17 @@
 
 ## Da fare (prossimi task)
 
+**Piano operativo attuale:** [`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md)
+— fasi 0–4 con dipendenze, criteri di accettazione e stime. Ordine: **0** registrazioni (review 89
+frasi, poi R-S1), **1** E-016 gold, **2** E-015 distillazione (dopo la decisione sulla fonte audio),
+**3** E-017 cross-speaker (S2/S3), **4** re-scope. Trasversali: release con E-014, room tone,
+noise augmentation.
+
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
-| M6 | H3b fatto e respinto (E-014); **H3a (gold) non testato**: R-S1 76/600, R-S2 e T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
+| H2 gate | **ETA = copertura lessicale** (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
+| M6 | H3b fatto e respinto (E-014); **H3a (gold) pronto da eseguire**: R-S1 76/635, R-S2 51 (servono ~550 frasi nuove), T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
