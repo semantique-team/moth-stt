@@ -1,0 +1,11 @@
+{
+  "clips": 21205,
+  "shards": 5,
+  "seconds": 395592.5,
+  "hours": 109.887,
+  "errors": [],
+  "index_path": "data/shards/spliced_it_en/index.json",
+  "manifest": "data/manifests/spliced_it_en.jsonl",
+  "seed": 0,
+  "max_seconds": 27.0
+}
