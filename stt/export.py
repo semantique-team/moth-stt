@@ -217,7 +217,8 @@ def verify_int8(
 def build_notice() -> str:
     """Whisper's MIT notice + dataset attributions from the source registry.
 
-    Sources whose license is still unverified (MUSAN) are deliberately not listed.
+    Every source in the registry has a verified license; evaluation-only sets are listed too,
+    because the model card reports results on them.
     """
     dataset_lines = [
         f"- {source.citation or source.name} — {source.license} — {source.url}"
@@ -225,7 +226,7 @@ def build_notice() -> str:
         if not source.license.lower().startswith("verify")
     ]
     own = (
-        "- Moth recorded mixed sets (T, R; speakers S1–S3) — authors' own recordings, "
+        "- Moth recorded mixed sets (T, R; speakers S1–S4) — authors' own recordings, "
         "consent and license decision in `recordings/data-card.md`"
     )
     return "\n".join(

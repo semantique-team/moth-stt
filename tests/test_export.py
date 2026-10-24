@@ -142,7 +142,7 @@ def test_release_writer_packages_verified_artifacts(tmp_path: Path) -> None:
     notice = (out / "NOTICE").read_text(encoding="utf-8")
     assert "MIT License" in notice and "Copyright (c) 2022 OpenAI" in notice
     assert "LibriSpeech" in notice and "FLEURS" in notice
-    assert "MUSAN" not in notice  # license still unverified: never attributed as used
+    assert "MUSAN" in notice and "CC-BY 4.0" in notice  # verified 2026-10-23
 
     session = _session(out / "model.int8.onnx")
     log_probs = session.run(None, {"mel": _mel(1.0)})[0]
