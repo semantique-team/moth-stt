@@ -4,7 +4,12 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-from stt.data.build_manifests import SetSpec, build_manifests, existing_eval_hashes
+from stt.data.build_manifests import (
+    SetSpec,
+    build_manifests,
+    default_sets,
+    existing_eval_hashes,
+)
 
 
 def _wav(path: Path, seconds: float = 2.0) -> None:
@@ -126,3 +131,12 @@ def test_build_report_written(tmp_path: Path) -> None:
     assert report["sets"]["fleurs_it_test"]["kept"] == 1
     assert report["sets"]["fleurs_it_test"]["rows_after_sampling"] == 1
     assert "sampling" in report["sets"]["ls_en_train"]
+
+
+def test_default_sets_can_add_train_clean_360() -> None:
+    assert "ls_en_train360" not in {spec.name for spec in default_sets()}
+    specs = {spec.name: spec for spec in default_sets(ls360_hours=200.0)}
+    spec = specs["ls_en_train360"]
+    assert spec.relative_root.endswith("train-clean-360")
+    assert spec.target_hours == 200.0
+    assert spec.split == "train"

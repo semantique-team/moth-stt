@@ -33,10 +33,17 @@ class SetSpec:
 
 
 def default_sets(
-    mls_hours: float = 170.0, ls_hours: float = 100.0, cv_hours: float = 170.0
+    mls_hours: float = 170.0,
+    ls_hours: float = 100.0,
+    cv_hours: float = 170.0,
+    ls360_hours: float = 0.0,
 ) -> list[SetSpec]:
-    """The M2 build list (``docs/03`` §2 targets)."""
-    return [
+    """The M2 build list (``docs/03`` §2 targets).
+
+    ``ls360_hours`` > 0 adds a LibriSpeech ``train-clean-360`` set (E-012 English scaling); the
+    default 0 keeps the original M2 build unchanged.
+    """
+    specs = [
         SetSpec("fleurs_it_dev", "fleurs_it", "fleurs/it_it", "dev"),
         SetSpec("fleurs_it_test", "fleurs_it", "fleurs/it_it", "test"),
         SetSpec("fleurs_en_dev", "fleurs_en", "fleurs/en_us", "dev"),
@@ -50,6 +57,17 @@ def default_sets(
         SetSpec("ls_en_train", "librispeech", "librispeech/LibriSpeech/train-clean-100", "train", ls_hours),
         SetSpec("cv_it_train", "cv_it_27", "cv_it_27/it", "train", cv_hours),
     ]
+    if ls360_hours > 0:
+        specs.append(
+            SetSpec(
+                "ls_en_train360",
+                "librispeech",
+                "librispeech/LibriSpeech/train-clean-360",
+                "train",
+                ls360_hours,
+            )
+        )
+    return specs
 
 
 def build_manifests(
@@ -164,6 +182,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--mls-hours", type=float, default=170.0)
     parser.add_argument("--ls-hours", type=float, default=100.0)
     parser.add_argument("--cv-hours", type=float, default=170.0)
+    parser.add_argument(
+        "--ls360-hours",
+        type=float,
+        default=0.0,
+        help="add a LibriSpeech train-clean-360 set with this target duration (E-012)",
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument(
         "--only",
@@ -173,10 +197,12 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    specs = default_sets(args.mls_hours, args.ls_hours, args.cv_hours)
+    specs = default_sets(args.mls_hours, args.ls_hours, args.cv_hours, args.ls360_hours)
     extra: set[str] = set()
     if args.only:
         wanted = {name.strip() for name in args.only.split(",") if name.strip()}
+        if "ls_en_train360" in wanted and args.ls360_hours <= 0:
+            parser.error("--only ls_en_train360 requires --ls360-hours > 0")
         unknown = wanted - {spec.name for spec in specs}
         if unknown:
             parser.error(f"unknown sets: {', '.join(sorted(unknown))}")

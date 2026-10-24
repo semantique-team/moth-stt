@@ -141,6 +141,21 @@
         "available_hours": 256.7,
         "short": false
       }
+    },
+    "ls_en_train360": {
+      "source": "librispeech",
+      "split": "train",
+      "rows_after_sampling": 57215,
+      "kept": 57198,
+      "dropped": {
+        "speaking_rate": 17
+      },
+      "hours": 199.99,
+      "sampling": {
+        "target_hours": 200.0,
+        "available_hours": 363.6,
+        "short": false
+      }
     }
   },
   "seed": 0
