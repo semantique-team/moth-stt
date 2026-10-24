@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-23** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **226 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-24** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **237 test verdi**, `ruff` pulito.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -38,26 +38,36 @@
 | Conversione (3.2) | **verificata sui pesi reali** e materializzata: `models/whisper_tiny_encoder.pt` (30,6 MB; parità 5,2e-4 vs gate 1e-3 contro eager con posizioni del checkpoint; errore relativo 2,8e-5) | `models/` (gitignored), docstring di `stt/convert_whisper.py`, `docs/02` §3 |
 | Export + web (3.4–3.5) | ONNX opset 17 (sinusoidi in-graph) + int8: **8.32 MB totali**; smoke browser Playwright; **RTFx 65–74×** (4 thread) / 33–38× (1 thread) con pesi random; E-003 | `stt/export.py`, `web/`, `runs/E-003/` |
 | **4.1 train.py** | **loop di training completo**: resume a metà epoca, checkpoint last-3+best, log JSONL, guardie non-finite, dev WER, parity guard MPS↔CPU (**misurata Δ=0.0** su modello e dati reali), input truncated/padded30, augment none/light/full; 8 test; config `runs/E-004/config.yaml` | `stt/train.py`, `tests/test_train.py`, `runs/E-004/` |
-| Script | **T.jsonl** (600, riviste) e **R-S1.jsonl** (600) | `recordings/scripts/` |
+| Script | **T.jsonl** (800 = 200×S1–S4; 600 riviste, S4 200 da rivedere) e **R-S1.jsonl** (600) | `recordings/scripts/` |
 
 ## In corso / fuori dal repo
 
 - **Registrazioni T**: **S1 completo, 200/200** (manifest `recordings/manifests/T.jsonl`, 200 righe, 481 s,
   12 retake). Il set è ora **800 frasi, 200 per S1–S4**; mancano S2, S3 e S4 (leggono solo T). Comandi:
   `uv run recordings/record.py --speaker S2 --kind T` (idem S3, S4).
-- **Anchor A**: 60 frasi di T lette da tutti; 0/240 take. Dopo il T di ogni speaker:
+- **R-S1 (S1, training H3)**: **76/600 take**; audio in `recordings/audio/R-S1/S1/` (T resta in
+  `recordings/audio/S1/`). Prime frasi mancanti: **R-S1-0023** (cancellata perché accettata per
+  errore) e **R-S1-0028**; `plan_session` dice **524 da registrare**. Resume automatico:
+  `uv run recordings/record.py --speaker S1 --kind R` (nessun `--start`); `--dry-run` per l'elenco.
+  La R-S1-0023 cancellata è annotata come `delete` in `session.log.jsonl`.
+- **Anchor A**: S1 **60/60** completo; mancano S2/S3/S4 (60 ciascuno). Dopo il T di ogni speaker:
   `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
-- **Review**: le 200 frasi nuove (T-0601…T-0800) sono `reviewed: false`; vanno riviste prima che S4 registri
-  (`uv run recordings/generate_scripts.py review --kind T`).
-- **Da generare/importare (tu)**: R-S2 (600–1000) con `recordings/generate_scripts.py` (il pool è fatto).
+- **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
+  che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
+- **R-S2**: script 600–1000 ancora da generare dal pool; poi S2 registra
+  `uv run recordings/record.py --speaker S2 --kind R`. R-S2 è il blocco residuo di H3a insieme a
+  T S2–S4.
+- **Guida per speaker esterni**: `recordings/EXTERNAL-SPEAKERS.md` (Mac guided recorder;
+  Windows/Linux/phone con cue sheet; consenso, privacy, resume e istruzioni per i loro agenti).
 - **H2 (E-005) completato** (2026-10-21, 72.592 step, ~8 h di training): gate **fallito solo su FLEURS-IT**
   (37,41% vs 32,09%); su CV dev batte Whisper-tiny (37,60% vs 48,53%). Artefatti: `runs/E-005/`,
   `EXPERIMENTS.md` (E-005).
 - **E-006 (+2 blocchi) completato** (2026-10-22, 36.296 step, ~5,4 h di training): **nuovo best Moth**.
   Dev **31,27%** (IT 35,56 / EN 26,99; E-005 33,77). Held-out: FLEURS-IT **34,11%** (E-005 37,41;
   Whisper-tiny 32,09), FLEURS-EN 61,45%, CV dev **34,45%** (Whisper-tiny 48,53), CV test 36,16%,
-  T **59,50%** (ETA 20,0%, E-005 16,4%). Il gate H2 resta **fallito solo su FLEURS-IT (+2,02)**,
-  ma il gap è più che dimezzato. Artefatti: `runs/E-006/` (config, log, `eval/best/`), `EXPERIMENTS.md`
+  T **59,50%** (ETA 20,0%, E-005 16,4%). Il gate H2 resta **fallito su FLEURS-IT** contro la
+  barra greedy (+2,02) e di più contro la barra vera (+6,69, vedi sotto); il gap era più che
+  dimezzato rispetto a E-005. Artefatti: `runs/E-006/` (config, log, `eval/best/`), `EXPERIMENTS.md`
   (E-006). Il codice P0 + `head_blocks` e gli artefatti E-005/E-006 sono **committati su `main`**
   (2026-10-22).
 - **E-007 (beam + hotwords) completato** (2026-10-22, decode-only, nessun training): E-006 congelato,
@@ -67,11 +77,12 @@
   (peggio del greedy 20,0%): non bastano. Artefatti `runs/E-007/`, `EXPERIMENTS.md` (E-007).
   Prossimo: **LM piccolo (E-008)**; se non chiude, conv head / 25 Hz+2.
 - **E-008 (LM) completato** (2026-10-22, decode-only): BPE trigram **3,53 MB** (195k bigrammi,
-  800k trigrammi, backoff 0,4), shallow fusion α=0,2 sul beam E-007. **Il gate H2 passa a livello
-  di sistema**: FLEURS-IT **29,02%** vs Whisper-tiny 32,09% (−3,06 [−4,29, −1,71]); CV dev
-  **28,39%** vs 48,53% (−20,13 [−20,52, −19,70]); FLEURS-EN 56,99%, CV test 30,07%, T 55,37%
-  (ETA 21,5%, ancora peggiore del greedy 20,0%). Dev macro **27,05%**. Totale ~15,5 MB
-  (acustico ~12 + LM 3,53). Artefatti `runs/E-008/`, `EXPERIMENTS.md` (E-008). Prossimo:
+  800k trigrammi, backoff 0,4), shallow fusion α=0,2 sul beam E-007. **Contro la barra greedy**
+  (Whisper-tiny 32,09%) il gate H2 passava: FLEURS-IT **29,02%**, CV dev **28,39%** vs 48,53%.
+  **Correzione 2026-10-23 (E-001 addendum):** il miglior H0 è Whisper-tiny **auto + beam 5** a
+  **27,42%** su FLEURS-IT; Moth 29,02 è **+1,60 [+0,32, +2,83]**, quindi il gate **non passa** su
+  FLEURS-IT. CV dev resta vinto (−20,13). FLEURS-EN 56,99%, CV test 30,07%, T 55,37%
+  (ETA 21,5%). Dev macro **27,05%**. Totale ~15,5 MB. Artefatti `runs/E-008/`, `EXPERIMENTS.md` (E-008). Prossimo:
   export LM/beam browser + RTFx; poi ETA su T e H3.
 - **E-009 (export/browser) fatto** (2026-10-23): E-006 int8 **11,91 MB**, fp32 Δ **2,17e-4**,
   int8 top-1 100%; su 100 clip FLEURS-IT WER 30,65% vs 30,92% PyTorch. Browser WASM reale:
@@ -85,18 +96,47 @@
   55,37% (diff +1,29 [−0,34, +3,02], **tie**); ETA 21,19% vs 21,49%. Differenze per-clip da int8.
   Demo: aggiunto **microfono** (AudioWorklet → 16 kHz, max 30 s), testato con fake device. Artefatti
   `runs/E-010/`. Prossimo: demo e2e + H3.
-- **Dati**: CV IT 27 scaricato ed estratto in `data/raw/cv_it_27/` (11 GB di clip + archivio 9.8 GB, ancora su
-  disco); manifest **12 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache mel 27 GB.
-  Audio raw MLS/LibriSpeech **cancellato** dopo spot check (ricostruibile con `data/raw/fetch.sh`); resta
-  **FLEURS (1.7 GB)** per le baseline di 1.4. Nessun dataset mancante.
+- **H0 (E-001) quasi completo** (2026-10-23): **Whisper-tiny auto + beam 5 = 27,42% FLEURS-IT**
+  e **11,86% FLEURS-EN**; forced `it` + beam 5 è il miglior WER su **T: 53,05% / ETA 37,61%**.
+  Moth E-008 su T: 55,37% / ETA 21,49% → **WER tie** (+2,32 [−3,22, +8,02]) ma **ETA −16,12**
+  [−25,31, −6,02] → **il gate misto non passa** (serve WER < 0 e ETA > 0). Anche FLEURS-IT non
+  passa (29,02 vs 27,42 = +1,60 [0,32, 2,83]); CV dev resta vinto. **Whistle** (16,9 MB) è a
+  **11,85% FLEURS-IT** e **29,49% / ETA 50,15% su T**: molto avanti (stretch gate lontano; caveat
+  FLEURS pubblico, T è il set pulito); su **CV-IT test** Whistle 20,63 vs Moth 30,07. **Parakeet**
+  (639 MB) è il ceiling: **10,66% / ETA 83,88%** su T, **3,65% FLEURS-IT**. Whisper base greedy
+  (18,27 IT / 9,88 EN) è solo riferimento.
+  Tutti i numeri: addendum E-001. **v0.1 non è spedibile** così: l'ETA è il problema dominante e
+  strutturale (BPE V=1024).
+- **E-011 noise set fatto** (2026-10-23): **360 clip × 10 s = 60 min** (20 silenzio digitale,
+  20 MUSAN noise, 20 MUSAN music), MUSAN **CC-BY 4.0** verificata, seed 0, livelli naturali.
+  Non-music (240 clip): Moth greedy **24 parole / 18 clip**, Moth beam+LM **259 / 134** (tutte le
+  120 clip di silenzio dicono "non mi": l'LM non ha un prior di blank), Whisper tiny beam5
+  **54 / 13**, Whistle **264 / 115**, Parakeet **0 / 0**. Music riportata a parte. **Solo Parakeet
+  passa il gate 0 parole**; servono energy gate + noise augmentation (H3). Dettagli: E-011.
+  Room tone (20 min) ancora da registrare per arrivare a 1 h non-music.
+- **E-013 (tokenizer V=4096) completato** (2026-10-23): dev **32,79%** (IT 37,44 / EN 28,14) e
+  a 18k meglio di E-006 (34,09), ma sui set veri: FLEURS-IT **36,30 greedy / 36,02 beam** vs E-006
+  34,11; FLEURS-EN **60,02 / 59,71** vs 61,45 (meglio); T **59,93 / 59,85**, **ETA 19,7 / 20,0**
+  vs E-006 20,0. **Il tokenizer non alza l'ETA** e peggiora IT/T: B da solo non si adotta.
+  Artefatti `runs/E-013/`.
+- **E-012 (più inglese) completato** (2026-10-23): 200 h EN extra (638 h totali), 2 epoche da
+  E-006. Dev **29,50%** (IT 35,78 / EN 23,22; E-006 best 31,27). Sui set veri: FLEURS-IT **29,79**
+  beam+LM (E-008 29,02), FLEURS-EN **51,56** (56,99, **+5,4**), **T 60,53 / ETA 21,49** (55,37 /
+  21,49), CV test greedy 36,60 (36,16). **A migliora l'inglese ma peggiora T/FLEURS-IT e non muove
+  l'ETA**: non si adotta. Crash a 9.350 per tempo-stretch >30 s, corretto `_prepare_batch` (crop
+  3000 + test), ripreso da 9.072. Artefatti `runs/E-012/`.
+- **Dati**: CV IT 27 estratto in `data/raw/cv_it_27/` (11 GB di clip; archivio cancellato per fare
+  spazio); manifest **13 set** in `data/manifests/` + `build_report.json` (E-002 + addendum); cache
+  mel **~34 GB** (27 GB + 7 GB LS360). Audio raw MLS/LibriSpeech **cancellato** dopo spot check
+  (ricostruibile con `data/raw/fetch.sh`); resta **FLEURS (1.7 GB)** per le baseline di 1.4.
 
 ## Da fare (prossimi task)
 
 | Task | Cosa | Blocco |
 |---|---|---|
-| 1.4 | E-001: restano base, beam 5, Whistle, Parakeet, mixed T, noise; **CV-IT ora disponibile** (14.643 clip test) | S2/S3/S4 + anchor; CLI Whistle/Parakeet |
-| H2 gate | **PASSATO a livello di sistema con E-008** (FLEURS-IT 29,02% < 32,09%; CV dev 28,39% < 48,53%). E-010: browser quality path beam+LM, **RTFx 58,1–65,2× a 4 thread**, pacchetto 17,08 MB, **T200 56,66% vs 55,37% Python (tie)**. Prossimo: demo e2e; ETA su T ancora debole | demo |
-| M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto, manca R-S2 | registrazioni R-S2 |
+| 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
+| H2 gate | **NON passato su FLEURS-IT** vs Whisper-tiny auto+beam5 (29,02 vs 27,42; +1,60). **Gate misto T non passato**: WER tie (+2,32 [−3,22, +8,02]) ma ETA −16,12 [−25,31, −6,02] vs Whisper it+beam5 (Moth 55,37/21,49 vs 53,05/37,61). **Noise gate non passato** (E-011: solo Parakeet 0 parole). **A (200h EN) e B (V=4096) respinti**: ETA resta 21,49. Prossimo: H3b splicing, poi distillazione/re-scope | H3/decisione |
+| M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto; R-S1 76/600, R-S2 e T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
@@ -120,7 +160,21 @@ live sono nei log.
 
 ## Serve da te
 
-- Registrazioni T per **S2/S3/S4** e anchor per tutti (quando vuoi); R-S2 per H3.
+- **Decisione bloccante (2026-10-23)**: **A e B testati e respinti**. B (tokenizer V=4096) non
+  muove l'ETA (20,0 vs 20,0) e peggiora IT/T; A (200 h EN) migliora l'inglese (FLEURS-EN 51,56 vs
+  56,99) ma peggiora T (60,53 vs 55,37) e lascia l'ETA a **21,49**. Il gate misto resta non passato
+  (Whisper 53,05 / ETA 37,61; Whistle 29,49 / ETA 50,15). Prossimo test a costo zero: **H3b
+  splicing IT+EN** (nessuna registrazione). Se l'ETA non sale, distillazione da Whistle/Parakeet o
+  re-scope; non registrare R-S1 alla cieca.
+- **S1**: continuare R-S1 da 0023 (524 mancanti) e completare le 600; poi build manifest.
+- **Room tone (20 min)**: serve per chiudere il noise set a 1 h non-music. Trova il device con
+  `ffmpeg -f avfoundation -list_devices true -i ""`, poi registra con
+  `ffmpeg -f avfoundation -i ":<n>" -t 1200 -ar 16000 -ac 1 data/raw/room_tone.wav`
+  (ventilatore/tastiera inclusi, stanza silenziosa). Poi:
+  `uv run python -m stt.data.build_noise --room-tone data/raw/room_tone.wav --categories room_tone`
+  e ricostruisci gli shard `data/shards/noise` con `build_mel.py`.
+- **S2/S3/S4**: T + anchor quando disponibili; S4 solo dopo review delle sue 200 T.
+- **R-S2**: l'organizzatore genera lo script dal pool; poi S2 registra.
 - Revisione a mano delle 200 frasi nuove di T prima che registri S4.
 - `en_terms.txt` è a 580 voci (target design 1–2k): estendibile quando serve.
 
