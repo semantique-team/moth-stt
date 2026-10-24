@@ -96,14 +96,23 @@ def test_score_rows_noise_block() -> None:
     rows = [
         {"id": "n1", "text": "", "norm": "", "category": None, "speaker": None, "lang": "it"},
         {"id": "n2", "text": "", "norm": "", "category": "music", "speaker": None, "lang": "it"},
+        {
+            "id": "n3",
+            "text": "",
+            "norm": "",
+            "category": None,
+            "source": "noise_music",
+            "speaker": None,
+            "lang": "it",
+        },
     ]
-    hyps = {"n1": "", "n2": "la la la"}
+    hyps = {"n1": "", "n2": "la la la", "n3": "un due tre"}
     result = score_rows(rows, hyps, bootstrap=0, seed=0)
     noise = result["noise"]
     assert noise["non_music_words"] == 0
     assert noise["non_music_non_empty_clips"] == 0
-    assert noise["music_words"] == 3
-    assert noise["music_non_empty_clips"] == 1
+    assert noise["music_words"] == 6
+    assert noise["music_non_empty_clips"] == 2
 
 
 def test_bootstrap_is_deterministic_and_ties_include_zero() -> None:

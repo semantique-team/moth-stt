@@ -32,6 +32,7 @@ SETS = {
     "cv_it_dev": ("data/manifests/cv_it_dev.jsonl", "data/shards/cv_it_dev"),
     "cv_it_test": ("data/manifests/cv_it_test.jsonl", "data/shards/cv_it_test"),
     "recorded_t": ("recordings/manifests/T.jsonl", "data/shards/recorded_t"),
+    "noise": ("data/manifests/noise.jsonl", "data/shards/noise"),
 }
 
 

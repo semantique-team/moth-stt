@@ -129,7 +129,7 @@ def score_rows(
         if not norm:
             words = len(hyp_norm.split())
             non_empty = int(words > 0)
-            is_music = row.get("category") == "music"
+            is_music = row.get("category") == "music" or row.get("source") == "noise_music"
             noise["clips"] += 1
             noise["total_words"] += words
             noise["non_empty_clips"] += non_empty
