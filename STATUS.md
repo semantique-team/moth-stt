@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-24** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **237 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-10-24** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **246 test verdi**, `ruff` pulito.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -114,6 +114,13 @@
   **54 / 13**, Whistle **264 / 115**, Parakeet **0 / 0**. Music riportata a parte. **Solo Parakeet
   passa il gate 0 parole**; servono energy gate + noise augmentation (H3). Dettagli: E-011.
   Room tone (20 min) ancora da registrare per arrivare a 1 h non-music.
+- **E-014 (H3b splicing) in corso** (2026-10-24): set sintetico IT+EN **109,9 h / 21.205 clip**
+  costruito sul mel cache (`stt/data/build_spliced.py`, seed 0, coppie ≤ 27 s, IT da CV+MLS, EN da
+  LS100, norm canoniche, 0 errori), 5,9 GB di shard. Config `runs/E-014/config.yaml`: 548 h totali
+  (IT 61,6% / EN 18,3% / spliced 20,1%), 2 epoche da E-006 best, stessi LR di E-012 (3e-4 / 5e-5),
+  **22.494 step previsti**, smoke 50 step ok (364 audio-s/s, 8,5 GB, init = dev macro 31,24).
+  La domanda: uno switch **dentro** l'enunciato muove l'ETA di T (E-012/E-013 l'hanno lasciata a
+  21,49)? I pesi 0,4/0,15/gold 0,2/0,25 del piano presuppongono il gold, che non esiste ancora.
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
@@ -142,7 +149,7 @@
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **NON passato su FLEURS-IT** vs Whisper-tiny auto+beam5 (29,02 vs 27,42; +1,60). **Gate misto T non passato**: WER tie (+2,32 [−3,22, +8,02]) ma ETA −16,12 [−25,31, −6,02] vs Whisper it+beam5 (Moth 55,37/21,49 vs 53,05/37,61). **Noise gate**: silenzio digitale risolto dal guard (240 → 0 parole), restano **19–24 parole su MUSAN noise** → serve l'augmentation con target vuoti. **A (200h EN) e B (V=4096) respinti**: ETA resta 21,49. Prossimo: H3b splicing, poi distillazione/re-scope | H3/decisione |
+| H2 gate | **NON passato su FLEURS-IT** vs Whisper-tiny auto+beam5 (29,02 vs 27,42; +1,60). **Gate misto T non passato**: WER tie (+2,32 [−3,22, +8,02]) ma ETA −16,12 [−25,31, −6,02] vs Whisper it+beam5 (Moth 55,37/21,49 vs 53,05/37,61). **Noise gate**: silenzio digitale risolto dal guard (240 → 0 parole), restano **19–24 parole su MUSAN noise** → serve l'augmentation con target vuoti. **A (200h EN) e B (V=4096) respinti**: ETA resta 21,49. **H3b splicing in corso (E-014)**; se l'ETA non si muove, distillazione/re-scope | H3/decisione |
 | M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto; R-S1 76/600, R-S2 e T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
