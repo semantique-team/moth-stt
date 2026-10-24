@@ -144,7 +144,7 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 
 | Idea | Sketch | Trigger to do it |
 |---|---|---|
-| Utterance-level splicing | Concatenate an Italian and an English clip; transcript is the concatenation. Cheap; gives clause-level switches only. | First thing H3 tries. |
+| Utterance-level splicing | Concatenate an Italian and an English clip; transcript is the concatenation. Cheap; gives clause-level switches only. Implemented on the mel cache in `stt/data/build_spliced.py`. | First thing H3 tries. **Tried in E-014** (2026-10-24, no gold data yet): FLEURS-IT −2.3 and FLEURS-EN −0.95, ETA unchanged → rejected as an ETA lever, kept as a quality gain. |
 | Word-level splicing | Force-align clips with the H2 model; cut an English word from an English clip, insert it at a word boundary of an Italian carrier sentence with a 20 ms crossfade and loudness match. | Only if H3 shows gold + utterance splicing is not enough. |
 | TTS synthesis | Synthesize mixed sentences with an open TTS that has IT+EN voices (the shelved TTS plan is the long-term source). Per-language segments joined; beware prosody seams and license of generated audio. | Only if it improves the mixed set beyond the noise interval. |
 | Pseudo-labeling | Parakeet v3 (or NVIDIA's Granary pipeline) labels untranscribed Italian audio; filter by agreement with a second model. | Only for a v0.2 data scale-up. |
