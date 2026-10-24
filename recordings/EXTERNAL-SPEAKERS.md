@@ -29,11 +29,19 @@ spieghiamo solo come registrare e come restituire l’audio.
 4. Non servono dati pesanti, checkpoint, tokenizer o shard: la repo basta.
 
 ```bash
-git clone git@github.com:semantique-team/moth-stt.git
+git clone git@github.com:semantique-team/moth-stt.git   # oppure HTTPS, se non hai chiavi SSH
 cd moth-stt
 git checkout main          # oppure il commit che ti passa l’organizzatore
-uv sync
+uv sync                    # ~2.5 GB: installa anche torch, che per registrare non serve
 brew install ffmpeg         # solo macOS
+```
+
+Se vuoi evitare i 2.5 GB di torch, il recorder gira anche senza l’ambiente del progetto
+(servono solo `numpy` e `soundfile`; verificato):
+
+```bash
+PYTHONPATH=. uv run --no-project --with numpy --with soundfile \
+    python recordings/record.py --speaker S2 --kind T --dry-run
 ```
 
 Non fare `git pull` a metà sessione e non modificare script o manifest.
@@ -73,11 +81,16 @@ uv run recordings/record.py --speaker S4 --kind A
 
 ### R-S2 — solo S2
 
-Lo script R-S2 deve esistere (lo genera l’organizzatore dal pool). Quando c’è:
+Lo script R-S2 deve arrivare a **600 frasi** (2026-10-24: 344, in completamento) e va **rivisto
+dall’organizzatore** prima di costruire il manifest. Quando l’organizzatore conferma che è pronto:
 
 ```bash
 uv run recordings/record.py --speaker S2 --kind R
 ```
+
+Il manifest R-S2 non si costruisce finché le frasi non sono marcate `reviewed` (o finché
+l’organizzatore non autorizza `--allow-unreviewed`). La review è un lavoro dell’organizzatore, non
+dello speaker.
 
 ### Percorsi audio
 
@@ -182,7 +195,9 @@ Se sei un agente che assiste S2/S3/S4:
 3. Prima di registrare esegui `--dry-run`; poi rilancia il comando senza `--start` per riprendere.
 4. Non usare `--overwrite` e non modificare script, manifest o nomi dei file.
 5. Non marcare T come reviewed: la review è umana. S4 aspetta.
-6. Dopo la sessione esegui il `build_manifest` del set e riporta gli errori.
+6. Dopo la sessione esegui il `build_manifest` del set e riporta gli errori. Non usare
+   `--allow-unreviewed` senza autorizzazione scritta dell’organizzatore: per R significa saltare la
+   revisione umana delle frasi.
 7. Zippa l’audio con la struttura corretta e caricalo su un servizio privato concordato; non
    usare git.
 8. Verifica che `git status` non mostri audio o file personali.
