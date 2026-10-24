@@ -21,6 +21,7 @@ from stt.eval import score_rows
 from stt.hotwords import HotwordIndex, load_hotwords
 from stt.lm import BPETrigramLM
 from stt.model import MothSTT
+from stt.no_speech import is_no_speech
 from stt.tokenizer import encode, load_tokenizer
 from stt.train import _prepare_batch, load_config, load_sources
 
@@ -34,6 +35,17 @@ SETS = {
     "recorded_t": ("recordings/manifests/T.jsonl", "data/shards/recorded_t"),
     "noise": ("data/manifests/noise.jsonl", "data/shards/noise"),
 }
+
+
+def _drop_silent(items: list[dict], hyps: dict[str, str]) -> list[dict]:
+    """Remove clips with no speech-like energy, recording an empty hypothesis for them."""
+    keep = []
+    for item in items:
+        if is_no_speech(item["mel"]):
+            hyps[item["id"]] = ""
+        else:
+            keep.append(item)
+    return keep
 
 
 def decode(
@@ -51,6 +63,7 @@ def decode(
     lm_path: str | None = None,
     lm_weight: float = 0.0,
     limit: int = 0,
+    no_speech_guard: bool = False,
 ) -> dict:
     config = load_config(config_path)
     batch = config["batch"]
@@ -103,11 +116,16 @@ def decode(
             epoch=0,
         )
         hyps: dict[str, str] = {}
+        guarded = 0
         with torch.inference_mode():
             for positions in batches:
-                tensor, lengths, brows = _prepare_batch(
-                    [dataset[position] for position in positions], input_mode
-                )
+                items = [dataset[position] for position in positions]
+                if no_speech_guard:
+                    items = _drop_silent(items, hyps)
+                    guarded += len(positions) - len(items)
+                    if not items:
+                        continue
+                tensor, lengths, brows = _prepare_batch(items, input_mode)
                 log_probs, out_lengths = model(tensor.to(device), lengths.to(device))
                 for offset, row in enumerate(brows):
                     if decoder == "beam":
@@ -148,6 +166,8 @@ def decode(
                 "lm": lm_path,
                 "lm_weight": lm_weight if decoder == "beam" else None,
                 "limit": limit,
+                "no_speech_guard": no_speech_guard,
+                "guarded": guarded,
             },
             "overall": scored["overall"],
             "breakdown": scored["breakdown"],
@@ -159,7 +179,8 @@ def decode(
         )
         results[name] = scored["overall"]
         print(f"{name}: WER {scored['overall']['wer']:.4f} "
-              f"CI {scored['overall'].get('wer_ci')}", flush=True)
+              f"CI {scored['overall'].get('wer_ci')}"
+              + (f" (guarded {guarded})" if no_speech_guard else ""), flush=True)
         if device == "mps":
             torch.mps.empty_cache()
     return results
@@ -198,6 +219,11 @@ def main() -> int:
     parser.add_argument("--lm", default=None, help="BPE n-gram LM pickle (.pkl or .pkl.gz)")
     parser.add_argument("--lm-weight", type=float, default=0.0)
     parser.add_argument("--limit", type=int, default=0, help="random subset per set (tuning only)")
+    parser.add_argument(
+        "--no-speech-guard",
+        action="store_true",
+        help="skip clips with no speech-like energy (stt.no_speech, E-011)",
+    )
     args = parser.parse_args()
 
     if args.average:
@@ -216,6 +242,7 @@ def main() -> int:
         lm_path=args.lm,
         lm_weight=args.lm_weight,
         limit=args.limit,
+        no_speech_guard=args.no_speech_guard,
     )
     return 0
 

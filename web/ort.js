@@ -10,7 +10,7 @@ import * as ort from "./node_modules/onnxruntime-web/dist/ort.wasm.min.mjs";
 
 import { beamSearch, greedy } from "./decode.js";
 import { loadLM } from "./lm.js";
-import { computeMel, N_MELS, N_FFT, SAMPLE_RATE } from "./mel.js";
+import { computeMel, isNoSpeech, N_MELS, N_FFT, SAMPLE_RATE } from "./mel.js";
 
 const FILTER_FLOATS = N_MELS * (N_FFT / 2 + 1);
 
@@ -105,6 +105,28 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
     const t0 = performance.now();
     const { data, frames } = computeMel(pcm, filters);
     const t1 = performance.now();
+    // No-speech guard (E-011): the LM path invents words on digital silence, so a clip with no
+    // speech-like energy never reaches the model. Silence is a feature-only cost.
+    if (isNoSpeech(data)) {
+      const audioSeconds = pcm.length / SAMPLE_RATE;
+      const totalMs = t1 - t0;
+      return {
+        text: "",
+        frames,
+        outFrames: 0,
+        vocabSize: pieces.length,
+        decoder: "no-speech-guard",
+        guarded: true,
+        audioSeconds,
+        timings: {
+          feature_ms: t1 - t0,
+          inference_ms: 0,
+          decode_ms: 0,
+          total_ms: totalMs,
+        },
+        rtfx: (audioSeconds * 1000) / totalMs,
+      };
+    }
     const input = new ort.Tensor("float32", data, [1, N_MELS, frames]);
     const outputs = await session.run({ [config.model.input]: input });
     const t2 = performance.now();
