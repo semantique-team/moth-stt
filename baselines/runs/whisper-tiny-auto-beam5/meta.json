@@ -1,0 +1,33 @@
+{
+  "system": "whisper-tiny",
+  "variant": "auto-beam5",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-23T15:29:13+0200",
+  "sets": {
+    "fleurs_it_test": {
+      "manifest": "data/manifests/fleurs_it_test.jsonl",
+      "n": 697,
+      "errors": [],
+      "audio_seconds": 9869.64,
+      "wall_seconds": 517.842,
+      "rtfx": 19.059184905999448,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    },
+    "fleurs_en_test": {
+      "manifest": "data/manifests/fleurs_en_test.jsonl",
+      "n": 525,
+      "errors": [],
+      "audio_seconds": 4995.56,
+      "wall_seconds": 230.94,
+      "rtfx": 21.631389934701957,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "language": "auto",
+  "decode": "beam5",
+  "beam_size": 5,
+  "padded_30s": true,
+  "params_bytes": 148738560
+}

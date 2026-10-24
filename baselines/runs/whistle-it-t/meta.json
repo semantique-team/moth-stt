@@ -1,0 +1,20 @@
+{
+  "system": "whistle",
+  "variant": "it-none",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-23T16:02:05+0200",
+  "sets": {
+    "T": {
+      "manifest": "recordings/manifests/T.jsonl",
+      "n": 200,
+      "errors": [],
+      "audio_seconds": 481.35,
+      "wall_seconds": 4.137,
+      "rtfx": 116.3515888460256,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "engine": "cactus-needle",
+  "language": "it"
+}

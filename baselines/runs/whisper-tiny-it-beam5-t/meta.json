@@ -1,0 +1,23 @@
+{
+  "system": "whisper-tiny",
+  "variant": "it-beam5",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-23T15:59:07+0200",
+  "sets": {
+    "T": {
+      "manifest": "recordings/manifests/T.jsonl",
+      "n": 200,
+      "errors": [],
+      "audio_seconds": 481.35,
+      "wall_seconds": 116.274,
+      "rtfx": 4.139830890715502,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "language": "it",
+  "decode": "beam5",
+  "beam_size": 5,
+  "padded_30s": true,
+  "params_bytes": 148738560
+}

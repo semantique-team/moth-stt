@@ -1,0 +1,23 @@
+{
+  "system": "whisper-tiny",
+  "variant": "auto-greedy",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-23T15:54:06+0200",
+  "sets": {
+    "T": {
+      "manifest": "recordings/manifests/T.jsonl",
+      "n": 200,
+      "errors": [],
+      "audio_seconds": 481.35,
+      "wall_seconds": 104.441,
+      "rtfx": 4.608852015007397,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "language": "auto",
+  "decode": "greedy",
+  "beam_size": 1,
+  "padded_30s": true,
+  "params_bytes": 148738560
+}

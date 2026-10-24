@@ -1,0 +1,37 @@
+{
+  "n_utterances": 0,
+  "overall": {
+    "n": 0,
+    "ref_words": 0,
+    "sub": 0,
+    "del": 0,
+    "ins": 0,
+    "wer": 0.0,
+    "insertion_rate": 0.0,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": null
+  },
+  "breakdown": null,
+  "noise": {
+    "clips": 360,
+    "total_words": 411,
+    "non_empty_clips": 24,
+    "non_music_clips": 240,
+    "non_music_words": 0,
+    "non_music_non_empty_clips": 0,
+    "music_clips": 120,
+    "music_words": 411,
+    "music_non_empty_clips": 24
+  },
+  "per_utterance": {},
+  "manifest": "data/manifests/noise.jsonl",
+  "manifest_sha256": "0aec9deadb9511d75aec02c09dbb249c33d886c5c47866ad18347fedd3a39bb7",
+  "hyp": "baselines/runs/parakeet-v3-noise/noise.jsonl",
+  "hyp_sha256": "4a09d8dfc639951af8e4849b2939477bad1162ab97278a48b31ddc694b74bffa",
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07",
+  "git_sha": "72cf11241effd8affd29d773b7e938a3a6f4fe00",
+  "config_path": null,
+  "extra_hypotheses": 0
+}

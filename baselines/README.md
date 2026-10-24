@@ -23,8 +23,8 @@ audio seconds, wall time, RTFx, errors, hotword count, size, and whether Whisper
 |---|---|---|
 | Whisper tiny (39 M) | language auto / forced `it` × greedy / beam 5 | `whisper_runner.py` |
 | Whisper base (74 M) | auto / forced `it` × greedy / beam 5 | `whisper_runner.py` |
-| Cactus Whistle (16.9 MB) | auto / forced `it`; hotwords none / fair / oracle | `whistle_runner.py` |
-| Parakeet TDT 0.6B v3 | hotwords none / fair / oracle | `parakeet_runner.py` |
+| Cactus Whistle (16.9 MB) | auto / forced `it`; hotwords none / fair / oracle | `whistle_needle.py` (in-process, one model load) or `whistle_runner.py` (CLI template) |
+| Parakeet TDT 0.6B v3 | hotwords none / fair / oracle | `parakeet_sherpa.py` (in-process) or `parakeet_runner.py` (CLI template) |
 
 Whisper has no biasing interface, so it has no hotword variants.
 
@@ -62,12 +62,20 @@ uv run baselines/parakeet_runner.py --hotwords none \
 ## Set names and manifests
 
 `--sets` takes the manifest file stems under `data/manifests/`: `fleurs_it_test`,
-`fleurs_en_test`, `fleurs_it_dev`, `fleurs_en_dev`, `cv_it_test`, `mixed` (the recorded T set),
-`noise`. They are produced by the M2 data pipeline (and the recordings step for `mixed`).
+`fleurs_en_test`, `fleurs_it_dev`, `fleurs_en_dev`, `cv_it_test`, `noise`. The recorded T set is
+`T` with `--manifests-dir recordings/manifests` (and `--audio-root recordings/audio`). The noise
+split uses `--audio-root data/raw/noise` (manifest `data/manifests/noise.jsonl`, built by
+`stt/data/build_noise.py`). They are produced by the M2 data pipeline (and the recordings step for
+T).
 
 ## Requirements
 
 - Whisper: the `openai-whisper` dev dependency (already in `pyproject.toml`); model weights are
   downloaded on first use.
-- Whistle: the `needle` CLI (or `cactus-needle`) installed and working.
-- Parakeet: `sherpa-onnx` (or a NeMo export) plus the int8 model files; ≈ 640 MB.
+- Whistle: `cactus-needle` plus `soxr` (for the 48 kHz recordings) in a **separate** venv, never a
+  project dependency:
+  `uv venv .venv-baselines --python 3.12 && uv pip install --python .venv-baselines/bin/python cactus-needle soxr num2words soundfile`
+  (`.venv-baselines/` is gitignored). Run with `PYTHONPATH=. .venv-baselines/bin/python ...`.
+- Parakeet: `sherpa-onnx` (installed in the same baseline venv) plus the int8 model files; ≈ 640 MB:
+  `huggingface-cli download csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8 --local-dir models/parakeet-tdt-0.6b-v3-int8`
+  (or the CLI-template runner `parakeet_runner.py`).
