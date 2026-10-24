@@ -10,6 +10,7 @@ import soundfile as sf
 
 from stt.data.build_mel import build_shards, load_index, read_clip
 from stt.data.build_spliced import build_spliced, plan_pairs
+from stt.text import normalize
 
 
 def _row(identifier: str, text: str, duration: float, lang: str) -> dict:
@@ -17,7 +18,7 @@ def _row(identifier: str, text: str, duration: float, lang: str) -> dict:
         "id": identifier,
         "audio": f"{identifier}.wav",
         "text": text,
-        "norm": text.lower(),
+        "norm": normalize(text),
         "duration": duration,
         "source": "test",
         "split": "train",
@@ -39,8 +40,9 @@ def _shard_set(root: Path, rows: list[dict]) -> Path:
 
 
 def test_plan_pairs_is_deterministic_and_bounded() -> None:
-    it_rows = [_row(f"it-{i}", f"ciao numero {i}", 3.0, "it") for i in range(10)]
-    en_rows = [_row(f"en-{i}", f"hello number {i}", 4.0, "en") for i in range(10)]
+    words = ["uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci"]
+    it_rows = [_row(f"it-{i}", f"ciao numero {word}", 3.0, "it") for i, word in enumerate(words)]
+    en_rows = [_row(f"en-{i}", f"hello number {word}", 4.0, "en") for i, word in enumerate(words)]
 
     first = plan_pairs(it_rows, en_rows, hours=0.05, seed=0)
     assert first == plan_pairs(it_rows, en_rows, hours=0.05, seed=0)
@@ -51,7 +53,7 @@ def test_plan_pairs_is_deterministic_and_bounded() -> None:
     for row in first:
         assert row["duration"] <= 27.0
         assert row["lang"] == "mix" and row["category"] == "switch"
-        assert row["norm"] == row["text"].lower()
+        assert row["norm"] == normalize(row["text"])
         (start, end), = row["en_spans"]
         assert row["norm"].split()[start:end] == row["text"].split()[start:end]
         assert start == 3  # "ciao numero N" is three words
