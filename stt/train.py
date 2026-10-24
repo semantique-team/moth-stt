@@ -636,12 +636,23 @@ def _apply_model_init(model: MothSTT, config: dict) -> None:
     checkpoint = config["model"].get("init_checkpoint")
     if checkpoint:
         payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
-        missing, unexpected = model.load_state_dict(payload["model"], strict=False)
+        state = payload["model"]
+        current = model.state_dict()
+        # A tokenizer change (e.g. V=1024 → V=4096) changes only the CTC head shape; the encoder
+        # and the transformer blocks are still a valid initialisation. Skip shape-mismatched
+        # tensors and let them be initialised fresh, but keep every other mismatch an error.
+        skipped = {
+            name for name, tensor in state.items()
+            if name in current and current[name].shape != tensor.shape
+        }
+        filtered = {name: tensor for name, tensor in state.items() if name not in skipped}
+        missing, unexpected = model.load_state_dict(filtered, strict=False)
         allowed_missing = {name for name in missing if name.startswith("head_blocks.")}
+        allowed_missing |= skipped
         if set(missing) - allowed_missing or unexpected:
             raise RuntimeError(
                 f"checkpoint mismatch: missing {sorted(set(missing) - allowed_missing)}, "
-                f"unexpected {sorted(unexpected)}"
+                f"unexpected {sorted(unexpected)}, skipped {sorted(skipped)}"
             )
 
 

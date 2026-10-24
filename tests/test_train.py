@@ -366,6 +366,17 @@ def test_apply_model_init_loads_a_full_checkpoint(tmp_path: Path) -> None:
         assert torch.equal(expected, actual)
 
 
+def test_apply_model_init_skips_a_different_vocab_head(tmp_path: Path) -> None:
+    source = MothSTT(vocab_size=16)
+    checkpoint = tmp_path / "ckpt.pt"
+    torch.save({"model": source.state_dict()}, checkpoint)
+
+    target = MothSTT(vocab_size=32)
+    _apply_model_init(target, {"model": {"init_checkpoint": str(checkpoint)}})
+    assert torch.equal(target.encoder.conv1.weight, source.encoder.conv1.weight)
+    assert target.head.weight.shape == (33, source.head.weight.shape[1])
+
+
 def test_prepare_batch_crops_a_long_augmented_mel() -> None:
     items = [{"mel": np.zeros((80, 3248), dtype=np.float32), "row": {"id": "x"}}]
     tensor, lengths, rows = _prepare_batch(items, "truncated")
