@@ -598,3 +598,38 @@
 {"text": "he fixed the old radio by himself", "category": "control_en", "en_spans": [[0, 7]], "generator": "deepseek-v4.1-flash", "date": "2026-10-19", "id": "R-S1-0598", "reviewed": false}
 {"text": "we are planning a trip to the north", "category": "control_en", "en_spans": [[0, 8]], "generator": "deepseek-v4.1-flash", "date": "2026-10-19", "id": "R-S1-0599", "reviewed": false}
 {"text": "the cat is sleeping under the chair", "category": "control_en", "en_spans": [[0, 7]], "generator": "deepseek-v4.1-flash", "date": "2026-10-19", "id": "R-S1-0600", "reviewed": false}
+{"text": "ci possiamo chattare domani sera", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0601", "reviewed": false}
+{"text": "evita di chattare durante la riunione", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0602", "reviewed": false}
+{"text": "abbiamo prenotato una sala nel coworking", "category": "single_word", "en_spans": [[5, 6]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0603", "reviewed": false}
+{"text": "il coworking ha una stampante veloce", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0604", "reviewed": false}
+{"text": "la cpu del server è al limite", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0605", "reviewed": false}
+{"text": "controlla la temperatura della cpu", "category": "acronym", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0606", "reviewed": false}
+{"text": "devi downloadare l'allegato entro stasera", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0607", "reviewed": false}
+{"text": "riesci a downloadare il pacchetto completo", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0608", "reviewed": false}
+{"text": "il tecnico ha fixato la stampante", "category": "italianized", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0609", "reviewed": false}
+{"text": "era tutto fixato già ieri", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0610", "reviewed": false}
+{"text": "dopo il merge rifacciamo i controlli", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0611", "reviewed": false}
+{"text": "possiamo mergiare solo con i controlli verdi", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0612", "reviewed": false}
+{"text": "preferisco mergiare tutto insieme", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0613", "reviewed": false}
+{"text": "scrivi il codice otp nella casella", "category": "acronym", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0614", "reviewed": false}
+{"text": "mi serve il codice otp per entrare", "category": "acronym", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0615", "reviewed": false}
+{"text": "la campagna di phishing ha colpito molti utenti", "category": "single_word", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0616", "reviewed": false}
+{"text": "ogni settimana arriva un phishing diverso", "category": "single_word", "en_spans": [[4, 5]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0617", "reviewed": false}
+{"text": "ho pushato la correzione sul ramo", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0618", "reviewed": false}
+{"text": "chi ha pushato senza controllare", "category": "italianized", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0619", "reviewed": false}
+{"text": "il recap di fine mese è pronto", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0620", "reviewed": false}
+{"text": "scrivi un recap delle decisioni", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0621", "reviewed": false}
+{"text": "serve uno scroll down per vedere tutto", "category": "phrase", "en_spans": [[2, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0622", "reviewed": false}
+{"text": "fai scroll up e rileggi il paragrafo", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0623", "reviewed": false}
+{"text": "possiamo splittare gli acquisti in due", "category": "italianized", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0624", "reviewed": false}
+{"text": "splittare la spesa in due parti conviene", "category": "italianized", "en_spans": [[0, 1]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0625", "reviewed": false}
+{"text": "ho comprato un ssd da un terabyte", "category": "acronym", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0626", "reviewed": false}
+{"text": "il ssd è più veloce del disco vecchio", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0627", "reviewed": false}
+{"text": "il daily standup è stato utile", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0628", "reviewed": false}
+{"text": "salto il daily standup di oggi", "category": "phrase", "en_spans": [[2, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0629", "reviewed": false}
+{"text": "dimentico sempre di taggare il responsabile", "category": "italianized", "en_spans": [[3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0630", "reviewed": false}
+{"text": "taggare tutti in un messaggio è sbagliato", "category": "italianized", "en_spans": [[0, 1]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0631", "reviewed": false}
+{"text": "incolla un url nel messaggio", "category": "acronym", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0632", "reviewed": false}
+{"text": "l'indirizzo url contiene il numero di versione", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0633", "reviewed": false}
+{"text": "la warranty è scaduta il mese scorso", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0634", "reviewed": false}
+{"text": "chiedi la warranty al negozio", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0635", "reviewed": false}
