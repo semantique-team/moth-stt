@@ -373,7 +373,9 @@ Greedy is the functional weak point of CTC. The plan already includes hotword be
   goes from 8.2 to ~9.5–10 MB, still under the 20 MB ceiling. A 1-layer GRU or a 2-layer small
   transformer is enough; a large LM is not.
 - **Blank/VAD guard** for the noise set: average blank probability or an energy VAD can suppress
-  music/noise output; tune on the noise set, not on FLEURS.
+  music/noise output; tune on the noise set, not on FLEURS. *Done for silence (2026-10-24): the
+  energy guard in `stt/no_speech.py` and `web/mel.js` removes all 240 silence words; MUSAN noise
+  still needs augmentation with empty targets (E-011 addendum).*
 
 ### 4.4 Export and browser
 

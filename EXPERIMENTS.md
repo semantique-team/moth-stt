@@ -660,6 +660,31 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   re-run this entry on the complete 1 h non-music set. Until then the demo should use greedy by
   default on unknown input and warn that the quality path is for speech-only clips.
 
+> **Addendum (2026-10-24) — the no-speech guard closes digital silence.** Follow-up (1) is done:
+> `stt/no_speech.py` (Python) and `isNoSpeech` in `web/mel.js` skip decoding when the loudest
+> normalized log-mel bin is below **−1.0**. The threshold is calibrated on the cached shards, not
+> guessed: digital silence is flat at **−1.50** (range 0.00, std 0.000), the quietest speech clip
+> measured (FLEURS-EN, 525 clips) still peaks at **+0.10**, MUSAN noise at **+0.64** and music at
+> **+1.04**. The threshold is therefore 20 dB above silence and 44 dB below the quietest speech.
+>
+> | Path | Guard | Non-music words | Silence words | MUSAN-noise words | Music words |
+> |---|---|---|---|---|---|
+> | Moth greedy | before | 24 | 0 | 24 | 250 |
+> | Moth greedy | **after** | 24 | 0 | 24 | 250 |
+> | Moth beam 5 + LM 0.2 | before | 259 | **240** | 19 | 146 |
+> | Moth beam 5 + LM 0.2 | **after** | **19** | **0** | 19 | 146 |
+>
+> The guard catches exactly the **120/120** digital-silence clips in both paths and changes
+> nothing else; on 897 speech clips (**200 T + 697 FLEURS-IT**) it guards **0** and leaves the WER
+> bit-identical to E-006 greedy (0.5950 / 0.3411). Silence now costs feature extraction only — no
+> inference, no decode — and the browser `transcribe()` returns `""` with `guarded: true`.
+> Artifacts: `runs/E-011/guard-greedy/`, `guard-beam-lm/`, `guard-speech/`.
+>
+> **The noise gate is still not met**: 19–24 words remain on the 240 non-music clips, all of them
+> MUSAN noise (this is follow-up 2, noise augmentation with empty targets). Music is unchanged and
+> still reported separately. The guard is an energy check, not a VAD: it catches silence and
+> near-silence, not loud noise or music.
+
 ## E-012 — scaling the English data (2026-10-23)
 
 - **Date**: 2026-10-23

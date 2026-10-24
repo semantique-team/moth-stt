@@ -4,7 +4,10 @@
 
 - **Record-then-transcribe**: capture audio, then transcribe it. Clips ≤ 30 s run in one pass; longer audio is split.
 - **No streaming, no VAD, no WebGPU, no punctuation.** (Backlog: pseudo-streaming by re-decoding a growing buffer,
-  Silero VAD ≈ 2 MB, WebGPU.)
+  Silero VAD ≈ 2 MB, WebGPU.) A **no-speech guard** is not a VAD: a clip whose normalized log-mel has no
+  speech-like energy (loudest bin < −1.0) is not decoded at all, which removes the LM path's words on digital
+  silence (`stt/no_speech.py`, `isNoSpeech` in `web/mel.js`, E-011 addendum). Loud noise and music still need
+  noise augmentation in training.
 - The same ONNX graph runs on native `onnxruntime` for edge devices; a sherpa-onnx integration is a follow-up.
 
 ## 2. Pipeline in the browser

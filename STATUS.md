@@ -114,6 +114,13 @@
   **54 / 13**, Whistle **264 / 115**, Parakeet **0 / 0**. Music riportata a parte. **Solo Parakeet
   passa il gate 0 parole**; servono energy gate + noise augmentation (H3). Dettagli: E-011.
   Room tone (20 min) ancora da registrare per arrivare a 1 h non-music.
+- **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
+  `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
+  debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
+  **0/897** clip di parlato (200 T + 697 FLEURS-IT, WER identico a E-006); beam+LM scende da
+  **259 → 19** parole non-music, silenzio **240 → 0**. Sul browser il clip silenzioso non arriva
+  al modello (`guarded: true`, solo feature). **Il gate noise resta non passato**: 19–24 parole
+  su MUSAN noise, che richiedono l'augmentation con target vuoti.
 - **E-013 (tokenizer V=4096) completato** (2026-10-23): dev **32,79%** (IT 37,44 / EN 28,14) e
   a 18k meglio di E-006 (34,09), ma sui set veri: FLEURS-IT **36,30 greedy / 36,02 beam** vs E-006
   34,11; FLEURS-EN **60,02 / 59,71** vs 61,45 (meglio); T **59,93 / 59,85**, **ETA 19,7 / 20,0**
@@ -135,7 +142,7 @@
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **NON passato su FLEURS-IT** vs Whisper-tiny auto+beam5 (29,02 vs 27,42; +1,60). **Gate misto T non passato**: WER tie (+2,32 [−3,22, +8,02]) ma ETA −16,12 [−25,31, −6,02] vs Whisper it+beam5 (Moth 55,37/21,49 vs 53,05/37,61). **Noise gate non passato** (E-011: solo Parakeet 0 parole). **A (200h EN) e B (V=4096) respinti**: ETA resta 21,49. Prossimo: H3b splicing, poi distillazione/re-scope | H3/decisione |
+| H2 gate | **NON passato su FLEURS-IT** vs Whisper-tiny auto+beam5 (29,02 vs 27,42; +1,60). **Gate misto T non passato**: WER tie (+2,32 [−3,22, +8,02]) ma ETA −16,12 [−25,31, −6,02] vs Whisper it+beam5 (Moth 55,37/21,49 vs 53,05/37,61). **Noise gate**: silenzio digitale risolto dal guard (240 → 0 parole), restano **19–24 parole su MUSAN noise** → serve l'augmentation con target vuoti. **A (200h EN) e B (V=4096) respinti**: ETA resta 21,49. Prossimo: H3b splicing, poi distillazione/re-scope | H3/decisione |
 | M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto; R-S1 76/600, R-S2 e T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
