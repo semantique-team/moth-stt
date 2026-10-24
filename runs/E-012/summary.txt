@@ -1,0 +1,10 @@
+=== E-012 FINAL SUMMARY Fri Oct 23 23:31:01 CEST 2026 ===
+runs/E-012/eval-final/beam-lm/cv_it_test.metrics.json: WER 0.3038 ETA - n=14643
+runs/E-012/eval-final/beam-lm/fleurs_en_test.metrics.json: WER 0.5156 ETA - n=525
+runs/E-012/eval-final/beam-lm/fleurs_it_test.metrics.json: WER 0.2979 ETA - n=697
+runs/E-012/eval-final/beam-lm/recorded_t.metrics.json: WER 0.6053 ETA 0.2149 n=200
+runs/E-012/eval-final/greedy/cv_it_test.metrics.json: WER 0.3660 ETA - n=14643
+runs/E-012/eval-final/greedy/fleurs_en_test.metrics.json: WER 0.5650 ETA - n=525
+runs/E-012/eval-final/greedy/fleurs_it_test.metrics.json: WER 0.3548 ETA - n=697
+runs/E-012/eval-final/greedy/recorded_t.metrics.json: WER 0.6552 ETA 0.1821 n=200
+/dev/disk3s5   460Gi   380Gi    52Gi    88%    5.2M  548M    1%   /System/Volumes/Data

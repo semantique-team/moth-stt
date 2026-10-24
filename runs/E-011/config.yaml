@@ -1,0 +1,39 @@
+# E-011 — silence / noise / music robustness (H0-style, decode-only).
+#
+# Measures the words emitted on audio that contains no speech. The hard ship gate is zero words
+# on the non-music half (digital silence + room tone + MUSAN noise); music is reported separately.
+# The acoustic model is E-006 best, frozen; both the greedy path and the E-008 beam + LM quality
+# path are measured. Room tone is still to be recorded and merged (see docs/03 §9).
+run: E-011
+checkpoint: runs/E-006/checkpoints/ckpt_best.pt
+model_config: runs/E-006/config.yaml
+
+noise_set:
+  manifest: data/manifests/noise.jsonl
+  shards: data/shards/noise
+  audio_root: data/raw/noise
+  clips: 360
+  clip_seconds: 10
+  minutes: 60
+  seed: 0
+  categories:
+    silence: 20 min   # digital zeros
+    musan_noise: 20 min
+    musan_music: 20 min
+    room_tone: pending # to be recorded and merged with build_noise.py
+  musan:
+    source: OpenSLR 17
+    license: CC-BY-4.0
+    subsets: [noise, music]
+  levels: natural (no RMS normalisation); median -20.6 dBFS noise, -15.9 dBFS music
+
+decode:
+  greedy: {method: greedy}
+  quality: {method: beam, beam_width: 5, top_k: 8, lm: runs/E-008/lm_bpe3.pkl.gz, lm_weight: 0.2}
+
+baselines:
+  whisper_tiny: auto/it greedy + beam 5
+  whistle: it, no hotwords
+  parakeet_v3: int8 sherpa-onnx, no hotwords
+
+results: {} # filled by EXPERIMENTS.md E-011 after the runs

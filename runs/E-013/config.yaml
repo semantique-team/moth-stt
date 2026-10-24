@@ -1,0 +1,65 @@
+# E-013 — larger BPE vocabulary (4096 pieces), same data as E-006.
+#
+# One variable vs E-006: the tokenizer/head vocabulary grows from 1024 to 4096 pieces. The tokenizer
+# was rebuilt with the same corpus and seed (`stt/data/build_tokenizer.py`): tokens/word 1.945 →
+# 1.495, tokens/s 4.70 → 3.61, English terms within 3 pieces 48.8% → 74.0%. The CTC head is new
+# (384×4097 ≈ 1.57 M params; total ≈ 12.76 M) and is initialised randomly; the encoder and the two
+# head blocks are initialised from E-006 best (shape-mismatched head is skipped). 2 epochs, same
+# continuation LR as E-012.
+run: E-013
+seed: 0
+
+model:
+  vocab_size: 4096
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-006/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe_4096.model
+
+data:
+  # Same 438 h as E-006: CV IT 167.8 + MLS IT 169.9 + LS EN 100.
+  train:
+    - manifest: data/manifests/cv_it_train.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  # The 4096-piece head is new (random initialisation), unlike E-006's pretrained head: use the
+  # original H2 head LR (1e-3) for it, and keep the continuation encoder LR (5e-5).
+  lr_head: 1.0e-3
+  lr_encoder: 5.0e-5
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 2
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 10
+  keep_last: 3
+  max_nonfinite_steps: 20
+  empty_cache_every: 50
+  eval_every_steps: 2000

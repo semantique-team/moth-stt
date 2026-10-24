@@ -78,7 +78,63 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
 - **Result**: the H2 gate now has concrete numbers: beat **32.09 %** WER on FLEURS-IT and **13.86 %** on FLEURS-EN under our normalization.
 - **Conclusion**: hypothesis confirmed. Remaining H0 rows: Whisper base, beam 5, Cactus Whistle, Parakeet v3, CV-IT test, the mixed set T (once recorded) and the noise set; beam 5 and base will be filled before the H2 gate.
 
+### E-001 addendum — the complete H0 matrix (2026-10-23)
+
+The first pass measured Whisper-tiny **greedy** only. The ship gate is relative to the **best**
+H0 variant and includes beam 5, the mixed T set and CV-IT, so the matrix was completed. All
+numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
+
+| System | Variant | FLEURS-IT | FLEURS-EN | CV-IT test | T WER | T ETA | RTFx (FLEURS / T) | Size |
+|---|---|---|---|---|---|---|---|---|
+| Whisper tiny | auto, greedy | 0.3212 | 0.1386 | — | 0.7575 | 0.3672 | 53.3 / 4.6 | 148.7 MB |
+| Whisper tiny | forced `it`, greedy | 0.3209 | 0.8190 | — | 0.6225 | 0.2537 | 65.5 / 7.0 | 148.7 MB |
+| Whisper tiny | auto, beam 5 | **0.2742** | 0.1186 | — | 0.7051 | 0.3821 | 19.1 / 3.9 | 148.7 MB |
+| Whisper tiny | forced `it`, beam 5 | — (skipped) | — (skipped) | — | **0.5305** | **0.3761** | — / 4.1 | 148.7 MB |
+| Whisper base | forced `it`, greedy | 0.1827 | — | — | — | — | 25.9 / — | 287.3 MB |
+| Whisper base | auto, greedy | — | 0.0988 | — | — | — | 15.3 / — | 287.3 MB |
+| Cactus Whistle | auto | **0.1185** | 0.1170 | — | 0.3611 | **0.5075** | 121.8 / 99.4 | 16.9 MB |
+| Cactus Whistle | forced `it` | 0.1185 | 0.1335 | **0.2063** | **0.2949** | 0.5015 | 130.0 / 116.4 | 16.9 MB |
+| Parakeet TDT v3 int8 | multilingual | **0.0365** | **0.0817** | — | **0.1066** | **0.8388** | 28.1 / 29.5 | 639 MB |
+| **Moth E-008** | beam 5 + LM 0.2 | 0.2902 | 0.5699 | 0.3007 | 0.5537 | 0.2149 | 65.2 / — | **17.08 MB** |
+
+- **Best Whisper-tiny variant is not greedy**: auto + beam 5 gives **27.42% FLEURS-IT** and
+  **11.86% FLEURS-EN**; forced `it` + beam 5 gives the best mixed-set WER (**53.05%**) and a
+  strong ETA (**37.61%**). The 32.09% bar used in E-005/E-008 was the greedy number.
+- **The mixed-set ship gate is not met.** Paired difference Moth E-008 vs the best Whisper
+  variant on T: WER **+2.32** [−3.22, +8.02] is a **tie**; ETA **−16.12** [−25.31, −6.02] is
+  **significantly worse**. The gate requires the WER CI entirely below 0 *and* the ETA CI entirely
+  above 0; neither holds. Moth is WER-competitive with Whisper but far behind on English terms.
+- **Where the ETA gap is** (T, per category; Moth E-008 vs Whisper forced-`it` beam 5): ETA
+  single_word 18 vs **42**, phrase 19 vs **34**, brand 4 vs **31**, acronym 5 vs **30**,
+  italianized 7 vs **26**, switch 33 vs **38**. Moth wins the pure-Italian control WER (32 vs 44)
+  and loses the English control (51 vs 40). The gap is the English vocabulary/phonology, not
+  general Italian.
+- **The FLEURS-IT half of H2 also fails** against the corrected bar: 29.02 vs 27.42 = **+1.60**
+  [+0.32, +2.83]. CV dev is still won comfortably against Whisper (28.39 vs 48.53), but **not
+  against Whistle**: on CV-IT test Whistle is **20.63%** vs Moth **30.07%**. Whisper/Parakeet
+  CV-IT rows were not run (informational; the H2 gate uses CV dev); the forced-`it` FLEURS cells
+  were skipped after the auto+beam5 result, because the gate decision does not depend on them.
+- **Whistle is far ahead at the same size**: 11.85% FLEURS-IT and, on our clean mixed T,
+  **29.49% WER / 50.15% ETA** — 26 WER points and 29 ETA points better than Moth. The stretch gate
+  ("within the noise of Whistle") is nowhere near met. Caveat: FLEURS is a public benchmark and
+  may be in Whistle's training data; T is our own set, so the T gap is the meaningful one.
+- **Parakeet is the ceiling**: 3.65% FLEURS-IT / 8.17% FLEURS-EN and, on T, **10.66% WER /
+  83.88% ETA** at 639 MB. The mixed set is not impossibly hard; the small models are simply far
+  from the ceiling. Moth is 45 WER points and 62 ETA points behind it.
+- **Base greedy** is the capacity reference: 18.27% FLEURS-IT, 9.88% FLEURS-EN. No new base runs
+  were made: this is inference, not training, and the gate is defined against Whisper-tiny.
+- **T RTFx** is low because the clips are short and several jobs shared the CPU; treat it as
+  indicative. The browser RTFx numbers (E-010) are the ones for the runtime gate.
+- **Conclusion**: the v0.1 candidate is **not shippable** under `docs/05` §5. The ETA gap is the
+  dominant problem, and it is structural: V=1024 splits English terms (only 48.8% fit in ≤3
+  pieces), and the model deletes or Italianizes them (`meeting → in`, `update → dayte`,
+  `backlog → ∅`). H3 gold data is still the planned next step, but before recording 600 R-S1
+  utterances decide whether H3 alone can close ~16 ETA points, or whether the tokenizer (larger
+  V / word-level output), capacity, or the product target must change. The E-008 "gate passed"
+  claim was against the greedy baseline and is corrected in that entry.
+
 ---
+
 
 ## E-002 — Dataset build (M2)
 
@@ -442,9 +498,12 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   [−5.61, −4.54]; FLEURS-EN **−4.46** [−5.07, −3.90]; CV dev **−6.05** [−6.22, −5.88]; CV test
   **−6.08** [−6.25, −5.91]; T **−4.13** [−6.26, −2.25]. All significant.
 - **Versus Whisper-tiny**: FLEURS-IT **29.02 vs 32.09** = **−3.06** [−4.29, −1.71] (Moth better);
-  CV dev **28.39 vs 48.53** = **−20.13** [−20.52, −19.70] (Moth better). **Both H2 gate
-  conditions now pass at system level** with the LM-assisted decoder; the E-006 acoustic model
-  alone still fails FLEURS-IT.
+  CV dev **28.39 vs 48.53** = **−20.13** [−20.52, −19.70] (Moth better). Against Whisper-tiny
+  **greedy**, both H2 gate conditions pass at system level with the LM-assisted decoder.
+  **Correction (2026-10-23, E-001 addendum):** 32.09 was the *greedy* variant. The best H0 variant
+  is auto + beam 5 at **27.42%** on FLEURS-IT; Moth 29.02 is **+1.60** [+0.32, +2.83], a
+  significant loss. The FLEURS-IT half of the H2 gate does **not** pass against the best baseline;
+  the CV-dev half does (28.39 vs 48.53).
 - **Findings**: the tiny LM is the largest single decode-side win on this model: it recovers
   ~4–6 WER points across domains, far more than beam or hotwords, and puts FLEURS-IT below
   Whisper-tiny for the first time. It is domain-sensitive (read/audiobook transcripts) but the
@@ -452,12 +511,13 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   ≈ **15.5 MB**, still under the ~20 MB ceiling. Caveats: the LM is a Python pickle, not yet
   exported to the browser; T ETA does not improve; a word-level/contextual LM may be needed for
   the mixed English terms.
-- **Result**: **E-008 is the new best Moth system; the H2 gate passes on FLEURS-IT and CV dev.**
-  This is a system-level pass with the LM decoder, not an acoustic-only pass.
+- **Result**: **E-008 is the new best Moth system.** It passes the CV-dev half of the H2 gate and
+  loses the FLEURS-IT half against Whisper-tiny's **best** H0 variant (auto + beam 5, 27.42%).
+  This is a system-level result with the LM decoder, not an acoustic-only pass.
 - **Conclusion**: freeze E-008 as the quality configuration. Next: export the LM and beam to the
   browser/ONNX path and measure RTFx; then address T ETA (word-level/contextual LM or better
-  hotword design) and H3 recordings. Capacity escalation (conv head / 25 Hz+2) is no longer
-  needed for the H2 gate.
+  hotword design) and H3 recordings. Capacity escalation (conv head / 25 Hz+2) stays an option
+  until the corrected FLEURS-IT bar is met on the held-out set.
 
 ## E-009 — real-weight int8 export + browser RTFx (2026-10-23)
 
@@ -534,3 +594,136 @@ Paired auto − forced-`it`: FLEURS-IT **+0.03 pp** (tie — CI includes 0); FLE
   ported to JS; T ETA remains the weak spot (browser 21.19%, Python 21.49%).
 - **Conclusion**: next is a full 200-clip browser-vs-Python T e2e and final demo polish; then H3
   recordings and T ETA work. No further model/capacity change is needed for the H2 gate.
+
+> **Correction (2026-10-23, E-001 addendum):** the H2 bar used above (Whisper-tiny 32.09% on
+> FLEURS-IT) is the **greedy** variant. The best H0 variant is auto + beam 5 at **27.42%**, so
+> the FLEURS-IT half of the H2 gate is not met (Moth 29.02, +1.60 [+0.32, +2.83]). The CV-dev
+> half is still met by ~20 points. Capacity escalation therefore remains an option; the noise set
+> (E-011) also shows the LM quality path needs a no-speech guard.
+
+## E-011 — silence / noise / music robustness (2026-10-23)
+
+- **Date**: 2026-10-23
+- **Hypothesis**: on audio with no speech the system emits **zero words** on the non-music part
+  (digital silence + MUSAN noise); music is reported separately and is not gated.
+- **Model configuration**: E-006 best (11.58 M, frozen) with the **greedy** decoder and with the
+  E-008 **beam 5 + BPE trigram LM** quality path (top-8, α=0.2). Baselines on the same clips:
+  Whisper-tiny auto/forced-`it` beam 5, Cactus Whistle forced `it` (no hotwords), Parakeet TDT
+  0.6B v3 int8 through sherpa-onnx (no hotwords).
+- **Dataset**: `data/manifests/noise.jsonl`, **360 clips × 10 s = 60 min**, seed 0:
+  120 digital-silence clips (20 min, exact zeros), 120 MUSAN noise clips (20 min), 120 MUSAN
+  music clips (20 min). MUSAN is **CC-BY 4.0** (OpenSLR 17, verified 2026-10-23); only its noise
+  and music subsets are used. Natural levels, no RMS normalisation (median −20.6 dBFS noise,
+  −15.9 dBFS music). Builder: `stt/data/build_noise.py`; mel shards: 1.00 h, 0 errors.
+  **Room tone is still to be recorded** (20 min); it will be merged into the same manifest and
+  shards, bringing the non-music part to the full 1 h.
+- **Procedure**: `build_noise.py` → `build_mel.py` → `runs/E-005/eval_sets.py` (Moth) /
+  `baselines/whisper_runner.py`, `baselines/whistle_needle.py`, `baselines/parakeet_sherpa.py` →
+  `stt/eval.py` (noise block). The `stt/eval.py` noise block counts words on empty-`norm` rows;
+  music rows are tagged `source = "noise_music"` and reported separately.
+- **Compute and cost**: set build ≈30 s (5.3 GB MUSAN extraction included in the download step);
+  Moth decode ≈3 min per path on M5/MPS; Whisper ≈5 min; Whistle 8 s (RTFx 443); Parakeet ≈2 min.
+  **0 USD**.
+
+| System | Decoder | Non-music words | Non-music non-empty clips | Silence words | MUSAN-noise words | Music words | Music non-empty clips |
+|---|---|---|---|---|---|---|---|
+| **Moth** | greedy | **24** | 18 / 240 | 0 | 24 | 250 | 56 / 120 |
+| **Moth** | beam 5 + LM 0.2 | 259 | 134 / 240 | **240** | 19 | **146** | 40 / 120 |
+| Whisper tiny | auto/it beam 5 | 54 | 13 / 240 | 0 | 54 | 274 | 26 / 120 |
+| Cactus Whistle | forced `it` | 264 | 115 / 240 | 0 | 264 | 554 | 120 / 120 |
+| Parakeet TDT 0.6B v3 int8 | transducer | **0** | **0 / 240** | 0 | **0** | 411 | 24 / 120 |
+
+- **Findings**:
+  - **Digital silence**: Moth greedy, Whisper, Whistle and Parakeet all emit nothing. Moth with
+    **beam 5 + LM emits "non mi" on all 120 silence clips** (2 words each, 240 words). The LM
+    shallow fusion has no blank/no-speech prior: on an all-blank acoustic distribution the best
+    LM continuation wins over the empty hypothesis. This is a decoder failure, not an acoustic
+    one; an energy gate would remove it, but the LM path also needs a no-speech prior.
+  - **MUSAN noise**: Moth greedy 24 words / 18 clips, Moth beam 19 / 14, Whisper 54 / 13, Whistle
+    264 / 115, Parakeet **0 / 0**. Moth's acoustic model is the most robust of the small systems
+    on non-music noise; Whisper hallucinates fewer but longer clips; Whistle is unusable without
+    a VAD on transient noise.
+  - **Music** (not gated): Moth beam+LM halves the words (250 → 146) and non-empty clips (56 → 40)
+    of greedy; Parakeet hallucinates long transcripts on 24 clips; Whistle on all 120.
+  - **Blank confidence is not calibrated for silence**: on exact zeros the mean non-blank
+    probability is 0.125, *higher* than on T speech (0.108), so a CTC-confidence threshold cannot
+    substitute for an energy/VAD gate. Silence and noise must enter training (noise augmentation
+    with empty targets) or be filtered before the model.
+- **Result**: **only Parakeet meets the hard 0-word non-music gate**; no Moth configuration does.
+  Moth greedy (24 words over 40 min of non-music) is much better than its LM quality path on
+  silence (259 words), and better than Whisper and Whistle on MUSAN noise. The LM path is the
+  wrong default for record-then-transcribe until a no-speech guard exists.
+- **Conclusion**: the noise gate is **not met** by the v0.1 candidate. Required follow-ups:
+  (1) an energy/silence gate in the Python and browser paths (fixes digital silence immediately);
+  (2) **MUSAN noise augmentation with empty targets** in H3 (the principled fix for noise, P2 in
+  `docs/10`); (3) a blank/no-speech prior or a small VAD for the LM path; (4) record room tone and
+  re-run this entry on the complete 1 h non-music set. Until then the demo should use greedy by
+  default on unknown input and warn that the quality path is for speech-only clips.
+
+## E-012 — scaling the English data (2026-10-23)
+
+- **Date**: 2026-10-23
+- **Hypothesis**: the model's English weakness (FLEURS-EN 56.99% vs Whisper-tiny 11.86%) is a data
+  problem; adding ~200 h of LibriSpeech English and retraining from E-006 raises English and,
+  through it, the mixed-set ETA, without hurting Italian/T.
+- **Data**: LibriSpeech `train-clean-360` reduced to a deterministic **200 h sample**
+  (`ls_en_train360`, 57,198 clips, 0 errors, 199.99 h of mel shards). Training mixture becomes
+  **638 h** (CV IT 167.8 + MLS IT 169.9 + LS EN 100 + LS EN 200), i.e. ~53/47 IT/EN (was 77/23).
+- **Training**: E-006 best frozen as init; 2 epochs, head LR 3e-4 / encoder 5e-5, batch 192 s/32
+  clips, bf16, MPS. **Crash at step 9,350**: tempo-stretch augmentation turned a 29.7 s LS360 clip
+  into ~32.5 s and the encoder rejects >30 s. Fixed in `_prepare_batch` (crop to 3000 mel frames,
+  clamp lengths, regression test); resumed from step 9,072. Total 26,028 steps.
+- **Compute and cost**: data build ≈10 min, training ≈4 h on the M5; 0 USD.
+- **Metrics** (bootstrap 1,000; `runs/E-012/eval-final/`):
+
+| Set | E-012 greedy | E-012 beam+LM | E-008 (best Moth) |
+|---|---|---|---|
+| Dev macro | — | — | 0.2705 |
+| FLEURS-IT test | 0.3548 | **0.2979** | **0.2902** |
+| FLEURS-EN test | 0.5650 | **0.5156** | 0.5699 |
+| CV IT test | 0.3660 | **0.3038** | **0.3007** |
+| T (S1, 200) | 0.6552 / ETA 0.1821 | 0.6053 / ETA 0.2149 | **0.5537 / ETA 0.2149** |
+
+  Final dev: **29.50%** (IT 35.78 / EN 23.22), better than E-006's best 31.27 (IT 35.56 / EN 26.99).
+- **Paired vs E-008 on T**: WER **+5.16** [+3.00, +7.37] (**significantly worse**); ETA **0.00**
+  [−2.93, +2.92] (**exact tie**).
+- **Findings**: the extra English does what it says on English — FLEURS-EN improves **5.4 points**
+  (51.56 vs 56.99) and dev EN improves 3.8 — but it **shifts the 11.5 M model away from Italian**:
+  FLEURS-IT is 0.8 points worse, CV-IT 0.3 worse, and T WER regresses 5.2 points significantly.
+  The dev macro looked better only because the English gain outweighed the Italian loss. **ETA does
+  not move at all** (21.49). The 53/47 mixture is too English-heavy for the mixed task.
+- **Result**: **A is rejected as a standalone lever for the ship gate**: English improves, Italian/T
+  regress, ETA is unchanged. The best Moth remains E-008.
+- **Conclusion**: the ETA bottleneck is not general English data. Next cheap test: H3b splicing
+  (synthetic IT+EN utterances, no recording); if ETA does not move, distillation from
+  Whistle/Parakeet or a re-scope are the remaining options.
+
+## E-013 — larger BPE vocabulary (V=4096) (2026-10-23)
+
+- **Date**: 2026-10-23
+- **Hypothesis**: English terms are split into 3–6 BPE pieces at V=1024; a 4096-piece vocabulary
+  shortens them to 1–2 pieces, making the CTC sequence easier to emit and raising ETA.
+- **Tokenizer**: rebuilt with the same corpus and seed as V=1024
+  (`stt/data/build_tokenizer.py`): **tokens/word 1.945 → 1.495**, **tokens/s 4.70 → 3.61**,
+  **English terms within 3 pieces 48.8% → 74.0%**.
+- **Training**: new CTC head (384×4097 ≈ 1.57 M; **12.758 M total**); encoder and two head blocks
+  from E-006 (the shape-mismatched head is skipped by `_apply_model_init`), 2 epochs on the E-006
+  438 h, head LR 1e-3 / encoder 5e-5. 18,148 steps, ≈3.5 h on MPS.
+- **Compute and cost**: ≈3.5 h; 0 USD.
+- **Metrics** (no LM: the E-008 LM is a 1024-piece model; `runs/E-013/eval/`):
+
+| Set | E-013 greedy | E-013 beam 5 | E-006 (1024) |
+|---|---|---|---|
+| Dev macro @18k | — | **0.3279** | 0.3409 |
+| FLEURS-IT test | 0.3630 | 0.3602 | **0.3411** |
+| FLEURS-EN test | 0.6002 | **0.5971** | 0.6145 |
+| T (S1, 200) | 0.5993 / ETA 0.197 | 0.5985 / ETA 0.200 | **0.5950 / ETA 0.200** |
+
+- **Findings**: at equal steps the dev macro is better (32.79 vs 34.09 at 18k; 1.3 points), and
+  FLEURS-EN improves 1.7 points, but **FLEURS-IT regresses 1.9 points** and T is flat/slightly worse.
+  **ETA does not change** (20.0 vs 20.0). The tokenizer shortens the sequences but does not teach the
+  acoustic model to recognise the English terms; the errors are still deletions/Italianisations.
+- **Result**: **B is rejected as a standalone lever for ETA**; the model size grows by ~1.2 M
+  parameters and the quality does not improve on the task that matters.
+- **Conclusion**: do not adopt V=4096 for v0.1, and do not spend time adapting the LM to it. The ETA
+  bottleneck is acoustic/data, not vocabulary.
