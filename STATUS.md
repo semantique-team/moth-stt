@@ -57,7 +57,8 @@
   `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
   che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
-- **R-S2**: script 600–1000 ancora da generare dal pool; poi S2 registra
+- **R-S2**: **51 frasi** (le 54 sui termini rari meno 3 doppioni); ne mancano ~550, da **generare
+  nuovi** — il pool non si può riusare, `docs/03` §6 impone il dedupe su T/R/pool. Poi S2 registra
   `uv run recordings/record.py --speaker S2 --kind R`. R-S2 è il blocco residuo di H3a insieme a
   T S2–S4.
 - **Guida per speaker esterni**: `recordings/EXTERNAL-SPEAKERS.md` (Mac guided recorder;
@@ -126,6 +127,15 @@
   **tie** (E-008 era +1,60 significativo); il gate misto T resta **non passato** (ETA **−17,01**
   [−25,55, −7,01]). **Lo splicing non muove l'ETA** (nessuna categoria migliora; italianized
   7,4 → 3,7): ipotesi H3b respinta. Artefatti `runs/E-014/`, `EXPERIMENTS.md` (E-014).
+- **Diagnosi ETA fatto** (2026-10-24): il problema è **copertura lessicale**. T annota 94 termini
+  inglesi, **47 non compaiono mai** nel testo di training (CV+MLS+spliced) e **18 non erano in
+  nessuno script** (esistevano solo in T): `backlog, cfo, cpu, crm, deadline, deploy, erp, kpi,
+  merge, milestone, okr, onboarding, paypal, phishing, url, warranty`… Sulle **41 frasi di T** con
+  un termine raro: Parakeet **32/41 (78%)**, Whistle 17/41, Whisper 12/41, **Moth E-014 2/41
+  (5%)**. Spiega perché E-012 e E-014 non hanno mosso l'ETA: l'inglese aggiunto era prosa, non
+  lessico tecnico. Rimedio: **35 frasi aggiunte a R-S1** e **54 a R-S2**, entrambi gli script ora
+  coprono tutti i 18 termini. Protocollo distillazione: `runs/E-015/PLAN.md` (bloccato sui dati,
+  non sul compute).
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
@@ -180,14 +190,15 @@ live sono nei log.
 
 ## Serve da te
 
-- **Decisione bloccante (2026-10-24)**: le leve a costo zero o basso sono **tutte testate e
-  respinte**: A (200 h EN), B (V=4096), **H3b splicing** (E-014). E-014 è il nuovo best (FLEURS-IT
-  ora in pari con Whisper, CV vinto, T in tie), ma **l'ETA resta 20,6 contro 37,6 di Whisper** e
-  nessun esperimento lo ha mosso. Le opzioni rimaste: (1) **distillazione** da Whistle (16,9 MB,
-  T 29,49 / ETA 50,15) o Parakeet (639 MB) — richiede un training lungo e una decisione sul tetto
-  di 20 MB; (2) **gold H3a**: registrare R-S1 (524 mancanti) è l'unica ipotesi non ancora testata,
-  ma costa ore di registrazione; (3) **re-scope** del gate (ETA come metrica secondaria, modello
-  "Italian-first con termini inglesi frequenti"). Da decidere prima di registrare.
+- **Decisione bloccante (2026-10-24, aggiornata)**: il problema dell'ETA non è capacità né
+  struttura: è **lessico mai sentito** (47/94 termini assenti dal training, 18 assenti dagli
+  script). Piano concordato: **(2) gold prima** — R-S1 è a 76/635 (35 frasi nuove sui termini),
+  R-S2 a 51 e va completato con ~550 frasi nuove — poi **E-016** (fine-tune sul gold) misura se
+  l'ipotesi originale chiude l'ETA; **(1) distillazione** da Parakeet (78% sui termini rari) è
+  pronta come protocollo (`runs/E-015/PLAN.md`) ma **bloccata sulla fonte audio**: gold, audio
+  CC0/BY, o TTS (H3c) — serve una decisione di provenienza, non compute; **(3) re-scope** si
+  valuta solo dopo i risultati di E-016/E-015. Non registrare R-S1 alla cieca non è più il
+  vincolo: ora si sa *quali* frasi servono.
 - **S1**: continuare R-S1 da 0023 (524 mancanti) e completare le 600; poi build manifest.
 - **Room tone (20 min)**: serve per chiudere il noise set a 1 h non-music. Trova il device con
   `ffmpeg -f avfoundation -list_devices true -i ""`, poi registra con

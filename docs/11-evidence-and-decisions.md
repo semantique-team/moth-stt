@@ -61,6 +61,23 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 Not tested (do not claim either way): distillation from Whistle/Parakeet, gold code-switch data
 (H3a), noise augmentation with empty targets, word-level splicing, InterCTC/CR-CTC.
 
+### 3.1 Why the ETA does not move: it is vocabulary coverage
+
+Measured 2026-10-24 (scripts in the repo, numbers reproducible from the manifests):
+
+- T annotates 94 English terms; **47 never occur in the training text** (CV IT + MLS IT + the
+  E-014 spliced set). The missing ones are the hard categories: `backlog, cfo, cpu, crm, deadline,
+  deploy, erp, kpi, merge, milestone, okr, onboarding, paypal, phishing, url, warranty`.
+- **18 of them were absent from every recording script** and existed only in T. Fixed the same
+  day: 35 sentences added to R-S1 and 54 to R-S2, so both R scripts now cover all 18.
+- On the **41 T utterances containing a rare term**, term accuracy is Parakeet **32/41 (78%)**,
+  Whistle 17/41 (41%), Whisper-tiny 12/41 (29%), **Moth E-014 2/41 (5%)**.
+
+This reframes the earlier failures: E-012 (more English) and E-014 (splicing) added English audio
+whose vocabulary was audiobook/web prose, not modern tech terms; neither could teach the terms.
+It also identifies the data that would: **audio where those words are actually spoken**. See
+`runs/E-015/PLAN.md` for the distillation protocol, which is blocked on exactly that asset.
+
 ## 4. Self-corrections
 
 Recorded because a paper about failures should include the failures of the authors, not only of the
@@ -123,9 +140,9 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 
 ## 7. Open questions, in decision order
 
-1. **Distillation from Whistle (16.9 MB) or Parakeet (639 MB)** — the only lever with a proven
-   headroom at this size (Whistle reaches T 29.49 / ETA 50.15). Needs a decision on the 20 MB
-   ceiling and a longer training budget.
+1. **Distillation from Parakeet (639 MB)** — the teacher gets **78%** of the rare terms right
+   against Moth's 5% (§3.1), so the signal exists. Blocked on audio containing those terms:
+   `runs/E-015/PLAN.md` lists the three possible sources and the provenance decision each needs.
 2. **Gold code-switch data (H3a)** — the only untested hypothesis, and the plan's original one.
    Costs recording hours: R-S1 is at 76/600 and T has S1 only.
 3. **Re-scope the mixed gate** — ETA as a secondary metric, "Italian-first with frequent English
