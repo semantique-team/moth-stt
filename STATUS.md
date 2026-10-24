@@ -8,6 +8,9 @@
 > Questo file dice **dove siamo**; il *come* e il *perché* stanno nei design doc (`docs/01`…`09`) e nel
 > piano (`docs/plans/2026-10-19-implementation-plan.md`, che ha una nota di sync in testa: i suoi checkbox
 > non sono mantenuti, questo file è la fonte live).
+> **Materiale per il paper:** `docs/11-evidence-and-decisions.md` — decisioni eseguite con l'evidenza,
+> risultati negativi, le tre autocorrezioni e i limiti (single seed, T = solo S1, FLEURS pubblica, ecc.),
+> più l'indice di riproducibilità di ogni numero.
 
 ## Come ripartire in una nuova conversazione
 

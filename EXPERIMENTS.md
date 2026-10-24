@@ -4,6 +4,12 @@ Every experiment records: hypothesis, model configuration, dataset, training par
 hardware, compute and cost, metrics, result, conclusion (template:
 `docs/07-repo-layout-and-roadmap.md` §4). Architecture changes are never made without an entry here.
 
+Entries E-007–E-011 are **decode-only, export-only or evaluation-only**: they have no training
+parameters or hardware of their own and fold model configuration and dataset into **Method**.
+Every entry ends with an **Artifacts** line naming the files behind its numbers, and the executed
+decision log, the negative results and the threats to validity are in
+`docs/11-evidence-and-decisions.md`.
+
 Compute ledger: 0 USD spent of the 10 USD budget; stop and review at 8 USD.
 
 ---
@@ -467,6 +473,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   beam (E-008); if that does not close the gap, move to capacity (conv head / 25 Hz+2). Hotword
   design can be revisited with prefix/fuzzy matching or a word-level lexicon, but it is not the
   first lever. H3 still needs the missing recordings.
+- **Artifacts**: `runs/E-007/eval/{beam,beam_hot*}/`, `runs/E-007/dev/`, `runs/E-007/tune/summary.md`; checkpoint `runs/E-006/checkpoints/ckpt_best.pt` (step 36,296). Decode-only: no git SHA in the metrics; artifacts added in commit 54289a2.
 
 ## E-008 — small BPE trigram LM in shallow fusion (2026-10-22)
 
@@ -518,6 +525,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   browser/ONNX path and measure RTFx; then address T ETA (word-level/contextual LM or better
   hotword design) and H3 recordings. Capacity escalation (conv head / 25 Hz+2) stays an option
   until the corrected FLEURS-IT bar is met on the held-out set.
+- **Artifacts**: `runs/E-008/lm_bpe3.pkl.gz`, `runs/E-008/build_lm.py`, `runs/E-008/eval/{w0.2,best}/`, `runs/E-008/tune/summary.md`; checkpoint `runs/E-006/checkpoints/ckpt_best.pt`. Artifacts added in commit 3c8b4b3.
 
 ## E-009 — real-weight int8 export + browser RTFx (2026-10-23)
 
@@ -554,6 +562,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Conclusion**: next step is the JS beam + LM port and a real-audio e2e parity test (browser vs
   Python E-008 transcripts), then a browser RTFx measurement for the quality path. The acoustic
   int8 export and the greedy fast path are ready.
+- **Artifacts**: `runs/E-009/rtfx.json`, `runs/E-009/rtfx-smoke.json`, `runs/E-009/int8_check.json`, `release/`; artifacts added in commit 4551d2a.
 
 ## E-010 — browser beam + LM quality path (2026-10-23)
 
@@ -600,6 +609,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > the FLEURS-IT half of the H2 gate is not met (Moth 29.02, +1.60 [+0.32, +2.83]). The CV-dev
 > half is still met by ~20 points. Capacity escalation therefore remains an option; the noise set
 > (E-011) also shows the LM quality path needs a no-speech guard.
+- **Artifacts**: `runs/E-010/rtfx.json`, `runs/E-010/browser_t200.json`, `runs/E-010/package_browser.py`, `web/{ort,decode,lm,mel}.js`; artifacts added in commit 4801d51.
 
 ## E-011 — silence / noise / music robustness (2026-10-23)
 
@@ -684,6 +694,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > MUSAN noise (this is follow-up 2, noise augmentation with empty targets). Music is unchanged and
 > still reported separately. The guard is an energy check, not a VAD: it catches silence and
 > near-silence, not loud noise or music.
+- **Artifacts**: `runs/E-011/{moth-greedy,moth-beam-lm,guard-greedy,guard-beam-lm,guard-speech}/`, `data/manifests/noise.jsonl`, `data/manifests/noise_report.json`, `stt/data/build_noise.py`. Committed 2026-10-24 (commit c459641) with the code at ~72cf112; no git SHA was recorded in the metrics.
 
 ## E-012 — scaling the English data (2026-10-23)
 
@@ -722,6 +733,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Conclusion**: the ETA bottleneck is not general English data. Next cheap test: H3b splicing
   (synthetic IT+EN utterances, no recording); if ETA does not move, distillation from
   Whistle/Parakeet or a re-scope are the remaining options.
+- **Artifacts**: `runs/E-012/eval-final/` (authoritative), `runs/E-012/eval/` (8k-checkpoint pass, superseded), `runs/E-012/train.log.jsonl` (git SHA 72cf112), `runs/E-012/config.yaml`, `data/manifests/ls_en_train360.jsonl`.
 
 ## E-013 — larger BPE vocabulary (V=4096) (2026-10-23)
 
@@ -752,6 +764,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   parameters and the quality does not improve on the task that matters.
 - **Conclusion**: do not adopt V=4096 for v0.1, and do not spend time adapting the LM to it. The ETA
   bottleneck is acoustic/data, not vocabulary.
+- **Artifacts**: `runs/E-013/eval/{greedy,beam}/`, `runs/E-013/train.log.jsonl` (git SHA 72cf112), `runs/E-013/config.yaml`. The V=4096 tokenizer is not committed (`data/tokenizer/` is gitignored); it is rebuilt by `stt/data/build_tokenizer.py`.
 
 ## E-014 — H3b utterance-level splicing, no gold data (2026-10-24)
 
@@ -809,3 +822,4 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   switches, so the remaining levers are (a) **distillation from Whistle/Parakeet**, (b) **gold
   code-switch data** (the plan's H3a, still untested: R-S1 at 76/600), (c) a re-scope of the ship
   gate. Noise augmentation with empty targets is still open (E-011).
+- **Artifacts**: `runs/E-014/eval/{greedy,beam-lm,noise-greedy,noise-beam-lm}/`, `runs/E-014/eval.sh`, `runs/E-014/train.log.jsonl` (git SHA 50d98b8), `runs/E-014/config.yaml`, `data/manifests/spliced_it_en.jsonl`, `data/manifests/spliced_it_en_report.json`, `stt/data/build_spliced.py`.

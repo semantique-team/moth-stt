@@ -1,8 +1,11 @@
 # moth-stt — IT+EN code-switching speech-to-text (design)
 
-> **Status:** design approved section by section on 2026-10-18 (brainstorming session).
-> **Nothing is implemented yet** — no code, no data, no training has been done for this model.
-> These documents were drafted inside `ant-4b/NewModel/` and now live in `moth-stt/docs/` (moved 2026-10-19).
+> **Status:** these documents are the **design snapshot of 2026-10-18** and are kept as written.
+> The project has since been implemented and run: the live state is [`STATUS.md`](../STATUS.md), the
+> experiment log is [`EXPERIMENTS.md`](../EXPERIMENTS.md), and the executed decision log, negative
+> results, self-corrections and threats to validity are in
+> [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md).
+> They were drafted inside `ant-4b/NewModel/` and now live in `moth-stt/docs/` (moved 2026-10-19).
 > **Name:** **moth** — decided 2026-10-19, together with the repository name `moth-stt` (see `08-risks-and-open-questions.md`).
 
 ## Summary
@@ -49,7 +52,10 @@ Read in order; each file is self-contained enough to be reviewed alone.
 | [`08-risks-and-open-questions.md`](08-risks-and-open-questions.md) | Risk register, open questions, follow-up backlog, stop/pivot criteria. |
 | [`09-research-notes.md`](09-research-notes.md) | The evidence behind the decisions, with links and a verified/unverified marker per claim. |
 | [`10-optimization-review.md`](10-optimization-review.md) | Architecture/code optimization review: loader, attention, CTC head, eval, export, capacity variants, recent STT papers, and what can safely run while H2 trains. |
+| [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) | What the project actually decided, rejected and corrected: executed decision log, negative results, self-corrections, threats to validity, reproduction index. |
 | [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points. |
+| [`../STATUS.md`](../STATUS.md) | Live state: what is done, what is in progress, what is next. |
+| [`../EXPERIMENTS.md`](../EXPERIMENTS.md) | Experiment log E-000…E-014 with hypothesis, configuration, metrics and conclusion. |
 
 ## Decision log
 
@@ -81,5 +87,6 @@ Read in order; each file is self-contained enough to be reviewed alone.
 
 ## Next step
 
-Next: execute the implementation plan —
-[`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) — starting from Task 0.1.
+The design phase is closed: see [`STATUS.md`](../STATUS.md) for the live state and the next
+experiment, and [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) §7 for the open
+decision between distillation, gold recordings and a re-scope of the mixed gate.
