@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 .venv/
+.venv-baselines/
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
@@ -20,6 +21,13 @@ runs/**/ckpt*.pt
 web/node_modules/
 web/test-results/
 web/playwright-report/
+baselines/runs/*.log
+
+# Agent session scratch (stdout dumps, orchestration logs: regenerable, not an experiment record)
+runs/*.log
+runs/*.txt
+runs/**/*.out
+runs/orchestrate.*
 
 # Recordings (audio, candidates and cue sheets are not versioned; scripts and manifests are)
 recordings/audio/
