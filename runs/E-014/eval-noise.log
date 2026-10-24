@@ -1,0 +1,7 @@
+decoder: greedy
+checkpoint runs/E-014/checkpoints/ckpt_best.pt (step 22494) on mps
+noise: WER 0.0000 CI None (guarded 120)
+lm: runs/E-008/lm_bpe3.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-014/checkpoints/ckpt_best.pt (step 22494) on mps
+noise: WER 0.0000 CI None (guarded 120)

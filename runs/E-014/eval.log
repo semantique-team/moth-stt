@@ -1,0 +1,13 @@
+decoder: greedy
+checkpoint runs/E-014/checkpoints/ckpt_best.pt (step 22494) on mps
+fleurs_it_test: WER 0.3268 CI [0.31595508390918065, 0.33827442037248195]
+fleurs_en_test: WER 0.6070 CI [0.5933010212913277, 0.6225335269496882]
+cv_it_test: WER 0.3615 CI [0.3577255002669442, 0.36526300075996093]
+recorded_t: WER 0.6113 CI [0.5726351351351351, 0.6493174061433447]
+lm: runs/E-008/lm_bpe3.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-014/checkpoints/ckpt_best.pt (step 22494) on mps
+fleurs_it_test: WER 0.2675 CI [0.2571857035741065, 0.27844028014385763]
+fleurs_en_test: WER 0.5604 CI [0.5458225667527993, 0.5757334042364619]
+cv_it_test: WER 0.3010 CI [0.2974261394800815, 0.3046796382718634]
+recorded_t: WER 0.5709 CI [0.5311418685121108, 0.6075731497418244]

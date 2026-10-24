@@ -752,3 +752,60 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   parameters and the quality does not improve on the task that matters.
 - **Conclusion**: do not adopt V=4096 for v0.1, and do not spend time adapting the LM to it. The ETA
   bottleneck is acoustic/data, not vocabulary.
+
+## E-014 — H3b utterance-level splicing, no gold data (2026-10-24)
+
+- **Date**: 2026-10-24
+- **Hypothesis**: E-012 (more English) and E-013 (V=4096) both left the mixed-set ETA at 21.49,
+  so the model has never seen a switch **inside one utterance**. Concatenating an Italian and an
+  English clip (transcript = the concatenation) gives clause-level switches and should raise the
+  ETA on T without hurting FLEURS/CV.
+- **Data**: **548 h** = the E-006 mix (CV IT 167.8 + MLS IT 169.9 + LS EN 100) + **110 h spliced**
+  (`stt/data/build_spliced.py`, seed 0): 21,205 clips, Italian pool CV+MLS, English pool
+  train-clean-100, pairs **≤ 27 s** (the 30 s encoder window plus tempo-stretch headroom),
+  transcript = IT+EN with `en_spans` covering the English half. Splicing happens on the **cached
+  mel** — no raw audio is needed, because the audio was deleted after the E-002 spot check. Pairs
+  whose seam re-normalizes into one word (an Italian elision, `po'` + `blushed` → `po'blushed`)
+  are dropped instead of corrupting the transcript. Mixture **IT 61.6% / EN 18.3% / spliced
+  20.1%**: the plan's H3b shares (0.4/0.15/gold 0.2/0.25) assume the gold set, which does not
+  exist yet (R-S1 is at 76/600), so this arm tests splicing **alone**.
+- **Training**: E-006 best (11.58 M) → 2 epochs, **22,494 steps**, head LR 3e-4 / encoder 5e-5
+  (identical to E-012, so the two continuation runs differ only in the data), batch 192 s /
+  32 clips, bf16, MPS, cosine 500-step warm-up.
+- **Compute and cost**: 09:16 → 13:33, **4 h 16 wall** (~3 h 50 of training). One
+  **memory-pressure stall** at step ≈ 3,040: the process was fully paged out (swap 7.6/8 GB) and
+  made zero progress for ~12 min; killed and resumed from `ckpt_0003040` (≤ 40 steps lost). **0 USD**.
+- **Metrics** (bootstrap 1,000; `runs/E-014/eval/`):
+
+| Set | E-008 (best Moth) | E-014 greedy | E-014 beam 5 + LM 0.2 |
+|---|---|---|---|
+| Dev macro (final) | 31.27 (E-006) | — | **30.86** |
+| FLEURS-IT **test** | 29.02 | 32.68 | **26.75** |
+| FLEURS-EN **test** | 56.99 | 60.70 | **56.04** |
+| CV IT **test** | 30.07 | 36.15 | 30.10 |
+| T (S1, 200) | 55.37 / ETA 21.49 | 61.13 / 18.51 | 57.09 / **20.60** |
+| Noise, non-music words | 19 | 24 | **13** |
+| Noise, music words | 146 | 275 | 138 |
+
+  Paired differences **vs E-008** (same utterances, 1,000 resamples): FLEURS-IT **−2.27**
+  [−2.86, −1.72]; FLEURS-EN **−0.95** [−1.57, −0.37]; CV test **+0.03** [−0.12, +0.16] (tie);
+  T WER **+1.72** [−0.60, +4.09] (tie) and ETA **−0.90** [−4.23, +2.48] (tie). Both FLEURS gains
+  are significant; CV, T and the noise set are ties (the LM path emits 13 words instead of 19).
+- **Against the ship bars**: FLEURS-IT vs Whisper-tiny auto+beam5 (27.42) is **−0.66**
+  [−1.80, +0.47], a **tie** — the first Moth configuration not significantly behind the best H0
+  (E-008 was +1.60 [0.32, 2.83]). The T half still fails on ETA: **−17.01** [−25.55, −7.01] vs
+  Whisper forced-`it` beam 5 (WER +4.04 [−1.20, +9.60] is a tie).
+- **Findings**: splicing is a real **generalization** gain on both FLEURS sets and costs nothing
+  measurable on CV, T or noise — but it does **not move the ETA**. The per-category breakdown
+  shows no category improving: single_word 18.0 → 16.0, italianized **7.4 → 3.7**, brand 4.2 →
+  4.2, acronym 5.0 → 5.0, switch 32.5 → 31.2. The model learned to stay Italian/robust with
+  English context around it (control_it 0.35, control_en 0.51), not to retain English terms.
+  It is also a reminder that the read-speech dev is not a proxy for FLEURS: E-014's dev
+  (30.86) is worse than E-012's (29.50) while its FLEURS-IT is 3 points better (26.75 vs 29.79).
+- **Result**: **E-014 is the new best Moth system**: significantly better on both FLEURS sets and
+  a tie on CV test, T (WER and ETA) and the noise set. The H3b hypothesis — splicing raises the
+  ETA — is **rejected**.
+- **Conclusion**: keep E-014 as the acoustic checkpoint. The ETA bottleneck is not clause-level
+  switches, so the remaining levers are (a) **distillation from Whistle/Parakeet**, (b) **gold
+  code-switch data** (the plan's H3a, still untested: R-S1 at 76/600), (c) a re-scope of the ship
+  gate. Noise augmentation with empty targets is still open (E-011).

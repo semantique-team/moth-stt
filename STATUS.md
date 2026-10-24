@@ -114,13 +114,15 @@
   **54 / 13**, Whistle **264 / 115**, Parakeet **0 / 0**. Music riportata a parte. **Solo Parakeet
   passa il gate 0 parole**; servono energy gate + noise augmentation (H3). Dettagli: E-011.
   Room tone (20 min) ancora da registrare per arrivare a 1 h non-music.
-- **E-014 (H3b splicing) in corso** (2026-10-24): set sintetico IT+EN **109,9 h / 21.205 clip**
-  costruito sul mel cache (`stt/data/build_spliced.py`, seed 0, coppie ≤ 27 s, IT da CV+MLS, EN da
-  LS100, norm canoniche, 0 errori), 5,9 GB di shard. Config `runs/E-014/config.yaml`: 548 h totali
-  (IT 61,6% / EN 18,3% / spliced 20,1%), 2 epoche da E-006 best, stessi LR di E-012 (3e-4 / 5e-5),
-  **22.494 step previsti**, smoke 50 step ok (364 audio-s/s, 8,5 GB, init = dev macro 31,24).
-  La domanda: uno switch **dentro** l'enunciato muove l'ETA di T (E-012/E-013 l'hanno lasciata a
-  21,49)? I pesi 0,4/0,15/gold 0,2/0,25 del piano presuppongono il gold, che non esiste ancora.
+- **E-014 (H3b splicing) fatto — nuovo best Moth** (2026-10-24): 548 h (438 naturali + **110 h
+  spliced**, 21.205 clip costruiti sul mel cache), **22.494 step** da E-006 best in 4 h 16 (uno
+  stallo da memory pressure a ~3.040, ripreso da checkpoint). Beam+LM: FLEURS-IT **26,75** (E-008
+  29,02; **−2,27** [−2,86, −1,72]), FLEURS-EN **56,04** (−0,95 [−1,57, −0,37]), CV test 30,10
+  (tie), **T 57,09 / ETA 20,60** (WER +1,72 tie, ETA −0,90 tie), noise non-music **13** parole
+  (era 19). **Contro la barra:** FLEURS-IT vs Whisper-tiny auto+beam5 = **−0,66** [−1,80, +0,47],
+  **tie** (E-008 era +1,60 significativo); il gate misto T resta **non passato** (ETA **−17,01**
+  [−25,55, −7,01]). **Lo splicing non muove l'ETA** (nessuna categoria migliora; italianized
+  7,4 → 3,7): ipotesi H3b respinta. Artefatti `runs/E-014/`, `EXPERIMENTS.md` (E-014).
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
@@ -149,8 +151,8 @@
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **NON passato su FLEURS-IT** vs Whisper-tiny auto+beam5 (29,02 vs 27,42; +1,60). **Gate misto T non passato**: WER tie (+2,32 [−3,22, +8,02]) ma ETA −16,12 [−25,31, −6,02] vs Whisper it+beam5 (Moth 55,37/21,49 vs 53,05/37,61). **Noise gate**: silenzio digitale risolto dal guard (240 → 0 parole), restano **19–24 parole su MUSAN noise** → serve l'augmentation con target vuoti. **A (200h EN) e B (V=4096) respinti**: ETA resta 21,49. **H3b splicing in corso (E-014)**; se l'ETA non si muove, distillazione/re-scope | H3/decisione |
-| M6 | H3a/H3b: continue 1–2 epoche, LR 5e-5/3e-4, miscela IT/EN/gold; H2 fatto; R-S1 76/600, R-S2 e T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
+| H2 gate | **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
+| M6 | H3b fatto e respinto (E-014); **H3a (gold) non testato**: R-S1 76/600, R-S2 e T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
@@ -166,7 +168,8 @@ live sono nei log.
   Restano checkpoint averaging/EMA, SDPA + time-major + QKV fuso, redesign hotword, demo e2e.
 - **P2 — H3:** InterCTC (prima), CR-CTC short fine-tune, noise augmentation, frame-aware batching;
   il LM piccolo è passato a E-008 (serve per FLEURS, non solo per l'ETA).
-- **P3 — +2 blocchi fatti (E-006); gate H2 passato con LM (E-008).** Capacity ulteriore
+- **P3 — +2 blocchi fatti (E-006); con LM e splicing (E-014) il gate passa su CV-dev e su
+  FLEURS-IT è un tie, non ancora un pass.** Capacity ulteriore
   (conv head → 25 Hz+2) non serve per il gate; resta un'opzione se si vuole alzare la qualità
   oltre il tetto attuale.
 - **Vincolo:** niente merge di codice durante un training attivo; E-006 è chiuso ed E-007 è
@@ -174,12 +177,14 @@ live sono nei log.
 
 ## Serve da te
 
-- **Decisione bloccante (2026-10-23)**: **A e B testati e respinti**. B (tokenizer V=4096) non
-  muove l'ETA (20,0 vs 20,0) e peggiora IT/T; A (200 h EN) migliora l'inglese (FLEURS-EN 51,56 vs
-  56,99) ma peggiora T (60,53 vs 55,37) e lascia l'ETA a **21,49**. Il gate misto resta non passato
-  (Whisper 53,05 / ETA 37,61; Whistle 29,49 / ETA 50,15). Prossimo test a costo zero: **H3b
-  splicing IT+EN** (nessuna registrazione). Se l'ETA non sale, distillazione da Whistle/Parakeet o
-  re-scope; non registrare R-S1 alla cieca.
+- **Decisione bloccante (2026-10-24)**: le leve a costo zero o basso sono **tutte testate e
+  respinte**: A (200 h EN), B (V=4096), **H3b splicing** (E-014). E-014 è il nuovo best (FLEURS-IT
+  ora in pari con Whisper, CV vinto, T in tie), ma **l'ETA resta 20,6 contro 37,6 di Whisper** e
+  nessun esperimento lo ha mosso. Le opzioni rimaste: (1) **distillazione** da Whistle (16,9 MB,
+  T 29,49 / ETA 50,15) o Parakeet (639 MB) — richiede un training lungo e una decisione sul tetto
+  di 20 MB; (2) **gold H3a**: registrare R-S1 (524 mancanti) è l'unica ipotesi non ancora testata,
+  ma costa ore di registrazione; (3) **re-scope** del gate (ETA come metrica secondaria, modello
+  "Italian-first con termini inglesi frequenti"). Da decidere prima di registrare.
 - **S1**: continuare R-S1 da 0023 (524 mancanti) e completare le 600; poi build manifest.
 - **Room tone (20 min)**: serve per chiudere il noise set a 1 h non-music. Trova il device con
   `ffmpeg -f avfoundation -list_devices true -i ""`, poi registra con
