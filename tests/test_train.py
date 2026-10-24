@@ -16,6 +16,7 @@ from stt.train import (
     _apply_model_init,
     _build_optimizer,
     _move_optimizer_state,
+    _prepare_batch,
     iter_batches,
     load_config,
     load_sources,
@@ -363,3 +364,11 @@ def test_apply_model_init_loads_a_full_checkpoint(tmp_path: Path) -> None:
     _apply_model_init(target, {"model": {"init_checkpoint": str(checkpoint)}})
     for expected, actual in zip(source.state_dict().values(), target.state_dict().values()):
         assert torch.equal(expected, actual)
+
+
+def test_prepare_batch_crops_a_long_augmented_mel() -> None:
+    items = [{"mel": np.zeros((80, 3248), dtype=np.float32), "row": {"id": "x"}}]
+    tensor, lengths, rows = _prepare_batch(items, "truncated")
+    assert tensor.shape == (1, 80, 3000)
+    assert lengths.tolist() == [3000]
+    assert rows[0]["id"] == "x"

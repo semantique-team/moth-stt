@@ -535,6 +535,12 @@ def _prepare_batch(
     items: list[dict], input_mode: str
 ) -> tuple[torch.Tensor, torch.Tensor, list[dict]]:
     tensor, mel_lengths, rows = collate(items)
+    # Augmentation (tempo stretch) can make a 29 s clip longer than 30 s; the encoder rejects
+    # >3000 mel frames. Crop the augmented mel and clamp the lengths so training can never crash
+    # on a long clip, in both input modes.
+    if tensor.shape[2] > MAX_MEL_FRAMES:
+        tensor = tensor[:, :, :MAX_MEL_FRAMES]
+        mel_lengths = mel_lengths.clamp(max=MAX_MEL_FRAMES)
     if input_mode == "padded30" and tensor.shape[2] < MAX_MEL_FRAMES:
         tensor = nn.functional.pad(tensor, (0, MAX_MEL_FRAMES - tensor.shape[2]))
     return tensor, mel_lengths, rows
