@@ -28,7 +28,8 @@ def test_registry_has_licenses_and_urls() -> None:
     assert SOURCES["cv_it_27"].license == "CC0"
     assert "CC-BY" in SOURCES["mls_it"].license
     assert SOURCES["fleurs_it"].eval_only is True
-    assert SOURCES["noise_musan"].license.startswith("verify")
+    assert SOURCES["noise_musan"].license == "CC-BY-4.0"
+    assert {"noise", "music"} <= set(SOURCES["noise_musan"].splits)
 
 
 def test_sha256_file(tmp_path: Path) -> None:

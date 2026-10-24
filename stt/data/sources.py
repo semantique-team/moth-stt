@@ -109,13 +109,14 @@ SOURCES: dict[str, Source] = {
         citation="FLEURS (CC-BY 4.0)",
     ),
     "noise_musan": Source(
-        name="MUSAN (or other permissive noise/music set)",
-        license="verify before use",
+        name="MUSAN (music, speech and noise)",
+        license="CC-BY-4.0",
         url="https://www.openslr.org/17/",
-        splits=("noise",),
+        splits=("noise", "music"),
         lang="it",
         reader="noise",
-        notes="License to verify before downloading; own room tone and digital silence are ours.",
+        notes="Only the noise and music subsets are used; own room tone and digital silence are ours.",
+        citation="MUSAN (CC-BY 4.0), OpenSLR 17",
     ),
 }
 

@@ -135,6 +135,8 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 
 - 20 min digital silence, 20 min room tone (own recordings, including fan/keyboard), 20 min permissively licensed
   noise and music (license verified before use). Cut into 10 s clips.
+  MUSAN (OpenSLR 17) is **CC-BY 4.0** (verified 2026-10-23); only its `noise` and `music` subsets are used.
+  Builder: `stt/data/build_noise.py` → `data/manifests/noise.jsonl` and `data/raw/noise/`.
 - Reported separately: **non-music noise/silence** (hard bar: zero words) and **music** (reported, not gated — the
   Whistle model card also warns that music can still come out as text).
 

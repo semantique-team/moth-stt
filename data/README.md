@@ -18,7 +18,7 @@ training and evaluation (ids, text, speaker, duration, source, split).
 | MLS Italian (OpenSLR 94) | CC-BY 4.0 | train / dev / test |
 | LibriSpeech `train-clean-100` (OpenSLR 12) | CC-BY 4.0 | train (+ dev-clean) |
 | FLEURS IT/EN | CC-BY 4.0 | **evaluation only** — never training, not even the FLEURS train split |
-| MUSAN (or other noise/music) | **verify before use** | noise/hallucination set |
+| MUSAN (noise + music) | CC-BY 4.0 | noise/hallucination set (evaluation only) |
 
 Own recordings (`recordings/`) are the recorded mixed sets; see `recordings/data-card.md`.
 
