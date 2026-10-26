@@ -88,9 +88,9 @@ dall’organizzatore** prima di costruire il manifest. Quando l’organizzatore 
 uv run recordings/record.py --speaker S2 --kind R
 ```
 
-Il manifest R-S2 non si costruisce finché le frasi non sono marcate `reviewed` (o finché
-l’organizzatore non autorizza `--allow-unreviewed`). La review è un lavoro dell’organizzatore, non
-dello speaker.
+Il builder applica il controllo `reviewed` **solo a T e A**, non a R: per R la revisione resta una
+scelta di qualità dell’organizzatore, non un blocco tecnico. Per T e A, invece, una frase non
+revisionata ferma il manifest.
 
 ### Percorsi audio
 
@@ -196,7 +196,7 @@ Se sei un agente che assiste S2/S3/S4:
 4. Non usare `--overwrite` e non modificare script, manifest o nomi dei file.
 5. Non marcare T come reviewed: la review è umana. S4 aspetta.
 6. Dopo la sessione esegui il `build_manifest` del set e riporta gli errori. Non usare
-   `--allow-unreviewed` senza autorizzazione scritta dell’organizzatore: per R significa saltare la
+   `--allow-unreviewed` con T o A senza autorizzazione scritta dell’organizzatore: salta la
    revisione umana delle frasi.
 7. Zippa l’audio con la struttura corretta e caricalo su un servizio privato concordato; non
    usare git.
