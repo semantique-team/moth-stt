@@ -823,3 +823,57 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   code-switch data** (the plan's H3a, still untested: R-S1 at 76/600), (c) a re-scope of the ship
   gate. Noise augmentation with empty targets is still open (E-011).
 - **Artifacts**: `runs/E-014/eval/{greedy,beam-lm,noise-greedy,noise-beam-lm}/`, `runs/E-014/eval.sh`, `runs/E-014/train.log.jsonl` (git SHA 50d98b8), `runs/E-014/config.yaml`, `data/manifests/spliced_it_en.jsonl`, `data/manifests/spliced_it_en_report.json`, `stt/data/build_spliced.py`.
+
+## E-016 — gold fine-tune on the recorded R-S1 set (2026-10-29)
+
+- **Date**: 2026-10-29
+- **Hypothesis**: 29 min of recorded Italian–English gold (S1, 635 sentences, the only audio that
+  contains `deadline`, `merge`, `kpi`, `onboarding`, `phishing`, …) is enough to teach those terms
+  to the model and lift the mixed-set ETA, once they are repeated enough to get gradient share.
+- **Data**: **572.4 h** = the E-014 mix (CV IT 167.8 + MLS IT 169.9 + LS EN 100 + spliced 110) +
+  **gold 24.4 h**. The gold is the same 29.3 min repeated **50×** through an index-only duplicated
+  shard (`runs/E-016/prepare_gold_oversample.py`; the mel file is copied once, 38 MB). Gold is
+  4.3% of the audio, 13.5% of the rows. The plan asked for ≥20% of the batches; with 29 min of
+  gold that would need a 220× repetition, i.e. memorisation, so this is the probe.
+- **Training**: init **E-014 best** (step 36,296), 2 epochs, **24,478 steps**, head LR 3e-4 /
+  encoder 5e-5 (same as E-012/E-014), batch 192 s / 32 clips, bf16, MPS, cosine 500-step warm-up.
+- **Compute and cost**: 4 h 20 wall (12:58 → 17:12), including one **memory stall** at step
+  ≈ 2,700: the MPS allocator held ~9 GB between `empty_cache` calls (every 50 steps), macOS
+  swapped the process out and made zero progress for minutes. Killed, resumed from
+  `ckpt_0002695`, and `empty_cache_every` lowered 50 → 10 (housekeeping only: same gradients, LR
+  and batches); the run then held 2–5 GB and ran at 125–150 steps/min. **0 USD**.
+- **Metrics** (bootstrap 1,000; `runs/E-016/eval/`):
+
+| Set | E-014 | E-016 greedy | E-016 beam 5 + LM 0.2 |
+|---|---|---|---|
+| Dev macro (best) | 30.86 | — | **30.90** |
+| FLEURS-IT test | **26.75** | 32.76 | 26.98 |
+| FLEURS-EN test | **56.04** | 60.75 | 56.22 |
+| CV IT test | **30.10** | 36.15 | 30.02 |
+| T (S1) WER | 57.09 | 38.09 | **35.51** |
+| T (S1) ETA | 20.60 | 37.91 | **40.60** |
+| Noise non-music words | 13 | 24 | **13** |
+
+  Paired differences **vs E-014** (beam + LM): FLEURS-IT **+0.22** [−0.23, +0.70] (tie), FLEURS-EN
+  **+0.17** [−0.42, +0.79] (tie), CV test **−0.08** [−0.22, +0.06] (tie), **T WER −21.58**
+  [−25.38, −17.99] and **T ETA +20.00** [+13.69, +25.70], both significant.
+- **The control that changes the reading**: on the same T-S1 clips, the **pure-Italian control**
+  (`control_it`, no English at all) goes from **34.7 → 18.1 WER** (−16.6), while the pure-English
+  control (`control_en`) is **unchanged at 51.4**. Splitting the annotated terms by whether they
+  appear in R-S1: **seen 18.3% → 45.7% (+27.4)**, **unseen 15.8% → 27.7% (+11.9)**. So the model
+  also got much better at Italian that has nothing to do with English terms: this is **adaptation
+  to S1's voice, room and reading style**, not only vocabulary learning. There is a real
+  term-specific component (the extra +15 points on terms present in the gold), but it sits on top
+  of a much larger speaker effect.
+- **Against the ship bars**: on T the WER half looks won — Whisper-tiny forced-`it` beam 5 is
+  **−17.54** [−22.50, −12.54] worse — but the ETA half is a **tie**, **+2.99** [−6.23, +12.29].
+  The mixed gate does **not** pass even before the speaker caveat. On FLEURS-IT the bar is still a
+  tie (26.98 vs 27.42), unchanged from E-014.
+- **Result**: **E-016 is not a shippable gain and not the new Moth.** It is the cleanest
+  demonstration in the project that a test set recorded by the training speaker can fabricate a
+  +20-point ETA. The gold did teach something (seen vs unseen terms, and the 18 missing terms now
+  exist in the model's acoustic experience), but the effect that dominates T is the speaker.
+- **Conclusion**: **E-017 is now mandatory**, not optional: train on S1+S2 gold and evaluate on a
+  held-out S3. Before that, one free check is available as soon as S2 delivers T: score **E-016
+  and E-014 on the same T-S2 clips** — S2 is not a training speaker, so if the gain evaporates
+  there the adaptation reading is confirmed without any new training.

@@ -143,6 +143,16 @@
   già pulite, quindi gli ETA riportati non cambiano), **5 in R-S1/R-S2**, e **1 near-duplicate**
   rimosso da R-S2. Aperti: **T-0714** e **T-0778** (`single_word` con 2–3 parole inglesi, nel
   blocco S4 non ancora rivisto) e le **190 frasi R non riviste**.
+- **E-016 (gold S1) fatto — diagnosi, non nuovo modello** (2026-10-29): R-S1 completo
+  (635 take, 29,3 min) ripetuto **×50** (24,4 h) dentro la miscela E-014 (572,4 h), 24.478 step in
+  4 h 20 (uno stallo da memoria a ~2.700, ripreso con `empty_cache` 50 → 10). Beam+LM:
+  FLEURS-IT 26,98 (tie), FLEURS-EN 56,22 (tie), CV test 30,02 (tie), **T 35,51 / ETA 40,60**
+  (WER −21,58 [−25,38, −17,99], ETA +20,00 [+13,69, +25,70]). **Ma il controllo decide:** il
+  control_it (italiano puro, nessun inglese) passa da 34,7 a **18,1** e i termini **visti** in R-S1
+  guadagnano +27,4 contro +11,9 degli **invisibili**: è soprattutto **adattamento alla voce di S1**,
+  non apprendimento dei termini. Contro Whisper su T il WER vince (−17,54) ma l'**ETA è tie**
+  (+2,99 [−6,23, +12,29]) → gate misto **non passato**. **E-017 obbligatorio**; check gratuito
+  appena arriva T di S2 (E-016 vs E-014 sulle stesse clip). Artefatti `runs/E-016/`.
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
@@ -177,7 +187,7 @@ noise augmentation.
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **ETA = copertura lessicale** (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
+| H2 gate | **E-016: +20 ETA su T ma è adattamento a S1** (control_it 34,7 → 18,1; visti +27,4 vs invisibili +11,9); contro Whisper ETA tie. Serve **E-017** (S3 held out). **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
 | M6 | H3b fatto e respinto (E-014); **H3a (gold) pronto da eseguire**: R-S1 76/635, R-S2 344 (servono ~256 frasi nuove), T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 

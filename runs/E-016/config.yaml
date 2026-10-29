@@ -71,5 +71,8 @@ train:
   checkpoint_minutes: 10
   keep_last: 3
   max_nonfinite_steps: 20
-  empty_cache_every: 50
+  # 50 -> 10 after the 2026-10-29 memory stall at step ~2,700: the MPS allocator was
+  # holding ~9 GB between empties and macOS swapped the process out (zero steps for minutes).
+  # Housekeeping only: it changes no gradient, no LR and no batch composition.
+  empty_cache_every: 10
   eval_every_steps: 2000

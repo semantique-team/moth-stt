@@ -58,6 +58,25 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | IT+EN utterance splicing | E-014 | FLEURS-IT −2.27, FLEURS-EN −0.95, **ETA −0.90 (tie)** | Rejected **as an ETA lever**; kept as quality | `runs/E-014/eval/` |
 | Energy guard on silence | E-011 add. | Silence words 240 → 0, noise words 19 (unchanged) | **Kept** | `runs/E-011/guard-*/` |
 
+### 3.2 A matched speaker can fabricate a +20-point ETA
+
+E-016 (2026-10-29) fine-tuned E-014 on 29 min of S1's recorded gold, repeated 50x, and improved
+the mixed set from **57.09% WER / 20.60% ETA to 35.51% / 40.60%** (paired CIs exclude 0), while
+FLEURS-IT, FLEURS-EN and CV test were ties. Read alone, that is a breakthrough.
+
+The controls say otherwise:
+
+- the **pure-Italian control** (`control_it`, no English words) improved from **34.7% to 18.1%
+  WER**: the model got better at S1's Italian, not just at English terms;
+- the **pure-English control** was unchanged (51.4%);
+- terms **present** in R-S1 went 18.3% → 45.7% ETA (+27.4), terms **absent** 15.8% → 27.7%
+  (+11.9) — a real term effect, but on top of a larger speaker effect;
+- nothing transferred to other speakers (all three external sets are ties).
+
+The test speaker was a training speaker. **Never report a mixed-set gain measured on a speaker
+that contributed training audio**, and keep a no-English control in the test set: it is what made
+the confound visible.
+
 Not tested (do not claim either way): distillation from Whistle/Parakeet, gold code-switch data
 (H3a), noise augmentation with empty targets, word-level splicing, InterCTC/CR-CTC.
 
