@@ -48,11 +48,11 @@
 - **Registrazioni T**: **S1 completo, 200/200** (manifest `recordings/manifests/T.jsonl`, 200 righe, 481 s,
   12 retake). Il set è ora **800 frasi, 200 per S1–S4**; mancano S2, S3 e S4 (leggono solo T). Comandi:
   `uv run recordings/record.py --speaker S2 --kind T` (idem S3, S4).
-- **R-S1 (S1, training H3)**: **76/600 take**; audio in `recordings/audio/R-S1/S1/` (T resta in
-  `recordings/audio/S1/`). Prime frasi mancanti: **R-S1-0023** (cancellata perché accettata per
-  errore) e **R-S1-0028**; `plan_session` dice **524 da registrare**. Resume automatico:
-  `uv run recordings/record.py --speaker S1 --kind R` (nessun `--start`); `--dry-run` per l'elenco.
-  La R-S1-0023 cancellata è annotata come `delete` in `session.log.jsonl`.
+- **R-S1 COMPLETO** (2026-10-29): **635/635 take, 0 errori, 0 warning, 29,3 min di parlato**
+  (`recordings/manifests/R-S1.jsonl`, audio in `recordings/audio/R-S1/S1/`). Cache mel:
+  `data/shards/R-S1` (0,49 h, spot check bit-exact su 3 clip). Oversampling ×50 →
+  `data/shards/R-S1-x50` (24,4 h, indice duplicato, nessuna copia extra dell'audio).
+  **E-016 lanciato** (`runs/E-016/`): 572,4 h totali (gold 4,3%), 2 epoche = 24.478 step.
 - **Anchor A**: S1 **60/60** completo; mancano S2/S3/S4 (60 ciascuno). Dopo il T di ogni speaker:
   `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
