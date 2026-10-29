@@ -837,6 +837,9 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   gold that would need a 220× repetition, i.e. memorisation, so this is the probe.
 - **Training**: init **E-014 best** (step 36,296), 2 epochs, **24,478 steps**, head LR 3e-4 /
   encoder 5e-5 (same as E-012/E-014), batch 192 s / 32 clips, bf16, MPS, cosine 500-step warm-up.
+- **Hardware**: Apple M5, 16 GB, MPS bf16; torch 2.14.1.
+  Dev curve: 33.51 @2k, 32.08 @14k, 31.18 @20k, **30.90 @24k (best)**, 30.98 final — E-014 at the
+  same steps was 33.56 / 31.87 / 31.03 / 30.86, so the two are within noise on the dev sets.
 - **Compute and cost**: 4 h 20 wall (12:58 → 17:12), including one **memory stall** at step
   ≈ 2,700: the MPS allocator held ~9 GB between `empty_cache` calls (every 50 steps), macOS
   swapped the process out and made zero progress for minutes. Killed, resumed from
@@ -852,11 +855,18 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 | CV IT test | **30.10** | 36.15 | 30.02 |
 | T (S1) WER | 57.09 | 38.09 | **35.51** |
 | T (S1) ETA | 20.60 | 37.91 | **40.60** |
-| Noise non-music words | 13 | 24 | **13** |
+| Noise non-music words | **13** | 35 | 31 |
 
   Paired differences **vs E-014** (beam + LM): FLEURS-IT **+0.22** [−0.23, +0.70] (tie), FLEURS-EN
   **+0.17** [−0.42, +0.79] (tie), CV test **−0.08** [−0.22, +0.06] (tie), **T WER −21.58**
   [−25.38, −17.99] and **T ETA +20.00** [+13.69, +25.70], both significant.
+  Per-category ETA (beam + LM, E-014 → E-016): single_word 16.0 → **32.0**, phrase 19.2 → **28.8**,
+  brand 4.2 → **25.0**, acronym 5.0 → **50.0**, italianized 3.7 → **51.9**, switch 31.2 → **56.2**.
+  Every term category moves, which is exactly what a speaker effect looks like; the controls below
+  separate the part that is vocabulary. The noise set also **regressed**: 13 non-music words with
+  the LM in E-014, **31** here (greedy 24 → 35), i.e. the fine-tuned model is more willing to emit
+  words on non-speech — another symptom of adapting to the recorded speaker rather than learning
+  the vocabulary.
 - **The control that changes the reading**: on the same T-S1 clips, the **pure-Italian control**
   (`control_it`, no English at all) goes from **34.7 → 18.1 WER** (−16.6), while the pure-English
   control (`control_en`) is **unchanged at 51.4**. Splitting the annotated terms by whether they
@@ -877,3 +887,8 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   held-out S3. Before that, one free check is available as soon as S2 delivers T: score **E-016
   and E-014 on the same T-S2 clips** — S2 is not a training speaker, so if the gain evaporates
   there the adaptation reading is confirmed without any new training.
+- **Artifacts**: `runs/E-016/config.yaml`, `train.log.jsonl` (git SHA 45ad463), `eval.sh`,
+  `eval/{greedy,beam-lm,noise-*}/*.metrics.json`, `prepare_gold_oversample.py`; gold manifest
+  `recordings/manifests/R-S1.jsonl` (committed), mel shards `data/shards/R-S1` and
+  `data/shards/R-S1-x50` (gitignored, rebuilt with `build_mel` + the prepare script);
+  checkpoint `runs/E-016/checkpoints/ckpt_best.pt` (step 24,000, gitignored).
