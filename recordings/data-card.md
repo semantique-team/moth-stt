@@ -1,7 +1,8 @@
 # Data card — recorded sets (moth-stt)
 
-Status: **in progress** — S1's T takes are complete (200/200, 2026-10-19, 481 s of audio);
-S2 and S3 still to record, and the per-speaker consent is not signed yet. Audio never enters
+Status: **in progress** — S1's T takes are complete (200/200, 2026-10-19, 481 s of audio) and
+S1's R-S1 is complete (635/635, 2026-10-29, 29.3 min, 0 errors); S2 and S3 still to record, and the
+per-speaker consent is not signed yet. Audio never enters
 git; it lives on Hugging Face once the dataset is published (`docs/03-data.md` §7, §11).
 
 | Field | Value |
@@ -12,6 +13,7 @@ git; it lives on Hugging Face once the dataset is published (`docs/03-data.md` �
 | Recording conditions | device per speaker (laptop mic / phone), room, date range — fill (**S1: 2026-10-19, 48 kHz mono WAV; device to confirm**) |
 | Format | WAV 16-bit mono, native rate; files `S<x>_<NNNN>.wav` (or `.m4a`/`.flac`); session logs `recordings/audio/<speaker>/session.log.jsonl` |
 | Retakes / skips | per the session logs — summarize per speaker (**S1: 12 retakes over 200 takes; 0 skips**) |
+| Speaker characteristics | **S1 has rhotacism ("r moscia"): a non-standard /r/.** This matters because T-S1 is the test speaker *and* R-S1 (S1) is training audio (×50 in E-016): T-S1 is therefore a **matched** speaker, so any ETA/WER gain measured there is optimistic for speakers with a standard /r/. The natural corpora (438 h) keep the standard realisation in the base model. Mitigations: S2/S3 recordings with **S3 held out** (E-017), and a per-word error split on /r/-containing terms. Speakers record naturally; no correction is applied. |
 | Scripts | `recordings/scripts/*.jsonl`, commit `d48532d` (T and R-S1), `df31eb7` (pool); all T rows human-reviewed on `2026-10-19` |
 | Dataset license decision | CC-BY 4.0 proposed for publishable parts; final decision at M8 (`docs/08` §2) |
 | Publication | Hugging Face dataset repository — link to fill at M8 |
