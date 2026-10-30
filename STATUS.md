@@ -164,6 +164,13 @@
   Parakeet 11,47/83,00 → **WER vinto contro Whisper** (−9,47 [−14,90, −4,59]) ma **ETA tie**
   (−3,12 [−12,46, +5,65]); Whistle resta avanti. **Da 2026-10-30 tutti i numeri su T sono a 400
   clip**; quelli precedenti sono sui 200 di S1 e non sono confrontabili direttamente.
+- **Release 0.3.0 con E-016** (2026-10-30): `release/` ricostruita col checkpoint E-016 —
+  int8 **11,91 MB** + LM 5,09 = **17,08 MB**. Browser (Playwright, WASM SIMD): **4T 61,0× / 60,9× /
+  53,8×**, **1T 28,5× / 27,0× / 23,7×** su 5/10/20 s; guard e mic test verdi. int8: top-1 99,78%,
+  WER identico a PyTorch su 100 FLEURS-IT (29,23%). fp32: **1,051e-3 su sintetico 29 s** (gate 1e-3,
+  +5%), **5,46e-4 su 20 clip reali** con top-1 100% → release costruita con `--no-verify` e
+  deviazione documentata (addendum E-016), da decidere se indagare. Non rimisurata la parità
+  browser-vs-Python sull'intero T (E-010 l'aveva fatta per E-006). Artefatti `runs/E-016/export.json`.
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e

@@ -1,0 +1,26 @@
+{
+  "checkpoint": "runs/E-016/checkpoints/ckpt_best.pt",
+  "fp32_gate": 0.001,
+  "fp32_synthetic_seed0": 0.0010509490966796875,
+  "fp32_synthetic_seed0_per_clip": {
+    "1s": 0.00054931640625,
+    "5s": 0.0002651214599609375,
+    "10s": 0.000179290771484375,
+    "29s": 0.0010509490966796875
+  },
+  "fp32_synthetic_seed2": 0.000362396240234375,
+  "fp32_real_clips": {
+    "clips": 20,
+    "max_abs": 0.000545501708984375,
+    "median_abs": 0.000202178955078125,
+    "top1": 1.0
+  },
+  "int8_max_abs": 12.082046508789062,
+  "int8_top1_agreement": 0.9977826725403818,
+  "int8_100_fleurs_it": {
+    "pytorch_wer": 0.29225836005497025,
+    "int8_wer": 0.29225836005497025,
+    "identical_transcripts": 44,
+    "clips": 100
+  }
+}
