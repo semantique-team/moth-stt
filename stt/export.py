@@ -7,8 +7,8 @@ slice must anyways follow the dynamic length.
 
 ``write_release`` runs the whole pipeline of ``docs/06`` §4: export → fp32 gate (PyTorch vs ONNX
 max-abs ≤ 1e-3 on 1/5/10/29 s clips) → dynamic int8 quantization (per-channel weights) → write
-``model.int8.onnx``, ``vocab.json``, ``mel_filters.bin``, ``config.json`` (with sha256 lines) and
-``NOTICE``. The quantization fallbacks of §4.3 (static quantization, fp32 LayerNorm path, fp16
+``model.int8.onnx``, ``vocab.json``, ``mel_filters.bin``, the vendored ``silero_vad.onnx`` guard,
+``config.json`` (with sha256 lines) and ``NOTICE``. The quantization fallbacks of §4.3 (static quantization, fp32 LayerNorm path, fp16
 weights) belong to the Task 7.1 gate and are not implemented here; the report returned by
 ``write_release`` carries the measured int8 gap so the gate can decide.
 """
@@ -39,6 +39,10 @@ from stt.features import (
 )
 from stt.model import MothSTT, sinusoids
 from stt.tokenizer import BLANK_ID, load_tokenizer, vocab_json
+from stt.vad import ASSET_PATH as VAD_ASSET
+from stt.vad import CONTEXT as VAD_CONTEXT
+from stt.vad import GATE_THRESHOLD as VAD_THRESHOLD
+from stt.vad import WINDOW as VAD_WINDOW
 
 __all__ = [
     "FP32_GATE",
@@ -60,12 +64,36 @@ FP32_GATE = 1e-3
 #: Clip lengths for the export gates (seconds; 50 encoder frames per second).
 GATE_SECONDS = (1.0, 5.0, 10.0, 29.0)
 _SPACE_MARKER = "▁"
-_RELEASE_FILES = ("model.int8.onnx", "vocab.json", "mel_filters.bin")
+_VAD_FILE = "silero_vad.onnx"
+_RELEASE_FILES = ("model.int8.onnx", "vocab.json", "mel_filters.bin", _VAD_FILE)
 
 #: Whisper's license text (verbatim, ``openai/whisper`` MIT); required by ``NOTICE``.
 _WHISPER_MIT = """MIT License
 
 Copyright (c) 2022 OpenAI
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE."""
+
+#: Silero VAD's license text (verbatim, ``snakers4/silero-vad`` MIT); required by ``NOTICE``.
+_SILERO_MIT = """MIT License
+
+Copyright (c) 2020-present Silero Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -215,7 +243,7 @@ def verify_int8(
 
 
 def build_notice() -> str:
-    """Whisper's MIT notice + dataset attributions from the source registry.
+    """Whisper's and Silero's MIT notices + dataset attributions from the source registry.
 
     Every source in the registry has a verified license; evaluation-only sets are listed too,
     because the model card reports results on them.
@@ -238,6 +266,13 @@ def build_notice() -> str:
             "distributed under the MIT License; the notice follows verbatim.",
             "",
             _WHISPER_MIT,
+            "",
+            "The no-speech guard is Silero VAD v5 (``snakers4/silero-vad``), "
+            + "shipped unmodified as",
+            f"``{_VAD_FILE}``. Silero VAD is distributed under the MIT License; "
+            + "the notice follows verbatim.",
+            "",
+            _SILERO_MIT,
             "",
             "Datasets used for training and evaluation:",
             *dataset_lines,
@@ -291,6 +326,12 @@ def _config(version: str) -> dict:
             "space_marker": _SPACE_MARKER,
         },
         "decode": {"default": "greedy", "beam": 8, "hotword_bonus": 2.0},
+        "vad": {
+            "file": _VAD_FILE,
+            "window": VAD_WINDOW,
+            "context": VAD_CONTEXT,
+            "threshold": VAD_THRESHOLD,
+        },
         "files": {},
     }
 
@@ -341,6 +382,7 @@ def write_release(
         encoding="utf-8",
     )
     shutil.copyfile(DEFAULT_FILTERS, out_dir / "mel_filters.bin")
+    shutil.copyfile(VAD_ASSET, out_dir / _VAD_FILE)
 
     config = _config(version)
     config["files"] = {

@@ -112,6 +112,7 @@ def test_release_writer_packages_verified_artifacts(tmp_path: Path) -> None:
         "model.int8.onnx",
         "vocab.json",
         "mel_filters.bin",
+        "silero_vad.onnx",
         "config.json",
         "NOTICE",
     }
@@ -129,18 +130,30 @@ def test_release_writer_packages_verified_artifacts(tmp_path: Path) -> None:
     assert config["model"]["frame_rate_hz"] == 50
     assert config["tokenizer"]["blank_id"] == 0
     assert config["decode"] == {"default": "greedy", "beam": 8, "hotword_bonus": 2.0}
+    assert config["vad"] == {
+        "file": "silero_vad.onnx",
+        "window": 512,
+        "context": 64,
+        "threshold": 0.10,
+    }
 
     from stt.data.sources import sha256_file
 
     for name, digest in config["files"].items():
         assert digest == f"sha256:{sha256_file(out / name)}"
-    assert set(config["files"]) == {"model.int8.onnx", "vocab.json", "mel_filters.bin"}
+    assert set(config["files"]) == {
+        "model.int8.onnx",
+        "vocab.json",
+        "mel_filters.bin",
+        "silero_vad.onnx",
+    }
 
     vocab = json.loads((out / "vocab.json").read_text(encoding="utf-8"))
     assert sorted(int(key) for key in vocab) == list(range(1, len(pieces) + 1))
 
     notice = (out / "NOTICE").read_text(encoding="utf-8")
     assert "MIT License" in notice and "Copyright (c) 2022 OpenAI" in notice
+    assert "Silero VAD" in notice and "Copyright (c) 2020-present Silero Team" in notice
     assert "LibriSpeech" in notice and "FLEURS" in notice
     assert "MUSAN" in notice and "CC-BY 4.0" in notice  # verified 2026-10-23
 
