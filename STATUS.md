@@ -45,16 +45,17 @@
 
 ## In corso / fuori dal repo
 
-- **Registrazioni T**: **S1 completo, 200/200** (manifest `recordings/manifests/T.jsonl`, 200 righe, 481 s,
-  12 retake). Il set è ora **800 frasi, 200 per S1–S4**; mancano S2, S3 e S4 (leggono solo T). Comandi:
-  `uv run recordings/record.py --speaker S2 --kind T` (idem S3, S4).
+- **Registrazioni T**: **S1 200/200, S2 200/200, S3 200/200** (manifest `recordings/manifests/T.jsonl`,
+  **600 righe**, 23,2 min, cache mel a 600 clip). Il set è **800 frasi, 200 per S1–S4**: manca **S4**,
+  che può registrare solo dopo la review delle sue 200 frasi. Comando: `uv run recordings/record.py
+  --speaker S4 --kind T`.
 - **R-S1 COMPLETO** (2026-10-29), poi **esteso a 641** (2026-10-30: 6 frasi `standup` in contesti vari da registrare, id 0636-0641): **635/635 take, 0 errori, 0 warning, 29,3 min di parlato**
   (`recordings/manifests/R-S1.jsonl`, audio in `recordings/audio/R-S1/S1/`). Cache mel:
   `data/shards/R-S1` (0,49 h, spot check bit-exact su 3 clip). Oversampling ×50 →
   `data/shards/R-S1-x50` (24,4 h, indice duplicato, nessuna copia extra dell'audio).
   **E-016 lanciato** (`runs/E-016/`): 572,4 h totali (gold 4,3%), 2 epoche = 24.478 step.
-- **Anchor A**: S1 **60/60** completo; mancano S2/S3/S4 (60 ciascuno). Dopo il T di ogni speaker:
-  `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
+- **Anchor A**: S1, S2 e **S3 60/60** completi (manifest `A-S1/A-S2/A-S3`); manca solo S4.
+  `uv run recordings/record.py --speaker S4 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
   che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
 - **R-S2**: **623 frasi** (batch 1–4 + 12 `standup` del 2026-10-30: 572 nette, 8 categorie, 18/18 termini rari, 0 doppioni, 0 near-dup contro T); **pronto per S2**. Non serve altro lavoro
@@ -162,8 +163,22 @@
   il guadagno ~2×, non lo inventa. **Gate su S2 (speaker mai in training):** Moth E-016
   **42,22 / ETA 29,75** vs Whisper auto 70,63/35,41, Whisper it 51,69/32,86, Whistle 30,41/45,61,
   Parakeet 11,47/83,00 → **WER vinto contro Whisper** (−9,47 [−14,90, −4,59]) ma **ETA tie**
-  (−3,12 [−12,46, +5,65]); Whistle resta avanti. **Da 2026-10-30 tutti i numeri su T sono a 400
-  clip**; quelli precedenti sono sui 200 di S1 e non sono confrontabili direttamente.
+  (−3,12 [−12,46, +5,65]); Whistle resta avanti. **Da 2026-10-30 i numeri su T sono a 600 clip**
+  (T-400/T-200 non sono confrontabili direttamente).
+- **T+A di S3 integrati + zero-shot cross-speaker** (2026-10-30): S3 (mai in training, stesso Mac e
+  microfono di S1) ha registrato **T 200/200 (459 s) + A 60/60**; manifest T a **600 righe**,
+  `A-S3` a 60, cache mel di T ricostruita (600 clip, 0,39 h, 0 errori). **Sui 200 clip di S3**
+  (E-016 vs E-014, beam+LM): **WER 54,77 → 41,57** (−13,20 [−16,36, −10,24]) e **ETA 17,75 →
+  30,42** (+12,68 [+7,71, +18,03]), entrambi significativi; greedy 60,22 → 45,91 / 13,52 → 26,48.
+  È **anche più grande che su S2** (−9,6/+9,1) e ~60% del guadagno su S1: il trasferimento
+  cross-speaker regge su un secondo speaker. **Caveat**: S3 condivide il canale con S1, quindi parte
+  del guadagno può essere adattamento al microfono; S2 resta la stima più pulita. **Gate su S3 vs Whisper:**
+  Moth **41,57/30,42** vs Whisper auto 58,69/41,41 (**vince entrambi**), Whisper it 46,51/38,03
+  (**WER −4,94 [−10,40, +0,34] tie, ETA −7,61 [−17,02, +1,86] tie**), Whistle 28,36/52,11 (avanti),
+  Parakeet 10,82/83,94. **VAD su S3: 0/200 gated**, ma il clip più debole è 0,194 (`T-0033`).
+  Artefatti `runs/E-017/` (`zero_shot_s3.sh`, manifest per speaker, metriche S3, baseline,
+  `vad_speakers.json`), `runs/E-016/eval/t600-*`, `runs/E-014/eval/t600-*`; addendum E-016.
+  **Manca ancora R-S2** (script pronto, 623 frasi) per il training di E-017 vero.
 - **Release 0.3.0 con E-016** (2026-10-30): `release/` ricostruita col checkpoint E-016 —
   int8 **11,91 MB** + LM 5,09 = **17,08 MB**. Browser (Playwright, WASM SIMD): **4T 61,0× / 60,9× /
   53,8×**, **1T 28,5× / 27,0× / 23,7×** su 5/10/20 s; guard e mic test verdi. int8: top-1 99,78%,
@@ -225,8 +240,8 @@ noise augmentation.
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **Noise: risolto (VAD, 0 parole)** — Silero VAD in 0.4.0: 0/240 clip non-music con entrambi i decoder, 0 clip gated su T-400/FLEURS (addendum E-011). **E-016: +20 ETA su T ma è adattamento a S1** (control_it 34,7 → 18,1; visti +27,4 vs invisibili +11,9); contro Whisper ETA tie. Serve **E-017** (S3 held out). **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio **e** rumore MUSAN a **0 parole** con il VAD (era 13–24), music riportata a parte e 89% gated. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
-| M6 | H3b fatto e respinto (E-014); **H3a (gold) pronto da eseguire**: R-S1 76/635, R-S2 344 (servono ~256 frasi nuove), T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
+| H2 gate | **Noise: risolto (VAD, 0 parole)** — Silero VAD in 0.4.0: 0/240 clip non-music con entrambi i decoder, 0 clip gated su T-400/FLEURS (addendum E-011). **E-016 su T-600: 38,50 WER / 36,05 ETA** (E-014 53,50/20,33); su S3, held-out e mai in training, **E-016 41,57/30,42** vs E-014 54,77/17,75 (**−13,20 WER, +12,68 ETA**, entrambi significativi): il guadagno gold trasferisce a un secondo speaker (caveat: S3 stesso Mac/mic di S1). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −4,94 [−10,40, +0,34] tie, ETA −7,61 [−17,02, +1,86] tie** → non passato; contro Whisper auto vince entrambi; Whistle resta avanti. **E-017** (training su gold S1+S2, eval su S3) richiede **R-S2 registrato**: ora è solo script. **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script): E-016 gold l'ha mossa, la distillazione (E-015) resta l'altra strada. **FLEURS-IT: tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]), il gate chiede una CI tutta sotto 0. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: R-S2 → E-017, poi distillazione o re-scope | decisione |
+| M6 | H3b fatto e respinto (E-014); **H3a (gold): R-S1 completo (635/641 take), T S1–S3 completi**; da fare: **R-S2 (script 623 pronto, S2 deve registrare)**, 6 frasi standup di R-S1, **S4** (review delle 200 frasi T + T/A) | registrazioni R-S2/T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
@@ -251,25 +266,22 @@ live sono nei log.
 
 ## Serve da te
 
-- **Decisione bloccante (2026-10-24, aggiornata)**: il problema dell'ETA non è capacità né
-  struttura: è **lessico mai sentito** (47/94 termini assenti dal training, 18 assenti dagli
-  script). Piano concordato: **(2) gold prima** — R-S1 è a 76/635 (35 frasi nuove sui termini),
-  R-S2 a 344 e va completato con ~256 frasi nuove — poi **E-016** (fine-tune sul gold) misura se
-  l'ipotesi originale chiude l'ETA; **(1) distillazione** da Parakeet (78% sui termini rari) è
-  pronta come protocollo (`runs/E-015/PLAN.md`) ma **bloccata sulla fonte audio**: gold, audio
-  CC0/BY, o TTS (H3c) — serve una decisione di provenienza, non compute; **(3) re-scope** si
-  valuta solo dopo i risultati di E-016/E-015. Non registrare R-S1 alla cieca non è più il
-  vincolo: ora si sa *quali* frasi servono.
-- **S1**: continuare R-S1 da 0023 (524 mancanti) e completare le 600; poi build manifest.
+- **Stato gold (2026-10-30)**: R-S1 completo (635 take; restano le 6 `standup` 0636–0641), R-S2 è
+  **solo script (623 frasi)** e va registrato da S2; E-016 ha già mostrato che il gold muove l'ETA
+  e trasferisce a S2/S3. Il passo che resta per **E-017** è **R-S2 registrato**.
+- **Decisione distillazione (2026-10-24)**: il protocollo Parakeet è pronto
+  (`runs/E-015/PLAN.md`) ma **bloccato sulla fonte audio**: gold, audio CC0/BY, o TTS (H3c) — serve
+  una decisione di provenienza, non compute. **(3) re-scope** si valuta dopo E-017/E-015.
+- **S1**: le 6 frasi `standup` di R-S1 (id 0636–0641), poi build manifest; il resto è completo.
 - **Room tone (20 min)**: serve per chiudere il noise set a 1 h non-music. Trova il device con
   `ffmpeg -f avfoundation -list_devices true -i ""`, poi registra con
   `ffmpeg -f avfoundation -i ":<n>" -t 1200 -ar 16000 -ac 1 data/raw/room_tone.wav`
   (ventilatore/tastiera inclusi, stanza silenziosa). Poi:
   `uv run python -m stt.data.build_noise --room-tone data/raw/room_tone.wav --categories room_tone`
   e ricostruisci gli shard `data/shards/noise` con `build_mel.py`.
-- **S2/S3/S4**: T + anchor quando disponibili; S4 solo dopo review delle sue 200 T.
-- **R-S2**: l'organizzatore genera lo script dal pool; poi S2 registra.
-- Revisione a mano delle 200 frasi nuove di T prima che registri S4.
+- **S4**: review a mano delle 200 frasi T-0601…T-0800, poi T + anchor. S1–S3 hanno già fatto T e A.
+- **R-S2**: S2 registra `uv run recordings/record.py --speaker S2 --kind R` (script pronto, 623
+  frasi); poi manifest, mel cache e oversampling ×50 per E-017.
 - `en_terms.txt` è a 580 voci (target design 1–2k): estendibile quando serve.
 
 ## Note di contesto utili

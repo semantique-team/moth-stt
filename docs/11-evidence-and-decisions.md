@@ -40,7 +40,7 @@ each with the evidence that forced it.
 | D21 | 2026-10-23 | **Reject A** (300 h English) | E-012: FLEURS-EN −5.4 but T +5.16 worse [3.00, 7.37] and **ETA unchanged** (21.49) | Adopting it for the English gain |
 | D22 | 2026-10-23 | **Reject B** (BPE V=4096, 12.76 M) | E-013: terms ≤3 pieces 48.8% → 74.0%, but ETA 20.0 → 20.0, FLEURS-IT +1.9 worse | Adopting it for the shorter sequences |
 | D23 | 2026-10-24 | Add a **no-speech energy guard**, not a VAD; greedy stays the default on unknown input | E-011 addendum: silence words 240 → 0 (120/120 clips), 0/897 speech clips touched | Silero VAD (~2 MB, out of v0.1 scope) |
-| D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.408 (T-400) / 0.419 (FLEURS-IT) vs noise max 0.038, silence 0.000; threshold 0.10 gates 100% of non-music and 0% of speech, and the guard takes non-music words **35/31 → 0** (greedy/beam) with T-400 and FLEURS-IT hypotheses bit-identical (`runs/E-011/vad_guard_summary.json`, `runs/E-011/vad-*`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
+| D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.194 (S3; S1/S2 0.408/0.410, FLEURS-IT 0.419) vs noise max 0.038, silence 0.000; threshold 0.10 gates 100% of non-music and 0% of speech, and the guard takes non-music words **35/31 → 0** (greedy/beam) with T-400 and FLEURS-IT hypotheses bit-identical (`runs/E-011/vad_guard_summary.json`, `runs/E-017/vad_speakers.json`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
 
 ## 3. Negative results
@@ -73,7 +73,8 @@ The controls say otherwise:
 - the **pure-English control** was unchanged (51.4%);
 - terms **present** in R-S1 went 18.3% → 45.7% ETA (+27.4), terms **absent** 15.8% → 27.7%
   (+11.9) — a real term effect, but on top of a larger speaker effect;
-- nothing transferred to other speakers (all three external sets are ties).
+- nothing transferred to the **external domains** (FLEURS-IT, FLEURS-EN, CV-IT: all ties); within
+  the same task, the cross-speaker transfer is real and measured in the next paragraph.
 
 The test speaker was a training speaker. **Never report a mixed-set gain measured on a speaker
 that contributed training audio**, and keep a no-English control in the test set: it is what made
@@ -82,6 +83,11 @@ the confound visible.
 The follow-up measured the size of the confound: S2's 200 T clips (S2 never contributed training
 audio) moved **51.87 → 42.22 WER** and **20.68 → 29.75 ETA** under E-016, both significant. The
 matched speaker roughly **doubles** the apparent gain (S1: −21.6 / +20.0) but does not create it.
+S3 — the speaker intended to be held out for E-017 — replicated it in a zero-shot read
+(2026-10-30): **54.77 → 41.57 WER** and **17.75 → 30.42 ETA** (beam+LM; both CIs exclude 0), again
+about 60% of the S1 gain. Caveat: S3 recorded on the **same Mac and microphone as S1**, so part of
+its gain may be channel adaptation; S2 (external recorder) is the cleaner speaker test, and E-017
+(training on S1+S2 gold, testing on S3) is the one that averages two channels.
 The rule stands — report the matched-speaker number and the unseen-speaker number side by side,
 never one alone.
 
@@ -130,9 +136,11 @@ best variant; those entries are annotated, not rewritten, so the history of the 
   bootstrap intervals: they describe sampling noise over utterances, **not** training variance.
   Seed-to-seed variation is not measured and is likely comparable to some of the smaller deltas
   (E-007's beam gain, E-014's FLEURS-EN gain).
-- **The mixed set T is two speakers now** (S1 + S2, 400 of the 800 planned sentences, 2026-10-30),
-  read in quiet rooms. S3 and S4 are unrecorded, so the *held-out* speaker for E-017 does not exist
-  yet, and every number measured before 2026-10-30 used the 200 S1 clips only.
+- **The mixed set T now has three speakers** (S1 + S2 + S3, 600 of the 800 planned sentences,
+  2026-10-30), read in quiet rooms. S4 is unrecorded and its 200 sentences are unreviewed, so the
+  final four-speaker T does not exist yet. S3 recorded on the same Mac/microphone as S1: for S3 the
+  speaker is held out but the channel is not, which is why S2 (external device) is the cleaner
+  cross-speaker estimate.
 - **FLEURS is public.** Whisper and Whistle may have seen it during pretraining; Whisper is trained
   on 680k h of web audio. FLEURS numbers are comparable across systems but not contamination-free.
   T, being ours and unrecorded by others, is the cleaner comparison — it is also the harder one.
@@ -141,8 +149,8 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 - **The noise set is 40 min of non-music, not 60**: room tone (20 min) is not recorded. Music is
   reported, never gated. Since D25 the Silero VAD gates **all** 240 non-music clips (0 words) and
   89% of the music clips; the gate is measured on synthetic MUSAN noise, not on real far-field
-  noise, and a very quiet or reverberant speaker could fall under the 0.10 fraction threshold
-  (the weakest speech clip measured is 0.408, 4× above it).
+  noise. On T-600 the weakest speech clip is **0.194** (`T-0033`, S3) — 1.9× the 0.10 gate, not the
+  4× of S1/S2/FLEURS — so a very quiet or reverberant speaker could still fall under it.
 - **int8 was gated on ARM64 only.** On x86_64 the same int8 file deviates ~40× more (E-003
   addendum), so the int8 quality gate on the target platform is still open.
 - **ETA depends on a curated term list** (580 terms in `data/en_terms.txt`); T has hand-annotated
@@ -171,6 +179,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Data build reports | `data/manifests/build_report.json`, `data/shards/*/build_report.json` | `uv run python -m stt.data.build_manifests`, `build_mel` |
 | Spliced set (E-014) | `data/manifests/spliced_it_en_report.json` | `uv run python -m stt.data.build_spliced --hours 110` |
 | Gold set and its x50 oversampling (E-016) | `recordings/manifests/R-S1.jsonl`, `runs/E-016/prepare_gold_oversample.py` | `build_manifest.py build --kind R --speaker S1`, then `build_mel`, then the prepare script |
+| S3 zero-shot cross-speaker read (E-017 pre-check) | `runs/E-017/{eval,baselines,manifests}/`, `runs/E-017/vad_speakers.json` | `runs/E-017/zero_shot_s3.sh` |
 | Noise set (E-011) | `data/manifests/noise_report.json` | `uv run python -m stt.data.build_noise ...` |
 
 ## 7. Open questions, in decision order

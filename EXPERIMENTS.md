@@ -1022,3 +1022,39 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > re-measured — 4T **64.3× / 62.5× / 57.3×**, 1T **29.1× / 27.6× / 24.5×** on 5/10/20 s, package
 > **17.11 MB** (v0.3.1). Even with the augmented LM the `standup` case can still lose to `st` in
 > isolation: the structural fix is more acoustic exposure in varied contexts, not a stronger prior.
+
+> **Addendum (2026-10-30) — S3 arrives: the cross-speaker gain replicates (zero-shot, no training).**
+> S3 is the speaker held out for **E-017**. S3 recorded **T 200/200 + A 60/60** on the same Mac and
+> microphone as S1 — the speaker changes, the channel does not. T is now **600 clips** (S1+S2+S3,
+> 23.2 min); T-600 numbers are **not** comparable to the earlier T-400/T-200 rows. Headline,
+> E-016 + augmented LM α 0.2: greedy **43.26% WER**, beam+LM **38.50%** (E-014: 59.26 / 53.50).
+>
+> On the S3 slice alone (200 clips, `runs/E-017/manifests/T-S3.jsonl`), E-016 vs E-014:
+
+| Decoder | E-014 WER / ETA | E-016 WER / ETA | Δ WER | Δ ETA |
+|---|---|---|---|---|
+| greedy | 60.22 / 13.52 | 45.91 / 26.48 | **−14.31** [−17.67, −11.00] | **+12.96** [+7.83, +18.15] |
+| beam + LM | 54.77 / 17.75 | **41.57 / 30.42** | **−13.20** [−16.36, −10.24] | **+12.68** [+7.71, +18.03] |
+
+> Both significant, and **slightly larger than on S2** (−9.64 WER / +9.07 ETA) and about **60% of
+> the matched-speaker S1 gain** (−21.58 / +20.00). Since S3 shares S1's microphone and room, part of
+> the S3 gain may be **channel** adaptation rather than speaker generalisation; S2 (external
+> recorder, different room) is the cleaner cross-speaker estimate. E-017 — train on S1+S2 gold,
+> test on S3 — averages two channels and is still the experiment that decides.
+>
+> **Gate on S3** (paired vs each baseline, beam+LM): Moth **41.57 / 30.42**; Whisper-tiny
+> auto+beam5 58.69 / 41.41 (**Moth −17.12 WER, −10.99 ETA**, both significant); Whisper-tiny
+> forced-`it` beam5 46.51 / 38.03 (**−4.94** [−10.40, +0.34] WER, **−7.61** [−17.02, +1.86] ETA:
+> **both ties**); Whistle 28.36 / 52.11 (Moth +13.20 WER, −21.69 ETA); Parakeet 10.82 / 83.94.
+> So on a second unseen speaker Moth still **ties** the mixed gate against the strongest Whisper
+> variant and beats the auto variant; Whistle remains ahead. The WER win shrinks vs S2
+> (−9.47 significant there, −4.94 tie here) because Whisper itself does better on S3's clips.
+>
+> **VAD**: 0/200 S3 clips gated, but the weakest clip is `T-0033` at fraction **0.194** — the
+> lowest speech fraction measured (S1 min 0.408, S2 0.410, FLEURS 0.419), 1.9× the 0.10 gate
+> instead of 4×. Kept, not tuned; it goes into the far-field threat (`docs/11` §5).
+>
+> **Still missing for E-017 proper**: R-S2 is a script (623 sentences), not audio; E-017 needs S2
+> to record it (600 takes, ~4 h), then the E-016 recipe is repeated on S1+S2 gold and evaluated on
+> S3. Artifacts: `runs/E-017/` (speaker manifests, S3 metrics + paired diffs, baselines, `vad_speakers.json`),
+> `runs/E-016/eval/t600-*`, `runs/E-014/eval/t600-*`; reproduce with `runs/E-017/zero_shot_s3.sh`.
