@@ -179,6 +179,16 @@
   release **17,11 MB** (v0.3.1) con LM 5,12 MB, browser 4T **64,3× / 62,5× / 57,3×**, 1T **29,1× /
   27,6× / 24,5×**. Il caso `standup` isolato può ancora perdere contro `st` (3 pezzi BPE vs 1): serve
   più esposizione acustica in contesti vari.
+- **VAD deciso, da implementare in una sessione nuova** (2026-10-30): il gate rumore chiede **0
+  parole** su non-music e l'energy guard non può separare il rumore forte. Silero VAD v5 (MIT,
+  **2,33 MB**, sha256 `1a153a22…`) misurato su tutti i set: frazione di finestre di parlato
+  **T min 0,410 / FLEURS min 0,420** contro **noise max 0,038** e silenzio 0,009 → con soglia
+  **0,10** nessun clip di parlato viene scartato e **tutti i 120 clip di rumore** vengono fermati.
+  **Decisione (autore):** adottarlo al posto dell'energy guard, pacchetto **~19,44 MB** (tetto 20),
+  MIT nel NOTICE. Piano completo, trappola della finestra 576 e criteri di accettazione:
+  **`docs/plans/2026-10-30-vad-guard.md`**. Script di misura:
+  `runs/E-011/vad_feasibility.py`. Il training sul rumore resta il fallback (richiede il re-download
+  di MUSAN e uno split train/eval, perché il noise set attuale *è* il set di valutazione).
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
@@ -213,7 +223,7 @@ noise augmentation.
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **E-016: +20 ETA su T ma è adattamento a S1** (control_it 34,7 → 18,1; visti +27,4 vs invisibili +11,9); contro Whisper ETA tie. Serve **E-017** (S3 held out). **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
+| H2 gate | **Noise: soluzione scelta = VAD** (piano `docs/plans/2026-10-30-vad-guard.md`, atteso 0 parole). **E-016: +20 ETA su T ma è adattamento a S1** (control_it 34,7 → 18,1; visti +27,4 vs invisibili +11,9); contro Whisper ETA tie. Serve **E-017** (S3 held out). **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script, Parakeet 78% vs Moth 5%): il prossimo test è **E-016 gold**, poi **E-015** se serve scala. **FLEURS-IT: ora tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]) — non più dietro in modo significativo, ma il gate chiede una CI tutta sotto 0. **Gate misto T non passato**: E-014 57,09/20,60 vs Whisper it+beam5 53,05/37,61 → WER tie (+4,04 [−1,20, +9,60]), **ETA −17,01** [−25,55, −7,01]. **Noise**: silenzio risolto dal guard (240 → 0), restano **13–24 parole su MUSAN noise**. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: distillazione da Whistle/Parakeet, oppure gold H3a, oppure re-scope | decisione |
 | M6 | H3b fatto e respinto (E-014); **H3a (gold) pronto da eseguire**: R-S1 76/635, R-S2 344 (servono ~256 frasi nuove), T S2–S4 mancanti | registrazioni R-S1/R-S2/T |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 

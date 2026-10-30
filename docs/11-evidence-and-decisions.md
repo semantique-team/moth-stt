@@ -40,6 +40,7 @@ each with the evidence that forced it.
 | D21 | 2026-10-23 | **Reject A** (300 h English) | E-012: FLEURS-EN −5.4 but T +5.16 worse [3.00, 7.37] and **ETA unchanged** (21.49) | Adopting it for the English gain |
 | D22 | 2026-10-23 | **Reject B** (BPE V=4096, 12.76 M) | E-013: terms ≤3 pieces 48.8% → 74.0%, but ETA 20.0 → 20.0, FLEURS-IT +1.9 worse | Adopting it for the shorter sequences |
 | D23 | 2026-10-24 | Add a **no-speech energy guard**, not a VAD; greedy stays the default on unknown input | E-011 addendum: silence words 240 → 0 (120/120 clips), 0/897 speech clips touched | Silero VAD (~2 MB, out of v0.1 scope) |
+| D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.410 (T) / 0.420 (FLEURS) vs noise max 0.038, silence 0.009; threshold 0.10 gates 100% of noise and 0% of speech (`runs/E-011/vad_feasibility.py`, plan `docs/plans/2026-10-30-vad-guard.md`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
 
 ## 3. Negative results
