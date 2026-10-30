@@ -1,0 +1,22 @@
+decoder: greedy
+checkpoint runs/E-016/checkpoints/ckpt_best.pt (step 24000) on mps
+noise: VAD gated 347/360 clips (threshold 0.1)
+noise: WER 0.0000 CI None (guarded 347)
+lm: runs/E-008/lm_bpe3_aug.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-016/checkpoints/ckpt_best.pt (step 24000) on mps
+noise: VAD gated 347/360 clips (threshold 0.1)
+noise: WER 0.0000 CI None (guarded 347)
+decoder: greedy
+checkpoint runs/E-016/checkpoints/ckpt_best.pt (step 24000) on mps
+recorded_t: VAD gated 0/400 clips (threshold 0.1)
+recorded_t: WER 0.4201 CI [0.3954802259887006, 0.4448734448734449] (guarded 0)
+fleurs_it_test: VAD gated 0/697 clips (threshold 0.1)
+fleurs_it_test: WER 0.3276 CI [0.31733431788812994, 0.33913644648356484] (guarded 0)
+lm: runs/E-008/lm_bpe3_aug.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-016/checkpoints/ckpt_best.pt (step 24000) on mps
+recorded_t: VAD gated 0/400 clips (threshold 0.1)
+recorded_t: WER 0.3691 CI [0.34448305821025194, 0.39265413205072147] (guarded 0)
+fleurs_it_test: VAD gated 0/697 clips (threshold 0.1)
+fleurs_it_test: WER 0.2690 CI [0.2584495539640658, 0.2793947198969736] (guarded 0)

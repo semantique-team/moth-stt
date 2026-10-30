@@ -15,6 +15,7 @@ from pathlib import Path
 
 import torch
 
+from stt.data.build_mel import load_audio_16k
 from stt.data.dataset import MelDataset, plan_batches
 from stt.decode import beam_search, greedy
 from stt.eval import score_rows
@@ -24,16 +25,32 @@ from stt.model import MothSTT
 from stt.no_speech import is_no_speech
 from stt.tokenizer import encode, load_tokenizer
 from stt.train import _prepare_batch, load_config, load_sources
+from stt.vad import GATE_THRESHOLD
+from stt.vad import has_speech as vad_has_speech
 
+#: ``name -> (manifest, shards, audio root)``; ``None`` where the raw audio was deleted after the
+#: mel cache. The VAD guard needs the audio root, the mel-based energy guard does not.
 SETS = {
-    "mls_it_dev": ("data/manifests/mls_it_dev.jsonl", "data/shards/mls_it_dev"),
-    "ls_en_dev": ("data/manifests/ls_en_dev.jsonl", "data/shards/ls_en_dev"),
-    "fleurs_it_test": ("data/manifests/fleurs_it_test.jsonl", "data/shards/fleurs_it_test"),
-    "fleurs_en_test": ("data/manifests/fleurs_en_test.jsonl", "data/shards/fleurs_en_test"),
-    "cv_it_dev": ("data/manifests/cv_it_dev.jsonl", "data/shards/cv_it_dev"),
-    "cv_it_test": ("data/manifests/cv_it_test.jsonl", "data/shards/cv_it_test"),
-    "recorded_t": ("recordings/manifests/T.jsonl", "data/shards/recorded_t"),
-    "noise": ("data/manifests/noise.jsonl", "data/shards/noise"),
+    "mls_it_dev": ("data/manifests/mls_it_dev.jsonl", "data/shards/mls_it_dev", None),
+    "ls_en_dev": ("data/manifests/ls_en_dev.jsonl", "data/shards/ls_en_dev", None),
+    "fleurs_it_test": (
+        "data/manifests/fleurs_it_test.jsonl",
+        "data/shards/fleurs_it_test",
+        "data/raw",
+    ),
+    "fleurs_en_test": (
+        "data/manifests/fleurs_en_test.jsonl",
+        "data/shards/fleurs_en_test",
+        "data/raw",
+    ),
+    "cv_it_dev": ("data/manifests/cv_it_dev.jsonl", "data/shards/cv_it_dev", "data/raw"),
+    "cv_it_test": ("data/manifests/cv_it_test.jsonl", "data/shards/cv_it_test", "data/raw"),
+    "recorded_t": (
+        "recordings/manifests/T.jsonl",
+        "data/shards/recorded_t",
+        "recordings/audio",
+    ),
+    "noise": ("data/manifests/noise.jsonl", "data/shards/noise", "data/raw/noise"),
 }
 
 
@@ -64,6 +81,8 @@ def decode(
     lm_weight: float = 0.0,
     limit: int = 0,
     no_speech_guard: bool = False,
+    vad_guard: bool = False,
+    vad_threshold: float = GATE_THRESHOLD,
 ) -> dict:
     config = load_config(config_path)
     batch = config["batch"]
@@ -103,10 +122,37 @@ def decode(
     out_dir.mkdir(parents=True, exist_ok=True)
     results = {}
     for name in names:
-        manifest, shards = SETS[name]
+        manifest, shards, audio_root = SETS[name]
         index, rows, root = load_sources([{"manifest": manifest, "shards": shards}])
         if limit and limit < len(rows):
             rows = random.Random(0).sample(rows, limit)
+        all_rows = rows
+        hyps: dict[str, str] = {}
+        guarded = 0
+        if vad_guard:
+            # D25: Silero VAD on the 16 kHz PCM, before the mel cache. Sets whose raw audio was
+            # deleted after the cache fall back to no gate, with a warning (never silently).
+            if audio_root is None or not Path(audio_root).is_dir():
+                print(
+                    f"warning: {name}: no audio under {audio_root}; VAD guard skipped",
+                    flush=True,
+                )
+            else:
+                kept = []
+                for row in rows:
+                    if vad_has_speech(
+                        load_audio_16k(Path(audio_root) / row["audio"]), vad_threshold
+                    ):
+                        kept.append(row)
+                    else:
+                        hyps[row["id"]] = ""
+                guarded = len(rows) - len(kept)
+                rows = kept
+                print(
+                    f"{name}: VAD gated {guarded}/{len(all_rows)} clips "
+                    f"(threshold {vad_threshold})",
+                    flush=True,
+                )
         dataset = MelDataset(index, root, rows)
         batches = plan_batches(
             [float(row["duration"]) for row in rows],
@@ -115,8 +161,6 @@ def decode(
             seed=0,
             epoch=0,
         )
-        hyps: dict[str, str] = {}
-        guarded = 0
         with torch.inference_mode():
             for positions in batches:
                 items = [dataset[position] for position in positions]
@@ -150,7 +194,7 @@ def decode(
                     for key, value in hyps.items()),
             encoding="utf-8",
         )
-        scored = score_rows(rows, hyps, bootstrap=1000, seed=0)
+        scored = score_rows(all_rows, hyps, bootstrap=1000, seed=0)
         metrics = {
             "checkpoint": ckpt,
             "set": name,
@@ -167,6 +211,8 @@ def decode(
                 "lm_weight": lm_weight if decoder == "beam" else None,
                 "limit": limit,
                 "no_speech_guard": no_speech_guard,
+                "vad_guard": vad_guard,
+                "vad_threshold": vad_threshold if vad_guard else None,
                 "guarded": guarded,
             },
             "overall": scored["overall"],
@@ -180,7 +226,7 @@ def decode(
         results[name] = scored["overall"]
         print(f"{name}: WER {scored['overall']['wer']:.4f} "
               f"CI {scored['overall'].get('wer_ci')}"
-              + (f" (guarded {guarded})" if no_speech_guard else ""), flush=True)
+              + (f" (guarded {guarded})" if no_speech_guard or vad_guard else ""), flush=True)
         if device == "mps":
             torch.mps.empty_cache()
     return results
@@ -222,9 +268,23 @@ def main() -> int:
     parser.add_argument(
         "--no-speech-guard",
         action="store_true",
-        help="skip clips with no speech-like energy (stt.no_speech, E-011)",
+        help="legacy E-011 energy guard: skip silent clips on the mel (stt.no_speech)",
+    )
+    parser.add_argument(
+        "--vad-guard",
+        action="store_true",
+        help="skip clips with no speech (Silero VAD, stt.vad, D25); needs the raw audio",
+    )
+    parser.add_argument(
+        "--vad-threshold",
+        type=float,
+        default=GATE_THRESHOLD,
+        help=f"speech-window fraction above which a clip is decoded (default {GATE_THRESHOLD})",
     )
     args = parser.parse_args()
+
+    if args.vad_guard and args.no_speech_guard:
+        parser.error("--vad-guard and --no-speech-guard are mutually exclusive")
 
     if args.average:
         average_checkpoints([path.strip() for path in args.average.split(",")], args.checkpoint)
@@ -243,6 +303,8 @@ def main() -> int:
         lm_weight=args.lm_weight,
         limit=args.limit,
         no_speech_guard=args.no_speech_guard,
+        vad_guard=args.vad_guard,
+        vad_threshold=args.vad_threshold,
     )
     return 0
 
