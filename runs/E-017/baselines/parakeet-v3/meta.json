@@ -1,0 +1,21 @@
+{
+  "system": "parakeet-tdt-0.6b-v3",
+  "variant": "multilingual",
+  "hotwords_mode": "none",
+  "created_at": "2026-10-30T18:46:21+0100",
+  "sets": {
+    "T-S3": {
+      "manifest": "runs/E-017/manifests/T-S3.jsonl",
+      "n": 200,
+      "errors": [],
+      "audio_seconds": 459.15,
+      "wall_seconds": 13.536,
+      "rtfx": 33.920142049006174,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "engine": "sherpa-onnx",
+  "num_threads": 4,
+  "size_bytes": 670478772
+}

@@ -1,0 +1,35 @@
+{
+  "gate": 0.1,
+  "speakers": {
+    "S1": {
+      "clips": 200,
+      "min": 0.408,
+      "p10": 0.6626,
+      "median": 0.7659,
+      "max": 0.961,
+      "gated": 0,
+      "weakest_id": "T-0001",
+      "weakest_fraction": 0.408
+    },
+    "S2": {
+      "clips": 200,
+      "min": 0.4101,
+      "p10": 0.5833,
+      "median": 0.6979,
+      "max": 0.9403,
+      "gated": 0,
+      "weakest_id": "T-0011",
+      "weakest_fraction": 0.4101
+    },
+    "S3": {
+      "clips": 200,
+      "min": 0.1944,
+      "p10": 0.6834,
+      "median": 0.8084,
+      "max": 0.9306,
+      "gated": 0,
+      "weakest_id": "T-0033",
+      "weakest_fraction": 0.1944
+    }
+  }
+}

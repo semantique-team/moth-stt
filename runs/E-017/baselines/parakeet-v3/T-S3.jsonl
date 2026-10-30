@@ -1,0 +1,200 @@
+{"id": "T-0003", "hyp": "Ho aperto un ticket per il problema.", "latency_s": 0.1192}
+{"id": "T-0006", "hyp": "Devo finire il report entro stasera.", "latency_s": 0.0723}
+{"id": "T-0009", "hyp": "Ho ricevuto un feedback positivo.", "latency_s": 0.0813}
+{"id": "T-0012", "hyp": "Lo sprint finisce la prossima settimana.", "latency_s": 0.0844}
+{"id": "T-0015", "hyp": "Ho completato il task più urgente.", "latency_s": 0.0762}
+{"id": "T-0018", "hyp": "Ho cambiato la password ieri.", "latency_s": 0.0775}
+{"id": "T-0021", "hyp": "Il database contiene i dati dei clienti.", "latency_s": 0.1249}
+{"id": "T-0024", "hyp": "Lavoro su un branch separato.", "latency_s": 0.0704}
+{"id": "T-0027", "hyp": "La roadmap è stata aggiornata.", "latency_s": 0.0724}
+{"id": "T-0030", "hyp": "Segue un webinar nel pomeriggio.", "latency_s": 0.0784}
+{"id": "T-0033", "hyp": "", "latency_s": 0.0894}
+{"id": "T-0036", "hyp": "Stiamo preparando il pitch per gli investitori.", "latency_s": 0.0854}
+{"id": "T-0039", "hyp": "La dashboard mostra i numeri del mese.", "latency_s": 0.0811}
+{"id": "T-0042", "hyp": "Il benefit arriva con lo stipendio.", "latency_s": 0.0672}
+{"id": "T-0045", "hyp": "Lavora in remote da due anni.", "latency_s": 0.0658}
+{"id": "T-0048", "hyp": "Mi prendo un coffee prima della riunione.", "latency_s": 0.0666}
+{"id": "T-0051", "hyp": "Il kick off del progetto è lunedì.", "latency_s": 0.0673}
+{"id": "T-0054", "hyp": "Ho visto il prototype del nuovo prodotto.", "latency_s": 0.0714}
+{"id": "T-0057", "hyp": "Il founder ha lasciato l'azienda.", "latency_s": 0.1081}
+{"id": "T-0060", "hyp": "Il lead del progetto è in ferie.", "latency_s": 0.0803}
+{"id": "T-0063", "hyp": "Lavoro come freelance da anni.", "latency_s": 0.0695}
+{"id": "T-0066", "hyp": "Ho comprato un nuovo domain.", "latency_s": 0.0542}
+{"id": "T-0069", "hyp": "Il check out non funziona.", "latency_s": 0.0646}
+{"id": "T-0072", "hyp": "Il mio order è stato spedito.", "latency_s": 0.0621}
+{"id": "T-0075", "hyp": "Ho chiesto il refund per il prodotto.", "latency_s": 0.0672}
+{"id": "T-0078", "hyp": "Il supporto risponde in giornata.", "latency_s": 0.0639}
+{"id": "T-0081", "hyp": "Ho scritto un prompt più chiaro.", "latency_s": 0.0633}
+{"id": "T-0084", "hyp": "Ho aperto il browser per controllare.", "latency_s": 0.0712}
+{"id": "T-0087", "hyp": "Mi è arrivato troppo spam oggi.", "latency_s": 0.0678}
+{"id": "T-0090", "hyp": "Il firewall ha bloccato la connessione.", "latency_s": 0.0723}
+{"id": "T-0093", "hyp": "Ho provato un reset del sistema.", "latency_s": 0.0665}
+{"id": "T-0096", "hyp": "Il shutdown è programmato per stasera.", "latency_s": 0.0931}
+{"id": "T-0099", "hyp": "Premi play sul comando.", "latency_s": 0.0626}
+{"id": "T-0102", "hyp": "La live inizia alle nove.", "latency_s": 0.0543}
+{"id": "T-0105", "hyp": "La procedura di upload delle foto è lenta.", "latency_s": 0.079}
+{"id": "T-0108", "hyp": "Ho fatto un backup dei dati.", "latency_s": 0.0636}
+{"id": "T-0111", "hyp": "Ho cambiato il wallpaper.", "latency_s": 0.0553}
+{"id": "T-0114", "hyp": "Ho risposto con un'emoji.", "latency_s": 0.0605}
+{"id": "T-0117", "hyp": "Ho pubblicato un post ieri.", "latency_s": 0.0659}
+{"id": "T-0120", "hyp": "Ho iniziato a follow quel profilo.", "latency_s": 0.0722}
+{"id": "T-0123", "hyp": "Ho messo mute durante la riunione.", "latency_s": 0.0637}
+{"id": "T-0126", "hyp": "O un date stasera.", "latency_s": 0.0569}
+{"id": "T-0129", "hyp": "Ho creato una playlist per il viaggio.", "latency_s": 0.0657}
+{"id": "T-0132", "hyp": "Non farmi spoil sulla serie.", "latency_s": 0.0611}
+{"id": "T-0135", "hyp": "Il laptop è troppo pesante.", "latency_s": 0.0679}
+{"id": "T-0138", "hyp": "Ho comprato un monitor nuovo.", "latency_s": 0.0535}
+{"id": "T-0141", "hyp": "Il wifi va e viene.", "latency_s": 0.0517}
+{"id": "T-0144", "hyp": "Ieri sera ho guardato il replay della partita.", "latency_s": 0.0771}
+{"id": "T-0147", "hyp": "Ho preso la bike per tornare.", "latency_s": 0.0694}
+{"id": "T-0150", "hyp": "Ho bisogno di un break adesso.", "latency_s": 0.0703}
+{"id": "T-0153", "hyp": "Dobbiamo fare un deep dive sui numeri.", "latency_s": 0.0666}
+{"id": "T-0156", "hyp": "Lavoriamo su una user experience più semplice.", "latency_s": 0.0785}
+{"id": "T-0159", "hyp": "Il corso di Data Science inizia a marzo.", "latency_s": 0.0821}
+{"id": "T-0162", "hyp": "Ci vediamo per un happy hour dopo il lavoro.", "latency_s": 0.073}
+{"id": "T-0165", "hyp": "Facciamo un check-in in albergo alle tre.", "latency_s": 0.0658}
+{"id": "T-0168", "hyp": "Facciamo un one to one la prossima settimana.", "latency_s": 0.0736}
+{"id": "T-0171", "hyp": "Vogliamo scale up il gruppo entro l'anno.", "latency_s": 0.0802}
+{"id": "T-0174", "hyp": "Il work in progress è sul muro.", "latency_s": 0.0766}
+{"id": "T-0177", "hyp": "Abbiamo scritto un case study sul cliente.", "latency_s": 0.0996}
+{"id": "T-0180", "hyp": "Definiamo la strategia go to market.", "latency_s": 0.0724}
+{"id": "T-0183", "hyp": "Usiamo solo software open source.", "latency_s": 0.0686}
+{"id": "T-0186", "hyp": "Il back end è più complesso", "latency_s": 0.0628}
+{"id": "T-0189", "hyp": "Nel tempo libero ho un side project.", "latency_s": 0.0729}
+{"id": "T-0192", "hyp": "Ho preparato una checklist per il viaggio.", "latency_s": 0.062}
+{"id": "T-0195", "hyp": "Il website è in manutenzione.", "latency_s": 0.0653}
+{"id": "T-0198", "hyp": "Lavoro come content creator.", "latency_s": 0.0616}
+{"id": "T-0201", "hyp": "Serve problem solving in questa situazione.", "latency_s": 0.0962}
+{"id": "T-0204", "hyp": "Il teamwork è fondamentale.", "latency_s": 0.057}
+{"id": "T-0207", "hyp": "Cerco un work life balance migliore.", "latency_s": 0.0785}
+{"id": "T-0210", "hyp": "Guardo una live streaming stasera.", "latency_s": 0.0734}
+{"id": "T-0213", "hyp": "Uso la screen sharing durante la riunione.", "latency_s": 0.0671}
+{"id": "T-0216", "hyp": "Il database è aggiornato.", "latency_s": 0.0501}
+{"id": "T-0219", "hyp": "Prova login con la nuova password.", "latency_s": 0.0658}
+{"id": "T-0222", "hyp": "Dobbiamo setup la stanza.", "latency_s": 0.0566}
+{"id": "T-0225", "hyp": "Premi i switch off sul telecomando.", "latency_s": 0.0617}
+{"id": "T-0228", "hyp": "Scorrere scroll down per leggere.", "latency_s": 0.0915}
+{"id": "T-0231", "hyp": "Fai swipe w right per accettare.", "latency_s": 0.0714}
+{"id": "T-0234", "hyp": "Imposta la night mode sul telefono.", "latency_s": 0.0761}
+{"id": "T-0237", "hyp": "Il stand up dura quindici minuti.", "latency_s": 0.0778}
+{"id": "T-0240", "hyp": "Il rollback ha risolto il problema.", "latency_s": 0.074}
+{"id": "T-0243", "hyp": "La feature request è in backlog.", "latency_s": 0.0976}
+{"id": "T-0246", "hyp": "La supreintrevù è venerdì.", "latency_s": 0.0657}
+{"id": "T-0249", "hyp": "La user story è troppo grande.", "latency_s": 0.0925}
+{"id": "T-0252", "hyp": "Guardo le serie su Netflix.", "latency_s": 0.0573}
+{"id": "T-0255", "hyp": "Il pacco è arrivato con globo.", "latency_s": 0.0615}
+{"id": "T-0258", "hyp": "La riunione è su Microsoft Teams.", "latency_s": 0.084}
+{"id": "T-0261", "hyp": "Il codice è su Github.", "latency_s": 0.0634}
+{"id": "T-0264", "hyp": "La presentazione su PowerPoint.", "latency_s": 0.0633}
+{"id": "T-0267", "hyp": "Il video è su TikTok.", "latency_s": 0.0553}
+{"id": "T-0270", "hyp": "La mapa es su Google Maps.", "latency_s": 0.0564}
+{"id": "T-0273", "hyp": "La nota è su Evernote.", "latency_s": 0.0582}
+{"id": "T-0276", "hyp": "La fattura è su Stripe.", "latency_s": 0.0555}
+{"id": "T-0279", "hyp": "Ho prenotato un hotel su Trivago.", "latency_s": 0.0718}
+{"id": "T-0282", "hyp": "Il cibo è arrivato con Deliverum.", "latency_s": 0.0615}
+{"id": "T-0285", "hyp": "Le scarpe sono di decathlon.", "latency_s": 0.0589}
+{"id": "T-0288", "hyp": "La console è una PlayStation.", "latency_s": 0.0741}
+{"id": "T-0291", "hyp": "Il film è su Prime Video.", "latency_s": 0.0539}
+{"id": "T-0294", "hyp": "La musica è su SoundCloud.", "latency_s": 0.073}
+{"id": "T-0297", "hyp": "Le foto sono su Google Photo.", "latency_s": 0.0588}
+{"id": "T-0300", "hyp": "Il calendario su Google Calendar.", "latency_s": 0.0635}
+{"id": "T-0303", "hyp": "La mail è il suo Outlook.", "latency_s": 0.0582}
+{"id": "T-0306", "hyp": "La chiamata è su Skype.", "latency_s": 0.0478}
+{"id": "T-0309", "hyp": "Il prototipo è su Invision.", "latency_s": 0.0728}
+{"id": "T-0312", "hyp": "La campagna è su MailChimp", "latency_s": 0.0608}
+{"id": "T-0315", "hyp": "Il progetto è su gira.", "latency_s": 0.0551}
+{"id": "T-0318", "hyp": "Il server è su AWS.", "latency_s": 0.0572}
+{"id": "T-0321", "hyp": "Il dominio è su Goddy.", "latency_s": 0.0698}
+{"id": "T-0324", "hyp": "Il video è su Vimeo.", "latency_s": 0.0517}
+{"id": "T-0327", "hyp": "Il computer ha un MacBook.", "latency_s": 0.0474}
+{"id": "T-0330", "hyp": "L'orologio è un Apple Watch.", "latency_s": 0.0543}
+{"id": "T-0333", "hyp": "Na Tv Cromcast.", "latency_s": 0.0497}
+{"id": "T-0336", "hyp": "Raspira polvere ed Ison.", "latency_s": 0.0584}
+{"id": "T-0339", "hyp": "Il pranzo è da Sabui.", "latency_s": 0.0569}
+{"id": "T-0342", "hyp": "Ordiniamo la pizza.", "latency_s": 0.056}
+{"id": "T-0345", "hyp": "Il Dead Winings", "latency_s": 0.0509}
+{"id": "T-0348", "hyp": "Identification di Oral B.", "latency_s": 0.0516}
+{"id": "T-0351", "hyp": "KPI del trimestre è in crescita.", "latency_s": 0.0623}
+{"id": "T-0354", "hyp": "Il Cto, ha approvato la scelta.", "latency_s": 0.0614}
+{"id": "T-0357", "hyp": "Il reparto di Char ha aperto una posizione.", "latency_s": 0.0705}
+{"id": "T-0360", "hyp": "Il nostro Mvp è pronto.", "latency_s": 0.0677}
+{"id": "T-0363", "hyp": "G più scalda troppo.", "latency_s": 0.052}
+{"id": "T-0366", "hyp": "Il porto USRB non funziona.", "latency_s": 0.0601}
+{"id": "T-0369", "hyp": "The fac sono sul sito.", "latency_s": 0.0638}
+{"id": "T-0372", "hyp": "Usiamo un servizio SaaS.", "latency_s": 0.0699}
+{"id": "T-0375", "hyp": "Il codice QR non si legge.", "latency_s": 0.0716}
+{"id": "T-0378", "hyp": "Il POC è stato approvato.", "latency_s": 0.062}
+{"id": "T-0381", "hyp": "Il KPI principale è la retention.", "latency_s": 0.068}
+{"id": "T-0384", "hyp": "Il Cto ha lasciato l'azienda.", "latency_s": 0.0641}
+{"id": "T-0387", "hyp": "Il supporto IT risponde tardi.", "latency_s": 0.0809}
+{"id": "T-0390", "hyp": "Il servizio API ha cambiato versione.", "latency_s": 0.0702}
+{"id": "T-0393", "hyp": "Comprato RAM nuova.", "latency_s": 0.052}
+{"id": "T-0396", "hyp": "Pdf è troppo grande.", "latency_s": 0.0541}
+{"id": "T-0399", "hyp": "Crm non si sincronizza.", "latency_s": 0.0698}
+{"id": "T-0402", "hyp": "Dimentic il pin della carta.", "latency_s": 0.0704}
+{"id": "T-0405", "hyp": "Ho letto il messaggio Sms solo ora.", "latency_s": 0.0808}
+{"id": "T-0408", "hyp": "Il tempo eta non è credibile.", "latency_s": 0.0797}
+{"id": "T-0411", "hyp": "Abbiamo deployato la nuova versione ieri sera.", "latency_s": 0.0818}
+{"id": "T-0414", "hyp": "Ho linkato il documento nella nota.", "latency_s": 0.0626}
+{"id": "T-0417", "hyp": "Mappato le foto sul profilo.", "latency_s": 0.0613}
+{"id": "T-0420", "hyp": "Ho cliccato sul pulsato.", "latency_s": 0.066}
+{"id": "T-0423", "hyp": "Presentato il telefono.", "latency_s": 0.0492}
+{"id": "T-0426", "hyp": "Ho testato la funzione prima di consegnarla.", "latency_s": 0.0943}
+{"id": "T-0429", "hyp": "Ho committato le modifiche.", "latency_s": 0.0565}
+{"id": "T-0432", "hyp": "Ho buildato il progetto.", "latency_s": 0.049}
+{"id": "T-0435", "hyp": "Ho updateato il documento.", "latency_s": 0.0706}
+{"id": "T-0438", "hyp": "Ho shippato la nuova versione.", "latency_s": 0.0558}
+{"id": "T-0441", "hyp": "Spoilerato il finale.", "latency_s": 0.0507}
+{"id": "T-0444", "hyp": "Mi ha Whatsappato ieri.", "latency_s": 0.058}
+{"id": "T-0447", "hyp": "Ho schippato l'introduzione.", "latency_s": 0.0576}
+{"id": "T-0450", "hyp": "Ho restartato il portatile.", "latency_s": 0.0536}
+{"id": "T-0453", "hyp": "Ho scannato i documenti.", "latency_s": 0.0491}
+{"id": "T-0456", "hyp": "Ho stato il sito.", "latency_s": 0.0497}
+{"id": "T-0459", "hyp": "Ho debrieffato la riunione.", "latency_s": 0.0533}
+{"id": "T-0462", "hyp": "Ho likeato e commento.", "latency_s": 0.0489}
+{"id": "T-0465", "hyp": "ho followato quel profilo.", "latency_s": 0.0517}
+{"id": "T-0468", "hyp": "Commeciato con una ragazza.", "latency_s": 0.0593}
+{"id": "T-0471", "hyp": "Puoi forwardare il messaggio al cliente.", "latency_s": 0.0768}
+{"id": "T-0474", "hyp": "Continua a scrollare la pagina.", "latency_s": 0.0697}
+{"id": "T-0477", "hyp": "Vorrei postare una foto.", "latency_s": 0.0522}
+{"id": "T-0480", "hyp": "Prova a alloggare quelle credenziali nuove.", "latency_s": 0.0678}
+{"id": "T-0483", "hyp": "Dobbiamo schedulare la riunione.", "latency_s": 0.0587}
+{"id": "T-0486", "hyp": "Prova a fissare l'errore.", "latency_s": 0.0549}
+{"id": "T-0489", "hyp": "Devo pushare il ramo.", "latency_s": 0.0597}
+{"id": "T-0492", "hyp": "Non lo so, let me check e ti dico.", "latency_s": 0.0853}
+{"id": "T-0495", "hyp": "Il progetto va bene, but we need more time.", "latency_s": 0.0816}
+{"id": "T-0498", "hyp": "Mi piace, but it is too expensive.", "latency_s": 0.0817}
+{"id": "T-0501", "hyp": "Nono tempo, maybe next week.", "latency_s": 0.0642}
+{"id": "T-0504", "hyp": "Va bene, I will send it later.", "latency_s": 0.0595}
+{"id": "T-0507", "hyp": "Yeah, I love this place.", "latency_s": 0.0589}
+{"id": "T-0510", "hyp": "Ho finito, now I can relax.", "latency_s": 0.0613}
+{"id": "T-0513", "hyp": "Per me va bene, see you tomorrow.", "latency_s": 0.111}
+{"id": "T-0516", "hyp": "Oggi lavoro da casa, It is raining outside.", "latency_s": 0.0967}
+{"id": "T-0519", "hyp": "Non ho mangiato, I'm really hungry.", "latency_s": 0.0674}
+{"id": "T-0522", "hyp": "Ho perso le chiavi, I cannot find them.", "latency_s": 0.0717}
+{"id": "T-0525", "hyp": "Il computer è lento, I Need a New One.", "latency_s": 0.0712}
+{"id": "T-0528", "hyp": "Non è un problema we can fix it.", "latency_s": 0.0599}
+{"id": "T-0531", "hyp": "Il pranzo è pronto. Wash your hands.", "latency_s": 0.0777}
+{"id": "T-0534", "hyp": "Il gana fame let us feed him.", "latency_s": 0.0675}
+{"id": "T-0537", "hyp": "Ho comprato il pane, do you want some?", "latency_s": 0.0633}
+{"id": "T-0540", "hyp": "La partita è iniziata Ways the remote.", "latency_s": 0.0798}
+{"id": "T-0543", "hyp": "La cena è fredda, Ken New Hirop.", "latency_s": 0.0659}
+{"id": "T-0546", "hyp": "La riunione è finita, Let us go for a coffee.", "latency_s": 0.0812}
+{"id": "T-0549", "hyp": "Il ristorante è pieno We Should Book a table.", "latency_s": 0.0704}
+{"id": "T-0552", "hyp": "Domani mattina vado dal medico per la visita.", "latency_s": 0.0856}
+{"id": "T-0555", "hyp": "Abbiamo prenotato un tavolo al ristorante.", "latency_s": 0.0655}
+{"id": "T-0558", "hyp": "La riunione è stata rimandata giovedì.", "latency_s": 0.0564}
+{"id": "T-0561", "hyp": "Facciamo una passeggiata nel parco.", "latency_s": 0.0642}
+{"id": "T-0564", "hyp": "Il vicino ha tagliato l'a del giardino.", "latency_s": 0.069}
+{"id": "T-0567", "hyp": "Il museo apre le dieci.", "latency_s": 0.0507}
+{"id": "T-0570", "hyp": "Devo studiare per l'esame di lunedì.", "latency_s": 0.0591}
+{"id": "T-0573", "hyp": "La strada per la montagna è stretta.", "latency_s": 0.0675}
+{"id": "T-0576", "hyp": "Ho scritto una lettera a mia zia.", "latency_s": 0.0596}
+{"id": "T-0579", "hyp": "Il medico mi ha consigliato di riposare.", "latency_s": 0.0647}
+{"id": "T-0582", "hyp": "Let us grab a coffee after this time up.", "latency_s": 0.0705}
+{"id": "T-0585", "hyp": "We should book a table for eight.", "latency_s": 0.0703}
+{"id": "T-0588", "hyp": "Can you send me the link to the folder?", "latency_s": 0.0738}
+{"id": "T-0591", "hyp": "She forgot her umbrella on the bus.", "latency_s": 0.0671}
+{"id": "T-0594", "hyp": "The restaurant is closed on Mondays.", "latency_s": 0.0623}
+{"id": "T-0597", "hyp": "The movie was better than the book.", "latency_s": 0.0612}
+{"id": "T-0600", "hyp": "The meeting has been moved to Friday.", "latency_s": 0.0681}
