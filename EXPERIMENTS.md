@@ -881,6 +881,12 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   transfers to a speaker the model never heard (S1: −21.58 WER / +20.00 ETA), and half is
   speaker-specific. The matched speaker **inflates the gain about 2×, but does not fabricate it**:
   the gold does teach something that generalises.
+- **The gate measured on a speaker the model never heard (S2, 200 clips, 2026-10-30)**: Moth
+  E-016 **42.22 WER / 29.75 ETA** vs Whisper auto+beam5 70.63/35.41, Whisper forced-`it` beam5
+  51.69/32.86, Whistle 30.41/45.61, Parakeet 11.47/83.00 (`baselines/runs/*-t-s2/`). Paired vs
+  Whisper forced-`it`: **WER −9.47** [−14.90, −4.59], **ETA −3.12** [−12.46, +5.65] (tie). So on a
+  non-training speaker Moth **wins the WER** against both Whisper variants and still **ties on
+  ETA**: the mixed gate does not pass, but for the first time it is measured where it matters.
 - **Against the ship bars**: on T the WER half looks won — Whisper-tiny forced-`it` beam 5 is
   **−17.54** [−22.50, −12.54] worse — but the ETA half is a **tie**, **+2.99** [−6.23, +12.29].
   The mixed gate does **not** pass even before the speaker caveat. On FLEURS-IT the bar is still a

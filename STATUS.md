@@ -57,7 +57,7 @@
   `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
   che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
-- **R-S2**: **344 frasi** (batch 1+2: 293 nette, 8 categorie, 18/18 termini rari, 0 doppioni); ne mancano ~256, da **generare
+- **R-S2**: **611 frasi** (batch 1–4: 560 nette, 8 categorie, 18/18 termini rari, 0 doppioni, 0 near-dup contro T); **pronto per S2**. Non serve altro lavoro
   nuovi** — il pool non si può riusare, `docs/03` §6 impone il dedupe su T/R/pool. Poi S2 registra
   `uv run recordings/record.py --speaker S2 --kind R`. R-S2 è il blocco residuo di H3a insieme a
   T S2–S4.
@@ -159,8 +159,11 @@
   (speaker mai visto in training): E-016 vs E-014 **WER 51,87 → 42,22** (−9,64 [−12,55, −6,93]) e
   **ETA 20,68 → 29,75** (+9,07 [+3,97, +14,61]), entrambi significativi. Quindi circa **metà** del
   guadagno di S1 (−21,6 / +20,0) **trasferisce** a uno speaker nuovo: lo speaker appaiato gonfia
-  il guadagno ~2×, non lo inventa. **Da 2026-10-30 tutti i numeri su T sono a 400 clip**; quelli
-  precedenti sono sui 200 di S1 e non sono confrontabili direttamente.
+  il guadagno ~2×, non lo inventa. **Gate su S2 (speaker mai in training):** Moth E-016
+  **42,22 / ETA 29,75** vs Whisper auto 70,63/35,41, Whisper it 51,69/32,86, Whistle 30,41/45,61,
+  Parakeet 11,47/83,00 → **WER vinto contro Whisper** (−9,47 [−14,90, −4,59]) ma **ETA tie**
+  (−3,12 [−12,46, +5,65]); Whistle resta avanti. **Da 2026-10-30 tutti i numeri su T sono a 400
+  clip**; quelli precedenti sono sui 200 di S1 e non sono confrontabili direttamente.
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e

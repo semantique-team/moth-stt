@@ -128,9 +128,9 @@ best variant; those entries are annotated, not rewritten, so the history of the 
   bootstrap intervals: they describe sampling noise over utterances, **not** training variance.
   Seed-to-seed variation is not measured and is likely comparable to some of the smaller deltas
   (E-007's beam gain, E-014's FLEURS-EN gain).
-- **The mixed set T is one speaker** (S1, 200 of the 800 planned sentences), read in a quiet room.
-  It is a clean code-switch set but not a speaker-independent one; S2–S4 are unrecorded.
-  Speaker-generalization claims cannot be made from T yet.
+- **The mixed set T is two speakers now** (S1 + S2, 400 of the 800 planned sentences, 2026-10-30),
+  read in quiet rooms. S3 and S4 are unrecorded, so the *held-out* speaker for E-017 does not exist
+  yet, and every number measured before 2026-10-30 used the 200 S1 clips only.
 - **FLEURS is public.** Whisper and Whistle may have seen it during pretraining; Whisper is trained
   on 680k h of web audio. FLEURS numbers are comparable across systems but not contamination-free.
   T, being ours and unrecorded by others, is the cleaner comparison — it is also the harder one.
