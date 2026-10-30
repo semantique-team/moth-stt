@@ -72,7 +72,7 @@ Read in order; each file is self-contained enough to be reviewed alone.
 | D8 | v0.1 uses human-transcribed audio only (no Parakeet pseudo-labeling). | Keeps the plan simple and cheap. |
 | D9 | Train on the author's M5 MacBook Pro 16 GB. | Measured feasible (see `04-training.md`). |
 | D10 | Evaluation bars are relative to measured baselines (Whisper-tiny, Whistle, Parakeet). | Absolute WER targets would be guesses before H0. |
-| D11 | v0.1 scope: record-then-transcribe; no streaming, no VAD, no punctuation, no WebGPU. | YAGNI. |
+| D11 | v0.1 scope: record-then-transcribe; no streaming, no punctuation, no WebGPU. | YAGNI. The no-speech guard was out of scope too, then added as an energy check (D23) and replaced by Silero VAD (D25) — see `11` §2. |
 | D12 | The project lives in a new repository, not in `ant-4b`. | Different model, dependencies and licenses. |
 | D13 | Model name **moth**; repository **`moth-stt`** (decided 2026-10-19). | Family naming thread with ANT (insects); the suffix names the task (speech-to-text), not the parameter scale. |
 

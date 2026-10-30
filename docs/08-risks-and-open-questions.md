@@ -17,7 +17,7 @@
 | R11 | Test set too small / noisy | Wrong conclusions from 1–2 point gaps | Bootstrap CIs; "tie" rule; optional anchor set; grow the set if gates are ambiguous | Wide CIs |
 | R12 | Budget creep | Over 10 USD | Mac-first; cost ledger in every entry; stop at 8 USD | Ledger |
 | R13 | Cannot match Whistle | Stretch missed | Bar is Whisper-tiny; Whistle stays a baseline; report honestly | H0 vs final |
-| R14 | CTC emits text on music/non-speech | False transcripts in apps | Report separately; VAD follow-up | Noise set (music arm) |
+| R14 | CTC emits text on music/non-speech | False transcripts in apps | Silero VAD guard (D25): 0 non-music words on the 240 noise/silence clips; music reported separately, 89% gated | Noise set (music arm) |
 | R15 | Italian dominance: English words come out Italianized ("miting") | Core use case fails | English term list in tokenizer text; EN data share; mixed data; ETA gate | ETA, per-term errors |
 | R16 | Facts in `09-research-notes.md` that came from third-party summaries prove wrong | Mis-set expectations | Each claim marked verified/unverified; H0 measures what matters | H0 |
 
@@ -38,7 +38,7 @@
 
 | Item | Why later |
 |---|---|
-| Streaming (re-decode growing buffer; or a streaming student distilled from this model) + Silero VAD | Needed for live dictation; not for v0.1 |
+| Streaming (re-decode growing buffer; or a streaming student distilled from this model) | Needed for live dictation; not for v0.1 (the Silero VAD guard is already shipped, D25) |
 | Punctuation/casing/error-correction post-processor (FUTO PCEC-style, ≈ 5 M params) | Product polish |
 | Detachable n-gram language head trained from text only (Metro-ASR idea) | Cheap accuracy for rare English words |
 | Pseudo-labeling Italian audio with Parakeet v3 / NVIDIA Granary pipeline | Data scale-up for v0.2 |

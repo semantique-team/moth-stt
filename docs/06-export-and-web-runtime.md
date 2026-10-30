@@ -3,11 +3,12 @@
 ## 1. Scope of v0.1
 
 - **Record-then-transcribe**: capture audio, then transcribe it. Clips ≤ 30 s run in one pass; longer audio is split.
-- **No streaming, no VAD, no WebGPU, no punctuation.** (Backlog: pseudo-streaming by re-decoding a growing buffer,
-  Silero VAD ≈ 2 MB, WebGPU.) A **no-speech guard** is not a VAD: a clip whose normalized log-mel has no
-  speech-like energy (loudest bin < −1.0) is not decoded at all, which removes the LM path's words on digital
-  silence (`stt/no_speech.py`, `isNoSpeech` in `web/mel.js`, E-011 addendum). Loud noise and music still need
-  noise augmentation in training.
+- **No streaming, no WebGPU, no punctuation.** (Backlog: pseudo-streaming by re-decoding a growing buffer,
+  WebGPU.) The **no-speech guard** is **Silero VAD v5** (MIT, 2.33 MB) on the 16 kHz PCM **before** the
+  features: a clip is decoded only when more than **10%** of its 32 ms windows are speech
+  (`stt/vad.py`, `web/vad.js`, D25 and the E-011 addendum). It gates 100% of digital silence and 100% of the
+  MUSAN noise clips, which the earlier mel-energy guard could not; that guard survives only as
+  `--no-speech-guard` for reproducing the E-011/E-016 artifacts. Music is reported, not gated.
 - The same ONNX graph runs on native `onnxruntime` for edge devices; a sherpa-onnx integration is a follow-up.
 
 ## 2. Pipeline in the browser
@@ -17,7 +18,9 @@ flowchart TD
     A["Microphone or file"] --> B["AudioWorklet PCM capture / decodeAudioData"]
     B --> C["Resample to 16 kHz mono (OfflineAudioContext)"]
     C --> D["Chunk at silences if longer than 30 s"]
-    D --> E["JS log-mel (400/160/80, Whisper constants)"]
+    D --> V{"Silero VAD: speech fraction > 0.10?"}
+    V -->|no| Z["Empty transcript, guarded: true"]
+    V -->|yes| E["JS log-mel (400/160/80, Whisper constants)"]
     E --> F["onnxruntime-web WASM: int8 encoder + head"]
     F --> G["CTC decode in JS: greedy or hotword beam"]
     G --> H["Join chunks, show text + timings"]
@@ -28,6 +31,7 @@ flowchart TD
 | Capture | `getUserMedia` (mono) → `AudioWorklet` collects float PCM at the context's native rate; or a dropped file via `decodeAudioData`. |
 | Resample | `OfflineAudioContext(1, n·16000/sr, 16000)` to 16 kHz mono. Any difference from the training resampler is covered by an end-to-end test on recorded clips. |
 | Chunking | If longer than 30 s: frame energy in 25 ms windows with an adaptive threshold; cut at the quietest point within the last 5 s before 30 s; minimum chunk 1 s; transcripts joined with a space. |
+| No-speech guard | Silero VAD v5 (`silero_vad.onnx`, MIT) on the 16 kHz PCM: 512-sample windows with 64 samples of context (576-sample input), `state [2,1,128]`, `sr` int64 scalar; a window is speech at P > 0.5, a clip is decoded when the speech-window fraction is > 0.10 (`stt/vad.py`, `web/vad.js`). |
 | Features | Direct, exact implementation of `02` §2: reflect-pad 200, Hann (periodic) window, **true 400-point real DFT** via precomputed 201×400 cos/sin matrices (≈ 16 M MACs per audio-second — negligible; a zero-padded 512-point FFT would shift the frequency grid and is **not** allowed), power, multiply by the shipped `mel_filters.bin`, log10, per-clip max−8 clamp, `(x+4)/4`; drop the last frame. |
 | Inference | `onnxruntime-web`, `executionProviders: ['wasm']`, SIMD on, `numThreads = min(4, hardwareConcurrency)` when cross-origin isolated, else 1; graph optimization `all`; dynamic input length. |
 | Decode | Greedy in ~20 lines; hotword beam search in ~100 lines of JS, a port of the Python reference. `▁` → space; no SentencePiece runtime needed. |
@@ -42,23 +46,27 @@ them and falls back to single-thread mode without them.
 ```text
 release/
   model.int8.onnx      ≈ 8–10 MB   encoder + head + log-softmax
+  lm_bpe3.bin          ≈ 5.1 MB    BPE trigram LM (browser binary, E-008/E-010)
+  silero_vad.onnx      2.33 MB     Silero VAD v5, MIT, unmodified (D25)
   vocab.json           pieces by CTC id, blank = 0, "▁" space marker
   mel_filters.bin      80×201 float32, 64 KB (Whisper's filterbank, MIT)
   config.json          constants and hashes (below)
-  NOTICE               Whisper MIT notice + dataset credits
+  NOTICE               Whisper + Silero MIT notices, dataset credits
   README.md            model card
 ```
 
 ```json
 {
-  "name": "moth-stt", "version": "0.1.0", "sample_rate": 16000,
+  "name": "moth-stt", "version": "0.4.0", "sample_rate": 16000,
   "features": {"n_fft": 400, "hop": 160, "n_mels": 80, "window": "hann_periodic", "center": true,
                "pad_mode": "reflect", "drop_last_frame": true, "floor_range": 8.0, "scale": "(x+4)/4",
                "mel_filters": "mel_filters.bin"},
   "model": {"file": "model.int8.onnx", "input": "mel", "output": "log_probs", "frame_rate_hz": 50, "max_seconds": 30},
   "tokenizer": {"vocab": "vocab.json", "blank_id": 0, "space_marker": "▁"},
-  "decode": {"default": "greedy", "beam": 8, "hotword_bonus": 2.0},
-  "files": {"model.int8.onnx": "sha256:…", "vocab.json": "sha256:…", "mel_filters.bin": "sha256:…"}
+  "decode": {"default": "beam", "beam": 5, "top_k": 8, "lm": "lm_bpe3.bin", "lm_weight": 0.2, "hotword_bonus": 2.0},
+  "vad": {"file": "silero_vad.onnx", "window": 512, "context": 64, "threshold": 0.10},
+  "files": {"model.int8.onnx": "sha256:…", "vocab.json": "sha256:…", "mel_filters.bin": "sha256:…",
+            "lm_bpe3.bin": "sha256:…", "silero_vad.onnx": "sha256:…"}
 }
 ```
 
@@ -75,7 +83,9 @@ files with the browser Cache API after the first download (the model downloads o
    fp32 if dynamic quantization does not support them in the graph (≈ +1.6 MB). If int8 is outside the noise interval of fp32:
    (a) static quantization with ≈ 200 dev clips for calibration, (b) keep the LayerNorm-adjacent ops in fp32,
    (c) fp16 weights (≈ 16–17 MB; still under the ceiling).
-4. **Package:** write `config.json`, hashes and `NOTICE`.
+4. **Package:** write `config.json` (including the `vad` block), hashes and `NOTICE`; copy
+   `stt/assets/silero_vad.onnx` verbatim (2.33 MB, MIT) and list its sha256 in `files`. The browser
+   `package_browser.py` then adds the LM binary and the beam settings.
 
 ## 5. Tests
 
@@ -87,6 +97,7 @@ files with the browser Cache API after the first download (the model downloads o
 | **Encoder parity**: own module vs `transformers.WhisperEncoder`, 30 s padded, fp32 | faithful reproduction (≤ 1e-4) |
 | **Batch parity**: batched+masked vs single-clip logits | masks are correct |
 | **Export parity**: PyTorch fp32 vs ONNX fp32 vs ONNX int8 logits and greedy transcripts | export does not change the model |
+| **VAD guard**: Python and JS use the same 512+64 contract and thresholds; synthetic tone, digital silence and noise are gated, a committed FLEURS speech fixture is not | the guard does not reject real speech and is not bypassed in the browser |
 | **Decoder parity**: Python vs JS greedy and beam on fixture log-probs | the port is faithful |
 | **Browser e2e**: headless Chromium (Playwright) with a fake audio device (`--use-fake-device-for-media-stream --use-file-for-fake-audio-capture=clip.wav`) or a file input, ≈ 20 clips | transcript in the browser equals Python's; resampler difference is acceptable |
 | **Speed benchmark** | browser RTFx feeds the ≥ 10× bar; also logs load time and memory |
@@ -99,7 +110,7 @@ files with the browser Cache API after the first download (the model downloads o
 | No WASM SIMD / unsupported browser | Message naming the requirement; no crash |
 | Not cross-origin isolated | Single-thread mode, with a visible note |
 | Model download fails or hash mismatch | Error with retry; cache entry discarded |
-| Silence / noise | Empty transcript (no placeholder text) |
+| Silence / noise | VAD says no speech: empty transcript (no placeholder text), `guarded: true`, no model call |
 | Audio > 30 s | Chunked automatically |
 | Hotword list empty or malformed | Ignored (greedy) with a note |
 

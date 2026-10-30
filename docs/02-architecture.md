@@ -148,8 +148,9 @@ the convolutions, plus attention that is negligible for clips of seconds). Measu
 | **Whisper-base fallback** | Whisper-base (width 512, 6 blocks, 8 heads, FFN 2048) | linear | 20.35 M (encoder 19.82 M + head 0.53 M) | ≈ **20.5–23.5 MB — at or slightly above the 20 MB ceiling** | H2 gate fails (`04`); requires relaxing the ceiling to ≈ 25 MB |
 
 > **Executed (2026-10-22, E-006; kept in E-014):** the *extra capacity* variant is the **shipped**
-> model — `head_blocks: 2`, **11,575,169 parameters**, 11.91 MB int8 plus the 5.09 MB browser LM =
-> **17.08 MB**. The 8.03 M figures above stay as the design baseline used by E-004/E-005.
+> model — `head_blocks: 2`, **11,575,169 parameters**, 11.91 MB int8 plus the 5.12 MB browser LM
+> and the 2.33 MB Silero VAD guard = **19.44 MB** (0.4.0; D25). The 8.03 M figures above stay as
+> the design baseline used by E-004/E-005.
 
 The Whisper-base figure is a correction to an earlier rough statement of "about 20 MB": by the arithmetic above it
 is a little over the ceiling, so choosing it is an explicit decision to relax the size constraint.

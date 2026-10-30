@@ -40,7 +40,7 @@ each with the evidence that forced it.
 | D21 | 2026-10-23 | **Reject A** (300 h English) | E-012: FLEURS-EN −5.4 but T +5.16 worse [3.00, 7.37] and **ETA unchanged** (21.49) | Adopting it for the English gain |
 | D22 | 2026-10-23 | **Reject B** (BPE V=4096, 12.76 M) | E-013: terms ≤3 pieces 48.8% → 74.0%, but ETA 20.0 → 20.0, FLEURS-IT +1.9 worse | Adopting it for the shorter sequences |
 | D23 | 2026-10-24 | Add a **no-speech energy guard**, not a VAD; greedy stays the default on unknown input | E-011 addendum: silence words 240 → 0 (120/120 clips), 0/897 speech clips touched | Silero VAD (~2 MB, out of v0.1 scope) |
-| D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.410 (T) / 0.420 (FLEURS) vs noise max 0.038, silence 0.009; threshold 0.10 gates 100% of noise and 0% of speech (`runs/E-011/vad_feasibility.py`, plan `docs/plans/2026-10-30-vad-guard.md`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
+| D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.408 (T-400) / 0.419 (FLEURS-IT) vs noise max 0.038, silence 0.000; threshold 0.10 gates 100% of non-music and 0% of speech, and the guard takes non-music words **35/31 → 0** (greedy/beam) with T-400 and FLEURS-IT hypotheses bit-identical (`runs/E-011/vad_guard_summary.json`, `runs/E-011/vad-*`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
 
 ## 3. Negative results
@@ -57,7 +57,8 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | 200 h more English | E-012 | EN −5.4, **T +5.16 worse**, IT −0.8, ETA 0 | **Rejected** | `runs/E-012/eval-final/` |
 | BPE V=4096 | E-013 | Sequences −23% tokens, ETA 0, IT/T slightly worse | **Rejected** | `runs/E-013/eval/` |
 | IT+EN utterance splicing | E-014 | FLEURS-IT −2.27, FLEURS-EN −0.95, **ETA −0.90 (tie)** | Rejected **as an ETA lever**; kept as quality | `runs/E-014/eval/` |
-| Energy guard on silence | E-011 add. | Silence words 240 → 0, noise words 19 (unchanged) | **Kept** | `runs/E-011/guard-*/` |
+| Energy guard on silence | E-011 add. | Silence words 240 → 0, noise words 19 (unchanged) | **Replaced by Silero VAD** (D25): 0 non-music words, 0/240 clips | `runs/E-011/guard-*/`, `runs/E-011/vad-*/` |
+| Silero VAD v5 as the guard | E-011 add. | Non-music words 31 → **0** both decoders; 0 gated on T-400 and FLEURS-IT; +2.33 MB | **Kept** (0.4.0) | `runs/E-011/vad-*/`, `runs/E-011/vad_guard_summary.json` |
 
 ### 3.2 A matched speaker can fabricate a +20-point ETA
 
@@ -138,16 +139,19 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 - **Coverage gaps in the baseline matrix.** Whisper on CV-IT test was never run (informational, the
   gate uses CV dev); Whistle's CV-IT row exists, Moth's CV-IT dev/test exists.
 - **The noise set is 40 min of non-music, not 60**: room tone (20 min) is not recorded. Music is
-  reported, never gated. The guard fixes digital silence only; MUSAN noise still produces 13–24
-  words.
+  reported, never gated. Since D25 the Silero VAD gates **all** 240 non-music clips (0 words) and
+  89% of the music clips; the gate is measured on synthetic MUSAN noise, not on real far-field
+  noise, and a very quiet or reverberant speaker could fall under the 0.10 fraction threshold
+  (the weakest speech clip measured is 0.408, 4× above it).
 - **int8 was gated on ARM64 only.** On x86_64 the same int8 file deviates ~40× more (E-003
   addendum), so the int8 quality gate on the target platform is still open.
 - **ETA depends on a curated term list** (580 terms in `data/en_terms.txt`); T has hand-annotated
   `en_spans`. A different term list would move ETA in ways this project did not measure.
 - **No correction for multiple comparisons.** Roughly ten gate comparisons were run; individual CIs
   are 95% and should be read with that in mind.
-- **The LM is trained on training transcripts only** (CV/MLS/LS), never on dev/test/T; its size
-  (3.53 MB pickled, 5.09 MB browser binary) is part of the 17.08 MB package.
+- **The LM is trained on training transcripts only** (CV/MLS/LS plus the training-side mixed
+  scripts R-S1/R-S2/pool, never dev/test/T); its size (5.12 MB browser binary) is part of the
+  **19.44 MB** 0.4.0 package (11.91 MB int8 + 5.12 MB LM + 2.33 MB VAD + 0.08 MB features/vocab).
 
 ## 6. Reproduction index
 
@@ -157,10 +161,12 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Training curves and throughput | `runs/E-0NN/train.log.jsonl` | `uv run python -m stt.train --config runs/E-0NN/config.yaml` |
 | Headline WER/ETA per set | `runs/E-0NN/eval/*/*.metrics.json` (+ `.hyp.jsonl`) | `runs/E-0NN/eval.sh` (E-014) or `runs/E-005/eval_sets.py` |
 | Paired differences and CIs | `*.vs-*.json` next to the metrics | `uv run python -m stt.eval --vs ...` |
-| Noise / silence behaviour | `runs/E-011/{moth-*,guard-*}/noise.metrics.json` | `runs/E-005/eval_sets.py --sets noise --no-speech-guard` |
+| Noise / silence behaviour (VAD, 0.4.0) | `runs/E-011/{vad-noise-greedy,vad-noise-beam-lm}/noise.metrics.json`, `runs/E-011/vad_guard_summary.json` | `runs/E-011/vad_eval.sh` (or `runs/E-005/eval_sets.py --sets noise --vad-guard`) |
+| Noise / silence behaviour (energy guard, legacy) | `runs/E-011/{moth-*,guard-*}/noise.metrics.json` | `runs/E-005/eval_sets.py --sets noise --no-speech-guard` |
 | LM value of the gold vocabulary | `runs/E-008/lm_bpe3_aug.pkl.gz`, `runs/E-016/eval/t400-aug-lm/` | `runs/E-008/build_lm_augmented.py`, then decode with `--lm` |
 | Browser RTFx and parity | `runs/E-009/rtfx.json`, `runs/E-010/browser_t200.json` | `web/` Playwright suite, `runs/E-010/package_browser.py` |
 | Release rebuild with E-016 (v0.3.0) | `runs/E-016/export.json`, addendum in `EXPERIMENTS.md` | `stt/export.py --checkpoint runs/E-016/checkpoints/ckpt_best.pt --head-blocks 2`, then `runs/E-010/package_browser.py` |
+| Release 0.4.0 with the VAD | `runs/E-011/browser-0.4.0.json` (sizes, hashes, browser RTFx) | `stt/export.py --version 0.4.0` (copies the VAD), then `runs/E-010/package_browser.py --lm runs/E-008/lm_bpe3_aug.pkl.gz`; `web/` Playwright suite |
 | Tokenizer statistics | `data/manifests/build_report.json` (`tokenizer`) | `uv run python -m stt.data.build_tokenizer ...` |
 | Data build reports | `data/manifests/build_report.json`, `data/shards/*/build_report.json` | `uv run python -m stt.data.build_manifests`, `build_mel` |
 | Spliced set (E-014) | `data/manifests/spliced_it_en_report.json` | `uv run python -m stt.data.build_spliced --hours 110` |
@@ -176,5 +182,6 @@ best variant; those entries are annotated, not rewritten, so the history of the 
    Costs recording hours: R-S1 is at 76/600 and T has S1 only.
 3. **Re-scope the mixed gate** — ETA as a secondary metric, "Italian-first with frequent English
    terms", if 1 and 2 are out of budget.
-4. **Noise augmentation with empty targets** (E-011 follow-up 2) — independent of the gate and
-   needed before shipping a demo that accepts arbitrary audio.
+4. **Noise augmentation with empty targets** (E-011 follow-up 2) — the VAD closes the "no speech
+   in, no words out" gate, but noisy *speech* still degrades the transcript; this remains the
+   principled fix and is independent of the gate.

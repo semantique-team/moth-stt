@@ -694,6 +694,65 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > MUSAN noise (this is follow-up 2, noise augmentation with empty targets). Music is unchanged and
 > still reported separately. The guard is an energy check, not a VAD: it catches silence and
 > near-silence, not loud noise or music.
+>
+> **Addendum (2026-10-30) — Silero VAD replaces the energy guard; the noise gate is met.** D25
+> adopts **Silero VAD v5** (MIT, `stt/assets/silero_vad.onnx`, **2,327,524 B**, sha256
+> `1a153a22…8788e3`) as the only no-speech guard, for three reasons: the gate demands **0 words**
+> on non-music (E-016 + augmented LM emitted **31** with beam, **35** greedy), the energy guard
+> cannot separate loud noise, and noise training is impossible without training on the evaluation
+> set (the 240 non-music clips *are* our only MUSAN data). Plan:
+> `docs/plans/2026-10-30-vad-guard.md`.
+>
+> **Rule**: 16 kHz PCM, 32 ms windows (**512 new samples + 64 of context = 576 per call**),
+> `state [2,1,128]` float32, `sr` int64 scalar; a window is speech at P > 0.5, a clip is decoded
+> when the fraction of speech windows is > **0.10** (`stt/vad.py`, `web/vad.js`). The fraction,
+> not the maximum, is the separating statistic: noise transients reach 0.99. The **invocation
+> trap** cost a day: passing 512 samples without the 64-sample context returns ~0.001 even on
+> speech, silently.
+>
+> Measured with the shipped code on every clip (`runs/E-011/vad_guard_summary.json`):
+>
+> | Set | n | min | median | max | gated at 0.10 |
+> |---|---|---|---|---|---|
+> | T S1+S2 (T-400) | 400 | **0.408** | 0.740 | 0.961 | **0** |
+> | FLEURS-IT test | 697 | **0.419** | 0.722 | 0.904 | **0** |
+> | MUSAN noise | 120 | 0.000 | 0.000 | **0.038** | **120** |
+> | digital silence | 120 | 0.000 | 0.000 | 0.000 | **120** |
+> | MUSAN music (reported, not gated) | 120 | 0.000 | 0.000 | 0.990 | 107 |
+>
+> The margin is 4× below the weakest speech clip and 2.6× above the noisiest noise clip. (The
+> feasibility table's `0.009` for silence was the maximum *window probability*, not the window
+> fraction; the fraction is 0.000.) No gain step is applied — our quiet recordings (−42 dBFS
+> RMS) still reach P = 1.000.
+>
+> | Path | Guard | Non-music words | Silence words | MUSAN-noise words | Music words |
+> |---|---|---|---|---|---|
+> | Moth greedy | energy | 35 | 0 | 35 | 275 |
+> | Moth greedy | **VAD** | **0** | **0** | **0** | 154 |
+> | Moth beam 5 + LM 0.2 | energy | 31 | 0 | 31 | 142 |
+> | Moth beam 5 + LM 0.2 | **VAD** | **0** | **0** | **0** | 98 |
+>
+> **The gate is met for the first time**: 0 words on 240/240 non-music clips with both decoders.
+> The VAD also gates 89% of the music clips (reported separately, never part of the gate), which
+> removes most music hallucinations as a side effect.
+>
+> **Speech is untouched**: **0/400** T clips and **0/697** FLEURS-IT clips gated. The beam+LM
+> hypotheses are **bit-identical to the no-guard run** (400/400 and 697/697), and greedy
+> FLEURS-IT is identical to E-016 greedy (697/697, WER 32.76). T-400 beam+LM stays **36.91%**,
+> FLEURS-IT **26.90%**. Guarded clips get an empty hypothesis and are counted in `decode.guarded`.
+>
+> **Package 0.4.0**: 11.91 + 5.12 + **2.33** + 0.08 = **19.44 MB** (ceiling 20). The int8 acoustic
+> file is byte-identical to 0.3.1 (sha `d94da6fc…`): no checkpoint, LM, α or tokenizer change.
+> Rebuild used `--no-verify` for the same documented reason as E-016 (fp32 gate 1.051e-3 on the
+> synthetic 29 s clip, 5.46e-4 on 20 real clips, top-1 100%). Browser (Playwright, WASM SIMD): **4T 48.3× / 46.4× / 41.8×** and **1T 25.2× / 24.0× / 21.5×**
+> on 5/10/20 s with the VAD in the loop; the VAD costs 16–83 ms per clip (312 calls per 10 s), i.e.
+> −25% RTFx on 4 threads and −12% on 1, still 2× above the 10× bar. Windows were **not**
+> subsampled: changing the stride would change the rule. `runs/E-011/browser-0.4.0.json`.
+>
+> **Risks**: far-field or very quiet speech below a 0.10 fraction would be rejected (none in T or
+> FLEURS, but not measured in the wild); music is still not gated by contract; the threshold was
+> chosen on separability, not tuned on T.
+
 - **Artifacts**: `runs/E-011/{moth-greedy,moth-beam-lm,guard-greedy,guard-beam-lm,guard-speech}/`, `data/manifests/noise.jsonl`, `data/manifests/noise_report.json`, `stt/data/build_noise.py`. Committed 2026-10-24 (commit c459641) with the code at ~72cf112; no git SHA was recorded in the metrics.
 
 ## E-012 — scaling the English data (2026-10-23)
