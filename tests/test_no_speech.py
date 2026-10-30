@@ -1,17 +1,16 @@
-"""Tests for the no-speech guard (E-011 follow-up)."""
+"""Tests for the legacy no-speech energy guard (E-011 follow-up).
+
+The shipping guard is now Silero VAD (:mod:`stt.vad`, D25); this module stays because
+``runs/E-005/eval_sets.py --no-speech-guard`` reproduces the E-011/E-016 noise artifacts.
+"""
 
 from __future__ import annotations
-
-import re
-from pathlib import Path
 
 import numpy as np
 import pytest
 
 from stt.features import log_mel
 from stt.no_speech import SILENCE_MAX, is_no_speech
-
-REPO = Path(__file__).resolve().parents[1]
 
 
 def _mel_with_peak(peak: float) -> np.ndarray:
@@ -42,10 +41,3 @@ def test_guard_reads_the_loudest_bin_not_the_mean() -> None:
     mel[40, 50] = -0.5
     assert float(mel.mean()) < SILENCE_MAX
     assert is_no_speech(mel) is False
-
-
-def test_js_threshold_matches_python() -> None:
-    source = (REPO / "web" / "mel.js").read_text(encoding="utf-8")
-    match = re.search(r"export const SILENCE_MAX = (-?[0-9.]+);", source)
-    assert match, "web/mel.js must export SILENCE_MAX"
-    assert float(match.group(1)) == SILENCE_MAX

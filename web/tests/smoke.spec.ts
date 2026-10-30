@@ -7,6 +7,9 @@ import { expect, test } from "@playwright/test";
  * (WAV → 16 kHz → JS log-mel → onnxruntime-web WASM → greedy decode) and produce RTFx numbers.
  * Transcript correctness is meaningless with random weights; the smoke proves the graph runs,
  * the release hashes verify and the speed bar can be measured before training.
+ *
+ * Since 0.4.0 the VAD guard runs first, so the speech fixture is used here: the synthetic tone
+ * is deliberately gated (D25, `vad.spec.ts`).
  */
 test("random-weight int8 export runs in the browser and measures RTFx", async ({ page }) => {
   const errors: string[] = [];
@@ -22,7 +25,7 @@ test("random-weight int8 export runs in the browser and measures RTFx", async ({
 
   const result = await page.evaluate(async () => {
     const moth = (window as any).moth;
-    const pcm = await moth.decodeTo16k("/web/tests/fixtures/clip.wav");
+    const pcm = await moth.decodeTo16k("/web/tests/fixtures/speech.wav");
     const single = await moth.transcribePcm(pcm);
     const bench = await moth.benchmark(pcm, { runs: 5, warmups: 2 });
     return { single, bench, load_ms: moth.runner.loadMs };
@@ -30,6 +33,7 @@ test("random-weight int8 export runs in the browser and measures RTFx", async ({
 
   expect(typeof result.single.text).toBe("string");
   expect(result.single.audioSeconds).toBeGreaterThan(1);
+  expect(result.single.guarded).toBeUndefined();
   expect(result.single.outFrames).toBeGreaterThan(0);
   expect(result.bench.rtfx_median).toBeGreaterThan(0);
   expect(result.bench.cross_origin_isolated).toBe(true);
@@ -43,9 +47,10 @@ test("random-weight int8 export runs in the browser and measures RTFx", async ({
 });
 
 /**
- * H4 early speed table, the `docs/05` §3 shape at smoke scale: 5/10/20 s (the fixture tiled) on
- * 1 and 4 threads, 3 warm-ups + 10 runs each. Chrome/Safari cross-check and real recordings are
- * the M7 benchmark.
+ * H4 early speed table, the `docs/05` §3 shape at smoke scale: 5/10/20 s on 1 and 4 threads,
+ * 3 warm-ups + 10 runs each. Chrome/Safari cross-check and real recordings are the M7 benchmark.
+ * The speech fixture is tiled so that the VAD guard runs in the loop (0.4.0); a tone would be
+ * gated and the table would measure only the guard.
  */
 test("RTFx table on 5/10/20 s clips, 1 and 4 threads", async ({ page, context }) => {
   const collect = async (threads: number) => {
@@ -56,7 +61,7 @@ test("RTFx table on 5/10/20 s clips, 1 and 4 threads", async ({ page, context })
     });
     const rows = await runnerPage.evaluate(async (threadCount: number) => {
       const moth = (window as any).moth;
-      const base = await moth.decodeTo16k("/web/tests/fixtures/clip.wav");
+      const base = await moth.decodeTo16k("/web/tests/fixtures/speech.wav");
       const tile = (seconds: number) => {
         const target = Math.round(seconds * 16000);
         const pcm = new Float32Array(target);
@@ -79,7 +84,8 @@ test("RTFx table on 5/10/20 s clips, 1 and 4 threads", async ({ page, context })
   for (const row of rows) {
     console.log(
       `${row.threads}T ${row.seconds}s: total ${row.total_ms_median.toFixed(1)} ms ` +
-        `(feature ${row.feature_ms_median.toFixed(1)} + inference ${row.inference_ms_median.toFixed(1)} ` +
+        `(vad ${row.vad_ms_median.toFixed(1)} + feature ${row.feature_ms_median.toFixed(1)} ` +
+        `+ inference ${row.inference_ms_median.toFixed(1)} ` +
         `+ decode ${row.decode_ms_median.toFixed(2)}) → RTFx ${row.rtfx_median.toFixed(1)}×`,
     );
     expect(row.rtfx_median).toBeGreaterThan(5);

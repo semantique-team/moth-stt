@@ -99,18 +99,3 @@ export function computeMel(pcm, filters) {
   }
   return { data, frames, bins: N_MELS };
 }
-
-/**
- * Loudest normalized log-mel bin below which a clip carries no speech-like energy.
- * Mirrors `SILENCE_MAX` in `stt/no_speech.py`; see that module for the calibration.
- */
-export const SILENCE_MAX = -1.0;
-
-/** True when the mel from `computeMel` has no speech-like energy and should not be decoded. */
-export function isNoSpeech(data) {
-  let loudest = -Infinity;
-  for (let i = 0; i < data.length; i += 1) {
-    if (data[i] > loudest) loudest = data[i];
-  }
-  return loudest < SILENCE_MAX;
-}

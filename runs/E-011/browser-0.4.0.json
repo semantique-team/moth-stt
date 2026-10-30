@@ -1,0 +1,175 @@
+{
+  "release": "0.4.0",
+  "date": "2026-10-30",
+  "checkpoint": "runs/E-016/checkpoints/ckpt_best.pt (step 24000)",
+  "lm": "runs/E-008/lm_bpe3_aug.pkl.gz (alpha 0.2)",
+  "package_bytes": 19436178,
+  "package_mb": 19.436,
+  "directory_bytes": 19440845,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "d94da6fccb3e209536f248b4a496ad160f5baccaef0e2d400de20a6cd7d40159"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5116464,
+      "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    }
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.1
+  },
+  "browser_rtfx": [
+    {
+      "threads": 4,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 103.43000000715256,
+      "total_ms_min": 99.64500004053116,
+      "vad_ms_median": 16.19249999523163,
+      "feature_ms_median": 37.12000000476837,
+      "inference_ms_median": 44.65999999642372,
+      "decode_ms_median": 5.634999990463257,
+      "rtfx_median": 48.3418737276828,
+      "rtfx_inference": 111.95700851769793,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 215.60499998927116,
+      "total_ms_min": 211.02000004053116,
+      "vad_ms_median": 31.477500021457672,
+      "feature_ms_median": 74.88999998569489,
+      "inference_ms_median": 95.43500000238419,
+      "decode_ms_median": 13.569999992847443,
+      "rtfx_median": 46.38111361284579,
+      "rtfx_inference": 104.78336039975038,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 478.3649999797344,
+      "total_ms_min": 470.4050000309944,
+      "vad_ms_median": 62.03000000119209,
+      "feature_ms_median": 150.28749999403954,
+      "inference_ms_median": 229.01249998807907,
+      "decode_ms_median": 36.117499977350235,
+      "rtfx_median": 41.809078843241636,
+      "rtfx_inference": 87.33147754398153,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 198.25250002741814,
+      "total_ms_min": 197.13999998569489,
+      "vad_ms_median": 21.562500029802322,
+      "feature_ms_median": 37.060000002384186,
+      "inference_ms_median": 133.60249999165535,
+      "decode_ms_median": 5.542499989271164,
+      "rtfx_median": 25.22036291753448,
+      "rtfx_inference": 37.42444939512579,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 416.1100000143051,
+      "total_ms_min": 414.9549999833107,
+      "vad_ms_median": 41.855000019073486,
+      "feature_ms_median": 73.4050000011921,
+      "inference_ms_median": 287.6525000035763,
+      "decode_ms_median": 13.197499990463257,
+      "rtfx_median": 24.032106893985286,
+      "rtfx_inference": 34.764168571021195,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 930.4625000059605,
+      "total_ms_min": 928.9300000071526,
+      "vad_ms_median": 82.61499997973442,
+      "feature_ms_median": 146.91999998688698,
+      "inference_ms_median": 666.6775000095367,
+      "decode_ms_median": 34.52750000357628,
+      "rtfx_median": 21.494686781973353,
+      "rtfx_inference": 29.999512507492607,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    }
+  ],
+  "speech_fixture_smoke": {
+    "single": {
+      "text": "le diffuse proteste iniziate a ottobrek conte",
+      "frames": 300,
+      "outFrames": 150,
+      "vocabSize": 1025,
+      "decoder": "beam",
+      "audioSeconds": 3,
+      "timings": {
+        "vad_ms": 31.42500001192093,
+        "feature_ms": 28.605000019073486,
+        "inference_ms": 53.44999998807907,
+        "decode_ms": 4.610000014305115,
+        "total_ms": 118.0900000333786
+      },
+      "rtfx": 25.40435260523362
+    },
+    "bench": {
+      "runs": 5,
+      "audio_s": 3,
+      "total_ms_median": 63.14000004529953,
+      "total_ms_min": 60.08500003814697,
+      "vad_ms_median": 10.039999961853027,
+      "feature_ms_median": 22.2950000166893,
+      "inference_ms_median": 27.944999992847443,
+      "decode_ms_median": 3.0149999856948853,
+      "rtfx_median": 47.513462113520156,
+      "rtfx_inference": 107.35373056961366,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    "load_ms": 33.63499999046326
+  }
+}

@@ -10,7 +10,8 @@ import * as ort from "./node_modules/onnxruntime-web/dist/ort.wasm.min.mjs";
 
 import { beamSearch, greedy } from "./decode.js";
 import { loadLM } from "./lm.js";
-import { computeMel, isNoSpeech, N_MELS, N_FFT, SAMPLE_RATE } from "./mel.js";
+import { computeMel, N_MELS, N_FFT, SAMPLE_RATE } from "./mel.js";
+import { createVad } from "./vad.js";
 
 const FILTER_FLOATS = N_MELS * (N_FFT / 2 + 1);
 
@@ -83,6 +84,11 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
     const lmBuffer = await fetchChecked(`${root}${config.decode.lm}`, files[config.decode.lm]);
     lm = loadLM(lmBuffer);
   }
+  let vad = null;
+  if (config.vad?.file) {
+    const vadBuffer = await fetchChecked(`${root}${config.vad.file}`, files[config.vad.file]);
+    vad = await createVad(vadBuffer, { gate: config.vad.threshold });
+  }
 
   const vocabJson = JSON.parse(new TextDecoder().decode(vocabBuffer));
   const maxId = Math.max(...Object.keys(vocabJson).map(Number));
@@ -103,23 +109,24 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
 
   async function transcribe(pcm) {
     const t0 = performance.now();
-    const { data, frames } = computeMel(pcm, filters);
+    // No-speech guard (D25, E-011): Silero VAD on the 16 kHz PCM, before the mel. The LM path
+    // invents words on silence and loud noise; a clip with no speech never reaches the model.
+    const guarded = vad ? !(await vad.hasSpeech(pcm)) : false;
     const t1 = performance.now();
-    // No-speech guard (E-011): the LM path invents words on digital silence, so a clip with no
-    // speech-like energy never reaches the model. Silence is a feature-only cost.
-    if (isNoSpeech(data)) {
+    if (guarded) {
       const audioSeconds = pcm.length / SAMPLE_RATE;
       const totalMs = t1 - t0;
       return {
         text: "",
-        frames,
+        frames: 0,
         outFrames: 0,
         vocabSize: pieces.length,
-        decoder: "no-speech-guard",
+        decoder: "vad-guard",
         guarded: true,
         audioSeconds,
         timings: {
-          feature_ms: t1 - t0,
+          vad_ms: t1 - t0,
+          feature_ms: 0,
           inference_ms: 0,
           decode_ms: 0,
           total_ms: totalMs,
@@ -127,9 +134,11 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
         rtfx: (audioSeconds * 1000) / totalMs,
       };
     }
+    const { data, frames } = computeMel(pcm, filters);
+    const t2 = performance.now();
     const input = new ort.Tensor("float32", data, [1, N_MELS, frames]);
     const outputs = await session.run({ [config.model.input]: input });
-    const t2 = performance.now();
+    const t3 = performance.now();
     const output = outputs[config.model.output];
     const [, outFrames, vocabSize] = output.dims;
     const decodeConfig = config.decode ?? {};
@@ -142,9 +151,9 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
             lmWeight: decodeConfig.lm_weight ?? 0,
           })
         : greedy(output.data, outFrames, vocabSize, pieces);
-    const t3 = performance.now();
+    const t4 = performance.now();
     const audioSeconds = pcm.length / SAMPLE_RATE;
-    const totalMs = t3 - t0;
+    const totalMs = t4 - t0;
     return {
       text,
       frames,
@@ -153,9 +162,10 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
       decoder: decodeConfig.default ?? "greedy",
       audioSeconds,
       timings: {
-        feature_ms: t1 - t0,
-        inference_ms: t2 - t1,
-        decode_ms: t3 - t2,
+        vad_ms: t1 - t0,
+        feature_ms: t2 - t1,
+        inference_ms: t3 - t2,
+        decode_ms: t4 - t3,
         total_ms: totalMs,
       },
       rtfx: (audioSeconds * 1000) / totalMs,
@@ -166,12 +176,14 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
   async function benchmark(pcm, { runs = 5, warmups = 2 } = {}) {
     for (let index = 0; index < warmups; index += 1) await transcribe(pcm);
     const totals = [];
+    const vads = [];
     const features = [];
     const inferences = [];
     const decodes = [];
     for (let index = 0; index < runs; index += 1) {
       const result = await transcribe(pcm);
       totals.push(result.timings.total_ms);
+      vads.push(result.timings.vad_ms ?? 0);
       features.push(result.timings.feature_ms);
       inferences.push(result.timings.inference_ms);
       decodes.push(result.timings.decode_ms);
@@ -184,6 +196,7 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
       audio_s: audioSeconds,
       total_ms_median: totalMedian,
       total_ms_min: Math.min(...totals),
+      vad_ms_median: median(vads),
       feature_ms_median: median(features),
       inference_ms_median: inferenceMedian,
       decode_ms_median: median(decodes),
@@ -198,6 +211,7 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
   return {
     config,
     session,
+    vad,
     pieces,
     filters,
     loadMs,

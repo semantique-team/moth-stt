@@ -5,13 +5,15 @@ Plain-JS port of the runtime path from `docs/06` §2, no bundler:
 | File | What |
 |---|---|
 | `mel.js` | Whisper log-mel, direct 400-point DFT (201×400 cos/sin matrices), exact `docs/02` §2 constants |
+| `vad.js` | Silero VAD v5 no-speech guard, 512+64-sample windows, speech fraction > 0.10 (twin of `stt/vad.py`) |
 | `decode.js` | greedy + beam CTC decode (twins of `stt/decode.py`) |
 | `lm.js` | browser reader for the compact BPE trigram LM (`stt/lm.py`) |
 | `mic.js` / `mic-worklet.js` | record-then-transcribe mic: AudioWorklet PCM → 16 kHz mono |
 | `ort.js` | `release/` loader (verifies every `sha256:` line), `onnxruntime-web` WASM session, timings + RTFx |
 | `index.html` | demo page: file or microphone → transcript, timings, RTFx |
 | `server.py` | static server with COOP/COEP (WASM threads need cross-origin isolation) |
-| `tests/smoke.spec.ts` | Playwright: WAV → browser path → RTFx |
+| `tests/smoke.spec.ts` | Playwright: WAV → browser path → RTFx (speech fixture; the tone is gated) |
+| `tests/vad.spec.ts` | Playwright: tone fixture gated, speech fixture decoded (D25) |
 | `tests/decoder.spec.ts` | Playwright: JS beam/LM parity fixtures |
 | `tests/mic.spec.ts` | Playwright: fake microphone → 16 kHz PCM |
 
