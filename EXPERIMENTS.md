@@ -952,6 +952,11 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 | CV-IT test | 30.02 | 30.02 | 0.00 |
 | Noise non-music words | 31 | 31 | 0.00 |
 
+> **α re-tuned on dev with the augmented LM** (200 `mls_it_dev` + 200 `ls_en_dev`, seed 0, the
+> E-008 protocol; T never used): α = 0.1 → 28.87 macro, **0.2 → 27.54**, 0.3 → 27.88, 0.4 → 29.08.
+> **0.2 stays**: raising it would help the English side (EN 0.2265 at 0.3 vs 0.2270 at 0.2) but costs
+> more on Italian, and it does not fix word-boundary merges either.
+>
 > The gain is concentrated where the vocabulary lives (T), and the other sets are unchanged: this is
 > a free win, not a trade. **Adopted**: the release LM binary was rebuilt from the augmented pickle
 > (`runs/E-010/package_browser.py --lm runs/E-008/lm_bpe3_aug.pkl.gz`, 5.12 MB) and the browser table

@@ -609,3 +609,15 @@
 {"text": "she bought a new pair of shoes", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0609", "reviewed": false}
 {"text": "my brother works in a bank", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0610", "reviewed": false}
 {"text": "the garden needs water", "category": "control_en", "en_spans": [], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0611", "reviewed": false}
+{"text": "lo standup meeting inizia alle nove e trenta", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0612", "reviewed": false}
+{"text": "lo standup call è stato rimandato", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0613", "reviewed": false}
+{"text": "lo standup di team dura un quarto d'ora", "category": "phrase", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0614", "reviewed": false}
+{"text": "facciamo uno standup veloce prima di pranzo", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0615", "reviewed": false}
+{"text": "il daily standup è stato spostato alle dieci", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0616", "reviewed": false}
+{"text": "nello standup parliamo dei blocchi aperti", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0617", "reviewed": false}
+{"text": "lo standup meeting con il cliente è domani", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0618", "reviewed": false}
+{"text": "chiudiamo lo standup in dieci minuti", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0619", "reviewed": false}
+{"text": "preparo il riepilogo per lo standup", "category": "single_word", "en_spans": [[5, 6]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0620", "reviewed": false}
+{"text": "lo standup call con il fornitore salta", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0621", "reviewed": false}
+{"text": "lo standup del lunedì è sempre lungo", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0622", "reviewed": false}
+{"text": "dopo lo standup facciamo una revisione", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S2-0623", "reviewed": false}

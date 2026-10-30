@@ -1,0 +1,1753 @@
+{
+  "checkpoint": "runs/E-016/checkpoints/ckpt_best.pt",
+  "set": "mls_it_dev",
+  "n_utterances": 200,
+  "decode": {
+    "method": "beam",
+    "beam_width": 5,
+    "top_k": 8,
+    "hotwords": null,
+    "hotword_terms": 0,
+    "hotword_bonus": 1.0,
+    "hotword_prefix_bonus": 0.0,
+    "lm": "runs/E-008/lm_bpe3_aug.pkl.gz",
+    "lm_weight": 0.4,
+    "limit": 200,
+    "no_speech_guard": false,
+    "guarded": 0
+  },
+  "overall": {
+    "n": 200,
+    "ref_words": 6364,
+    "sub": 1259,
+    "del": 908,
+    "ins": 57,
+    "wer": 0.34946574481458204,
+    "insertion_rate": 0.8956631049654306,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": [
+      0.32873563218390806,
+      0.3692138710183587
+    ]
+  },
+  "breakdown": {
+    "speaker": {
+      "642": {
+        "n": 25,
+        "ref_words": 558,
+        "sub": 128,
+        "del": 106,
+        "ins": 3,
+        "wer": 0.42473118279569894,
+        "insertion_rate": 0.5376344086021505,
+        "eta": null
+      },
+      "645": {
+        "n": 17,
+        "ref_words": 626,
+        "sub": 107,
+        "del": 60,
+        "ins": 7,
+        "wer": 0.2779552715654952,
+        "insertion_rate": 1.1182108626198084,
+        "eta": null
+      },
+      "5537": {
+        "n": 26,
+        "ref_words": 835,
+        "sub": 155,
+        "del": 143,
+        "ins": 5,
+        "wer": 0.362874251497006,
+        "insertion_rate": 0.5988023952095808,
+        "eta": null
+      },
+      "875": {
+        "n": 16,
+        "ref_words": 610,
+        "sub": 163,
+        "del": 130,
+        "ins": 8,
+        "wer": 0.4934426229508197,
+        "insertion_rate": 1.3114754098360655,
+        "eta": null
+      },
+      "8613": {
+        "n": 20,
+        "ref_words": 847,
+        "sub": 113,
+        "del": 75,
+        "ins": 8,
+        "wer": 0.23140495867768596,
+        "insertion_rate": 0.9445100354191264,
+        "eta": null
+      },
+      "11247": {
+        "n": 18,
+        "ref_words": 423,
+        "sub": 83,
+        "del": 67,
+        "ins": 8,
+        "wer": 0.3735224586288416,
+        "insertion_rate": 1.8912529550827424,
+        "eta": null
+      },
+      "3129": {
+        "n": 15,
+        "ref_words": 512,
+        "sub": 125,
+        "del": 112,
+        "ins": 3,
+        "wer": 0.46875,
+        "insertion_rate": 0.5859375,
+        "eta": null
+      },
+      "6121": {
+        "n": 19,
+        "ref_words": 696,
+        "sub": 110,
+        "del": 64,
+        "ins": 8,
+        "wer": 0.2614942528735632,
+        "insertion_rate": 1.1494252873563218,
+        "eta": null
+      },
+      "10362": {
+        "n": 26,
+        "ref_words": 840,
+        "sub": 191,
+        "del": 104,
+        "ins": 6,
+        "wer": 0.35833333333333334,
+        "insertion_rate": 0.7142857142857143,
+        "eta": null
+      },
+      "4712": {
+        "n": 18,
+        "ref_words": 417,
+        "sub": 84,
+        "del": 47,
+        "ins": 1,
+        "wer": 0.31654676258992803,
+        "insertion_rate": 0.23980815347721823,
+        "eta": null
+      }
+    },
+    "speaker_group": {
+      "S3+S4": {
+        "n": 200,
+        "ref_words": 6364,
+        "sub": 1259,
+        "del": 908,
+        "ins": 57,
+        "wer": 0.34946574481458204,
+        "insertion_rate": 0.8956631049654306,
+        "eta": null
+      }
+    }
+  },
+  "noise": null,
+  "per_utterance": {
+    "mls-642_529_000142": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000046": {
+      "ref_words": 40,
+      "sub": 4,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000012": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000015": {
+      "ref_words": 41,
+      "sub": 16,
+      "del": 9,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000085": {
+      "ref_words": 30,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000033": {
+      "ref_words": 46,
+      "sub": 3,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000014": {
+      "ref_words": 35,
+      "sub": 1,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000106": {
+      "ref_words": 39,
+      "sub": 11,
+      "del": 14,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000014": {
+      "ref_words": 38,
+      "sub": 7,
+      "del": 7,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000087": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000063": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000029": {
+      "ref_words": 20,
+      "sub": 7,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000071": {
+      "ref_words": 50,
+      "sub": 7,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000070": {
+      "ref_words": 40,
+      "sub": 7,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000062": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 9,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000071": {
+      "ref_words": 36,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000124": {
+      "ref_words": 28,
+      "sub": 6,
+      "del": 10,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000095": {
+      "ref_words": 43,
+      "sub": 11,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000007": {
+      "ref_words": 34,
+      "sub": 7,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_9630_000005": {
+      "ref_words": 30,
+      "sub": 4,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000085": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000120": {
+      "ref_words": 35,
+      "sub": 10,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000132": {
+      "ref_words": 53,
+      "sub": 7,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000081": {
+      "ref_words": 30,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000030": {
+      "ref_words": 21,
+      "sub": 6,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000004": {
+      "ref_words": 39,
+      "sub": 3,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000015": {
+      "ref_words": 28,
+      "sub": 2,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000136": {
+      "ref_words": 32,
+      "sub": 7,
+      "del": 12,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000078": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000074": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000001": {
+      "ref_words": 22,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000000": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000000": {
+      "ref_words": 33,
+      "sub": 8,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000091": {
+      "ref_words": 39,
+      "sub": 9,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000105": {
+      "ref_words": 53,
+      "sub": 4,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000018": {
+      "ref_words": 44,
+      "sub": 10,
+      "del": 11,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000057": {
+      "ref_words": 40,
+      "sub": 7,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000040": {
+      "ref_words": 34,
+      "sub": 5,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000028": {
+      "ref_words": 24,
+      "sub": 4,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000121": {
+      "ref_words": 34,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000001": {
+      "ref_words": 43,
+      "sub": 11,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000002": {
+      "ref_words": 27,
+      "sub": 7,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000048": {
+      "ref_words": 47,
+      "sub": 11,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000036": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000081": {
+      "ref_words": 42,
+      "sub": 8,
+      "del": 13,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000020": {
+      "ref_words": 20,
+      "sub": 7,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000058": {
+      "ref_words": 36,
+      "sub": 7,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000067": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000031": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000036": {
+      "ref_words": 27,
+      "sub": 8,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000070": {
+      "ref_words": 36,
+      "sub": 9,
+      "del": 5,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000076": {
+      "ref_words": 41,
+      "sub": 10,
+      "del": 7,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000029": {
+      "ref_words": 28,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000102": {
+      "ref_words": 48,
+      "sub": 7,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000116": {
+      "ref_words": 32,
+      "sub": 4,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000094": {
+      "ref_words": 36,
+      "sub": 3,
+      "del": 9,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000009": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000078": {
+      "ref_words": 48,
+      "sub": 5,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000040": {
+      "ref_words": 31,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000008": {
+      "ref_words": 30,
+      "sub": 10,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000102": {
+      "ref_words": 43,
+      "sub": 10,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000045": {
+      "ref_words": 52,
+      "sub": 15,
+      "del": 7,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000081": {
+      "ref_words": 33,
+      "sub": 10,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000040": {
+      "ref_words": 33,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000038": {
+      "ref_words": 33,
+      "sub": 7,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000035": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000023": {
+      "ref_words": 30,
+      "sub": 4,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000092": {
+      "ref_words": 33,
+      "sub": 7,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_9630_000008": {
+      "ref_words": 22,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000037": {
+      "ref_words": 50,
+      "sub": 10,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000072": {
+      "ref_words": 23,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000074": {
+      "ref_words": 40,
+      "sub": 11,
+      "del": 9,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000096": {
+      "ref_words": 39,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000117": {
+      "ref_words": 22,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_9630_000010": {
+      "ref_words": 31,
+      "sub": 9,
+      "del": 4,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000003": {
+      "ref_words": 25,
+      "sub": 6,
+      "del": 10,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000047": {
+      "ref_words": 24,
+      "sub": 6,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000077": {
+      "ref_words": 37,
+      "sub": 11,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000079": {
+      "ref_words": 39,
+      "sub": 11,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000052": {
+      "ref_words": 16,
+      "sub": 4,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000063": {
+      "ref_words": 26,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000058": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000067": {
+      "ref_words": 38,
+      "sub": 8,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000017": {
+      "ref_words": 42,
+      "sub": 9,
+      "del": 6,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000013": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000071": {
+      "ref_words": 36,
+      "sub": 8,
+      "del": 7,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000113": {
+      "ref_words": 19,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000051": {
+      "ref_words": 25,
+      "sub": 5,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000091": {
+      "ref_words": 43,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000009": {
+      "ref_words": 26,
+      "sub": 6,
+      "del": 14,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000024": {
+      "ref_words": 42,
+      "sub": 4,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000155": {
+      "ref_words": 23,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000112": {
+      "ref_words": 41,
+      "sub": 7,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000049": {
+      "ref_words": 45,
+      "sub": 12,
+      "del": 16,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000106": {
+      "ref_words": 47,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000064": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000022": {
+      "ref_words": 38,
+      "sub": 10,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000076": {
+      "ref_words": 20,
+      "sub": 3,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000043": {
+      "ref_words": 34,
+      "sub": 7,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000056": {
+      "ref_words": 16,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000048": {
+      "ref_words": 26,
+      "sub": 6,
+      "del": 6,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000107": {
+      "ref_words": 23,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000046": {
+      "ref_words": 46,
+      "sub": 8,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000085": {
+      "ref_words": 23,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000098": {
+      "ref_words": 27,
+      "sub": 10,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000018": {
+      "ref_words": 40,
+      "sub": 11,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000021": {
+      "ref_words": 40,
+      "sub": 8,
+      "del": 4,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000034": {
+      "ref_words": 42,
+      "sub": 6,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000071": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000040": {
+      "ref_words": 19,
+      "sub": 6,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000065": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000079": {
+      "ref_words": 32,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000033": {
+      "ref_words": 27,
+      "sub": 9,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000040": {
+      "ref_words": 35,
+      "sub": 13,
+      "del": 10,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000024": {
+      "ref_words": 31,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000033": {
+      "ref_words": 33,
+      "sub": 8,
+      "del": 12,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000115": {
+      "ref_words": 20,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000025": {
+      "ref_words": 19,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000057": {
+      "ref_words": 39,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000084": {
+      "ref_words": 54,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000030": {
+      "ref_words": 45,
+      "sub": 10,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000022": {
+      "ref_words": 28,
+      "sub": 6,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000044": {
+      "ref_words": 30,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000011": {
+      "ref_words": 27,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_9630_000006": {
+      "ref_words": 35,
+      "sub": 14,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000054": {
+      "ref_words": 31,
+      "sub": 8,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000039": {
+      "ref_words": 47,
+      "sub": 15,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000062": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_9630_000014": {
+      "ref_words": 24,
+      "sub": 9,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000048": {
+      "ref_words": 22,
+      "sub": 7,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000030": {
+      "ref_words": 41,
+      "sub": 6,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000112": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000022": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000004": {
+      "ref_words": 44,
+      "sub": 6,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_9630_000013": {
+      "ref_words": 28,
+      "sub": 9,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000044": {
+      "ref_words": 40,
+      "sub": 6,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000074": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000054": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000038": {
+      "ref_words": 43,
+      "sub": 4,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000019": {
+      "ref_words": 37,
+      "sub": 9,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000013": {
+      "ref_words": 37,
+      "sub": 16,
+      "del": 14,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000055": {
+      "ref_words": 26,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000046": {
+      "ref_words": 23,
+      "sub": 9,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000031": {
+      "ref_words": 48,
+      "sub": 9,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000056": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000137": {
+      "ref_words": 44,
+      "sub": 7,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000073": {
+      "ref_words": 37,
+      "sub": 7,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000034": {
+      "ref_words": 40,
+      "sub": 9,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000077": {
+      "ref_words": 21,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000101": {
+      "ref_words": 37,
+      "sub": 9,
+      "del": 5,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000071": {
+      "ref_words": 29,
+      "sub": 9,
+      "del": 8,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000078": {
+      "ref_words": 34,
+      "sub": 9,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000045": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000069": {
+      "ref_words": 40,
+      "sub": 3,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000141": {
+      "ref_words": 41,
+      "sub": 11,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000010": {
+      "ref_words": 34,
+      "sub": 4,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000084": {
+      "ref_words": 17,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000088": {
+      "ref_words": 15,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000001": {
+      "ref_words": 39,
+      "sub": 6,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000035": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000022": {
+      "ref_words": 22,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000048": {
+      "ref_words": 37,
+      "sub": 7,
+      "del": 10,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000000": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000007": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000055": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_8906_000001": {
+      "ref_words": 36,
+      "sub": 6,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000025": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_9630_000011": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000090": {
+      "ref_words": 46,
+      "sub": 6,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000034": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000027": {
+      "ref_words": 33,
+      "sub": 9,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000003": {
+      "ref_words": 41,
+      "sub": 3,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000024": {
+      "ref_words": 38,
+      "sub": 5,
+      "del": 3,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000034": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000079": {
+      "ref_words": 55,
+      "sub": 8,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000122": {
+      "ref_words": 41,
+      "sub": 10,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000149": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000099": {
+      "ref_words": 29,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000017": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000025": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000122": {
+      "ref_words": 34,
+      "sub": 7,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000091": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000041": {
+      "ref_words": 17,
+      "sub": 3,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000023": {
+      "ref_words": 27,
+      "sub": 11,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-875_529_000060": {
+      "ref_words": 41,
+      "sub": 10,
+      "del": 10,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000061": {
+      "ref_words": 31,
+      "sub": 7,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-3129_529_000073": {
+      "ref_words": 33,
+      "sub": 6,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-8613_7877_000024": {
+      "ref_words": 48,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000075": {
+      "ref_words": 20,
+      "sub": 9,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000089": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_8906_000077": {
+      "ref_words": 23,
+      "sub": 5,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-6121_4125_000056": {
+      "ref_words": 51,
+      "sub": 6,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000148": {
+      "ref_words": 32,
+      "sub": 9,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-645_529_000033": {
+      "ref_words": 39,
+      "sub": 9,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-5537_3829_000095": {
+      "ref_words": 35,
+      "sub": 7,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-10362_11341_000003": {
+      "ref_words": 26,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-11247_9630_000006": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 6,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000069": {
+      "ref_words": 24,
+      "sub": 9,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-642_529_000038": {
+      "ref_words": 32,
+      "sub": 11,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "mls-4712_5281_000003": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    }
+  }
+}

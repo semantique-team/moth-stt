@@ -48,7 +48,7 @@
 - **Registrazioni T**: **S1 completo, 200/200** (manifest `recordings/manifests/T.jsonl`, 200 righe, 481 s,
   12 retake). Il set è ora **800 frasi, 200 per S1–S4**; mancano S2, S3 e S4 (leggono solo T). Comandi:
   `uv run recordings/record.py --speaker S2 --kind T` (idem S3, S4).
-- **R-S1 COMPLETO** (2026-10-29): **635/635 take, 0 errori, 0 warning, 29,3 min di parlato**
+- **R-S1 COMPLETO** (2026-10-29), poi **esteso a 641** (2026-10-30: 6 frasi `standup` in contesti vari da registrare, id 0636-0641): **635/635 take, 0 errori, 0 warning, 29,3 min di parlato**
   (`recordings/manifests/R-S1.jsonl`, audio in `recordings/audio/R-S1/S1/`). Cache mel:
   `data/shards/R-S1` (0,49 h, spot check bit-exact su 3 clip). Oversampling ×50 →
   `data/shards/R-S1-x50` (24,4 h, indice duplicato, nessuna copia extra dell'audio).
@@ -57,7 +57,7 @@
   `uv run recordings/record.py --speaker S2 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
   che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
-- **R-S2**: **611 frasi** (batch 1–4: 560 nette, 8 categorie, 18/18 termini rari, 0 doppioni, 0 near-dup contro T); **pronto per S2**. Non serve altro lavoro
+- **R-S2**: **623 frasi** (batch 1–4 + 12 `standup` del 2026-10-30: 572 nette, 8 categorie, 18/18 termini rari, 0 doppioni, 0 near-dup contro T); **pronto per S2**. Non serve altro lavoro
   nuovi** — il pool non si può riusare, `docs/03` §6 impone il dedupe su T/R/pool. Poi S2 registra
   `uv run recordings/record.py --speaker S2 --kind R`. R-S2 è il blocco residuo di H3a insieme a
   T S2–S4.

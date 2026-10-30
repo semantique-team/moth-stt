@@ -633,3 +633,9 @@
 {"text": "l'indirizzo url contiene il numero di versione", "category": "acronym", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0633", "reviewed": false}
 {"text": "la warranty è scaduta il mese scorso", "category": "single_word", "en_spans": [[1, 2]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0634", "reviewed": false}
 {"text": "chiedi la warranty al negozio", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-24", "id": "R-S1-0635", "reviewed": false}
+{"text": "lo standup meeting dura venti minuti", "category": "phrase", "en_spans": [[1, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S1-0636", "reviewed": false}
+{"text": "facciamo uno standup call domani", "category": "phrase", "en_spans": [[2, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S1-0637", "reviewed": false}
+{"text": "lo standup di team è alle dieci", "category": "phrase", "en_spans": [[1, 2], [3, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S1-0638", "reviewed": false}
+{"text": "il nostro standup quotidiano salta oggi", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S1-0639", "reviewed": false}
+{"text": "prepariamo lo standup meeting per lunedì", "category": "phrase", "en_spans": [[2, 4]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S1-0640", "reviewed": false}
+{"text": "dopo lo standup scrivo le note", "category": "single_word", "en_spans": [[2, 3]], "generator": "opencode/deepseek-v4.1-flash", "date": "2026-10-30", "id": "R-S1-0641", "reviewed": false}

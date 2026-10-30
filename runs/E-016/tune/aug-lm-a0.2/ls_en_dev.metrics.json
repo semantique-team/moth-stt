@@ -1,0 +1,2053 @@
+{
+  "checkpoint": "runs/E-016/checkpoints/ckpt_best.pt",
+  "set": "ls_en_dev",
+  "n_utterances": 200,
+  "decode": {
+    "method": "beam",
+    "beam_width": 5,
+    "top_k": 8,
+    "hotwords": null,
+    "hotword_terms": 0,
+    "hotword_bonus": 1.0,
+    "hotword_prefix_bonus": 0.0,
+    "lm": "runs/E-008/lm_bpe3_aug.pkl.gz",
+    "lm_weight": 0.2,
+    "limit": 200,
+    "no_speech_guard": false,
+    "guarded": 0
+  },
+  "overall": {
+    "n": 200,
+    "ref_words": 3939,
+    "sub": 676,
+    "del": 167,
+    "ins": 51,
+    "wer": 0.22696115765422697,
+    "insertion_rate": 1.2947448591012947,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": [
+      0.20703784044348036,
+      0.24712221405829046
+    ]
+  },
+  "breakdown": {
+    "speaker": {
+      "5338": {
+        "n": 2,
+        "ref_words": 40,
+        "sub": 16,
+        "del": 3,
+        "ins": 0,
+        "wer": 0.475,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "5694": {
+        "n": 4,
+        "ref_words": 45,
+        "sub": 9,
+        "del": 2,
+        "ins": 0,
+        "wer": 0.24444444444444444,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "1462": {
+        "n": 8,
+        "ref_words": 82,
+        "sub": 11,
+        "del": 2,
+        "ins": 2,
+        "wer": 0.18292682926829268,
+        "insertion_rate": 2.4390243902439024,
+        "eta": null
+      },
+      "3000": {
+        "n": 4,
+        "ref_words": 113,
+        "sub": 13,
+        "del": 2,
+        "ins": 2,
+        "wer": 0.1504424778761062,
+        "insertion_rate": 1.7699115044247788,
+        "eta": null
+      },
+      "6319": {
+        "n": 5,
+        "ref_words": 92,
+        "sub": 9,
+        "del": 3,
+        "ins": 0,
+        "wer": 0.13043478260869565,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "6313": {
+        "n": 5,
+        "ref_words": 65,
+        "sub": 20,
+        "del": 4,
+        "ins": 0,
+        "wer": 0.36923076923076925,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "3536": {
+        "n": 5,
+        "ref_words": 100,
+        "sub": 18,
+        "del": 1,
+        "ins": 1,
+        "wer": 0.2,
+        "insertion_rate": 1.0,
+        "eta": null
+      },
+      "6295": {
+        "n": 8,
+        "ref_words": 179,
+        "sub": 21,
+        "del": 3,
+        "ins": 5,
+        "wer": 0.16201117318435754,
+        "insertion_rate": 2.793296089385475,
+        "eta": null
+      },
+      "3853": {
+        "n": 4,
+        "ref_words": 124,
+        "sub": 22,
+        "del": 11,
+        "ins": 5,
+        "wer": 0.3064516129032258,
+        "insertion_rate": 4.032258064516129,
+        "eta": null
+      },
+      "7850": {
+        "n": 8,
+        "ref_words": 97,
+        "sub": 20,
+        "del": 4,
+        "ins": 0,
+        "wer": 0.24742268041237114,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "251": {
+        "n": 5,
+        "ref_words": 81,
+        "sub": 14,
+        "del": 2,
+        "ins": 1,
+        "wer": 0.20987654320987653,
+        "insertion_rate": 1.2345679012345678,
+        "eta": null
+      },
+      "2078": {
+        "n": 3,
+        "ref_words": 54,
+        "sub": 7,
+        "del": 0,
+        "ins": 0,
+        "wer": 0.12962962962962962,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "3081": {
+        "n": 5,
+        "ref_words": 56,
+        "sub": 7,
+        "del": 2,
+        "ins": 0,
+        "wer": 0.16071428571428573,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "1988": {
+        "n": 8,
+        "ref_words": 190,
+        "sub": 36,
+        "del": 10,
+        "ins": 2,
+        "wer": 0.25263157894736843,
+        "insertion_rate": 1.0526315789473684,
+        "eta": null
+      },
+      "8297": {
+        "n": 6,
+        "ref_words": 72,
+        "sub": 11,
+        "del": 7,
+        "ins": 0,
+        "wer": 0.25,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "2902": {
+        "n": 1,
+        "ref_words": 35,
+        "sub": 6,
+        "del": 1,
+        "ins": 1,
+        "wer": 0.22857142857142856,
+        "insertion_rate": 2.857142857142857,
+        "eta": null
+      },
+      "6345": {
+        "n": 6,
+        "ref_words": 173,
+        "sub": 20,
+        "del": 8,
+        "ins": 3,
+        "wer": 0.1791907514450867,
+        "insertion_rate": 1.7341040462427746,
+        "eta": null
+      },
+      "7976": {
+        "n": 8,
+        "ref_words": 126,
+        "sub": 17,
+        "del": 4,
+        "ins": 1,
+        "wer": 0.1746031746031746,
+        "insertion_rate": 0.7936507936507936,
+        "eta": null
+      },
+      "2086": {
+        "n": 3,
+        "ref_words": 149,
+        "sub": 38,
+        "del": 10,
+        "ins": 3,
+        "wer": 0.3422818791946309,
+        "insertion_rate": 2.0134228187919465,
+        "eta": null
+      },
+      "1919": {
+        "n": 7,
+        "ref_words": 143,
+        "sub": 32,
+        "del": 10,
+        "ins": 1,
+        "wer": 0.3006993006993007,
+        "insertion_rate": 0.6993006993006993,
+        "eta": null
+      },
+      "3752": {
+        "n": 6,
+        "ref_words": 48,
+        "sub": 6,
+        "del": 3,
+        "ins": 1,
+        "wer": 0.20833333333333334,
+        "insertion_rate": 2.0833333333333335,
+        "eta": null
+      },
+      "777": {
+        "n": 4,
+        "ref_words": 80,
+        "sub": 15,
+        "del": 2,
+        "ins": 1,
+        "wer": 0.225,
+        "insertion_rate": 1.25,
+        "eta": null
+      },
+      "1993": {
+        "n": 4,
+        "ref_words": 139,
+        "sub": 10,
+        "del": 3,
+        "ins": 0,
+        "wer": 0.09352517985611511,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "5895": {
+        "n": 6,
+        "ref_words": 93,
+        "sub": 11,
+        "del": 0,
+        "ins": 1,
+        "wer": 0.12903225806451613,
+        "insertion_rate": 1.075268817204301,
+        "eta": null
+      },
+      "84": {
+        "n": 5,
+        "ref_words": 99,
+        "sub": 17,
+        "del": 4,
+        "ins": 2,
+        "wer": 0.23232323232323232,
+        "insertion_rate": 2.0202020202020203,
+        "eta": null
+      },
+      "2428": {
+        "n": 6,
+        "ref_words": 82,
+        "sub": 12,
+        "del": 3,
+        "ins": 1,
+        "wer": 0.1951219512195122,
+        "insertion_rate": 1.2195121951219512,
+        "eta": null
+      },
+      "652": {
+        "n": 9,
+        "ref_words": 131,
+        "sub": 27,
+        "del": 4,
+        "ins": 0,
+        "wer": 0.2366412213740458,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "174": {
+        "n": 5,
+        "ref_words": 85,
+        "sub": 14,
+        "del": 5,
+        "ins": 0,
+        "wer": 0.2235294117647059,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "1272": {
+        "n": 4,
+        "ref_words": 110,
+        "sub": 37,
+        "del": 13,
+        "ins": 0,
+        "wer": 0.45454545454545453,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "5536": {
+        "n": 2,
+        "ref_words": 51,
+        "sub": 6,
+        "del": 5,
+        "ins": 1,
+        "wer": 0.23529411764705882,
+        "insertion_rate": 1.9607843137254901,
+        "eta": null
+      },
+      "2803": {
+        "n": 5,
+        "ref_words": 76,
+        "sub": 18,
+        "del": 4,
+        "ins": 4,
+        "wer": 0.34210526315789475,
+        "insertion_rate": 5.2631578947368425,
+        "eta": null
+      },
+      "3576": {
+        "n": 3,
+        "ref_words": 43,
+        "sub": 13,
+        "del": 3,
+        "ins": 0,
+        "wer": 0.37209302325581395,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "2412": {
+        "n": 8,
+        "ref_words": 287,
+        "sub": 38,
+        "del": 15,
+        "ins": 2,
+        "wer": 0.1916376306620209,
+        "insertion_rate": 0.6968641114982579,
+        "eta": null
+      },
+      "6241": {
+        "n": 3,
+        "ref_words": 60,
+        "sub": 23,
+        "del": 1,
+        "ins": 2,
+        "wer": 0.43333333333333335,
+        "insertion_rate": 3.3333333333333335,
+        "eta": null
+      },
+      "3170": {
+        "n": 4,
+        "ref_words": 182,
+        "sub": 26,
+        "del": 7,
+        "ins": 3,
+        "wer": 0.1978021978021978,
+        "insertion_rate": 1.6483516483516483,
+        "eta": null
+      },
+      "2035": {
+        "n": 9,
+        "ref_words": 123,
+        "sub": 20,
+        "del": 2,
+        "ins": 1,
+        "wer": 0.18699186991869918,
+        "insertion_rate": 0.8130081300813008,
+        "eta": null
+      },
+      "8842": {
+        "n": 3,
+        "ref_words": 45,
+        "sub": 5,
+        "del": 1,
+        "ins": 0,
+        "wer": 0.13333333333333333,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "422": {
+        "n": 2,
+        "ref_words": 30,
+        "sub": 5,
+        "del": 0,
+        "ins": 2,
+        "wer": 0.23333333333333334,
+        "insertion_rate": 6.666666666666667,
+        "eta": null
+      },
+      "2277": {
+        "n": 6,
+        "ref_words": 119,
+        "sub": 17,
+        "del": 3,
+        "ins": 1,
+        "wer": 0.17647058823529413,
+        "insertion_rate": 0.8403361344537815,
+        "eta": null
+      },
+      "1673": {
+        "n": 1,
+        "ref_words": 40,
+        "sub": 9,
+        "del": 0,
+        "ins": 2,
+        "wer": 0.275,
+        "insertion_rate": 5.0,
+        "eta": null
+      }
+    },
+    "speaker_group": {
+      "S3+S4": {
+        "n": 200,
+        "ref_words": 3939,
+        "sub": 676,
+        "del": 167,
+        "ins": 51,
+        "wer": 0.22696115765422697,
+        "insertion_rate": 1.2947448591012947,
+        "eta": null
+      }
+    }
+  },
+  "noise": null,
+  "per_utterance": {
+    "ls-5338-284437-0018": {
+      "ref_words": 26,
+      "sub": 14,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5694-64038-0014": {
+      "ref_words": 16,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170145-0021": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3000-15664-0006": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6319-57405-0011": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6313-66125-0024": {
+      "ref_words": 15,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5694-64025-0007": {
+      "ref_words": 10,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3536-23268-0004": {
+      "ref_words": 10,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-64301-0019": {
+      "ref_words": 17,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3853-163249-0022": {
+      "ref_words": 28,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-286674-0008": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-251-118436-0006": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6319-275224-0005": {
+      "ref_words": 37,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2078-142845-0029": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3081-166546-0054": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2078-142845-0031": {
+      "ref_words": 41,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-24833-0010": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8297-275155-0007": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2902-9006-0008": {
+      "ref_words": 35,
+      "sub": 6,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6345-93306-0013": {
+      "ref_words": 48,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-110124-0016": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2086-149220-0003": {
+      "ref_words": 64,
+      "sub": 17,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3536-8226-0001": {
+      "ref_words": 24,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-24833-0026": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0034": {
+      "ref_words": 11,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3752-4943-0009": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-64301-0000": {
+      "ref_words": 41,
+      "sub": 6,
+      "del": 1,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-777-126732-0027": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1993-147149-0005": {
+      "ref_words": 24,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3853-163249-0005": {
+      "ref_words": 33,
+      "sub": 6,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5895-34622-0022": {
+      "ref_words": 27,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3536-8226-0026": {
+      "ref_words": 28,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8297-275154-0005": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-84-121550-0022": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2428-83699-0036": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130737-0012": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-64301-0020": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5895-34629-0033": {
+      "ref_words": 22,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6345-64257-0018": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3000-15664-0012": {
+      "ref_words": 34,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-174-84280-0003": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130726-0032": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1272-141231-0017": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-24833-0004": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5536-43363-0001": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8297-275156-0003": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1272-128104-0004": {
+      "ref_words": 68,
+      "sub": 21,
+      "del": 10,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8297-275154-0009": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6313-66129-0027": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3752-4943-0021": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2803-154328-0021": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3576-138058-0030": {
+      "ref_words": 15,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-174-84280-0005": {
+      "ref_words": 23,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153954-0006": {
+      "ref_words": 32,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-777-126732-0059": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-251-118436-0020": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2803-154320-0014": {
+      "ref_words": 9,
+      "sub": 4,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2078-142845-0042": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130726-0009": {
+      "ref_words": 16,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6241-61943-0020": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-148538-0011": {
+      "ref_words": 25,
+      "sub": 6,
+      "del": 4,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0061": {
+      "ref_words": 44,
+      "sub": 9,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3576-138058-0008": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6319-275224-0018": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6313-66129-0010": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1993-147964-0008": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3170-137482-0045": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130737-0006": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3170-137482-0003": {
+      "ref_words": 56,
+      "sub": 6,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147961-0029": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130726-0027": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3752-4943-0019": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-129742-0019": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2428-83699-0031": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-110124-0021": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130726-0026": {
+      "ref_words": 22,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-73752-0007": {
+      "ref_words": 25,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3081-166546-0079": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6241-61943-0008": {
+      "ref_words": 24,
+      "sub": 7,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-148538-0013": {
+      "ref_words": 36,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-105575-0023": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5338-284437-0017": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3536-8226-0029": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-281318-0000": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2803-154328-0013": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3170-137482-0000": {
+      "ref_words": 67,
+      "sub": 10,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153947-0010": {
+      "ref_words": 57,
+      "sub": 9,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153948-0015": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153948-0004": {
+      "ref_words": 73,
+      "sub": 11,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170142-0034": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8297-275154-0012": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8842-304647-0012": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3000-15664-0011": {
+      "ref_words": 30,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-64301-0018": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0014": {
+      "ref_words": 26,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-148538-0005": {
+      "ref_words": 54,
+      "sub": 11,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-152373-0010": {
+      "ref_words": 20,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2086-149220-0014": {
+      "ref_words": 33,
+      "sub": 7,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170145-0014": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0060": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-129742-0020": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5536-43358-0009": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6345-93302-0010": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3081-166546-0028": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6345-64257-0020": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2803-154320-0001": {
+      "ref_words": 34,
+      "sub": 7,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2428-83705-0037": {
+      "ref_words": 26,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-73752-0016": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5694-64038-0009": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-281318-0017": {
+      "ref_words": 19,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3081-166546-0027": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6241-61946-0003": {
+      "ref_words": 23,
+      "sub": 13,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6313-66129-0023": {
+      "ref_words": 19,
+      "sub": 8,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-84-121550-0025": {
+      "ref_words": 22,
+      "sub": 5,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3853-163249-0019": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-147956-0005": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3576-138058-0026": {
+      "ref_words": 18,
+      "sub": 7,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147960-0007": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6313-66125-0026": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-73752-0005": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-84-121123-0009": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3752-4943-0030": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153954-0003": {
+      "ref_words": 31,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2803-154328-0017": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1272-141231-0026": {
+      "ref_words": 13,
+      "sub": 7,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3081-166546-0010": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147960-0014": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-251-118436-0015": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-422-122949-0024": {
+      "ref_words": 24,
+      "sub": 5,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2277-149896-0028": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5895-34615-0011": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-174-84280-0002": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2086-149220-0001": {
+      "ref_words": 52,
+      "sub": 14,
+      "del": 5,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-251-118436-0008": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1673-143396-0018": {
+      "ref_words": 40,
+      "sub": 9,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-111771-0003": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-84-121123-0025": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6345-93306-0020": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-110124-0017": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0035": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170142-0008": {
+      "ref_words": 15,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147961-0027": {
+      "ref_words": 3,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-84-121123-0028": {
+      "ref_words": 20,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153948-0012": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-110523-0008": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7850-281318-0002": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147961-0008": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1988-148538-0012": {
+      "ref_words": 38,
+      "sub": 7,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-422-122949-0017": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147960-0010": {
+      "ref_words": 32,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170145-0005": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-110523-0005": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170138-0015": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153954-0021": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2412-153947-0014": {
+      "ref_words": 37,
+      "sub": 6,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147961-0025": {
+      "ref_words": 11,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-64301-0029": {
+      "ref_words": 32,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2428-83705-0018": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-174-50561-0018": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170138-0020": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-652-130726-0014": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5895-34615-0009": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8297-275155-0016": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1993-147149-0008": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3000-15664-0010": {
+      "ref_words": 42,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0018": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-251-118436-0016": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1919-142785-0026": {
+      "ref_words": 15,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8842-302196-0012": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3170-137482-0044": {
+      "ref_words": 47,
+      "sub": 9,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3752-4944-0060": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5895-34629-0006": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2277-149897-0033": {
+      "ref_words": 15,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6319-275224-0000": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-244435-0021": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1462-170145-0017": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-105575-0024": {
+      "ref_words": 16,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1993-147149-0006": {
+      "ref_words": 81,
+      "sub": 6,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2428-83699-0015": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3853-163249-0024": {
+      "ref_words": 42,
+      "sub": 8,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-244435-0034": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-777-126732-0068": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2277-149896-0023": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2428-83699-0032": {
+      "ref_words": 11,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-174-50561-0005": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2277-149874-0000": {
+      "ref_words": 51,
+      "sub": 9,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2277-149874-0015": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3752-4944-0028": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6345-93306-0000": {
+      "ref_words": 68,
+      "sub": 8,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2035-147960-0015": {
+      "ref_words": 4,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-7976-105575-0025": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5895-34629-0031": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-2277-149897-0011": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-1272-141231-0014": {
+      "ref_words": 19,
+      "sub": 7,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6295-244435-0039": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-5694-64029-0003": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-777-126732-0066": {
+      "ref_words": 38,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-6319-57405-0000": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-3536-8226-0006": {
+      "ref_words": 28,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "ls-8842-302201-0008": {
+      "ref_words": 17,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    }
+  }
+}
