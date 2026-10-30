@@ -15,6 +15,8 @@ data/*
 models/
 release/
 *.onnx
+# ...except the vendored Silero VAD (MIT, 2.33 MB) that ships with the runtime
+!stt/assets/silero_vad.onnx
 runs/**/ckpt*.pt
 
 # Web
