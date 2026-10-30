@@ -1,0 +1,8 @@
+lm: runs/E-008/lm_bpe3.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-016/checkpoints/ckpt_best.pt (step 24000) on mps
+recorded_t: WER 0.3876 CI [0.36328125, 0.4109880749574106]
+lm: runs/E-008/lm_bpe3.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-014/checkpoints/ckpt_best.pt (step 22494) on mps
+recorded_t: WER 0.5454 CI [0.5213492741246798, 0.5696420871065114]

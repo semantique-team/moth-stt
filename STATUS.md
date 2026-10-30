@@ -151,8 +151,16 @@
   control_it (italiano puro, nessun inglese) passa da 34,7 a **18,1** e i termini **visti** in R-S1
   guadagnano +27,4 contro +11,9 degli **invisibili**: è soprattutto **adattamento alla voce di S1**,
   non apprendimento dei termini. Contro Whisper su T il WER vince (−17,54) ma l'**ETA è tie**
-  (+2,99 [−6,23, +12,29]) → gate misto **non passato**. **E-017 obbligatorio**; check gratuito
-  appena arriva T di S2 (E-016 vs E-014 sulle stesse clip). Artefatti `runs/E-016/`.
+  (+2,99 [−6,23, +12,29]) → gate misto **non passato**. **E-017 obbligatorio**. Artefatti
+  `runs/E-016/`.
+- **T di S2 integrato + check gratuito** (2026-10-30): zip ricevuto (260 wav: 200 T + 60 A,
+  PCM 16 bit mono 48 kHz, 0 warning), copiato in `recordings/audio/S2` e `anchor/S2`, manifest
+  **T a 400 righe** e `A-S2` a 60, cache mel di T ricostruita (400 clip). Sui **200 clip di S2**
+  (speaker mai visto in training): E-016 vs E-014 **WER 51,87 → 42,22** (−9,64 [−12,55, −6,93]) e
+  **ETA 20,68 → 29,75** (+9,07 [+3,97, +14,61]), entrambi significativi. Quindi circa **metà** del
+  guadagno di S1 (−21,6 / +20,0) **trasferisce** a uno speaker nuovo: lo speaker appaiato gonfia
+  il guadagno ~2×, non lo inventa. **Da 2026-10-30 tutti i numeri su T sono a 400 clip**; quelli
+  precedenti sono sui 200 di S1 e non sono confrontabili direttamente.
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e

@@ -875,18 +875,28 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   to S1's voice, room and reading style**, not only vocabulary learning. There is a real
   term-specific component (the extra +15 points on terms present in the gold), but it sits on top
   of a much larger speaker effect.
+- **The free S2 check (2026-10-30)**: S2's 200 T clips arrived; S2 is **not** a training speaker.
+  On those 200 clips E-016 vs E-014: WER **51.87 → 42.22** (−9.64 [−12.55, −6.93]) and ETA
+  **20.68 → 29.75** (+9.07 [+3.97, +14.61]), both significant. So roughly **half** of the S1 gain
+  transfers to a speaker the model never heard (S1: −21.58 WER / +20.00 ETA), and half is
+  speaker-specific. The matched speaker **inflates the gain about 2×, but does not fabricate it**:
+  the gold does teach something that generalises.
 - **Against the ship bars**: on T the WER half looks won — Whisper-tiny forced-`it` beam 5 is
   **−17.54** [−22.50, −12.54] worse — but the ETA half is a **tie**, **+2.99** [−6.23, +12.29].
   The mixed gate does **not** pass even before the speaker caveat. On FLEURS-IT the bar is still a
   tie (26.98 vs 27.42), unchanged from E-014.
-- **Result**: **E-016 is not a shippable gain and not the new Moth.** It is the cleanest
-  demonstration in the project that a test set recorded by the training speaker can fabricate a
-  +20-point ETA. The gold did teach something (seen vs unseen terms, and the 18 missing terms now
-  exist in the model's acoustic experience), but the effect that dominates T is the speaker.
-- **Conclusion**: **E-017 is now mandatory**, not optional: train on S1+S2 gold and evaluate on a
-  held-out S3. Before that, one free check is available as soon as S2 delivers T: score **E-016
-  and E-014 on the same T-S2 clips** — S2 is not a training speaker, so if the gain evaporates
-  there the adaptation reading is confirmed without any new training.
+- **Result**: **E-016 is the best Moth so far on every speaker we can measure**, with a caveat
+  that is now quantified instead of assumed: on the training speaker the gain is −21.6 WER / +20.0
+  ETA, on a new speaker (S2) it is −9.6 / +9.1, both significant, and FLEURS/CV are ties. The
+  matched speaker doubles the apparent gain; it does not create it. The mixed ship gate still
+  cannot be claimed: it needs the baselines re-run on S2's clips and the held-out S3 (E-017).
+- **Conclusion**: **E-017 is now mandatory** and better motivated: with S2 as a second training
+  speaker and **S3 held out**, the same measurement separates "adapts to the speaker" from "learns
+  the terms" on a speaker that never entered training at all. Next steps, in order: (1) re-run
+  Whisper/Whistle/Parakeet on S2's 200 clips to get a fair gate on a non-training speaker;
+  (2) finish R-S2 (script 344/600) and record it; (3) E-017 on S1+S2, evaluated on S3. Note that
+  **T now has 400 rows (S1+S2)**: every number measured before 2026-10-30 is on the 200 S1 clips
+  and is not directly comparable to the new 400-clip numbers.
 - **Artifacts**: `runs/E-016/config.yaml`, `train.log.jsonl` (git SHA 45ad463), `eval.sh`,
   `eval/{greedy,beam-lm,noise-*}/*.metrics.json`, `prepare_gold_oversample.py`; gold manifest
   `recordings/manifests/R-S1.jsonl` (committed), mel shards `data/shards/R-S1` and

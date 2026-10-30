@@ -38,3 +38,6 @@ recordings/cues/
 .DS_Store
 .idea/
 .vscode/
+
+# Incoming external recordings (personal data: archivi e staging, mai in git)
+recordings/incoming/

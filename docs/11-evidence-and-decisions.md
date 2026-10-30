@@ -77,6 +77,12 @@ The test speaker was a training speaker. **Never report a mixed-set gain measure
 that contributed training audio**, and keep a no-English control in the test set: it is what made
 the confound visible.
 
+The follow-up measured the size of the confound: S2's 200 T clips (S2 never contributed training
+audio) moved **51.87 → 42.22 WER** and **20.68 → 29.75 ETA** under E-016, both significant. The
+matched speaker roughly **doubles** the apparent gain (S1: −21.6 / +20.0) but does not create it.
+The rule stands — report the matched-speaker number and the unseen-speaker number side by side,
+never one alone.
+
 Not tested (do not claim either way): distillation from Whistle/Parakeet, gold code-switch data
 (H3a), noise augmentation with empty targets, word-level splicing, InterCTC/CR-CTC.
 
