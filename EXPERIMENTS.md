@@ -929,3 +929,32 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > - **Not re-measured**: full T-set browser-vs-Python parity (E-010 did it for the E-006 int8
 >   graph; here int8 quality is measured in Python on 100 FLEURS-IT clips). `release/` is
 >   gitignored — it is reproducible with the two commands above.
+
+> **Addendum (2026-10-30) — the LM did not know the gold's vocabulary.**
+> Found by trying the demo: `stand-up meeting` came out as `st meeting`. Diagnosed in three steps.
+> (1) `standup` never appears in the E-008 LM text (CV/MLS/LS transcripts: 0 occurrences), and the
+> LM preferred the wrong hypothesis by **+15.9 log-prob**. (2) E-016 does learn the term in the
+> context it saw: on T-0247 (`il daily standup è alle nove`) E-014 produced `il balis st up elen` and
+> E-016 `il baily standup èlena`; standalone (T-0032) it is still wrong. (3) The term is three BPE
+> pieces against one for `st`, so even a fair prior cannot always win.
+> **Fix**: `runs/E-008/build_lm_augmented.py` rebuilds the same trigram LM adding the **training-side**
+> mixed scripts (R-S1, R-S2, pool) to the transcripts; T and A are never read, so no leakage. Same
+> pruner and backoff, **3.55 MB**.
+> **Results** (E-016 checkpoint, beam 5, α = 0.2, paired bootstrap 1,000):
+
+| Set | E-008 LM | augmented LM | Δ |
+|---|---|---|---|
+| T-400 WER | 38.76 | **36.91** | **−1.86** [−2.55, −1.21] |
+| T-400 ETA | 35.03 | **39.10** | **+4.07** [+2.67, +5.61] |
+| T-S2 WER / ETA | 42.22 / 29.75 | **40.49 / 33.43** | −1.73 / +3.68 |
+| FLEURS-IT | 26.98 | 26.90 | −0.08 |
+| FLEURS-EN | 56.22 | 56.23 | +0.01 |
+| CV-IT test | 30.02 | 30.02 | 0.00 |
+| Noise non-music words | 31 | 31 | 0.00 |
+
+> The gain is concentrated where the vocabulary lives (T), and the other sets are unchanged: this is
+> a free win, not a trade. **Adopted**: the release LM binary was rebuilt from the augmented pickle
+> (`runs/E-010/package_browser.py --lm runs/E-008/lm_bpe3_aug.pkl.gz`, 5.12 MB) and the browser table
+> re-measured — 4T **64.3× / 62.5× / 57.3×**, 1T **29.1× / 27.6× / 24.5×** on 5/10/20 s, package
+> **17.11 MB** (v0.3.1). Even with the augmented LM the `standup` case can still lose to `st` in
+> isolation: the structural fix is more acoustic exposure in varied contexts, not a stronger prior.

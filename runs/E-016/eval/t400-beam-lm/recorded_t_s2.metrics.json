@@ -1251,10 +1251,7 @@
         "got": "does"
       }
     ],
-    "wer_ci": [
-      0.3903697334479794,
-      0.4539363484087102
-    ]
+    "wer_ci": null
   },
   "breakdown": null,
   "noise": null,
@@ -2866,7 +2863,7 @@
   "hyp_sha256": "f1bdc3b89edef5a38417e3e5e076876e3c1d69cef0aca052d0e0944731f88637",
   "normalizer": "stt.text.normalize",
   "normalizer_sha256": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07",
-  "git_sha": "30c6ba045d27ccf667b6868551b1c4c31ce23311",
+  "git_sha": "e810bfa2c563cf3f11cde515bf2ee7a87342e92f",
   "config_path": null,
   "extra_hypotheses": 200
 }

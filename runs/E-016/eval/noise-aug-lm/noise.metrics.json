@@ -1,0 +1,44 @@
+{
+  "checkpoint": "runs/E-016/checkpoints/ckpt_best.pt",
+  "set": "noise",
+  "n_utterances": 0,
+  "decode": {
+    "method": "beam",
+    "beam_width": 5,
+    "top_k": 8,
+    "hotwords": null,
+    "hotword_terms": 0,
+    "hotword_bonus": 1.0,
+    "hotword_prefix_bonus": 0.0,
+    "lm": "runs/E-008/lm_bpe3_aug.pkl.gz",
+    "lm_weight": 0.2,
+    "limit": 0,
+    "no_speech_guard": true,
+    "guarded": 120
+  },
+  "overall": {
+    "n": 0,
+    "ref_words": 0,
+    "sub": 0,
+    "del": 0,
+    "ins": 0,
+    "wer": 0.0,
+    "insertion_rate": 0.0,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": null
+  },
+  "breakdown": {},
+  "noise": {
+    "clips": 360,
+    "total_words": 173,
+    "non_empty_clips": 61,
+    "non_music_clips": 240,
+    "non_music_words": 31,
+    "non_music_non_empty_clips": 20,
+    "music_clips": 120,
+    "music_words": 142,
+    "music_non_empty_clips": 41
+  },
+  "per_utterance": {}
+}

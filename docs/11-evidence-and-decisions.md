@@ -157,6 +157,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Headline WER/ETA per set | `runs/E-0NN/eval/*/*.metrics.json` (+ `.hyp.jsonl`) | `runs/E-0NN/eval.sh` (E-014) or `runs/E-005/eval_sets.py` |
 | Paired differences and CIs | `*.vs-*.json` next to the metrics | `uv run python -m stt.eval --vs ...` |
 | Noise / silence behaviour | `runs/E-011/{moth-*,guard-*}/noise.metrics.json` | `runs/E-005/eval_sets.py --sets noise --no-speech-guard` |
+| LM value of the gold vocabulary | `runs/E-008/lm_bpe3_aug.pkl.gz`, `runs/E-016/eval/t400-aug-lm/` | `runs/E-008/build_lm_augmented.py`, then decode with `--lm` |
 | Browser RTFx and parity | `runs/E-009/rtfx.json`, `runs/E-010/browser_t200.json` | `web/` Playwright suite, `runs/E-010/package_browser.py` |
 | Release rebuild with E-016 (v0.3.0) | `runs/E-016/export.json`, addendum in `EXPERIMENTS.md` | `stt/export.py --checkpoint runs/E-016/checkpoints/ckpt_best.pt --head-blocks 2`, then `runs/E-010/package_browser.py` |
 | Tokenizer statistics | `data/manifests/build_report.json` (`tokenizer`) | `uv run python -m stt.data.build_tokenizer ...` |

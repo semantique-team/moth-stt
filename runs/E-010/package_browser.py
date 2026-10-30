@@ -6,6 +6,7 @@ binary LM and the patched config are covered by ``runs/E-010/``.
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -18,12 +19,16 @@ LM_BINARY = Path("release/lm_bpe3.bin")
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Package the LM and decode settings into release/")
+    parser.add_argument("--lm", default=str(LM_PICKLE), help="BPETrigramLM pickle to package")
+    args = parser.parse_args()
+    lm_pickle = Path(args.lm)
     config_path = RELEASE / "config.json"
     config = json.loads(config_path.read_text(encoding="utf-8"))
     if not (RELEASE / "model.int8.onnx").exists():
         raise SystemExit("release/model.int8.onnx missing: run stt/export.py first")
 
-    lm = BPETrigramLM.load(LM_PICKLE)
+    lm = BPETrigramLM.load(lm_pickle)
     lm.save_browser(LM_BINARY)
     config["decode"] = {
         "default": "beam",

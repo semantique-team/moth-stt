@@ -171,6 +171,14 @@
   +5%), **5,46e-4 su 20 clip reali** con top-1 100% → release costruita con `--no-verify` e
   deviazione documentata (addendum E-016), da decidere se indagare. Non rimisurata la parità
   browser-vs-Python sull'intero T (E-010 l'aveva fatta per E-006). Artefatti `runs/E-016/export.json`.
+- **LM aumentato + release 0.3.1** (2026-10-30): la demo ha rivelato che il LM non conosceva i
+  termini (`standup` → `st meeting`; 0 occorrenze nel testo LM, +15,9 log-prob a favore di `st`).
+  `runs/E-008/build_lm_augmented.py` aggiunge al LM i testi **di training** (R-S1, R-S2, pool; mai
+  T/A): **T-400 38,76 → 36,91 WER** (−1,86 [−2,55, −1,21]) e **ETA 35,03 → 39,10** (+4,07
+  [+2,67, +5,61]); T-S2 42,22/29,75 → **40,49/33,43**; FLEURS/CV/noise invariati. Adottato:
+  release **17,11 MB** (v0.3.1) con LM 5,12 MB, browser 4T **64,3× / 62,5× / 57,3×**, 1T **29,1× /
+  27,6× / 24,5×**. Il caso `standup` isolato può ancora perdere contro `st` (3 pezzi BPE vs 1): serve
+  più esposizione acustica in contesti vari.
 - **No-speech guard fatto** (2026-10-24, addendum E-011): `stt/no_speech.py` + `isNoSpeech` in
   `web/mel.js`, soglia **−1.0** calibrata sui shard (silenzio **−1.50** piatto, clip di parlato più
   debole **+0.10**, MUSAN noise +0.64). Ferma **120/120** clip di silenzio in entrambi i path e
