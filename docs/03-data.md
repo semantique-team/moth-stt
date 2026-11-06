@@ -135,6 +135,9 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 
 - 20 min digital silence, 20 min room tone (own recordings, including fan/keyboard), 20 min permissively licensed
   noise and music (license verified before use). Cut into 10 s clips.
+  **Built (2026-11-06)**: silence 120 clips, MUSAN noise 120, **room tone 97 (16.2 min — the capture
+  stopped early)**, music 120; non-music **337 clips = 56.2 min** instead of 60. The room-tone file
+  has 0 speech windows, so it is clean non-speech.
   MUSAN (OpenSLR 17) is **CC-BY 4.0** (verified 2026-10-23); only its `noise` and `music` subsets are used.
   Builder: `stt/data/build_noise.py` → `data/manifests/noise.jsonl` and `data/raw/noise/`.
 - Reported separately: **non-music noise/silence** (hard bar: zero words) and **music** (reported, not gated — the

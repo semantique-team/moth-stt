@@ -752,6 +752,13 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > **Risks**: far-field or very quiet speech below a 0.10 fraction would be rejected (none in T or
 > FLEURS, but not measured in the wild); music is still not gated by contract; the threshold was
 > chosen on separability, not tuned on T.
+>
+> **Room-tone update (2026-11-06)**: the non-music set now includes **97 clips (16.2 min) of the
+> author's own room** — no voice, 0 speech windows, −69.8 dBFS median. The VAD gates **97/97**,
+> so the guard is shown to work on real low-level room noise and not only on synthetic MUSAN. The
+> recording was 974.8 s instead of 1,200 s (capture stopped early), so non-music is **337 clips =
+> 56.2 min**, not the 60 planned. 0 non-music words with both decoders
+> (`runs/E-011/vad-noise-room-tone-{greedy,beam-lm}/`).
 
 - **Artifacts**: `runs/E-011/{moth-greedy,moth-beam-lm,guard-greedy,guard-beam-lm,guard-speech}/`, `data/manifests/noise.jsonl`, `data/manifests/noise_report.json`, `stt/data/build_noise.py`. Committed 2026-10-24 (commit c459641) with the code at ~72cf112; no git SHA was recorded in the metrics.
 
@@ -1058,3 +1065,23 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > to record it (600 takes, ~4 h), then the E-016 recipe is repeated on S1+S2 gold and evaluated on
 > S3. Artifacts: `runs/E-017/` (speaker manifests, S3 metrics + paired diffs, baselines, `vad_speakers.json`),
 > `runs/E-016/eval/t600-*`, `runs/E-014/eval/t600-*`; reproduce with `runs/E-017/zero_shot_s3.sh`.
+
+> **Addendum (2026-11-06) — room tone recorded; the non-music set is now 56 min and all gated.**
+> The last piece of E-011 follow-up (4): 16.2 min of the author's own room (fan, keyboard, monitor;
+> no voice, no music), 16 kHz mono, −65.7 dBFS mean / −22.3 dBFS peak. It was recorded as
+> **974.8 s instead of 1,200 s** (the capture stopped early), so the set gains **97 clips = 16.2 min**
+> and non-music reaches **337 clips / 56.2 min**, not the 60 planned; music stays 120 clips.
+> Checked before use: **0** speech windows (max window probability 0.42), so it is clean non-speech.
+>
+> | Path | Guard | Non-music words | Clips gated | Music words |
+> |---|---|---|---|---|
+> | E-016 greedy | VAD | **0** | 444/457 | 154 |
+> | E-016 beam 5 + LM 0.2 | VAD | **0** | 444/457 | 98 |
+>
+> **Room tone: 97/97 gated** (fraction 0.000 on every clip). The 13 clips that pass the guard are
+> all music, which is reported and never gated by contract. So the VAD handles **real** low-level
+> room noise, not just synthetic MUSAN: this is the evidence the D25 table was missing.
+> Artifacts: `data/manifests/noise.jsonl` (457 rows), `noise_report.json`, `data/shards/noise`
+> (1.27 h, 0 errors), `runs/E-011/vad-noise-room-tone-{greedy,beam-lm}/`. Reproduce with
+> `uv run python -m stt.data.build_noise --room-tone data/raw/room_tone.wav --categories room_tone
+> --minutes-per-category 16.2`, then `build_mel`, then `runs/E-005/eval_sets.py --sets noise --vad-guard`.

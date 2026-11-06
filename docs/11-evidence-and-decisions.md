@@ -146,11 +146,14 @@ best variant; those entries are annotated, not rewritten, so the history of the 
   T, being ours and unrecorded by others, is the cleaner comparison — it is also the harder one.
 - **Coverage gaps in the baseline matrix.** Whisper on CV-IT test was never run (informational, the
   gate uses CV dev); Whistle's CV-IT row exists, Moth's CV-IT dev/test exists.
-- **The noise set is 40 min of non-music, not 60**: room tone (20 min) is not recorded. Music is
-  reported, never gated. Since D25 the Silero VAD gates **all** 240 non-music clips (0 words) and
-  89% of the music clips; the gate is measured on synthetic MUSAN noise, not on real far-field
-  noise. On T-600 the weakest speech clip is **0.194** (`T-0033`, S3) — 1.9× the 0.10 gate, not the
-  4× of S1/S2/FLEURS — so a very quiet or reverberant speaker could still fall under it.
+- **The noise set is 56 min of non-music, not 60**: room tone is **16.2 min**, not 20 — the
+  recording stopped early (974.8 s of 1,200 s). The 97 room-tone clips are real room audio
+  (−69.8 dBFS median, 0 speech windows, max window probability 0.42) and the VAD gates **97/97**.
+  Music is reported, never gated. Since D25 the Silero VAD gates **all** 337 non-music clips
+  (0 words) and 89% of the music clips; the gate is measured on synthetic MUSAN noise plus one own
+  room, not on real far-field noise. On T-600 the weakest speech clip is **0.194** (`T-0033`, S3)
+  — 1.9× the 0.10 gate, not the 4× of S1/S2/FLEURS — so a very quiet or reverberant speaker could
+  still fall under it.
 - **int8 was gated on ARM64 only.** On x86_64 the same int8 file deviates ~40× more (E-003
   addendum), so the int8 quality gate on the target platform is still open.
 - **ETA depends on a curated term list** (580 terms in `data/en_terms.txt`); T has hand-annotated

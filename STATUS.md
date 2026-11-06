@@ -241,7 +241,7 @@ noise augmentation.
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **Noise: risolto (VAD, 0 parole)** — Silero VAD in 0.4.0: 0/240 clip non-music con entrambi i decoder, 0 clip gated su T-400/FLEURS (addendum E-011). **E-016 su T-600: 38,50 WER / 36,05 ETA** (E-014 53,50/20,33); su S3, held-out e mai in training, **E-016 41,57/30,42** vs E-014 54,77/17,75 (**−13,20 WER, +12,68 ETA**, entrambi significativi): il guadagno gold trasferisce a un secondo speaker (caveat: S3 stesso Mac/mic di S1). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −4,94 [−10,40, +0,34] tie, ETA −7,61 [−17,02, +1,86] tie** → non passato; contro Whisper auto vince entrambi; Whistle resta avanti. **E-017** (training su gold S1+S2, eval su S3) richiede **R-S2 registrato**: ora è solo script. **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script): E-016 gold l'ha mossa, la distillazione (E-015) resta l'altra strada. **FLEURS-IT: tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]), il gate chiede una CI tutta sotto 0. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: R-S2 → E-017, poi distillazione o re-scope | decisione |
+| H2 gate | **Noise: risolto (VAD, 0 parole)** — Silero VAD in 0.4.0: **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder, 0 clip gated su T-400/FLEURS (addendum E-011). **E-016 su T-600: 38,50 WER / 36,05 ETA** (E-014 53,50/20,33); su S3, held-out e mai in training, **E-016 41,57/30,42** vs E-014 54,77/17,75 (**−13,20 WER, +12,68 ETA**, entrambi significativi): il guadagno gold trasferisce a un secondo speaker (caveat: S3 stesso Mac/mic di S1). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −4,94 [−10,40, +0,34] tie, ETA −7,61 [−17,02, +1,86] tie** → non passato; contro Whisper auto vince entrambi; Whistle resta avanti. **E-017** (training su gold S1+S2, eval su S3) richiede **R-S2 registrato**: ora è solo script. **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script): E-016 gold l'ha mossa, la distillazione (E-015) resta l'altra strada. **FLEURS-IT: tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]), il gate chiede una CI tutta sotto 0. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: R-S2 → E-017, poi distillazione o re-scope | decisione |
 | M6 | H3b fatto e respinto (E-014); **H3a (gold): R-S1 completo 641/641, T S1–S3 completi**; da fare: **R-S2 (script 623 pronto, S2 deve registrare)** e **S4** (review delle 200 frasi T + T/A) | registrazioni R-S2/T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
@@ -274,12 +274,11 @@ live sono nei log.
   (`runs/E-015/PLAN.md`) ma **bloccato sulla fonte audio**: gold, audio CC0/BY, o TTS (H3c) — serve
   una decisione di provenienza, non compute. **(3) re-scope** si valuta dopo E-017/E-015.
 - **S1**: completo — T 200/200, A 60/60, **R-S1 641/641**. Non servono altre registrazioni S1.
-- **Room tone (20 min)**: serve per chiudere il noise set a 1 h non-music. Trova il device con
-  `ffmpeg -f avfoundation -list_devices true -i ""`, poi registra con
-  `ffmpeg -f avfoundation -i ":<n>" -t 1200 -ar 16000 -ac 1 data/raw/room_tone.wav`
-  (ventilatore/tastiera inclusi, stanza silenziosa). Poi:
-  `uv run python -m stt.data.build_noise --room-tone data/raw/room_tone.wav --categories room_tone`
-  e ricostruisci gli shard `data/shards/noise` con `build_mel.py`.
+- **Room tone — fatto** (2026-11-06): 16,2 min di stanza reale (ventola, tastiera, monitor; nessuna
+  voce), −65,7 dBFS medi, **0 finestre di parlato** (max P 0,42). Costruite **97 clip** (la cattura
+  si è fermata a 974,8 s invece di 1.200), shard `noise` ricostruiti (**457 clip, 1,27 h**): il
+  non-music passa a **337 clip = 56,2 min**. Col VAD: **0 parole non-music** e **97/97** clip di
+  room tone gated (le 13 non gated sono music). Restano 4 min per arrivare a 1 h, non bloccanti.
 - **S4**: review a mano delle 200 frasi T-0601…T-0800, poi T + anchor. S1–S3 hanno già fatto T e A.
 - **R-S2**: S2 registra `uv run recordings/record.py --speaker S2 --kind R` (script pronto, 623
   frasi); poi manifest, mel cache e oversampling ×50 per E-017.
