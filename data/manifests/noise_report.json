@@ -1,41 +1,23 @@
 {
   "seed": 0,
   "clip_seconds": 10.0,
-  "minutes_per_category": 20.0,
+  "minutes_per_category": 16.2,
   "target_rms_dbfs": null,
-  "musan_dir": "data/raw/musan/extracted/musan",
+  "musan_dir": "data/raw/musan",
   "categories": {
-    "silence": {
-      "clips": 120,
-      "non_silent_clips": 0,
-      "seconds": 1200.0,
-      "rms_dbfs_min": null,
-      "rms_dbfs_median": null,
-      "rms_dbfs_max": null,
-      "source_files": 0
-    },
-    "noise": {
-      "clips": 120,
-      "non_silent_clips": 120,
-      "seconds": 1200.0,
-      "rms_dbfs_min": -50.7,
-      "rms_dbfs_median": -20.6,
-      "rms_dbfs_max": -6.6,
-      "source_files": 930
-    },
-    "music": {
-      "clips": 120,
-      "non_silent_clips": 120,
-      "seconds": 1200.0,
-      "rms_dbfs_min": -30.2,
-      "rms_dbfs_median": -15.9,
-      "rms_dbfs_max": -8.2,
-      "source_files": 660
+    "room_tone": {
+      "clips": 97,
+      "non_silent_clips": 97,
+      "seconds": 970.0,
+      "rms_dbfs_min": -73.1,
+      "rms_dbfs_median": -69.8,
+      "rms_dbfs_max": -63.0,
+      "source_files": 1
     }
   },
-  "total_clips": 360,
-  "total_seconds": 3600.0,
-  "total_minutes": 60.0,
+  "total_clips": 457,
+  "total_seconds": 4570.0,
+  "total_minutes": 76.2,
   "manifest": "data/manifests/noise.jsonl",
   "audio_root": "data/raw/noise"
 }
