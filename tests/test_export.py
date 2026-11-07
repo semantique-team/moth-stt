@@ -172,3 +172,11 @@ def test_notice_skips_unverified_licenses() -> None:
     notice = build_notice()
     assert "Mozilla Common Voice" in notice
     assert "verify before use" not in notice
+
+
+def test_notice_lists_each_dataset_once() -> None:
+    """FLEURS is two registry entries (IT and EN) but one dataset: one attribution line."""
+    lines = [line for line in build_notice().splitlines() if line.startswith("- ")]
+    assert len(lines) == len(set(lines))
+    assert sum(1 for line in lines if "FLEURS" in line) == 1
+    assert sum(1 for line in lines if "MUSAN" in line) == 1

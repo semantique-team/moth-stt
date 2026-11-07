@@ -1,0 +1,123 @@
+{
+  "gate": 0.001,
+  "seconds": [
+    1.0,
+    5.0,
+    10.0,
+    29.0
+  ],
+  "fixtures": {
+    "synthetic_scale_0.1": {
+      "1s": {
+        "max_abs": 0.0001659393310546875,
+        "top1": 1.0
+      },
+      "5s": {
+        "max_abs": 0.000186920166015625,
+        "top1": 1.0
+      },
+      "10s": {
+        "max_abs": 0.0001983642578125,
+        "top1": 1.0
+      },
+      "29s": {
+        "max_abs": 0.00024318695068359375,
+        "top1": 1.0
+      }
+    },
+    "real_t": {
+      "1s": {
+        "max_abs": 0.0001373291015625,
+        "top1": 1.0,
+        "frames": 131
+      },
+      "5s": {
+        "max_abs": 0.00030517578125,
+        "top1": 1.0,
+        "frames": 480
+      },
+      "10s": {
+        "max_abs": 0.00023651123046875,
+        "top1": 1.0,
+        "frames": 557
+      },
+      "29s": {
+        "max_abs": 0.000164031982421875,
+        "top1": 1.0,
+        "frames": 444
+      }
+    },
+    "synthetic_scale_1.0": {
+      "1s": {
+        "max_abs": 5.245208740234375e-05,
+        "top1": 1.0
+      },
+      "5s": {
+        "max_abs": 6.67572021484375e-05,
+        "top1": 1.0
+      },
+      "10s": {
+        "max_abs": 0.0001373291015625,
+        "top1": 1.0
+      },
+      "29s": {
+        "max_abs": 0.0001068115234375,
+        "top1": 1.0
+      }
+    },
+    "real_t_padded_29s": {
+      "max_abs": 0.00022125244140625,
+      "top1": 1.0
+    }
+  },
+  "real_clip_ids": {
+    "1s": "T-0304",
+    "5s": "T-0021",
+    "10s": "T-0019",
+    "29s": "T-0011"
+  },
+  "seed_sweep": {
+    "1s": {
+      "median": 0.00016880035400390625,
+      "max": 0.0006389617919921875,
+      "over_gate": 0,
+      "draws": 20
+    },
+    "5s": {
+      "median": 0.0001850128173828125,
+      "max": 0.0009326934814453125,
+      "over_gate": 0,
+      "draws": 20
+    },
+    "10s": {
+      "median": 0.00014972686767578125,
+      "max": 0.000213623046875,
+      "over_gate": 0,
+      "draws": 20
+    },
+    "29s": {
+      "median": 0.00023794174194335938,
+      "max": 0.00128173828125,
+      "over_gate": 1,
+      "draws": 20
+    }
+  },
+  "worst": {
+    "synthetic_scale_0.1": 0.00024318695068359375,
+    "real_t": 0.00030517578125,
+    "synthetic_scale_1.0": 0.0001373291015625,
+    "real_t_padded_29s": 1.0
+  },
+  "verdict": {
+    "gate_fixture_max": 0.00024318695068359375,
+    "gate_fixture_fails_at_seed_0": false,
+    "real_audio_fails": false,
+    "seed_failures": {
+      "1s": 0,
+      "5s": 0,
+      "10s": 0,
+      "29s": 1
+    },
+    "diagnosis": "the gate is a single draw of a random input: the typical gap is ~2e-4 and only the 29 s length occasionally crosses 1e-3, at a rate of a few percent. It is a fixture variance problem, not an export bug; real speech is well under the gate."
+  }
+}

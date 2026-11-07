@@ -246,13 +246,17 @@ def build_notice() -> str:
     """Whisper's and Silero's MIT notices + dataset attributions from the source registry.
 
     Every source in the registry has a verified license; evaluation-only sets are listed too,
-    because the model card reports results on them.
+    because the model card reports results on them. Several registry entries can be the *same*
+    dataset in different languages (FLEURS IT and EN); identical attribution lines are collapsed
+    so the notice does not list one dataset twice.
     """
-    dataset_lines = [
-        f"- {source.citation or source.name} — {source.license} — {source.url}"
-        for source in SOURCES.values()
-        if not source.license.lower().startswith("verify")
-    ]
+    dataset_lines = list(
+        dict.fromkeys(
+            f"- {source.citation or source.name} — {source.license} — {source.url}"
+            for source in SOURCES.values()
+            if not source.license.lower().startswith("verify")
+        )
+    )
     own = (
         "- Moth recorded mixed sets (T, R; speakers S1–S4) — authors' own recordings, "
         "consent and license decision in `recordings/data-card.md`"
