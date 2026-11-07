@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 .venv/
 .venv-baselines/
+.venv-whistle/
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
