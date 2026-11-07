@@ -1204,3 +1204,42 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > `runs/E-017/release-0.5.0.json`. `release/` is gitignored: rebuild with
 > `stt/export.py --checkpoint runs/E-017/checkpoints/ckpt_best.pt --vocab release/vocab.json
 > --version 0.5.0 --no-verify`, then `runs/E-010/package_browser.py`.
+
+## E-019 — Whistle LoRA probe, a second model "less ours" (2026-11-07)
+
+- **Date**: 2026-11-07 (training 22 min on CPU; 216 steps).
+- **Hypothesis**: the 50 min of gold that moved Moth on a held-out speaker (E-017) should move
+  Cactus Whistle too. If it does, the gold effect is a property of the data and not of our
+  architecture; if it does not, the effect is architecture-bound. Secondary: a new `mix` language
+  code might express intra-clip switching, which our CTC cannot.
+- **Status**: **exploratory side artifact, not Moth** (D28). D5 ("own model, not a fine-tune of
+  Cactus Whistle") is unchanged. Nothing here ships under the Moth name.
+- **Design**: LoRA (rank 16, α 32) on the published `whistle.safetensors`, 3 epochs, batch 16,
+  lr 1e-4, seed 0, `--language it`. Data is **R-S1 + R-S2 only** (1,263 clips, 45.3 min), split
+  90/5/5 seeded and stratified by speaker; **T and A are never read**. Text is the manifest `norm`
+  field, so the one text rule applies. Validation is a gold split, never T.
+- **Environment**: throwaway `.venv-whistle` (cactus-needle 3.2.10; jax 0.12.0.1 on **CPU** — the
+  plan's `cactus-needle[jax]` extra does not exist, the training extra is `train`). The base
+  `.safetensors` for training is **220.6 MB**, downloaded once, outside the repo.
+- **Baseline check**: L0 re-run on T-S3 reproduces E-017 **bit-identically** (200/200 hypotheses,
+  WER 28.3646 / ETA 52.1127), so the JSONL, the audio paths and the loader are right.
+- **Result — killed at L1**:
+  - **T-S3 (primary, held-out speaker)**: WER 28.36 → **30.66**, Δ **+2.30** [−0.68, +5.46] → tie;
+    ETA 52.11 → 47.89, Δ −4.23 [−10.34, +1.86] → tie. **The kill criterion is met.**
+  - Gold test split (the two speakers seen in training) 30.08 → 27.10 (−2.98 [−8.38, +1.88], tie)
+    and ETA +8.25: the adapter **does** adapt to the trained voices.
+  - FLEURS-IT 11.85 → 12.87 (**+1.02** [+0.51, +1.56]), FLEURS-EN 13.35 → 15.65
+    (**+2.30** [+1.16, +3.26]), CV-IT test 17.59 → 20.25 (**+2.66** [+1.74, +3.49]): every
+    out-of-gold set gets **significantly worse**.
+  - Noise with our VAD: **0 non-music words / 337 clips** in both arms (music 217 → 281, apart).
+- **Verdict**: H1 rejected, **H2 rejected in this form** — the gold effect is *not* architecture
+  independent. Moth's CTC gained −6.13 WER on S3 with the same 50 min (D27); Whistle's decoder
+  loses 2.3. 45 min of gold on a 220 MB decoder re-tunes it toward two voices and costs it its
+  generality. H3 (`mix`) and H4 (`--tokens`) were **not run**: the plan forbids them after a kill.
+- **Side observation**: the exported `whistle-lora-L1.cact` is **28.0 MB** vs the 16.92 MB base,
+  so 28.0 + 2.33 MB VAD is **over the 20 MB ceiling** — a second, independent reason not to pursue
+  the arm.
+- **Artifacts**: `runs/E-019/` (`build_jsonl.py`, `config.json`, `data/`, `train_L1.sh`,
+  `train_L1.log`, `RESULT.md`, `l0/`, `l1-s3/`, `gold-test-{base,l1}/`, `{l0,l1}-{sets,cv,noise}/`,
+  `manifests/`). The 6.5 MB adapter and the 28 MB `.cact` are gitignored; every number comes from
+  `stt.eval` with a paired bootstrap (seed 0, 1000 resamples), never from the CLI's own WER.

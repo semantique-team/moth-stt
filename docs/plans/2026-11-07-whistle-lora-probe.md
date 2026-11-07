@@ -1,7 +1,10 @@
 # Plan — E-019: Whistle LoRA probe (a second model, "less ours")
 
-> Written 2026-11-07 at the author's request. **Status: not started. This document is the handoff
-> for a new session; no code has been written for it.**
+> Written 2026-11-07 at the author's request. **Status: DONE 2026-11-07 — killed at L1.**
+> Result: [`runs/E-019/RESULT.md`](../runs/E-019/RESULT.md), `EXPERIMENTS.md` E-019, `docs/11` §3.4.
+> On held-out S3 the LoRA moved Whistle **+2.30 WER** [−0.68, +5.46] (tie); FLEURS-IT/EN and CV-IT
+> all got significantly worse. Only the two trained speakers improved. Steps 6–8 (L2/L3/export
+> docs beyond the probe) were not run: the kill criterion in this document fired.
 >
 > Context: E-017 closed the gap to Whistle to **+3.35 WER** on T-600 (32.77 vs 29.42) and left the
 > ETA gap at −6.42. The next Moth step (E-018, scale the gold with S4) is blocked until S4 records.

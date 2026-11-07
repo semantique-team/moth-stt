@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-11-07** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **257 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-11-07** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **262 test verdi**, `ruff` pulito.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -68,6 +68,23 @@
   ETA −2,82 [−11,65, +6,56] tie** → gate misto ancora non passato, ma il WER è vinto per la prima
   volta su uno speaker held-out. Artefatti `runs/E-017/` (`config.yaml`, `train.log.jsonl`,
   `eval.sh`, `prepare_gold.py` + test, `eval/`, `diffs/`), addendum E-017.
+- **E-019 (sonda Whistle LoRA) — FATTO e CHIUSO (2026-11-07, D28)**: artefatto esplorativo "meno
+  nostro", **non Moth**, D5 invariato. LoRA rank 16 su `whistle.safetensors` (220,6 MB) con i
+  **soli** R-S1+R-S2 (1.263 clip, 45,3 min, split 90/5/5 seed 0 stratificato per speaker; T/A mai
+  letti), 3 epoche = 216 step in **22 min su CPU** (jax 0.12.0.1 senza Metal; il venv usa-e-getta
+  usa l'extra `train`, non `jax` che non esiste). Baseline L0 riverificata: su T-S3 riproduce E-017
+  **bit-identica** (WER 28,3646 / ETA 52,1127). **Esito: kill a L1.** Su **S3**: WER 28,36 → 30,66
+  (**+2,30** [−0,68, +5,46], tie), ETA 52,11 → 47,89 (tie) → criterio di kill soddisfatto. Solo gli
+  speaker in training migliorano (gold test −2,98 WER, +8,25 ETA, tie); **FLEURS-IT +1,02
+  [+0,51, +1,56], FLEURS-EN +2,30 [+1,16, +3,26], CV-IT +2,66 [+1,74, +3,49] — tutti
+  significativamente peggiori**. Noise col VAD: 0 parole non-music in entrambe le braccia. Quindi
+  **H2 (dati, non architettura) è respinta**: lo stesso gold che dà −6,13 WER a Moth su S3 fa
+  perdere 2,3 a Whistle — l'effetto gold è legato all'architettura (`docs/11` §3.4). H3 (`mix`) e
+  H4 (`--tokens`) **non eseguiti**: il piano li vieta dopo il kill. In più l'export `--lora` pesa
+  **28,0 MB** (base 16,92): con il VAD sfonderebbe il tetto da 20 MB. Artefatti `runs/E-019/`
+  (`build_jsonl.py`, `config.json`, `data/`, `train_L1.sh`, `train_L1.log`, `RESULT.md`, eval di
+  L0/L1 su S3, gold-test, FLEURS, CV, noise). Adattatore 6,5 MB e `.cact` 28 MB gitignored.
+  **Whistle LoRA: chiuso, non si prosegue.**
 - **Release 0.5.0 con E-017** (2026-11-07): `release/` ricostruita col checkpoint E-017 —
   int8 **11,91 MB** (sha `fe1afcc2…`) + LM 5,12 + VAD 2,33 = **19,44 MB**. Browser con VAD nel loop:
   **4T 52,2× / 50,8× / 46,3×**, **1T 25,5× / 24,3× / 21,8×** su 5/10/20 s; **6/6 Playwright** verdi.
@@ -264,15 +281,11 @@
 (bloccata sulla decisione di provenienza audio), **4** re-scope, più **E-018** (scalare il gold, non
 ancora nel piano). Trasversali: release con E-017, noise augmentation.
 
-**In attesa di S4 (2026-11-07):** si esegue **E-019**, la sonda Whistle LoRA — artefatto
-esplorativo "meno nostro", **non** Moth e non un cambio di D5. Piano completo, protocollo e criteri
-di kill: [`docs/plans/2026-11-07-whistle-lora-probe.md`](docs/plans/2026-11-07-whistle-lora-probe.md)
-(D28). Da fare in una **sessione nuova**: nella sessione del 2026-11-07 sono stati scritti solo i
-documenti, nessun codice. Verificato a mano quel giorno: `needle whistle finetune` accetta JSONL
-`{audio,text,language}`, `--tokens`, `--lora-rank`, e un codice di lingua nuovo "aggiunge quella
-lingua"; `needle whistle build --lora … --platform wasm` esporta il `.cact`. **JAX non è installato**
-in `.venv-baselines` (serve un venv usa-e-getta). Base `.cact` già in cache
-(`~/.cache/cactus-needle/whistle/2.0.0/whistle.cact`); il `.safetensors` per il training **no**.
+**In attesa di S4 (2026-11-07):** **E-019 è stato eseguito e chiuso** (kill a L1, vedi sopra e
+`docs/11` §3.4); l'attesa di S4 resta aperta. Piano e protocollo:
+[`docs/plans/2026-11-07-whistle-lora-probe.md`](docs/plans/2026-11-07-whistle-lora-probe.md)
+(D28). La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per il criterio
+di kill.
 
 | Task | Cosa | Blocco |
 |---|---|---|
@@ -280,7 +293,7 @@ in `.venv-baselines` (serve un venv usa-e-getta). Base `.cact` già in cache
 | H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-017 è il modello migliore**: T-600 **32,77 WER / 42,86 ETA** (E-016 38,50/36,05; E-014 53,50/20,33), FLEURS-IT **26,52**, FLEURS-EN 55,48, CV 30,36, noise 0 parole. **Su S3, che non ha mai contribuito audio, E-017 vs E-016: WER −6,13 [−8,68, −3,51], ETA +4,79 [+0,51, +9,06]** — lo stesso guadagno degli speaker in training (S1 −4,47, S2 −6,60): il gold **non** è adattamento allo speaker (D27). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −11,07 [−16,28, −5,89] VINTO**, **ETA −2,82 [−11,65, +6,56] tie** → gate misto non passato, ma il WER è vinto per la prima volta su uno speaker held-out; contro Whisper auto vince entrambi; Whistle resta avanti (28,36/52,11). **FLEURS-IT**: 26,52 vs Whisper-tiny auto+beam5 27,42 → −0,89 [−2,08, +0,19] **tie** (era −0,66). **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: **E-018** (più gold: S4 e più frasi) perché il secondo speaker ha valso ~6 punti, oppure E-015 distillazione (bloccata sulla fonte audio), oppure re-scope | decisione |
 | M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). Resta **S4**: review delle 200 frasi T-0601…0800, poi T + A, poi eventuale **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
-| **E-019** | **Sonda Whistle LoRA** (artefatto esplorativo, non Moth): piano in `docs/plans/2026-11-07-whistle-lora-probe.md`, decisione D28. Da eseguire in sessione nuova, solo docs scritte il 2026-11-07 | — (usare l'attesa di S4) |
+| **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
 

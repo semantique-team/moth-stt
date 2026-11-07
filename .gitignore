@@ -19,6 +19,12 @@ release/
 # ...except the vendored Silero VAD (MIT, 2.33 MB) that ships with the runtime
 !stt/assets/silero_vad.onnx
 runs/**/ckpt*.pt
+# E-019: the LoRA adapter (6.5 MB) and the exported .cact (28 MB) are rebuilt by the scripts;
+# the 220.6 MB training checkpoint and the smoke adapters are never committed.
+runs/E-019/*.safetensors
+runs/E-019/*.cact
+runs/E-019/smoke/
+checkpoints/
 
 # Web
 web/node_modules/

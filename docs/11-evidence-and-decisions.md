@@ -43,7 +43,7 @@ each with the evidence that forced it.
 | D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.194 (S3; S1/S2 0.408/0.410, FLEURS-IT 0.419) vs noise max 0.038, silence 0.000; threshold 0.10 gates 100% of non-music and 0% of speech, and the guard takes non-music words **35/31 → 0** (greedy/beam) with T-400 and FLEURS-IT hypotheses bit-identical (`runs/E-011/vad_guard_summary.json`, `runs/E-017/vad_speakers.json`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
 | D26 | 2026-11-07 | **Keep gold instances that fail validation out of the manifest instead of renumbering** (R-S2: 622 of 623) | The builder maps cue→file by position; renaming would shift every later cue. The excluded take is 0.39 s of silence, so nothing is lost; the count is reported | Dropping the whole set, or shifting the cue indices |
 | D27 | 2026-11-07 | **Adopt E-017 as the shipped checkpoint**; gold works and generalises across speakers, but the ETA half of the mixed gate is still not won | E-017 vs E-016 on T-600: WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; on **S3, which never contributed audio**, WER −6.13 [−8.68, −3.51] and ETA +4.79 [+0.51, +9.06] — the same gain as on the two trained speakers (S1 −4.47, S2 −6.60), so it is not speaker adaptation. Gate on S3 vs Whisper forced-`it`: WER −11.07 [−16.28, −5.89] **won**, ETA −2.82 [−11.65, +6.56] **tie** | Keeping E-016 (worse everywhere, and its cross-speaker claim rests on S2 alone); waiting for more gold before adopting |
-| D28 | 2026-11-07 | **Run E-019, a Whistle LoRA probe, as an exploratory side artifact** — explicitly "less ours", never presented as Moth. D5 (own model, not a Whistle fine-tune) is **unchanged** for the Moth deliverable | The wait for S4 (E-018's blocker) is the cheapest window; Whistle leads Moth by +3.35 WER / 6.42 ETA on T-600, and the probe answers two things Moth's CTC cannot: whether a decoder-based code-switch model gains from our gold, and whether a new `mix` language code expresses intra-clip switching. Protocol and kill criteria: `docs/plans/2026-11-07-whistle-lora-probe.md` | Presenting the LoRA as Moth; skipping the probe; running it on T (leakage) |
+| D28 | 2026-11-07 | **Run E-019, a Whistle LoRA probe, as an exploratory side artifact** — explicitly "less ours", never presented as Moth. D5 (own model, not a Whistle fine-tune) is **unchanged** for the Moth deliverable. **Executed the same day: killed at L1** — on held-out S3 +2.30 WER [−0.68, +5.46] (tie), FLEURS-IT/EN and CV-IT all significantly worse; only the two trained speakers improve. H2 (data, not architecture) rejected. H3/H4 not run, per the kill criterion | The wait for S4 (E-018's blocker) is the cheapest window; Whistle leads Moth by +3.35 WER / 6.42 ETA on T-600, and the probe answers two things Moth's CTC cannot: whether a decoder-based code-switch model gains from our gold, and whether a new `mix` language code expresses intra-clip switching. Protocol and kill criteria: `docs/plans/2026-11-07-whistle-lora-probe.md`. Result: `runs/E-019/RESULT.md`, `EXPERIMENTS.md` E-019, §3.4 | Presenting the LoRA as Moth; skipping the probe; running it on T (leakage) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
 
 ## 3. Negative results
@@ -63,6 +63,7 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | Energy guard on silence | E-011 add. | Silence words 240 → 0, noise words 19 (unchanged) | **Replaced by Silero VAD** (D25): 0 non-music words, 0/240 clips | `runs/E-011/guard-*/`, `runs/E-011/vad-*/` |
 | Silero VAD v5 as the guard | E-011 add. | Non-music words 31 → **0** both decoders; 0 gated on T-400 and FLEURS-IT; +2.33 MB | **Kept** (0.4.0) | `runs/E-011/vad-*/`, `runs/E-011/vad_guard_summary.json` |
 | Gold data from two speakers (S1+S2) | E-017 | T-600 38.50 → **32.77** WER, 36.05 → **42.86** ETA; on held-out S3 −6.13 WER / +4.79 ETA, the same as on the trained speakers | **Kept** (best model) | `runs/E-017/eval/`, `runs/E-017/diffs/` |
+| LoRA on Whistle with the same gold | E-019 | On held-out S3 **+2.30 WER** [−0.68, +5.46] (tie, kill); FLEURS-IT +1.02, FLEURS-EN +2.30, CV-IT +2.66 — **all significant worse**; only the two trained speakers improve (−2.98, tie) | **Killed at L1**; H2 (data, not architecture) rejected | `runs/E-019/RESULT.md`, `runs/E-019/l1-s3/` |
 
 ### 3.2 A matched speaker can fabricate a +20-point ETA
 
@@ -119,6 +120,31 @@ not, and gains the most).
 
 Not tested (do not claim either way): distillation from Whistle/Parakeet, gold code-switch data
 (H3a), noise augmentation with empty targets, word-level splicing, InterCTC/CR-CTC.
+
+### 3.4 The gold effect is architecture-bound: a Whistle LoRA loses on the same data
+
+E-019 (2026-11-07) ran the external check the gold result needed: the **same** 45.3 min of gold
+(R-S1 + R-S2, never T) as a LoRA on Cactus Whistle, a 220 MB decoder model that is 3.35 WER
+points *ahead* of Moth on T-600. If the gold effect were a property of the data, it should move
+Whistle the same way it moved Moth. It does not:
+
+| Set | Whistle base | Whistle + LoRA | Δ WER | 95% CI |
+|---|---|---|---|---|
+| **T-S3 (held-out speaker)** | 28.36 | 30.66 | **+2.30** | [−0.68, +5.46] |
+| Gold test (both speakers trained) | 30.08 | 27.10 | −2.98 | [−8.38, +1.88] |
+| FLEURS-IT | 11.85 | 12.87 | **+1.02** | [+0.51, +1.56] |
+| FLEURS-EN | 13.35 | 15.65 | **+2.30** | [+1.16, +3.26] |
+| CV-IT test | 17.59 | 20.25 | **+2.66** | [+1.74, +3.49] |
+
+Where Moth's CTC gained **−6.13 WER** on S3 with the same data (D27), Whistle's decoder **loses
+2.3**, and every out-of-gold set degrades significantly. The adapter does adapt to the two trained
+voices; it buys speaker fit at the cost of the base model's generality. A LoRA on a decoder with
+one language token per clip has no mechanism to keep what it knew.
+
+The secondary questions are therefore unanswered by choice: the plan's kill criterion fired at L1,
+so `mix` (H3) and `--tokens` (H4) were never run. The probe was "less ours" by construction
+(D28); its negative result is the useful part, and it belongs to the paper as a boundary on how
+far the gold claim generalises — **to our architecture**, not to fine-tuning in general.
 
 ### 3.1 Why the ETA does not move: it is vocabulary coverage
 
@@ -215,6 +241,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | S3 zero-shot cross-speaker read (E-017 pre-check) | `runs/E-017/{eval,baselines,manifests}/`, `runs/E-017/vad_speakers.json` | `runs/E-017/zero_shot_s3.sh` |
 | Cross-speaker gold (E-017) | `runs/E-017/{config.yaml,train.log.jsonl,eval/,diffs/}` | `runs/E-017/prepare_gold.py --sets R-S1,R-S2 --factor 50`, then `stt.train --config runs/E-017/config.yaml`, then `runs/E-017/eval.sh` |
 | Noise set (E-011) | `data/manifests/noise_report.json` | `uv run python -m stt.data.build_noise ...` |
+| Whistle LoRA probe (E-019) | `runs/E-019/{RESULT.md,config.json,data/,l0/,l1-s3/,l0-sets/,l1-sets/}` | `uv run python runs/E-019/build_jsonl.py`, then `runs/E-019/train_L1.sh` (throwaway `.venv-whistle`), then `baselines/whistle_needle.py --weights runs/E-019/whistle-lora-L1.cact` |
 
 ## 7. Open questions, in decision order
 
@@ -230,6 +257,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 4. **Noise augmentation with empty targets** (E-011 follow-up 2) — the VAD closes the "no speech
    in, no words out" gate, but noisy *speech* still degrades the transcript; this remains the
    principled fix and is independent of the gate.
-5. **Whistle LoRA probe** (E-019, D28) — exploratory, while S4 is recorded: does a decoder-based
-   code-switch model gain from the same gold, and does a `mix` language code express intra-clip
-   switching? Plan: `docs/plans/2026-11-07-whistle-lora-probe.md`. Never presented as Moth.
+5. **Whistle LoRA probe** (E-019, D28) — **answered and closed**: a decoder-based code-switch
+   model does **not** gain from the same gold (S3 +2.30 WER, tie; FLEURS/CV significantly worse),
+   so the gold effect is architecture-bound (§3.4). `mix` and `--tokens` were never run because
+   the kill criterion fired. Result: `runs/E-019/RESULT.md`. Never presented as Moth.
