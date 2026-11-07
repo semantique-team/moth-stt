@@ -1,0 +1,2410 @@
+T: 600 clips, 1390s audio, RTFx 6.2, 0 errors
+wrote runs/E-017/baselines-t600/whisper-tiny-auto-beam5
+T: 600 clips, 1390s audio, RTFx 8.3, 0 errors
+wrote runs/E-017/baselines-t600/whisper-tiny-it-beam5
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+T: 600 clips, 1390s audio, RTFx 168.7, 0 errors
+wrote runs/E-017/baselines-t600/whistle-it
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+/Users/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/csrc/offline-stream.cc:AcceptWaveformImpl:146 Creating a resampler:
+   in_sample_rate: 48000
+   output_sample_rate: 16000
+
+T: 600 clips, 1390s audio, RTFx 34.1, 0 errors
+wrote runs/E-017/baselines-t600/parakeet-v3
+BASELINES_DONE

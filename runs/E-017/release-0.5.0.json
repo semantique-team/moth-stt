@@ -1,0 +1,148 @@
+{
+  "release": "0.5.0",
+  "date": "2026-11-07",
+  "checkpoint": "runs/E-017/checkpoints/ckpt_best.pt (step 26442)",
+  "lm": "runs/E-008/lm_bpe3_aug.pkl.gz (alpha 0.2)",
+  "package_bytes": 19436178,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "fe1afcc2bb53f8ddcf5e1c9e959673f70099f76a37e38785b42c42a19dc1d482"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5116464,
+      "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    }
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.1
+  },
+  "int8_check": {
+    "clips": 100,
+    "identical_transcripts": 44,
+    "top1_agreement": 0.9972,
+    "max_abs": 8.59,
+    "median_abs": 5.15
+  },
+  "browser_rtfx": [
+    {
+      "threads": 4,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 95.71749997138977,
+      "total_ms_min": 94.45500004291534,
+      "vad_ms_median": 15.047500014305115,
+      "feature_ms_median": 36.9099999666214,
+      "inference_ms_median": 37.99250000715256,
+      "decode_ms_median": 5.2674999833106995,
+      "rtfx_median": 52.23705175641355,
+      "rtfx_inference": 131.60492199930744,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 196.87999999523163,
+      "total_ms_min": 195.97500002384186,
+      "vad_ms_median": 28.647499978542328,
+      "feature_ms_median": 73.16000008583069,
+      "inference_ms_median": 81.93500000238419,
+      "decode_ms_median": 12.859999895095825,
+      "rtfx_median": 50.792360830161506,
+      "rtfx_inference": 122.04796484663471,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 431.71749997138977,
+      "total_ms_min": 429.9449999332428,
+      "vad_ms_median": 56.237499952316284,
+      "feature_ms_median": 146.1675000190735,
+      "inference_ms_median": 194.77249997854233,
+      "decode_ms_median": 34.389999985694885,
+      "rtfx_median": 46.32659088715518,
+      "rtfx_inference": 102.68390045927099,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 196.1600000858307,
+      "total_ms_min": 194.99500000476837,
+      "vad_ms_median": 21.3024999499321,
+      "feature_ms_median": 36.83250004053116,
+      "inference_ms_median": 132.37000000476837,
+      "decode_ms_median": 5.334999978542328,
+      "rtfx_median": 25.489396399939984,
+      "rtfx_inference": 37.77290926811124,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 411.8949999809265,
+      "total_ms_min": 411.1100000143051,
+      "vad_ms_median": 41.527499973773956,
+      "feature_ms_median": 72.81250005960464,
+      "inference_ms_median": 284.647500038147,
+      "decode_ms_median": 12.902499973773956,
+      "rtfx_median": 24.27803202384847,
+      "rtfx_inference": 35.13117100504959,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 919.0449999570847,
+      "total_ms_min": 918.3150000572205,
+      "vad_ms_median": 81.91999995708466,
+      "feature_ms_median": 145.69499999284744,
+      "inference_ms_median": 657.2599999904633,
+      "decode_ms_median": 34.080000042915344,
+      "rtfx_median": 21.76172004736864,
+      "rtfx_inference": 30.42935824527614,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    }
+  ],
+  "t600_baselines": "runs/E-017/baselines-t600/",
+  "package_mb": 19.436
+}
