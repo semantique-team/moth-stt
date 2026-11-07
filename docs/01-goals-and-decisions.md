@@ -59,7 +59,10 @@ Details and links in `09-research-notes.md`.
 
 Also considered and **rejected**:
 
-- *LoRA fine-tune of Whistle* — works, cheap, but not an own model (D5).
+- *LoRA fine-tune of Whistle* — works, cheap, but not an own model (D5). **Revisited 2026-11-07 as
+  D28**: it runs as an *exploratory side artifact* (E-019, plan
+  `docs/plans/2026-11-07-whistle-lora-probe.md`) to learn what a decoder-based code-switch model
+  does with our gold; the Moth deliverable stays an own CTC model.
 - *Fine-tuning Whisper tiny/base end-to-end* — too big (39–74 M) and weak at tiny size; keeps the decoder problems.
 - *Moonshine-style from scratch* — budget.
 - *TTS* — an earlier proposal (a small Italian+English code-switching TTS); **shelved**. It may return as a source of

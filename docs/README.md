@@ -55,6 +55,8 @@ Read in order; each file is self-contained enough to be reviewed alone.
 | [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) | What the project actually decided, rejected and corrected: executed decision log, negative results, self-corrections, threats to validity, reproduction index. |
 | [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Original implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points (historical; not maintained). |
 | [`plans/2026-10-24-post-E014-plan.md`](plans/2026-10-24-post-E014-plan.md) | **Current plan:** gold data first (E-016), distillation pilot (E-015), cross-speaker gold (E-017), then the re-scope decision, with acceptance criteria and time estimates. |
+| [`plans/2026-10-30-vad-guard.md`](plans/2026-10-30-vad-guard.md) | Silero VAD as the no-speech guard (D25, release 0.4.0): implemented, with the measurement table and the invocation trap. |
+| [`plans/2026-11-07-whistle-lora-probe.md`](plans/2026-11-07-whistle-lora-probe.md) | **E-019, not started:** exploratory Whistle LoRA probe (D28) — a second, explicitly "less ours" artifact, never presented as Moth. Protocol, arms, kill criteria. |
 | [`../STATUS.md`](../STATUS.md) | Live state: what is done, what is in progress, what is next. |
 | [`../EXPERIMENTS.md`](../EXPERIMENTS.md) | Experiment log E-000…E-014 with hypothesis, configuration, metrics and conclusion. |
 

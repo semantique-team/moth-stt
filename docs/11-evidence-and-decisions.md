@@ -43,6 +43,7 @@ each with the evidence that forced it.
 | D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.194 (S3; S1/S2 0.408/0.410, FLEURS-IT 0.419) vs noise max 0.038, silence 0.000; threshold 0.10 gates 100% of non-music and 0% of speech, and the guard takes non-music words **35/31 → 0** (greedy/beam) with T-400 and FLEURS-IT hypotheses bit-identical (`runs/E-011/vad_guard_summary.json`, `runs/E-017/vad_speakers.json`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
 | D26 | 2026-11-07 | **Keep gold instances that fail validation out of the manifest instead of renumbering** (R-S2: 622 of 623) | The builder maps cue→file by position; renaming would shift every later cue. The excluded take is 0.39 s of silence, so nothing is lost; the count is reported | Dropping the whole set, or shifting the cue indices |
 | D27 | 2026-11-07 | **Adopt E-017 as the shipped checkpoint**; gold works and generalises across speakers, but the ETA half of the mixed gate is still not won | E-017 vs E-016 on T-600: WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; on **S3, which never contributed audio**, WER −6.13 [−8.68, −3.51] and ETA +4.79 [+0.51, +9.06] — the same gain as on the two trained speakers (S1 −4.47, S2 −6.60), so it is not speaker adaptation. Gate on S3 vs Whisper forced-`it`: WER −11.07 [−16.28, −5.89] **won**, ETA −2.82 [−11.65, +6.56] **tie** | Keeping E-016 (worse everywhere, and its cross-speaker claim rests on S2 alone); waiting for more gold before adopting |
+| D28 | 2026-11-07 | **Run E-019, a Whistle LoRA probe, as an exploratory side artifact** — explicitly "less ours", never presented as Moth. D5 (own model, not a Whistle fine-tune) is **unchanged** for the Moth deliverable | The wait for S4 (E-018's blocker) is the cheapest window; Whistle leads Moth by +3.35 WER / 6.42 ETA on T-600, and the probe answers two things Moth's CTC cannot: whether a decoder-based code-switch model gains from our gold, and whether a new `mix` language code expresses intra-clip switching. Protocol and kill criteria: `docs/plans/2026-11-07-whistle-lora-probe.md` | Presenting the LoRA as Moth; skipping the probe; running it on T (leakage) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
 
 ## 3. Negative results
@@ -220,10 +221,15 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 1. **Distillation from Parakeet (639 MB)** — the teacher gets **78%** of the rare terms right
    against Moth's 5% (§3.1), so the signal exists. Blocked on audio containing those terms:
    `runs/E-015/PLAN.md` lists the three possible sources and the provenance decision each needs.
-2. **Gold code-switch data (H3a)** — the only untested hypothesis, and the plan's original one.
-   Costs recording hours: R-S1 is at 76/600 and T has S1 only.
+2. **Gold code-switch data (H3a)** — the original hypothesis, now **confirmed** by E-017: gold works
+   and generalises across speakers. The open part is **how far it scales** (E-018, blocked on S4's
+   recordings and the review of its 200 sentences).
 3. **Re-scope the mixed gate** — ETA as a secondary metric, "Italian-first with frequent English
-   terms", if 1 and 2 are out of budget.
+   terms", if 1 and 2 are out of budget. Cheaper to decide after E-018: the gap to Whistle is now
+   3.35 WER, not 14.
 4. **Noise augmentation with empty targets** (E-011 follow-up 2) — the VAD closes the "no speech
    in, no words out" gate, but noisy *speech* still degrades the transcript; this remains the
    principled fix and is independent of the gate.
+5. **Whistle LoRA probe** (E-019, D28) — exploratory, while S4 is recorded: does a decoder-based
+   code-switch model gain from the same gold, and does a `mix` language code express intra-clip
+   switching? Plan: `docs/plans/2026-11-07-whistle-lora-probe.md`. Never presented as Moth.

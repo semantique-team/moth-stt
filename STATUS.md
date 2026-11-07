@@ -264,12 +264,23 @@
 (bloccata sulla decisione di provenienza audio), **4** re-scope, più **E-018** (scalare il gold, non
 ancora nel piano). Trasversali: release con E-017, noise augmentation.
 
+**In attesa di S4 (2026-11-07):** si esegue **E-019**, la sonda Whistle LoRA — artefatto
+esplorativo "meno nostro", **non** Moth e non un cambio di D5. Piano completo, protocollo e criteri
+di kill: [`docs/plans/2026-11-07-whistle-lora-probe.md`](docs/plans/2026-11-07-whistle-lora-probe.md)
+(D28). Da fare in una **sessione nuova**: nella sessione del 2026-11-07 sono stati scritti solo i
+documenti, nessun codice. Verificato a mano quel giorno: `needle whistle finetune` accetta JSONL
+`{audio,text,language}`, `--tokens`, `--lora-rank`, e un codice di lingua nuovo "aggiunge quella
+lingua"; `needle whistle build --lora … --platform wasm` esporta il `.cact`. **JAX non è installato**
+in `.venv-baselines` (serve un venv usa-e-getta). Base `.cact` già in cache
+(`~/.cache/cactus-needle/whistle/2.0.0/whistle.cact`); il `.safetensors` per il training **no**.
+
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
 | H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-017 è il modello migliore**: T-600 **32,77 WER / 42,86 ETA** (E-016 38,50/36,05; E-014 53,50/20,33), FLEURS-IT **26,52**, FLEURS-EN 55,48, CV 30,36, noise 0 parole. **Su S3, che non ha mai contribuito audio, E-017 vs E-016: WER −6,13 [−8,68, −3,51], ETA +4,79 [+0,51, +9,06]** — lo stesso guadagno degli speaker in training (S1 −4,47, S2 −6,60): il gold **non** è adattamento allo speaker (D27). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −11,07 [−16,28, −5,89] VINTO**, **ETA −2,82 [−11,65, +6,56] tie** → gate misto non passato, ma il WER è vinto per la prima volta su uno speaker held-out; contro Whisper auto vince entrambi; Whistle resta avanti (28,36/52,11). **FLEURS-IT**: 26,52 vs Whisper-tiny auto+beam5 27,42 → −0,89 [−2,08, +0,19] **tie** (era −0,66). **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: **E-018** (più gold: S4 e più frasi) perché il secondo speaker ha valso ~6 punti, oppure E-015 distillazione (bloccata sulla fonte audio), oppure re-scope | decisione |
 | M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). Resta **S4**: review delle 200 frasi T-0601…0800, poi T + A, poi eventuale **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
+| **E-019** | **Sonda Whistle LoRA** (artefatto esplorativo, non Moth): piano in `docs/plans/2026-11-07-whistle-lora-probe.md`, decisione D28. Da eseguire in sessione nuova, solo docs scritte il 2026-11-07 | — (usare l'attesa di S4) |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
 
