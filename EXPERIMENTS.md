@@ -1173,3 +1173,34 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `data/shards/gold-x50` (gitignored); manifest `recordings/manifests/R-S2.jsonl` (committed).
   Reproduce: `runs/E-017/prepare_gold.py --sets R-S1,R-S2 --factor 50`, then
   `uv run python -m stt.train --config runs/E-017/config.yaml`, then `runs/E-017/eval.sh`.
+
+> **Addendum (2026-11-07) — T-600 baselines and release 0.5.0 with E-017.**
+> The full 600-clip T baselines (Whisper/Whistle/Parakeet) had only ever been run on T-200 (S1) and
+> on the S3 slice; they are now measured on the whole set, which is the number the ship gate needs.
+>
+> | System (T-600) | WER | ETA | vs E-017 (paired) |
+> |---|---|---|---|
+> | **Moth E-017** beam 5 + LM 0.2 | **32.77** | **42.86** | — |
+> | Whisper-tiny auto + beam 5 | 68.86 | 39.50 | WER **−36.10** [−40.76, −31.66], ETA +3.36 [−2.20, +9.36] (tie) |
+> | Whisper-tiny forced `it` + beam 5 | 50.72 | 36.05 | WER **−17.95** [−21.47, −14.88], ETA **+6.81** [+0.85, +12.50] |
+> | Cactus Whistle forced `it` | 29.42 | 49.28 | WER +3.35 [+1.07, +5.60], ETA −6.42 [−11.15, −1.40] |
+> | Parakeet TDT 0.6B v3 int8 | 10.98 | 83.60 | WER +21.79, ETA −40.75 |
+>
+> **The mixed ship gate passes on T-600 against both Whisper variants**: the WER CI lies entirely
+> below 0 and the ETA CI entirely above 0 vs forced-`it` (and WER below 0 with ETA a tie vs auto).
+> Two things to state honestly: (1) on this set 200 of the 600 clips come from **S1 and S2, whose
+> gold is in E-017's training mix**, so the aggregate is optimistic — the honest generalisation
+> number is the S3 slice in the E-017 entry (WER won, ETA tie); (2) against **Whistle** Moth is now
+> within **+3.35 WER** [1.07, 5.60], i.e. significantly behind but by about 3 points rather than the
+> ~14 of E-016. The stretch bar ("within the noise interval of Whistle") is close but not met.
+>
+> **Release 0.5.0** (E-017 checkpoint): int8 11.91 + LM 5.12 + VAD 2.33 + 0.08 = **19.44 MB**
+> (ceiling 20). int8 vs PyTorch on 100 FLEURS-IT clips: **top-1 99.72%**, 44/100 transcripts
+> identical, max logit gap 8.59 (median 5.15) — the int8 gap grew with the E-017 weights, so the
+> per-clip transcript identity rate is lower than E-016's, and the WER cost of int8 was **not**
+> measured end-to-end on T in this step (the E-016 int8 measurement was WER-identical on 100 clips;
+> that is not a substitute). Browser (Playwright, WASM SIMD, VAD in the loop): **4T 52.2× / 50.8× /
+> 46.3×**, **1T 25.5× / 24.3× / 21.8×** on 5/10/20 s; 6/6 tests green; package hashes in
+> `runs/E-017/release-0.5.0.json`. `release/` is gitignored: rebuild with
+> `stt/export.py --checkpoint runs/E-017/checkpoints/ckpt_best.pt --vocab release/vocab.json
+> --version 0.5.0 --no-verify`, then `runs/E-010/package_browser.py`.

@@ -68,6 +68,19 @@
   ETA −2,82 [−11,65, +6,56] tie** → gate misto ancora non passato, ma il WER è vinto per la prima
   volta su uno speaker held-out. Artefatti `runs/E-017/` (`config.yaml`, `train.log.jsonl`,
   `eval.sh`, `prepare_gold.py` + test, `eval/`, `diffs/`), addendum E-017.
+- **Release 0.5.0 con E-017** (2026-11-07): `release/` ricostruita col checkpoint E-017 —
+  int8 **11,91 MB** (sha `fe1afcc2…`) + LM 5,12 + VAD 2,33 = **19,44 MB**. Browser con VAD nel loop:
+  **4T 52,2× / 50,8× / 46,3×**, **1T 25,5× / 24,3× / 21,8×** su 5/10/20 s; **6/6 Playwright** verdi.
+  int8 su 100 FLEURS-IT: top-1 **99,72%**, 44/100 trascrizioni identiche, gap massimo 8,59. Il costo
+  WER dell'int8 **non** è stato rimisurato end-to-end su T (da fare). Record:
+  `runs/E-017/release-0.5.0.json`.
+- **Baseline T-600 complete** (2026-11-07): su tutti i 600 clip, Moth E-017 **32,77/42,86** vs
+  Whisper auto 68,86/39,50, Whisper it 50,72/36,05, **Whistle 29,42/49,28**, Parakeet 10,98/83,60.
+  **Il gate misto passa su T-600 contro entrambe le varianti Whisper** (vs it: WER −17,95
+  [−21,47, −14,88] e ETA +6,81 [+0,85, +12,50]) — ma 400 dei 600 clip sono di speaker in training,
+  quindi il numero onesto di generalizzazione resta la slice S3 (WER vinto, ETA tie). Contro
+  **Whistle** siamo a **+3,35 WER** [1,07, 5,60]: dietro ma di ~3 punti (era ~14). Artefatti
+  `runs/E-017/baselines-t600/`.
 - **Anchor A**: S1, S2 e **S3 60/60** completi (manifest `A-S1/A-S2/A-S3`); manca solo S4.
   `uv run recordings/record.py --speaker S4 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
