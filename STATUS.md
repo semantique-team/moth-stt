@@ -320,10 +320,10 @@
 ## Da fare (prossimi task)
 
 **Piano operativo attuale:** [`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md)
-— fasi 0–4 con dipendenze, criteri di accettazione e stime. Ordine eseguito: **0** registrazioni,
-**1** E-016 gold (S1), **3** E-017 cross-speaker (S1+S2 → S3). Restano **2** E-015 distillazione
-(bloccata sulla decisione di provenienza audio), **4** re-scope, più **E-018** (scalare il gold, non
-ancora nel piano). Trasversali: release con E-017, noise augmentation.
+— riallineato il **2026-11-07**: fasi 1 e 3 chiuse (E-016, E-017), cross-cutting chiuso
+(release 0.5.1, room tone, VAD); restano solo le voci che dipendono da te o da S4 (review,
+decisione E-015, re-scope, E-018). Il piano E-018 è
+[`2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md).
 
 **In attesa di S4 (2026-11-07):** **E-019 chiuso** (kill a L1, `docs/11` §3.4), **E-020/E-021 fatti**
 (misure), **piano E-018 scritto**. L'attesa di S4 resta aperta e ora ha un piano:
