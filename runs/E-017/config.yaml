@@ -1,0 +1,79 @@
+# E-017 — cross-speaker gold: train on S1 + S2 gold, evaluate on S3 (held out).
+#
+# One variable vs E-016: the gold arm now has **two speakers** (R-S1 641 takes + R-S2 622 takes,
+# 50.2 min total, repeated 50x). Everything else is the E-016 recipe: same init (E-014 best),
+# same natural + spliced mix, same continuation LRs, schedule, augmentation and batch shape.
+#
+# Why this is the experiment that matters: E-016 was trained and partly evaluated on S1, so its
+# headline gain was inflated by speaker adaptation (control_it 34.7 -> 18.1). S3 recorded T and A
+# but never R, so it can only ever be a test speaker. A gain on S3 from a model trained on S1+S2
+# cannot be explained by having heard S3.
+#
+# Channel caveat: S1 and S3 recorded on the same Mac and microphone, S2 on an external device.
+# So the training gold spans two channels and the S3 test shares one of them; the S2 test slice
+# (a training speaker here, reported separately) and the external sets bound the confound.
+#
+# Mixture: natural 438 h + spliced 110 h + gold 41.87 h (50 x 50.2 min) = 589.9 h; gold is 7.1%
+# of the audio. Same 50x as E-016 rather than a tuned value: the point is comparability, and a
+# different repetition would confound speaker count with exposure.
+run: E-017
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-014/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  # ≈ 590 h: CV IT 167.8 + MLS IT 169.9 + LS EN 100 + spliced 110 + gold 41.87 (R-S1+R-S2 x50).
+  train:
+    - manifest: data/manifests/cv_it_train.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+    - manifest: data/manifests/spliced_it_en.jsonl
+      shards: data/shards/spliced_it_en
+    - manifest: data/shards/gold-x50/manifest.jsonl
+      shards: data/shards/gold-x50
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  # Same continuation LRs as E-012/E-014/E-016.
+  lr_head: 3.0e-4
+  lr_encoder: 5.0e-5
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 2
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 10
+  keep_last: 3
+  max_nonfinite_steps: 20
+  # Housekeeping only (E-016 memory stall): changes no gradient, no LR, no batch composition.
+  empty_cache_every: 10
+  eval_every_steps: 2000
