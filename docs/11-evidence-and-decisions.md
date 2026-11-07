@@ -41,6 +41,8 @@ each with the evidence that forced it.
 | D22 | 2026-10-23 | **Reject B** (BPE V=4096, 12.76 M) | E-013: terms ≤3 pieces 48.8% → 74.0%, but ETA 20.0 → 20.0, FLEURS-IT +1.9 worse | Adopting it for the shorter sequences |
 | D23 | 2026-10-24 | Add a **no-speech energy guard**, not a VAD; greedy stays the default on unknown input | E-011 addendum: silence words 240 → 0 (120/120 clips), 0/897 speech clips touched | Silero VAD (~2 MB, out of v0.1 scope) |
 | D25 | 2026-10-30 | Adopt **Silero VAD** (MIT, 2.33 MB) as the no-speech guard, replacing the energy guard; package goes to ~19.4 MB | Separability on the full sets: speech fraction min 0.194 (S3; S1/S2 0.408/0.410, FLEURS-IT 0.419) vs noise max 0.038, silence 0.000; threshold 0.10 gates 100% of non-music and 0% of speech, and the guard takes non-music words **35/31 → 0** (greedy/beam) with T-400 and FLEURS-IT hypotheses bit-identical (`runs/E-011/vad_guard_summary.json`, `runs/E-017/vad_speakers.json`) | Noise training with empty targets (would train on the evaluation set without a MUSAN re-download and split), energy/flatness VAD (measured, no separation) |
+| D26 | 2026-11-07 | **Keep gold instances that fail validation out of the manifest instead of renumbering** (R-S2: 622 of 623) | The builder maps cue→file by position; renaming would shift every later cue. The excluded take is 0.39 s of silence, so nothing is lost; the count is reported | Dropping the whole set, or shifting the cue indices |
+| D27 | 2026-11-07 | **Adopt E-017 as the shipped checkpoint**; gold works and generalises across speakers, but the ETA half of the mixed gate is still not won | E-017 vs E-016 on T-600: WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; on **S3, which never contributed audio**, WER −6.13 [−8.68, −3.51] and ETA +4.79 [+0.51, +9.06] — the same gain as on the two trained speakers (S1 −4.47, S2 −6.60), so it is not speaker adaptation. Gate on S3 vs Whisper forced-`it`: WER −11.07 [−16.28, −5.89] **won**, ETA −2.82 [−11.65, +6.56] **tie** | Keeping E-016 (worse everywhere, and its cross-speaker claim rests on S2 alone); waiting for more gold before adopting |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
 
 ## 3. Negative results
@@ -59,6 +61,7 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | IT+EN utterance splicing | E-014 | FLEURS-IT −2.27, FLEURS-EN −0.95, **ETA −0.90 (tie)** | Rejected **as an ETA lever**; kept as quality | `runs/E-014/eval/` |
 | Energy guard on silence | E-011 add. | Silence words 240 → 0, noise words 19 (unchanged) | **Replaced by Silero VAD** (D25): 0 non-music words, 0/240 clips | `runs/E-011/guard-*/`, `runs/E-011/vad-*/` |
 | Silero VAD v5 as the guard | E-011 add. | Non-music words 31 → **0** both decoders; 0 gated on T-400 and FLEURS-IT; +2.33 MB | **Kept** (0.4.0) | `runs/E-011/vad-*/`, `runs/E-011/vad_guard_summary.json` |
+| Gold data from two speakers (S1+S2) | E-017 | T-600 38.50 → **32.77** WER, 36.05 → **42.86** ETA; on held-out S3 −6.13 WER / +4.79 ETA, the same as on the trained speakers | **Kept** (best model) | `runs/E-017/eval/`, `runs/E-017/diffs/` |
 
 ### 3.2 A matched speaker can fabricate a +20-point ETA
 
@@ -90,6 +93,28 @@ its gain may be channel adaptation; S2 (external recorder) is the cleaner speake
 (training on S1+S2 gold, testing on S3) is the one that averages two channels.
 The rule stands — report the matched-speaker number and the unseen-speaker number side by side,
 never one alone.
+
+### 3.3 The confound is retired: a held-out speaker gains as much as the trained ones
+
+E-017 (2026-11-07) trained the same recipe on gold from **two** speakers (S1 + S2, 50.2 min) and
+tested on **S3**, which never contributed audio. Against E-016 (one gold speaker), the paired gains
+with beam+LM were:
+
+| Speaker | Role under E-017 | Δ WER | Δ ETA |
+|---|---|---|---|
+| S1 | trained (matched) | −4.47 [−6.72, −2.41] | +7.16 [+3.26, +11.45] |
+| S2 | trained (matched) | −6.60 [−8.87, −4.33] | +8.50 [+3.84, +13.50] |
+| **S3** | **never trained** | **−6.13** [−8.68, −3.51] | **+4.79** [+0.51, +9.06] |
+
+An unseen speaker improves as much as the seen ones. Whatever the gold teaches, it is not "this
+person's voice": adaptation to a speaker the model never heard is not a mechanism. Note the
+asymmetry is in the *right* direction — S1, with the most gold audio, gains the least, which is
+consistent with the gold teaching vocabulary-and-task rather than speaker traits.
+
+Consequence for how results are reported: the matched-speaker number is still the optimistic one,
+but the held-out number no longer collapses, so the gold claim can be stated without the E-016
+caveat. The remaining confound is **channel**, not speaker (S1 and S3 share a microphone; S2 does
+not, and gains the most).
 
 Not tested (do not claim either way): distillation from Whistle/Parakeet, gold code-switch data
 (H3a), noise augmentation with empty targets, word-level splicing, InterCTC/CR-CTC.
@@ -136,11 +161,15 @@ best variant; those entries are annotated, not rewritten, so the history of the 
   bootstrap intervals: they describe sampling noise over utterances, **not** training variance.
   Seed-to-seed variation is not measured and is likely comparable to some of the smaller deltas
   (E-007's beam gain, E-014's FLEURS-EN gain).
-- **The mixed set T now has three speakers** (S1 + S2 + S3, 600 of the 800 planned sentences,
-  2026-10-30), read in quiet rooms. S4 is unrecorded and its 200 sentences are unreviewed, so the
-  final four-speaker T does not exist yet. S3 recorded on the same Mac/microphone as S1: for S3 the
-  speaker is held out but the channel is not, which is why S2 (external device) is the cleaner
-  cross-speaker estimate.
+- **The mixed set T has three speakers** (S1 + S2 + S3, 600 of the 800 planned sentences,
+  2026-11-06). S4 is unrecorded and its 200 sentences are unreviewed, so the final four-speaker T
+  does not exist yet. **S3 is held out from training** (it recorded only T and A, never R), so it
+  is a valid generalisation test; S1 and S2 contribute gold. S1 and S3 recorded on the same
+  Mac/microphone, so for those two the speaker is held out but the channel is not — the remaining
+  confound after E-017.
+- **Gold is small and repeated.** 50.2 min (R-S1 641 + R-S2 622 takes) repeated ×50 = 41.87 h, i.e.
+  7.1% of the training audio. Each sentence is seen ~100 times over 2 epochs. A different repetition
+  factor would change the result and was not measured.
 - **FLEURS is public.** Whisper and Whistle may have seen it during pretraining; Whisper is trained
   on 680k h of web audio. FLEURS numbers are comparable across systems but not contamination-free.
   T, being ours and unrecorded by others, is the cleaner comparison — it is also the harder one.
@@ -183,6 +212,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Spliced set (E-014) | `data/manifests/spliced_it_en_report.json` | `uv run python -m stt.data.build_spliced --hours 110` |
 | Gold set and its x50 oversampling (E-016) | `recordings/manifests/R-S1.jsonl`, `runs/E-016/prepare_gold_oversample.py` | `build_manifest.py build --kind R --speaker S1`, then `build_mel`, then the prepare script |
 | S3 zero-shot cross-speaker read (E-017 pre-check) | `runs/E-017/{eval,baselines,manifests}/`, `runs/E-017/vad_speakers.json` | `runs/E-017/zero_shot_s3.sh` |
+| Cross-speaker gold (E-017) | `runs/E-017/{config.yaml,train.log.jsonl,eval/,diffs/}` | `runs/E-017/prepare_gold.py --sets R-S1,R-S2 --factor 50`, then `stt.train --config runs/E-017/config.yaml`, then `runs/E-017/eval.sh` |
 | Noise set (E-011) | `data/manifests/noise_report.json` | `uv run python -m stt.data.build_noise ...` |
 
 ## 7. Open questions, in decision order

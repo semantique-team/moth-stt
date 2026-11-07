@@ -1,6 +1,6 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-10-30** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **254 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-11-07** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **257 test verdi**, `ruff` pulito.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -55,6 +55,19 @@
   Oversampling ×50 → `data/shards/R-S1-x50` (32.050 righe, **24,70 h**, indice duplicato, nessuna
   copia extra dell'audio). **E-016 lanciato** (`runs/E-016/`): 572,4 h totali (gold 4,3%),
   2 epoche = 24.478 step; E-016 ha usato i 635 take, poi il set è cresciuto a 641.
+- **R-S2 COMPLETO + E-017** (2026-11-07): S2 ha registrato **623 take** (20,6 min, 48 kHz mono);
+  una è inutilizzabile (`S2_0001`, 0,39 s di silenzio) e **resta fuori dal manifest**: 622 righe,
+  mappatura cue→file intatta (D26). Cache mel `data/shards/R-S2` (0,34 h, 0 errori).
+  **E-017** = ricetta E-016 con gold da **due speaker** (R-S1 641 + R-S2 622, 50,2 min, ×50 = 41,87 h,
+  gold **7,1%** della miscela da 589,54 h): 26.442 step in **3 h 21**, dev macro **30,98%** (migliore
+  del progetto), 0 step non-finiti. Beam+LM: **T-600 32,77 / 42,86** (E-016 38,50/36,05),
+  FLEURS-IT **26,52**, FLEURS-EN **55,48**, CV 30,36, noise **0 parole**. **Su S3, che non ha mai
+  contribuito audio: WER −6,13 [−8,68, −3,51] e ETA +4,79 [+0,51, +9,06] vs E-016 — lo stesso
+  guadagno degli speaker in training (S1 −4,47, S2 −6,60)**: il guadagno gold **non** è adattamento
+  allo speaker (D27). **Gate su S3 vs Whisper it+beam5: WER −11,07 [−16,28, −5,89] vinto,
+  ETA −2,82 [−11,65, +6,56] tie** → gate misto ancora non passato, ma il WER è vinto per la prima
+  volta su uno speaker held-out. Artefatti `runs/E-017/` (`config.yaml`, `train.log.jsonl`,
+  `eval.sh`, `prepare_gold.py` + test, `eval/`, `diffs/`), addendum E-017.
 - **Anchor A**: S1, S2 e **S3 60/60** completi (manifest `A-S1/A-S2/A-S3`); manca solo S4.
   `uv run recordings/record.py --speaker S4 --kind A` (audio in `recordings/audio/anchor/`).
 - **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
@@ -233,16 +246,16 @@
 ## Da fare (prossimi task)
 
 **Piano operativo attuale:** [`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md)
-— fasi 0–4 con dipendenze, criteri di accettazione e stime. Ordine: **0** registrazioni (review 89
-frasi, poi R-S1), **1** E-016 gold, **2** E-015 distillazione (dopo la decisione sulla fonte audio),
-**3** E-017 cross-speaker (S2/S3), **4** re-scope. Trasversali: release con E-014, room tone,
-noise augmentation.
+— fasi 0–4 con dipendenze, criteri di accettazione e stime. Ordine eseguito: **0** registrazioni,
+**1** E-016 gold (S1), **3** E-017 cross-speaker (S1+S2 → S3). Restano **2** E-015 distillazione
+(bloccata sulla decisione di provenienza audio), **4** re-scope, più **E-018** (scalare il gold, non
+ancora nel piano). Trasversali: release con E-017, noise augmentation.
 
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **Noise: risolto (VAD, 0 parole)** — Silero VAD in 0.4.0: **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder, 0 clip gated su T-400/FLEURS (addendum E-011). **E-016 su T-600: 38,50 WER / 36,05 ETA** (E-014 53,50/20,33); su S3, held-out e mai in training, **E-016 41,57/30,42** vs E-014 54,77/17,75 (**−13,20 WER, +12,68 ETA**, entrambi significativi): il guadagno gold trasferisce a un secondo speaker (caveat: S3 stesso Mac/mic di S1). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −4,94 [−10,40, +0,34] tie, ETA −7,61 [−17,02, +1,86] tie** → non passato; contro Whisper auto vince entrambi; Whistle resta avanti. **E-017** (training su gold S1+S2, eval su S3) richiede **R-S2 registrato**: ora è solo script. **Storia:** ETA = copertura lessicale (47/94 termini mai visti, 18 assenti dagli script): E-016 gold l'ha mossa, la distillazione (E-015) resta l'altra strada. **FLEURS-IT: tie** (E-014 26,75 vs Whisper-tiny auto+beam5 27,42; −0,66 [−1,80, +0,47]), il gate chiede una CI tutta sotto 0. **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: R-S2 → E-017, poi distillazione o re-scope | decisione |
-| M6 | H3b fatto e respinto (E-014); **H3a (gold): R-S1 completo 641/641, T S1–S3 completi**; da fare: **R-S2 (script 623 pronto, S2 deve registrare)** e **S4** (review delle 200 frasi T + T/A) | registrazioni R-S2/T-S4 |
+| H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-017 è il modello migliore**: T-600 **32,77 WER / 42,86 ETA** (E-016 38,50/36,05; E-014 53,50/20,33), FLEURS-IT **26,52**, FLEURS-EN 55,48, CV 30,36, noise 0 parole. **Su S3, che non ha mai contribuito audio, E-017 vs E-016: WER −6,13 [−8,68, −3,51], ETA +4,79 [+0,51, +9,06]** — lo stesso guadagno degli speaker in training (S1 −4,47, S2 −6,60): il gold **non** è adattamento allo speaker (D27). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −11,07 [−16,28, −5,89] VINTO**, **ETA −2,82 [−11,65, +6,56] tie** → gate misto non passato, ma il WER è vinto per la prima volta su uno speaker held-out; contro Whisper auto vince entrambi; Whistle resta avanti (28,36/52,11). **FLEURS-IT**: 26,52 vs Whisper-tiny auto+beam5 27,42 → −0,89 [−2,08, +0,19] **tie** (era −0,66). **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: **E-018** (più gold: S4 e più frasi) perché il secondo speaker ha valso ~6 punti, oppure E-015 distillazione (bloccata sulla fonte audio), oppure re-scope | decisione |
+| M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). Resta **S4**: review delle 200 frasi T-0601…0800, poi T + A, poi eventuale **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
@@ -267,12 +280,13 @@ live sono nei log.
 
 ## Serve da te
 
-- **Stato gold (2026-10-31)**: R-S1 **completo 641/641** (manifest, mel e ×50 ricostruiti), R-S2 è
-  **solo script (623 frasi)** e va registrato da S2; E-016 ha già mostrato che il gold muove l'ETA
-  e trasferisce a S2/S3. Il passo che resta per **E-017** è **R-S2 registrato**.
+- **Stato gold (2026-11-07)**: R-S1 **641/641** e R-S2 **622/623** registrati e consumati da **E-017**
+  (gold 50,2 min ×50). Il gold funziona e generalizza: su S3 (mai in training) il guadagno è lo stesso
+  degli speaker in training. **Il prossimo passo è decidere se scalare** (E-018: S4 + più frasi per
+  speaker) — il secondo speaker ha valso ~6 punti WER.
 - **Decisione distillazione (2026-10-24)**: il protocollo Parakeet è pronto
   (`runs/E-015/PLAN.md`) ma **bloccato sulla fonte audio**: gold, audio CC0/BY, o TTS (H3c) — serve
-  una decisione di provenienza, non compute. **(3) re-scope** si valuta dopo E-017/E-015.
+  una decisione di provenienza, non compute. **(3) re-scope** si valuta con i numeri di E-017.
 - **S1**: completo — T 200/200, A 60/60, **R-S1 641/641**. Non servono altre registrazioni S1.
 - **Room tone — fatto** (2026-11-06): 16,2 min di stanza reale (ventola, tastiera, monitor; nessuna
   voce), −65,7 dBFS medi, **0 finestre di parlato** (max P 0,42). Costruite **97 clip** (la cattura
@@ -280,8 +294,10 @@ live sono nei log.
   non-music passa a **337 clip = 56,2 min**. Col VAD: **0 parole non-music** e **97/97** clip di
   room tone gated (le 13 non gated sono music). Restano 4 min per arrivare a 1 h, non bloccanti.
 - **S4**: review a mano delle 200 frasi T-0601…T-0800, poi T + anchor. S1–S3 hanno già fatto T e A.
-- **R-S2**: S2 registra `uv run recordings/record.py --speaker S2 --kind R` (script pronto, 623
-  frasi); poi manifest, mel cache e oversampling ×50 per E-017.
+- **R-S2 — fatto** (2026-11-06): **623 take**, 622 valide (`S2_0001` = 0,39 s di silenzio, escluso;
+  D26). Manifest `recordings/manifests/R-S2.jsonl`, mel `data/shards/R-S2`. Consumato da **E-017**.
+- **T di S2**: già integrato dal 2026-10-30; lo zip di novembre conteneva T e anchor **byte-identici**
+  (verificato via sha256), quindi non è stato sovrascritto nulla.
 - `en_terms.txt` è a 580 voci (target design 1–2k): estendibile quando serve.
 
 ## Note di contesto utili

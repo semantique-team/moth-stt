@@ -1085,3 +1085,91 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 > (1.27 h, 0 errors), `runs/E-011/vad-noise-room-tone-{greedy,beam-lm}/`. Reproduce with
 > `uv run python -m stt.data.build_noise --room-tone data/raw/room_tone.wav --categories room_tone
 > --minutes-per-category 16.2`, then `build_mel`, then `runs/E-005/eval_sets.py --sets noise --vad-guard`.
+
+## E-017 — cross-speaker gold: S1 + S2 trained, S3 held out (2026-11-07)
+
+- **Date**: 2026-11-07 (training 2026-11-06 21:04 → 2026-11-07 00:25, 3 h 21 min).
+- **Hypothesis**: E-016's gain came from S1's gold, and S1 was both a training speaker and (in the
+  prepaper reading) a test speaker, so the confound was speaker adaptation. With gold from **two**
+  speakers and a **third** speaker that never contributes audio, the term-learning component should
+  survive the matched-speaker removal. If the gain on S3 collapses to ~0, the E-016 result was
+  speaker adaptation and the gold hypothesis is dead.
+- **Design**: exactly one variable vs E-016 — the gold arm gains **R-S2**. Everything else is the
+  same recipe: init E-014 best, natural + spliced mix, head 3e-4 / encoder 5e-5, cosine with 500
+  warm-up, 2 epochs, bf16, truncated input, augmentation full, batch 192 s / 32 clips, 50× gold
+  repetition.
+- **Data**: R-S1 **641 takes** (29.6 min) + R-S2 **622 takes** (20.6 min; one of the 623 takes was
+  0.39 s of silence and is excluded). Gold repeated ×50 → **63,150 rows / 41.87 h**. Mixture
+  **589.54 h** (CV IT 167.8 + MLS IT 169.9 + LS EN 100 + spliced 110 + gold 41.87), gold **7.1%**
+  of the audio (E-016: 4.3%). Builder: `runs/E-017/prepare_gold.py` (generalises E-016's
+  single-source script, namespaced shards, 3 tests).
+- **Compute**: 26,442 steps (~3 h 21 min at ~370 audio-s/s median), 0 non-finite steps, peak 6.45 GB,
+  MPS↔CPU parity 4.9e-6. Cost 0 USD.
+- **Dev**: macro **30.98%** (IT 36.29 / EN 25.68) at the final step — the best dev of the project
+  (E-016 31.27 best, 30.90 at step 24k). The curve was still improving at 26k.
+
+| Set (beam 5 + LM α 0.2) | E-014 | E-016 | **E-017** |
+|---|---|---|---|
+| **T-600 WER / ETA** | 53.50 / 20.33 | 38.50 / 36.05 | **32.77 / 42.86** |
+| T S1 (matched) | 55.55 / 22.09 | 33.45 / 44.78 | **28.98 / 51.94** |
+| T S2 (trained) | 50.13 / 21.25 | 40.49 / 33.43 | **33.88 / 41.93** |
+| **T S3 (held out)** | 54.77 / 17.75 | 41.57 / 30.42 | **35.43 / 35.21** |
+| FLEURS-IT | 26.75 | 26.90 | **26.52** |
+| FLEURS-EN | 56.04 | 56.23 | **55.48** |
+| CV-IT test | 30.10 | 30.02 | 30.36 |
+| Noise non-music words | 0 (VAD) | 0 (VAD) | **0 (VAD)** |
+
+- **Paired vs E-016 on T-600** (same manifest, bootstrap 1,000): WER **−5.73** [−7.14, −4.26] and
+  ETA **+6.81** [+4.18, +9.55] with beam+LM; greedy −5.56 [−7.01, −4.20] / +5.56 [+3.08, +8.16].
+  A second gold speaker is worth ~6 points WER on the mixed set.
+- **The key control — per-speaker gain vs E-016** (beam+LM, paired):
+
+| Speaker | Role under E-017 | Δ WER | Δ ETA |
+|---|---|---|---|
+| S1 | training speaker (matched) | −4.47 [−6.72, −2.41] | +7.16 [+3.26, +11.45] |
+| S2 | training speaker (matched) | −6.60 [−8.87, −4.33] | +8.50 [+3.84, +13.50] |
+| **S3** | **never contributed audio** | **−6.13** [−8.68, −3.51] | **+4.79** [+0.51, +9.06] |
+
+  The held-out speaker gains **as much as the matched speakers**. That is the result E-016 could
+  not produce: the improvement is not speaker adaptation, because adaptation to a speaker the model
+  never heard is undefined. S3 even gains more than S1, the speaker with the most gold.
+- **Gate on S3 vs the baselines** (beam+LM, paired): Moth **35.43 / 35.21** vs Whisper-tiny
+  auto+beam5 58.69 / 41.41 (**WER −23.25** [−29.98, −17.20] **won**, ETA −6.20 [−15.96, +4.86] tie);
+  Whisper-tiny forced-`it` beam5 46.51 / 38.03 (**WER −11.07** [−16.28, −5.89] **won**, ETA −2.82
+  [−11.65, +6.56] **tie**); Whistle 28.36 / 52.11 (still ahead); Parakeet 10.82 / 83.94.
+  **For the first time the WER half of the mixed gate is won significantly on a speaker the model
+  never heard**; the ETA half remains a tie, so the mixed gate still does not pass.
+- **FLEURS-IT**: 26.52 vs Whisper-tiny auto+beam5 27.42 → **−0.89** [−2.08, +0.19], **tie** (it was
+  −0.66 [−1.80, +0.47] in E-014). Best Moth number on FLEURS-IT to date, still not a significant win.
+- **Noise**: **0 non-music words** with both decoders, 444/457 clip gated by the VAD (the 13 that
+  pass are music). The room tone is in the set and is gated 97/97.
+- **Findings**:
+  - The gold signal is **real and cross-speaker**, not adaptation: the held-out gain equals the
+    matched-speaker gain. That retires the concern that made E-016 unreadable as a claim.
+  - It also **scales with speakers**: one gold speaker (E-016) gave −13.20 WER on S3 zero-shot;
+    two give −19.34 vs E-014 and −6.13 vs E-016. The second speaker is worth ~6 points, so the
+    remaining question is how much a third and fourth would add (S4 is unrecorded).
+  - **ETA is still the blocker.** Even at 35.21% on S3 against 30.42% for E-016, it remains
+    significantly behind Whistle (52.11) and is a tie vs Whisper. The term-accuracy ceiling is not
+    solved by 20.6 more minutes of gold; it needs either much more term-rich audio (E-015
+    distillation) or a decoder-side change.
+  - **Channel caveat**: S1 and S3 recorded on the same Mac and microphone; S2 on an external
+    device. S3's gain could partly be channel adaptation to the S1/S3 microphone. It is weakened
+    by the fact that S2, on a different device, gains the most (−6.60), but not eliminated. S4 on
+    a different setup would settle it.
+- **Result**: **E-017 is the new best Moth** on every set that matters: T-600 32.77/42.86 (from
+  38.50/36.05), FLEURS-IT 26.52, FLEURS-EN 55.48, CV 30.36 (tie), 0 noise words. The cross-speaker
+  claim now has direct evidence: a speaker that contributed no audio improves as much as the
+  speakers that did.
+- **Conclusion**: gold data works and generalises across speakers; the mixed gate's WER half is now
+  won on a held-out speaker, the ETA half is not. Next, in order: (1) **E-018** — scale the gold
+  (S4, and more sentences per speaker) because the second speaker was worth 6 points; (2) **E-015
+  distillation** for term coverage, still blocked on the audio-source decision; (3) decide the
+  re-scope with E-017's numbers, since the ETA gap now has a measured shape.
+- **Artifacts**: `runs/E-017/config.yaml`, `train.log.jsonl`, `eval.sh`, `prepare_gold.py`,
+  `eval/{greedy,beam-lm,noise-*}/`, `eval/s{1,2,3}-*.metrics.json`, `eval/e017-vs-e016-*.diff.json`,
+  `eval/e017-vs-e014-s3-*.diff.json`, `diffs/` (T-600 paired vs E-016), `manifests/T-{S1,S2,S3}.jsonl`;
+  checkpoint `runs/E-017/checkpoints/ckpt_best.pt` (step 26,442, gitignored); gold shards
+  `data/shards/gold-x50` (gitignored); manifest `recordings/manifests/R-S2.jsonl` (committed).
+  Reproduce: `runs/E-017/prepare_gold.py --sets R-S1,R-S2 --factor 50`, then
+  `uv run python -m stt.train --config runs/E-017/config.yaml`, then `runs/E-017/eval.sh`.
