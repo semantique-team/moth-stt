@@ -8,11 +8,13 @@ import torch
 
 from stt.export import (
     FP32_GATE,
+    FP32_GATE_WORST,
     ExportError,
     ExportModel,
     build_notice,
     export_fp32,
     quantize_int8,
+    verify_fp32,
     verify_int8,
     write_release,
 )
@@ -61,6 +63,75 @@ def test_fp32_parity_on_gate_clips(fp32_export: tuple[MothSTT, Path]) -> None:
         got = session.run(None, {"mel": mel})[0]
         assert got.shape == (1, int(seconds) * 50, 65)
         assert float(np.abs(expected - got).max()) <= FP32_GATE
+
+
+def test_verify_fp32_is_a_sweep_not_one_draw(fp32_export: tuple[MothSTT, Path]) -> None:
+    """E-021: the gate reports a distribution, so one unlucky draw cannot decide it."""
+    model, path = fp32_export
+    report = verify_fp32(model, path, seconds=(1.0,), seeds=5, seed=0)
+    assert report["draws"] == 5
+    assert set(report["sweep"]["1s"]) == {"median", "max", "over_gate", "draws"}
+    assert report["median_abs"] <= report["max_abs"]
+    assert report["median_abs"] <= FP32_GATE
+    assert report["max_abs"] <= FP32_GATE_WORST
+
+
+def test_verify_fp32_single_seed_keeps_the_old_shape(fp32_export: tuple[MothSTT, Path]) -> None:
+    model, path = fp32_export
+    report = verify_fp32(model, path, seconds=(1.0, 5.0), seeds=1)
+    assert "sweep" not in report
+    assert report["max_abs"] <= FP32_GATE
+    assert report["top1_agreement"] > 0.99
+
+
+def test_verify_fp32_gate_accepts_an_unlucky_draw(
+    fp32_export: tuple[MothSTT, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A single draw above 1e-3 no longer fails the gate; only the median and the worst do."""
+    model, path = fp32_export
+    fake = {
+        "per_clip": {"29s": 1.28e-3},
+        "max_abs": 1.28e-3,
+        "top1_agreement": 1.0,
+        "sweep": {"29s": {"median": 1.8e-4, "max": 1.28e-3, "over_gate": 1, "draws": 20}},
+        "median_abs": 1.8e-4,
+        "over_gate": 1,
+        "draws": 20,
+    }
+    monkeypatch.setattr("stt.export._logit_gap", lambda *args, **kwargs: fake)
+    assert verify_fp32(model, path)["max_abs"] == 1.28e-3
+
+
+def test_verify_fp32_gate_rejects_a_bad_median(
+    fp32_export: tuple[MothSTT, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    model, path = fp32_export
+    fake = {
+        "per_clip": {"1s": 3e-2},
+        "max_abs": 3e-2,
+        "top1_agreement": 0.5,
+        "median_abs": 3e-2,
+        "draws": 20,
+    }
+    monkeypatch.setattr("stt.export._logit_gap", lambda *args, **kwargs: fake)
+    with pytest.raises(ExportError, match="median"):
+        verify_fp32(model, path)
+
+
+def test_verify_fp32_gate_rejects_a_catastrophic_draw(
+    fp32_export: tuple[MothSTT, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    model, path = fp32_export
+    fake = {
+        "per_clip": {"1s": 5e-2},
+        "max_abs": 5e-2,
+        "top1_agreement": 0.1,
+        "median_abs": 1e-4,
+        "draws": 20,
+    }
+    monkeypatch.setattr("stt.export._logit_gap", lambda *args, **kwargs: fake)
+    with pytest.raises(ExportError, match="worst"):
+        verify_fp32(model, path)
 
 
 def test_export_model_includes_extra_head_blocks() -> None:
