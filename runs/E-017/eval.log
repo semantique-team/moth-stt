@@ -1,0 +1,50 @@
+decoder: greedy
+checkpoint runs/E-017/checkpoints/ckpt_best.pt (step 26442) on mps
+fleurs_it_test: WER 0.3198 CI [0.3094686776394017, 0.33139240506329115]
+fleurs_en_test: WER 0.6031 CI [0.5886573873951759, 0.618186652486041]
+cv_it_test: WER 0.3630 CI [0.3594156371911573, 0.3666822597812896]
+recorded_t: WER 0.3770 CI [0.3565668202764977, 0.39873961615582926]
+lm: runs/E-008/lm_bpe3_aug.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-017/checkpoints/ckpt_best.pt (step 26442) on mps
+fleurs_it_test: WER 0.2652 CI [0.2553285968028419, 0.2759272816007809]
+fleurs_en_test: WER 0.5548 CI [0.5397030899361298, 0.5706096925482022]
+cv_it_test: WER 0.3036 CI [0.3000277471356158, 0.3072588100935393]
+recorded_t: WER 0.3277 CI [0.30811277330264675, 0.3501449275362319]
+decoder: greedy
+checkpoint runs/E-017/checkpoints/ckpt_best.pt (step 26442) on mps
+noise: VAD gated 444/457 clips (threshold 0.1)
+noise: WER 0.0000 CI None (guarded 444)
+lm: runs/E-008/lm_bpe3_aug.pkl.gz (weight 0.2)
+decoder: beam (beam 5, top-k 8)
+checkpoint runs/E-017/checkpoints/ckpt_best.pt (step 26442) on mps
+noise: VAD gated 444/457 clips (threshold 0.1)
+noise: WER 0.0000 CI None (guarded 444)
+WER 0.4012 [0.3643, 0.4332]  ETA 0.2958  ins/100w 1.36  (1174 ref words)
+ETA errors: 250
+metrics written to runs/E-017/eval/s3-greedy.metrics.json
+WER 0.3823 [0.3491, 0.4188]  ETA 0.3598  ins/100w 2.09  (1151 ref words)
+ETA errors: 226
+metrics written to runs/E-017/eval/s2-greedy.metrics.json
+WER 0.3543 [0.3182, 0.3887]  ETA 0.3521  ins/100w 0.34  (1174 ref words)
+ETA errors: 230
+metrics written to runs/E-017/eval/s3-beam-lm.metrics.json
+WER 0.3388 [0.3052, 0.3761]  ETA 0.4193  ins/100w 0.96  (1151 ref words)
+ETA errors: 205
+metrics written to runs/E-017/eval/s2-beam-lm.metrics.json
+WER 0.4012 [0.3643, 0.4332]  ETA 0.2958  ins/100w 1.36  (1174 ref words)
+ETA errors: 250
+vs runs/E-016/eval/t600-greedy/recorded_t.hyp.jsonl: WER diff -0.0579 (tie: False)
+metrics written to runs/E-017/eval/e017-vs-e016-s3-greedy.diff.json
+WER 0.3543 [0.3182, 0.3887]  ETA 0.3521  ins/100w 0.34  (1174 ref words)
+ETA errors: 230
+vs runs/E-016/eval/t600-aug-lm/recorded_t.hyp.jsonl: WER diff -0.0613 (tie: False)
+metrics written to runs/E-017/eval/e017-vs-e016-s3-beam-lm.diff.json
+WER 0.4012 [0.3643, 0.4332]  ETA 0.2958  ins/100w 1.36  (1174 ref words)
+ETA errors: 250
+vs runs/E-014/eval/t600-greedy/recorded_t.hyp.jsonl: WER diff -0.2010 (tie: False)
+metrics written to runs/E-017/eval/e017-vs-e014-s3-greedy.diff.json
+WER 0.3543 [0.3182, 0.3887]  ETA 0.3521  ins/100w 0.34  (1174 ref words)
+ETA errors: 230
+vs runs/E-014/eval/t600-aug-lm/recorded_t.hyp.jsonl: WER diff -0.1934 (tie: False)
+metrics written to runs/E-017/eval/e017-vs-e014-s3-beam-lm.diff.json

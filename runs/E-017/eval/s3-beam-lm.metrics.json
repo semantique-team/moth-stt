@@ -1,0 +1,2782 @@
+{
+  "n_utterances": 200,
+  "overall": {
+    "n": 200,
+    "ref_words": 1174,
+    "sub": 248,
+    "del": 164,
+    "ins": 4,
+    "wer": 0.3543441226575809,
+    "insertion_rate": 0.34071550255536626,
+    "eta": 0.352112676056338,
+    "eta_errors": [
+      {
+        "id": "T-0006",
+        "term": "report",
+        "got": "ilreort"
+      },
+      {
+        "id": "T-0015",
+        "term": "task",
+        "got": null
+      },
+      {
+        "id": "T-0018",
+        "term": "password",
+        "got": "passw"
+      },
+      {
+        "id": "T-0021",
+        "term": "database",
+        "got": "databas"
+      },
+      {
+        "id": "T-0024",
+        "term": "branch",
+        "got": "brancese"
+      },
+      {
+        "id": "T-0030",
+        "term": "webinar",
+        "got": "binar"
+      },
+      {
+        "id": "T-0033",
+        "term": "sync",
+        "got": null
+      },
+      {
+        "id": "T-0036",
+        "term": "pitch",
+        "got": "pich"
+      },
+      {
+        "id": "T-0042",
+        "term": "benefit",
+        "got": null
+      },
+      {
+        "id": "T-0045",
+        "term": "remote",
+        "got": "remotta"
+      },
+      {
+        "id": "T-0048",
+        "term": "coffee",
+        "got": "coff"
+      },
+      {
+        "id": "T-0051",
+        "term": "kickoff",
+        "got": "kickff"
+      },
+      {
+        "id": "T-0054",
+        "term": "prototype",
+        "got": "protoyp"
+      },
+      {
+        "id": "T-0057",
+        "term": "founder",
+        "got": "f"
+      },
+      {
+        "id": "T-0063",
+        "term": "freelance",
+        "got": "friendenza"
+      },
+      {
+        "id": "T-0066",
+        "term": "domain",
+        "got": "nuovodomain"
+      },
+      {
+        "id": "T-0069",
+        "term": "checkout",
+        "got": "checkut"
+      },
+      {
+        "id": "T-0072",
+        "term": "order",
+        "got": "or"
+      },
+      {
+        "id": "T-0075",
+        "term": "refund",
+        "got": "rifund"
+      },
+      {
+        "id": "T-0078",
+        "term": "support",
+        "got": "suort"
+      },
+      {
+        "id": "T-0081",
+        "term": "prompt",
+        "got": "prote"
+      },
+      {
+        "id": "T-0087",
+        "term": "spam",
+        "got": "spaan"
+      },
+      {
+        "id": "T-0090",
+        "term": "firewall",
+        "got": null
+      },
+      {
+        "id": "T-0093",
+        "term": "reset",
+        "got": "resetto"
+      },
+      {
+        "id": "T-0096",
+        "term": "shutdown",
+        "got": "shwn"
+      },
+      {
+        "id": "T-0105",
+        "term": "upload",
+        "got": "dilode"
+      },
+      {
+        "id": "T-0111",
+        "term": "wallpaper",
+        "got": "paper"
+      },
+      {
+        "id": "T-0114",
+        "term": "emoji",
+        "got": "mogi"
+      },
+      {
+        "id": "T-0117",
+        "term": "post",
+        "got": "pos"
+      },
+      {
+        "id": "T-0123",
+        "term": "mute",
+        "got": "mte"
+      },
+      {
+        "id": "T-0129",
+        "term": "playlist",
+        "got": "playlyista"
+      },
+      {
+        "id": "T-0132",
+        "term": "spoiler",
+        "got": "spoil"
+      },
+      {
+        "id": "T-0138",
+        "term": "monitor",
+        "got": "mtor"
+      },
+      {
+        "id": "T-0141",
+        "term": "wifi",
+        "got": "wi"
+      },
+      {
+        "id": "T-0144",
+        "term": "replay",
+        "got": "torla"
+      },
+      {
+        "id": "T-0147",
+        "term": "bike",
+        "got": "bke"
+      },
+      {
+        "id": "T-0150",
+        "term": "break",
+        "got": "bke"
+      },
+      {
+        "id": "T-0153",
+        "term": "deep",
+        "got": null
+      },
+      {
+        "id": "T-0153",
+        "term": "dive",
+        "got": "deeplyve"
+      },
+      {
+        "id": "T-0156",
+        "term": "user",
+        "got": null
+      },
+      {
+        "id": "T-0156",
+        "term": "experience",
+        "got": "unaus"
+      },
+      {
+        "id": "T-0159",
+        "term": "science",
+        "got": "si"
+      },
+      {
+        "id": "T-0162",
+        "term": "happy",
+        "got": "unppy"
+      },
+      {
+        "id": "T-0162",
+        "term": "hour",
+        "got": "huardo"
+      },
+      {
+        "id": "T-0165",
+        "term": "check",
+        "got": "un"
+      },
+      {
+        "id": "T-0165",
+        "term": "in",
+        "got": "cckini"
+      },
+      {
+        "id": "T-0168",
+        "term": "one",
+        "got": null
+      },
+      {
+        "id": "T-0168",
+        "term": "to",
+        "got": null
+      },
+      {
+        "id": "T-0171",
+        "term": "scale",
+        "got": "sla"
+      },
+      {
+        "id": "T-0174",
+        "term": "work",
+        "got": null
+      },
+      {
+        "id": "T-0174",
+        "term": "in",
+        "got": "worken"
+      },
+      {
+        "id": "T-0177",
+        "term": "study",
+        "got": "stadi"
+      },
+      {
+        "id": "T-0180",
+        "term": "to",
+        "got": "tom"
+      },
+      {
+        "id": "T-0186",
+        "term": "back",
+        "got": null
+      },
+      {
+        "id": "T-0186",
+        "term": "end",
+        "got": null
+      },
+      {
+        "id": "T-0192",
+        "term": "check",
+        "got": "c"
+      },
+      {
+        "id": "T-0192",
+        "term": "list",
+        "got": "clista"
+      },
+      {
+        "id": "T-0198",
+        "term": "content",
+        "got": null
+      },
+      {
+        "id": "T-0198",
+        "term": "creator",
+        "got": "contarate"
+      },
+      {
+        "id": "T-0201",
+        "term": "problem",
+        "got": "probleen"
+      },
+      {
+        "id": "T-0201",
+        "term": "solving",
+        "got": "sov"
+      },
+      {
+        "id": "T-0207",
+        "term": "life",
+        "got": null
+      },
+      {
+        "id": "T-0207",
+        "term": "balance",
+        "got": null
+      },
+      {
+        "id": "T-0213",
+        "term": "screen",
+        "got": "scri"
+      },
+      {
+        "id": "T-0213",
+        "term": "sharing",
+        "got": "shairing"
+      },
+      {
+        "id": "T-0216",
+        "term": "data",
+        "got": "lata"
+      },
+      {
+        "id": "T-0219",
+        "term": "log",
+        "got": "prova"
+      },
+      {
+        "id": "T-0219",
+        "term": "in",
+        "got": "login"
+      },
+      {
+        "id": "T-0222",
+        "term": "set",
+        "got": null
+      },
+      {
+        "id": "T-0222",
+        "term": "up",
+        "got": "sup"
+      },
+      {
+        "id": "T-0225",
+        "term": "switch",
+        "got": "swchff"
+      },
+      {
+        "id": "T-0225",
+        "term": "off",
+        "got": "sul"
+      },
+      {
+        "id": "T-0228",
+        "term": "scroll",
+        "got": null
+      },
+      {
+        "id": "T-0228",
+        "term": "down",
+        "got": "scorrescro"
+      },
+      {
+        "id": "T-0231",
+        "term": "swipe",
+        "got": null
+      },
+      {
+        "id": "T-0231",
+        "term": "right",
+        "got": "facewigrite"
+      },
+      {
+        "id": "T-0234",
+        "term": "night",
+        "got": null
+      },
+      {
+        "id": "T-0234",
+        "term": "mode",
+        "got": "nightde"
+      },
+      {
+        "id": "T-0237",
+        "term": "stand",
+        "got": null
+      },
+      {
+        "id": "T-0237",
+        "term": "up",
+        "got": "standup"
+      },
+      {
+        "id": "T-0240",
+        "term": "roll",
+        "got": null
+      },
+      {
+        "id": "T-0240",
+        "term": "back",
+        "got": "rollback"
+      },
+      {
+        "id": "T-0243",
+        "term": "request",
+        "got": "requte"
+      },
+      {
+        "id": "T-0249",
+        "term": "story",
+        "got": "stoy"
+      },
+      {
+        "id": "T-0252",
+        "term": "netflix",
+        "got": "nflix"
+      },
+      {
+        "id": "T-0255",
+        "term": "glovo",
+        "got": "globo"
+      },
+      {
+        "id": "T-0258",
+        "term": "microsoft",
+        "got": "microsfort"
+      },
+      {
+        "id": "T-0264",
+        "term": "powerpoint",
+        "got": "pawerpin"
+      },
+      {
+        "id": "T-0270",
+        "term": "google",
+        "got": null
+      },
+      {
+        "id": "T-0270",
+        "term": "maps",
+        "got": "googles"
+      },
+      {
+        "id": "T-0273",
+        "term": "evernote",
+        "got": "note"
+      },
+      {
+        "id": "T-0279",
+        "term": "hotel",
+        "got": "untel"
+      },
+      {
+        "id": "T-0282",
+        "term": "deliveroo",
+        "got": "deliver"
+      },
+      {
+        "id": "T-0288",
+        "term": "playstation",
+        "got": "station"
+      },
+      {
+        "id": "T-0294",
+        "term": "soundcloud",
+        "got": "soundlou"
+      },
+      {
+        "id": "T-0297",
+        "term": "photos",
+        "got": "pto"
+      },
+      {
+        "id": "T-0300",
+        "term": "google",
+        "got": "suole"
+      },
+      {
+        "id": "T-0300",
+        "term": "calendar",
+        "got": "calend"
+      },
+      {
+        "id": "T-0303",
+        "term": "outlook",
+        "got": "suok"
+      },
+      {
+        "id": "T-0309",
+        "term": "invision",
+        "got": "sudision"
+      },
+      {
+        "id": "T-0312",
+        "term": "mailchimp",
+        "got": "mailchi"
+      },
+      {
+        "id": "T-0315",
+        "term": "jira",
+        "got": "gira"
+      },
+      {
+        "id": "T-0318",
+        "term": "aws",
+        "got": "abs"
+      },
+      {
+        "id": "T-0324",
+        "term": "vimeo",
+        "got": "sudme"
+      },
+      {
+        "id": "T-0327",
+        "term": "computer",
+        "got": null
+      },
+      {
+        "id": "T-0327",
+        "term": "macbook",
+        "got": "uncbook"
+      },
+      {
+        "id": "T-0330",
+        "term": "apple",
+        "got": null
+      },
+      {
+        "id": "T-0330",
+        "term": "watch",
+        "got": "laorologiopleatch"
+      },
+      {
+        "id": "T-0333",
+        "term": "tv",
+        "got": "attivi"
+      },
+      {
+        "id": "T-0333",
+        "term": "chromecast",
+        "got": "cas"
+      },
+      {
+        "id": "T-0336",
+        "term": "dyson",
+        "got": "èzon"
+      },
+      {
+        "id": "T-0339",
+        "term": "subway",
+        "got": "sabo"
+      },
+      {
+        "id": "T-0342",
+        "term": "pizza",
+        "got": "la"
+      },
+      {
+        "id": "T-0342",
+        "term": "hut",
+        "got": "pizzaat"
+      },
+      {
+        "id": "T-0345",
+        "term": "twinings",
+        "got": "deadings"
+      },
+      {
+        "id": "T-0348",
+        "term": "oral",
+        "got": null
+      },
+      {
+        "id": "T-0348",
+        "term": "b",
+        "got": "alb"
+      },
+      {
+        "id": "T-0351",
+        "term": "kpi",
+        "got": null
+      },
+      {
+        "id": "T-0354",
+        "term": "cto",
+        "got": null
+      },
+      {
+        "id": "T-0357",
+        "term": "hr",
+        "got": "repar"
+      },
+      {
+        "id": "T-0360",
+        "term": "mvp",
+        "got": "ilp"
+      },
+      {
+        "id": "T-0366",
+        "term": "usb",
+        "got": "il"
+      },
+      {
+        "id": "T-0372",
+        "term": "saas",
+        "got": "sass"
+      },
+      {
+        "id": "T-0375",
+        "term": "qr",
+        "got": "q"
+      },
+      {
+        "id": "T-0387",
+        "term": "it",
+        "got": "iet"
+      },
+      {
+        "id": "T-0399",
+        "term": "crm",
+        "got": "rem"
+      },
+      {
+        "id": "T-0402",
+        "term": "pin",
+        "got": "pde"
+      },
+      {
+        "id": "T-0405",
+        "term": "sms",
+        "got": null
+      },
+      {
+        "id": "T-0408",
+        "term": "eta",
+        "got": "tempoeta"
+      },
+      {
+        "id": "T-0414",
+        "term": "linkato",
+        "got": "l'inkato"
+      },
+      {
+        "id": "T-0417",
+        "term": "uppato",
+        "got": "ppato"
+      },
+      {
+        "id": "T-0423",
+        "term": "resettato",
+        "got": "l'settato"
+      },
+      {
+        "id": "T-0432",
+        "term": "buildato",
+        "got": "buito"
+      },
+      {
+        "id": "T-0441",
+        "term": "spoilerato",
+        "got": "ilerato"
+      },
+      {
+        "id": "T-0447",
+        "term": "skippato",
+        "got": null
+      },
+      {
+        "id": "T-0456",
+        "term": "hostato",
+        "got": null
+      },
+      {
+        "id": "T-0459",
+        "term": "debriefato",
+        "got": "brifato"
+      },
+      {
+        "id": "T-0462",
+        "term": "likato",
+        "got": "lakato"
+      },
+      {
+        "id": "T-0468",
+        "term": "matchato",
+        "got": "mciato"
+      },
+      {
+        "id": "T-0480",
+        "term": "loggare",
+        "got": null
+      },
+      {
+        "id": "T-0495",
+        "term": "but",
+        "got": "bat"
+      },
+      {
+        "id": "T-0495",
+        "term": "we",
+        "got": "w"
+      },
+      {
+        "id": "T-0495",
+        "term": "more",
+        "got": "morte"
+      },
+      {
+        "id": "T-0498",
+        "term": "but",
+        "got": null
+      },
+      {
+        "id": "T-0498",
+        "term": "it",
+        "got": null
+      },
+      {
+        "id": "T-0498",
+        "term": "is",
+        "got": "theas"
+      },
+      {
+        "id": "T-0498",
+        "term": "too",
+        "got": "to"
+      },
+      {
+        "id": "T-0498",
+        "term": "expensive",
+        "got": "expensi"
+      },
+      {
+        "id": "T-0501",
+        "term": "maybe",
+        "got": "mab"
+      },
+      {
+        "id": "T-0501",
+        "term": "next",
+        "got": "nex"
+      },
+      {
+        "id": "T-0504",
+        "term": "i",
+        "got": null
+      },
+      {
+        "id": "T-0504",
+        "term": "will",
+        "got": null
+      },
+      {
+        "id": "T-0504",
+        "term": "send",
+        "got": "ha"
+      },
+      {
+        "id": "T-0504",
+        "term": "it",
+        "got": "sandy"
+      },
+      {
+        "id": "T-0504",
+        "term": "later",
+        "got": "lead"
+      },
+      {
+        "id": "T-0507",
+        "term": "love",
+        "got": null
+      },
+      {
+        "id": "T-0507",
+        "term": "this",
+        "got": null
+      },
+      {
+        "id": "T-0507",
+        "term": "place",
+        "got": "lolace"
+      },
+      {
+        "id": "T-0510",
+        "term": "now",
+        "got": null
+      },
+      {
+        "id": "T-0510",
+        "term": "can",
+        "got": null
+      },
+      {
+        "id": "T-0510",
+        "term": "relax",
+        "got": "relex"
+      },
+      {
+        "id": "T-0513",
+        "term": "see",
+        "got": null
+      },
+      {
+        "id": "T-0513",
+        "term": "you",
+        "got": null
+      },
+      {
+        "id": "T-0513",
+        "term": "tomorrow",
+        "got": "seutmorrow"
+      },
+      {
+        "id": "T-0516",
+        "term": "is",
+        "got": null
+      },
+      {
+        "id": "T-0516",
+        "term": "raining",
+        "got": "israining"
+      },
+      {
+        "id": "T-0519",
+        "term": "i",
+        "got": null
+      },
+      {
+        "id": "T-0519",
+        "term": "am",
+        "got": null
+      },
+      {
+        "id": "T-0519",
+        "term": "really",
+        "got": "iwly"
+      },
+      {
+        "id": "T-0522",
+        "term": "cannot",
+        "got": "can"
+      },
+      {
+        "id": "T-0525",
+        "term": "computer",
+        "got": null
+      },
+      {
+        "id": "T-0525",
+        "term": "a",
+        "got": null
+      },
+      {
+        "id": "T-0528",
+        "term": "we",
+        "got": null
+      },
+      {
+        "id": "T-0531",
+        "term": "your",
+        "got": null
+      },
+      {
+        "id": "T-0534",
+        "term": "feed",
+        "got": null
+      },
+      {
+        "id": "T-0534",
+        "term": "him",
+        "got": "fem"
+      },
+      {
+        "id": "T-0537",
+        "term": "do",
+        "got": null
+      },
+      {
+        "id": "T-0537",
+        "term": "you",
+        "got": null
+      },
+      {
+        "id": "T-0537",
+        "term": "want",
+        "got": null
+      },
+      {
+        "id": "T-0537",
+        "term": "some",
+        "got": "uns"
+      },
+      {
+        "id": "T-0540",
+        "term": "where",
+        "got": null
+      },
+      {
+        "id": "T-0540",
+        "term": "is",
+        "got": null
+      },
+      {
+        "id": "T-0540",
+        "term": "the",
+        "got": "we"
+      },
+      {
+        "id": "T-0540",
+        "term": "remote",
+        "got": "themo"
+      },
+      {
+        "id": "T-0543",
+        "term": "can",
+        "got": null
+      },
+      {
+        "id": "T-0543",
+        "term": "you",
+        "got": null
+      },
+      {
+        "id": "T-0543",
+        "term": "heat",
+        "got": null
+      },
+      {
+        "id": "T-0543",
+        "term": "it",
+        "got": "ca"
+      },
+      {
+        "id": "T-0543",
+        "term": "up",
+        "got": "hla"
+      },
+      {
+        "id": "T-0546",
+        "term": "let",
+        "got": null
+      },
+      {
+        "id": "T-0546",
+        "term": "us",
+        "got": null
+      },
+      {
+        "id": "T-0546",
+        "term": "go",
+        "got": "dats"
+      },
+      {
+        "id": "T-0546",
+        "term": "a",
+        "got": null
+      },
+      {
+        "id": "T-0546",
+        "term": "coffee",
+        "got": "copy"
+      },
+      {
+        "id": "T-0549",
+        "term": "book",
+        "got": null
+      },
+      {
+        "id": "T-0549",
+        "term": "a",
+        "got": null
+      },
+      {
+        "id": "T-0549",
+        "term": "table",
+        "got": "boccateble"
+      },
+      {
+        "id": "T-0582",
+        "term": "let",
+        "got": null
+      },
+      {
+        "id": "T-0582",
+        "term": "us",
+        "got": null
+      },
+      {
+        "id": "T-0582",
+        "term": "grab",
+        "got": null
+      },
+      {
+        "id": "T-0582",
+        "term": "a",
+        "got": "laasba"
+      },
+      {
+        "id": "T-0582",
+        "term": "coffee",
+        "got": "coff"
+      },
+      {
+        "id": "T-0582",
+        "term": "standup",
+        "got": "stand"
+      },
+      {
+        "id": "T-0585",
+        "term": "a",
+        "got": null
+      },
+      {
+        "id": "T-0585",
+        "term": "table",
+        "got": "theble"
+      },
+      {
+        "id": "T-0588",
+        "term": "can",
+        "got": null
+      },
+      {
+        "id": "T-0588",
+        "term": "you",
+        "got": null
+      },
+      {
+        "id": "T-0588",
+        "term": "send",
+        "got": null
+      },
+      {
+        "id": "T-0588",
+        "term": "me",
+        "got": null
+      },
+      {
+        "id": "T-0588",
+        "term": "the",
+        "got": null
+      },
+      {
+        "id": "T-0588",
+        "term": "link",
+        "got": "kyusm"
+      },
+      {
+        "id": "T-0588",
+        "term": "folder",
+        "got": "fller"
+      },
+      {
+        "id": "T-0591",
+        "term": "her",
+        "got": null
+      },
+      {
+        "id": "T-0591",
+        "term": "umbrella",
+        "got": null
+      },
+      {
+        "id": "T-0591",
+        "term": "on",
+        "got": null
+      },
+      {
+        "id": "T-0591",
+        "term": "the",
+        "got": "hand"
+      },
+      {
+        "id": "T-0591",
+        "term": "bus",
+        "got": "theus"
+      },
+      {
+        "id": "T-0594",
+        "term": "restaurant",
+        "got": null
+      },
+      {
+        "id": "T-0594",
+        "term": "is",
+        "got": null
+      },
+      {
+        "id": "T-0594",
+        "term": "closed",
+        "got": null
+      },
+      {
+        "id": "T-0594",
+        "term": "on",
+        "got": "restiss"
+      },
+      {
+        "id": "T-0594",
+        "term": "mondays",
+        "got": "onmandas"
+      },
+      {
+        "id": "T-0597",
+        "term": "the",
+        "got": null
+      },
+      {
+        "id": "T-0597",
+        "term": "movie",
+        "got": null
+      },
+      {
+        "id": "T-0597",
+        "term": "was",
+        "got": "le"
+      },
+      {
+        "id": "T-0597",
+        "term": "better",
+        "got": "movi"
+      },
+      {
+        "id": "T-0597",
+        "term": "than",
+        "got": "wasbet"
+      },
+      {
+        "id": "T-0600",
+        "term": "has",
+        "got": "s"
+      },
+      {
+        "id": "T-0600",
+        "term": "been",
+        "got": "be"
+      },
+      {
+        "id": "T-0600",
+        "term": "friday",
+        "got": "fday"
+      }
+    ],
+    "wer_ci": [
+      0.31821998320738876,
+      0.38870431893687707
+    ]
+  },
+  "breakdown": null,
+  "noise": null,
+  "per_utterance": {
+    "T-0003": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0006": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0009": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0012": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0015": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0018": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0021": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0024": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0027": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0030": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0033": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0036": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0039": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0042": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0045": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0048": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0051": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0054": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0057": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0060": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0063": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0066": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0069": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0072": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0075": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0078": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0081": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0084": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0087": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0090": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0093": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0096": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0099": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0102": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0105": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0108": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0111": {
+      "ref_words": 4,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0114": {
+      "ref_words": 5,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0117": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0120": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0123": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0126": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0129": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0132": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0135": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0138": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0141": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0144": {
+      "ref_words": 8,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0147": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0150": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0153": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0156": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0159": {
+      "ref_words": 8,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0162": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0165": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0168": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 1
+    },
+    "T-0171": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0174": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 1
+    },
+    "T-0177": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0180": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 2
+    },
+    "T-0183": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 3
+    },
+    "T-0186": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0189": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 2
+    },
+    "T-0192": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0195": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 2
+    },
+    "T-0198": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0201": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0204": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 2
+    },
+    "T-0207": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 1
+    },
+    "T-0210": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 2,
+      "en_hit": 2
+    },
+    "T-0213": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0216": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0219": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 1
+    },
+    "T-0222": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0225": {
+      "ref_words": 5,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0228": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0231": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0234": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0237": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0240": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0243": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 2
+    },
+    "T-0246": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 2
+    },
+    "T-0249": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0252": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0255": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0258": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0261": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0264": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0267": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 2
+    },
+    "T-0270": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0273": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0276": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0279": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0282": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0285": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0288": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0291": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 3
+    },
+    "T-0294": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0297": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0300": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0303": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0306": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0309": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0312": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0315": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0318": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0321": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0324": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 1
+    },
+    "T-0327": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0330": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0333": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0336": {
+      "ref_words": 3,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0339": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0342": {
+      "ref_words": 4,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0345": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0348": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 2,
+      "en_hit": 0
+    },
+    "T-0351": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0354": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0357": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0360": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0363": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0366": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0369": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0372": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0375": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0378": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0381": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0384": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0387": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0390": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0393": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0396": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0399": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0402": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0405": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0408": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0411": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0414": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0417": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0420": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0423": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0426": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0429": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0432": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0435": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0438": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0441": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0444": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0447": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0450": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0453": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0456": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0459": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0462": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0465": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0468": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0471": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0474": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0477": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0480": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 0
+    },
+    "T-0483": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0486": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0489": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 1,
+      "en_hit": 1
+    },
+    "T-0492": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 3
+    },
+    "T-0495": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 5,
+      "en_hit": 2
+    },
+    "T-0498": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 5,
+      "en_hit": 0
+    },
+    "T-0501": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 1
+    },
+    "T-0504": {
+      "ref_words": 7,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 5,
+      "en_hit": 0
+    },
+    "T-0507": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 1
+    },
+    "T-0510": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 1
+    },
+    "T-0513": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 0
+    },
+    "T-0516": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 2
+    },
+    "T-0519": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 1
+    },
+    "T-0522": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 3
+    },
+    "T-0525": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 6,
+      "en_hit": 4
+    },
+    "T-0528": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 3
+    },
+    "T-0531": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 3,
+      "en_hit": 2
+    },
+    "T-0534": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 2
+    },
+    "T-0537": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 0
+    },
+    "T-0540": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 4,
+      "en_hit": 0
+    },
+    "T-0543": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 5,
+      "en_hit": 0
+    },
+    "T-0546": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 6,
+      "en_hit": 1
+    },
+    "T-0549": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 5,
+      "en_hit": 2
+    },
+    "T-0552": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0555": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0558": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0561": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0564": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0567": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0570": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0573": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0576": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0579": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "T-0582": {
+      "ref_words": 8,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 8,
+      "en_hit": 2
+    },
+    "T-0585": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 7,
+      "en_hit": 5
+    },
+    "T-0588": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 9,
+      "en_hit": 2
+    },
+    "T-0591": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 7,
+      "en_hit": 2
+    },
+    "T-0594": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 6,
+      "en_hit": 1
+    },
+    "T-0597": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 7,
+      "en_hit": 2
+    },
+    "T-0600": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 7,
+      "en_hit": 4
+    }
+  },
+  "manifest": "runs/E-017/manifests/T-S3.jsonl",
+  "manifest_sha256": "afe68dc5a7f20f62c4e7e9198964c1d80b4e3f5e864b1422743152323b09207a",
+  "hyp": "runs/E-017/eval/beam-lm/recorded_t.hyp.jsonl",
+  "hyp_sha256": "a0afcf10864ed5d35f89ac97bad45b619c40e2bf3af42ec135d1b80d9ec680ea",
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07",
+  "git_sha": "638217f0f8376e9edb65e11dcd817c361c121ac0",
+  "config_path": null,
+  "extra_hypotheses": 400
+}
