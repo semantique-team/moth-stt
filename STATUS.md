@@ -118,6 +118,17 @@
   — bracci G3 (tre speaker) / G3+ (più frasi) / G3× (×100), criteri di successo e di plateau,
   la modifica di codice necessaria (l'invariante `kind R` rifiuta S3/S4 in `generate_scripts.py`),
   e i rischi (terzo canale, rendimenti decrescenti, E-019 che rende il claim architecture-bound).
+- **E-021 (gate fp32)** — chiuso, vedi sopra.
+- **M8 — model card + publisher HF — PRONTI, non pubblicati (2026-11-07)**:
+  `runs/E-021/MODEL_CARD.md` è la card completa (numeri verificati uno per uno contro gli artefatti,
+  tabella contro Whisper/Whistle/Parakeet, costo int8, dati, 9 limiti dichiarati). `runs/E-021/upload_hf.py`
+  verifica `release/` contro gli sha registrati prima di caricare (hash, dimensione payload, card) ed
+  è **dry run di default**; 7 test. **Serve da te**: (1) il **token HF** con write, passato via
+  `HF_TOKEN` — mai nel repo; (2) il **namespace**: oggi HF non ha `semantique-team`, quindi o si crea
+  l'org, o si usa un account e si cambia `--repo`. Comando:
+  `HF_TOKEN=hf_... uv run python runs/E-021/upload_hf.py --repo <namespace>/moth-stt --push`
+  (aggiungere `--private` per uno staging). La card cita `semantique-team` in due punti: va
+  aggiornata se il namespace è diverso.
 - **Release 0.5.0 con E-017** (2026-11-07): `release/` ricostruita col checkpoint E-017 —
   int8 **11,91 MB** (sha `fe1afcc2…`) + LM 5,12 + VAD 2,33 = **19,44 MB**. Browser con VAD nel loop:
   **4T 52,2× / 50,8× / 46,3×**, **1T 25,5× / 24,3× / 21,8×** su 5/10/20 s; **6/6 Playwright** verdi.
@@ -328,6 +339,7 @@ La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per i
 | **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
 | **E-020** | **Costo WER dell'int8 — FATTO 2026-11-07**: T-600 +0,43 (greedy) / +0,17 (beam+LM), entrambi tie; FLEURS-IT +0,32 significativo. `stt/onnx_runner.py`, `runs/E-020/RESULT.md` | — (misura chiusa) |
 | **E-021** | **Gate fp32 — FATTO 2026-11-07**: 1,05e-3 è la coda di una singola estrazione (1/80 sopra, solo 29 s), non un bug; reale ≤ 3,1e-4. **Gate sostituito da uno sweep seedato (D29)** e release **0.5.1 ricostruita verificata**: mediana 2,13e-4, peggiore 1,47e-3, int8 byte-identico. `runs/E-021/RESULT.md` | — (chiuso) |
+| **M8** | **Card + publisher HF pronti, non pubblicati**: `runs/E-021/MODEL_CARD.md`, `runs/E-021/upload_hf.py` (verifica gli sha, dry run di default, 7 test) | **token HF + namespace** |
 | **E-018** | **Piano scritto 2026-11-07**: [`2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md). Bracci G3/G3+/G3×, criteri di successo e plateau, unica modifica di codice (invariante `kind R`) | review T-S4 + R-S4 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)

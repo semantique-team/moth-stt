@@ -51,3 +51,17 @@ uv run python runs/E-021/fp32_gap.py
 ```
 
 Output: `runs/E-021/fp32_gap.json` (per-fixture gaps, per-length seed sweep, real clip ids).
+
+## Release 0.5.1 on Hugging Face (M8)
+
+The model card is `runs/E-021/MODEL_CARD.md`; the publisher is `runs/E-021/upload_hf.py`. It
+verifies `release/` against `release-0.5.1.json` before uploading anything (hash, size, missing
+card) and is a **dry run by default**:
+
+```bash
+uv run python runs/E-021/upload_hf.py --repo semantique-team/moth-stt          # check
+HF_TOKEN=hf_... uv run python runs/E-021/upload_hf.py --repo ... --push        # publish
+```
+
+`--private` stages it; the token is read from the environment only (never a file in the repo).
+7 tests cover the guard, including the case where a file was edited after the build.

@@ -1298,3 +1298,11 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   NOTICE now lists FLEURS once. Browser 6/6 Playwright, 4T 52.0/51.0/46.5 and 1T 25.4/24.2/21.7 on
   5/10/20 s (same weights as 0.5.0, differences are noise). `runs/E-021/release-0.5.1.json`.
 - **Artifacts**: `runs/E-021/` (`fp32_gap.py`, `RESULT.md`, `fp32_gap.json`, `release-0.5.1.json`).
+- **M8 — model card and HF publisher (2026-11-07)**: `runs/E-021/MODEL_CARD.md` (full card for
+  `semantique-team/moth-stt`: results, the comparison against Whisper/Whistle/Parakeet, the int8
+  cost, the data, **9 stated limitations** — no punctuation, three speakers, S1's rhotacism, weak
+  English, music, public FLEURS, single seed, and "this is not a Whistle fine-tune") and
+  `runs/E-021/upload_hf.py`, which **verifies** `release/` against the recorded hashes before
+  uploading (hash, payload size, card present) and is a **dry run by default**; 7 tests, including
+  a file edited after the build. The token is read from the environment only. **Not published
+  yet**: needs the token and a namespace decision (HF has no `semantique-team` org today).
