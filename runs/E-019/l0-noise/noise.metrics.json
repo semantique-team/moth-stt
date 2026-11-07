@@ -1,0 +1,37 @@
+{
+  "n_utterances": 0,
+  "overall": {
+    "n": 0,
+    "ref_words": 0,
+    "sub": 0,
+    "del": 0,
+    "ins": 0,
+    "wer": 0.0,
+    "insertion_rate": 0.0,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": null
+  },
+  "breakdown": null,
+  "noise": {
+    "clips": 457,
+    "total_words": 217,
+    "non_empty_clips": 13,
+    "non_music_clips": 337,
+    "non_music_words": 0,
+    "non_music_non_empty_clips": 0,
+    "music_clips": 120,
+    "music_words": 217,
+    "music_non_empty_clips": 13
+  },
+  "per_utterance": {},
+  "manifest": "data/manifests/noise.jsonl",
+  "manifest_sha256": "a0fce07aa8daa4c3f30883d0788dc9bde9d402baf2bba0b1096b71fc36af7141",
+  "hyp": "runs/E-019/l0-noise/noise.jsonl",
+  "hyp_sha256": "6e8539a0dad112af5fd5d748394a41b84666e2d0cb9d99584fca14b57aff1310",
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07",
+  "git_sha": "b4f8e5e301cab4f2d863d93c610f4b295b8eacec",
+  "config_path": null,
+  "extra_hypotheses": 0
+}

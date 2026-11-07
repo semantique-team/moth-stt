@@ -1,0 +1,67 @@
+  backend   cpu  float32
+  data      1137 train, 63 validation, 63 test clips  45.3 min to train on
+  vocab     0 tokens  0 new pieces
+  numerics  CQ W4 STE + A8 (matches export)
+  lora      rank 16  alpha 32  15 weight groups  +0 vocabulary rows
+  schedule  216 steps  warmup 10  cosine decay  clip 1.0  (compiling...)
+  step      4/216  loss 1.2032
+  step      8/216  loss 1.3823
+  step      12/216  loss 1.1832
+  step      16/216  loss 1.1337
+  step      20/216  loss 1.0797
+  step      24/216  loss 1.0300
+  step      28/216  loss 1.2331
+  step      32/216  loss 1.1141
+  step      36/216  loss 0.8778
+  step      40/216  loss 0.8686
+  step      44/216  loss 1.0553
+  step      48/216  loss 1.1383
+  step      52/216  loss 0.7890
+  step      56/216  loss 0.8511
+  step      60/216  loss 1.1150
+  step      64/216  loss 1.0366
+  step      68/216  loss 0.7299
+  step      72/216  loss 0.5014
+  epoch     1/3  loss 0.5014  val 0.8250
+  step      76/216  loss 0.7666
+  step      80/216  loss 0.6944
+  step      84/216  loss 0.8460
+  step      88/216  loss 0.8437
+  step      92/216  loss 0.7460
+  step      96/216  loss 0.5831
+  step      100/216  loss 0.6784
+  step      104/216  loss 0.6850
+  step      108/216  loss 0.8112
+  step      112/216  loss 0.6023
+  step      116/216  loss 0.8287
+  step      120/216  loss 0.4105
+  step      124/216  loss 0.5689
+  step      128/216  loss 0.6819
+  step      132/216  loss 0.7637
+  step      136/216  loss 0.5543
+  step      140/216  loss 0.5749
+  step      144/216  loss 0.0736
+  epoch     2/3  loss 0.0736  val 0.5608
+  step      148/216  loss 0.6167
+  step      152/216  loss 0.6011
+  step      156/216  loss 0.7108
+  step      160/216  loss 0.4226
+  step      164/216  loss 0.4167
+  step      168/216  loss 0.5787
+  step      172/216  loss 0.5244
+  step      176/216  loss 0.6508
+  step      180/216  loss 0.5114
+  step      184/216  loss 0.4947
+  step      188/216  loss 0.4552
+  step      192/216  loss 0.4521
+  step      196/216  loss 0.4227
+  step      200/216  loss 0.4566
+  step      204/216  loss 0.4824
+  step      208/216  loss 0.7346
+  step      212/216  loss 0.4612
+  step      216/216  loss 1.3997
+  epoch     3/3  loss 1.3997  val 0.5267
+  wer       29.9% on 63 test clips, greedy decoding on the W4 weights
+  note      for real-world numbers, build the .cact and transcribe the test set with it
+  adapter   runs/E-019/lora-L1.safetensors
+  next      needle whistle build --lora runs/E-019/lora-L1.safetensors

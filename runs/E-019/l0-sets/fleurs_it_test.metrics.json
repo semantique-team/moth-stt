@@ -1,0 +1,5607 @@
+{
+  "n_utterances": 697,
+  "overall": {
+    "n": 697,
+    "ref_words": 16035,
+    "sub": 1413,
+    "del": 301,
+    "ins": 186,
+    "wer": 0.11849080137199876,
+    "insertion_rate": 1.1599625818521984,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": [
+      0.1111869878321331,
+      0.12611023622047243
+    ]
+  },
+  "breakdown": null,
+  "noise": null,
+  "per_utterance": {
+    "fleurs-3299434526375775286": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1006729518827641482": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5761106912632880847": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1815772323593604298": {
+      "ref_words": 27,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5520246528580221640": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8800547400861953606": {
+      "ref_words": 27,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-325012546177289849": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4625363240754311860": {
+      "ref_words": 29,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13079120887552488011": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5836088289665941372": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8158343052207979717": {
+      "ref_words": 26,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17330763848797266499": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8686236804963895257": {
+      "ref_words": 23,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3193404391434912324": {
+      "ref_words": 23,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5577719210761920579": {
+      "ref_words": 29,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14020623701255196900": {
+      "ref_words": 29,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10901047079532568780": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1409747897457775027": {
+      "ref_words": 21,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5621481855126464199": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13528228465691893357": {
+      "ref_words": 28,
+      "sub": 5,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17523079128766973356": {
+      "ref_words": 28,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2531490434321028456": {
+      "ref_words": 28,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13845067118873492744": {
+      "ref_words": 19,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7903155792528276364": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5977924103134120189": {
+      "ref_words": 19,
+      "sub": 6,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10168148107941542925": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13561548906626579972": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4920619931105787722": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8361355844110779696": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16915640926355431333": {
+      "ref_words": 25,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12359692958429430240": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16891835188027563938": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3139183242656726590": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-443055511629629563": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15366910484220678567": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17578388273665154460": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5234362128850349742": {
+      "ref_words": 28,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6143169836096918403": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2616544972054051395": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3821750387240545824": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2521746394261174724": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1376294010079088584": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1853919646599074402": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14725415183227195242": {
+      "ref_words": 24,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12027431294129631918": {
+      "ref_words": 24,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10434945468030652443": {
+      "ref_words": 24,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15627900095895919965": {
+      "ref_words": 24,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16238235165754910412": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14132964742837170522": {
+      "ref_words": 31,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6325003584041468929": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12160094460106356198": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16019598193080977808": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2289661946919776507": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13058916468342356962": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-43707915211541300": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3970294095029037989": {
+      "ref_words": 16,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4263160572835125456": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1124830659756702543": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9517287571316288134": {
+      "ref_words": 15,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7215055249690737553": {
+      "ref_words": 15,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7564354139033851905": {
+      "ref_words": 15,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16816357932077844014": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8232757054306470472": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18032427759714771238": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16594987402660178320": {
+      "ref_words": 30,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5947105870969335971": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11596881807061387823": {
+      "ref_words": 26,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14617236658782998747": {
+      "ref_words": 26,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14767198386507928528": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11029373772918561866": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3847098465672577479": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2271616736391022843": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14703987544084016572": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17997640579627203290": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16419793391412340110": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4870484826871632416": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9808415381171742067": {
+      "ref_words": 30,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16904609454600648934": {
+      "ref_words": 30,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13338976644433145220": {
+      "ref_words": 30,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11963604253974054184": {
+      "ref_words": 17,
+      "sub": 3,
+      "del": 0,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10568286449112693066": {
+      "ref_words": 17,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3537425899669230456": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3463776689038980940": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1279852737948134207": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7351661222477750748": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4902581531577307503": {
+      "ref_words": 18,
+      "sub": 6,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14450353468053215837": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10017896147709177739": {
+      "ref_words": 23,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10159398106668856572": {
+      "ref_words": 23,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-399139236583833672": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16462150914726946412": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8546879304616272817": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3303655653625101965": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7575282189551127265": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11967348161453086843": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9386673948643247447": {
+      "ref_words": 23,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-738407394317009891": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13542381279665389917": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13008771065671800969": {
+      "ref_words": 15,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17106486571221720107": {
+      "ref_words": 16,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-441427274768950878": {
+      "ref_words": 16,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6719555535348096329": {
+      "ref_words": 22,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12013566675598043608": {
+      "ref_words": 22,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3481663747315982136": {
+      "ref_words": 38,
+      "sub": 8,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12715874722470470383": {
+      "ref_words": 38,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3210909488113484301": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17040315030544971372": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14092724663533139317": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-735667558351102460": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4112277901384466931": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14763818879524162554": {
+      "ref_words": 31,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5107281728415491984": {
+      "ref_words": 31,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13226260728511810799": {
+      "ref_words": 31,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9724692777467983649": {
+      "ref_words": 31,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15059906100354265918": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9789014105882869606": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14252394159975830713": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16639529163990457553": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-605216151226980667": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8282528717465607004": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1040642958705021773": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17403876264428120948": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16427578384028309601": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5466848448962725890": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8480995775572235517": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5781966769016954851": {
+      "ref_words": 27,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12905126507620464146": {
+      "ref_words": 27,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18107749238252765378": {
+      "ref_words": 27,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13872792762363866921": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3167969721432806085": {
+      "ref_words": 16,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4139949566587026429": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11697287891158582963": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9102871273037112583": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17434049184077323177": {
+      "ref_words": 8,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11899161547977593341": {
+      "ref_words": 19,
+      "sub": 7,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3565957601631823766": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15487265400728142784": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1386109617932448707": {
+      "ref_words": 38,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1425912576999514106": {
+      "ref_words": 38,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17341935230246264962": {
+      "ref_words": 38,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11035437312205117136": {
+      "ref_words": 37,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11717894082528543921": {
+      "ref_words": 37,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6610556532114627469": {
+      "ref_words": 32,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14587558680389311171": {
+      "ref_words": 32,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18298836049935641837": {
+      "ref_words": 29,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9839444873950790375": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4641868831898834990": {
+      "ref_words": 23,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18374946916272461403": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12301564455796255514": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-498614022846896982": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8128921689758728482": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10536267797820820051": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17413795790897659561": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-925414811356018525": {
+      "ref_words": 22,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17602726912861073963": {
+      "ref_words": 42,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9570154710626483793": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-737347003256571227": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9628322064624504106": {
+      "ref_words": 26,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1627309113636802646": {
+      "ref_words": 26,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14978712161169421132": {
+      "ref_words": 17,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7372355661598975005": {
+      "ref_words": 17,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2415293086271844723": {
+      "ref_words": 17,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6379457519002101324": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2607196085468312355": {
+      "ref_words": 26,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6170658304757950439": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12953017652920732838": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11997949401429734706": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13287825571460880280": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3003903058872724": {
+      "ref_words": 28,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13250680130880855877": {
+      "ref_words": 22,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16808491184683597527": {
+      "ref_words": 22,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14040219741990913044": {
+      "ref_words": 22,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12935364811326801887": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8452077561518205362": {
+      "ref_words": 20,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6574151596858710683": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5034652097936384669": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17160504224155806195": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4958973329061908125": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11067362407565311789": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5289689506440416534": {
+      "ref_words": 34,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3289400707278960655": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6304091428962715426": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6832702604859897598": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11501403537812004395": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8493828573380387587": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10437794928490533393": {
+      "ref_words": 32,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9189764174915008274": {
+      "ref_words": 32,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8822100840447531075": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14480038421195578286": {
+      "ref_words": 29,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3706687721334007198": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16470257071721429565": {
+      "ref_words": 33,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17352787568232164710": {
+      "ref_words": 33,
+      "sub": 5,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-936632602586917044": {
+      "ref_words": 33,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11691725068293539420": {
+      "ref_words": 21,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7978727932282031584": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12862984726980074004": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17210831127197272525": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17581597766008074419": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15299042836722536710": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9985083612674030045": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6478377317534160978": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14011025861479151077": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14537151085907282599": {
+      "ref_words": 21,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9440017704669368031": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16015016207165550833": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14576214971839732147": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16831285896857494767": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15272961481522622997": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18163722293834638622": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13167614366317949835": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16061947827835486845": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16134883520494116745": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11597248049266956557": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6470048988788531075": {
+      "ref_words": 38,
+      "sub": 8,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3445643410178281957": {
+      "ref_words": 38,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3905610497128973099": {
+      "ref_words": 28,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13244379152565036495": {
+      "ref_words": 28,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8638349567667028952": {
+      "ref_words": 28,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13200711505860244529": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-386527852199968371": {
+      "ref_words": 15,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2079968358538939098": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-175608475272644473": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13695870050879359265": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2867809210339769221": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14406651131902331000": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2746727566123879908": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14319439621931898885": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2827067806944647383": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1993852041441800325": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16433212473595451166": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15111271211381692258": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17735223940467580801": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3434838368676431879": {
+      "ref_words": 20,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14437332586201340792": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2711502171680213799": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9761007471906515224": {
+      "ref_words": 35,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13142124462057177649": {
+      "ref_words": 35,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13708138327031910562": {
+      "ref_words": 35,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8239904413529758433": {
+      "ref_words": 35,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18094787416472993824": {
+      "ref_words": 35,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16281759964284949116": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3523073696540186902": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16084596264592548480": {
+      "ref_words": 22,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10955367583686005647": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3680487862805697976": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15919247237135353468": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13006332987801604682": {
+      "ref_words": 33,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2775934872166905083": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1086199108496852370": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5669991840272654740": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3983531924940910725": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17564241951164881153": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5157041472185391184": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10707717394504269796": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1373309659886757133": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7466753647760650675": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17231240526516852553": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1885085104079867977": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2566577512440928019": {
+      "ref_words": 19,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9355566322070590486": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13824589797439107267": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-34644045858784186": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5258127574014990848": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17620256273583590736": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12307817420478140656": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12999413606412531606": {
+      "ref_words": 16,
+      "sub": 5,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4636074668058490715": {
+      "ref_words": 16,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8646216597303794244": {
+      "ref_words": 16,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15827541309443576636": {
+      "ref_words": 31,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9841735037218359782": {
+      "ref_words": 31,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16762547255157787246": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 0,
+      "ins": 4,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6098785940617652036": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1496528906463535155": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 0,
+      "ins": 4,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12651720856365963403": {
+      "ref_words": 30,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9859118615443335967": {
+      "ref_words": 30,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18310561812601248076": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11407458215800374681": {
+      "ref_words": 34,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8703994143477934943": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6941946753653253955": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-365604834526455565": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3808026723418818324": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3522197304240763541": {
+      "ref_words": 28,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9489151642209474397": {
+      "ref_words": 28,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10294884782884582016": {
+      "ref_words": 28,
+      "sub": 6,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8077080199598601288": {
+      "ref_words": 34,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17667630582107464755": {
+      "ref_words": 34,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17257598343476361959": {
+      "ref_words": 34,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5623511206568089361": {
+      "ref_words": 41,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-988937778005340498": {
+      "ref_words": 16,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6673160530682692179": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17151373406665299743": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16352070349959636109": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16143572554648456073": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5037057776155160751": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7481433819132282135": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1529426847196676572": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13896368736890408379": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17677361290349433340": {
+      "ref_words": 17,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3906421874455981507": {
+      "ref_words": 23,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8313721456183674113": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12403137853857777572": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17557073065499500847": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5893180671254556338": {
+      "ref_words": 23,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3301082691785558142": {
+      "ref_words": 41,
+      "sub": 3,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12777588315901228495": {
+      "ref_words": 41,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4226737309034913636": {
+      "ref_words": 41,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5669855707068102999": {
+      "ref_words": 33,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6496847228322048726": {
+      "ref_words": 33,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6462315186619075348": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13226678743825537591": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1393309696779998163": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15280475371117193901": {
+      "ref_words": 23,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9544227166125851320": {
+      "ref_words": 23,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2448077935765316901": {
+      "ref_words": 29,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16291651130525889043": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18167323869030325965": {
+      "ref_words": 29,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2997314249577674557": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10906900159238464755": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9583419241481923745": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5480632757826007587": {
+      "ref_words": 29,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15884045814858173442": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15829924101105843351": {
+      "ref_words": 29,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9603483890309880980": {
+      "ref_words": 39,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10529316262657848687": {
+      "ref_words": 39,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16079835747729853535": {
+      "ref_words": 39,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5791519532263295888": {
+      "ref_words": 31,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1708359595297583962": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3665911549860568317": {
+      "ref_words": 31,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15288220340736076022": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16934193273648416040": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10210638754804006465": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13722784315047196008": {
+      "ref_words": 11,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3504027885100464615": {
+      "ref_words": 22,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8334487633793300356": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9268941262271104016": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1576999151884193072": {
+      "ref_words": 32,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9756632279073683128": {
+      "ref_words": 32,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12644283506490504083": {
+      "ref_words": 32,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10166843301601278560": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7633701051967957452": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17863374507158048514": {
+      "ref_words": 24,
+      "sub": 3,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10875261210227541858": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2706000138121925438": {
+      "ref_words": 24,
+      "sub": 7,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14242959223701470174": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4031661563737486311": {
+      "ref_words": 31,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16616310271342585705": {
+      "ref_words": 20,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14248317648161323773": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8936907966445477749": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11852448763726016480": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7114456019310477346": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14152645902893963785": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17617388711063538128": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2625185712785227847": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16668497975943539124": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5203794583249134742": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17368289982109801976": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12758785955469357417": {
+      "ref_words": 23,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1131233198965973441": {
+      "ref_words": 23,
+      "sub": 8,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8138511959015282648": {
+      "ref_words": 23,
+      "sub": 6,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-815331908432464752": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9261788870609407464": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4719960141605285791": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11186448838926099836": {
+      "ref_words": 19,
+      "sub": 5,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13692615837330888023": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1092346771486144638": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16530246678225991789": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7138676631021633448": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2628791901005927857": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18372334564395804037": {
+      "ref_words": 23,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14948774100730622259": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6152177220163606526": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16226410991278807717": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13382362752957807024": {
+      "ref_words": 10,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10421376619578532077": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14176890045372702886": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4368643764002673880": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15106959786190548861": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18252784839898252703": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16494784820933374813": {
+      "ref_words": 34,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16700385499943200069": {
+      "ref_words": 34,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3477901189760994546": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8442136854803991413": {
+      "ref_words": 29,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17525948090718236285": {
+      "ref_words": 29,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14397566715701149771": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8918107119527318376": {
+      "ref_words": 31,
+      "sub": 5,
+      "del": 0,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16592115365581960654": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14030084120010019246": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9838873819784803": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-614182180771019425": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16870868816476327224": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6398392813590269559": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1177673088906247318": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8978627103418847195": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16156880817865903347": {
+      "ref_words": 37,
+      "sub": 10,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8898934986956479510": {
+      "ref_words": 37,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-34609404880915251": {
+      "ref_words": 37,
+      "sub": 8,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12246544248459645757": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-519755587287612403": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17414399831931344474": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9183311237362775269": {
+      "ref_words": 17,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2869809605849932574": {
+      "ref_words": 17,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12264720524290304125": {
+      "ref_words": 17,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4649714401944117571": {
+      "ref_words": 17,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15188512843079489585": {
+      "ref_words": 17,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5315156707764644287": {
+      "ref_words": 17,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-882219389445450541": {
+      "ref_words": 35,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11358947081862026117": {
+      "ref_words": 35,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9296167685482164415": {
+      "ref_words": 35,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5479565497851927820": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-630478181448195247": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4625062730428472681": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1184559682288866813": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9442444124856589973": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5705877623775914131": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4334360559077792911": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-446126962359117378": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1863495407378241974": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15157311457782470743": {
+      "ref_words": 30,
+      "sub": 2,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6825441898403143144": {
+      "ref_words": 30,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6971748108451482929": {
+      "ref_words": 30,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2184330284487099412": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16306775752734536496": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17457373764553308840": {
+      "ref_words": 18,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7880349391530920046": {
+      "ref_words": 34,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13099436194993160436": {
+      "ref_words": 28,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4805802717232908067": {
+      "ref_words": 28,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15890007627890387910": {
+      "ref_words": 28,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15321718043402821441": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1644945211762314941": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-50763252620035934": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13119801082269610301": {
+      "ref_words": 27,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16628924470900233082": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17086180668284711790": {
+      "ref_words": 27,
+      "sub": 5,
+      "del": 0,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14539011392961690099": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2430494818245391658": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4041859456656545918": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7405216514935931838": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14316697418222743302": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7259671666891426057": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3505289520481913352": {
+      "ref_words": 26,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6740803278325811323": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2769729723878051256": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4882983405989953846": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1616491589666964748": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14028120936583420217": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7693558729113467965": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4354497654731436053": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4759135692971042045": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2360601798256401842": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7808468835681366565": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10275928643200034491": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11123778747631522404": {
+      "ref_words": 37,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4993905881326744917": {
+      "ref_words": 37,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16591664060905172157": {
+      "ref_words": 37,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17132432282632650535": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12244110148027093174": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7473087787640837851": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3847346010640116728": {
+      "ref_words": 23,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10000151032537989529": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7655228652716745245": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6761270027381967899": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17401802633606188891": {
+      "ref_words": 20,
+      "sub": 6,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1329103592539925399": {
+      "ref_words": 23,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5347401002950316534": {
+      "ref_words": 23,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9293191107527411197": {
+      "ref_words": 23,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9498923720550401524": {
+      "ref_words": 29,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10324513969638088871": {
+      "ref_words": 29,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2414197646839648054": {
+      "ref_words": 29,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7126745070223190329": {
+      "ref_words": 31,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1846002469812983360": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11090002047836477069": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4023986607040221909": {
+      "ref_words": 32,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16807774866635991822": {
+      "ref_words": 32,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5237376421296071894": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17413714553185601739": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16927682509831983106": {
+      "ref_words": 28,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7303861233561470183": {
+      "ref_words": 28,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12758830586206987920": {
+      "ref_words": 28,
+      "sub": 5,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6394396503267026674": {
+      "ref_words": 20,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3408865956630288536": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4337700686710746468": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1642760343500381894": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8271243515929353820": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16745099257468552688": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5736630489725067295": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17628386499410960757": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7443672204428789954": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15608318389401007651": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11071624094585946253": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7957516695992121116": {
+      "ref_words": 30,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4784001210986800251": {
+      "ref_words": 30,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7780980086114657670": {
+      "ref_words": 30,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2246806538359104404": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5500501976912029322": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16766699090764121868": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4922211422913061585": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11895462199050986312": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15012813816929340534": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4055850342672476926": {
+      "ref_words": 22,
+      "sub": 4,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1374608187292943527": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11705998923188893576": {
+      "ref_words": 22,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1904497143655810935": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16172347790867238503": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18339960199116825598": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5802240489331479619": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15353217904414386592": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7467455727145797147": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13422667390193209890": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8163225608327053464": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12137746508495051699": {
+      "ref_words": 18,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10724761538669846878": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18413104576311045513": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11788566903325213867": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14724707019967071685": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2304700082642137831": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-521627948810678456": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3403018486072405181": {
+      "ref_words": 45,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5264764117785249813": {
+      "ref_words": 45,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8106084934712714522": {
+      "ref_words": 27,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-925504208281737895": {
+      "ref_words": 27,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6418561952974462804": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16388435232238351068": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-795710828190503348": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3701603982588000979": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3707700622471676561": {
+      "ref_words": 20,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11191231201416885655": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4292177765992315830": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18262589805476879217": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8429187919396721101": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14351386732585898696": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1391604489470106010": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17524717606615045390": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9483729844802406873": {
+      "ref_words": 34,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10663019413117022741": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14815624640637674101": {
+      "ref_words": 34,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1610120587761527365": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13972275219466935921": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1712901219926410334": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16864697716385995589": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7775364368777462824": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4474046069035354578": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-245549139205774203": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10037759924455051213": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1354963388601994237": {
+      "ref_words": 29,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5830689108717682239": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6532041474320528573": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9772596883794532070": {
+      "ref_words": 29,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10173541521390065753": {
+      "ref_words": 18,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8164369493339931371": {
+      "ref_words": 18,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6924178661626804415": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13056139116247458648": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10713904656493882072": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17149969095795237349": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8003703452509123182": {
+      "ref_words": 28,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7411305704617084213": {
+      "ref_words": 28,
+      "sub": 8,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13936690389957450225": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5534836155710838648": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15513047683575523357": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11955008895760981329": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13097266327547143097": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5439216546413353810": {
+      "ref_words": 36,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3173642626480120572": {
+      "ref_words": 36,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-448090709628371833": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5728214997822669962": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8300630672447414703": {
+      "ref_words": 26,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2425495975928120698": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2445853878339840715": {
+      "ref_words": 40,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7367790505390608229": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17304961910229882151": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14644753402005836636": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16698726199579354266": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4504086852022472914": {
+      "ref_words": 27,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8582400747024067980": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3063351521014733861": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1333247701460370998": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17949367215553597344": {
+      "ref_words": 35,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2901664397793218712": {
+      "ref_words": 35,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10331901392264121024": {
+      "ref_words": 35,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18082994823058473808": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8979774917206194942": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4227694996208545952": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10127750728509182272": {
+      "ref_words": 15,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12796255573085980126": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9084809573522217005": {
+      "ref_words": 31,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16245537390971011439": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5452502644378324062": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3493471438011183770": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14089751339403325211": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8444448604252357297": {
+      "ref_words": 24,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5286587672974364397": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-647791787162418779": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11103659218459013642": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1348060304376863464": {
+      "ref_words": 33,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-395526465300122666": {
+      "ref_words": 33,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5489705199715017161": {
+      "ref_words": 33,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8624883642038355529": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8400316205938500674": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10892870942267194469": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-636078745292417868": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7235941717645993910": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15671633673792705094": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15019600377627773647": {
+      "ref_words": 19,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3377416756349288322": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8350442492543662588": {
+      "ref_words": 27,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-36483421306858451": {
+      "ref_words": 33,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16040235974919255393": {
+      "ref_words": 33,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9736141568307377538": {
+      "ref_words": 33,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13026985237150452880": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17327349708727047487": {
+      "ref_words": 26,
+      "sub": 1,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3981221425465110195": {
+      "ref_words": 26,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5788560095062812133": {
+      "ref_words": 29,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1300188261660801588": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4377251862084090842": {
+      "ref_words": 29,
+      "sub": 3,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16492100583888081146": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17219500578442047228": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5577679441484127121": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4887766484936675346": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14245750402303208184": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4393517562662704044": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10775229660857585342": {
+      "ref_words": 20,
+      "sub": 4,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11339071716208461682": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10363722267618555781": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6693372564166260466": {
+      "ref_words": 16,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11797586279966817241": {
+      "ref_words": 22,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11957109347956835276": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9125119964951216566": {
+      "ref_words": 22,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7815926197000448972": {
+      "ref_words": 40,
+      "sub": 7,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11477033720454599358": {
+      "ref_words": 40,
+      "sub": 8,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-6829253697012231368": {
+      "ref_words": 40,
+      "sub": 7,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13920062595057358738": {
+      "ref_words": 16,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2964670514638254068": {
+      "ref_words": 16,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7205526259017871574": {
+      "ref_words": 16,
+      "sub": 5,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8880871811778501315": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-62737037796556154": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12301188122993691022": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-16185571894601235056": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17950358501644847424": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8953218902826726171": {
+      "ref_words": 21,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10557144981026796249": {
+      "ref_words": 31,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11604735238260450088": {
+      "ref_words": 31,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9899283838986625640": {
+      "ref_words": 36,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8527553295242834766": {
+      "ref_words": 36,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15863032525162493578": {
+      "ref_words": 52,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3074311296443652847": {
+      "ref_words": 52,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13686425341231579548": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2941106202850179656": {
+      "ref_words": 15,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14222603191201987697": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7423764081781373508": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7119514666423133241": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-10571870825120879633": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11704279637582289257": {
+      "ref_words": 30,
+      "sub": 7,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12573528338670120584": {
+      "ref_words": 30,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4509707654661734991": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2209933534813078659": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14831071379897947070": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7264864507784354413": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-5801018455295832063": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-9071737899953350186": {
+      "ref_words": 25,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-17186218170400258884": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8649342079861995550": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1701941707910913361": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8255490706104567074": {
+      "ref_words": 21,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15182465475031374299": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1061754421613910766": {
+      "ref_words": 30,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4628429369589708545": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-800605313593319325": {
+      "ref_words": 30,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11476189529866908174": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3196628264779512269": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4131059503480097181": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15478686785066055188": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11432710681817462062": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4396809030064961803": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14004221706613343653": {
+      "ref_words": 20,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3058068294599792164": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4814216792779461781": {
+      "ref_words": 25,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-730680398860124808": {
+      "ref_words": 25,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14713762785067230586": {
+      "ref_words": 18,
+      "sub": 9,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4045850852858959263": {
+      "ref_words": 18,
+      "sub": 6,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-12967134631724664785": {
+      "ref_words": 23,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4900550129993756462": {
+      "ref_words": 30,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8972150741429135505": {
+      "ref_words": 30,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14327807496555850172": {
+      "ref_words": 30,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-2000664095146143447": {
+      "ref_words": 45,
+      "sub": 5,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3626746970937690833": {
+      "ref_words": 38,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-7984902539773104794": {
+      "ref_words": 38,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-14903486794729362820": {
+      "ref_words": 19,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8151586305145188134": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-3657592053724136980": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8855325558123369633": {
+      "ref_words": 36,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13541870492179954456": {
+      "ref_words": 36,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-11065864919517073072": {
+      "ref_words": 36,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-1121305088935168255": {
+      "ref_words": 22,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-4518117965488940939": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-13716883997792689133": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-15444545988445322318": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-18130618207377966310": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "fleurs-8678896313545100362": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    }
+  },
+  "manifest": "data/manifests/fleurs_it_test.jsonl",
+  "manifest_sha256": "54b79c8e1520359f2403dc021fd2bff167e76d7df3db2d4ed3532de91c8ce0f1",
+  "hyp": "runs/E-019/l0-sets/fleurs_it_test.jsonl",
+  "hyp_sha256": "319d6ee5ecb7f7e366a3bee888bc1fa64876b2e305f2f165771e93d4d849f2ab",
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07",
+  "git_sha": "b4f8e5e301cab4f2d863d93c610f4b295b8eacec",
+  "config_path": null,
+  "extra_hypotheses": 0
+}

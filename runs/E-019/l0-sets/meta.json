@@ -1,0 +1,32 @@
+{
+  "system": "whistle",
+  "variant": "it-none",
+  "hotwords_mode": "none",
+  "created_at": "2026-11-07T10:24:18+0100",
+  "sets": {
+    "fleurs_it_test": {
+      "manifest": "data/manifests/fleurs_it_test.jsonl",
+      "n": 697,
+      "errors": [],
+      "audio_seconds": 9869.64,
+      "wall_seconds": 46.063,
+      "rtfx": 214.26447119804,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    },
+    "fleurs_en_test": {
+      "manifest": "data/manifests/fleurs_en_test.jsonl",
+      "n": 525,
+      "errors": [],
+      "audio_seconds": 4995.56,
+      "wall_seconds": 20.797,
+      "rtfx": 240.2017684966938,
+      "hotwords": 0,
+      "oracle_hotwords": false
+    }
+  },
+  "engine": "cactus-needle",
+  "language": "it",
+  "weights": "published base",
+  "vad_guard": false
+}

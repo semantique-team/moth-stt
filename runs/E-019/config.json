@@ -40,6 +40,28 @@
     "language_code": "it",
     "reproducible": "bit-identical across reruns; sha256 of the three JSONL files is in data/split.json (`sha256`)"
   },
+  "training": {
+    "command": "runs/E-019/train_L1.sh",
+    "epochs": 3,
+    "batch_size": 16,
+    "lr": 0.0001,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "seed": 0,
+    "steps": 216,
+    "wall_seconds": 1320,
+    "seconds_per_step": 5.7,
+    "val_loss": [0.8250, 0.5608, 0.5267],
+    "backend": "cpu (float32)",
+    "adapter_bytes": 6786888
+  },
+  "export": {
+    "path": "runs/E-019/whistle-lora-L1.cact",
+    "bytes": 29346671,
+    "base_bytes": 16919407,
+    "note": "28.0 MB exported vs 16.92 MB base: the merged W4A8 archive is larger, and 28.0 + 2.33 MB VAD is over the 20 MB budget"
+  },
+  "result": "killed at L1: S3 paired WER CI [-0.68, +5.46] covers 0 (see runs/E-019/RESULT.md)",
   "step_3_base_weights": {
     "cached_cact": "~/.cache/cactus-needle/whistle/2.0.0/whistle.cact",
     "cached_cact_bytes": 16919407,
