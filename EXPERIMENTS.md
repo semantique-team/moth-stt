@@ -1243,3 +1243,53 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `train_L1.log`, `RESULT.md`, `l0/`, `l1-s3/`, `gold-test-{base,l1}/`, `{l0,l1}-{sets,cv,noise}/`,
   `manifests/`). The 6.5 MB adapter and the 28 MB `.cact` are gitignored; every number comes from
   `stt.eval` with a paired bootstrap (seed 0, 1000 resamples), never from the CLI's own WER.
+
+## E-020 — the WER cost of the shipped int8 model (2026-11-07)
+
+- **Date**: 2026-11-07. **Decode-only**, no training.
+- **Question**: the release ships `model.int8.onnx`, but its WER had never been measured on our
+  sets — only top-1 logit agreement (99.72%) and 44/100 identical transcripts on 100 FLEURS-IT
+  clips. E-016 had measured it (identical WER on 100 clips); E-017 had not.
+- **Method**: `stt/onnx_runner.py` (new) decodes the shipped artifact in Python. Before this the
+  repo could not *run* the released graph at all: the browser path is JavaScript and
+  `stt/export.py` uses ONNX Runtime only to compare logits. Same manifests, same CTC decoders, same
+  LM, same text rule and same bootstrap as every other number; the PyTorch references are the
+  E-017 hypotheses re-scored on the identical manifest (sha256 `43f895bf…`).
+- **Result**:
+  - **T-600 greedy**: 37.70 → **38.13**, Δ **+0.43** [−0.17, +1.01] → tie.
+  - **T-600 beam+LM**: 32.77 → **32.94**, Δ **+0.17** [−0.40, +0.77] → tie.
+  - **FLEURS-IT beam+LM**: 26.52 → **26.85**, Δ **+0.32** [+0.08, +0.57] → **slightly worse**.
+  - ETA unchanged on T (Δ −0.10 / −0.38, ties). Identical transcripts: 70.5% / 77.3% on T-600,
+    52.8% on FLEURS-IT.
+- **Reading**: on our own speakers the quantized artifact is free within noise, so the shipped
+  package is honest. On longer out-of-domain audio it costs 0.3 points with a CI that excludes 0 —
+  a fair caveat for the model card. The length split explains it: T clips are 1.3–5.6 s (mean 239
+  mel frames), FLEURS clips 7–23 s (mean 1458), and per-frame quantization error accumulates before
+  the decoder commits; beam search turns small logit differences into different hypotheses.
+- **Closes**: the `STATUS.md` line *"Il costo WER dell'int8 non è stato rimisurato end-to-end su T"*.
+- **Artifacts**: `runs/E-020/` (`eval_onnx.py`, `RESULT.md`, `int8-greedy/`, `int8-beam-lm/`,
+  `int8-fleurs-it/`, `torch-ref/`), `stt/onnx_runner.py`, `tests/test_onnx_runner.py`.
+
+## E-021 — where the fp32 export gap comes from (2026-11-07)
+
+- **Date**: 2026-11-07. **Export-only**, no training.
+- **Question**: E-016 recorded fp32 `max |Δ| = 1.051e-3` against a 1e-3 gate on a synthetic 29 s
+  clip, and every release since (0.3.0/0.4.0/0.5.0) was built with `--no-verify` because of it.
+  Real audio in the same run measured 5.46e-4. Export bug, or fixture?
+- **Method**: `runs/E-021/fp32_gap.py` exports the E-017 checkpoint to fp32 ONNX and measures the
+  same quantity under four fixtures plus a 20-seed sweep.
+- **Result**:
+  - Gate fixture as written, seed 0: **2.43e-4** (passes — E-017's checkpoint is not E-016's).
+  - Real T clips at the same lengths: **3.05e-4**; real clip zero-padded to 29 s: 2.21e-4.
+  - Synthetic at the natural mel scale: 1.37e-4.
+  - **20 seeds × 4 lengths = 80 draws**: median ≈ 1.8e-4, **worst 1.28e-3, 1/80 over the gate,
+    always at 29 s**; at 1/5/10 s, 0/60.
+- **Reading**: **the gate is a single random draw, not a statistic.** Its typical value is 5.5×
+  under the threshold and the tail crosses it ~1% of the time. The number depends on (checkpoint,
+  seed, length): E-017 gives 2.43e-4 at seed 0 and 1.28e-3 at seed 2. The export is not wrong —
+  real speech, including a real clip padded to the failing length, stays at a third of the gate
+  with top-1 agreement 1.0, and the int8 built from it costs +0.17 WER on T-600 (E-020).
+- **Recommendation (not implemented — it changes the gate)**: replace the single-draw check with a
+  seeded sweep asserting the median ≤ 1e-3 and the worst ≤ 1e-2, so the gate tests the export and
+  not the luck of one `default_rng(0)` call.
+- **Artifacts**: `runs/E-021/` (`fp32_gap.py`, `RESULT.md`, `fp32_gap.json`).

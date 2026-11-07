@@ -85,12 +85,38 @@
   (`build_jsonl.py`, `config.json`, `data/`, `train_L1.sh`, `train_L1.log`, `RESULT.md`, eval di
   L0/L1 su S3, gold-test, FLEURS, CV, noise). Adattatore 6,5 MB e `.cact` 28 MB gitignored.
   **Whistle LoRA: chiuso, non si prosegue.**
+- **E-020 (int8 WER end-to-end) — FATTO (2026-11-07)**: chiusa la lacuna "il costo WER dell'int8
+  non è stato rimisurato end-to-end su T". Nuovo `stt/onnx_runner.py` (il repo non sapeva *eseguire*
+  il modello spedito: il path browser è JS e `export.py` usava ORT solo per i logit). Misurato
+  decodificando `release/model.int8.onnx` con i decodificatori, i manifest e lo scoring esistenti:
+  **T-600 greedy 37,70 → 38,13 (+0,43 [−0,17, +1,01], tie)**; **T-600 beam+LM 32,77 → 32,94
+  (+0,17 [−0,40, +0,77], tie)**; **FLEURS-IT beam+LM 26,52 → 26,85 (+0,32 [+0,08, +0,57], non tie)**.
+  ETA invariata su T. Trascrizioni identiche: 70,5% (greedy) e 77,3% (beam+LM) su T, 52,8% su
+  FLEURS-IT. Lettura: sugli speaker nostri l'int8 è gratis entro il rumore; sul dominio lungo
+  (clip 7–23 s vs 1,3–5,6 s di T) costa 0,3 punti reali. L'artefatto spedito resta valido.
+  Artefatti `runs/E-020/` (`eval_onnx.py`, `RESULT.md`, eval int8 + riferimenti PyTorch ri-scorati).
+- **E-021 (gate fp32) — FATTO (2026-11-07)**: il `1,051e-3` che da E-016 faceva costruire ogni
+  release con `--no-verify` è **la coda di una singola estrazione casuale, non un bug di export**.
+  Sweep 20 seed × 4 lunghezze (80 estrazioni): mediana ~1,8e-4, **peggiore 1,28e-3, 1/80 sopra il
+  gate, sempre a 29 s**; a 1/5/10 s nessuna. Su audio reale (anche una clip T reale paddata a 29 s)
+  max **3,05e-4**, top-1 1,0. Il valore dipende da (checkpoint, seed, lunghezza): E-017 al seed 0 dà
+  2,43e-4 e al seed 2 dà 1,28e-3. **Raccomandazione**: sostituire il gate a estrazione singola con
+  uno sweep seedato (mediana ≤ 1e-3, peggiore ≤ 1e-2) — non implementato, cambia il gate.
+  Artefatti `runs/E-021/` (`fp32_gap.py`, `RESULT.md`, `fp32_gap.json`).
+- **NOTICE**: FLEURS era elencato due volte (una voce per `fleurs_it` e una per `fleurs_en` nello
+  stesso registro); ora le righe di attribuzione identiche sono deduplicate in `build_notice`, con
+  un test di regressione. Le release già costruite hanno ancora il duplicato: si corregge al
+  prossimo rebuild.
+- **Piano E-018 scritto** (2026-11-07): [`docs/plans/2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md)
+  — bracci G3 (tre speaker) / G3+ (più frasi) / G3× (×100), criteri di successo e di plateau,
+  la modifica di codice necessaria (l'invariante `kind R` rifiuta S3/S4 in `generate_scripts.py`),
+  e i rischi (terzo canale, rendimenti decrescenti, E-019 che rende il claim architecture-bound).
 - **Release 0.5.0 con E-017** (2026-11-07): `release/` ricostruita col checkpoint E-017 —
   int8 **11,91 MB** (sha `fe1afcc2…`) + LM 5,12 + VAD 2,33 = **19,44 MB**. Browser con VAD nel loop:
   **4T 52,2× / 50,8× / 46,3×**, **1T 25,5× / 24,3× / 21,8×** su 5/10/20 s; **6/6 Playwright** verdi.
   int8 su 100 FLEURS-IT: top-1 **99,72%**, 44/100 trascrizioni identiche, gap massimo 8,59. Il costo
-  WER dell'int8 **non** è stato rimisurato end-to-end su T (da fare). Record:
-  `runs/E-017/release-0.5.0.json`.
+  WER dell'int8 **ora misurato end-to-end** (E-020): T-600 +0,43 greedy / +0,17 beam+LM, tie;
+  FLEURS-IT +0,32 significativo. Record: `runs/E-017/release-0.5.0.json`.
 - **Baseline T-600 complete** (2026-11-07): su tutti i 600 clip, Moth E-017 **32,77/42,86** vs
   Whisper auto 68,86/39,50, Whisper it 50,72/36,05, **Whistle 29,42/49,28**, Parakeet 10,98/83,60.
   **Il gate misto passa su T-600 contro entrambe le varianti Whisper** (vs it: WER −17,95
@@ -281,11 +307,10 @@
 (bloccata sulla decisione di provenienza audio), **4** re-scope, più **E-018** (scalare il gold, non
 ancora nel piano). Trasversali: release con E-017, noise augmentation.
 
-**In attesa di S4 (2026-11-07):** **E-019 è stato eseguito e chiuso** (kill a L1, vedi sopra e
-`docs/11` §3.4); l'attesa di S4 resta aperta. Piano e protocollo:
-[`docs/plans/2026-11-07-whistle-lora-probe.md`](docs/plans/2026-11-07-whistle-lora-probe.md)
-(D28). La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per il criterio
-di kill.
+**In attesa di S4 (2026-11-07):** **E-019 chiuso** (kill a L1, `docs/11` §3.4), **E-020/E-021 fatti**
+(misure), **piano E-018 scritto**. L'attesa di S4 resta aperta e ora ha un piano:
+[`docs/plans/2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md).
+La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per il criterio di kill.
 
 | Task | Cosa | Blocco |
 |---|---|---|
@@ -294,6 +319,9 @@ di kill.
 | M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). Resta **S4**: review delle 200 frasi T-0601…0800, poi T + A, poi eventuale **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 | **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
+| **E-020** | **Costo WER dell'int8 — FATTO 2026-11-07**: T-600 +0,43 (greedy) / +0,17 (beam+LM), entrambi tie; FLEURS-IT +0,32 significativo. `stt/onnx_runner.py`, `runs/E-020/RESULT.md` | — (misura chiusa) |
+| **E-021** | **Gate fp32 — FATTO 2026-11-07**: 1,05e-3 è la coda di una singola estrazione (1/80 sopra, solo 29 s), non un bug; reale ≤ 3,1e-4. Raccomandato uno sweep seedato. `runs/E-021/RESULT.md` | decisione sul gate |
+| **E-018** | **Piano scritto 2026-11-07**: [`2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md). Bracci G3/G3+/G3×, criteri di successo e plateau, unica modifica di codice (invariante `kind R`) | review T-S4 + R-S4 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
 

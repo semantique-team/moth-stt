@@ -64,6 +64,8 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | Silero VAD v5 as the guard | E-011 add. | Non-music words 31 → **0** both decoders; 0 gated on T-400 and FLEURS-IT; +2.33 MB | **Kept** (0.4.0) | `runs/E-011/vad-*/`, `runs/E-011/vad_guard_summary.json` |
 | Gold data from two speakers (S1+S2) | E-017 | T-600 38.50 → **32.77** WER, 36.05 → **42.86** ETA; on held-out S3 −6.13 WER / +4.79 ETA, the same as on the trained speakers | **Kept** (best model) | `runs/E-017/eval/`, `runs/E-017/diffs/` |
 | LoRA on Whistle with the same gold | E-019 | On held-out S3 **+2.30 WER** [−0.68, +5.46] (tie, kill); FLEURS-IT +1.02, FLEURS-EN +2.30, CV-IT +2.66 — **all significant worse**; only the two trained speakers improve (−2.98, tie) | **Killed at L1**; H2 (data, not architecture) rejected | `runs/E-019/RESULT.md`, `runs/E-019/l1-s3/` |
+| int8 quantization of the shipped model | E-020 | T-600 +0.43 WER greedy / +0.17 beam+LM (both ties); FLEURS-IT +0.32 [+0.08, +0.57] | **Kept** (the artifact is honest on our speakers); FLEURS caveat for the card | `runs/E-020/RESULT.md` |
+| fp32 export gate of 1e-3, single draw | E-021 | Typical gap **1.8e-4**, but 1/80 draws crosses 1e-3, always at 29 s; real audio ≤ 3.05e-4 | **Gate is the problem, not the export**; switch to a seeded sweep | `runs/E-021/RESULT.md` |
 
 ### 3.2 A matched speaker can fabricate a +20-point ETA
 
@@ -242,6 +244,8 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Cross-speaker gold (E-017) | `runs/E-017/{config.yaml,train.log.jsonl,eval/,diffs/}` | `runs/E-017/prepare_gold.py --sets R-S1,R-S2 --factor 50`, then `stt.train --config runs/E-017/config.yaml`, then `runs/E-017/eval.sh` |
 | Noise set (E-011) | `data/manifests/noise_report.json` | `uv run python -m stt.data.build_noise ...` |
 | Whistle LoRA probe (E-019) | `runs/E-019/{RESULT.md,config.json,data/,l0/,l1-s3/,l0-sets/,l1-sets/}` | `uv run python runs/E-019/build_jsonl.py`, then `runs/E-019/train_L1.sh` (throwaway `.venv-whistle`), then `baselines/whistle_needle.py --weights runs/E-019/whistle-lora-L1.cact` |
+| int8 WER of the shipped model (E-020) | `runs/E-020/{RESULT.md,int8-greedy/,int8-beam-lm/,int8-fleurs-it/,torch-ref/}` | `uv run python runs/E-020/eval_onnx.py --sets recorded_t --out ...` (`stt/onnx_runner.py`), then `stt.eval --vs` the re-scored E-017 hypotheses |
+| fp32 export gap (E-021) | `runs/E-021/{RESULT.md,fp32_gap.json}` | `uv run python runs/E-021/fp32_gap.py` |
 
 ## 7. Open questions, in decision order
 
