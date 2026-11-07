@@ -199,3 +199,52 @@ def test_cli_accepts_s4_for_r(capsys, tmp_path: Path) -> None:
     assert main(["review", "--kind", "R", "--speaker", "S4", "--scripts-dir", str(tmp_path)]) == 0
     captured = capsys.readouterr()
     assert "R: 0/0 reviewed" in captured.out
+
+
+def test_recorded_rows_are_not_silently_editable() -> None:
+    """A recorded row's text is the training target and the ETA reference: it must match the audio.
+
+    The review of 2026-11-07 found 14 grammar artifacts in R-S1/R-S2 that are *in the audio* (the
+    speakers read them verbatim). Fixing the text would desynchronise it from the recording, so
+    two invariants are pinned here:
+
+    1. manifest and script agree on every recorded id;
+    2. the recorded text as a whole still hashes to what it was when the audio was accepted
+       (``recorded_text.sha256.json``), so editing both files together is also caught.
+
+    Changing a recorded transcript on purpose means re-recording the clip and updating the digest:
+    a deliberate, reviewable act rather than an accidental one.
+    """
+    import hashlib
+
+    repo = Path(__file__).resolve().parents[1]
+    pinned = json.loads(
+        (repo / "recordings" / "manifests" / "recorded_text.sha256.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    for name in ("R-S1", "R-S2", "T"):
+        script = {
+            row["id"]: row["text"]
+            for row in load_script(repo / "recordings" / "scripts" / f"{name}.jsonl")
+        }
+        manifest_path = repo / "recordings" / "manifests" / f"{name}.jsonl"
+        if not manifest_path.exists():
+            continue
+        rows = [
+            json.loads(l)
+            for l in manifest_path.read_text(encoding="utf-8").splitlines()
+            if l.strip()
+        ]
+        for row in rows:
+            assert row["text"] == script[row["id"]], (
+                f"{row['id']}: manifest and script disagree; the manifest is the recorded target"
+            )
+        digest = hashlib.sha256()
+        for row in sorted(rows, key=lambda r: r["id"]):
+            digest.update(f"{row['id']}\t{row['text']}\n".encode())
+        assert digest.hexdigest() == pinned[name]["sha256"], (
+            f"{name}: the recorded transcripts changed. If this is intentional, re-record the clip "
+            "and update recordings/manifests/recorded_text.sha256.json in the same commit."
+        )
+        assert len(rows) == pinned[name]["rows"], f"{name}: recorded row count changed"
