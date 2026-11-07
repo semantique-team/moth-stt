@@ -101,12 +101,19 @@
   gate, sempre a 29 s**; a 1/5/10 s nessuna. Su audio reale (anche una clip T reale paddata a 29 s)
   max **3,05e-4**, top-1 1,0. Il valore dipende da (checkpoint, seed, lunghezza): E-017 al seed 0 dà
   2,43e-4 e al seed 2 dà 1,28e-3. **Raccomandazione**: sostituire il gate a estrazione singola con
-  uno sweep seedato (mediana ≤ 1e-3, peggiore ≤ 1e-2) — non implementato, cambia il gate.
-  Artefatti `runs/E-021/` (`fp32_gap.py`, `RESULT.md`, `fp32_gap.json`).
+  uno sweep seedato (mediana ≤ 1e-3, peggiore ≤ 1e-2) — **implementato lo stesso giorno (D29)**:
+  `FP32_GATE_WORST`, `FP32_SEEDS` in `stt/export.py`, `verify_fp32(..., seeds=N)`, e `docs/06` §4.2
+  aggiornato. Artefatti `runs/E-021/` (`fp32_gap.py`, `RESULT.md`, `fp32_gap.json`).
+- **Release 0.5.1 — la prima verificata da 0.3.0** (2026-11-07): stessi pesi di 0.5.0, ricostruita
+  col gate nuovo **senza `--no-verify`**: fp32 **mediana 2,127e-4, peggiore 1,472e-3, 3/80 sopra
+  1e-3** → passa. L'int8 prodotto è **byte-identico** a 0.5.0 (`fe1afcc2…`), pacchetto **19,44 MB**,
+  cinque sha invariati; solo `NOTICE` (FLEURS una volta) e `config.json` (versione) cambiano.
+  WER int8 ricontrollato sul pacchetto ricostruito: **38,13** su T-600 greedy, identico a E-020.
+  Browser 6/6 Playwright, 4T 52,0/51,0/46,5 e 1T 25,4/24,2/21,7 su 5/10/20 s.
+  Record: `runs/E-021/release-0.5.1.json`.
 - **NOTICE**: FLEURS era elencato due volte (una voce per `fleurs_it` e una per `fleurs_en` nello
   stesso registro); ora le righe di attribuzione identiche sono deduplicate in `build_notice`, con
-  un test di regressione. Le release già costruite hanno ancora il duplicato: si corregge al
-  prossimo rebuild.
+  un test di regressione. Corretto in 0.5.1.
 - **Piano E-018 scritto** (2026-11-07): [`docs/plans/2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md)
   — bracci G3 (tre speaker) / G3+ (più frasi) / G3× (×100), criteri di successo e di plateau,
   la modifica di codice necessaria (l'invariante `kind R` rifiuta S3/S4 in `generate_scripts.py`),
@@ -320,7 +327,7 @@ La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per i
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 | **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
 | **E-020** | **Costo WER dell'int8 — FATTO 2026-11-07**: T-600 +0,43 (greedy) / +0,17 (beam+LM), entrambi tie; FLEURS-IT +0,32 significativo. `stt/onnx_runner.py`, `runs/E-020/RESULT.md` | — (misura chiusa) |
-| **E-021** | **Gate fp32 — FATTO 2026-11-07**: 1,05e-3 è la coda di una singola estrazione (1/80 sopra, solo 29 s), non un bug; reale ≤ 3,1e-4. Raccomandato uno sweep seedato. `runs/E-021/RESULT.md` | decisione sul gate |
+| **E-021** | **Gate fp32 — FATTO 2026-11-07**: 1,05e-3 è la coda di una singola estrazione (1/80 sopra, solo 29 s), non un bug; reale ≤ 3,1e-4. **Gate sostituito da uno sweep seedato (D29)** e release **0.5.1 ricostruita verificata**: mediana 2,13e-4, peggiore 1,47e-3, int8 byte-identico. `runs/E-021/RESULT.md` | — (chiuso) |
 | **E-018** | **Piano scritto 2026-11-07**: [`2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md). Bracci G3/G3+/G3×, criteri di successo e plateau, unica modifica di codice (invariante `kind R`) | review T-S4 + R-S4 |
 
 ## Backlog ottimizzazioni (`docs/10`, living review)

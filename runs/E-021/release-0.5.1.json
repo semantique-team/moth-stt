@@ -1,0 +1,59 @@
+{
+  "release": "0.5.1",
+  "date": "2026-11-07",
+  "checkpoint": "runs/E-017/checkpoints/ckpt_best.pt (step 26442)",
+  "lm": "runs/E-008/lm_bpe3_aug.pkl.gz (alpha 0.2)",
+  "reason": "Same weights as 0.5.0. Two changes only: (1) the fp32 gate is now a seeded sweep (E-021), so this is the first release since 0.3.0 built with verification ON, no --no-verify; (2) NOTICE deduplicates the FLEURS attribution, which appeared twice (one line per language entry in the source registry).",
+  "build": "uv run python stt/export.py --out release --checkpoint runs/E-017/checkpoints/ckpt_best.pt --vocab release/vocab.json --head-blocks 2 --version 0.5.1",
+  "package_bytes": 19436178,
+  "package_mb": 19.44,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "fe1afcc2bb53f8ddcf5e1c9e959673f70099f76a37e38785b42c42a19dc1d482"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5116464,
+      "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    }
+  },
+  "identical_to_0_5_0": "all five file sha256 are unchanged; only NOTICE and config.json differ",
+  "fp32_verification": {
+    "gate": "seeded sweep, 20 draws per length: median <= 1e-3, worst <= 1e-2 (E-021)",
+    "median_abs": 0.0002127,
+    "worst_abs": 0.001472,
+    "draws_over_1e-3": 3,
+    "draws": 80,
+    "note": "verified, not --no-verify; the old single-draw gate would have failed this export"
+  },
+  "int8_verification": {
+    "max_abs": 2.857,
+    "top1_agreement": 1.0
+  },
+  "int8_wer_check": {
+    "script": "runs/E-020/eval_onnx.py",
+    "set": "recorded_t",
+    "decoder": "greedy",
+    "wer": 0.381307,
+    "matches_E020_rebuild_independently": true
+  },
+  "browser": {
+    "suite": "web/ Playwright, Chromium headless, WASM SIMD, VAD in the loop",
+    "tests": "6/6 passed",
+    "rtfx_4_threads": {"5s": 52.0, "10s": 51.0, "20s": 46.5},
+    "rtfx_1_thread": {"5s": 25.4, "10s": 24.2, "20s": 21.7},
+    "note": "in line with 0.5.0 (52.2/50.8/46.3 and 25.5/24.3/21.8); the weights are byte-identical so any difference is measurement noise"
+  }
+}
