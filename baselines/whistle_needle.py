@@ -43,12 +43,25 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--terms", default="data/en_terms.txt")
     parser.add_argument("--out", required=True)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument(
+        "--weights",
+        default=None,
+        help="optional .cact to load instead of the published base (a LoRA build)",
+    )
+    parser.add_argument(
+        "--vad-guard",
+        action="store_true",
+        help="gate clips with our Silero VAD before transcribing (the 0.4.0/0.5.0 path)",
+    )
     args = parser.parse_args(argv)
 
     os.environ.setdefault("NEEDLE_TELEMETRY", "0")
     os.environ.setdefault("DO_NOT_TRACK", "1")
 
     import needle  # heavy import: only when the runner actually runs
+
+    if args.vad_guard:
+        from stt.vad import has_speech
 
     language = None if args.variant == "auto" else args.variant
     if language is not None and language not in LANGUAGES:
@@ -64,8 +77,14 @@ def main(argv: list[str] | None = None) -> int:
 
     def build_transcriber(hotwords: list[str]):
         def transcribe(path) -> str:
+            audio = load_audio(path)
+            if args.vad_guard and not has_speech(audio):
+                return ""
             result = needle.transcribe(
-                load_audio(path), language=language, keywords=hotwords or None
+                audio,
+                language=language,
+                keywords=hotwords or None,
+                weights=args.weights,
             )
             return str(result.get("text", "")).strip()
 
@@ -83,7 +102,12 @@ def main(argv: list[str] | None = None) -> int:
         scripts_dir=args.scripts_dir,
         terms_path=args.terms,
         limit=args.limit,
-        meta_extra={"engine": "cactus-needle", "language": args.variant},
+        meta_extra={
+            "engine": "cactus-needle",
+            "language": args.variant,
+            "weights": args.weights or "published base",
+            "vad_guard": args.vad_guard,
+        },
     )
 
 
