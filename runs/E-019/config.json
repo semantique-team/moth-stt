@@ -8,7 +8,7 @@
     "install": "uv venv .venv-whistle --python 3.12 && uv pip install --python .venv-whistle/bin/python \"cactus-needle[train]\" soxr soundfile",
     "deviation_from_plan": "the plan said `cactus-needle[jax]`; cactus-needle 3.2.10 has no `jax` extra. The training extra is named `train` (jax, jaxlib, flax, optax, safetensors, sentencepiece, whisper-normalizer, soxr).",
     "python": "3.12.12",
-    "platform": "darwin arm64 (macOS 27.0.1), Apple M5, 17.2 GB RAM",
+    "platform": "darwin arm64 (macOS 27.0.1), MacBook Pro Mac17,2, Apple M5, 10 cores (4 performance + 6 efficiency), 16 GiB RAM",
     "packages": {
       "cactus-needle": "3.2.10",
       "jax": "0.12.0.1",
