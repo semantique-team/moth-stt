@@ -129,6 +129,22 @@
   `HF_TOKEN=hf_... uv run python runs/E-021/upload_hf.py --repo <namespace>/moth-stt --push`
   (aggiungere `--private` per uno staging). La card cita `semantique-team` in due punti: va
   aggiornata se il namespace è diverso.
+- **Review delle frasi — FATTA (2026-11-07)**: lette tutte le **1.464** righe (R-S1 641, R-S2 623,
+  S4 200), marcate `reviewed: true`. Report:
+  [`recordings/scripts/audit-2026-11-07.md`](recordings/scripts/audit-2026-11-07.md). Struttura:
+  **0 violazioni di categoria, 0 duplicati, 0 near-duplicate** contro T (Jaccard 3-gram ≥ 0,8).
+  **T (S4, non registrata)**: 24 righe corrette — articoli (`lo status`, `lo sprint`, `lo ssd`,
+  `lo sdk`, `lo sso`), accordi (`una demo call`, `la release note`, `la timeline`), frasi rotte
+  (`una new version` / `un better support` riscritte), un apostrofo perso, e **8 prestiti inglesi
+  che nessun italiano usa** (`printer`, `contract`, `invoice`, `delivery`, `parcel`, `shipment`,
+  `courier`, `accountant`) sostituiti con gli equivalenti italiani. `T-0714`/`T-0778` portate a
+  `switch` con **tutti** i termini annotati (`bug`, `login`, `team` prima invisibili all'ETA).
+  **13 righe R** hanno errori di articolo che restano perché **l'audio li contiene**: lo speaker ha
+  letto il testo verbatim (verificato con Whistle su S1_0077 → "Il studio di registrazione è in
+  centro"), quindi riscrivere il testo desincronizzerebbe audio e trascrizione. Documentati, non
+  toccati. **0 righe registrate modificate**, nessun manifest toccato: verificato contro `HEAD`
+  (22 testi + 3 blocchi span/categoria, tutti non registrati). Le sigle (`un SMS`, `il XML`) sono
+  **corrette**: si leggono lettera per lettera.
 - **Release 0.5.0 con E-017** (2026-11-07): `release/` ricostruita col checkpoint E-017 —
   int8 **11,91 MB** (sha `fe1afcc2…`) + LM 5,12 + VAD 2,33 = **19,44 MB**. Browser con VAD nel loop:
   **4T 52,2× / 50,8× / 46,3×**, **1T 25,5× / 24,3× / 21,8×** su 5/10/20 s; **6/6 Playwright** verdi.
@@ -144,8 +160,9 @@
   `runs/E-017/baselines-t600/`.
 - **Anchor A**: S1, S2 e **S3 60/60** completi (manifest `A-S1/A-S2/A-S3`); manca solo S4.
   `uv run recordings/record.py --speaker S4 --kind A` (audio in `recordings/audio/anchor/`).
-- **Review**: le 200 frasi nuove (T-0601…T-0800, S4) sono `reviewed: false`; vanno riviste prima
-  che S4 registri (`uv run recordings/generate_scripts.py review --kind T`).
+- **Review**: **completata il 2026-11-07** — tutte le 1.464 righe lette e marcate. Le 24 correzioni
+  del blocco S4 sono in `recordings/scripts/audit-2026-11-07.md`; nessuna riga registrata è stata
+  toccata. S4 può registrare.
 - **R-S2**: **623 frasi** (batch 1–4 + 12 `standup` del 2026-10-30: 572 nette, 8 categorie, 18/18 termini rari, 0 doppioni, 0 near-dup contro T); **pronto per S2**. Non serve altro lavoro
   nuovi** — il pool non si può riusare, `docs/03` §6 impone il dedupe su T/R/pool. Poi S2 registra
   `uv run recordings/record.py --speaker S2 --kind R`. R-S2 è il blocco residuo di H3a insieme a
@@ -230,8 +247,8 @@
   di categoria**, R-S1/R-S2 **0 near-duplicate contro T**; copertura **18/18** termini rari.
   Corretti: **15 buchi di annotazione in T** (tutte frasi non ancora registrate: le 200 di S1 erano
   già pulite, quindi gli ETA riportati non cambiano), **5 in R-S1/R-S2**, e **1 near-duplicate**
-  rimosso da R-S2. Aperti: **T-0714** e **T-0778** (`single_word` con 2–3 parole inglesi, nel
-  blocco S4 non ancora rivisto) e le **190 frasi R non riviste**.
+  rimosso da R-S2. **Aperti risolti il 2026-11-07**: `T-0714` e `T-0778` sono ora `switch` con tutti
+  i termini annotati, e le frasi R sono state lette tutte (`audit-2026-11-07.md`).
 - **E-016 (gold S1) fatto — diagnosi, non nuovo modello** (2026-10-29): R-S1 completo
   (635 take, 29,3 min) ripetuto **×50** (24,4 h) dentro la miscela E-014 (572,4 h), 24.478 step in
   4 h 20 (uno stallo da memoria a ~2.700, ripreso con `empty_cache` 50 → 10). Beam+LM:
@@ -334,7 +351,7 @@ La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per i
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
 | H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-017 è il modello migliore**: T-600 **32,77 WER / 42,86 ETA** (E-016 38,50/36,05; E-014 53,50/20,33), FLEURS-IT **26,52**, FLEURS-EN 55,48, CV 30,36, noise 0 parole. **Su S3, che non ha mai contribuito audio, E-017 vs E-016: WER −6,13 [−8,68, −3,51], ETA +4,79 [+0,51, +9,06]** — lo stesso guadagno degli speaker in training (S1 −4,47, S2 −6,60): il gold **non** è adattamento allo speaker (D27). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −11,07 [−16,28, −5,89] VINTO**, **ETA −2,82 [−11,65, +6,56] tie** → gate misto non passato, ma il WER è vinto per la prima volta su uno speaker held-out; contro Whisper auto vince entrambi; Whistle resta avanti (28,36/52,11). **FLEURS-IT**: 26,52 vs Whisper-tiny auto+beam5 27,42 → −0,89 [−2,08, +0,19] **tie** (era −0,66). **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: **E-018** (più gold: S4 e più frasi) perché il secondo speaker ha valso ~6 punti, oppure E-015 distillazione (bloccata sulla fonte audio), oppure re-scope | decisione |
-| M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). Resta **S4**: review delle 200 frasi T-0601…0800, poi T + A, poi eventuale **E-018** con tre speaker | registrazioni T-S4 |
+| M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). **Review fatta** (2026-11-07). Resta **S4**: registra T (200), A (60) e R-S4, poi **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 | **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
 | **E-020** | **Costo WER dell'int8 — FATTO 2026-11-07**: T-600 +0,43 (greedy) / +0,17 (beam+LM), entrambi tie; FLEURS-IT +0,32 significativo. `stt/onnx_runner.py`, `runs/E-020/RESULT.md` | — (misura chiusa) |
@@ -377,7 +394,8 @@ live sono nei log.
   si è fermata a 974,8 s invece di 1.200), shard `noise` ricostruiti (**457 clip, 1,27 h**): il
   non-music passa a **337 clip = 56,2 min**. Col VAD: **0 parole non-music** e **97/97** clip di
   room tone gated (le 13 non gated sono music). Restano 4 min per arrivare a 1 h, non bloccanti.
-- **S4**: review a mano delle 200 frasi T-0601…T-0800, poi T + anchor. S1–S3 hanno già fatto T e A.
+- **S4**: review **fatta** (2026-11-07, `audit-2026-11-07.md`); ora S4 può registrare T + anchor.
+  S1–S3 hanno già fatto T e A.
 - **R-S2 — fatto** (2026-11-06): **623 take**, 622 valide (`S2_0001` = 0,39 s di silenzio, escluso;
   D26). Manifest `recordings/manifests/R-S2.jsonl`, mel `data/shards/R-S2`. Consumato da **E-017**.
 - **T di S2**: già integrato dal 2026-10-30; lo zip di novembre conteneva T e anchor **byte-identici**
