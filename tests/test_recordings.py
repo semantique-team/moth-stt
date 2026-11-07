@@ -16,7 +16,9 @@ from recordings.generate_scripts import script_path
 from recordings.record import append_session_log, next_audio_path, plan_session
 
 
-def _write_script(scripts_dir: Path, kind: str, rows: list[dict], speaker: str | None = None) -> None:
+def _write_script(
+    scripts_dir: Path, kind: str, rows: list[dict], speaker: str | None = None
+) -> None:
     path = script_path(scripts_dir, kind, speaker)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
@@ -60,7 +62,9 @@ def test_default_audio_dirs_separate_t_and_r() -> None:
     assert default_audio_dir("A", "S2") == Path("recordings/audio/anchor")
     assert default_audio_dir("R", "S1") == Path("recordings/audio/R-S1")
     assert default_audio_dir("R", "S2") == Path("recordings/audio/R-S2")
-    with pytest.raises(ValueError, match="S1 or S2"):
+    # S4 gets one for E-018; S3 never does (it is the held-out speaker).
+    assert default_audio_dir("R", "S4") == Path("recordings/audio/R-S4")
+    with pytest.raises(ValueError, match="held out"):
         default_audio_dir("R", "S3")
 
 
@@ -160,7 +164,11 @@ def test_record_builds_r_manifest(tmp_path: Path) -> None:
 
 
 def test_build_report_renders_counts() -> None:
-    report = {"speakers": {"S1": {"expected": 3, "found": 2, "total_seconds": 12.5}}, "errors": [], "warnings": []}
+    report = {
+        "speakers": {"S1": {"expected": 3, "found": 2, "total_seconds": 12.5}},
+        "errors": [],
+        "warnings": [],
+    }
     text = build_report(report)
     assert "S1" in text and "2/3" in text and "12.5" in text
 

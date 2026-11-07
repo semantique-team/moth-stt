@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -31,10 +32,12 @@ from stt.text import normalize
 
 __all__ = [
     "CATEGORIES",
+    "HELD_OUT_SPEAKERS",
     "NEAR_DUP_JACCARD",
     "POOL_RANGE",
     "QUOTAS_T",
     "R_RANGE",
+    "R_SPEAKERS",
     "T_SPEAKERS",
     "ScriptError",
     "evaluate_stats",
@@ -77,6 +80,15 @@ POOL_RANGE = (3000, 5000)
 
 T_SPEAKERS = ("S1", "S2", "S3", "S4")
 
+#: Speakers that may have a training script (``kind R``). S1 and S2 recorded theirs for E-016 and
+#: E-017; **S4 was added on 2026-11-07 for E-018**, where it is a *training* speaker.
+R_SPEAKERS = ("S1", "S2", "S4")
+
+#: Speakers held out from all training. **S3 must never get an R script**: it is the honest
+#: held-out speaker for E-017 and again for E-018, and the whole cross-speaker claim rests on it
+#: never contributing audio. The set is stated explicitly so a future edit has to face it.
+HELD_OUT_SPEAKERS = ("S3",)
+
 #: Word-3-gram Jaccard above which two sentences are considered near-duplicates.
 NEAR_DUP_JACCARD = 0.8
 
@@ -95,8 +107,15 @@ def script_path(scripts_dir: Path | str, kind: str, speaker: str | None = None) 
     if kind not in _SCRIPT_FILES:
         raise ScriptError(f"unknown kind {kind!r} (expected one of {sorted(_SCRIPT_FILES)})")
     if kind == "R":
-        if speaker not in ("S1", "S2"):
-            raise ScriptError("kind 'R' needs --speaker S1 or S2 (S3/S4 are held out from training)")
+        if speaker in HELD_OUT_SPEAKERS:
+            raise ScriptError(
+                f"kind 'R' is refused for {speaker}: held out from all training "
+                f"({', '.join(HELD_OUT_SPEAKERS)}); see docs/plans/2026-11-07-e018-scale-the-gold.md"
+            )
+        if speaker not in R_SPEAKERS:
+            raise ScriptError(
+                f"kind 'R' needs --speaker one of {', '.join(R_SPEAKERS)}, got {speaker!r}"
+            )
         return Path(scripts_dir) / _SCRIPT_FILES["R"].format(speaker=speaker)
     return Path(scripts_dir) / _SCRIPT_FILES[kind]
 
@@ -190,7 +209,9 @@ def load_script(path: Path) -> list[dict]:
     path = Path(path)
     if not path.exists():
         return []
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return [
+        json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
 
 
 def _save_script(path: Path, rows: list[dict]) -> None:
@@ -251,7 +272,9 @@ def import_candidates(
         if index.is_duplicate(row["text"]):
             duplicates += 1
             continue
-        row["id"] = f"{kind}-{speaker}-{next_number:04d}" if kind == "R" else f"{kind}-{next_number:04d}"
+        row["id"] = (
+            f"{kind}-{speaker}-{next_number:04d}" if kind == "R" else f"{kind}-{next_number:04d}"
+        )
         row["reviewed"] = False
         next_number += 1
         index.add(row["text"])
@@ -311,9 +334,7 @@ def evaluate_stats(scripts_dir: Path | str) -> dict:
 
 def review_report(rows: list[dict]) -> dict:
     """Review status of one script: totals and the list of unreviewed rows."""
-    unreviewed = [
-        {"id": row["id"], "text": row["text"]} for row in rows if not row.get("reviewed")
-    ]
+    unreviewed = [{"id": row["id"], "text": row["text"]} for row in rows if not row.get("reviewed")]
     return {"total": len(rows), "reviewed": len(rows) - len(unreviewed), "unreviewed": unreviewed}
 
 
@@ -335,7 +356,9 @@ def mark_reviewed(rows: list[dict], reviewer: str, ids: list[str] | None = None)
 def _print_stats(stats: dict) -> None:
     for name, section in stats.items():
         if name == "T":
-            print(f"T: {section['total']}/{sum(QUOTAS_T.values())} sentences, reviewed {section['reviewed']}")
+            print(
+                f"T: {section['total']}/{sum(QUOTAS_T.values())} sentences, reviewed {section['reviewed']}"
+            )
             for speaker, count in section["per_speaker"].items():
                 print(f"  {speaker}: {count} (target 200)")
             for category, entry in section["categories"].items():
@@ -343,7 +366,9 @@ def _print_stats(stats: dict) -> None:
                 print(f"  {category}: {entry['actual']}/{entry['quota']}{flag}")
         else:
             low, high = section["range"]
-            print(f"{name}: {section['count']} (range {low}-{high}), reviewed {section['reviewed']}")
+            print(
+                f"{name}: {section['count']} (range {low}-{high}), reviewed {section['reviewed']}"
+            )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -378,6 +403,17 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     scripts_dir = Path(args.scripts_dir)
 
+    try:
+        return _run_command(args, scripts_dir)
+    except ScriptError as error:
+        # A usage error, including the held-out-speaker refusal: exit non-zero so a caller or an
+        # agent cannot mistake it for success.
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+
+
+def _run_command(args: argparse.Namespace, scripts_dir: Path) -> int:
+    """Dispatch one subcommand; raises :class:`ScriptError` for usage errors."""
     if args.command == "review":
         rows = load_script(script_path(scripts_dir, args.kind, args.speaker))
         report = review_report(rows)

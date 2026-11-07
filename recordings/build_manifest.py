@@ -19,7 +19,12 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-from recordings.generate_scripts import load_script, script_path
+from recordings.generate_scripts import (
+    HELD_OUT_SPEAKERS,
+    R_SPEAKERS,
+    load_script,
+    script_path,
+)
 
 __all__ = [
     "AUDIO_EXTENSIONS",
@@ -49,8 +54,10 @@ def default_audio_dir(kind: str, speaker: str | None = None) -> Path:
     if kind == "A":
         return Path("recordings/audio/anchor")
     if kind == "R":
-        if speaker not in ("S1", "S2"):
-            raise ValueError("kind R needs speaker S1 or S2")
+        if speaker in HELD_OUT_SPEAKERS:
+            raise ValueError(f"kind R is refused for {speaker}: held out from all training")
+        if speaker not in R_SPEAKERS:
+            raise ValueError(f"kind R needs a speaker in {', '.join(R_SPEAKERS)}")
         return Path("recordings/audio") / f"R-{speaker}"
     return Path("recordings/audio")
 
@@ -96,7 +103,9 @@ def build_manifest(
     if kind not in ("T", "R", "A"):
         raise ValueError("kind must be 'T', 'R' or 'A' (the pool has no audio)")
     if kind == "A" and speaker is None:
-        raise ValueError("kind 'A' needs --speaker (each speaker records the same anchor sentences)")
+        raise ValueError(
+            "kind 'A' needs --speaker (each speaker records the same anchor sentences)"
+        )
     scripts_dir, audio_dir = Path(scripts_dir), Path(audio_dir)
     script_rows = load_script(script_path(scripts_dir, kind, speaker))
     if not script_rows:
@@ -156,14 +165,20 @@ def build_manifest(
                     "en_spans": cue["en_spans"],
                 }
             )
-        per_speaker[current] = {"expected": len(cues), "found": found, "total_seconds": round(seconds, 1)}
+        per_speaker[current] = {
+            "expected": len(cues),
+            "found": found,
+            "total_seconds": round(seconds, 1),
+        }
         for extra in sorted((audio_dir / current).glob("*")):
             if extra.suffix.lower() in AUDIO_EXTENSIONS:
                 stem = extra.stem
                 try:
                     index = int(stem.rsplit("_", 1)[1])
                 except (IndexError, ValueError):
-                    warnings.append(f"{current}: file {extra.name} does not match the naming scheme")
+                    warnings.append(
+                        f"{current}: file {extra.name} does not match the naming scheme"
+                    )
                     continue
                 if index > len(cues):
                     warnings.append(f"{current}: extra file {extra.name} (no cue {index})")
@@ -189,7 +204,9 @@ def write_cues(rows: list[dict], speaker: str, path: Path) -> int:
     cues = cues_for(rows, speaker) if any("speaker" in row for row in rows) else rows
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        "\n".join(f"{index:04d}\t{cue['id']}\t{cue['text']}" for index, cue in enumerate(cues, start=1))
+        "\n".join(
+            f"{index:04d}\t{cue['id']}\t{cue['text']}" for index, cue in enumerate(cues, start=1)
+        )
         + "\n",
         encoding="utf-8",
     )
@@ -212,7 +229,9 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="audio root (default recordings/audio, or recordings/audio/anchor for kind A)",
     )
-    build.add_argument("--out", default=None, help="output manifest (default recordings/manifests/<kind>.jsonl)")
+    build.add_argument(
+        "--out", default=None, help="output manifest (default recordings/manifests/<kind>.jsonl)"
+    )
     build.add_argument("--allow-unreviewed", action="store_true")
 
     cue = sub.add_parser("cue", help="write the printable cue sheet for one speaker")
@@ -243,12 +262,16 @@ def main(argv: list[str] | None = None) -> int:
         allow_unreviewed=args.allow_unreviewed,
     )
     print(build_report(result))
-    out = Path(args.out) if args.out else Path("recordings/manifests") / (
-        f"{args.kind}.jsonl" if args.kind == "T" else f"{args.kind}-{args.speaker}.jsonl"
+    out = (
+        Path(args.out)
+        if args.out
+        else Path("recordings/manifests")
+        / (f"{args.kind}.jsonl" if args.kind == "T" else f"{args.kind}-{args.speaker}.jsonl")
     )
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
-        "\n".join(json.dumps(row, ensure_ascii=False) for row in result["rows"]) + ("\n" if result["rows"] else ""),
+        "\n".join(json.dumps(row, ensure_ascii=False) for row in result["rows"])
+        + ("\n" if result["rows"] else ""),
         encoding="utf-8",
     )
     print(f"wrote {len(result['rows'])} rows to {out}")

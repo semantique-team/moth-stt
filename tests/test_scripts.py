@@ -5,7 +5,9 @@ import pytest
 
 from recordings.generate_scripts import (
     CATEGORIES,
+    HELD_OUT_SPEAKERS,
     QUOTAS_T,
+    R_SPEAKERS,
     ScriptError,
     evaluate_stats,
     import_candidates,
@@ -13,6 +15,7 @@ from recordings.generate_scripts import (
     main,
     mark_reviewed,
     review_report,
+    script_path,
     stratify_speakers,
     validate_candidate,
 )
@@ -33,9 +36,7 @@ def _candidate(text: str, category: str = "phrase", en_spans: list | None = None
 
 
 def test_accepts_a_valid_candidate() -> None:
-    row = validate_candidate(
-        _candidate("ho spostato il meeting a domani", "single_word", [[3, 4]])
-    )
+    row = validate_candidate(_candidate("ho spostato il meeting a domani", "single_word", [[3, 4]]))
     assert row["text"] == "ho spostato il meeting a domani"
     assert row["en_spans"] == [[3, 4]]
 
@@ -150,9 +151,51 @@ def test_import_cli_roundtrip(tmp_path: Path) -> None:
         json.dumps(_candidate("ho spostato il meeting a domani", "single_word", [[3, 4]])),
         encoding="utf-8",
     )
-    assert main(["import", "--kind", "T", "--in", str(candidates), "--scripts-dir", str(scripts)]) == 0
+    assert (
+        main(["import", "--kind", "T", "--in", str(candidates), "--scripts-dir", str(scripts)]) == 0
+    )
     rows = load_script(scripts / "T.jsonl")
     assert rows[0]["id"] == "T-0001"
     assert rows[0]["speaker"] in ("S1", "S2", "S3", "S4")
     assert rows[0]["reviewed"] is False
     assert main(["stats", "--scripts-dir", str(scripts)]) == 0
+
+
+def test_r_scripts_are_allowed_for_training_speakers_only() -> None:
+    """E-018 needs R-S4; S3 must stay impossible, or the cross-speaker claim dies."""
+    assert R_SPEAKERS == ("S1", "S2", "S4")
+    assert HELD_OUT_SPEAKERS == ("S3",)
+    for speaker in R_SPEAKERS:
+        path = script_path("scripts", "R", speaker)
+        assert path.name == f"R-{speaker}.jsonl"
+
+
+def test_r_script_for_the_held_out_speaker_is_refused() -> None:
+    with pytest.raises(ScriptError, match="held out from all training"):
+        script_path("scripts", "R", "S3")
+
+
+def test_r_script_needs_a_known_speaker() -> None:
+    with pytest.raises(ScriptError, match="needs --speaker"):
+        script_path("scripts", "R", None)
+
+
+def test_held_out_and_trainable_speakers_do_not_overlap() -> None:
+    assert not set(HELD_OUT_SPEAKERS) & set(R_SPEAKERS)
+    # Every test speaker is accounted for: S3 held out, the others may train.
+    assert set(HELD_OUT_SPEAKERS) | set(R_SPEAKERS) == {"S1", "S2", "S3", "S4"}
+
+
+def test_cli_refuses_the_held_out_speaker_with_a_nonzero_exit(capsys) -> None:
+    """An agent scripting this must not mistake the refusal for success (exit was 0 before)."""
+    assert main(["review", "--kind", "R", "--speaker", "S3"]) == 2
+    captured = capsys.readouterr()
+    assert "held out from all training" in captured.err
+    assert "Traceback" not in captured.err
+
+
+def test_cli_accepts_s4_for_r(capsys, tmp_path: Path) -> None:
+    """E-018's speaker can get a script; the file does not exist yet, which is a loud error."""
+    assert main(["review", "--kind", "R", "--speaker", "S4", "--scripts-dir", str(tmp_path)]) == 0
+    captured = capsys.readouterr()
+    assert "R: 0/0 reviewed" in captured.out
