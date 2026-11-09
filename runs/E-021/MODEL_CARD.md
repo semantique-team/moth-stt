@@ -38,6 +38,11 @@ model-index:
             name: WER (beam+LM, normalized, percent)
 ---
 
+> **Superseded — do not publish this card.** It documents release **0.5.1**. The current release is
+> **0.6.0**, whose card is [`runs/E-022/MODEL_CARD.md`](../E-022/MODEL_CARD.md): same weights and
+> same int8 file, recalibrated decoder, 6.9 WER points better on the mixed test set. This file is
+> kept because it is the artifact E-021 shipped and the record of what 0.5.1 claimed.
+
 # Moth STT 0.5.1 — Italian + English code-switching, 19.4 MB, CPU-only
 
 A very small open **Italian + English code-switching** speech-to-text model: a Whisper-tiny

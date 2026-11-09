@@ -1415,3 +1415,16 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Artifacts**: `runs/E-023/` (`PLAN.md` = the decision rule, `RESULT.md`, `sweep.py`,
   `sweep.log`, `sweep.json`, `gate.py`, `eval/{lm-1-1,shipped-0.6.0}/`, `gate-diffs.json`,
   `lm-prune-1-1.pkl.gz` = the candidate kept for a future ceiling decision).
+- **M8 — model card regenerated for 0.6.0 (2026-11-09)**: `runs/E-022/MODEL_CARD.md` replaces the
+  0.5.1 card as the publishable one (the old one stays in `runs/E-021/` with a superseded header).
+  Every number was re-read from the artifacts rather than carried over, which changed more than the
+  version string: T-600 **25.92 / 52.64**, held-out S3 **26.66 / 47.32**, FLEURS-IT **20.46**,
+  FLEURS-EN **49.63**, CV-IT test **24.88** (measured for this card — E-022 had left CV on the dev
+  subset), int8 cost re-measured (**+0.03 T-600, +0.60 S3**, both ties, 79% identical transcripts).
+  The card gained a section explaining that the weights are unchanged and the *decoder* is what
+  moved, plus the three reimplementation warnings (`token_bonus` is not optional; it must be tuned
+  with `lm_weight`; greedy is unaffected). Limitations went from 9 to 10: the fourth speaker was
+  never recorded, and the ETA column on S3 is a tie.
+  `runs/E-021/upload_hf.py` now also **refuses a card whose title does not name the release
+  version**, because a stale card publishes true numbers for the wrong artifact — the failure mode
+  the E-022 audit itself fell into. 8 tests. Still a dry run until the token and namespace exist.
