@@ -1,0 +1,5277 @@
+{
+  "n_utterances": 600,
+  "overall": {
+    "n": 600,
+    "ref_words": 5945,
+    "sub": 884,
+    "del": 264,
+    "ins": 107,
+    "wer": 0.2111017661900757,
+    "insertion_rate": 1.7998317914213624,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": [
+      0.19690600302673616,
+      0.22543933054393306
+    ]
+  },
+  "breakdown": {
+    "speaker": {
+      "929e71f9d04b28500498bd16adb1df85b09b23aa4bc41be171e974472c86ec9d4c94ba3f6a2546bfa5094a677d7813c6467f088a11069a1dc4ea342d4db8c3d1": {
+        "n": 12,
+        "ref_words": 122,
+        "sub": 21,
+        "del": 5,
+        "ins": 3,
+        "wer": 0.23770491803278687,
+        "insertion_rate": 2.459016393442623,
+        "eta": null
+      },
+      "72c12660f9f90d8511c2cf581d30a308c351012fca5a1c39a66ba78cfcaf6a3c1be1b3e00a1c7d66927923a428c654da93076748e977cf856240983606b8e32d": {
+        "n": 11,
+        "ref_words": 98,
+        "sub": 15,
+        "del": 7,
+        "ins": 3,
+        "wer": 0.25510204081632654,
+        "insertion_rate": 3.061224489795918,
+        "eta": null
+      },
+      "71b4e9ecbeade746bab0e846749aad3cc15faf2c4b02edb43d2b55fd4981db5a236598c78ce7e63068bbde11422600c1827d0faa27f187236224caf542003ff6": {
+        "n": 15,
+        "ref_words": 131,
+        "sub": 11,
+        "del": 10,
+        "ins": 0,
+        "wer": 0.16030534351145037,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "6f82e8a9382e1d58ce9c6cd295be76a229d1f8b0f8fb16e0b37e0f01433727f85e608990e41657f6db653b278cf22ab32bf5e272197a6aa6e89589e01cda436b": {
+        "n": 15,
+        "ref_words": 142,
+        "sub": 30,
+        "del": 5,
+        "ins": 3,
+        "wer": 0.2676056338028169,
+        "insertion_rate": 2.112676056338028,
+        "eta": null
+      },
+      "6f7969a1c237c203abb2de69381280f1672a30a4403ddd4a01afc9eadf1bff5ca66f724dbaaf178d1897abec7a88f247fce70d6351faa9b61867d6732717bc50": {
+        "n": 15,
+        "ref_words": 128,
+        "sub": 22,
+        "del": 6,
+        "ins": 3,
+        "wer": 0.2421875,
+        "insertion_rate": 2.34375,
+        "eta": null
+      },
+      "6e1284b5726359bc12c64239b2c7217be7aa812a8bd43c7a17814f561be5701d3e9e7bb0aceaae4feddd61d047b4d9ee209cbf4e5bf8076801563abb00f72e45": {
+        "n": 13,
+        "ref_words": 139,
+        "sub": 21,
+        "del": 12,
+        "ins": 3,
+        "wer": 0.2589928057553957,
+        "insertion_rate": 2.158273381294964,
+        "eta": null
+      },
+      "6c3069981ce3a03fc1e88e5d17afda9275e8d441c3074578bdbfa9f86b21558eb53f783ebaab1fd5c6b4ecbd201aa06521218c37616323cb622c1553e9f3c64b": {
+        "n": 14,
+        "ref_words": 133,
+        "sub": 25,
+        "del": 4,
+        "ins": 2,
+        "wer": 0.23308270676691728,
+        "insertion_rate": 1.5037593984962405,
+        "eta": null
+      },
+      "68ad8aada1a68c6345c9731903c1406edf76654b2e11be890512afc78aff0167a9a92309d876f9f8d97682d6a138ec41c6eeb14f3b2d3595c8a34c20cc288309": {
+        "n": 15,
+        "ref_words": 153,
+        "sub": 5,
+        "del": 1,
+        "ins": 1,
+        "wer": 0.0457516339869281,
+        "insertion_rate": 0.6535947712418301,
+        "eta": null
+      },
+      "6729df05d858c1f75cfa35ed5aa620684ad01659b8330201b55308cc4b749a9de498a8a86af6d94c602894ffef9fe910581ceffcfe51195bbadfbb325b555f06": {
+        "n": 13,
+        "ref_words": 111,
+        "sub": 15,
+        "del": 2,
+        "ins": 3,
+        "wer": 0.18018018018018017,
+        "insertion_rate": 2.7027027027027026,
+        "eta": null
+      },
+      "668ed6581bbb7dcf632513206c3393b7f0d17bb8f25762c078b7b818ad446b95c5fdd6bc682abf566a1f6aac67953f5736355a1a748b8a0d7b288c24aaa78c29": {
+        "n": 11,
+        "ref_words": 103,
+        "sub": 14,
+        "del": 8,
+        "ins": 4,
+        "wer": 0.2524271844660194,
+        "insertion_rate": 3.883495145631068,
+        "eta": null
+      },
+      "663baf6c8a71a388cdc00732854a22ae7662b133e6b869a4997d3eb5982fcb7cf0de2856057dc2c78a33ffdb43308bbbf048adffc1fbe2b439ead7f1640b70f6": {
+        "n": 15,
+        "ref_words": 141,
+        "sub": 21,
+        "del": 13,
+        "ins": 0,
+        "wer": 0.24113475177304963,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "60b1a396195dceec76acf55c79152779cf8aa1fd24045422a12aa5498808fe8bd5b14ffd1851d03216a645491143083fc7c67bd6d644f4b94030484d4df6b238": {
+        "n": 14,
+        "ref_words": 165,
+        "sub": 18,
+        "del": 9,
+        "ins": 2,
+        "wer": 0.17575757575757575,
+        "insertion_rate": 1.2121212121212122,
+        "eta": null
+      },
+      "5fc2a9dba88ea94948f584199775321c626f758ebcb65d9d79244ae11c206d04f825fc35ab409bad23f4f6f2347c09832c89b4878cea0172790b6be8e5879334": {
+        "n": 15,
+        "ref_words": 165,
+        "sub": 35,
+        "del": 8,
+        "ins": 1,
+        "wer": 0.26666666666666666,
+        "insertion_rate": 0.6060606060606061,
+        "eta": null
+      },
+      "5e9350d8ce94cbde0cb59a08fe5c0d131324aac77b02ded911890784809e69dcaffbaaf9a0dea842ea90e29166a2abb1a4855b62d13b5bb8f6902ef1113f0b9b": {
+        "n": 13,
+        "ref_words": 120,
+        "sub": 12,
+        "del": 7,
+        "ins": 0,
+        "wer": 0.15833333333333333,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "5cab76f72418a7c6f92d23bda0460fd322694caba69ecb19fa5e81ad3580c29b6306ff55818b767500be4d2cf79965ba975a35aa1b0ec9578a3383b9587f39b4": {
+        "n": 15,
+        "ref_words": 162,
+        "sub": 19,
+        "del": 3,
+        "ins": 2,
+        "wer": 0.14814814814814814,
+        "insertion_rate": 1.2345679012345678,
+        "eta": null
+      },
+      "5c6f0be56b82823d489642f566fc82a511c233e8ad67fabd5bbf8011721aadb4b763a062b82cba8b8be28fbb0501dbf53e13a680a09e1ece16b0aa869791d216": {
+        "n": 14,
+        "ref_words": 155,
+        "sub": 20,
+        "del": 6,
+        "ins": 2,
+        "wer": 0.18064516129032257,
+        "insertion_rate": 1.2903225806451613,
+        "eta": null
+      },
+      "5aa5006270e29637c0bfed318b14ae105bca3371c8bb0922391571c27975d9c7b94053ef9de5832ebde280d1f44f182501b6593b32fe749ae36714a6d8a0b6b9": {
+        "n": 15,
+        "ref_words": 143,
+        "sub": 33,
+        "del": 7,
+        "ins": 5,
+        "wer": 0.3146853146853147,
+        "insertion_rate": 3.4965034965034967,
+        "eta": null
+      },
+      "58edfc924a7594d19b4706b8ef904759d65e83d4ea90da81cf01400002bf2deb672612dd9d15f95aff38b5e5faaa1d29c995ac5769364ebd9f858af53cd6eb42": {
+        "n": 13,
+        "ref_words": 131,
+        "sub": 18,
+        "del": 7,
+        "ins": 3,
+        "wer": 0.21374045801526717,
+        "insertion_rate": 2.2900763358778624,
+        "eta": null
+      },
+      "5887767f3878d1f48e80e30271d206bc9fdd62c370760525fbf6c158976989d03b0fecce5627415be8df5dae5c791c34bce954cca47dcb5ce82389a92fd3430c": {
+        "n": 15,
+        "ref_words": 145,
+        "sub": 15,
+        "del": 4,
+        "ins": 3,
+        "wer": 0.15172413793103448,
+        "insertion_rate": 2.0689655172413794,
+        "eta": null
+      },
+      "5528dcc74699d9314dc5cd0aca2f2370384a21858b2e1537671a3a36c6f3276d3af1bbff05a1f6cacfc87d39b8f6b32f46fafe205ef4d67d9bb2d1f0ea6bef46": {
+        "n": 13,
+        "ref_words": 134,
+        "sub": 16,
+        "del": 6,
+        "ins": 4,
+        "wer": 0.19402985074626866,
+        "insertion_rate": 2.985074626865672,
+        "eta": null
+      },
+      "54278bb9ddd98ee39b3f8d9786c01c79777f3846989baf89f422970bf8596f30497079b7f9be4b11bfbb05fbc06a0de2e47f9bbd1abd921f78114bf84c6ce7e9": {
+        "n": 13,
+        "ref_words": 137,
+        "sub": 22,
+        "del": 9,
+        "ins": 2,
+        "wer": 0.24087591240875914,
+        "insertion_rate": 1.4598540145985401,
+        "eta": null
+      },
+      "51341f5a631a2e095ef99c9ac549736386317718d881cd1befd7ad18bfe29baba023c08b84292c88bae8e9094ccb17ac3a64ef480f1df49b651c98885fdc2d8c": {
+        "n": 14,
+        "ref_words": 104,
+        "sub": 27,
+        "del": 4,
+        "ins": 2,
+        "wer": 0.3173076923076923,
+        "insertion_rate": 1.9230769230769231,
+        "eta": null
+      },
+      "4e2652176c1865ac0ec1b91121b82a8fa1d2e8d6ad8382f92d92b311181f200bfa37d799f1a1ce77a14e8b66efb1f0b165ef836bea3edcdfa0f4f87356d3164e": {
+        "n": 13,
+        "ref_words": 118,
+        "sub": 21,
+        "del": 2,
+        "ins": 1,
+        "wer": 0.2033898305084746,
+        "insertion_rate": 0.847457627118644,
+        "eta": null
+      },
+      "4c17bc61cb29ffde380d359b1829c7fb84053eef92626ee4b20b7fff354096cd179ed1be7b438226c1c50aa50110df78aecf328897493ef47408af97a9e28781": {
+        "n": 15,
+        "ref_words": 158,
+        "sub": 29,
+        "del": 9,
+        "ins": 0,
+        "wer": 0.24050632911392406,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "4a7ea69f40de677bcd000757badc71867d78109afeeae53874ca304a8ef498e9035f725323517f253525ac0fe8edcb521f1502704bba687828f6d4557b5f4f85": {
+        "n": 11,
+        "ref_words": 115,
+        "sub": 27,
+        "del": 4,
+        "ins": 2,
+        "wer": 0.28695652173913044,
+        "insertion_rate": 1.7391304347826086,
+        "eta": null
+      },
+      "49b9fa0c979e6336fb987b9c8125aad89bea32807da9e9d1f830a1a989575188e44e8ed155ddeb5147cacc1079279aae27413ef71c61eeabe611260a70305f62": {
+        "n": 15,
+        "ref_words": 137,
+        "sub": 12,
+        "del": 4,
+        "ins": 1,
+        "wer": 0.12408759124087591,
+        "insertion_rate": 0.7299270072992701,
+        "eta": null
+      },
+      "4552063f2ced16be61fbc0f981a4b6df715ffbe0b227f7ef18a87a0b9eb2ad48716bfbf31775ba6c13c829c1e1481caeeed45d770c3b7f7fbcf9264a91094aa7": {
+        "n": 8,
+        "ref_words": 79,
+        "sub": 9,
+        "del": 4,
+        "ins": 0,
+        "wer": 0.16455696202531644,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "405b79cafc601e37fe6401147728f78fe26a0f1949dde33eb84691073d64c5e0241855b237800fa4be9958a14df0a8572a7396520499cf941d1bd74a268d5582": {
+        "n": 14,
+        "ref_words": 136,
+        "sub": 31,
+        "del": 10,
+        "ins": 7,
+        "wer": 0.35294117647058826,
+        "insertion_rate": 5.147058823529412,
+        "eta": null
+      },
+      "3defa1a76381c12a37b6b1403a49fd8dd4e4051ae199390741f30c6aacdafd3b70cb444ae4351be8420bf7529b78cf44884514bdd997bd8bb9fae18f01693912": {
+        "n": 15,
+        "ref_words": 145,
+        "sub": 13,
+        "del": 4,
+        "ins": 2,
+        "wer": 0.1310344827586207,
+        "insertion_rate": 1.3793103448275863,
+        "eta": null
+      },
+      "3b0f81cfacaf9e6ce0818baffd7b07fad735d02c7f6eea2f7db8b9de596bc106f03e0611b91db724409300e96ea08c52e95d9fd5500c1613d062db70127a4e64": {
+        "n": 15,
+        "ref_words": 161,
+        "sub": 25,
+        "del": 10,
+        "ins": 2,
+        "wer": 0.22981366459627328,
+        "insertion_rate": 1.2422360248447204,
+        "eta": null
+      },
+      "394fbfd484f3e1e7c9fb3609242dbbf59506065484dc34f6c392cea634dae48c68ea6e1fc19f1019c7f32b4d23b3bb9138c413cace8a7654eea0bdc853d2fdaf": {
+        "n": 15,
+        "ref_words": 153,
+        "sub": 24,
+        "del": 7,
+        "ins": 4,
+        "wer": 0.22875816993464052,
+        "insertion_rate": 2.6143790849673203,
+        "eta": null
+      },
+      "38b9b07aaca9a7d92f4cf3733e3edb7d7769ca4ff3aad81daac2c3f59ebf88d959fd7c564b3b13c122d7875466b93abe4b804e0a527906a31ef1c237234e1243": {
+        "n": 14,
+        "ref_words": 140,
+        "sub": 16,
+        "del": 5,
+        "ins": 2,
+        "wer": 0.16428571428571428,
+        "insertion_rate": 1.4285714285714286,
+        "eta": null
+      },
+      "38b2c8dfb0dbc1e9cdd5222f25200703037c953b18cd982f44b148de51088667aaeee72c0f1da9ffee93d296fa0fbee43b6ec50bee61badfbf4f69cdda7d0361": {
+        "n": 13,
+        "ref_words": 115,
+        "sub": 47,
+        "del": 6,
+        "ins": 9,
+        "wer": 0.5391304347826087,
+        "insertion_rate": 7.826086956521739,
+        "eta": null
+      },
+      "36fc11f37e2020513ea61b1457fe00cb5834c293b4e54c22105d7b7f6a0ed93dceef9b6c68a264d90d32ee46c1e2c3d0cfc6aec135e4130722c51126735c8ad7": {
+        "n": 12,
+        "ref_words": 135,
+        "sub": 29,
+        "del": 3,
+        "ins": 4,
+        "wer": 0.26666666666666666,
+        "insertion_rate": 2.962962962962963,
+        "eta": null
+      },
+      "351c3be4ae14e043c8058bf866946a156fcf684fd558942a398a1ca657f86ad23ee57d9880195a541d04232167b6c7211b8aa619bce27b71e7d47a349f8c7ad0": {
+        "n": 15,
+        "ref_words": 160,
+        "sub": 11,
+        "del": 6,
+        "ins": 3,
+        "wer": 0.125,
+        "insertion_rate": 1.875,
+        "eta": null
+      },
+      "343f572ed4d0d3ea05da7284fd9e84efe57d7d44fde1a0a2373d83e96e9e7960662e49b27681ba1bbaf6861b7eeb33abf3ca30a5c53a45aa9c2ea7083c2fd292": {
+        "n": 15,
+        "ref_words": 163,
+        "sub": 26,
+        "del": 6,
+        "ins": 2,
+        "wer": 0.2085889570552147,
+        "insertion_rate": 1.2269938650306749,
+        "eta": null
+      },
+      "340f9598d75ad11f60b1953643ce1b147e9d3b896f6b9bab1a550a54278c392856b5893301191d328b9d876e3ebb27d36c7bcdb46975c660e6bedb0bd69d5044": {
+        "n": 13,
+        "ref_words": 123,
+        "sub": 9,
+        "del": 5,
+        "ins": 2,
+        "wer": 0.13008130081300814,
+        "insertion_rate": 1.6260162601626016,
+        "eta": null
+      },
+      "33a6f945992b60b81c853e76c3bde93874e71147cc9121dc9b67131c82161fdd41ae68861138609fea0e85beba6bf045bee3f79755b9f839dfc91e5f8beb95a9": {
+        "n": 15,
+        "ref_words": 141,
+        "sub": 21,
+        "del": 5,
+        "ins": 1,
+        "wer": 0.19148936170212766,
+        "insertion_rate": 0.7092198581560284,
+        "eta": null
+      },
+      "32eae66b5bf889098732e64f7d247e5535f916b7fd4006e6c9f5883af4ee8f2687207be315e6b05a340cc9aaf8d9a0496ba86f05721674c1377389d16e90d26c": {
+        "n": 15,
+        "ref_words": 144,
+        "sub": 32,
+        "del": 9,
+        "ins": 4,
+        "wer": 0.3125,
+        "insertion_rate": 2.7777777777777777,
+        "eta": null
+      },
+      "3162809400ef167fbfe99e4d323fb65a6b46e2b14464851e07baef056052e04e431e211937e32e44214ec092a6e647d10545114d5854e2aef8c6b06e5b041054": {
+        "n": 15,
+        "ref_words": 142,
+        "sub": 19,
+        "del": 2,
+        "ins": 5,
+        "wer": 0.18309859154929578,
+        "insertion_rate": 3.5211267605633805,
+        "eta": null
+      },
+      "3103147fd2990148cd763557fb43cd957dee50ccddde5421cbde6a0f00941c7106dfb076c858ff87f2adb842a39f06209b54c6b65a08e788c12e01985be546b5": {
+        "n": 15,
+        "ref_words": 165,
+        "sub": 17,
+        "del": 11,
+        "ins": 0,
+        "wer": 0.1696969696969697,
+        "insertion_rate": 0.0,
+        "eta": null
+      },
+      "2d0042db0a75f7c883fb0f08c683a7cca3bcb72645315c29d76d2b24b986cab16145b377996f778ba92117da851c3ebdc8c635ccf5abe627a7c760f154c2bc83": {
+        "n": 15,
+        "ref_words": 158,
+        "sub": 20,
+        "del": 4,
+        "ins": 3,
+        "wer": 0.17088607594936708,
+        "insertion_rate": 1.8987341772151898,
+        "eta": null
+      },
+      "2a428c1b7b041cd5e93de83a4910994af259f6e6ee3869a21942ca76841e6101e4c705274cd4543d386ed1ce69fe4a58126eb7d31179eac9f3ae1787d7e60398": {
+        "n": 14,
+        "ref_words": 149,
+        "sub": 10,
+        "del": 5,
+        "ins": 1,
+        "wer": 0.10738255033557047,
+        "insertion_rate": 0.6711409395973155,
+        "eta": null
+      },
+      "28f15a2164554fb285d57d989cb45f3242d54aaeb196323c7eb2daba84db0ca726ad6d5e23f9e413e892e0297d23d20569500540e95d13858034d2b947d245c6": {
+        "n": 5,
+        "ref_words": 46,
+        "sub": 1,
+        "del": 0,
+        "ins": 1,
+        "wer": 0.043478260869565216,
+        "insertion_rate": 2.1739130434782608,
+        "eta": null
+      }
+    },
+    "speaker_group": {
+      "S3+S4": {
+        "n": 600,
+        "ref_words": 5945,
+        "sub": 884,
+        "del": 264,
+        "ins": 107,
+        "wer": 0.2111017661900757,
+        "insertion_rate": 1.7998317914213624,
+        "eta": null
+      }
+    }
+  },
+  "noise": null,
+  "per_utterance": {
+    "cv-common_voice_it_20034674": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034512": {
+      "ref_words": 11,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034510": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034515": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034523": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034673": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034609": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034671": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034670": {
+      "ref_words": 5,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034608": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034607": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20034602": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996403": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996404": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996470": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996465": {
+      "ref_words": 9,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996432": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996462": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996435": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19995244": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996401": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19995240": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19995239": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842282": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842292": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842281": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842291": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842284": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842293": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19572730": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842280": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842294": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19572729": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19572731": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842295": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19572733": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19842278": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19572732": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20040086": {
+      "ref_words": 11,
+      "sub": 7,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010740": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20040087": {
+      "ref_words": 13,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010744": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20040085": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010742": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20040084": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010738": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010721": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010720": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010719": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010718": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010745": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20040088": {
+      "ref_words": 8,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20010717": {
+      "ref_words": 13,
+      "sub": 6,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367415": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367416": {
+      "ref_words": 2,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367399": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367400": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367414": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367437": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367436": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367417": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367432": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367401": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367420": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367402": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367403": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367434": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21367438": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043498": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043497": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043503": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043523": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043524": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043501": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043507": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043508": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043510": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043525": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043522": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043499": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20043512": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553676": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553670": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553671": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553678": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553679": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553675": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553677": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553672": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553685": {
+      "ref_words": 13,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553674": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553688": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553686": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553687": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27553673": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108287": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108288": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108284": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108283": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108282": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108281": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108280": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108279": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108278": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108286": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108290": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108276": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108285": {
+      "ref_words": 2,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108277": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21108289": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511333": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511346": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511385": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511334": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511351": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511347": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511332": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511342": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511386": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511343": {
+      "ref_words": 14,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511350": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511349": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_18511348": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032842": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032853": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032855": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032844": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032859": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032860": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032862": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032863": {
+      "ref_words": 14,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032845": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032852": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19032846": {
+      "ref_words": 3,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254100": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254117": {
+      "ref_words": 15,
+      "sub": 5,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254034": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254101": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254096": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254037": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254114": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254115": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254116": {
+      "ref_words": 2,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254036": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254035": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254113": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254099": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254032": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20254097": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286966": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286993": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286992": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286973": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286972": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286991": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286968": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286989": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286970": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286960": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286958": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286957": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286990": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20286956": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263050": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263048": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263054": {
+      "ref_words": 12,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263058": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263053": {
+      "ref_words": 14,
+      "sub": 9,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263052": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263057": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263056": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263051": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263049": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263047": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263046": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263045": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263044": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20263055": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002144": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002258": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002260": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002146": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002145": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002256": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002262": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19974893": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19974892": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002148": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19974889": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19974890": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19974891": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137855": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137856": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137857": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137858": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137859": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137841": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137865": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137842": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137867": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137869": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137874": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137843": {
+      "ref_words": 11,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137844": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137872": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21137840": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084886": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084882": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084866": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084885": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084884": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084865": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084872": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084862": {
+      "ref_words": 8,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084873": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084876": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084883": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084874": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084863": {
+      "ref_words": 15,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20084864": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005911": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005941": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005922": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005923": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005909": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005924": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005937": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005925": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005926": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005907": {
+      "ref_words": 10,
+      "sub": 6,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005908": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005910": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005940": {
+      "ref_words": 15,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005939": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20005938": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737566": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737565": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737641": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737501": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737638": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737650": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737637": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737567": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737640": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737503": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737639": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737563": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_36737564": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716150": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716159": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716058": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716053": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112327": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716046": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112326": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716052": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112281": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_31716158": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112324": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112279": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112323": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112280": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20112278": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997946": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997856": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997950": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997949": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997857": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997947": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997927": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997945": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997925": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997924": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997850": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997852": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19997854": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189339": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189317": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189318": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189319": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189341": {
+      "ref_words": 15,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189342": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189322": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189353": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189352": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189351": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189350": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189349": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_22189343": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441152": {
+      "ref_words": 27,
+      "sub": 15,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441150": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441154": {
+      "ref_words": 2,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441134": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441149": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441156": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441148": {
+      "ref_words": 2,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441133": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441137": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441136": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441151": {
+      "ref_words": 11,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441157": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441153": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17441155": {
+      "ref_words": 15,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821702": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821710": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821704": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821701": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821700": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821703": {
+      "ref_words": 4,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821715": {
+      "ref_words": 10,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821712": {
+      "ref_words": 2,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821713": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821714": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821716": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821718": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_24821719": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922377": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922379": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922428": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922427": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922426": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922384": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922452": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922454": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922455": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922429": {
+      "ref_words": 11,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922453": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922451": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922430": {
+      "ref_words": 10,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922383": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21922381": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011486": {
+      "ref_words": 13,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011572": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011518": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011519": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011517": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011516": {
+      "ref_words": 10,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011515": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011570": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011485": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011489": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20011573": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428321": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428310": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428320": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428318": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428319": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428234": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428233": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428307": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428308": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428309": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428232": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428231": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428317": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428311": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27428230": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996378": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996285": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996407": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996282": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996284": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996408": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996372": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19996283": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20018059": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991402": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991399": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20018060": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20018057": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20018058": {
+      "ref_words": 9,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991390": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991401": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991398": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991386": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991400": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20018061": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991389": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19991392": {
+      "ref_words": 9,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224622": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224614": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224619": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224618": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224616": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224536": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224535": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224534": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224533": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224502": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224506": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224508": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224509": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224511": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20224532": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634533": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634501": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634536": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634535": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634471": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634537": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634508": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634509": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634470": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634469": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634534": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634510": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634502": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634468": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27634472": {
+      "ref_words": 14,
+      "sub": 5,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983673": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983664": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983667": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983675": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983666": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983644": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983643": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983645": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983646": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983663": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983676": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983647": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983665": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983674": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19983677": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270950": {
+      "ref_words": 14,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270910": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270908": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270909": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270923": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270924": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270925": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270926": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270947": {
+      "ref_words": 3,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270907": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270948": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270949": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270911": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 2,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20270951": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061482": {
+      "ref_words": 12,
+      "sub": 5,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061449": {
+      "ref_words": 6,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061478": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061479": {
+      "ref_words": 7,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061450": {
+      "ref_words": 10,
+      "sub": 6,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061465": {
+      "ref_words": 10,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061469": {
+      "ref_words": 3,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061447": {
+      "ref_words": 13,
+      "sub": 7,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061480": {
+      "ref_words": 5,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061467": {
+      "ref_words": 11,
+      "sub": 5,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061446": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061481": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_35061468": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975629": {
+      "ref_words": 8,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975700": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975738": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975621": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975626": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975699": {
+      "ref_words": 11,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975734": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975630": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975703": {
+      "ref_words": 10,
+      "sub": 6,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975701": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975702": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_19975619": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944648": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944336": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944650": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944291": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944646": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944290": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944289": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944506": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944481": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944652": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944345": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944288": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944343": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944341": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_30944338": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846508": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846473": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846471": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846472": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846469": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846507": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846467": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846438": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846437": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846434": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846436": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846506": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846435": {
+      "ref_words": 14,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846505": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_21846504": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046234": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046255": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046211": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046235": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046210": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046249": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046251": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046254": {
+      "ref_words": 3,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046213": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046214": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046231": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046232": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20046212": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20308290": {
+      "ref_words": 5,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964952": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20308288": {
+      "ref_words": 9,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964953": {
+      "ref_words": 5,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20308289": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964954": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964950": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964951": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964932": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964941": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20308292": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20308291": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964938": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964936": {
+      "ref_words": 11,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20964934": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809395": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809386": {
+      "ref_words": 8,
+      "sub": 4,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809384": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809385": {
+      "ref_words": 7,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809364": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809363": {
+      "ref_words": 4,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809388": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809400": {
+      "ref_words": 6,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809383": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809397": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809362": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809361": {
+      "ref_words": 14,
+      "sub": 6,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809401": {
+      "ref_words": 6,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809398": {
+      "ref_words": 8,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_32809365": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303109": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303129": {
+      "ref_words": 13,
+      "sub": 3,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303125": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303126": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303086": {
+      "ref_words": 8,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303111": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303090": {
+      "ref_words": 8,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303089": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303088": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303087": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303110": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303127": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303108": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303128": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20303112": {
+      "ref_words": 7,
+      "sub": 2,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002100": {
+      "ref_words": 7,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002121": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002042": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002041": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002122": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002040": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002123": {
+      "ref_words": 11,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002039": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002099": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002101": {
+      "ref_words": 5,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002120": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002102": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002103": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002038": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20002119": {
+      "ref_words": 14,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245236": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245196": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245195": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245197": {
+      "ref_words": 12,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245300": {
+      "ref_words": 10,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245194": {
+      "ref_words": 14,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245298": {
+      "ref_words": 12,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245290": {
+      "ref_words": 9,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245237": {
+      "ref_words": 10,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245193": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245235": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245295": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245233": {
+      "ref_words": 13,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245234": {
+      "ref_words": 7,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_27245293": {
+      "ref_words": 6,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114562": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114559": {
+      "ref_words": 13,
+      "sub": 1,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114558": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114569": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114568": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114567": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114556": {
+      "ref_words": 13,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114566": {
+      "ref_words": 10,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114565": {
+      "ref_words": 14,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114555": {
+      "ref_words": 9,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114564": {
+      "ref_words": 9,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114563": {
+      "ref_words": 13,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114561": {
+      "ref_words": 11,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_20114560": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17861373": {
+      "ref_words": 19,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17861368": {
+      "ref_words": 3,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17861372": {
+      "ref_words": 4,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17861367": {
+      "ref_words": 12,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "cv-common_voice_it_17861366": {
+      "ref_words": 8,
+      "sub": 0,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    }
+  }
+}

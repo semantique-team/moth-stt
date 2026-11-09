@@ -1,0 +1,42 @@
+{
+  "shipped-0.2-g0": {
+    "with_vad": {
+      "words": 104,
+      "clips": 457
+    },
+    "vad_off": {
+      "words": 301,
+      "clips": 457
+    },
+    "vad_off_words_by_source": {
+      "noise_musan": 29,
+      "noise_musan_clips": 24,
+      "noise_music": 147,
+      "noise_music_clips": 39,
+      "noise_room_tone": 5,
+      "noise_room_tone_clips": 5,
+      "noise_silence": 120,
+      "noise_silence_clips": 120
+    }
+  },
+  "recal-0.5-g2.4": {
+    "with_vad": {
+      "words": 134,
+      "clips": 457
+    },
+    "vad_off": {
+      "words": 683,
+      "clips": 457
+    },
+    "vad_off_words_by_source": {
+      "noise_musan": 63,
+      "noise_musan_clips": 41,
+      "noise_music": 239,
+      "noise_music_clips": 76,
+      "noise_room_tone": 141,
+      "noise_room_tone_clips": 85,
+      "noise_silence": 240,
+      "noise_silence_clips": 120
+    }
+  }
+}

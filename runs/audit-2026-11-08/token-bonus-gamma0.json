@@ -1,0 +1,26 @@
+[
+  {
+    "gamma": 0.0,
+    "fleurs_it_test": {
+      "wer": 0.2652,
+      "eta": null,
+      "del": 0.0778,
+      "sub": 0.1706,
+      "ins": 0.0168
+    },
+    "fleurs_en_test": {
+      "wer": 0.5548,
+      "eta": null,
+      "del": 0.147,
+      "sub": 0.3868,
+      "ins": 0.0211
+    },
+    "cv_it_dev": {
+      "wer": 0.2491,
+      "eta": null,
+      "del": 0.0685,
+      "sub": 0.169,
+      "ins": 0.0116
+    }
+  }
+]

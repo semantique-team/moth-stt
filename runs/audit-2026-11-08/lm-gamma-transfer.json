@@ -1,0 +1,170 @@
+[
+  {
+    "lm_weight": 0.0,
+    "gamma": 0.0,
+    "t600": {
+      "wer": 0.3713,
+      "eta": 0.373,
+      "del": 0.0989,
+      "ins": 0.0189
+    },
+    "fleurs_it": {
+      "wer": 0.3182,
+      "eta": null,
+      "del": 0.0635,
+      "ins": 0.0316
+    },
+    "fleurs_en": {
+      "wer": 0.5974,
+      "eta": null,
+      "del": 0.0902,
+      "ins": 0.0451
+    },
+    "cv_it_dev": {
+      "wer": 0.2997,
+      "eta": null,
+      "del": 0.0563,
+      "ins": 0.0239
+    }
+  },
+  {
+    "lm_weight": 0.2,
+    "gamma": 0.0,
+    "t600": {
+      "wer": 0.3277,
+      "eta": 0.4286,
+      "del": 0.1224,
+      "ins": 0.008
+    },
+    "fleurs_it": {
+      "wer": 0.2652,
+      "eta": null,
+      "del": 0.0778,
+      "ins": 0.0168
+    },
+    "fleurs_en": {
+      "wer": 0.5548,
+      "eta": null,
+      "del": 0.147,
+      "ins": 0.0211
+    },
+    "cv_it_dev": {
+      "wer": 0.2491,
+      "eta": null,
+      "del": 0.0685,
+      "ins": 0.0116
+    }
+  },
+  {
+    "lm_weight": 0.3,
+    "gamma": 1.6,
+    "t600": {
+      "wer": 0.2835,
+      "eta": 0.4928,
+      "del": 0.0874,
+      "ins": 0.0143
+    },
+    "fleurs_it": {
+      "wer": 0.2247,
+      "eta": null,
+      "del": 0.0477,
+      "ins": 0.0249
+    },
+    "fleurs_en": {
+      "wer": 0.524,
+      "eta": null,
+      "del": 0.0885,
+      "ins": 0.04
+    },
+    "cv_it_dev": {
+      "wer": 0.222,
+      "eta": null,
+      "del": 0.0446,
+      "ins": 0.02
+    }
+  },
+  {
+    "lm_weight": 0.4,
+    "gamma": 2.0,
+    "t600": {
+      "wer": 0.2718,
+      "eta": 0.5053,
+      "del": 0.0857,
+      "ins": 0.0123
+    },
+    "fleurs_it": {
+      "wer": 0.2183,
+      "eta": null,
+      "del": 0.0489,
+      "ins": 0.0247
+    },
+    "fleurs_en": {
+      "wer": 0.5121,
+      "eta": null,
+      "del": 0.0908,
+      "ins": 0.0379
+    },
+    "cv_it_dev": {
+      "wer": 0.2111,
+      "eta": null,
+      "del": 0.0444,
+      "ins": 0.018
+    }
+  },
+  {
+    "lm_weight": 0.5,
+    "gamma": 2.4,
+    "t600": {
+      "wer": 0.2683,
+      "eta": 0.511,
+      "del": 0.0889,
+      "ins": 0.0118
+    },
+    "fleurs_it": {
+      "wer": 0.2121,
+      "eta": null,
+      "del": 0.0481,
+      "ins": 0.0236
+    },
+    "fleurs_en": {
+      "wer": 0.5038,
+      "eta": null,
+      "del": 0.0938,
+      "ins": 0.0366
+    },
+    "cv_it_dev": {
+      "wer": 0.2072,
+      "eta": null,
+      "del": 0.0439,
+      "ins": 0.0185
+    }
+  },
+  {
+    "lm_weight": 0.6,
+    "gamma": 2.8,
+    "t600": {
+      "wer": 0.2626,
+      "eta": 0.5206,
+      "del": 0.0897,
+      "ins": 0.0118
+    },
+    "fleurs_it": {
+      "wer": 0.2127,
+      "eta": null,
+      "del": 0.0503,
+      "ins": 0.0229
+    },
+    "fleurs_en": {
+      "wer": 0.5003,
+      "eta": null,
+      "del": 0.0989,
+      "ins": 0.0348
+    },
+    "cv_it_dev": {
+      "wer": 0.2106,
+      "eta": null,
+      "del": 0.0451,
+      "ins": 0.0204
+    }
+  }
+]
