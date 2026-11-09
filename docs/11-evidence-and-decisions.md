@@ -415,19 +415,27 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 
 ## 7. Open questions, in decision order
 
-1. **Distillation from Parakeet (639 MB)** — the teacher gets **78%** of the rare terms right
-   against Moth's 5% (§3.1), so the signal exists. Blocked on audio containing those terms:
-   `runs/E-015/PLAN.md` lists the three possible sources and the provenance decision each needs.
-2. **Gold code-switch data (H3a)** — the original hypothesis, now **confirmed** by E-017: gold works
-   and generalises across speakers. The open part is **how far it scales** (E-018, blocked on S4's
-   recordings and the review of its 200 sentences).
-3. **Re-scope the mixed gate** — ETA as a secondary metric, "Italian-first with frequent English
-   terms", if 1 and 2 are out of budget. Cheaper to decide after E-018: the gap to Whistle is now
-   3.35 WER, not 14.
-4. **Noise augmentation with empty targets** (E-011 follow-up 2) — the VAD closes the "no speech
-   in, no words out" gate, but noisy *speech* still degrades the transcript; this remains the
-   principled fix and is independent of the gate.
-5. **Whistle LoRA probe** (E-019, D28) — **answered and closed**: a decoder-based code-switch
-   model does **not** gain from the same gold (S3 +2.30 WER, tie; FLEURS/CV significantly worse),
-   so the gold effect is architecture-bound (§3.4). `mix` and `--tokens` were never run because
-   the kill criterion fired. Result: `runs/E-019/RESULT.md`. Never presented as Moth.
+1. **Re-scope the mixed gate** — the top decision now that E-025 is closed and E-018 is dead. On
+   held-out S3 the WER is **won** and ETA is a **tie** (+8.73 [−1.08, +20.00]); the question is
+   whether the gate is WER-first with ETA secondary, or whether ETA stays a target and E-015 is
+   funded. Evidence: `runs/E-024/MODEL_CARD.md` and §5 below.
+2. **Distillation from Parakeet** — the teacher gets **78%** of the rare terms right against Moth's
+   5% (§3.1), so the signal exists. Success criterion **ETA +5** with WER not worse; cost 3.3 h of
+   labeling + 3.5 h of fine-tune. Blocked on audio provenance (gold / CC0-BY / TTS), not compute:
+   `runs/E-015/PLAN.md`.
+3. **Gold code-switch data (E-018)** — confirmed by E-017, but the scaling question needs S4, who
+   was never recorded. The marginal return of the second speaker fell from −5.73 to −4.07, so a
+   third is worth roughly 2–3 WER at best. Treat as dead unless S4 appears.
+4. **InterCTC** — training-only auxiliary CTC at an intermediate block; **+4.4% step time**
+   measured, expected **+0.2–0.7 WER**. The cheapest size-neutral accuracy lever; not yet run.
+5. **Noise: what remains** — E-024 (training) and E-025 (holdout) closed the "noisy speech"
+   question for CV-IT and one unseen room. Remaining: noise on MLS/LS (22 GB, disk-bound) and a
+   second room (evidence only, no model change). The old "noise with empty targets" item is
+   **closed**: E-024 augmented speech, which is what the transcript needed.
+6. **Whistle LoRA probe** (E-019, D28) — **answered and closed**: a decoder-based code-switch model
+   does **not** gain from the same gold (S3 +2.30 WER, tie; FLEURS/CV significantly worse), so the
+   gold effect is architecture-bound (§3.4). `mix` and `--tokens` were never run because the kill
+   criterion fired. Result: `runs/E-019/RESULT.md`. Never presented as Moth.
+7. **Not now, and why** — LM 4-gram (0.56 MB of headroom under the 20 MB ceiling), 25 Hz (an
+   architecture change, not a knob), word timestamps (a feature, not accuracy), `en_terms`
+   expansion (cannot fix terms the acoustics never saw). Reasons and costs: `STATUS.md` § "Da fare".

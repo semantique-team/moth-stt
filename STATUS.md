@@ -383,25 +383,36 @@
 
 ## Da fare (prossimi task)
 
-**Aggiornato 2026-11-09 dopo E-025.** Il piano operativo
-[`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md) **non è più
-allineato**: descrive la distillazione come fase 2 e il re-scope come fase 4, mentre la realtà è
-che il rumore ha preso la scena e **S4 non esiste**. Va riallineato o sostituito prima del prossimo
-esperimento — è l'unico documento di piano ancora stantio.
+**Aggiornato 2026-11-09 dopo E-025.** Due cose da fare subito, prima del prossimo esperimento:
+il **re-scope** (decide il gate) e il **riallineamento del piano** — `docs/plans/2026-10-24-post-E014-plan.md`
+descrive ancora la distillazione come fase 2 e il re-scope come fase 4. La lista delle domande
+aperte (`docs/11` §7) è già stata riallineata.
 
-### Aperto, in ordine di valore
+### Prossimi passi, in ordine di valore
 
-| Cosa | Perché | Costo |
-|---|---|---|
-| **Re-scope (fase 4)** | decidere il gate misto con i numeri di 0.7.0: WER vinto su S3, ETA tie. `docs/11` §7.3 | ~2 h di scrittura, decisione tua |
-| **E-018 (gold)** | **bloccato e probabilmente morto**: senza S4 la domanda "il terzo speaker paga?" è irrispondibile per costruzione. Il rendimento marginale del secondo speaker era già sceso da −5,73 a −4,07 | serve S4 |
-| **E-015 (distillazione)** | bloccata sulla provenienza dell'audio (gold, CC0/BY, o TTS), non sul compute. Ora **meno urgente**: E-024 ha reso più di quanto il pilota puntasse | decisione tua |
-| **InterCTC (E-024-bis?)** | sonda già fatta: **+4,4% di tempo per step** (misurato con controllo di sensibilità). Attesa 0,2–0,7 punti. **Rimandato**, non rifiutato | ~3 h 30 + 2 h tue |
-| **Rumore su MLS/LS** | E-024 ha augmentato **solo CV-IT**: MLS e LibriSpeech richiedono un riscarico (~22 GB) | 22 GB + 3 h 30 |
-| **LM 4-gram** | con il tetto dei 20 MB saturo, l'unica strada per un LM migliore è un formato nuovo (`web/lm.js`) | ~1 giorno |
-| **Word timestamps** | Whistle li ha (dall'attenzione del decoder); noi possiamo averli **gratis** con un Viterbi forzato sulla matrice CTC | ~mezza giornata |
-| **Frame rate 25 Hz** | Whistle gira a 12,5 Hz, noi a 50 Hz con 10,6 frame per token: lavoro sprecato. `docs/10` lo proponeva già | training run |
-| **`en_terms.txt` 580 → 1–2k** | target del design, mai chiuso | ~1 h + rebuild LM |
+| # | Cosa | Cosa vuol dire | Tempo | Training | Guadagno atteso | Stato |
+|---|---|---|---|---|---|---|
+| 1 | **Re-scope (fase 4)** | Decidere il gate misto con i numeri di 0.7.0: su S3 il WER è **vinto**, l'ETA è **tie**. Si accetta il WER come gate e l'ETA diventa secondario, o si continua a inseguirlo | ~2 h di scrittura, **decisione tua** | No | **0 WER**; sblocca la domanda "il gate è passato?" | **da fare ora** |
+| 2 | **Riallineare il piano operativo** | `2026-10-24-post-E014` descrive la distillazione come fase 2 e il re-scope come fase 4: è l'unico documento di piano ancora stantio | ~45 min | No | 0; evita di ripartire da premesse false | **da fare ora** |
+| 3 | **InterCTC** | CTC ausiliario su un blocco intermedio: regolarizza l'allenamento e **non aggiunge nulla al modello esportato**. Sonda: **+4,4% di tempo per step** | ~4 h training + ~1 h codice/eval | **Sì** | **+0,2–0,7 WER** (stima da letteratura; con 4 blocchi è probabile il lato basso) | pronto, nessun blocco |
+| 4 | **Distillazione E-015** | Parakeet etichetta audio con i termini rari, poi fine-tune di Moth. Segnale misurato: Parakeet **78%** vs Moth **5%** sui termini rari | 3,3 h labeling + 3,5 h fine-tune | **Sì** | **ETA +5** (criterio di successo), WER non peggiore | **bloccata**: provenienza audio (gold / CC0-BY / TTS), decisione tua |
+| 5 | **Rumore su MLS/LS** | E-024 ha augmentato solo CV-IT (84 h); MLS+LS sono altre 270 h di parlato letto ancora pulite | 22 GB + ~4 h | **Sì** | **+1–2 a 10–15 dB, ~0 sul pulito** (stima non misurata) | **bloccata dal disco**: 19 GB liberi |
+| 6 | **LM 4-gram** | Sostituire il trigramma. Il tetto di 20 MB ha **0,56 MB** di margine, quindi serve un formato compresso nuovo (`web/lm.js`) | ~1 giorno | No | **+0,5–1,0 WER** *se* entra nel tetto (stima); rischio alto | dopo il re-scope |
+| 7 | **Word timestamps** | Viterbi forzato sulla matrice CTC: tempi di parola gratis dal modello attuale | ~mezza giornata | No | **0 WER**; è una feature (sottotitoli, evidenziazione) | solo se serve UX |
+| 8 | **Frame rate 25 Hz** | Pooling dei frame dopo l'encoder: metà frame, più profondità a parità di compute (`docs/10`: "25 Hz + 2 blocchi") | ~4 h + modifiche runtime | **Sì** | **20–30% più veloce**, WER ±0,5–1,5 (stima) | cambio architetturale, non ora |
+| 9 | **`en_terms.txt` 580 → 1–2k** | Espandere la lista di termini del LM | ~1 h + rebuild LM | No | **+1–2 ETA** sui termini plausibili; **0 sui 47 mai sentiti** (diagnosi E-015) | basso valore senza audio nuovo |
+| 10 | **Secondo seed di E-024** | Rifare il fine-tune del rumore con un seed diverso | ~3,5 h | **Sì** | **0 guadagno**; dice se il **−0,52 CV-IT** sul pulito è reale o rumore di run | rigore, non prodotto |
+| 11 | **E-018 (gold)** | Terzo speaker per la domanda "il gold scala?" | registrazioni + review | **Sì** | ~2–3 WER da un terzo speaker (stima), ma il rendimento marginale cala (−5,73 → −4,07) | **morto senza S4** |
+
+**Misurato vs stimato**: l'unico costo misurato è il **+4,4% per step** di InterCTC; gli altri
+guadagni in tabella sono priori da letteratura o criteri di successo, non promesse. Due previsioni
+consecutive (E-024, E-025) sono state troppo prudenti, quindi trattali come ordini di grandezza.
+
+**Non adesso, e perché**: rumore MLS/LS (disco), LM 4-gram (tetto di 20 MB), 25 Hz (cambio
+architetturale), `en_terms` (non risolve i termini mai sentiti), word timestamps (feature, non
+accuratezza). Il **divario su FLEURS-IT** (Whistle +8,29) è *architecture-bound* — CTC contro
+decoder — e l'unica strada è la distillazione (E-015), non un knob. Una **seconda stanza** (café)
+rafforzerebbe E-025 ma non migliora il modello: ~30 min, solo evidenza.
 
 ### Fatto di recente, per contesto
 
