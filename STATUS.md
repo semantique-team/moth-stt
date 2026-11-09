@@ -14,7 +14,14 @@
 > **Decisione (2026-11-09, D34):** l'**ETA resta un gate**: il caso d'uso richiede i termini inglesi
 > rari usati in italiano. E-015 riparte come **gold addendum** (100 frasi, 44 termini mai visti),
 > non Parakeet. Misura su 0.7.0: **17,0%** sui 44 termini mai visti, **74,1%** sui 18 già coperti;
-> il tetto diretto è **+3,7 ETA**, non +5. Le 100 frasi sono importate e aspettano la registrazione.
+> il tetto diretto è **+3,7 ETA**, non +5. Le 50 S1 sono registrate e validate; le 50 S2 aspettano la seconda voce.
+>
+> **Decisione (2026-11-09, D35):** il **primo braccio E-015 è killato**. Rare-term **17,0% →
+> 23,4%** (8/47 → 11/47, **+6,4 [−4,3, +17,0]**, non significativo), guadagno solo su S1/S2 e
+> **S3 invariato**; termini naturali 439 → 423; FLEURS-IT **+0,72** e FLEURS-EN **+1,31**
+> significativamente peggiori; dev strappato da 30,81 a 33,64 e mai recuperato (best = step 20,
+> cioè il baseline). **0.7.0 resta il modello pubblicato.** I dati sono riutilizzabili: il
+> prossimo braccio cambia **due** variabili, S2 come seconda voce e un fine-tune più gentile.
 >
 > **PUBBLICATO (2026-11-09):** il modello è **online** — <https://huggingface.co/semantique-team/moth-stt>
 > (pubblico, artefatti ri-scaricati e verificati sha256 contro `runs/E-024/release-0.7.0.json`) e la
@@ -388,15 +395,16 @@
 
 ## Da fare (prossimi task)
 
-**Aggiornato 2026-11-09 dopo D34.** L'**ETA resta un gate** (il caso d'uso richiede i termini rari),
-quindi la priorità è **E-015**: le 100 frasi sono importate, manca la registrazione. Poi il memo che
-chiude il re-scope e riallinea il piano operativo, che resta l'unico documento stantio.
+**Aggiornato 2026-11-09 dopo D35.** L'**ETA resta un gate**, ma il primo braccio E-015 è fallito:
+**0.7.0 resta** e le 50 S1 non bastano. La priorità è **E-015 v2** — S2 come seconda voce (le 50
+frasi sono già importate) e un fine-tune più gentile — poi il memo che chiude il re-scope e
+riallinea il piano operativo, che resta l'unico documento stantio.
 
 ### Prossimi passi, in ordine di valore
 
 | # | Cosa | Cosa vuol dire | Tempo | Training | Guadagno atteso | Stato |
 |---|---|---|---|---|---|---|
-| 1 | **E-015 gold addendum (attivo)** | 100 frasi con i **44 termini mai visti** (50 S1 + 50 S2), gold, non Parakeet. Baseline 0.7.0: **17,0%** sui 44, **74,1%** sui 18 già coperti | 15–20 min registrazione + ~2 h fine-tune + 15 min eval | **Sì** | **ETA +2,8–3,7** (tetto diretto misurato; +5 non raggiungibile coi soli 47 termini) | **frasi pronte**: registrare S1 (`--start 642`) e S2 (`--start 624`) |
+| 1 | **E-015 v2 (dopo il kill del primo braccio)** | S2 come seconda voce (50 frasi già importate) + fine-tune gentile (head 5e-5 / encoder 1e-5, o encoder congelato). Il primo braccio: **17,0 → 23,4** non significativo, **S3 invariato**, FLEURS-IT/EN peggiorano, dev 30,81 → 33,64 | 7 min registrazione S2 + ~2 h fine-tune + 15 min eval | **Sì** | **+2,8–3,7** se il transfer cross-voice funziona; il primo braccio non l'ha dimostrato | registrare S2 (`--start 624`), poi run gentile |
 | 2 | **Chiudere re-scope (D34) + piano** | Documentare "ETA resta un gate" e riallineare `2026-10-24-post-E014` (distillazione fase 2, re-scope fase 4) | ~45 min | No | 0; evita di ripartire da premesse false | dopo la registrazione |
 | 3 | **InterCTC** | CTC ausiliario su un blocco intermedio: regolarizza l'allenamento e **non aggiunge nulla al modello esportato**. Sonda: **+4,4% di tempo per step** | ~4 h training + ~1 h codice/eval | **Sì** | **+0,2–0,7 WER** (stima da letteratura; con 4 blocchi è probabile il lato basso) | pronto, nessun blocco |
 | 4 | **Rumore su MLS/LS** | E-024 ha augmentato solo CV-IT (84 h); MLS+LS sono altre 270 h di parlato letto ancora pulite | 22 GB + ~4 h | **Sì** | **+1–2 a 10–15 dB, ~0 sul pulito** (stima non misurata) | **bloccata dal disco**: 19 GB liberi |
@@ -408,8 +416,9 @@ chiude il re-scope e riallinea il piano operativo, che resta l'unico documento s
 | 10 | **E-018 (gold)** | Terzo speaker per la domanda "il gold scala?" | registrazioni + review | **Sì** | ~2–3 WER da un terzo speaker (stima), ma il rendimento marginale cala (−5,73 → −4,07) | **morto senza S4** |
 
 **Misurato vs stimato**: l'unico costo misurato è il **+4,4% per step** di InterCTC; per E-015 il
-tetto **+2,8–3,7** è misurato sul set, il guadagno effettivo no. Due previsioni consecutive (E-024,
-E-025) sono state troppo prudenti, quindi tratta gli altri numeri come ordini di grandezza.
+primo braccio ha **misurato** 17,0 → 23,4 (non significativo) e il tetto **+2,8–3,7** resta una
+stima del secondo. Due previsioni consecutive (E-024, E-025) sono state troppo prudenti, quindi
+tratta gli altri numeri come ordini di grandezza.
 
 **Non adesso, e perché**: rumore MLS/LS (disco), LM 4-gram (tetto di 20 MB), 25 Hz (cambio
 architetturale), `en_terms` (non risolve i termini mai sentiti), word timestamps (feature, non
@@ -420,6 +429,9 @@ rafforzerebbe E-025 ma non migliora il modello: ~30 min, solo evidenza.
 ### Fatto di recente, per contesto
 
 - **0.7.0 pubblicato** (modello + demo), artefatti verificati sha256 dopo il caricamento
+- **E-015 primo braccio: kill** — 50 frasi S1, x20, 1 epoca: **17,0 → 23,4** non significativo,
+  **S3 invariato**, FLEURS-IT/EN peggiorano; dev 30,81 → 33,64. **0.7.0 resta**; dati e readout
+  riutilizzabili
 - **E-025** hold-out su una stanza mai vista: il guadagno del rumore **trasferisce ed è più grande**
   (media −10,06 su 10–30 dB), caveat del pool condiviso **chiuso**; nessun peso nuovo
 - **E-022** decoder ricalibrato (−6,9 WER, zero training), **E-023** re-tune LM (niente da adottare),

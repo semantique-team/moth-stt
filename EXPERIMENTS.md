@@ -1531,3 +1531,46 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Artifacts**: `runs/E-025/` (`PLAN.md`, `RESULT.md`, `record_room.py`, `room_report.json` for the
   used take, `room_report_take1_rejected.json` and `room_report_take2_untrimmed.json` for the two
   rejected stages, `holdout_eval.py`, `eval/`), `data/raw/noise/room_holdout/` (audio, gitignored).
+
+## E-015 — gold term addendum: the first arm missed, and the recipe was too aggressive (2026-11-09)
+
+- **Date**: 2026-11-09. Training run, 13,252 steps (1 epoch), init
+  `runs/E-024/checkpoints/ckpt_best.pt` (0.7.0).
+- **Motivation**: E-015's 5% baseline was E-014's. On 0.7.0, measured on the committed T
+  hypotheses, the 600-clip term accuracy splits by provenance: **53.7%** on terms present in the
+  natural training text, **68.7%** on gold-only terms, **17.0%** on the **44 terms never seen in
+  any training text** (47 utterances). The 18 terms the gold already covers are at **74.1%**.
+  The target is the 44, and the direct ETA ceiling from fixing them is **+3.7** (100%) or
+  **+2.8** at Parakeet's 78%, not the +5 in the original plan.
+- **Method**: 50 new **S1** sentences covering all 44 terms once (2.5 min), recorded and validated
+  (691/691 clips, 0 errors), added as a **separate** source at **x20** (0.84 h). The old gold
+  (R-S1/R-S2, x50) stays untouched. One epoch, E-017 LRs (head 3e-4, encoder 5e-5), same 589.5 h
+  mixture. S1-only: S2 was not available, and S3 is held out by rule.
+- **Result — KILLED** (plan rule: rare-term accuracy <30%, or clean WER worse by >0.5 with CI
+  excluding 0):
+
+| Readout | 0.7.0 | E-015 | Δ |
+|---|---|---|---|
+| 47 rare utterances | 8/47 (17.0%) | 11/47 (23.4%) | +6.4 [−4.3, +17.0], not significant |
+| S1 rare / S2 rare / S3 rare | 6/14, 0/15, 2/18 | 7/14, 2/15, 2/18 | +1, +2, **0 on held-out S3** |
+| Natural-term occurrences | 439/817 (53.7%) | 423/817 (51.8%) | **−16** |
+| Gold-only occurrences | 123/179 | 129/179 | +6 |
+| All term occurrences | 570/1043 (54.65%) | 563/1043 (53.98%) | −0.67 |
+| 18 gold terms (regression) | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
+| T-600 / T-S3 | 25.20 / 26.92 | 24.91 / 25.55 | −0.29 tie / −1.36 tie |
+| FLEURS-IT / FLEURS-EN | 20.14 / 49.14 | 20.86 / 50.45 | **+0.72** / **+1.31**, both worse |
+| CV-IT dev | 19.85 | 19.97 | +0.12 tie |
+
+- **The dev shock is the story**: 30.81 at step 20 → 33.64 at 2k → 31.22 at the end. The fine-tune
+  pulled the model almost 3 dev points away and spent the epoch recovering; it never beat the start.
+  The best checkpoint by dev is **step 20, i.e. the baseline itself**, so the run selects no new
+  model. The final checkpoint was evaluated only as the arm that saw the data.
+- **Reading**: the data is not disproven; the recipe is. 50 sentences in **one** voice at the E-017
+  LRs for a full epoch is too much update for a converged model, and the term gain is confined to
+  the training speakers. The next arm must change **two** variables (S2 as a second voice +
+  a gentler fine-tune, e.g. head 5e-5 / encoder 1e-5 or a frozen encoder), with the same kill rule.
+- **Cost**: prep + mel + x20 **2 min**, training **1 h 50**, eval **~3 min**. No teacher, no
+  downloads, 0 USD. The 50 S1 clips and the `gold-terms-x20` source are reusable.
+- **Artifacts**: `runs/E-015/` (`PLAN.md`, `RESULT.md`, `RECORDING.md`, `config.yaml`,
+  `train.log.jsonl`, `eval/`, `eval_terms.py`, `prepare_terms.py`), `recordings/manifests/R-S1.jsonl`
+  (691 rows), `runs/E-015/candidates-S{1,2}.jsonl`.

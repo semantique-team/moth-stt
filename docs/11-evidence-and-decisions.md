@@ -45,6 +45,7 @@ each with the evidence that forced it.
 | D27 | 2026-11-07 | **Adopt E-017 as the shipped checkpoint**; gold works and generalises across speakers, but the ETA half of the mixed gate is still not won | E-017 vs E-016 on T-600: WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; on **S3, which never contributed audio**, WER −6.13 [−8.68, −3.51] and ETA +4.79 [+0.51, +9.06] — the same gain as on the two trained speakers (S1 −4.47, S2 −6.60), so it is not speaker adaptation. Gate on S3 vs Whisper forced-`it`: WER −11.07 [−16.28, −5.89] **won**, ETA −2.82 [−11.65, +6.56] **tie** | Keeping E-016 (worse everywhere, and its cross-speaker claim rests on S2 alone); waiting for more gold before adopting |
 | D28 | 2026-11-07 | **Run E-019, a Whistle LoRA probe, as an exploratory side artifact** — explicitly "less ours", never presented as Moth. D5 (own model, not a Whistle fine-tune) is **unchanged** for the Moth deliverable. **Executed the same day: killed at L1** — on held-out S3 +2.30 WER [−0.68, +5.46] (tie), FLEURS-IT/EN and CV-IT all significantly worse; only the two trained speakers improve. H2 (data, not architecture) rejected. H3/H4 not run, per the kill criterion | The wait for S4 (E-018's blocker) is the cheapest window; Whistle leads Moth by +3.35 WER / 6.42 ETA on T-600, and the probe answers two things Moth's CTC cannot: whether a decoder-based code-switch model gains from our gold, and whether a new `mix` language code expresses intra-clip switching. Protocol and kill criteria: `docs/plans/2026-11-07-whistle-lora-probe.md`. Result: `runs/E-019/RESULT.md`, `EXPERIMENTS.md` E-019, §3.4 | Presenting the LoRA as Moth; skipping the probe; running it on T (leakage) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
+| D35 | 2026-11-09 | **Do not adopt the first E-015 gold addendum**; keep 0.7.0. The next arm changes two variables (S2 as a second voice + a gentler fine-tune), not one | E-015: 50 S1 sentences covering the 44 never-seen terms, x20, one epoch at E-017 LRs. Rare-term accuracy went **17.0% → 23.4%** (8/47 → 11/47, **+6.4 [−4.3, +17.0]**, not significant) and only on training speakers (**S1 +1, S2 +2, S3 0**); natural-term occurrences fell **439 → 423**; the 18 gold terms slipped 74.1% → 70.4%. The dev was shocked from **30.81 to 33.64** at step 2,000 and ended at 31.22: the best checkpoint is step 20, i.e. the baseline, so the run selects no new model. FLEURS-IT **+0.72** and FLEURS-EN **+1.31** are significantly worse | Adopting the final checkpoint (rare-term gain non-significant, held-out speaker unchanged, read speech worse); rerunning the same recipe with more S1 sentences (the failure is cross-voice, not volume); lowering the kill bar (it fired on both criteria) |
 | D34 | 2026-11-09 | **Keep ETA as a gate** — the use case needs rare English terms used in Italian — and fund **E-015 as a gold addendum**, not Parakeet | 0.7.0 on T-600: 53.7% on terms present in the natural training text, 68.7% on gold-only terms, **17.0% on the 44 terms never seen anywhere**; the 18 terms added to gold are at **74.1%** (E-014: 5%). The 47 never-seen occurrences are 4.5% of 1,043, so the direct ETA ceiling is **+3.7** (100%) or **+2.8** at the teacher's 78%: the old +5 criterion is unreachable by this intervention. Success revised to **17% → ≥50% on the 47 utterances, ETA +2–4, WER not worse**. Cost: 100 sentences (15–20 min of recording) + ~2 h fine-tune | WER-first (the use case needs the terms); Parakeet 100 h (more expensive, teacher noise, provenance blocked); keeping +5 (would fail a successful experiment) |
 | D33 | 2026-11-09 | **Keep 0.7.0's noise claim, and upgrade it from "upper bound" to "measured on an unseen room"** (the weights do not change) | E-025: the 80/20 split proposed in STATUS was invalid — all 217 clips were in training, and the source MUSAN audio was deleted, so no partition at the source level was possible. Replaced by a room recorded **after** training (38 s of steady, broadband ambience; VAD speech 0.0). On the same 100 S3 clips the gain **transfers and is larger**: 30 dB −3.90 [−7.20, −0.83], 20 dB −6.79 [−10.84, −3.15], 15 dB −11.21 [−14.69, −7.48], 10 dB −18.34 [−22.78, −13.40], 5 dB −14.60 [−18.84, −10.47]; mean −10.06 over 10–30 dB against −6.18 on the pool. Clean reproduced E-024 exactly (22.24 / 23.94, within 1e-5), which is the harness check | An 80/20 split of the 217 clips (leaky by construction: every clip was seen); keeping the upper-bound caveat unmeasured; treating the larger gain as better absolute performance — the room is harsher, so 0.7.0 is 27.3 at 15 dB on the pool and **36.5** here |
 | D32 | 2026-11-09 | **Train with noise augmentation on half of Common Voice IT**, and ship it as **0.7.0** | E-024: on a controlled SNR curve, mixed noise costs the pre-0.7.0 model **+5.3 WER at 20 dB, +11.4 at 15 dB, +22.6 at 10 dB**; at 15 dB it scored worse than Whisper-tiny does on clean audio. Half of CV-IT re-rendered through noise at 10–30 dB, with the mixture held at the same 589.5 h, buys **−6.28 at 15 dB, −11.54 at 10 dB, −9.68 at 5 dB** (mean −6.18 over 10–30 dB), and the clean gate passes (T-600 −0.72, T-S3 +0.26, CV-IT test **−0.52** significant). Population size: the build took 1.1 min because only the noisy half is computed | Not training on noise (the model drops words under noise, it does not mis-hear them, so this is a distribution gap and not a decoder problem); noising all of CV-IT (removes clean Italian, and clean WER is a gate); adding a noisy copy of all CV (mixture 757 h, CV share 28.5% → 44.3%, confounding "noise" with "more CV"); noising MLS/LS (raw audio deleted, 22 GB re-download) |
@@ -72,6 +73,7 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | **Per-token bonus + LM weight re-tuned** | **E-022** | T-600 **−6.85** [−7.94, −5.72], held-out **S3 −8.77** [−11.13, −6.50], FLEURS-IT −6.06, FLEURS-EN −5.85, CV −5.01; deletions 12.2% → 8.3%, insertions 0.8% → 1.3% | **Kept** (0.6.0, decode-only, weights unchanged) | `runs/E-022/eval/`, `runs/E-022/diffs/` |
 | **Noise augmentation (half of CV-IT)** | **E-024** | Controlled-SNR curve: **15 dB −6.28** [−10.58, −2.38], **10 dB −11.54** [−16.18, −7.43], **5 dB −9.68** [−14.50, −5.01]; 30 dB −2.72 and 20 dB −0.68 (ties). Clean: T-600 −0.72, T-S3 +0.26 (ties), CV-IT test **−0.52** (significant) | **Kept** (0.7.0) | `runs/E-024/eval/`, `runs/E-024/comparison.json` |
 | **Noise gain on an unseen room** | **E-025** | A room recorded after training: **30 dB −3.90** [−7.20, −0.83], **20 dB −6.79** [−10.84, −3.15], **15 dB −11.21** [−14.69, −7.48], **10 dB −18.34** [−22.78, −13.40], **5 dB −14.60** [−18.84, −10.47]; mean −10.06 vs −6.18 on the pool; clean reproduced exactly (22.24 / 23.94) | **Caveat closed** (0.7.0, card updated in place, no new weights) | `runs/E-025/eval/result.json`, `runs/E-025/room_report.json` |
+| Gold term addendum (50 S1 ×20) | E-015 | Rare terms **17.0% → 23.4%** (8/47 → 11/47, +6.4 [−4.3, +17.0]); **S3 held out unchanged** (2/18); natural terms 439 → 423; 18 gold terms 74.1% → 70.4%; T-600 −0.29 tie, T-S3 −1.36 tie, **FLEURS-IT +0.72 / FLEURS-EN +1.31 significantly worse**; dev 30.81 → 33.64 → 31.22 | **Killed** (0.7.0 stays); data reusable, next arm S2 + gentler recipe | `runs/E-015/RESULT.md`, `runs/E-015/eval/terms.json` |
 | LM re-tune (weight, backoff, pruning) | E-023 | Optimum is **exactly E-022's cell** on 10× the selection set; backoff 0.4 best. The unpruned LM is −0.65 dev but **12.31 MB** → 26.63 MB package, and a **tie on the held-out speaker** | **Nothing adopted** (does not fit); D31 | `runs/E-023/sweep.json`, `runs/E-023/gate-diffs.json` |
 | LoRA on Whistle with the same gold | E-019 | On held-out S3 **+2.30 WER** [−0.68, +5.46] (tie, kill); FLEURS-IT +1.02, FLEURS-EN +2.30, CV-IT +2.66 — **all significant worse**; only the two trained speakers improve (−2.98, tie) | **Killed at L1**; H2 (data, not architecture) rejected | `runs/E-019/RESULT.md`, `runs/E-019/l1-s3/` |
 | int8 quantization of the shipped model | E-020 | T-600 +0.43 WER greedy / +0.17 beam+LM (both ties); FLEURS-IT +0.32 [+0.08, +0.57] | **Kept** (the artifact is honest on our speakers); FLEURS caveat for the card | `runs/E-020/RESULT.md` |
@@ -310,6 +312,39 @@ Three lessons.
    curve assumes the new stimulus is equally damaging, which is exactly what a held-out stimulus is
    not.
 
+### 3.8 The first gold addendum did not teach the rare terms
+
+The measured gap was real: 0.7.0 gets **17.0%** on the 44 terms that appear in no training text,
+against 74.1% on the 18 the gold already covers. E-015 recorded 50 S1 sentences covering all 44
+terms and added them at x20 to the 589.5 h mixture, one epoch from 0.7.0 at the E-017 learning
+rates. The result was a **kill**:
+
+| Readout | 0.7.0 | E-015 | Δ |
+|---|---|---|---|
+| 47 rare utterances | 8/47 (17.0%) | 11/47 (23.4%) | +6.4 [−4.3, +17.0] |
+| S1 / S2 / S3 rare | 6/14, 0/15, 2/18 | 7/14, 2/15, 2/18 | +1, +2, **0** |
+| Natural terms | 439/817 | 423/817 | −16 |
+| 18 gold terms | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
+| FLEURS-IT / EN | 20.14 / 49.14 | 20.86 / 50.45 | **+0.72 / +1.31** |
+
+The dev curve explains it: **30.81 before the fine-tune, 33.64 at step 2,000, 31.22 at the end**.
+The model was pulled three points away and spent the whole epoch recovering; the best checkpoint by
+dev is step 20, i.e. the baseline. Under the project's own selection rule the run selects no new
+model at all.
+
+Three lessons.
+
+1. **The data is not disproven; the recipe is.** 50 sentences in one voice at a 3e-4 head LR for a
+   full epoch is too much update for a converged model. The natural-term loss is optimization
+   damage, not evidence that the terms are unlearnable.
+2. **One voice is not enough for a speaker-independent mapping.** S1 +1, S2 +2, S3 **0**. The gain
+   is where the model already had the voice; the held-out speaker — the only place the product
+   claim lives — did not move. The original 50 S1 + 50 S2 design was right, and the S1-only
+   compromise was not.
+3. **A failed arm still buys information.** The 50 clips, the x20 source and the readout are
+   reusable; the next arm changes S2 + the learning rate, not the data. The kill rule was fixed
+   before the run and it fired on both criteria; the bar is not moved after the fact.
+
 ## 4. Self-corrections
 
 Recorded because a paper about failures should include the failures of the authors, not only of the
@@ -411,6 +446,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Browser/Python parity (E-022) | `runs/E-022/parity-wer.json` | as above; the JS mel is `web/mel.js`, the Python one `stt/features.py` |
 | Noise augmentation (E-024) | `runs/E-024/{RESULT.md,comparison.json,release-0.7.0.json}`, `data/manifests/cv_it_train_{clean,noisy}50.jsonl` | `uv run python runs/E-024/build_noisy_mel.py` (1 min), then `stt.train --config runs/E-024/config.yaml`, then `runs/E-024/noise_eval.py --checkpoint ... --out ...` for both arms and `runs/E-024/compare.py` |
 | Noise hold-out on an unseen room (E-025) | `runs/E-025/{PLAN.md,RESULT.md,room_report.json,eval/result.json}` | record in a noisy room: `uv run python runs/E-025/record_room.py --seconds 90`, trim events with `--trim-start/--trim-end`, then `uv run python runs/E-025/holdout_eval.py --noise data/raw/noise/room_holdout/<take>_trimmed_16k.wav --out runs/E-025/eval` |
+| Gold term addendum (E-015) | `runs/E-015/{RESULT.md,terms.json in eval/,PLAN.md,RECORDING.md}` | record: `runs/E-015/RECORDING.md`; source: `runs/E-015/prepare_terms.py`, `stt.data.build_mel`, `runs/E-017/prepare_gold.py --sets R-S1-terms --factor 20`; train: `stt.train --config runs/E-015/config.yaml`; readout: `runs/E-015/eval_terms.py` |
 | LM tuning (E-023) | `runs/E-023/{sweep.json,gate-diffs.json,eval/}` | `uv run python runs/E-023/sweep.py --phase all`, then `runs/E-023/gate.py --lm-weight 0.5 --gamma 2.4 --lm runs/E-023/lm-prune-1-1.pkl.gz` |
 | fp32 export gap (E-021) | `runs/E-021/{RESULT.md,fp32_gap.json}`, `runs/E-021/release-0.5.1.json` | `uv run python runs/E-021/fp32_gap.py`; release: `stt/export.py --version 0.5.1` (verified), then `runs/E-010/package_browser.py` |
 
@@ -419,11 +455,12 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 1. **Re-scope the mixed gate — decided 2026-11-09 (D34).** The use case needs rare English terms
    used in Italian, so **ETA stays a gate**; the WER-first option is out. The remaining work is a
    short memo documenting the choice and the realigned phases, not a new debate.
-2. **E-015 as a gold addendum** — 100 sentences covering the **44 terms never seen** (50 S1 + 50
-   S2), recorded and added at x20. Measured on 0.7.0: 17.0% on those 44 terms, 74.1% on the 18
-   already covered by gold. Success revised to **17% → ≥50% on the 47 utterances, ETA +2–4, WER
-   not worse**; the old +5 is unreachable (direct ceiling +3.7). Plan and recording sheet:
-   `runs/E-015/PLAN.md`, `runs/E-015/RECORDING.md`.
+2. **E-015 v2 — the first arm failed, the next changes two variables.** The 50 S1 sentences moved
+   the 47 rare utterances **17.0% → 23.4%** (not significant), with **S3 unchanged** (2/18), and
+   the E-017 learning rates shocked the dev (30.81 → 33.64); FLEURS-IT/EN regressed. The data is
+   reusable. The next arm adds **S2 as the second voice** (the 50 sentences are already imported,
+   `--start 624`) and uses a **gentler fine-tune** (head 5e-5 / encoder 1e-5, or a frozen encoder),
+   with the same kill rule and the 47-utterance readout. D35; `runs/E-015/RESULT.md`.
 3. **Gold code-switch data (E-018)** — confirmed by E-017, but the scaling question needs S4, who
    was never recorded. The marginal return of the second speaker fell from −5.73 to −4.07, so a
    third is worth roughly 2–3 WER at best. Treat as dead unless S4 appears.
