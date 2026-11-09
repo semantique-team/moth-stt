@@ -1,0 +1,33 @@
+{
+  "device": "mps",
+  "shape": {
+    "batch": 32,
+    "clip_frames": 600,
+    "audio_s": 192.0
+  },
+  "samples_per_variant": 60,
+  "baseline": {
+    "median_s": 0.2593899994972162,
+    "min_s": 0.2576593749690801,
+    "p10_s": 0.258483708021231
+  },
+  "interctc": {
+    "median_s": 0.27072412497363985,
+    "min_s": 0.2693694999907166,
+    "p10_s": 0.2701677919831127
+  },
+  "extra_encoder": {
+    "median_s": 0.49965791701106355,
+    "min_s": 0.4969619590556249,
+    "p10_s": 0.4983129589818418
+  },
+  "overhead_ratio": 1.043695306289344,
+  "sensitivity_control_ratio": 1.9262805735747957,
+  "timer_is_sensitive": true,
+  "aux_weight": 0.3,
+  "projection": {
+    "e017_hours": 3.35,
+    "interctc_hours": 3.5,
+    "added_minutes": 8.8
+  }
+}

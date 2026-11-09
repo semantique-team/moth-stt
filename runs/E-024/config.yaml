@@ -1,0 +1,72 @@
+# E-024 — noise augmentation on half of CV-IT.
+#
+# One variable against E-017: half of the Common Voice IT clips are heard through noise
+# (MUSAN + room tone, uniform 10-30 dB), the other half stay clean. The mixture is the *same*
+# 589.6 h as E-017 — no source grows, shrinks or is added — so "noise" is not confounded with
+# "more CV". Everything else (init, LRs, schedule, augmentation, batch shape) is E-017's.
+#
+# Why: the audit of 2026-11-09 measured +9.85 WER at 20 dB SNR and +16.13 at 15 dB on the held-out
+# speaker, against a clean 22.24. The training mixture has never contained noise (docs/10 §4.2.6,
+# docs/11 §7.4). See runs/E-024/PLAN.md for the prediction and the kill criteria.
+run: E-024
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-014/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  # ≈ 590 h, unchanged from E-017: CV-IT 167.8 (84.2 clean + 83.6 noisy) + MLS IT 169.9 +
+  # LS EN 100 + spliced 110 + gold 41.87.
+  train:
+    - manifest: data/manifests/cv_it_train_clean50.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/cv_it_train_noisy50.jsonl
+      shards: data/shards/cv_it_noisy50
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+    - manifest: data/manifests/spliced_it_en.jsonl
+      shards: data/shards/spliced_it_en
+    - manifest: data/shards/gold-x50/manifest.jsonl
+      shards: data/shards/gold-x50
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  lr_head: 3.0e-4
+  lr_encoder: 5.0e-5
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 2
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 10
+  keep_last: 3
+  max_nonfinite_steps: 20
+  empty_cache_every: 10
+  eval_every_steps: 2000

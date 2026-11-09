@@ -1,0 +1,28 @@
+split: clean 56769 clips / 84.2 h | noisy 56349 clips / 83.6 h | noise pool 217 clips
+noisy mel on disk: ~4.8 GB | only the noisy half is computed
+SNR draw over a 2k sample: min 10.0 median 20.1 max 30.0 dB
+wrote data/manifests/cv_it_train_clean50.jsonl (56769 rows)
+  5000/56349 clips, 7.4 h, 897 clips/s, eta 1 min
+  10000/56349 clips, 14.8 h, 934 clips/s, eta 1 min
+  15000/56349 clips, 22.2 h, 946 clips/s, eta 1 min
+  20000/56349 clips, 29.5 h, 905 clips/s, eta 1 min
+  25000/56349 clips, 36.9 h, 916 clips/s, eta 1 min
+  30000/56349 clips, 44.3 h, 919 clips/s, eta 0 min
+  35000/56349 clips, 51.7 h, 918 clips/s, eta 0 min
+  40000/56349 clips, 59.1 h, 906 clips/s, eta 0 min
+  45000/56349 clips, 66.5 h, 907 clips/s, eta 0 min
+  50000/56349 clips, 73.9 h, 909 clips/s, eta 0 min
+  55000/56349 clips, 81.3 h, 894 clips/s, eta 0 min
+{
+ "clips": 56349,
+ "shards": 4,
+ "hours": 83.33,
+ "errors": [],
+ "error_count": 0,
+ "snr_low": 10.0,
+ "snr_high": 30.0,
+ "manifest": "data/manifests/cv_it_train_noisy50.jsonl",
+ "shards_dir": "data/shards/cv_it_noisy50",
+ "minutes": 1.1
+}
+wrote data/manifests/cv_it_train_noisy50.jsonl
