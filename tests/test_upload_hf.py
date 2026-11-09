@@ -52,7 +52,7 @@ def _fixture(root: Path) -> tuple[Path, Path]:
         encoding="utf-8",
     )
     card = root / "CARD.md"
-    card.write_text("# card\n", encoding="utf-8")
+    card.write_text("# Moth test card\n", encoding="utf-8")
     return record, card
 
 
@@ -121,6 +121,15 @@ def test_missing_card_is_refused(tmp_path: Path) -> None:
     result = _run(tmp_path, *_args(tmp_path, record, card))
     assert result.returncode == 2
     assert "model card" in result.stderr
+
+
+def test_card_for_a_different_release_is_refused(tmp_path: Path) -> None:
+    """A card that documents another version publishes true numbers for the wrong artifact."""
+    record, card = _fixture(tmp_path)
+    card.write_text("# Moth STT 0.4.0 — old card\n", encoding="utf-8")
+    result = _run(tmp_path, *_args(tmp_path, record, card))
+    assert result.returncode == 2
+    assert "different release" in result.stderr
 
 
 def test_push_without_token_fails_before_the_network(tmp_path: Path) -> None:

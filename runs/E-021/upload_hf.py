@@ -26,8 +26,9 @@ import sys
 from pathlib import Path
 
 RELEASE = Path("release")
-CARD = Path("runs/E-021/MODEL_CARD.md")
-RECORD = Path("runs/E-021/release-0.5.1.json")
+#: The card moves with the release it documents (0.5.1 in runs/E-021/, 0.6.0 in runs/E-022/).
+CARD = Path("runs/E-022/MODEL_CARD.md")
+RECORD = Path("runs/E-022/release-0.6.0.json")
 
 #: Files the runtime downloads. `config.json` and `NOTICE` travel with them.
 PAYLOAD = ("model.int8.onnx", "vocab.json", "mel_filters.bin", "silero_vad.onnx", "lm_bpe3.bin")
@@ -63,6 +64,19 @@ def check(
             problems.append(f"missing: {release / name}")
     if not card.is_file():
         problems.append(f"missing model card: {card}")
+    else:
+        # A card that documents a different release is worse than no card: it publishes true
+        # numbers for the wrong artifact. Required, because 0.6.0 changed the system without
+        # changing the weights (E-022).
+        heading = next(
+            (line for line in card.read_text(encoding="utf-8").splitlines() if line.startswith("# ")),
+            "",
+        )
+        if record["release"] not in heading:
+            problems.append(
+                f"model card is for a different release: its title is {heading.strip()!r}, "
+                f"expected it to name {record['release']}"
+            )
     total = sum((release / name).stat().st_size for name in PAYLOAD if (release / name).is_file())
     declared = record["package_bytes"]
     if total != declared and not problems:
@@ -93,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
         print(
             "  uv run python stt/export.py --out release --checkpoint "
             "runs/E-017/checkpoints/ckpt_best.pt --vocab release/vocab.json --head-blocks 2 "
-            "--version 0.5.1",
+            f"--version {record['release']}",
             file=sys.stderr,
         )
         return 2
@@ -126,7 +140,7 @@ def main(argv: list[str] | None = None) -> int:
         path_in_repo="README.md",
         repo_id=args.repo,
         repo_type="model",
-        commit_message="model card: Moth 0.5.1",
+        commit_message=f"model card: Moth {record['release']}",
     )
     for name in (*PAYLOAD, *ALSO):
         api.upload_file(
@@ -134,7 +148,7 @@ def main(argv: list[str] | None = None) -> int:
             path_in_repo=name,
             repo_id=args.repo,
             repo_type="model",
-            commit_message=f"release 0.5.1: {name}",
+            commit_message=f"release {record['release']}: {name}",
         )
         print(f"  uploaded {name}", flush=True)
     print(f"\ndone: https://huggingface.co/{args.repo}")
