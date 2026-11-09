@@ -3,6 +3,14 @@
 > Aggiornato: **2026-11-09** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **300 test
 > verdi** + 11 Playwright, `ruff` pulito.
 >
+> **Decisione (2026-11-09, D32) — release 0.7.0:** il modello ora **sopravvive al rumore**. Metà di
+> CV-IT è stata riresa con rumore a 10–30 dB, miscela identica (589,5 h), nessun'altra modifica.
+> Sulla curva SNR controllata: **−6,28 a 15 dB, −11,54 a 10 dB, −9,68 a 5 dB** (media −6,18 su
+> 10–30 dB), con il pulito **non peggiore** (T-600 −0,72, S3 +0,26, CV-IT test **−0,52**
+> significativo). Prima: a 15 dB il modello faceva 38,4%, cioè **peggio di Whisper su audio pulito**.
+> Pesi nuovi (`7a075da4…`), architettura e LM invariati, pacchetto 19,44 MB. Pubblicato su HF:
+> modello e demo sono alla 0.7.0.
+>
 > **PUBBLICATO (2026-11-09):** il modello è **online** — <https://huggingface.co/semantique-team/moth-stt>
 > (pubblico, artefatti ri-scaricati e verificati sha256 contro `runs/E-022/release-0.6.0.json`) e la
 > **demo gira nel browser** — <https://semantique-team-moth-demo.static.hf.space> (Space statico:
@@ -51,6 +59,7 @@
 
 | Area | Cosa | Dove |
 |---|---|---|
+| **E-024 rumore** | **Release 0.7.0 (2026-11-09, D32)**: metà di CV-IT riresa con rumore (MUSAN + room tone, SNR 10–30 dB dall'hash dell'id). Miscela invariata a 589,5 h. Curva SNR appaiata: **15 dB −6,28** [−10,58, −2,38], **10 dB −11,54** [−16,18, −7,43], **5 dB −9,68**; 30 e 20 dB tie. Pulito: T-600 25,20 / 54,17, S3 26,92 / 48,45 (tie), FLEURS-IT 20,14, FLEURS-EN 49,14, CV-IT test 24,37 (**−0,52 significativo**). Build dei dati **1,1 min** (si calcola solo la metà rumorosa) | `runs/E-024/`, `data/manifests/cv_it_train_{clean,noisy}50.jsonl` |
 | **Pubblicazione + demo** | **Modello su HF** (`semantique-team/moth-stt`, pubblico) e **demo nel browser** (`semantique-team-moth-demo.static.hf.space`): Space **statico**, la card verifica gli sha256 nel browser prima di eseguire il modello, l'audio non esce dal tab. 6,3 s al primo caricamento, 16× realtime a 1 thread. Lo Space si ricostruisce con un comando (`publish_space.py`) | `runs/E-021/upload_hf.py`, `runs/E-022/publish_space.py`, `runs/E-022/space/` |
 | **Segmentazione** | **Registrazioni multi-frase**: 5 frasi concatenate fanno **36,6% WER** contro **26,6%** decodificate separate (−9,37 [−12,22, −3,51]); il VAD già spedito recupera l'**80%** (→ 28,5). Si segmenta **solo** se trova ≥2 sequenze (tagliare una singola costa +1,6). La durata non c'entra: la curva su FLEURS non è monotona | `stt/vad.py`, `web/vad.js`, `runs/audit-2026-11-09/` |
 | **E-022** | **Ricalibrazione del decoder (2026-11-09, D30)**: `token_bonus` (γ=2,4) + `lm_weight` 0,5 + beam 12/top-k 10. T-600 **−6,85** [−7,94, −5,72], **S3 held-out −8,77** [−11,13, −6,50], FLEURS-IT −6,06, FLEURS-EN −5,85, CV-IT dev −5,01 — tutti i CI escludono 0. Greedy invariato, `token_bonus=0` no-op bit-esatto, int8 byte-identico, **nessun training**. Release **0.6.0** (19,44 MB), browser 1T 20,3× a 20 s, parità browser↔Python tie. **FLEURS-IT vs Whisper auto+beam5: −6,95 [−8,02, −5,87], vinto** | `stt/decode.py`, `web/decode.js`, `runs/E-022/` |

@@ -1428,3 +1428,59 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `runs/E-021/upload_hf.py` now also **refuses a card whose title does not name the release
   version**, because a stale card publishes true numbers for the wrong artifact — the failure mode
   the E-022 audit itself fell into. 8 tests. Still a dry run until the token and namespace exist.
+
+## E-024 — noise augmentation on half of Common Voice IT (2026-11-09)
+
+- **Date**: 2026-11-09. Training run, 26,442 steps, init `runs/E-014/checkpoints/ckpt_best.pt`.
+- **Motivation**: the demo was tested with a real laptop microphone and the transcripts were poor.
+  Measuring it (`runs/audit-2026-11-09/noise_curve.py`, 100 held-out-speaker clips, MUSAN at a
+  controlled SNR) gave 22.24 clean, **26.99 at 30 dB, 32.09 at 20 dB, 38.37 at 15 dB, 48.05 at
+  10 dB, 58.23 at 5 dB** — all significant. Deletions go from 5.6% of reference words to 24.6%:
+  under noise the model drops words rather than mis-hearing them, which is the signature of
+  training on clean read speech. At 15 dB it scored worse than Whisper-tiny does on clean audio.
+  For scale, the InterCTC arm this replaced (probe: +4.4% step time, measured with a sensitivity
+  control after two failed timing designs) was expected to buy 0.2–0.7 points.
+- **Method — one variable, same mixture size**: CV-IT split deterministically by id hash; half keeps
+  the existing mel cache untouched, half is re-rendered through noise at a per-clip SNR uniform in
+  **10–30 dB** (drawn from the clip id, so the dataset is reproducible). The mixture stays at
+  E-017's **589.5 h / 266,796 clips / 13,221 steps per epoch**, so "noise" is not confounded with
+  "more CV". Everything else is E-017's recipe. Rejected with reasons in `PLAN.md`: all CV noised;
+  all CV clean plus a noisy copy (mixture 757 h, CV share 28.5% → 44.3%); noising MLS/LS (raw audio
+  deleted, 22 GB re-download).
+- **Compute**: build **1.1 min** (56,349 clips / 83.3 h / 0 errors / 3.2 GB — only the noisy half is
+  computed, which is why it took a minute instead of the estimated 2 h), training **~3 h 40**,
+  evaluation 13 min. **0 USD.**
+- **Result — ADOPTED as release 0.7.0** (plan rule: mean gain ≥ 4 points over 10–30 dB and clean
+  T-600 within +1.0):
+
+| SNR | E-017 (0.6.0) | **E-024 (0.7.0)** | Δ WER [95% CI] |
+|---|---|---|---|
+| clean | 22.24 | 23.94 | +1.70 [−0.34, +3.72] tie |
+| 30 dB | 25.98 | **23.26** | −2.72 [−5.63, +0.17] tie |
+| 20 dB | 27.50 | **26.83** | −0.68 [−4.13, +2.73] tie |
+| 15 dB | 33.62 | **27.33** | **−6.28 [−10.58, −2.38]** |
+| 10 dB | 44.82 | **33.28** | **−11.54 [−16.18, −7.43]** |
+| 5 dB | 50.93 | **41.26** | **−9.68 [−14.50, −5.01]** |
+
+  Mean over 10–30 dB: **−6.18 points**. Clean gate: T-600 **−0.72** [−1.75, +0.26], T-S3 **+0.26**
+  [−1.37, +1.96], FLEURS-IT −0.32, **CV-IT test −0.52 [−0.66, −0.38] significant**. Dev macro
+  0.3084 against E-017's 0.3098 — a difference of 0.14 points, i.e. noise, as predicted.
+- **The prediction was right on the mean and wrong on the shape**: `PLAN.md` said −3 to −6 at 20 dB
+  and −4 to −10 at 10 dB; measured −0.68 and −11.54. The gain is concentrated where noise is worst,
+  not spread across the curve. A model at 20 dB was already holding on; what it could not do was
+  survive 10 dB.
+- **Also measured**: int8 ties against fp32 (−0.06 T-600, +0.08 T-S3); browser↔Python parity **tie**
+  (−0.09 WER [−1.19, +1.13], 152/200 identical); browser 1-thread RTFx **20.3×** on 20 s,
+  unchanged; noise set with the VAD **0 non-music words over 337 clips**; a multi-sentence
+  segmentation fix landed in the same session (5 sentences in one clip cost 9.4 WER, the shipped
+  VAD recovers 80%).
+- **Not true, and stated in the card**: the noise pool is shared between training and evaluation,
+  so the gain is an **upper bound** for an unfamiliar room; a per-source split (80/20) is the
+  obvious next control and was not run. Half the Italian read speech is now only ever heard in
+  noise — costless here, but a second seed might show it.
+- **Artifacts**: `runs/E-024/` (`PLAN.md`, `RESULT.md`, `build_noisy_mel.py`, `build.log`,
+  `config.yaml`, `train.log.jsonl`, `train.out`, `noise_eval.py`, `compare.py`, `eval/`,
+  `comparison.json`, `parity.py`, `parity-wer.json`, `browser.json`, `record_release.py`,
+  `release-0.7.0.json`), `data/manifests/cv_it_train_{clean,noisy}50.jsonl`,
+  `runs/audit-2026-11-09/`. Published as 0.7.0 to `semantique-team/moth-stt` and
+  `semantique-team/moth-demo`.

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moth — Italian + English speech to text, in your browser</title>
+    <meta name="description" content="A 19 MB code-switching speech-to-text model that runs entirely in your browser." />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fbfbfa;
+        --fg: #1a1a19;
+        --muted: #6b6b68;
+        --line: #dcdcd8;
+        --accent: #2f6f4f;
+        --accent-fg: #ffffff;
+        --box: #f2f2ef;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #16161a;
+          --fg: #ececeb;
+          --muted: #9b9b96;
+          --line: #33333a;
+          --accent: #6fbf92;
+          --accent-fg: #10201a;
+          --box: #1e1e23;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 2.5rem 1.25rem 4rem;
+        background: var(--bg);
+        color: var(--fg);
+        font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      main { max-width: 44rem; margin: 0 auto; }
+      header { display: flex; align-items: center; gap: 1rem; margin-bottom: .5rem; }
+      .logo { width: 56px; height: 56px; flex: 0 0 auto; }
+      h1 { font-size: 1.6rem; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
+      .sub { color: var(--muted); margin: 0 0 2rem; font-size: .95rem; }
+      .sub code { font-size: .9em; }
+      .controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+      button {
+        font: inherit;
+        font-weight: 500;
+        padding: .6rem 1.1rem;
+        border-radius: .55rem;
+        border: 1px solid var(--line);
+        background: var(--box);
+        color: var(--fg);
+        cursor: pointer;
+      }
+      button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+      button:disabled { opacity: .45; cursor: not-allowed; }
+      label.file {
+        font: inherit; font-size: .9rem; color: var(--muted);
+        cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+      }
+      label.file input { display: none; }
+      #status { color: var(--muted); font-size: .9rem; margin: 1rem 0 0; min-height: 1.4em; }
+      #status.bad { color: #c0392b; }
+      #status.ok { color: var(--accent); }
+      #out {
+        margin: 1.25rem 0 0;
+        padding: 1.1rem 1.2rem;
+        background: var(--box);
+        border: 1px solid var(--line);
+        border-radius: .7rem;
+        font-size: 1.15rem;
+        line-height: 1.55;
+        min-height: 4.5rem;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      #out:empty::before { content: "La trascrizione appare qui."; color: var(--muted); font-size: 1rem; }
+      details { margin-top: 1.25rem; color: var(--muted); font-size: .85rem; }
+      details pre { margin: .6rem 0 0; padding: .8rem; background: var(--box); border-radius: .5rem; overflow-x: auto; }
+      footer { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+      footer a { color: inherit; }
+      kbd { font: inherit; font-size: .85em; padding: .1em .35em; border: 1px solid var(--line); border-radius: .3em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="logo-white.png" />
+          <img class="logo" src="logo.png" alt="" width="56" height="56" />
+        </picture>
+        <h1>Moth — italiano con termini inglesi, nel browser</h1>
+      </header>
+      <p class="sub">
+        19,4 MB, nessun server: l'audio non esce dal tuo dispositivo. Modello CTC su encoder
+        Whisper-tiny, 11,6 M parametri, int8.
+      </p>
+
+      <div class="controls">
+        <button id="record" class="primary" disabled>Registra</button>
+        <button id="stop" disabled>Stop</button>
+        <label class="file">
+          oppure carica un file
+          <input type="file" id="file" accept="audio/*" />
+        </label>
+      </div>
+
+      <p id="status">carico il modello…</p>
+      <div id="out" aria-live="polite"></div>
+
+      <details>
+        <summary>Dettagli tecnici</summary>
+        <pre id="details">—</pre>
+      </details>
+
+      <footer>
+        Parla italiano, con dentro le parole inglesi che usi davvero —
+        <em>"il deploy è andato bene, facciamo un quick sync dopo la call"</em>.
+        Meglio una frase alla volta: il modello spezza da sé sui silenzi, ma le pause lo aiutano.
+        Nessuna punteggiatura, output minuscolo, numeri a parole.<br /><br />
+        Modello, numeri e limiti: <a href="https://huggingface.co/semantique-team/moth-stt" target="_blank" rel="noreferrer">semantique-team/moth-stt</a>.
+        Licenza Apache-2.0; encoder iniziale da <code>openai/whisper-tiny</code> (MIT).
+      </footer>
+    </main>
+
+    <script type="module">
+      import { createRunner, decodeTo16k } from "./ort.js";
+      import { startMicrophone } from "./mic.js";
+
+      const status = document.getElementById("status");
+      const output = document.getElementById("out");
+      const details = document.getElementById("details");
+      const recordButton = document.getElementById("record");
+      const stopButton = document.getElementById("stop");
+      const fileInput = document.getElementById("file");
+
+      let runner = null;
+      let recording = null;
+
+      function say(text, kind = "") {
+        status.textContent = text;
+        status.className = kind;
+      }
+
+      function showResult(result) {
+        output.textContent = result.text || "(niente: il VAD non ha trovato parlato)";
+        details.textContent = JSON.stringify(result, null, 2);
+      }
+
+      async function transcribe(pcm) {
+        recordButton.disabled = true;
+        say("trascrivo…");
+        try {
+          const result = await runner.transcribe(pcm);
+          showResult(result);
+          const seconds = result.audioSeconds.toFixed(1);
+          say(
+            result.guarded
+              ? "nessun parlato rilevato"
+              : `${seconds} s di audio in ${(result.timings.total_ms / 1000).toFixed(1)} s ` +
+                  `(${result.rtfx.toFixed(0)}× realtime, ${result.segments} segmenti)`,
+            "ok",
+          );
+        } catch (error) {
+          say(`errore: ${error}`, "bad");
+        } finally {
+          recordButton.disabled = !runner;
+        }
+      }
+
+      try {
+        runner = await createRunner({ baseUrl: "./release/" });
+        const isolated = runner.crossOriginIsolated ? "4 thread" : "1 thread";
+        say(`modello caricato in ${runner.loadMs.toFixed(0)} ms — ${isolated}, SIMD`, "ok");
+        recordButton.disabled = false;
+      } catch (error) {
+        say(`non riesco a caricare il modello: ${error}`, "bad");
+      }
+
+      recordButton.addEventListener("click", async () => {
+        if (recording || !runner) return;
+        try {
+          recordButton.disabled = true;
+          stopButton.disabled = false;
+          say("registro… premi Stop quando hai finito (max 30 s)");
+          recording = await startMicrophone({
+            maxSeconds: 30,
+            onLimit: () => void stopRecording(),
+          });
+        } catch (error) {
+          recording = null;
+          stopButton.disabled = true;
+          recordButton.disabled = !runner;
+          say(`microfono non disponibile: ${error}`, "bad");
+        }
+      });
+
+      async function stopRecording() {
+        if (!recording) return;
+        const active = recording;
+        recording = null;
+        stopButton.disabled = true;
+        say("elaboro l'audio…");
+        try {
+          const pcm = await active.stop();
+          if (pcm.length < 1600) {
+            say("registrazione troppo corta", "bad");
+            recordButton.disabled = !runner;
+            return;
+          }
+          await transcribe(pcm);
+        } catch (error) {
+          say(`errore microfono: ${error}`, "bad");
+          recordButton.disabled = !runner;
+        }
+      }
+
+      stopButton.addEventListener("click", () => void stopRecording());
+
+      fileInput.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (!file || !runner) return;
+        const url = URL.createObjectURL(file);
+        try {
+          const pcm = await decodeTo16k(url);
+          await transcribe(pcm);
+        } catch (error) {
+          say(`non riesco a leggere ${file.name}: ${error}`, "bad");
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      });
+    </script>
+  </body>
+</html>

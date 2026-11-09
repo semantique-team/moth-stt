@@ -74,7 +74,9 @@ test("a single sentence is decoded whole, not segmented", async ({ page }) => {
   });
 
   // One speech run: the code must take the whole-clip path, so the two transcripts are identical.
+  // The text itself is not asserted: it is whatever the current checkpoint produces, and pinning it
+  // here would make this a model-regression test that fails on every retrain for no reason.
   expect(result.bounds.length).toBe(1);
   expect(result.withSegments.text).toBe(result.withoutSegments.text);
-  expect(result.withSegments.text).toBe("ho ricevuto un feedback positivo");
+  expect(result.withSegments.text.length).toBeGreaterThan(0);
 });

@@ -165,6 +165,9 @@ def write_jsonl(path: Path, hypotheses: dict[str, str]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(prog="E-022/eval.py")
     parser.add_argument("--arm", choices=sorted(ARMS), default="frozen")
+    parser.add_argument(
+        "--checkpoint", default=str(CHECKPOINT.relative_to(REPO)) if CHECKPOINT.is_absolute() else str(CHECKPOINT)
+    )
     parser.add_argument("--int8", action="store_true", help="also decode the shipped int8 artifact")
     parser.add_argument("--sets", default=None, help="comma list of set names")
     parser.add_argument("--greedy", action="store_true", help="also run greedy (VAD-free control)")
@@ -179,10 +182,12 @@ def main() -> int:
     lm = BPETrigramLM.load(LM_PATH)
 
     model = MothSTT(vocab_size=1024, head_blocks=2)
-    payload = torch.load(CHECKPOINT, map_location="cpu", weights_only=False)
+    checkpoint = Path(args.checkpoint)
+    checkpoint = checkpoint if checkpoint.is_absolute() else REPO / checkpoint
+    payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
     model.load_state_dict(payload["model"])
     model.eval()
-    print(f"arm {args.arm}: {json.dumps(params)}", flush=True)
+    print(f"arm {args.arm}: {json.dumps(params)} on {checkpoint.relative_to(REPO)}", flush=True)
 
     available = sets()
     wanted = (

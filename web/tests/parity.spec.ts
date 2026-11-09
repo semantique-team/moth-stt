@@ -16,7 +16,11 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 import { expect, test } from "@playwright/test";
 
-const CLIPS = JSON.parse(readFileSync("../runs/E-022/parity-clips.json", "utf8"));
+// The clip list and the destination are overridable so this test can serve any run, not just the
+// one it was written for (E-022). Defaults keep the original invocation working.
+const CLIPS = JSON.parse(
+  readFileSync(process.env.PARITY_CLIPS ?? "../runs/E-022/parity-clips.json", "utf8"),
+);
 const OUT = process.env.PARITY_OUT ?? "parity-browser.json";
 
 test("browser transcripts at the E-022 decode parameters", async ({ page }) => {

@@ -28,9 +28,9 @@ import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-SPACE_SRC = REPO / "runs/E-022/space"
+SPACE_SRC = REPO / "runs/E-024/space"
 RELEASE = REPO / "release"
-RECORD = REPO / "runs/E-022/release-0.6.0.json"
+RECORD = REPO / "runs/E-024/release-0.7.0.json"
 
 #: The demo page, its runtime, and the ORT build the WASM backend loads. `ort.wasm.min.mjs`
 #: dynamically imports `ort-wasm-simd-threaded.mjs`, which loads the `.wasm` — all three must sit

@@ -1,0 +1,210 @@
+{
+  "release": "0.7.0",
+  "date": "2026-11-09",
+  "checkpoint": "runs/E-024/checkpoints/ckpt_best.pt (step 26442, noise-augmented fine-tune from E-014)",
+  "lm": "runs/E-008/lm_bpe3_aug.pkl.gz (unchanged)",
+  "reason": "New acoustic checkpoint (E-024): the E-017 recipe re-run with half of the Common Voice IT clips heard through noise at a random 10-30 dB SNR. Architecture, tokenizer, LM, decode and package size are unchanged from 0.6.0; only the int8 weights differ. Buys 6.3 WER at 15 dB SNR and 11.5 at 10 dB, with clean performance a tie.",
+  "build": "uv run python stt/export.py --out release --checkpoint runs/E-024/checkpoints/ckpt_best.pt --vocab release/vocab.json --head-blocks 2 --version 0.7.0",
+  "package": "uv run python runs/E-010/package_browser.py --lm runs/E-008/lm_bpe3_aug.pkl.gz --beam 12 --top-k 10 --lm-weight 0.5 --token-bonus 2.4",
+  "decode": {
+    "default": "beam",
+    "beam": 12,
+    "top_k": 10,
+    "lm": "lm_bpe3.bin",
+    "lm_weight": 0.5,
+    "token_bonus": 2.4
+  },
+  "package_bytes": 19436178,
+  "package_mb": 19.44,
+  "payload_mb": 19.44,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "7a075da40eb37de6988947efc717824db8b144769628db078e48dcc35b5ab0af"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5116464,
+      "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    },
+    "config.json": {
+      "bytes": 1322,
+      "sha256": "55d7c7196e27013cc1b9c5c2303b39d14d594ab4e92414fe2ed22148538585e0"
+    },
+    "NOTICE": {
+      "bytes": 3260,
+      "sha256": "6ca7672f006155be816fa3b28072add859ca020c22a2c4e47eaaf4433c341d32"
+    }
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.1
+  },
+  "verification": {
+    "fp32": {
+      "gate": "seeded sweep, D29: median <= 1e-3, worst <= 1e-2",
+      "median_abs": 0.0001888,
+      "worst_abs": 0.001217,
+      "draws_over_1e-3": "1/80",
+      "source": "stt/export.py stdout for this build"
+    },
+    "int8": {
+      "max_abs": 3.063,
+      "top1_agreement": 1.0
+    }
+  },
+  "wer": {
+    "t600": {
+      "wer": 0.252,
+      "eta": 0.5417
+    },
+    "t-s3": {
+      "wer": 0.2692,
+      "eta": 0.4845
+    },
+    "fleurs_it_test": {
+      "wer": 0.2014
+    },
+    "fleurs_en_test": {
+      "wer": 0.4914
+    },
+    "cv_it_test": {
+      "wer": 0.2437
+    },
+    "source": "runs/E-024/eval/gate/ (PyTorch) and eval/gate/int8/ (this artifact)"
+  },
+  "browser_rtfx": [
+    {
+      "threads": 4,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 110.47499996423721,
+      "total_ms_min": 108.0900000333786,
+      "vad_ms_median": 15.637499928474426,
+      "feature_ms_median": 39.1149999499321,
+      "inference_ms_median": 39.110000014305115,
+      "decode_ms_median": 16.225000023841858,
+      "rtfx_median": 45.25910841021581,
+      "rtfx_inference": 127.84454099133646,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 231.63999998569489,
+      "total_ms_min": 229.31500005722046,
+      "vad_ms_median": 29.792500019073486,
+      "feature_ms_median": 77.54250001907349,
+      "inference_ms_median": 85.49000000953674,
+      "decode_ms_median": 39.622500002384186,
+      "rtfx_median": 43.1704368874873,
+      "rtfx_inference": 116.9727453372846,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 520.4799999594688,
+      "total_ms_min": 513.2900000810623,
+      "vad_ms_median": 57.830000042915344,
+      "feature_ms_median": 151.27749997377396,
+      "inference_ms_median": 202.9825000166893,
+      "decode_ms_median": 105.53250002861023,
+      "rtfx_median": 38.42606824768954,
+      "rtfx_inference": 98.53066150212749,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 205.54249995946884,
+      "total_ms_min": 205.02499997615814,
+      "vad_ms_median": 21.3125,
+      "feature_ms_median": 36.655000030994415,
+      "inference_ms_median": 132.02999997138977,
+      "decode_ms_median": 15.467500030994415,
+      "rtfx_median": 24.32586935055259,
+      "rtfx_inference": 37.87018102767155,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 436.5224999785423,
+      "total_ms_min": 435.56000006198883,
+      "vad_ms_median": 41.35999995470047,
+      "feature_ms_median": 72.6875,
+      "inference_ms_median": 284.09750002622604,
+      "decode_ms_median": 38.377499997615814,
+      "rtfx_median": 22.908326605138473,
+      "rtfx_inference": 35.19918337569625,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 984.3225000500679,
+      "total_ms_min": 982.3300000429153,
+      "vad_ms_median": 81.57999992370605,
+      "feature_ms_median": 145.39749997854233,
+      "inference_ms_median": 657.3174999952316,
+      "decode_ms_median": 99.34500002861023,
+      "rtfx_median": 20.318543972105374,
+      "rtfx_inference": 30.426696383627526,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    }
+  ],
+  "browser_parity": {
+    "parity": {
+      "clips": 200,
+      "identical": 152,
+      "identical_ratio": 0.76,
+      "browser_wer": 0.21496130696474636,
+      "python_wer": 0.21582115219260534,
+      "wer_diff": -0.0008598452278589797,
+      "wer_ci": [
+        -0.011864406779660996,
+        0.011274934952298366
+      ],
+      "wer_tie": true,
+      "browser_eta": 0.6328358208955224,
+      "python_eta": 0.6417910447761194
+    }
+  }
+}

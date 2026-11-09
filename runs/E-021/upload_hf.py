@@ -27,8 +27,8 @@ from pathlib import Path
 
 RELEASE = Path("release")
 #: The card moves with the release it documents (0.5.1 in runs/E-021/, 0.6.0 in runs/E-022/).
-CARD = Path("runs/E-022/MODEL_CARD.md")
-RECORD = Path("runs/E-022/release-0.6.0.json")
+CARD = Path("runs/E-024/MODEL_CARD.md")
+RECORD = Path("runs/E-024/release-0.7.0.json")
 
 #: Images the card references, uploaded next to it. The card cannot switch image by colour scheme,
 #: so it uses the white tile, which is legible on both light and dark themes.

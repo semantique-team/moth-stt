@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "T-0001",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 0,
+      "frames": 398,
+      "duration": 3.989
+    }
+  },
+  {
+    "id": "T-0004",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 398,
+      "frames": 291,
+      "duration": 2.912
+    }
+  },
+  {
+    "id": "T-0007",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 689,
+      "frames": 235,
+      "duration": 2.357
+    }
+  },
+  {
+    "id": "T-0010",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 924,
+      "frames": 260,
+      "duration": 2.603
+    }
+  },
+  {
+    "id": "T-0013",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 1184,
+      "frames": 188,
+      "duration": 1.888
+    }
+  },
+  {
+    "id": "T-0016",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 1372,
+      "frames": 370,
+      "duration": 3.701
+    }
+  },
+  {
+    "id": "T-0019",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 1742,
+      "frames": 557,
+      "duration": 5.579
+    }
+  },
+  {
+    "id": "T-0022",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 2299,
+      "frames": 205,
+      "duration": 2.059
+    }
+  },
+  {
+    "id": "T-0025",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 2504,
+      "frames": 158,
+      "duration": 1.589
+    }
+  },
+  {
+    "id": "T-0028",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 2662,
+      "frames": 213,
+      "duration": 2.133
+    }
+  },
+  {
+    "id": "T-0031",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 2875,
+      "frames": 273,
+      "duration": 2.731
+    }
+  },
+  {
+    "id": "T-0034",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 3148,
+      "frames": 202,
+      "duration": 2.027
+    }
+  },
+  {
+    "id": "T-0037",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 3350,
+      "frames": 230,
+      "duration": 2.304
+    }
+  },
+  {
+    "id": "T-0040",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 3580,
+      "frames": 227,
+      "duration": 2.272
+    }
+  },
+  {
+    "id": "T-0043",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 3807,
+      "frames": 234,
+      "duration": 2.347
+    }
+  },
+  {
+    "id": "T-0046",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 4041,
+      "frames": 182,
+      "duration": 1.824
+    }
+  },
+  {
+    "id": "T-0049",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 4223,
+      "frames": 218,
+      "duration": 2.187
+    }
+  },
+  {
+    "id": "T-0052",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 4441,
+      "frames": 205,
+      "duration": 2.059
+    }
+  },
+  {
+    "id": "T-0055",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 4646,
+      "frames": 226,
+      "duration": 2.261
+    }
+  },
+  {
+    "id": "T-0058",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 4872,
+      "frames": 190,
+      "duration": 1.909
+    }
+  },
+  {
+    "id": "T-0061",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 5062,
+      "frames": 234,
+      "duration": 2.347
+    }
+  },
+  {
+    "id": "T-0064",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 5296,
+      "frames": 218,
+      "duration": 2.187
+    }
+  },
+  {
+    "id": "T-0067",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 5514,
+      "frames": 237,
+      "duration": 2.379
+    }
+  },
+  {
+    "id": "T-0070",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 5751,
+      "frames": 236,
+      "duration": 2.368
+    }
+  },
+  {
+    "id": "T-0073",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 5987,
+      "frames": 273,
+      "duration": 2.731
+    }
+  },
+  {
+    "id": "T-0076",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 6260,
+      "frames": 236,
+      "duration": 2.368
+    }
+  },
+  {
+    "id": "T-0079",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 6496,
+      "frames": 170,
+      "duration": 1.707
+    }
+  },
+  {
+    "id": "T-0082",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 6666,
+      "frames": 199,
+      "duration": 1.995
+    }
+  },
+  {
+    "id": "T-0085",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 6865,
+      "frames": 212,
+      "duration": 2.123
+    }
+  },
+  {
+    "id": "T-0088",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 7077,
+      "frames": 180,
+      "duration": 1.803
+    }
+  },
+  {
+    "id": "T-0091",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 7257,
+      "frames": 222,
+      "duration": 2.229
+    }
+  },
+  {
+    "id": "T-0094",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 7479,
+      "frames": 246,
+      "duration": 2.464
+    }
+  },
+  {
+    "id": "T-0097",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 7725,
+      "frames": 224,
+      "duration": 2.24
+    }
+  },
+  {
+    "id": "T-0100",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 7949,
+      "frames": 235,
+      "duration": 2.357
+    }
+  },
+  {
+    "id": "T-0103",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 8184,
+      "frames": 248,
+      "duration": 2.485
+    }
+  },
+  {
+    "id": "T-0106",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 8432,
+      "frames": 171,
+      "duration": 1.717
+    }
+  },
+  {
+    "id": "T-0109",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 8603,
+      "frames": 257,
+      "duration": 2.571
+    }
+  },
+  {
+    "id": "T-0112",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 8860,
+      "frames": 204,
+      "duration": 2.048
+    }
+  },
+  {
+    "id": "T-0115",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 9064,
+      "frames": 234,
+      "duration": 2.347
+    }
+  },
+  {
+    "id": "T-0118",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 9298,
+      "frames": 288,
+      "duration": 2.88
+    }
+  },
+  {
+    "id": "T-0121",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 9586,
+      "frames": 275,
+      "duration": 2.752
+    }
+  },
+  {
+    "id": "T-0124",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 9861,
+      "frames": 167,
+      "duration": 1.675
+    }
+  },
+  {
+    "id": "T-0127",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 10028,
+      "frames": 202,
+      "duration": 2.027
+    }
+  },
+  {
+    "id": "T-0130",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 10230,
+      "frames": 285,
+      "duration": 2.859
+    }
+  },
+  {
+    "id": "T-0133",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 10515,
+      "frames": 232,
+      "duration": 2.325
+    }
+  },
+  {
+    "id": "T-0136",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 10747,
+      "frames": 199,
+      "duration": 1.995
+    }
+  },
+  {
+    "id": "T-0139",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 10946,
+      "frames": 208,
+      "duration": 2.08
+    }
+  },
+  {
+    "id": "T-0142",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 11154,
+      "frames": 284,
+      "duration": 2.848
+    }
+  },
+  {
+    "id": "T-0145",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 11438,
+      "frames": 279,
+      "duration": 2.795
+    }
+  },
+  {
+    "id": "T-0148",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 11717,
+      "frames": 235,
+      "duration": 2.357
+    }
+  },
+  {
+    "id": "T-0151",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 11952,
+      "frames": 317,
+      "duration": 3.179
+    }
+  },
+  {
+    "id": "T-0154",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 12269,
+      "frames": 267,
+      "duration": 2.677
+    }
+  },
+  {
+    "id": "T-0157",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 12536,
+      "frames": 289,
+      "duration": 2.891
+    }
+  },
+  {
+    "id": "T-0160",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 12825,
+      "frames": 257,
+      "duration": 2.571
+    }
+  },
+  {
+    "id": "T-0163",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 13082,
+      "frames": 194,
+      "duration": 1.941
+    }
+  },
+  {
+    "id": "T-0166",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 13276,
+      "frames": 318,
+      "duration": 3.189
+    }
+  },
+  {
+    "id": "T-0169",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 13594,
+      "frames": 155,
+      "duration": 1.557
+    }
+  },
+  {
+    "id": "T-0172",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 13749,
+      "frames": 328,
+      "duration": 3.285
+    }
+  },
+  {
+    "id": "T-0175",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 14077,
+      "frames": 275,
+      "duration": 2.752
+    }
+  },
+  {
+    "id": "T-0178",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 14352,
+      "frames": 283,
+      "duration": 2.837
+    }
+  },
+  {
+    "id": "T-0181",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 14635,
+      "frames": 186,
+      "duration": 1.867
+    }
+  },
+  {
+    "id": "T-0184",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 14821,
+      "frames": 210,
+      "duration": 2.101
+    }
+  },
+  {
+    "id": "T-0187",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 15031,
+      "frames": 221,
+      "duration": 2.219
+    }
+  },
+  {
+    "id": "T-0190",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 15252,
+      "frames": 167,
+      "duration": 1.675
+    }
+  },
+  {
+    "id": "T-0193",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 15419,
+      "frames": 283,
+      "duration": 2.837
+    }
+  },
+  {
+    "id": "T-0196",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 15702,
+      "frames": 316,
+      "duration": 3.168
+    }
+  },
+  {
+    "id": "T-0199",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 16018,
+      "frames": 232,
+      "duration": 2.325
+    }
+  },
+  {
+    "id": "T-0202",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 16250,
+      "frames": 205,
+      "duration": 2.059
+    }
+  },
+  {
+    "id": "T-0205",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 16455,
+      "frames": 219,
+      "duration": 2.197
+    }
+  },
+  {
+    "id": "T-0208",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 16674,
+      "frames": 208,
+      "duration": 2.08
+    }
+  },
+  {
+    "id": "T-0211",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 16882,
+      "frames": 235,
+      "duration": 2.357
+    }
+  },
+  {
+    "id": "T-0214",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 17117,
+      "frames": 208,
+      "duration": 2.08
+    }
+  },
+  {
+    "id": "T-0217",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 17325,
+      "frames": 329,
+      "duration": 3.296
+    }
+  },
+  {
+    "id": "T-0220",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 17654,
+      "frames": 308,
+      "duration": 3.083
+    }
+  },
+  {
+    "id": "T-0223",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 17962,
+      "frames": 265,
+      "duration": 2.656
+    }
+  },
+  {
+    "id": "T-0226",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 18227,
+      "frames": 241,
+      "duration": 2.411
+    }
+  },
+  {
+    "id": "T-0229",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 18468,
+      "frames": 340,
+      "duration": 3.403
+    }
+  },
+  {
+    "id": "T-0232",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 18808,
+      "frames": 204,
+      "duration": 2.048
+    }
+  },
+  {
+    "id": "T-0235",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 19012,
+      "frames": 252,
+      "duration": 2.528
+    }
+  },
+  {
+    "id": "T-0238",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 19264,
+      "frames": 262,
+      "duration": 2.624
+    }
+  },
+  {
+    "id": "T-0241",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 19526,
+      "frames": 200,
+      "duration": 2.005
+    }
+  },
+  {
+    "id": "T-0244",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 19726,
+      "frames": 267,
+      "duration": 2.677
+    }
+  },
+  {
+    "id": "T-0247",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 19993,
+      "frames": 234,
+      "duration": 2.347
+    }
+  },
+  {
+    "id": "T-0250",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 20227,
+      "frames": 363,
+      "duration": 3.637
+    }
+  },
+  {
+    "id": "T-0253",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 20590,
+      "frames": 142,
+      "duration": 1.429
+    }
+  },
+  {
+    "id": "T-0256",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 20732,
+      "frames": 144,
+      "duration": 1.44
+    }
+  },
+  {
+    "id": "T-0259",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 20876,
+      "frames": 151,
+      "duration": 1.515
+    }
+  },
+  {
+    "id": "T-0262",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 21027,
+      "frames": 185,
+      "duration": 1.856
+    }
+  },
+  {
+    "id": "T-0265",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 21212,
+      "frames": 210,
+      "duration": 2.101
+    }
+  },
+  {
+    "id": "T-0268",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 21422,
+      "frames": 190,
+      "duration": 1.909
+    }
+  },
+  {
+    "id": "T-0271",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 21612,
+      "frames": 188,
+      "duration": 1.888
+    }
+  },
+  {
+    "id": "T-0274",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 21800,
+      "frames": 202,
+      "duration": 2.027
+    }
+  },
+  {
+    "id": "T-0277",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 22002,
+      "frames": 210,
+      "duration": 2.101
+    }
+  },
+  {
+    "id": "T-0280",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 22212,
+      "frames": 195,
+      "duration": 1.952
+    }
+  },
+  {
+    "id": "T-0283",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 22407,
+      "frames": 225,
+      "duration": 2.251
+    }
+  },
+  {
+    "id": "T-0286",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 22632,
+      "frames": 221,
+      "duration": 2.219
+    }
+  },
+  {
+    "id": "T-0289",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 22853,
+      "frames": 221,
+      "duration": 2.219
+    }
+  },
+  {
+    "id": "T-0292",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 23074,
+      "frames": 224,
+      "duration": 2.24
+    }
+  },
+  {
+    "id": "T-0295",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 23298,
+      "frames": 194,
+      "duration": 1.941
+    }
+  },
+  {
+    "id": "T-0298",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 23492,
+      "frames": 176,
+      "duration": 1.76
+    }
+  },
+  {
+    "id": "T-0301",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 23668,
+      "frames": 249,
+      "duration": 2.496
+    }
+  },
+  {
+    "id": "T-0304",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 23917,
+      "frames": 131,
+      "duration": 1.312
+    }
+  },
+  {
+    "id": "T-0307",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 24048,
+      "frames": 240,
+      "duration": 2.4
+    }
+  },
+  {
+    "id": "T-0310",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 24288,
+      "frames": 230,
+      "duration": 2.304
+    }
+  },
+  {
+    "id": "T-0313",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 24518,
+      "frames": 320,
+      "duration": 3.2
+    }
+  },
+  {
+    "id": "T-0316",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 24838,
+      "frames": 209,
+      "duration": 2.091
+    }
+  },
+  {
+    "id": "T-0319",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 25047,
+      "frames": 173,
+      "duration": 1.739
+    }
+  },
+  {
+    "id": "T-0322",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 25220,
+      "frames": 233,
+      "duration": 2.336
+    }
+  },
+  {
+    "id": "T-0325",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 25453,
+      "frames": 163,
+      "duration": 1.632
+    }
+  },
+  {
+    "id": "T-0328",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 25616,
+      "frames": 154,
+      "duration": 1.547
+    }
+  },
+  {
+    "id": "T-0331",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 25770,
+      "frames": 200,
+      "duration": 2.005
+    }
+  },
+  {
+    "id": "T-0334",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 25970,
+      "frames": 245,
+      "duration": 2.453
+    }
+  },
+  {
+    "id": "T-0337",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 26215,
+      "frames": 251,
+      "duration": 2.517
+    }
+  },
+  {
+    "id": "T-0340",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 26466,
+      "frames": 214,
+      "duration": 2.144
+    }
+  },
+  {
+    "id": "T-0343",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 26680,
+      "frames": 280,
+      "duration": 2.805
+    }
+  },
+  {
+    "id": "T-0346",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 26960,
+      "frames": 199,
+      "duration": 1.995
+    }
+  },
+  {
+    "id": "T-0349",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 27159,
+      "frames": 254,
+      "duration": 2.549
+    }
+  },
+  {
+    "id": "T-0352",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 27413,
+      "frames": 254,
+      "duration": 2.549
+    }
+  },
+  {
+    "id": "T-0355",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 27667,
+      "frames": 340,
+      "duration": 3.403
+    }
+  },
+  {
+    "id": "T-0358",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 28007,
+      "frames": 238,
+      "duration": 2.389
+    }
+  },
+  {
+    "id": "T-0361",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 28245,
+      "frames": 249,
+      "duration": 2.496
+    }
+  },
+  {
+    "id": "T-0364",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 28494,
+      "frames": 226,
+      "duration": 2.261
+    }
+  },
+  {
+    "id": "T-0367",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 28720,
+      "frames": 219,
+      "duration": 2.197
+    }
+  },
+  {
+    "id": "T-0370",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 28939,
+      "frames": 198,
+      "duration": 1.984
+    }
+  },
+  {
+    "id": "T-0373",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 29137,
+      "frames": 232,
+      "duration": 2.325
+    }
+  },
+  {
+    "id": "T-0376",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 29369,
+      "frames": 245,
+      "duration": 2.453
+    }
+  },
+  {
+    "id": "T-0379",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 29614,
+      "frames": 264,
+      "duration": 2.645
+    }
+  },
+  {
+    "id": "T-0382",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 29878,
+      "frames": 227,
+      "duration": 2.272
+    }
+  },
+  {
+    "id": "T-0385",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 30105,
+      "frames": 310,
+      "duration": 3.104
+    }
+  },
+  {
+    "id": "T-0388",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 30415,
+      "frames": 267,
+      "duration": 2.677
+    }
+  },
+  {
+    "id": "T-0391",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 30682,
+      "frames": 261,
+      "duration": 2.613
+    }
+  },
+  {
+    "id": "T-0394",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 30943,
+      "frames": 240,
+      "duration": 2.4
+    }
+  },
+  {
+    "id": "T-0397",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 31183,
+      "frames": 221,
+      "duration": 2.219
+    }
+  },
+  {
+    "id": "T-0400",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 31404,
+      "frames": 294,
+      "duration": 2.944
+    }
+  },
+  {
+    "id": "T-0403",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 31698,
+      "frames": 268,
+      "duration": 2.688
+    }
+  },
+  {
+    "id": "T-0406",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 31966,
+      "frames": 278,
+      "duration": 2.784
+    }
+  },
+  {
+    "id": "T-0409",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 32244,
+      "frames": 330,
+      "duration": 3.307
+    }
+  },
+  {
+    "id": "T-0412",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 32574,
+      "frames": 236,
+      "duration": 2.368
+    }
+  },
+  {
+    "id": "T-0415",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 32810,
+      "frames": 200,
+      "duration": 2.005
+    }
+  },
+  {
+    "id": "T-0418",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 33010,
+      "frames": 242,
+      "duration": 2.421
+    }
+  },
+  {
+    "id": "T-0421",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 33252,
+      "frames": 243,
+      "duration": 2.432
+    }
+  },
+  {
+    "id": "T-0424",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 33495,
+      "frames": 234,
+      "duration": 2.347
+    }
+  },
+  {
+    "id": "T-0427",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 33729,
+      "frames": 227,
+      "duration": 2.272
+    }
+  },
+  {
+    "id": "T-0430",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 33956,
+      "frames": 215,
+      "duration": 2.155
+    }
+  },
+  {
+    "id": "T-0433",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 34171,
+      "frames": 249,
+      "duration": 2.496
+    }
+  },
+  {
+    "id": "T-0436",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 34420,
+      "frames": 211,
+      "duration": 2.112
+    }
+  },
+  {
+    "id": "T-0439",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 34631,
+      "frames": 282,
+      "duration": 2.827
+    }
+  },
+  {
+    "id": "T-0442",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 34913,
+      "frames": 173,
+      "duration": 1.739
+    }
+  },
+  {
+    "id": "T-0445",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 35086,
+      "frames": 210,
+      "duration": 2.101
+    }
+  },
+  {
+    "id": "T-0448",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 35296,
+      "frames": 186,
+      "duration": 1.867
+    }
+  },
+  {
+    "id": "T-0451",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 35482,
+      "frames": 193,
+      "duration": 1.931
+    }
+  },
+  {
+    "id": "T-0454",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 35675,
+      "frames": 249,
+      "duration": 2.496
+    }
+  },
+  {
+    "id": "T-0457",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 35924,
+      "frames": 233,
+      "duration": 2.336
+    }
+  },
+  {
+    "id": "T-0460",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 36157,
+      "frames": 232,
+      "duration": 2.325
+    }
+  },
+  {
+    "id": "T-0463",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 36389,
+      "frames": 205,
+      "duration": 2.059
+    }
+  },
+  {
+    "id": "T-0466",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 36594,
+      "frames": 237,
+      "duration": 2.379
+    }
+  },
+  {
+    "id": "T-0469",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 36831,
+      "frames": 209,
+      "duration": 2.091
+    }
+  },
+  {
+    "id": "T-0472",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 37040,
+      "frames": 296,
+      "duration": 2.965
+    }
+  },
+  {
+    "id": "T-0475",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 37336,
+      "frames": 257,
+      "duration": 2.571
+    }
+  },
+  {
+    "id": "T-0478",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 37593,
+      "frames": 178,
+      "duration": 1.781
+    }
+  },
+  {
+    "id": "T-0481",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 37771,
+      "frames": 274,
+      "duration": 2.741
+    }
+  },
+  {
+    "id": "T-0484",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 38045,
+      "frames": 240,
+      "duration": 2.4
+    }
+  },
+  {
+    "id": "T-0487",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 38285,
+      "frames": 237,
+      "duration": 2.379
+    }
+  },
+  {
+    "id": "T-0490",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 38522,
+      "frames": 234,
+      "duration": 2.347
+    }
+  },
+  {
+    "id": "T-0493",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 38756,
+      "frames": 427,
+      "duration": 4.277
+    }
+  },
+  {
+    "id": "T-0496",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 39183,
+      "frames": 166,
+      "duration": 1.664
+    }
+  },
+  {
+    "id": "T-0499",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 39349,
+      "frames": 267,
+      "duration": 2.677
+    }
+  },
+  {
+    "id": "T-0502",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 39616,
+      "frames": 238,
+      "duration": 2.389
+    }
+  },
+  {
+    "id": "T-0505",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 39854,
+      "frames": 264,
+      "duration": 2.645
+    }
+  },
+  {
+    "id": "T-0508",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 40118,
+      "frames": 187,
+      "duration": 1.877
+    }
+  },
+  {
+    "id": "T-0511",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 40305,
+      "frames": 261,
+      "duration": 2.613
+    }
+  },
+  {
+    "id": "T-0514",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 40566,
+      "frames": 233,
+      "duration": 2.336
+    }
+  },
+  {
+    "id": "T-0517",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 40799,
+      "frames": 290,
+      "duration": 2.901
+    }
+  },
+  {
+    "id": "T-0520",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 41089,
+      "frames": 224,
+      "duration": 2.24
+    }
+  },
+  {
+    "id": "T-0523",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 41313,
+      "frames": 360,
+      "duration": 3.605
+    }
+  },
+  {
+    "id": "T-0526",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 41673,
+      "frames": 254,
+      "duration": 2.549
+    }
+  },
+  {
+    "id": "T-0529",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 41927,
+      "frames": 282,
+      "duration": 2.827
+    }
+  },
+  {
+    "id": "T-0532",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 42209,
+      "frames": 308,
+      "duration": 3.083
+    }
+  },
+  {
+    "id": "T-0535",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 42517,
+      "frames": 265,
+      "duration": 2.656
+    }
+  },
+  {
+    "id": "T-0538",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 42782,
+      "frames": 258,
+      "duration": 2.581
+    }
+  },
+  {
+    "id": "T-0541",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 43040,
+      "frames": 345,
+      "duration": 3.456
+    }
+  },
+  {
+    "id": "T-0544",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 43385,
+      "frames": 307,
+      "duration": 3.072
+    }
+  },
+  {
+    "id": "T-0547",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 43692,
+      "frames": 294,
+      "duration": 2.944
+    }
+  },
+  {
+    "id": "T-0550",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 43986,
+      "frames": 313,
+      "duration": 3.136
+    }
+  },
+  {
+    "id": "T-0553",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 44299,
+      "frames": 310,
+      "duration": 3.104
+    }
+  },
+  {
+    "id": "T-0556",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 44609,
+      "frames": 240,
+      "duration": 2.4
+    }
+  },
+  {
+    "id": "T-0559",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 44849,
+      "frames": 209,
+      "duration": 2.091
+    }
+  },
+  {
+    "id": "T-0562",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 45058,
+      "frames": 238,
+      "duration": 2.389
+    }
+  },
+  {
+    "id": "T-0565",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 45296,
+      "frames": 206,
+      "duration": 2.069
+    }
+  },
+  {
+    "id": "T-0568",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 45502,
+      "frames": 237,
+      "duration": 2.379
+    }
+  },
+  {
+    "id": "T-0571",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 45739,
+      "frames": 229,
+      "duration": 2.293
+    }
+  },
+  {
+    "id": "T-0574",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 45968,
+      "frames": 228,
+      "duration": 2.283
+    }
+  },
+  {
+    "id": "T-0577",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 46196,
+      "frames": 203,
+      "duration": 2.037
+    }
+  },
+  {
+    "id": "T-0580",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 46399,
+      "frames": 278,
+      "duration": 2.784
+    }
+  },
+  {
+    "id": "T-0583",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 46677,
+      "frames": 286,
+      "duration": 2.869
+    }
+  },
+  {
+    "id": "T-0586",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 46963,
+      "frames": 220,
+      "duration": 2.208
+    }
+  },
+  {
+    "id": "T-0589",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 47183,
+      "frames": 210,
+      "duration": 2.101
+    }
+  },
+  {
+    "id": "T-0592",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 47393,
+      "frames": 219,
+      "duration": 2.197
+    }
+  },
+  {
+    "id": "T-0595",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 47612,
+      "frames": 199,
+      "duration": 1.995
+    }
+  },
+  {
+    "id": "T-0598",
+    "entry": {
+      "shard": "recorded_t/shard-000.npy",
+      "offset": 47811,
+      "frames": 225,
+      "duration": 2.251
+    }
+  }
+]
