@@ -79,6 +79,7 @@ def decode(
     hotword_prefix_bonus: float = 0.0,
     lm_path: str | None = None,
     lm_weight: float = 0.0,
+    token_bonus: float = 0.0,
     limit: int = 0,
     no_speech_guard: bool = False,
     vad_guard: bool = False,
@@ -184,6 +185,7 @@ def decode(
                             hotword_prefix_bonus=hotword_prefix_bonus,
                             lm=lm,
                             lm_weight=lm_weight,
+                            token_bonus=token_bonus,
                         )
                     else:
                         hyps[row["id"]] = greedy(
@@ -209,6 +211,7 @@ def decode(
                 "hotword_prefix_bonus": hotword_prefix_bonus if decoder == "beam" else None,
                 "lm": lm_path,
                 "lm_weight": lm_weight if decoder == "beam" else None,
+                "token_bonus": token_bonus if decoder == "beam" else None,
                 "limit": limit,
                 "no_speech_guard": no_speech_guard,
                 "vad_guard": vad_guard,
@@ -264,6 +267,9 @@ def main() -> int:
     parser.add_argument("--hotword-prefix-bonus", type=float, default=0.0)
     parser.add_argument("--lm", default=None, help="BPE n-gram LM pickle (.pkl or .pkl.gz)")
     parser.add_argument("--lm-weight", type=float, default=0.0)
+    #: Per-token bonus (E-022). Must be set together with --lm-weight; the pair is what the shipped
+    #: decode uses (0.5 / 2.4). Default 0 reproduces every pre-E-022 number in the repository.
+    parser.add_argument("--token-bonus", type=float, default=0.0)
     parser.add_argument("--limit", type=int, default=0, help="random subset per set (tuning only)")
     parser.add_argument(
         "--no-speech-guard",
@@ -301,6 +307,7 @@ def main() -> int:
         hotword_prefix_bonus=args.hotword_prefix_bonus,
         lm_path=args.lm,
         lm_weight=args.lm_weight,
+        token_bonus=args.token_bonus,
         limit=args.limit,
         no_speech_guard=args.no_speech_guard,
         vad_guard=args.vad_guard,
