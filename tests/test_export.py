@@ -200,7 +200,16 @@ def test_release_writer_packages_verified_artifacts(tmp_path: Path) -> None:
     assert config["model"]["file"] == "model.int8.onnx"
     assert config["model"]["frame_rate_hz"] == 50
     assert config["tokenizer"]["blank_id"] == 0
-    assert config["decode"] == {"default": "greedy", "beam": 8, "hotword_bonus": 2.0}
+    # The exporter emits the defaults; the packager (runs/E-010/package_browser.py) overrides them
+    # with the shipped decode. ``hotword_bonus`` used to be written here but no runtime ever loaded
+    # a hotword index (runs/E-022 audit §5), so it advertised a feature that did not exist.
+    assert config["decode"] == {
+        "default": "beam",
+        "beam": 5,
+        "top_k": 8,
+        "lm_weight": 0.0,
+        "token_bonus": 0.0,
+    }
     assert config["vad"] == {
         "file": "silero_vad.onnx",
         "window": 512,

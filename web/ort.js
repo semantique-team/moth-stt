@@ -149,6 +149,7 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
             topK: decodeConfig.top_k ?? 8,
             lm,
             lmWeight: decodeConfig.lm_weight ?? 0,
+            tokenBonus: decodeConfig.token_bonus ?? 0,
           })
         : greedy(output.data, outFrames, vocabSize, pieces);
     const t4 = performance.now();

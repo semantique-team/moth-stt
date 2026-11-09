@@ -4,6 +4,11 @@
  * Greedy: argmax per frame → collapse consecutive repeats → drop blanks (id 0) → join pieces.
  * Beam: prefix beam search with an optional BPE trigram LM (web/lm.js). `pieces` is indexed by
  * CTC id, with `pieces[0] === ""` for blank.
+ *
+ * `tokenBonus` is added once per emitted token. It is not a quality knob on its own: the LM term
+ * (`lmWeight * LM(token)`) is always negative, so without a counterweight a positive `lmWeight`
+ * biases the search toward emitting fewer tokens than the acoustics support. The two are tuned
+ * together — see `runs/E-022/` and the twin implementation in `stt/decode.py`.
  */
 
 import { LM_BOS_ID, LM_EOS_ID } from "./lm.js";
@@ -102,14 +107,14 @@ export function greedy(logProbs, frames, vocabSize, pieces) {
  * @param {number} frames usable frames
  * @param {number} vocabSize `V_ctc`
  * @param {string[]} pieces piece per CTC id; blank at 0
- * @param {{beamWidth?: number, topK?: number, lm?: object, lmWeight?: number}} options
+ * @param {{beamWidth?: number, topK?: number, lm?: object, lmWeight?: number, tokenBonus?: number}} options
  */
 export function beamSearch(
   logProbs,
   frames,
   vocabSize,
   pieces,
-  { beamWidth = 5, topK = 8, lm = null, lmWeight = 0 } = {},
+  { beamWidth = 5, topK = 8, lm = null, lmWeight = 0, tokenBonus = 0 } = {},
 ) {
   if (beamWidth <= 0 || topK <= 0) throw new Error("beamWidth and topK must be positive");
   if (frames <= 0) return "";
@@ -135,7 +140,7 @@ export function beamSearch(
             next,
             extended,
             null,
-            pBlank + logp + lmBonus(lm, ids, token, lmWeight),
+            pBlank + logp + tokenBonus + lmBonus(lm, ids, token, lmWeight),
           );
         } else {
           const extended = ids.concat(token);
@@ -143,7 +148,7 @@ export function beamSearch(
             next,
             extended,
             null,
-            total + logp + lmBonus(lm, ids, token, lmWeight),
+            total + logp + tokenBonus + lmBonus(lm, ids, token, lmWeight),
           );
         }
       }

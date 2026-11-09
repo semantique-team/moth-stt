@@ -132,9 +132,16 @@ def test_push_without_token_fails_before_the_network(tmp_path: Path) -> None:
 
 @pytest.mark.skipif(not (REPO / "release").is_dir(), reason="release/ not built on this machine")
 def test_the_real_release_passes_the_guard() -> None:
-    record = REPO / "runs" / "E-021" / "release-0.5.1.json"
-    if not record.is_file():
-        pytest.skip("no recorded release")
-    result = _run(REPO, "--repo", "someone/moth-test")
+    """The built ``release/`` must match *its own* recorded build, whatever version it is.
+
+    The version is read from ``release/config.json`` and the record is looked up under ``runs/``
+    (0.5.1 lives in ``runs/E-021/``, 0.6.0 in ``runs/E-022/``), so rebuilding the release does not
+    silently disable this test.
+    """
+    version = json.loads((REPO / "release" / "config.json").read_text(encoding="utf-8"))["version"]
+    candidates = sorted(REPO.glob(f"runs/*/release-{version}.json"))
+    if not candidates:
+        pytest.skip(f"no recorded build for release {version}")
+    result = _run(REPO, "--repo", "someone/moth-test", "--record", str(candidates[-1]))
     assert result.returncode == 0, result.stderr
-    assert "verified release 0.5.1" in result.stdout
+    assert f"verified release {version}" in result.stdout

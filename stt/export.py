@@ -379,7 +379,13 @@ def _config(version: str) -> dict:
             "blank_id": BLANK_ID,
             "space_marker": _SPACE_MARKER,
         },
-        "decode": {"default": "greedy", "beam": 8, "hotword_bonus": 2.0},
+        "decode": {
+            "default": "beam",
+            "beam": 5,
+            "top_k": 8,
+            "lm_weight": 0.0,
+            "token_bonus": 0.0,
+        },
         "vad": {
             "file": _VAD_FILE,
             "window": VAD_WINDOW,

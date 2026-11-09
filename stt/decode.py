@@ -111,12 +111,24 @@ def beam_search(
     hotword_prefix_bonus: float = 0.0,
     lm: BPETrigramLM | None = None,
     lm_weight: float = 0.0,
+    token_bonus: float = 0.0,
 ) -> str:
     """CTC prefix beam search over the first ``length`` frames.
 
     ``top_k`` is the number of non-blank labels expanded per frame; blank is always kept. The
     hotword bonus is added when a prefix completes a term; ``hotword_prefix_bonus`` can keep
     partial terms alive (default 0, since it can accumulate on multi-piece terms).
+
+    ``token_bonus`` (``gamma``) is added **once per emitted token**, and it exists because the LM
+    term is not self-normalising: ``lm_weight * LM(token)`` is always negative, so with a positive
+    ``lm_weight`` and no counterweight every extra token costs score and the decoder is biased
+    toward emitting *fewer* tokens than the acoustics support. On T-600 the shipped settings
+    (``lm_weight`` 0.2, no bonus) delete 12.2% of reference words against 0.8% insertions, and drop
+    the first word of 13.3% of clips. See ``runs/E-022/``.
+
+    A positive ``token_bonus`` therefore lengthens hypotheses; the pair
+    (``lm_weight``, ``token_bonus``) has to be tuned together, because the first alone cannot tell
+    language modelling from length control.
     """
     if beam_width <= 0:
         raise ValueError("beam_width must be positive")
@@ -162,7 +174,7 @@ def beam_search(
                     # Repeating a label without a blank keeps the same prefix.
                     entry[1] = logaddexp(entry[1], p_nonblank + logp)
                     new_prefix = prefix + (token,)
-                    bonus = _hotword_bonus(
+                    bonus = token_bonus + _hotword_bonus(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
                     bonus += _lm_bonus(lm, prefix, token, lm_weight)
@@ -173,7 +185,7 @@ def beam_search(
                     new_entry[1] = logaddexp(new_entry[1], p_blank + logp + bonus)
                 else:
                     new_prefix = prefix + (token,)
-                    bonus = _hotword_bonus(
+                    bonus = token_bonus + _hotword_bonus(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
                     bonus += _lm_bonus(lm, prefix, token, lm_weight)
