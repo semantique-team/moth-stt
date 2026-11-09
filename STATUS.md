@@ -18,9 +18,12 @@
 > quindi niente SharedArrayBuffer). Ripubblicabili con `runs/E-021/upload_hf.py` e
 > `runs/E-022/publish_space.py`.
 >
-> **In corso (2026-11-09):** **E-024** — noise augmentation su metà di CV-IT, partita dalle misure
-> dell'audit: a 20 dB il WER passa da 22,2 a 32,1 e a 15 dB a 38,4 (peggio di Whisper su audio
-> pulito). Miscela identica a E-017 (589,5 h). Risultato in `runs/E-024/`.
+> **Chiuso (2026-11-09, D33):** **E-025** ha verificato il caveat di E-024 su una **stanza registrata
+> dopo il training**, mai vista dal modello: il guadagno **non è un artefatto del pool condiviso**, è
+> **più grande** (15 dB −11,21, 10 dB −18,34, 5 dB −14,60; media −10,06 su 10–30 dB contro −6,18
+> sullo stesso pool). La stanza è più dura a parità di SNR, quindi il valore assoluto è peggiore
+> (36,5 a 15 dB contro 27,3): i due numeri vanno citati insieme. Nessun peso nuovo, card aggiornata
+> in place.
 >
 > **Decisione (2026-11-09, D30):** il **decoder** era mal calibrato, non il modello. `beam_search`
 > pagava il costo LM per token emesso senza contrappeso, quindi cancellava ~12% delle parole. Con
@@ -60,7 +63,8 @@
 | Area | Cosa | Dove |
 |---|---|---|
 | **E-024 rumore** | **Release 0.7.0 (2026-11-09, D32)**: metà di CV-IT riresa con rumore (MUSAN + room tone, SNR 10–30 dB dall'hash dell'id). Miscela invariata a 589,5 h. Curva SNR appaiata: **15 dB −6,28** [−10,58, −2,38], **10 dB −11,54** [−16,18, −7,43], **5 dB −9,68**; 30 e 20 dB tie. Pulito: T-600 25,20 / 54,17, S3 26,92 / 48,45 (tie), FLEURS-IT 20,14, FLEURS-EN 49,14, CV-IT test 24,37 (**−0,52 significativo**). Build dei dati **1,1 min** (si calcola solo la metà rumorosa) | `runs/E-024/`, `data/manifests/cv_it_train_{clean,noisy}50.jsonl` |
-| **Pubblicazione + demo** | **Modello su HF** (`semantique-team/moth-stt`, pubblico) e **demo nel browser** (`semantique-team-moth-demo.static.hf.space`): Space **statico**, la card verifica gli sha256 nel browser prima di eseguire il modello, l'audio non esce dal tab. 6,3 s al primo caricamento, 16× realtime a 1 thread. Lo Space si ricostruisce con un comando (`publish_space.py`) | `runs/E-021/upload_hf.py`, `runs/E-022/publish_space.py`, `runs/E-022/space/` |
+| **E-025 hold-out rumore** | **Chiuso (2026-11-09, D33)**: stanza registrata **dopo** il training (38 s, broadband, VAD 0.0), 100 clip S3 appaiati. 0.6.0→0.7.0: 30 dB −3,90, 20 dB −6,79, **15 dB −11,21**, **10 dB −18,34**, **5 dB −14,60**; media −10,06 contro −6,18 sullo stesso pool. Clean riprodotto esattamente (22,24/23,94). La stanza è più dura: assoluto 36,5 a 15 dB | `runs/E-025/` |
+| **Pubblicazione + demo** | **Modello su HF** (`semantique-team/moth-stt`, pubblico) e **demo nel browser** (`semantique-team-moth-demo.static.hf.space`): Space **statico**, la card verifica gli sha256 nel browser prima di eseguire il modello, l'audio non esce dal tab. ~6 s al primo caricamento (19 MB), 19× realtime a 1 thread. Lo Space si ricostruisce con un comando (`publish_space.py`) | `runs/E-021/upload_hf.py`, `runs/E-022/publish_space.py`, `runs/E-022/space/` |
 | **Segmentazione** | **Registrazioni multi-frase**: 5 frasi concatenate fanno **36,6% WER** contro **26,6%** decodificate separate (−9,37 [−12,22, −3,51]); il VAD già spedito recupera l'**80%** (→ 28,5). Si segmenta **solo** se trova ≥2 sequenze (tagliare una singola costa +1,6). La durata non c'entra: la curva su FLEURS non è monotona | `stt/vad.py`, `web/vad.js`, `runs/audit-2026-11-09/` |
 | **E-022** | **Ricalibrazione del decoder (2026-11-09, D30)**: `token_bonus` (γ=2,4) + `lm_weight` 0,5 + beam 12/top-k 10. T-600 **−6,85** [−7,94, −5,72], **S3 held-out −8,77** [−11,13, −6,50], FLEURS-IT −6,06, FLEURS-EN −5,85, CV-IT dev −5,01 — tutti i CI escludono 0. Greedy invariato, `token_bonus=0` no-op bit-esatto, int8 byte-identico, **nessun training**. Release **0.6.0** (19,44 MB), browser 1T 20,3× a 20 s, parità browser↔Python tie. **FLEURS-IT vs Whisper auto+beam5: −6,95 [−8,02, −5,87], vinto** | `stt/decode.py`, `web/decode.js`, `runs/E-022/` |
 | **E-023** | **Re-tune LM — FATTO (2026-11-09), niente adottato (D31)**: su dev completo (3.939 clip, 10× il set di E-022) l'ottimo è **esattamente** la cella di E-022 (w 0,5 / γ 2,4, macro **22,98**); backoff 0,4 resta il migliore. L'LM **non potato** (pruning ≥1) vale **−0,65 punti dev** e vince i gate (T-600 −0,77, FLEURS-IT −0,72, CV-IT −0,65) **ma pesa 12,31 MB** → pacchetto **26,63 MB** contro il tetto di 20, ed è un **tie sullo speaker held-out** (+0,43). Quindi: il tetto costa WER italiano, **non** il claim code-switching | `runs/E-023/` |
@@ -379,7 +383,7 @@
 
 ## Da fare (prossimi task)
 
-**Aggiornato 2026-11-09 dopo E-024.** Il piano operativo
+**Aggiornato 2026-11-09 dopo E-025.** Il piano operativo
 [`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md) **non è più
 allineato**: descrive la distillazione come fase 2 e il re-scope come fase 4, mentre la realtà è
 che il rumore ha preso la scena e **S4 non esiste**. Va riallineato o sostituito prima del prossimo
@@ -389,7 +393,6 @@ esperimento — è l'unico documento di piano ancora stantio.
 
 | Cosa | Perché | Costo |
 |---|---|---|
-| **Controllo hold-out del rumore** | l'unico buco nel claim di E-024: training e valutazione usano lo **stesso pool** di 217 clip, quindi il guadagno è un tetto superiore. Si risolve con split per sorgente (80/20) sul rumore e ri-valutando | ~30 min, nessun training |
 | **Re-scope (fase 4)** | decidere il gate misto con i numeri di 0.7.0: WER vinto su S3, ETA tie. `docs/11` §7.3 | ~2 h di scrittura, decisione tua |
 | **E-018 (gold)** | **bloccato e probabilmente morto**: senza S4 la domanda "il terzo speaker paga?" è irrispondibile per costruzione. Il rendimento marginale del secondo speaker era già sceso da −5,73 a −4,07 | serve S4 |
 | **E-015 (distillazione)** | bloccata sulla provenienza dell'audio (gold, CC0/BY, o TTS), non sul compute. Ora **meno urgente**: E-024 ha reso più di quanto il pilota puntasse | decisione tua |
@@ -403,6 +406,8 @@ esperimento — è l'unico documento di piano ancora stantio.
 ### Fatto di recente, per contesto
 
 - **0.7.0 pubblicato** (modello + demo), artefatti verificati sha256 dopo il caricamento
+- **E-025** hold-out su una stanza mai vista: il guadagno del rumore **trasferisce ed è più grande**
+  (media −10,06 su 10–30 dB), caveat del pool condiviso **chiuso**; nessun peso nuovo
 - **E-022** decoder ricalibrato (−6,9 WER, zero training), **E-023** re-tune LM (niente da adottare),
   **E-024** noise augmentation (−6 a −11 con rumore, pulito tie)
 - **Segmentazione** delle registrazioni multi-frase (il VAD recupera l'80% del divario)

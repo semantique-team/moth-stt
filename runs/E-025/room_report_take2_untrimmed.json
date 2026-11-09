@@ -1,0 +1,34 @@
+{
+  "raw_wav": "data/raw/noise/room_holdout/room2_2026-11-09.wav",
+  "sample_rate": 16000,
+  "duration_s": 78.69,
+  "rms_dbfs": -47.4,
+  "peak_dbfs": -4.6,
+  "vad": {
+    "speech_fraction": 0.0012,
+    "max_probability": 0.5153,
+    "gate_threshold": 0.1,
+    "has_speech": false,
+    "windows": 2460
+  },
+  "spectrum": {
+    "centroid_hz": 1057.1,
+    "flatness": 0.5777,
+    "low_band_share_lt_200hz": 0.3945
+  },
+  "stationarity": {
+    "block_seconds": 10.0,
+    "level_db_std": 5.27,
+    "level_db_range": 17.65,
+    "centroid_hz_std": 223.6
+  },
+  "transients": {
+    "frame_seconds": 0.05,
+    "median_db": -56.9,
+    "over_db": 15.0,
+    "frames": 41,
+    "total_frames": 1573,
+    "seconds_over": 2.05
+  },
+  "mix_wav": "data/raw/noise/room_holdout/room2_2026-11-09_16k.wav"
+}

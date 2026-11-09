@@ -105,3 +105,12 @@ evaluation ~13 min. Release rebuild and republish ~10 min. **No author time, 0 U
 - `checkpoints/` — gitignored, as always
 
 Published: model `semantique-team/moth-stt`, demo `semantique-team/moth-demo` (static Space).
+
+## Follow-up: the shared-pool caveat was closed the same day
+
+E-025 re-ran this curve on a **room recorded after training**, which the model has never heard. The
+gain transfers and is **larger** (15 dB −11.21, 10 dB −18.34, 5 dB −14.60; mean −10.06 over 10–30 dB
+against −6.18 here), because the new room is harsher at the same nominal SNR: 0.7.0 scores 36.5 at
+15 dB there against 27.3 here. The clean condition reproduced this experiment's numbers exactly
+(22.24 / 23.94, within 1e-5), which is the harness check. **No weights changed**; the card was
+updated in place. See `runs/E-025/RESULT.md` and `docs/11` §3.7.

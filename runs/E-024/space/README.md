@@ -38,8 +38,9 @@ verifies every file's sha256 at load time before running it.
   sentence without). If it gets a term wrong, that is the known limit.
 - Speaker coverage is three people. A fourth was recruited and never recorded.
 - **Noise costs, but no longer destroys.** Against clean audio: +2.9 WER at 20 dB SNR, +3.4 at
-  15 dB, +9.3 at 10 dB. Before 0.7.0 those were +5.3, +11.4 and +22.6. A normal room is fine now;
-  a loud café is not.
+  15 dB, +9.3 at 10 dB. Before 0.7.0 those were +5.3, +11.4 and +22.6. On a room the model never
+  heard it is 11.2 points better than 0.6.0 at 15 dB and 18.3 at 10 dB, though the absolute WER
+  there is higher (36.5 at 15 dB). A quiet room is fine; a loud café is not.
 - Max 30 s per recording. Speak one sentence at a time — the page splits on pauses, but pauses help.
 
 Numbers, limitations and provenance: [`semantique-team/moth-stt`](https://huggingface.co/semantique-team/moth-stt).

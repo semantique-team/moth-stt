@@ -45,6 +45,7 @@ each with the evidence that forced it.
 | D27 | 2026-11-07 | **Adopt E-017 as the shipped checkpoint**; gold works and generalises across speakers, but the ETA half of the mixed gate is still not won | E-017 vs E-016 on T-600: WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; on **S3, which never contributed audio**, WER −6.13 [−8.68, −3.51] and ETA +4.79 [+0.51, +9.06] — the same gain as on the two trained speakers (S1 −4.47, S2 −6.60), so it is not speaker adaptation. Gate on S3 vs Whisper forced-`it`: WER −11.07 [−16.28, −5.89] **won**, ETA −2.82 [−11.65, +6.56] **tie** | Keeping E-016 (worse everywhere, and its cross-speaker claim rests on S2 alone); waiting for more gold before adopting |
 | D28 | 2026-11-07 | **Run E-019, a Whistle LoRA probe, as an exploratory side artifact** — explicitly "less ours", never presented as Moth. D5 (own model, not a Whistle fine-tune) is **unchanged** for the Moth deliverable. **Executed the same day: killed at L1** — on held-out S3 +2.30 WER [−0.68, +5.46] (tie), FLEURS-IT/EN and CV-IT all significantly worse; only the two trained speakers improve. H2 (data, not architecture) rejected. H3/H4 not run, per the kill criterion | The wait for S4 (E-018's blocker) is the cheapest window; Whistle leads Moth by +3.35 WER / 6.42 ETA on T-600, and the probe answers two things Moth's CTC cannot: whether a decoder-based code-switch model gains from our gold, and whether a new `mix` language code expresses intra-clip switching. Protocol and kill criteria: `docs/plans/2026-11-07-whistle-lora-probe.md`. Result: `runs/E-019/RESULT.md`, `EXPERIMENTS.md` E-019, §3.4 | Presenting the LoRA as Moth; skipping the probe; running it on T (leakage) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
+| D33 | 2026-11-09 | **Keep 0.7.0's noise claim, and upgrade it from "upper bound" to "measured on an unseen room"** (the weights do not change) | E-025: the 80/20 split proposed in STATUS was invalid — all 217 clips were in training, and the source MUSAN audio was deleted, so no partition at the source level was possible. Replaced by a room recorded **after** training (38 s of steady, broadband ambience; VAD speech 0.0). On the same 100 S3 clips the gain **transfers and is larger**: 30 dB −3.90 [−7.20, −0.83], 20 dB −6.79 [−10.84, −3.15], 15 dB −11.21 [−14.69, −7.48], 10 dB −18.34 [−22.78, −13.40], 5 dB −14.60 [−18.84, −10.47]; mean −10.06 over 10–30 dB against −6.18 on the pool. Clean reproduced E-024 exactly (22.24 / 23.94, within 1e-5), which is the harness check | An 80/20 split of the 217 clips (leaky by construction: every clip was seen); keeping the upper-bound caveat unmeasured; treating the larger gain as better absolute performance — the room is harsher, so 0.7.0 is 27.3 at 15 dB on the pool and **36.5** here |
 | D32 | 2026-11-09 | **Train with noise augmentation on half of Common Voice IT**, and ship it as **0.7.0** | E-024: on a controlled SNR curve, mixed noise costs the pre-0.7.0 model **+5.3 WER at 20 dB, +11.4 at 15 dB, +22.6 at 10 dB**; at 15 dB it scored worse than Whisper-tiny does on clean audio. Half of CV-IT re-rendered through noise at 10–30 dB, with the mixture held at the same 589.5 h, buys **−6.28 at 15 dB, −11.54 at 10 dB, −9.68 at 5 dB** (mean −6.18 over 10–30 dB), and the clean gate passes (T-600 −0.72, T-S3 +0.26, CV-IT test **−0.52** significant). Population size: the build took 1.1 min because only the noisy half is computed | Not training on noise (the model drops words under noise, it does not mis-hear them, so this is a distribution gap and not a decoder problem); noising all of CV-IT (removes clean Italian, and clean WER is a gate); adding a noisy copy of all CV (mixture 757 h, CV share 28.5% → 44.3%, confounding "noise" with "more CV"); noising MLS/LS (raw audio deleted, 22 GB re-download) |
 | D31 | 2026-11-09 | **Keep the LM as shipped** (weight 0.5 from E-022, backoff 0.4, count pruning ≥ 2, 5.12 MB browser binary) after a full re-tune; **do not** buy the bigger LM | E-023: on full dev (3,939 clips, 10× E-022's selection set) the optimum is exactly E-022's cell, and 0.4 stays the best backoff. The unpruned LM (pruning ≥ 1) is **0.65 dev points better** and wins the gate sets (T-600 −0.77 [−1.40, −0.11], FLEURS-IT −0.72, CV-IT dev −0.65) — but it is a **12.31 MB** browser binary, i.e. a **26.63 MB** package against the 20 MB ceiling (D4), and it is a **tie on the held-out speaker** (+0.43 [−0.61, +1.62]). The ceiling costs general Italian WER, not the code-switching claim the project exists to make | Relaxing the 20 MB ceiling for ~0.7 WER (buys an Italian model, not a code-switching one; D4 is a product constraint, not a quality knob); pruning harder to save 1.8 MB at +0.56 dev points (the LM is 5.12 MB of 19.44 and is paying its way) |
 | D29 | 2026-11-07 | **Make the fp32 export gate a seeded sweep** (median ≤ 1e-3, worst ≤ 1e-2 over 20 draws per length) instead of one random draw, and rebuild the release **with verification on** (0.5.1) | E-021: the gate fixture's typical gap is 1.8e-4, but 1 draw in 80 crosses 1e-3, always at 29 s; the value depends on (checkpoint, seed, length) — E-017 gives 2.43e-4 at seed 0 and 1.28e-3 at seed 2. Real speech measures 2.2–3.1e-4 with top-1 1.0, so the export was never wrong. The rebuilt 0.5.1 passes the new gate (median 2.127e-4, worst 1.472e-3, 3/80 over) and produces a **byte-identical** int8 artifact (`fe1afcc2…`) | Keeping the single draw and `--no-verify` (would keep shipping unverified packages for a ~1% coin flip); loosening the threshold to 2e-3 (hides a real regression instead of measuring the distribution) |
@@ -69,6 +70,7 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | Gold data from two speakers (S1+S2) | E-017 | T-600 38.50 → **32.77** WER, 36.05 → **42.86** ETA; on held-out S3 −6.13 WER / +4.79 ETA, the same as on the trained speakers | **Kept** (best model) | `runs/E-017/eval/`, `runs/E-017/diffs/` |
 | **Per-token bonus + LM weight re-tuned** | **E-022** | T-600 **−6.85** [−7.94, −5.72], held-out **S3 −8.77** [−11.13, −6.50], FLEURS-IT −6.06, FLEURS-EN −5.85, CV −5.01; deletions 12.2% → 8.3%, insertions 0.8% → 1.3% | **Kept** (0.6.0, decode-only, weights unchanged) | `runs/E-022/eval/`, `runs/E-022/diffs/` |
 | **Noise augmentation (half of CV-IT)** | **E-024** | Controlled-SNR curve: **15 dB −6.28** [−10.58, −2.38], **10 dB −11.54** [−16.18, −7.43], **5 dB −9.68** [−14.50, −5.01]; 30 dB −2.72 and 20 dB −0.68 (ties). Clean: T-600 −0.72, T-S3 +0.26 (ties), CV-IT test **−0.52** (significant) | **Kept** (0.7.0) | `runs/E-024/eval/`, `runs/E-024/comparison.json` |
+| **Noise gain on an unseen room** | **E-025** | A room recorded after training: **30 dB −3.90** [−7.20, −0.83], **20 dB −6.79** [−10.84, −3.15], **15 dB −11.21** [−14.69, −7.48], **10 dB −18.34** [−22.78, −13.40], **5 dB −14.60** [−18.84, −10.47]; mean −10.06 vs −6.18 on the pool; clean reproduced exactly (22.24 / 23.94) | **Caveat closed** (0.7.0, card updated in place, no new weights) | `runs/E-025/eval/result.json`, `runs/E-025/room_report.json` |
 | LM re-tune (weight, backoff, pruning) | E-023 | Optimum is **exactly E-022's cell** on 10× the selection set; backoff 0.4 best. The unpruned LM is −0.65 dev but **12.31 MB** → 26.63 MB package, and a **tie on the held-out speaker** | **Nothing adopted** (does not fit); D31 | `runs/E-023/sweep.json`, `runs/E-023/gate-diffs.json` |
 | LoRA on Whistle with the same gold | E-019 | On held-out S3 **+2.30 WER** [−0.68, +5.46] (tie, kill); FLEURS-IT +1.02, FLEURS-EN +2.30, CV-IT +2.66 — **all significant worse**; only the two trained speakers improve (−2.98, tie) | **Killed at L1**; H2 (data, not architecture) rejected | `runs/E-019/RESULT.md`, `runs/E-019/l1-s3/` |
 | int8 quantization of the shipped model | E-020 | T-600 +0.43 WER greedy / +0.17 beam+LM (both ties); FLEURS-IT +0.32 [+0.08, +0.57] | **Kept** (the artifact is honest on our speakers); FLEURS caveat for the card | `runs/E-020/RESULT.md` |
@@ -265,9 +267,47 @@ Three lessons.
    explanation for the bad transcript and cost one query on existing artifacts to kill. The
    expensive mistake is not testing the cheap one first.
 
-The honest limit, stated in the card: the noise used for training and the noise used for this curve
-come from the same 217 clips, so the gain is an **upper bound** for an unfamiliar room, and the
-per-source control (train on 80% of the noise, evaluate on the other 20%) has not been run.
+The limit as stated at the time: the noise used for training and the noise used for this curve came
+from the same 217 clips, so the gain was an **upper bound** for an unfamiliar room. The per-source
+control (train on 80% of the noise, evaluate on the other 20%) turned out to be impossible to run —
+all 217 clips were seen, and the source audio was deleted. §3.7 replaces it with a room recorded
+after training, and the bound holds.
+
+### 3.7 The noise gain was not an artifact of the shared pool
+
+The 0.7.0 card said the noise gain was an **upper bound**, because training and evaluation drew from
+the same 217 clips. The obvious control — an 80/20 split — cannot be run: the training build cycled
+all 217 (`pool[noise_index % len(pool)]`), and the source MUSAN audio was deleted after the noise
+set was built, so there is no way to hold out a source recording. E-025 therefore recorded a **new
+room after training** — a different physical room from the room tone already in the training pool,
+confirmed by the author, and spectrally distinct (the training room tone is 91% below 120 Hz; this
+take is broadband) — and re-ran the same 100 held-out-speaker clips at the same SNRs, with both
+checkpoints decoding the same mixed audio.
+
+| SNR | 0.6.0 | 0.7.0 | Δ | same pool (E-024) |
+|---|---|---|---|---|
+| 30 dB | 28.52 | **24.62** | **−3.90 [−7.20, −0.83]** | −2.72, tie |
+| 20 dB | 38.71 | **31.92** | **−6.79 [−10.84, −3.15]** | −0.68, tie |
+| 15 dB | 47.71 | **36.50** | **−11.21 [−14.69, −7.48]** | −6.28 |
+| 10 dB | 63.33 | **44.99** | **−18.34 [−22.78, −13.40]** | −11.54 |
+| 5 dB | 81.32 | **66.72** | **−14.60 [−18.84, −10.47]** | −9.68 |
+
+Three lessons.
+
+1. **The caveat was worth testing, and the gain is real.** It is not a memory of those 217
+   recordings: it transfers to a room that did not exist in any training artifact. In fact it is
+   **larger**, and the reason matters: the new room is harsher at the same nominal SNR (0.6.0 scores
+   47.7 at 15 dB there against 33.6 on the pool), so the baseline has more headroom. A gain at fixed
+   nominal SNR is **not a property of the model alone**; it depends on how damaging the noise is.
+   The absolute number is worse (36.5 at 15 dB), and both halves have to be quoted together.
+2. **The first recording was rejected for the right reason.** It was dominated by 50 Hz mains hum
+   from the charger — 93% of the energy below 200 Hz, and after a 200 Hz high-pass only 4% of the
+   energy was left. It would have measured electrical hum, not a room. The spectrum check caught it;
+   without that check the experiment would have produced a precise number about the wrong stimulus.
+3. **The prediction was wrong in the same direction as E-024's.** I predicted attenuation (−3..−6
+   at 15 dB); measured −11.21. Two experiments, two conservative misses. Anchoring to the previous
+   curve assumes the new stimulus is equally damaging, which is exactly what a held-out stimulus is
+   not.
 
 ## 4. Self-corrections
 
@@ -295,6 +335,12 @@ models.
    transcript identity. The default is fixed in the same change. Recorded because the auditor
    fell for the repository's own footgun, and the lesson is that a surprising result should be
    checked against the build recipe before it is believed.
+
+6. **E-025: predicted attenuation, measured amplification.** `PLAN.md` said the gain would shrink
+   to −3..−6 at 15 dB and −6..−10 at 10 dB; measured −11.21 and −18.34, with 30 and 20 dB also
+   significant against a predicted tie. The direction was right and the magnitude wrong at every
+   point, because the new room is harsher than the training pool at the same nominal SNR, so the
+   baseline has more headroom. The prediction is kept in `runs/E-025/PLAN.md`, not rewritten.
 
 An earlier, smaller correction: the H2 bar in E-005/E-006 was the greedy number (32.09), not the
 best variant; those entries are annotated, not rewritten, so the history of the bar is visible.
@@ -363,6 +409,7 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Decode recalibration (E-022) | `runs/E-022/{PLAN.md,RESULT.md,eval/,diffs/,gate-table.json,parity-wer.json,browser.json}` | `uv run python runs/E-022/eval.py --arm frozen --int8`, then `runs/E-022/diffs.py`; parity: `runs/E-022/parity.py --clips 200`, `cd web && npx playwright test tests/parity.spec.ts`, `runs/E-022/parity_wer.py` |
 | Browser/Python parity (E-022) | `runs/E-022/parity-wer.json` | as above; the JS mel is `web/mel.js`, the Python one `stt/features.py` |
 | Noise augmentation (E-024) | `runs/E-024/{RESULT.md,comparison.json,release-0.7.0.json}`, `data/manifests/cv_it_train_{clean,noisy}50.jsonl` | `uv run python runs/E-024/build_noisy_mel.py` (1 min), then `stt.train --config runs/E-024/config.yaml`, then `runs/E-024/noise_eval.py --checkpoint ... --out ...` for both arms and `runs/E-024/compare.py` |
+| Noise hold-out on an unseen room (E-025) | `runs/E-025/{PLAN.md,RESULT.md,room_report.json,eval/result.json}` | record in a noisy room: `uv run python runs/E-025/record_room.py --seconds 90`, trim events with `--trim-start/--trim-end`, then `uv run python runs/E-025/holdout_eval.py --noise data/raw/noise/room_holdout/<take>_trimmed_16k.wav --out runs/E-025/eval` |
 | LM tuning (E-023) | `runs/E-023/{sweep.json,gate-diffs.json,eval/}` | `uv run python runs/E-023/sweep.py --phase all`, then `runs/E-023/gate.py --lm-weight 0.5 --gamma 2.4 --lm runs/E-023/lm-prune-1-1.pkl.gz` |
 | fp32 export gap (E-021) | `runs/E-021/{RESULT.md,fp32_gap.json}`, `runs/E-021/release-0.5.1.json` | `uv run python runs/E-021/fp32_gap.py`; release: `stt/export.py --version 0.5.1` (verified), then `runs/E-010/package_browser.py` |
 

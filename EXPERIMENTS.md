@@ -1484,3 +1484,50 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `release-0.7.0.json`), `data/manifests/cv_it_train_{clean,noisy}50.jsonl`,
   `runs/audit-2026-11-09/`. Published as 0.7.0 to `semantique-team/moth-stt` and
   `semantique-team/moth-demo`.
+
+## E-025 — does the noise gain survive a room the model never heard? (2026-11-09)
+
+- **Date**: 2026-11-09. Evaluation-only; **no training**. Plan written before the recording:
+  `runs/E-025/PLAN.md`.
+- **Motivation**: the 0.7.0 card calls E-024's gain an **upper bound** because training and
+  evaluation used the same 217 clips. The control proposed in STATUS (an 80/20 split) is invalid:
+  the training build cycled all 217 (`pool[noise_index % len(pool)]`), and the source MUSAN audio
+  was deleted after the noise set was built, so no split at the level of the source recordings is
+  possible. The only valid control is noise the model has never encountered.
+- **Method**: a **new room** — a different physical room from the room tone already in the training
+  pool, confirmed by the author — recorded on the built-in microphone *after* training: 78.7 s, trimmed
+  to 40–78 s (three loud events at 12.1/16.9/31.0 s excluded), 38 s of steady broadband ambience
+  (RMS −52.6 dBFS, spectral centroid 1.05 kHz, 33% of energy below 200 Hz, VAD speech fraction 0.0,
+  one 50 ms transient). The first take was rejected: 93% of its energy was below 200 Hz because of
+  50 Hz mains hum from the charger. Same 100 held-out-speaker (S3) clips as E-024, same decoder,
+  same mixed audio for both arms, SNRs 30/20/15/10/5 dB.
+- **Result — the gain transfers, and is larger**:
+
+| SNR | 0.6.0 | **0.7.0** | Δ WER [95% CI] | same pool (E-024) |
+|---|---|---|---|---|
+| 30 dB | 28.52 | **24.62** | **−3.90 [−7.20, −0.83]** | −2.72, tie |
+| 20 dB | 38.71 | **31.92** | **−6.79 [−10.84, −3.15]** | −0.68, tie |
+| 15 dB | 47.71 | **36.50** | **−11.21 [−14.69, −7.48]** | −6.28 |
+| 10 dB | 63.33 | **44.99** | **−18.34 [−22.78, −13.40]** | −11.54 |
+| 5 dB | 81.32 | **66.72** | **−14.60 [−18.84, −10.47]** | −9.68 |
+
+  Mean over 10–30 dB: **−10.06** against −6.18 on the same pool. All five conditions significant.
+  Clean reproduced E-024 exactly (22.24 / 23.94, within 1e-5), which is the harness check.
+- **Why the gain is larger**: the unseen room is harsher at the same nominal SNR (0.6.0: 47.7 at
+  15 dB here vs 33.6 on the pool), so the baseline has more headroom. The absolute 0.7.0 number is
+  worse there (36.5 at 15 dB vs 27.3): the gain and the absolute must be quoted together. **A gain
+  at fixed nominal SNR is not a property of the model alone.**
+- **Prediction miss**: `PLAN.md` predicted attenuation (−3..−6 at 15 dB, −6..−10 at 10 dB, ties at
+  30/20). Measured −11.21, −18.34, and both 30 and 20 dB significant: the direction was right, the
+  magnitude wrong at every point. Second conservative miss in two experiments (E-024 was right on
+  the mean and wrong on the shape); recorded in `docs/11` §4 item 6, prediction kept unchanged in
+  `PLAN.md`.
+- **Decision (D33)**: the card's caveat is downgraded from "upper bound for an unfamiliar room" to
+  "measured on one unseen room", with the table. **No new weights, no version bump**: 0.7.0 is the
+  same artifact with a better-supported claim. Still not covered: one room, one take, steady
+  ambience (events trimmed), a synthetic RMS-relative SNR, single seed.
+- **Cost**: recording 3 min (including the rejected take), analysis 2 min, paired evaluation
+  **20 s**. No training, 0 USD.
+- **Artifacts**: `runs/E-025/` (`PLAN.md`, `RESULT.md`, `record_room.py`, `room_report.json` for the
+  used take, `room_report_take1_rejected.json` and `room_report_take2_untrimmed.json` for the two
+  rejected stages, `holdout_eval.py`, `eval/`), `data/raw/noise/room_holdout/` (audio, gitignored).

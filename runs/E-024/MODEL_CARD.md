@@ -63,8 +63,10 @@ work, tech and media — and it is deliberately tiny.
 > architecture, tokenizer, LM, decoding, 19.4 MB — is identical to 0.6.0. The point is not a better
 > clean number (clean is a tie: −0.7 on the mixed set, ±0.3 elsewhere). The point is that the model
 > now survives a normal room: on a controlled noise curve it gains **6.3 WER points at 15 dB, 11.5
-> at 10 dB and 9.7 at 5 dB**, all significant. Before this release, at 15 dB it scored *worse than
-> Whisper-tiny does on clean audio*.
+> at 10 dB and 9.7 at 5 dB**, all significant. Those are same-pool numbers; on a room the model
+> never heard (E-025) the gain is larger — **11.2 at 15 dB and 18.3 at 10 dB** — because that room
+> is harsher. Before this release, at 15 dB it scored *worse than Whisper-tiny does on clean
+> audio*.
 >
 > 0.6.0 had already fixed the decoder: beam search had been charging a language-model cost per
 > emitted token with nothing to counterbalance it, so it deleted words. That fix alone was worth
@@ -75,7 +77,7 @@ work, tech and media — and it is deliberately tiny.
 | | |
 |---|---|
 | **Good at** | Italian sentences with English words and phrases inside them ("il deploy è andato bene, facciamo un quick sync dopo la call"), Italian tech jargon, acronyms (KPI, MVP, API), Italianised verbs (deployato, pushare, loggare). |
-| **Weaker at** | Pure English (49.6% WER), long-form dictation, speakers very different from the training voices, punctuation and casing (**there is none** — output is lowercase, unpunctuated, numbers spelled out). |
+| **Weaker at** | Pure English (49.1% WER), long-form dictation, speakers very different from the training voices, punctuation and casing (**there is none** — output is lowercase, unpunctuated, numbers spelled out). |
 | **Out of scope** | More than 30 s per pass without chunking, music, singing, overlapping speech, any language other than Italian/English. |
 
 The model emits **no words at all on silence and steady noise** (0 words over 337 non-music clips
@@ -89,7 +91,7 @@ All numbers are WER / ETA (English-term accuracy) after the same text normalizat
 and evaluate every system here. Beam+LM decoding (beam 12, top-k 10, BPE trigram LM weight 0.5,
 per-token bonus 2.4).
 
-| Set | n | Moth 0.6.0 WER | ETA |
+| Set | n | Moth 0.7.0 WER | ETA |
 |---|---|---|---|
 | **Mixed test T, all speakers** | 600 | **25.20** | **54.17** |
 | **T, speaker S3 — never seen in training** | 200 | **26.92** | **48.45** |
@@ -101,11 +103,10 @@ per-token bonus 2.4).
 
 **Read the speaker breakdown, not just the total.** 400 of the 600 mixed-test clips come from
 speakers whose recorded audio is in the training mix, so the aggregate is optimistic: the two
-trained speakers average 25.54 against **26.66 for S3**, who never contributed a single second to
-training. **S3 is the honest number**, and it is behind both trained voices (21.67 and 26.93)
-rather than behind them. Note also the direction of the change: the gain against the previous
-release is *larger* on S3 (−8.77) than on the trained speakers (−5.92), which is what a recovered
-decoding bias looks like and not what speaker fit looks like.
+trained speakers average 24.30 against **26.92 for S3**, who never contributed a single second to
+training. **S3 is the honest number.** It is behind both trained voices (21.67 and 26.93), and the
+0.7.0 change left it where it was (+0.26, a tie): this release bought noise robustness, not speaker
+fit.
 
 ### Against other systems on the same 600 clips
 
@@ -135,7 +136,10 @@ monolingual Italian read speech, while Moth's advantage is the mixed set and the
 
 ## Noise
 
-This is the reason 0.7.0 exists. On 100 held-out-speaker clips, noise mixed at a controlled SNR:
+This is the reason 0.7.0 exists. Two measurements, both on 100 held-out-speaker clips: the noise
+pool the model trained on, and a room it has never heard.
+
+**Same pool** (MUSAN noise + the room tone used in training):
 
 | SNR | 0.6.0 | **0.7.0** | Δ |
 |---|---|---|---|
@@ -146,13 +150,27 @@ This is the reason 0.7.0 exists. On 100 held-out-speaker clips, noise mixed at a
 | 10 dB (bar) | 44.82 | **33.28** | **−11.54 [−16.18, −7.43]** |
 | 5 dB (street) | 50.93 | **41.26** | **−9.68 [−14.50, −5.01]** |
 
-**Read this with its caveat**: the noise used for training and the noise used for this curve come
-from the same small pool (MUSAN noise + one room), so the gain is an **upper bound** for a room the
-mixer has never heard. The direction is solid — three of the five conditions are significant — but
-a recording in an unfamiliar café will land between the two columns, not at the new one.
+**Unseen room** (E-025: a different physical room from the training room tone, recorded after training, broadband, 38 s, no speech):
 
-Before 0.7.0 the model scored **38.4% at 15 dB**: worse than Whisper-tiny does on clean audio. That
-is no longer true.
+| SNR | 0.6.0 | **0.7.0** | Δ |
+|---|---|---|---|
+| 30 dB | 28.52 | **24.62** | **−3.90 [−7.20, −0.83]** |
+| 20 dB | 38.71 | **31.92** | **−6.79 [−10.84, −3.15]** |
+| 15 dB | 47.71 | **36.50** | **−11.21 [−14.69, −7.48]** |
+| 10 dB | 63.33 | **44.99** | **−18.34 [−22.78, −13.40]** |
+| 5 dB | 81.32 | **66.72** | **−14.60 [−18.84, −10.47]** |
+
+The gain **transfers, and is larger**: mean −10.06 over 10–30 dB against −6.18 on the pool. The
+unseen room is harsher at the same nominal SNR, so the baseline falls further and there is more to
+rescue. That cuts both ways, and both halves must be quoted: 0.7.0 scores **27.3** at 15 dB on the
+pool and **36.5** on this room. The clean row is identical audio in both experiments and reproduced
+E-024 exactly (22.24 / 23.94), which is the harness check.
+
+What this does **not** cover: one room, one take, steady ambience (loud events were trimmed), and a
+synthetic RMS-relative SNR. It is not a promise about a café, a car or a kitchen with cutlery.
+
+Before 0.7.0 the model scored **38.4% at 15 dB** on the same-pool curve: worse than Whisper-tiny
+does on clean audio. That is no longer true.
 
 ## Int8 cost
 
@@ -163,13 +181,13 @@ The shipped graph is dynamically quantized int8. Measured end to end:
 | Mixed test T (600) | 25.20 | 25.14 | −0.06 — tie |
 | T, held-out S3 (200) | 26.92 | 27.00 | +0.08 — tie |
 
-Transcripts are identical to fp32 for **79%** of clips on both sets. The int8 cost is inside the
-noise floor of this test set; on longer out-of-domain audio it has been measured at +0.3 points
-(FLEURS-IT, E-020), which is the fair number to expect there.
+Transcripts are identical to fp32 for **81%** of clips on T-600 and **79%** on held-out S3. The
+int8 cost is inside the noise floor of this test set; on longer out-of-domain audio it has been
+measured at +0.3 points (FLEURS-IT, E-020), which is the fair number to expect there.
 
 The browser runs the same int8 graph through ONNX Runtime Web and produces transcripts that match
-Python: on 200 clips the paired difference is **−0.09 WER [−1.22, +0.96], a tie**, with 154/200
-byte-identical transcripts. The remaining difference is float noise in the two mel front-ends, not a
+Python: on 200 clips the paired difference is **−0.09 WER [−1.19, +1.13], a tie**, with 152/200
+identical transcripts. The remaining difference is float noise in the two mel front-ends, not a
 different model.
 
 ## How to use
@@ -194,8 +212,8 @@ JavaScript port tested against it.
 
 **Decoding.** CTC greedy, or prefix beam search with shallow fusion. `config.json` carries the
 settings this release was measured with — `beam: 12`, `top_k: 10`, `lm_weight: 0.5`,
-`token_bonus: 2.4` — and they are worth **11.8 WER points** over greedy (37.70 → 25.92 on the mixed
-set). Three notes for anyone reimplementing the decoder:
+`token_bonus: 2.4` — and at 0.6.0, on the same weights, they were worth **11.8 WER points** over
+greedy (37.70 → 25.92 on the mixed set). Three notes for anyone reimplementing the decoder:
 
 - **`token_bonus` is not an optional nicety.** It is added once per emitted token and it is what
   keeps the search from under-emitting. Set it to 0 and you reproduce 0.5.1's behaviour, including
@@ -207,8 +225,8 @@ set). Three notes for anyone reimplementing the decoder:
 - **Do not apply them to greedy.** Greedy is length-neutral and unaffected; the fast path is
   byte-identical to earlier releases.
 
-Runs on CPU at 47× real time (4 threads, WASM SIMD, Apple M5) with the VAD in the loop; 39× at
-20 s on 4 threads, 20× on 1 thread.
+Runs on CPU at 45× real time on 5 s clips (4 threads, WASM SIMD, Apple M5) with the VAD in the
+loop; 38× at 20 s on 4 threads, 20× on 1 thread.
 
 ## Training data
 
@@ -242,9 +260,10 @@ training run.
    the base model, but any test number on S1 is optimistic for speakers with a standard /r/.
 5. **English-only speech is weak** (49.1% WER). This is a code-switching model, not a bilingual one.
 6. **Music can produce words.** The VAD stops silence and steady noise, not music.
-7. **Noise robustness was trained on a small, synthetic pool** (MUSAN noise + one room tone, mixed
-   at a random SNR). The gain in the table above is an upper bound for an unfamiliar room, and it
-   was measured on the same pool it was trained on. A real café will be between the two columns.
+7. **Noise robustness is measured on one unseen room, not on a corpus.** E-025 re-ran the curve on
+   a room recorded after training: the gain transfers and is larger (−11.2 at 15 dB, −18.3 at
+   10 dB). But it is one room with steady broadband ambience, the loud events were trimmed,
+   and the SNR is synthetic. A café, a car or a kitchen with cutlery is not covered.
 8. **FLEURS is public** and may be in the pretraining data of the models we compare against; the
    recorded mixed set T is the only clean benchmark here, and S3 the only clean speaker.
 9. **Single seed per configuration.** Training ran with one seed throughout. The quoted intervals
@@ -283,12 +302,13 @@ training run.
 
 Checkpoint E-024 (noise-augmented fine-tune from E-014), **release 0.7.0 (2026-11-09)**, built with
 the export gate verified (fp32 median |Δ| 1.888e-4, worst 1.217e-3 over 80 draws; int8 top-1 logit
-agreement 100%). The LM binary is unchanged (`dcf1d59f…`); the acoustic model is not `7a075da4…`.
+agreement 100%). The LM binary is unchanged (`dcf1d59f…`); the acoustic model is now `7a075da4…`.
 The weights are 11.6 M parameters either way, and 0.7.0 changes only what the model was trained on.
 
 Every number in this card comes from the committed evaluation artifacts in the source repository
-(`runs/E-017/`, `runs/E-020/`, `runs/E-022/`), scored with a paired bootstrap (1,000 resamples,
+(`runs/E-017/`, `runs/E-020/`, `runs/E-022/`, `runs/E-024/`, `runs/E-025/`), scored with a paired bootstrap (1,000 resamples,
 seed 0) through `stt.eval`. The decode settings were selected on dev only and frozen before the
 measurement (`runs/E-022/PLAN.md`); a third experiment re-tuned the LM and adopted nothing, because
 the only improvement found did not fit the 20 MB budget (`runs/E-023/`); the noise run was planned
-with its prediction and kill criteria before the data was built (`runs/E-024/PLAN.md`).
+with its prediction and kill criteria before the data was built (`runs/E-024/PLAN.md`); the holdout
+control was planned before its recording existed (`runs/E-025/PLAN.md`).

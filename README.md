@@ -35,11 +35,13 @@ Whistle on the mixed set's WER (−4.22), though Whistle stays ahead on monoling
 speech.
 
 **Noise (0.7.0):** on a controlled SNR curve it gains **6.3 WER points at 15 dB** and **11.5 at
-10 dB** over the previous checkpoint, with clean performance a tie. Before that, at 15 dB it scored
-worse than Whisper-tiny does on clean audio.
+10 dB** over the previous checkpoint, with clean performance a tie. On a **room recorded after
+training** — one the model has never heard — the gain is larger (**11.2** and **18.3**), because that
+room is harsher; absolute WER there is 36.5 at 15 dB. Before 0.7.0, at 15 dB it scored worse than
+Whisper-tiny does on clean audio.
 
-**Speed:** 47× real time on 4 threads, 24× on 1 thread, with the VAD in the loop (Apple M5, WASM
-SIMD).
+**Speed:** 45× real time on 4 threads, 24× on 1 thread, with the VAD in the loop (Apple M5, WASM
+SIMD; 5 s clips).
 
 ## What it does not do
 
