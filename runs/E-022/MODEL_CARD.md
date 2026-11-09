@@ -38,6 +38,8 @@ model-index:
             name: WER (beam+LM, normalized, percent)
 ---
 
+<img src="logo-tile.png" alt="Moth" width="88" />
+
 # Moth STT 0.6.0 — Italian + English code-switching, 19.4 MB, CPU-only
 
 > **Live demo:** [semantique-team/moth-demo](https://huggingface.co/spaces/semantique-team/moth-demo) —

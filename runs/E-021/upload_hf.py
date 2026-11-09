@@ -30,6 +30,11 @@ RELEASE = Path("release")
 CARD = Path("runs/E-022/MODEL_CARD.md")
 RECORD = Path("runs/E-022/release-0.6.0.json")
 
+#: Images the card references, uploaded next to it. The card cannot switch image by colour scheme,
+#: so it uses the white tile, which is legible on both light and dark themes.
+CARD_ASSETS = ("logo-tile.png",)
+CARD_ASSETS_DIR = Path("docs/assets")
+
 #: Files the runtime downloads. `config.json` and `NOTICE` travel with them.
 PAYLOAD = ("model.int8.onnx", "vocab.json", "mel_filters.bin", "silero_vad.onnx", "lm_bpe3.bin")
 ALSO = ("config.json", "NOTICE")
@@ -68,8 +73,9 @@ def check(
         # A card that documents a different release is worse than no card: it publishes true
         # numbers for the wrong artifact. Required, because 0.6.0 changed the system without
         # changing the weights (E-022).
+        card_text = card.read_text(encoding="utf-8")
         heading = next(
-            (line for line in card.read_text(encoding="utf-8").splitlines() if line.startswith("# ")),
+            (line for line in card_text.splitlines() if line.startswith("# ")),
             "",
         )
         if record["release"] not in heading:
@@ -77,6 +83,11 @@ def check(
                 f"model card is for a different release: its title is {heading.strip()!r}, "
                 f"expected it to name {record['release']}"
             )
+        # Only check an asset the card actually references, so a caller with its own card is not
+        # forced to ship our images.
+        for name in CARD_ASSETS:
+            if name in card_text and not (CARD_ASSETS_DIR / name).is_file():
+                problems.append(f"card references {name}, missing from {CARD_ASSETS_DIR}")
     total = sum((release / name).stat().st_size for name in PAYLOAD if (release / name).is_file())
     declared = record["package_bytes"]
     if total != declared and not problems:
@@ -118,6 +129,9 @@ def main(argv: list[str] | None = None) -> int:
         path = release / name
         print(f"  {name:<20} {path.stat().st_size:>10}  sha256 {sha256(path)[:16]}…")
     print(f"  README.md (from {card})")
+    for name in CARD_ASSETS:
+        if (CARD_ASSETS_DIR / name).is_file():
+            print(f"  {name} (from {CARD_ASSETS_DIR})")
     print(
         f"\ntarget: https://huggingface.co/{args.repo}  ({'private' if args.private else 'public'})"
     )
@@ -151,6 +165,18 @@ def main(argv: list[str] | None = None) -> int:
         repo_type="model",
         commit_message=f"model card: Moth {record['release']}",
     )
+    for name in CARD_ASSETS:
+        source = CARD_ASSETS_DIR / name
+        if not source.is_file():
+            continue
+        api.upload_file(
+            path_or_fileobj=str(source),
+            path_in_repo=name,
+            repo_id=args.repo,
+            repo_type="model",
+            commit_message=f"card: {name}",
+        )
+        print(f"  uploaded {name}", flush=True)
     for name in (*PAYLOAD, *ALSO):
         api.upload_file(
             path_or_fileobj=str(release / name),
