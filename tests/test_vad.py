@@ -21,6 +21,7 @@ from stt.vad import (
     _chunks,
     _sha256,
     has_speech,
+    segment_bounds,
     speech_fraction,
     speech_probabilities,
 )
@@ -126,3 +127,50 @@ def test_js_rule_matches_python() -> None:
         match = re.search(rf"export const {name} = ([0-9.]+);", source)
         assert match, f"web/vad.js must export {name}"
         assert float(match.group(1)) == value
+
+
+# --- sentence segmentation (runs/audit-2026-11-09) -------------------------------------------
+
+
+def test_segment_bounds_returns_one_run_for_a_single_sentence() -> None:
+    """A single sentence must come back as one segment, so callers can decode it whole."""
+    audio = load_audio_16k(SPEECH_FIXTURE)
+    bounds = segment_bounds(audio)
+    assert len(bounds) == 1
+    start, end = bounds[0]
+    assert 0 <= start < end <= audio.size
+
+
+def test_segment_bounds_splits_at_pauses() -> None:
+    """Two sentences separated by silence are two runs, and the margin widens each one."""
+    audio = load_audio_16k(SPEECH_FIXTURE)
+    quiet = np.zeros(int(1.0 * SAMPLE_RATE), dtype=np.float32)
+    joined = np.concatenate([audio, quiet, audio])
+    without_margin = segment_bounds(joined, margin_s=0.0)
+    with_margin = segment_bounds(joined, margin_s=0.2)
+    assert len(without_margin) == 2
+    assert len(with_margin) == 2
+    # The margin must widen the cuts, never narrow them, and never leave the audio.
+    for (s0, e0), (s1, e1) in zip(without_margin, with_margin, strict=True):
+        assert s1 <= s0
+        assert e1 >= e0
+        assert 0 <= s1 and e1 <= joined.size
+
+
+def test_segment_bounds_margin_is_clamped_at_the_edges() -> None:
+    audio = load_audio_16k(SPEECH_FIXTURE)
+    bounds = segment_bounds(audio, margin_s=5.0)
+    assert len(bounds) == 1
+    start, end = bounds[0]
+    assert start == 0
+    assert end == audio.size
+
+
+def test_segment_bounds_drops_too_short_runs() -> None:
+    """A run shorter than ``min_segment_s`` is dropped rather than decoded on its own."""
+    audio = load_audio_16k(SPEECH_FIXTURE)
+    assert segment_bounds(audio, min_segment_s=10_000.0) == []
+
+
+def test_segment_bounds_is_empty_without_speech() -> None:
+    assert segment_bounds(np.zeros(int(2.0 * SAMPLE_RATE), dtype=np.float32)) == []

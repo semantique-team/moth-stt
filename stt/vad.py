@@ -42,10 +42,14 @@ __all__ = [
     "GATE_THRESHOLD",
     "MODEL_INPUT",
     "SAMPLE_RATE",
+    "SEGMENT_MARGIN_S",
+    "SEGMENT_MIN_SEGMENT_S",
+    "SEGMENT_MIN_SILENCE_S",
     "STATE_SHAPE",
     "WINDOW",
     "WINDOW_THRESHOLD",
     "has_speech",
+    "segment_bounds",
     "speech_fraction",
     "speech_probabilities",
 ]
@@ -61,6 +65,13 @@ STATE_SHAPE = (2, 1, 128)
 WINDOW_THRESHOLD = 0.5
 #: Fraction of speech windows above which the clip is decoded (gate: speech iff fraction > this).
 GATE_THRESHOLD = 0.10
+
+#: Silence needed to cut between two sentences when splitting a long recording.
+SEGMENT_MIN_SILENCE_S = 0.25
+#: Context kept on each side of a cut: cutting flush removes the leading silence the model expects.
+SEGMENT_MARGIN_S = 0.20
+#: Runs shorter than this are dropped rather than decoded on their own.
+SEGMENT_MIN_SEGMENT_S = 0.40
 
 ASSET_PATH = Path(__file__).parent / "assets" / "silero_vad.onnx"
 ASSET_SHA256 = "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
@@ -130,3 +141,61 @@ def speech_fraction(audio: np.ndarray) -> float:
 def has_speech(audio: np.ndarray, threshold: float = GATE_THRESHOLD) -> bool:
     """True when the clip should be decoded: ``speech_fraction(audio) > threshold``."""
     return speech_fraction(audio) > threshold
+
+
+def segment_bounds(
+    audio: np.ndarray,
+    margin_s: float = SEGMENT_MARGIN_S,
+    min_silence_s: float = SEGMENT_MIN_SILENCE_S,
+    min_segment_s: float = SEGMENT_MIN_SEGMENT_S,
+) -> list[tuple[int, int]]:
+    """Sample offsets of the speech runs in ``audio``, for splitting a long recording.
+
+    Why this exists: the model is trained on sentence-sized gold clips (median 2.7 s) and reads a
+    recording of several sentences as one unpunctuated stream. Measured on T-S3, five sentences
+    concatenated into one 12.5 s clip score **36.6% WER** against **26.6%** when decoded
+    separately; cutting at the pauses recovers **80%** of that gap
+    (``runs/audit-2026-11-09/``).
+
+    ``margin_s`` keeps audio on each side of a cut: cutting flush against the first voiced window
+    removes the leading silence the model expects and costs +1.6 to +2.9 WER on single clips, so
+    callers must not segment at all when only one run is found — see ``unwrap_or_whole``.
+
+    Returns ``[]`` when there is no speech. ``mirror`` of ``web/vad.js::segments``; keep in sync.
+    """
+    probabilities = speech_probabilities(audio)
+    if probabilities.size == 0:
+        return []
+    voiced = probabilities > WINDOW_THRESHOLD
+
+    runs: list[tuple[int, int]] = []
+    index = 0
+    total = int(voiced.size)
+    while index < total:
+        if not voiced[index]:
+            index += 1
+            continue
+        start = index
+        while index < total and voiced[index]:
+            index += 1
+        runs.append((start, index))
+    if not runs:
+        return []
+
+    seconds_per_window = WINDOW / SAMPLE_RATE
+    merged = [runs[0]]
+    for start, end in runs[1:]:
+        if (start - merged[-1][1]) * seconds_per_window < min_silence_s:
+            merged[-1] = (merged[-1][0], end)
+        else:
+            merged.append((start, end))
+
+    margin = int(margin_s * SAMPLE_RATE)
+    bounds: list[tuple[int, int]] = []
+    for start, end in merged:
+        if (end - start) * seconds_per_window < min_segment_s:
+            continue
+        bounds.append(
+            (max(0, start * WINDOW - margin), min(int(audio.size), end * WINDOW + margin))
+        )
+    return bounds

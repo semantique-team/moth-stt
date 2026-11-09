@@ -54,7 +54,7 @@ function median(values) {
   return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
 }
 
-export async function createRunner({ baseUrl = "../release/", threads = null } = {}) {
+export async function createRunner({ baseUrl = "../release/", threads = null, segment = null } = {}) {
   const root = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
 
   ort.env.wasm.wasmPaths = new URL(
@@ -107,11 +107,13 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
   });
   const loadMs = performance.now() - loadStarted;
 
-  async function transcribe(pcm) {
+  async function transcribe(pcm, { segment: segmentOverride = null } = {}) {
     const t0 = performance.now();
-    // No-speech guard (D25, E-011): Silero VAD on the 16 kHz PCM, before the mel. The LM path
-    // invents words on silence and loud noise; a clip with no speech never reaches the model.
-    const guarded = vad ? !(await vad.hasSpeech(pcm)) : false;
+    // No-speech guard (D25, E-011) and sentence segmentation from a **single** VAD pass: the
+    // per-window probabilities answer both questions, and running the graph twice would double a
+    // cost that is already ~80 ms on 18 s of audio.
+    const probabilities = vad ? await vad.probabilities(pcm) : null;
+    const guarded = probabilities ? !(vad.fraction(probabilities) > vad.gate) : false;
     const t1 = performance.now();
     if (guarded) {
       const audioSeconds = pcm.length / SAMPLE_RATE;
@@ -134,27 +136,55 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
         rtfx: (audioSeconds * 1000) / totalMs,
       };
     }
-    const { data, frames } = computeMel(pcm, filters);
-    const t2 = performance.now();
-    const input = new ort.Tensor("float32", data, [1, N_MELS, frames]);
-    const outputs = await session.run({ [config.model.input]: input });
-    const t3 = performance.now();
-    const output = outputs[config.model.output];
-    const [, outFrames, vocabSize] = output.dims;
+    // Split a long recording at its pauses before decoding (see runs/audit-2026-11-09/): the model
+    // is trained on sentence-sized clips and reads several sentences as one unpunctuated stream,
+    // which costs 9.4 WER points on five concatenated sentences. Only split when the VAD finds two
+    // or more runs — cutting a single run removes the leading silence the model expects (+1.6 WER).
     const decodeConfig = config.decode ?? {};
-    const text =
-      decodeConfig.default === "beam"
-        ? beamSearch(output.data, outFrames, vocabSize, pieces, {
-            beamWidth: decodeConfig.beam ?? 5,
-            topK: decodeConfig.top_k ?? 8,
-            lm,
-            lmWeight: decodeConfig.lm_weight ?? 0,
-            tokenBonus: decodeConfig.token_bonus ?? 0,
-          })
-        : greedy(output.data, outFrames, vocabSize, pieces);
-    const t4 = performance.now();
+    const segmentEnabled = segmentOverride ?? segment ?? decodeConfig.segment ?? true;
+    const wantsSegments = segmentEnabled && probabilities !== null;
+    const bounds = wantsSegments ? vad.segmentsFrom(pcm.length, probabilities) : [];
+    const spans = bounds.length >= 2 ? bounds : [{ start: 0, end: pcm.length }];
+
+    let outFrames = 0;
+    let vocabSize = pieces.length + 1;
+    let featureMs = 0;
+    let inferenceMs = 0;
+    let decodeMs = 0;
+    const texts = [];
+    for (const span of spans) {
+      const sliceStart = performance.now();
+      const { data, frames } = computeMel(
+        span.start === 0 && span.end === pcm.length ? pcm : pcm.subarray(span.start, span.end),
+        filters,
+      );
+      const input = new ort.Tensor("float32", data, [1, N_MELS, frames]);
+      featureMs += performance.now() - sliceStart;
+      const inferStart = performance.now();
+      const outputs = await session.run({ [config.model.input]: input });
+      inferenceMs += performance.now() - inferStart;
+      const output = outputs[config.model.output];
+      const [, framesOut, size] = output.dims;
+      outFrames += framesOut;
+      vocabSize = size;
+      const decodeStart = performance.now();
+      const text =
+        decodeConfig.default === "beam"
+          ? beamSearch(output.data, framesOut, size, pieces, {
+              beamWidth: decodeConfig.beam ?? 5,
+              topK: decodeConfig.top_k ?? 8,
+              lm,
+              lmWeight: decodeConfig.lm_weight ?? 0,
+              tokenBonus: decodeConfig.token_bonus ?? 0,
+            })
+          : greedy(output.data, framesOut, size, pieces);
+      if (text) texts.push(text);
+      decodeMs += performance.now() - decodeStart;
+    }
+    const text = texts.join(" ");
+    const frames = Math.ceil(pcm.length / 160);
     const audioSeconds = pcm.length / SAMPLE_RATE;
-    const totalMs = t4 - t0;
+    const totalMs = performance.now() - t0;
     return {
       text,
       frames,
@@ -162,11 +192,12 @@ export async function createRunner({ baseUrl = "../release/", threads = null } =
       vocabSize,
       decoder: decodeConfig.default ?? "greedy",
       audioSeconds,
+      segments: spans.length,
       timings: {
         vad_ms: t1 - t0,
-        feature_ms: t2 - t1,
-        inference_ms: t3 - t2,
-        decode_ms: t4 - t3,
+        feature_ms: featureMs,
+        inference_ms: inferenceMs,
+        decode_ms: decodeMs,
         total_ms: totalMs,
       },
       rtfx: (audioSeconds * 1000) / totalMs,

@@ -1,0 +1,20 @@
+{
+  "groups": 120,
+  "clips_per_group": 1,
+  "margin_s": 0.2,
+  "rule": "multi",
+  "mean_seconds": 2.6752015625,
+  "whole_wer": 0.25289017341040465,
+  "vad_split_wer": 0.25289017341040465,
+  "whole_eta": 0.4715909090909091,
+  "vad_split_eta": 0.4715909090909091,
+  "vad_minus_whole": 0.0,
+  "ci": [
+    0.0,
+    0.0
+  ],
+  "tie": true,
+  "true_boundary_wer": 0.2657580919931857,
+  "recovered_fraction": -0.0,
+  "segments_per_group_median": 1.0
+}
