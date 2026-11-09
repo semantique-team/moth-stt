@@ -11,6 +11,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -56,8 +57,17 @@ def _fixture(root: Path) -> tuple[Path, Path]:
     return record, card
 
 
+#: An empty HF home for the tests: a real token from `hf auth login` in the developer's home must
+#: not turn "push without a token" into a test that reaches the network.
+HF_HOME = tempfile.mkdtemp(prefix="moth-hfhome-")
+
+
 def _run(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
-    env = {"PYTHONPATH": str(REPO), "PATH": "/usr/bin:/bin:/usr/sbin:/sbin"}
+    env = {
+        "PYTHONPATH": str(REPO),
+        "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+        "HF_HOME": HF_HOME,
+    }
     return subprocess.run(
         [sys.executable, str(SCRIPT), *args],
         cwd=root,

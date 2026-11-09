@@ -142,9 +142,18 @@ def main() -> int:
         print("\nnothing uploaded (staged only). Use --push and HF_TOKEN to publish.")
         return 0
 
+    # Three ways in, in order: the environment, then the token `hf auth login` stored (which keeps
+    # the secret out of shell history and out of any chat), then refuse.
     token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
     if not token:
-        print("error: --push needs HF_TOKEN in the environment", file=sys.stderr)
+        from huggingface_hub import get_token
+
+        token = get_token()
+    if not token:
+        print(
+            "error: --push needs HF_TOKEN in the environment, or a token from `uv run hf auth login`",
+            file=sys.stderr,
+        )
         return 2
 
     from huggingface_hub import HfApi
