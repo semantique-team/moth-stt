@@ -1,0 +1,113 @@
+[
+  {
+    "arm": "frozen",
+    "set": "t600",
+    "shipped_wer": 0.32769495412844035,
+    "arm_wer": 0.2591743119266055,
+    "wer_diff": -0.06852064220183485,
+    "wer_ci": [
+      -0.07940516273849607,
+      -0.0571511459239919
+    ],
+    "wer_tie": false,
+    "shipped_eta": 0.42857142857142855,
+    "arm_eta": 0.5263662511984659,
+    "eta_diff": 0.09779482262703737,
+    "eta_ci": [
+      0.07676969092721836,
+      0.1205607476635514
+    ],
+    "eta_tie": false
+  },
+  {
+    "arm": "frozen",
+    "set": "t-s3",
+    "shipped_wer": 0.3543441226575809,
+    "arm_wer": 0.2666098807495741,
+    "wer_diff": -0.08773424190800683,
+    "wer_ci": [
+      -0.11130434782608695,
+      -0.0650477016478751
+    ],
+    "wer_tie": false,
+    "shipped_eta": 0.352112676056338,
+    "arm_eta": 0.4732394366197183,
+    "eta_diff": 0.12112676056338029,
+    "eta_ci": [
+      0.08314087759815242,
+      0.1647058823529412
+    ],
+    "eta_tie": false
+  },
+  {
+    "arm": "frozen",
+    "set": "t-s1s2",
+    "shipped_wer": 0.3146067415730337,
+    "arm_wer": 0.2554019014693172,
+    "wer_diff": -0.059204840103716516,
+    "wer_ci": [
+      -0.0722943722943723,
+      -0.04517543859649123
+    ],
+    "wer_tie": false,
+    "shipped_eta": 0.46656976744186046,
+    "arm_eta": 0.5537790697674418,
+    "eta_diff": 0.08720930232558138,
+    "eta_ci": [
+      0.06230529595015577,
+      0.11181102362204726
+    ],
+    "eta_tie": false
+  },
+  {
+    "arm": "frozen",
+    "set": "fleurs_it_test",
+    "shipped_wer": 0.2652323043342688,
+    "arm_wer": 0.20461490489554102,
+    "wer_diff": -0.06061739943872779,
+    "wer_ci": [
+      -0.06627655514565575,
+      -0.05505867427846495
+    ],
+    "wer_tie": false,
+    "shipped_eta": null,
+    "arm_eta": null,
+    "eta_diff": null,
+    "eta_ci": null,
+    "eta_tie": false
+  },
+  {
+    "arm": "frozen",
+    "set": "fleurs_en_test",
+    "shipped_wer": 0.5548172757475083,
+    "arm_wer": 0.496328029375765,
+    "wer_diff": -0.0584892463717433,
+    "wer_ci": [
+      -0.06548337067034293,
+      -0.05183510175682726
+    ],
+    "wer_tie": false,
+    "shipped_eta": null,
+    "arm_eta": null,
+    "eta_diff": null,
+    "eta_ci": null,
+    "eta_tie": false
+  },
+  {
+    "arm": "frozen",
+    "set": "cv_it_dev",
+    "shipped_wer": 0.24911690496215308,
+    "arm_wer": 0.19899074852817494,
+    "wer_diff": -0.050126156433978136,
+    "wer_ci": [
+      -0.058763413387838526,
+      -0.04136417356069558
+    ],
+    "wer_tie": false,
+    "shipped_eta": null,
+    "arm_eta": null,
+    "eta_diff": null,
+    "eta_ci": null,
+    "eta_tie": false
+  }
+]

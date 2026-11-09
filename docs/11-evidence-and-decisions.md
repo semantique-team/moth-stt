@@ -45,7 +45,9 @@ each with the evidence that forced it.
 | D27 | 2026-11-07 | **Adopt E-017 as the shipped checkpoint**; gold works and generalises across speakers, but the ETA half of the mixed gate is still not won | E-017 vs E-016 on T-600: WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; on **S3, which never contributed audio**, WER −6.13 [−8.68, −3.51] and ETA +4.79 [+0.51, +9.06] — the same gain as on the two trained speakers (S1 −4.47, S2 −6.60), so it is not speaker adaptation. Gate on S3 vs Whisper forced-`it`: WER −11.07 [−16.28, −5.89] **won**, ETA −2.82 [−11.65, +6.56] **tie** | Keeping E-016 (worse everywhere, and its cross-speaker claim rests on S2 alone); waiting for more gold before adopting |
 | D28 | 2026-11-07 | **Run E-019, a Whistle LoRA probe, as an exploratory side artifact** — explicitly "less ours", never presented as Moth. D5 (own model, not a Whistle fine-tune) is **unchanged** for the Moth deliverable. **Executed the same day: killed at L1** — on held-out S3 +2.30 WER [−0.68, +5.46] (tie), FLEURS-IT/EN and CV-IT all significantly worse; only the two trained speakers improve. H2 (data, not architecture) rejected. H3/H4 not run, per the kill criterion | The wait for S4 (E-018's blocker) is the cheapest window; Whistle leads Moth by +3.35 WER / 6.42 ETA on T-600, and the probe answers two things Moth's CTC cannot: whether a decoder-based code-switch model gains from our gold, and whether a new `mix` language code expresses intra-clip switching. Protocol and kill criteria: `docs/plans/2026-11-07-whistle-lora-probe.md`. Result: `runs/E-019/RESULT.md`, `EXPERIMENTS.md` E-019, §3.4 | Presenting the LoRA as Moth; skipping the probe; running it on T (leakage) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
+| D31 | 2026-11-09 | **Keep the LM as shipped** (weight 0.5 from E-022, backoff 0.4, count pruning ≥ 2, 5.12 MB browser binary) after a full re-tune; **do not** buy the bigger LM | E-023: on full dev (3,939 clips, 10× E-022's selection set) the optimum is exactly E-022's cell, and 0.4 stays the best backoff. The unpruned LM (pruning ≥ 1) is **0.65 dev points better** and wins the gate sets (T-600 −0.77 [−1.40, −0.11], FLEURS-IT −0.72, CV-IT dev −0.65) — but it is a **12.31 MB** browser binary, i.e. a **26.63 MB** package against the 20 MB ceiling (D4), and it is a **tie on the held-out speaker** (+0.43 [−0.61, +1.62]). The ceiling costs general Italian WER, not the code-switching claim the project exists to make | Relaxing the 20 MB ceiling for ~0.7 WER (buys an Italian model, not a code-switching one; D4 is a product constraint, not a quality knob); pruning harder to save 1.8 MB at +0.56 dev points (the LM is 5.12 MB of 19.44 and is paying its way) |
 | D29 | 2026-11-07 | **Make the fp32 export gate a seeded sweep** (median ≤ 1e-3, worst ≤ 1e-2 over 20 draws per length) instead of one random draw, and rebuild the release **with verification on** (0.5.1) | E-021: the gate fixture's typical gap is 1.8e-4, but 1 draw in 80 crosses 1e-3, always at 29 s; the value depends on (checkpoint, seed, length) — E-017 gives 2.43e-4 at seed 0 and 1.28e-3 at seed 2. Real speech measures 2.2–3.1e-4 with top-1 1.0, so the export was never wrong. The rebuilt 0.5.1 passes the new gate (median 2.127e-4, worst 1.472e-3, 3/80 over) and produces a **byte-identical** int8 artifact (`fe1afcc2…`) | Keeping the single draw and `--no-verify` (would keep shipping unverified packages for a ~1% coin flip); loosening the threshold to 2e-3 (hides a real regression instead of measuring the distribution) |
+| D30 | 2026-11-09 | **Adopt a per-token bonus in beam search and re-tune the LM weight with it** (`token_bonus` 2.4, `lm_weight` 0.5, beam 12 / top-k 10), shipped as **0.6.0** with the weights unchanged | E-022: the shipped decode inserted no counterweight for the per-token LM cost, so it deleted 12.2% of reference words against 0.8% insertions and dropped the first word of 13.3% of clips. With the bonus: T-600 **−6.85** [−7.94, −5.72], held-out **T-S3 −8.77** [−11.13, −6.50] (larger on the unseen speaker, so not adaptation), FLEURS-IT **−6.06**, FLEURS-EN −5.85, CV-IT dev −5.01 — every CI excludes 0, from 1 h 45 of decode and **no training**. `token_bonus=0` is a bit-exact no-op, greedy is untouched, and the int8 artifact stays byte-identical. **FLEURS-IT finally beats Whisper-tiny auto+beam 5** (−6.95 [−8.02, −5.87]), which the D19 correction had made the blocking bar | Retraining to fix a decoder bias (the CTC loss is length-neutral, so the model was never wrong); adopting the `0.6/3.0` cell that also wins the S3 ETA tie (it was selected after looking at S3, breaking the held-out rule — see the E-022 self-correction); leaving the LM weight at 0.2 (it was tuned under the broken calibration, so its 1-D optimum was the optimum of neither job) |
 
 ## 3. Negative results
 
@@ -64,6 +66,8 @@ The paper's core. "No change" means a paired 95% CI that includes 0 on the ship-
 | Energy guard on silence | E-011 add. | Silence words 240 → 0, noise words 19 (unchanged) | **Replaced by Silero VAD** (D25): 0 non-music words, 0/240 clips | `runs/E-011/guard-*/`, `runs/E-011/vad-*/` |
 | Silero VAD v5 as the guard | E-011 add. | Non-music words 31 → **0** both decoders; 0 gated on T-400 and FLEURS-IT; +2.33 MB | **Kept** (0.4.0) | `runs/E-011/vad-*/`, `runs/E-011/vad_guard_summary.json` |
 | Gold data from two speakers (S1+S2) | E-017 | T-600 38.50 → **32.77** WER, 36.05 → **42.86** ETA; on held-out S3 −6.13 WER / +4.79 ETA, the same as on the trained speakers | **Kept** (best model) | `runs/E-017/eval/`, `runs/E-017/diffs/` |
+| **Per-token bonus + LM weight re-tuned** | **E-022** | T-600 **−6.85** [−7.94, −5.72], held-out **S3 −8.77** [−11.13, −6.50], FLEURS-IT −6.06, FLEURS-EN −5.85, CV −5.01; deletions 12.2% → 8.3%, insertions 0.8% → 1.3% | **Kept** (0.6.0, decode-only, weights unchanged) | `runs/E-022/eval/`, `runs/E-022/diffs/` |
+| LM re-tune (weight, backoff, pruning) | E-023 | Optimum is **exactly E-022's cell** on 10× the selection set; backoff 0.4 best. The unpruned LM is −0.65 dev but **12.31 MB** → 26.63 MB package, and a **tie on the held-out speaker** | **Nothing adopted** (does not fit); D31 | `runs/E-023/sweep.json`, `runs/E-023/gate-diffs.json` |
 | LoRA on Whistle with the same gold | E-019 | On held-out S3 **+2.30 WER** [−0.68, +5.46] (tie, kill); FLEURS-IT +1.02, FLEURS-EN +2.30, CV-IT +2.66 — **all significant worse**; only the two trained speakers improve (−2.98, tie) | **Killed at L1**; H2 (data, not architecture) rejected | `runs/E-019/RESULT.md`, `runs/E-019/l1-s3/` |
 | int8 quantization of the shipped model | E-020 | T-600 +0.43 WER greedy / +0.17 beam+LM (both ties); FLEURS-IT +0.32 [+0.08, +0.57] | **Kept** (the artifact is honest on our speakers); FLEURS caveat for the card | `runs/E-020/RESULT.md` |
 | fp32 export gate of 1e-3, single draw | E-021 | Typical gap **1.8e-4**, but 1/80 draws crosses 1e-3, always at 29 s; real audio ≤ 3.05e-4 | **Gate is the problem, not the export**: replaced by a seeded sweep (D29) | `runs/E-021/RESULT.md`, `runs/E-021/release-0.5.1.json` |
@@ -166,6 +170,53 @@ whose vocabulary was audiobook/web prose, not modern tech terms; neither could t
 It also identifies the data that would: **audio where those words are actually spoken**. See
 `runs/E-015/PLAN.md` for the distillation protocol, which is blocked on exactly that asset.
 
+### 3.5 The biggest gain in the project came from the decoder, not the model
+
+E-022 (2026-11-09) started as an audit of the finished project and found that roughly a fifth of
+the reported WER was a **decoding** artefact. `beam_search` charged the LM log-probability on every
+emitted token and inserted no counterweight, so with `lm_weight = 0.2` the search preferred
+hypotheses that were too short. The evidence was in the aggregate: deletions were **12.2%** of
+reference words against **0.8%** insertions, and the first word of a clip vanished **13.3%** of the
+time against **0.5%** for the last.
+
+The fix is two decode scalars. On the same checkpoint, with **no training**:
+
+| Set | before | after | Δ WER |
+|---|---|---|---|
+| T-600 | 32.77 / 42.86 | **25.92 / 52.64** | −6.85 [−7.94, −5.72] |
+| T-S3 (held-out) | 35.43 / 35.21 | **26.66 / 47.32** | −8.77 [−11.13, −6.50] |
+| FLEURS-IT | 26.52 | **20.46** | −6.06 [−6.63, −5.51] |
+
+Three lessons, and each is uncomfortable in a different way.
+
+1. **The gain was larger on the held-out speaker than on the training speakers** (−8.77 vs −5.92),
+   which is the signature of a bias being removed rather than a model being fitted. Any result
+   whose gain is biggest on the speakers it trained on should be distrusted more than this one.
+2. **A 1-D sweep cannot optimise a parameter that has two jobs.** E-008 tuned `lm_weight` over
+   `{0.05 … 0.8}` and found 0.2, because a larger weight both improved the language model and
+   suppressed tokens; the curve's shape was the sum of those two effects, and its optimum was the
+   optimum of neither. Nothing was wrong with the sweep's execution, only with its dimension.
+3. **FLEURS-IT, the bar that had blocked the project since E-008 and forced the D19 correction,
+   was won by fixing the decoder** (−6.95 [−8.02, −5.87]), not by any of the data or architecture
+   experiments that came before. Five experiments (E-012, E-013, E-014, E-016, E-017) were run
+   against a metre that was miscalibrated by about 6 points.
+
+**The self-correction inside the self-correction**: the strongest cell found (`lm_weight` 0.6 /
+`gamma` 3.0) also turned the S3 ETA tie into a win, but it was selected **after** looking at S3.
+It is reported in `runs/E-022/AUDIT-PROBE.md` §1.4 and deliberately **not** adopted. The arm that
+shipped is the one dev alone selected. A result that needs the test set to look good is not a
+result, and the repository's "never tune against S3" rule exists precisely because the temptation
+is real.
+
+**A second finding, and a correction to it**: the audit's first pass claimed a browser/Python WER
+gap of +3.27 [1.74, 4.88]. That was an **artifact of the auditor's own packaging**: the packager's
+default LM is the unaugmented one, while every release since 0.3.1 ships the augmented one and
+overrode the default by hand. With the correct LM, on 200 clips: shipped decode **+1.29**
+[0.0009, 0.0259] — the same point estimate E-010 measured — and the **E-022 decode is a tie at
+−0.09 [−0.012, +0.010] with *higher* transcript identity** (154/200 vs 140/200). The wider beam
+improves parity rather than hurting it. `docs/11` §3.5 carries the corrected numbers; §4 records
+the auditor's error next to the project's own.
+
 ## 4. Self-corrections
 
 Recorded because a paper about failures should include the failures of the authors, not only of the
@@ -181,6 +232,17 @@ models.
 3. **E-012: intermediate numbers.** `runs/E-012/eval/` was produced from the 8k checkpoint used to
    check the crash fix; `runs/E-012/eval-final/` is authoritative. Both are committed, and the
    E-012 entry says which is which.
+4. **E-022: an arm chosen with the test set in view.** The audit's first pass picked
+   `lm_weight` 0.6 / `gamma` 3.0, which wins the S3 ETA tie, after looking at S3 — a violation of
+   the "never tune against S3" rule. The shipped arm was re-selected using dev alone; the peeked
+   cell is documented and not adopted (§3.5, `runs/E-022/AUDIT-PROBE.md` §1.4).
+5. **E-022: the auditor's browser/Python claim was an artifact.** The audit reported a +3.27 WER
+   browser gap because it packaged the **unaugmented** LM (`runs/E-010/package_browser.py`
+   defaults to `lm_bpe3.pkl.gz`; every release since 0.3.1 overrode it by hand). With the correct
+   LM the shipped decode is +1.29 — E-010's number — and the E-022 decode is a **tie** with higher
+   transcript identity. The default is fixed in the same change. Recorded because the auditor
+   fell for the repository's own footgun, and the lesson is that a surprising result should be
+   checked against the build recipe before it is believed.
 
 An earlier, smaller correction: the H2 bar in E-005/E-006 was the greedy number (32.09), not the
 best variant; those entries are annotated, not rewritten, so the history of the bar is visible.
@@ -246,6 +308,9 @@ best variant; those entries are annotated, not rewritten, so the history of the 
 | Noise set (E-011) | `data/manifests/noise_report.json` | `uv run python -m stt.data.build_noise ...` |
 | Whistle LoRA probe (E-019) | `runs/E-019/{RESULT.md,config.json,data/,l0/,l1-s3/,l0-sets/,l1-sets/}` | `uv run python runs/E-019/build_jsonl.py`, then `runs/E-019/train_L1.sh` (throwaway `.venv-whistle`), then `baselines/whistle_needle.py --weights runs/E-019/whistle-lora-L1.cact` |
 | int8 WER of the shipped model (E-020) | `runs/E-020/{RESULT.md,int8-greedy/,int8-beam-lm/,int8-fleurs-it/,torch-ref/}` | `uv run python runs/E-020/eval_onnx.py --sets recorded_t --out ...` (`stt/onnx_runner.py`), then `stt.eval --vs` the re-scored E-017 hypotheses |
+| Decode recalibration (E-022) | `runs/E-022/{PLAN.md,RESULT.md,eval/,diffs/,gate-table.json,parity-wer.json,browser.json}` | `uv run python runs/E-022/eval.py --arm frozen --int8`, then `runs/E-022/diffs.py`; parity: `runs/E-022/parity.py --clips 200`, `cd web && npx playwright test tests/parity.spec.ts`, `runs/E-022/parity_wer.py` |
+| Browser/Python parity (E-022) | `runs/E-022/parity-wer.json` | as above; the JS mel is `web/mel.js`, the Python one `stt/features.py` |
+| LM tuning (E-023) | `runs/E-023/{sweep.json,gate-diffs.json,eval/}` | `uv run python runs/E-023/sweep.py --phase all`, then `runs/E-023/gate.py --lm-weight 0.5 --gamma 2.4 --lm runs/E-023/lm-prune-1-1.pkl.gz` |
 | fp32 export gap (E-021) | `runs/E-021/{RESULT.md,fp32_gap.json}`, `runs/E-021/release-0.5.1.json` | `uv run python runs/E-021/fp32_gap.py`; release: `stt/export.py --version 0.5.1` (verified), then `runs/E-010/package_browser.py` |
 
 ## 7. Open questions, in decision order

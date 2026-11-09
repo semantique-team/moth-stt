@@ -1306,3 +1306,112 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   uploading (hash, payload size, card present) and is a **dry run by default**; 7 tests, including
   a file edited after the build. The token is read from the environment only. **Not published
   yet**: needs the token and a namespace decision (HF has no `semantique-team` org today).
+
+## E-022 — decode recalibration: a per-token bonus, and an LM weight that was doing two jobs (2026-11-09)
+
+- **Date**: 2026-11-09. **Decode-only**, no training, no new data, no checkpoint change.
+- **Hypothesis**: `stt/decode.py::beam_search` adds `lm_weight * lm.score(...)` on every emitted
+  token and nothing offsets it. An LM log-probability is negative, so each extra token costs
+  score and the search is biased toward emitting **fewer** tokens than the acoustics support.
+  A per-token bonus `gamma` should cancel that bias, and only then can the LM weight be
+  re-tuned — because in one dimension the weight was controlling language modelling *and*
+  output length at once.
+- **Motivation**: an audit of the project at `ee2f34b` (seventeen decode-only probes,
+  `runs/E-022/AUDIT-PROBE.md`). The error profile was the tell: on T-600 the shipped decode
+  deletes **12.2%** of reference words against **0.8%** insertions, and drops the first word of
+  13.3% of clips but the last of 0.5%.
+- **Method**: `beam_search` gains `token_bonus` (default 0, a bit-exact no-op: 0/30 real clips
+  change output) and `web/decode.js` gains the twin. The arm was chosen **on dev only**
+  (`mls_it_dev` 200 + `ls_en_dev` 200) over a 2-D grid of (`lm_weight` × `gamma`) and frozen in
+  `runs/E-022/PLAN.md` before the code changed: **beam 12 / top-k 10 / `lm_weight` 0.5 /
+  `gamma` 2.4**. Dev WER 31.61 → 27.30. The `shipped` arm reproduces E-017 to four decimals, so
+  the harness is unchanged.
+- **Metrics** (bootstrap 1,000, `runs/E-022/eval/`, differences paired vs the shipped decode):
+
+| Set | shipped | E-022 | Δ WER [95% CI] | Δ ETA [95% CI] |
+|---|---|---|---|---|
+| **T-600** | 32.77 / 42.86 | **25.92 / 52.64** | **−6.85** [−7.94, −5.72] | +9.78 [+7.68, +12.06] |
+| **T-S3** (held-out speaker) | 35.43 / 35.21 | **26.66 / 47.32** | **−8.77** [−11.13, −6.50] | +12.11 [+8.31, +16.47] |
+| T-S1+S2 (training speakers) | 31.46 / 46.66 | **25.54 / 55.38** | −5.92 [−7.23, −4.52] | +8.72 |
+| FLEURS-IT | 26.52 | **20.46** | −6.06 [−6.63, −5.51] | — |
+| FLEURS-EN | 55.48 | **49.63** | −5.85 [−6.55, −5.18] | — |
+| CV-IT dev | 24.91 | **19.90** | −5.01 [−5.88, −4.14] | — |
+| int8, T-600 | 37.70 greedy | **25.95** / ETA 53.12 | — | — |
+| Noise, non-music words (VAD) | 0 | **0** | — | — |
+
+  Greedy is unchanged (37.70 on T-600), because `token_bonus` and `lm_weight` only exist in the
+  beam path: the change cannot have touched the fast default. Deletions fall 12.2% → 8.3% and
+  insertions rise 0.8% → 1.3%, which is the mechanism showing up in the aggregate.
+- **Against the ship bars**: **FLEURS-IT vs Whisper-tiny auto+beam 5 (27.42, the D19 bar) is
+  −6.95 [−8.02, −5.87] — WON**, the first time since E-008; the release no longer fails that
+  half of the gate. On **T-600 vs Whisper forced-`it`** both metrics win (WER −24.80, ETA +16.59
+  [+10.61, +22.74]), and **vs Whistle the WER is won for the first time** (−3.50 [−5.85, −1.24];
+  ETA +3.36, tie). On the held-out speaker **T-S3 the WER is won against Whisper (−19.51) but the
+  ETA is still a tie** (+8.73 [−1.49, +18.86]): the strict mixed gate (`docs/05` §5) is therefore
+  still not certified on a held-out speaker, although the point estimate moved from −3.4 to +8.7.
+  Still behind Whistle on FLEURS-IT (+8.61) and behind Parakeet everywhere.
+- **Self-correction, recorded**: the strongest cell (`lm_weight` 0.6 / `gamma` 3.0) does flip the
+  S3 ETA tie to a win, but it was picked after **looking at S3**, which the repository forbids. It
+  is not adopted and must not be cited; the arm above is the dev-only one. This is the third
+  self-correction of this kind (`docs/11` §4) and the pattern is consistent: the number that
+  makes the gate pass by a hair is the one to distrust.
+- **Pre-existing footgun closed, and a correction to the audit**: `runs/E-010/package_browser.py`
+  defaulted to the **unaugmented** LM, which every release since 0.3.1 had to override by hand; the
+  auditor's first parity reading (+3.27 WER browser gap) was an artifact of exactly that. With the
+  correct LM the shipped decode is **+1.29** [0.0009, 0.0259] — E-010's own number — and the
+  **E-022 decode is a tie at −0.09** [−0.012, +0.010] with **higher** transcript identity
+  (**154/200** vs 140/200): the wider beam improves parity rather than hurting it. The default now
+  points at `lm_bpe3_aug.pkl.gz`.
+- **Code**: `stt/decode.py` (`token_bonus`), `web/decode.js` (twin), `web/ort.js` (passes it),
+  `runs/E-010/package_browser.py` (`--beam/--top-k/--lm-weight/--token-bonus`, and the default LM
+  now points at the augmented one), `stt/export.py` (drops the never-read `hotword_bonus`, stops
+  contradicting the packager on beam width), `tests/test_upload_hf.py` (the release guard reads the
+  version from `release/config.json` and looks up its record under `runs/`, instead of hard-coding
+  0.5.1). **294 Python tests** (4 new decoder tests including the LM-length-bias regression), **9
+  Playwright** (2 new parity tests), `ruff` clean.
+- **Cost**: **no training**. ~2 h of machine time, **0 USD**. Release **0.6.0**: int8
+  **byte-identical** to 0.5.1 (`fe1afcc2…`), LM binary **byte-identical** (`dcf1d59f…`), package
+  **19.44 MB**, fp32 gate passed as a seeded sweep (median 2.127e-4, worst 1.472e-3). Browser
+  1-thread RTFx **24.3 / 22.9 / 20.3×** on 5/10/20 s — a ~7% cost, 2× the bar.
+- **Artifacts**: `runs/E-022/` (`PLAN.md` = the frozen prediction, `RESULT.md`, `AUDIT-PROBE.md`,
+  `eval.py`, `eval/{shipped,frozen}/`, `diffs/vs-shipped.json`, `gate-table.json`, `parity*.py`,
+  `parity-wer.json`, `browser.json`, `release-0.6.0.json`, `record_release.py`),
+  `stt/decode.py`, `web/decode.js`, `tests/test_decode.py`,
+  `web/tests/{decoder,parity}.spec.ts`.
+
+## E-023 — re-tuning the LM now that the decoder is calibrated (2026-11-09)
+
+- **Date**: 2026-11-09. **Decode-only**, no training, no checkpoint change (E-017 reused).
+- **Question**: E-022 found that `lm_weight` had been doing two jobs at once (language modelling
+  *and* length control), which is why E-008's 1-D sweep picked 0.2. With the bonus taking the
+  length job, are the LM's own parameters — weight, backoff, count pruning — still right? E-022's
+  grid was coarse (0.4/0.5/0.6) on a 400-clip dev subset.
+- **Method**: three phases, selection on **full dev** (`mls_it_dev` 1,248 + `ls_en_dev` 2,691 =
+  3,939 clips / 10.48 h, macro WER as in E-008), gate sets read **once** at the end. Beam 12 /
+  top-k 10 frozen from E-022. The corpus is unchanged (CV/MLS/LS train + R-S1/R-S2/pool, never
+  T/A); only the knobs move. Decision rule fixed in `runs/E-023/PLAN.md` before the sweep.
+- **Result — nothing adopted**:
+  - **Phase 1** (`lm_weight` × `gamma`, 20 configs): the optimum is **exactly E-022's cell**,
+    w 0.5 / γ 2.4, dev macro **22.98**; every other cell is worse, in every direction. On a
+    selection set ten times wider, the 400-clip answer reproduces.
+  - **Phase 2** (`backoff`): 0.4 stays best — 0.4 → 22.98, 0.3 → 23.01, 0.5 → 23.06,
+    0.2 → 23.09, 0.6 → 23.23.
+  - **Phase 3** (count pruning): the current (2,2) is not the dev optimum — **(1,1)**, keeping
+    every n-gram, buys **−0.65 dev points** and is significantly better on the gate sets
+    (**T-600 −0.77** [−1.40, −0.11], **FLEURS-IT −0.72** [−1.01, −0.42], **CV-IT dev −0.65**
+    [−0.75, −0.55]). Pruning harder is worse: (2,3) +0.52, (3,3) +0.56.
+- **Why (1,1) is rejected**: it does not fit. Its browser binary is **12.31 MB** against 5.12, so
+  the package would be **26.63 MB** (11.91 int8 + 12.31 LM + 2.33 VAD + 0.08 features) against the
+  hard **20 MB** ceiling (D4). The 5.12 MB LM is paying its way; the ceiling's price is now
+  measured rather than assumed.
+- **Where the ceiling's price lands matters**: on **T-S3, the held-out speaker, (1,1) is a tie and
+  marginally worse** (+0.43 [−0.61, +1.62]) while it wins on general Italian (CV-IT) and FLEURS-IT.
+  So relaxing the ceiling would buy a better *Italian* model, not a better *code-switching* model —
+  which reframes the constraint: the ceiling is not costing the project its core claim.
+- **Reading**: the two E-022 wins and this negative result together say the decode is now at a
+  local optimum that survives a 10× larger selection set. E-008's mistake was not bad luck but a
+  mis-specified sweep; E-023 is the check that E-022's correction generalises.
+- **Cost**: **no training**. ~2 h 20 CPU, **0 USD**. No release change: 0.6.0 stands.
+- **Artifacts**: `runs/E-023/` (`PLAN.md` = the decision rule, `RESULT.md`, `sweep.py`,
+  `sweep.log`, `sweep.json`, `gate.py`, `eval/{lm-1-1,shipped-0.6.0}/`, `gate-diffs.json`,
+  `lm-prune-1-1.pkl.gz` = the candidate kept for a future ceiling decision).

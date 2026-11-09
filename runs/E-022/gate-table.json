@@ -1,0 +1,168 @@
+[
+  {
+    "set": "t600",
+    "vs": "whisper-tiny-it-beam5",
+    "wer_diff": -0.248,
+    "wer_ci": [
+      -0.2805,
+      -0.218
+    ],
+    "wer_won": true,
+    "eta_diff": 0.1659,
+    "eta_ci": [
+      0.1061,
+      0.2274
+    ],
+    "eta_won": true,
+    "eta_tie": false
+  },
+  {
+    "set": "t600",
+    "vs": "whisper-tiny-auto-beam5",
+    "wer_diff": -0.4295,
+    "wer_ci": [
+      -0.4761,
+      -0.3852
+    ],
+    "wer_won": true,
+    "eta_diff": 0.1314,
+    "eta_ci": [
+      0.0774,
+      0.1938
+    ],
+    "eta_won": true,
+    "eta_tie": false
+  },
+  {
+    "set": "t600",
+    "vs": "whistle-it",
+    "wer_diff": -0.035,
+    "wer_ci": [
+      -0.0585,
+      -0.0124
+    ],
+    "wer_won": true,
+    "eta_diff": 0.0336,
+    "eta_ci": [
+      -0.0175,
+      0.084
+    ],
+    "eta_won": false,
+    "eta_tie": true
+  },
+  {
+    "set": "t600",
+    "vs": "parakeet-v3",
+    "wer_diff": 0.1494,
+    "wer_ci": [
+      0.1274,
+      0.1718
+    ],
+    "wer_won": false,
+    "eta_diff": -0.3097,
+    "eta_ci": [
+      -0.3536,
+      -0.26
+    ],
+    "eta_won": false,
+    "eta_tie": false
+  },
+  {
+    "set": "t-s3",
+    "vs": "whisper-tiny-it-beam5",
+    "wer_diff": -0.1951,
+    "wer_ci": [
+      -0.2418,
+      -0.1457
+    ],
+    "wer_won": true,
+    "eta_diff": 0.0873,
+    "eta_ci": [
+      -0.0149,
+      0.1886
+    ],
+    "eta_won": false,
+    "eta_tie": true
+  },
+  {
+    "set": "t-s3",
+    "vs": "whisper-tiny-auto-beam5",
+    "wer_diff": -0.3586,
+    "wer_ci": [
+      -0.4625,
+      -0.2745
+    ],
+    "wer_won": true,
+    "eta_diff": 0.0423,
+    "eta_ci": [
+      -0.0635,
+      0.1527
+    ],
+    "eta_won": false,
+    "eta_tie": true
+  },
+  {
+    "set": "t-s3",
+    "vs": "whistle-it",
+    "wer_diff": -0.017,
+    "wer_ci": [
+      -0.057,
+      0.0213
+    ],
+    "wer_won": false,
+    "eta_diff": -0.0479,
+    "eta_ci": [
+      -0.1347,
+      0.0385
+    ],
+    "eta_won": false,
+    "eta_tie": true
+  },
+  {
+    "set": "t-s3",
+    "vs": "parakeet-v3",
+    "wer_diff": 0.1584,
+    "wer_ci": [
+      0.1203,
+      0.1957
+    ],
+    "wer_won": false,
+    "eta_diff": -0.3662,
+    "eta_ci": [
+      -0.442,
+      -0.2865
+    ],
+    "eta_won": false,
+    "eta_tie": false
+  },
+  {
+    "set": "fleurs_it",
+    "vs": "whisper-tiny-auto-beam5",
+    "wer_diff": -0.0695,
+    "wer_ci": [
+      -0.0802,
+      -0.0587
+    ],
+    "wer_won": true
+  },
+  {
+    "set": "fleurs_it",
+    "vs": "whistle-it",
+    "wer_diff": 0.0861,
+    "wer_ci": [
+      0.0774,
+      0.0942
+    ],
+    "wer_won": false
+  },
+  {
+    "set": "fleurs_it",
+    "vs": "parakeet-v3",
+    "wer_diff": 0.1681,
+    "wer_ci": [
+      0.1594,
+      0.176
+    ],
+    "wer_won": false
+  }
+]

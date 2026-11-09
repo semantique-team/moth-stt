@@ -1,0 +1,54 @@
+full dev: 3939 clips, 10.48 h
+--- phase 1: lm_weight x gamma on full dev (20 configs)
+{"it": 0.2884153735738857, "en": 0.18811881188118812, "macro": 0.2382670927275369, "lm_weight": 0.3, "gamma": 1.6, "seconds": 234.4}
+{"it": 0.2903952285495087, "en": 0.1908411180101061, "macro": 0.2406181732798074, "lm_weight": 0.3, "gamma": 2.0, "seconds": 233.0}
+{"it": 0.2964090380379637, "en": 0.1972180268874345, "macro": 0.2468135324626991, "lm_weight": 0.3, "gamma": 2.4, "seconds": 234.8}
+{"it": 0.307174499467914, "en": 0.20555275866569708, "macro": 0.25636362906680554, "lm_weight": 0.3, "gamma": 2.8, "seconds": 240.5}
+{"it": 0.2842329299378821, "en": 0.18190971639536835, "macro": 0.2330713231666252, "lm_weight": 0.4, "gamma": 1.6, "seconds": 233.9}
+{"it": 0.2823273195238449, "en": 0.1816673192743003, "macro": 0.2319973193990726, "lm_weight": 0.4, "gamma": 2.0, "seconds": 234.4}
+{"it": 0.2847278936817878, "en": 0.18429639574126905, "macro": 0.23451214471152843, "lm_weight": 0.4, "gamma": 2.4, "seconds": 233.8}
+{"it": 0.289900264805603, "en": 0.18836120900225617, "macro": 0.23913073690392958, "lm_weight": 0.4, "gamma": 2.8, "seconds": 235.6}
+{"it": 0.2897022793080407, "en": 0.18039939587179057, "macro": 0.23505083758991563, "lm_weight": 0.5, "gamma": 1.6, "seconds": 232.8}
+{"it": 0.283713218006781, "en": 0.1789263672129925, "macro": 0.23131979260988675, "lm_weight": 0.5, "gamma": 2.0, "seconds": 234.2}
+{"it": 0.281560125720791, "en": 0.17803136245827972, "macro": 0.22979574408953535, "lm_weight": 0.5, "gamma": 2.4, "seconds": 233.4}
+{"it": 0.2833172470116564, "en": 0.180101060953553, "macro": 0.2317091539826047, "lm_weight": 0.5, "gamma": 2.8, "seconds": 238.7}
+{"it": 0.3008884599203108, "en": 0.18369972590479386, "macro": 0.24229409291255233, "lm_weight": 0.6, "gamma": 1.6, "seconds": 235.5}
+{"it": 0.2933650110129433, "en": 0.18015699875072252, "macro": 0.23676100488183294, "lm_weight": 0.6, "gamma": 2.0, "seconds": 238.3}
+{"it": 0.2864107704110674, "en": 0.17812459212022896, "macro": 0.23226768126564817, "lm_weight": 0.6, "gamma": 2.4, "seconds": 237.8}
+{"it": 0.28650976315984855, "en": 0.17799407059350003, "macro": 0.2322519168766743, "lm_weight": 0.6, "gamma": 2.8, "seconds": 238.1}
+{"it": 0.3194743485039721, "en": 0.19044955342991926, "macro": 0.2549619509669457, "lm_weight": 0.7, "gamma": 1.6, "seconds": 237.0}
+{"it": 0.30722399584230453, "en": 0.18502358710447317, "macro": 0.24612379147338886, "lm_weight": 0.7, "gamma": 2.0, "seconds": 240.3}
+{"it": 0.3000717697428663, "en": 0.18095877384348605, "macro": 0.24051527179317617, "lm_weight": 0.7, "gamma": 2.4, "seconds": 243.4}
+{"it": 0.29452817581112184, "en": 0.18051127146612966, "macro": 0.23751972363862575, "lm_weight": 0.7, "gamma": 2.8, "seconds": 240.8}
+--- phase 2: backoff at (w=0.5, g=2.4)
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-backoff-0.2.pkl.gz (3.55 MB) in 6.7 s
+  built lm-backoff-0.2.pkl.gz in 7 s
+{"it": 0.2847526418689831, "en": 0.17696854431205833, "macro": 0.2308605930905207, "backoff": 0.2, "lm_weight": 0.5, "gamma": 2.4, "lm_bytes": 3545327, "seconds": 237.1}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-backoff-0.3.pkl.gz (3.55 MB) in 6.5 s
+  built lm-backoff-0.3.pkl.gz in 7 s
+{"it": 0.28279753508055533, "en": 0.177378754824635, "macro": 0.23008814495259516, "backoff": 0.3, "lm_weight": 0.5, "gamma": 2.4, "lm_bytes": 3545325, "seconds": 236.8}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-backoff-0.4.pkl.gz (3.55 MB) in 6.5 s
+  built lm-backoff-0.4.pkl.gz in 7 s
+{"it": 0.281560125720791, "en": 0.17803136245827972, "macro": 0.22979574408953535, "backoff": 0.4, "lm_weight": 0.5, "gamma": 2.4, "lm_bytes": 3545327, "seconds": 234.9}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-backoff-0.5.pkl.gz (3.55 MB) in 6.5 s
+  built lm-backoff-0.5.pkl.gz in 7 s
+{"it": 0.2816591184695721, "en": 0.17944845331990827, "macro": 0.23055378589474018, "backoff": 0.5, "lm_weight": 0.5, "gamma": 2.4, "lm_bytes": 3545325, "seconds": 237.4}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-backoff-0.6.pkl.gz (3.55 MB) in 6.5 s
+  built lm-backoff-0.6.pkl.gz in 7 s
+{"it": 0.2828965278293365, "en": 0.18164867334191045, "macro": 0.2322726005856235, "backoff": 0.6, "lm_weight": 0.5, "gamma": 2.4, "lm_bytes": 3545325, "seconds": 233.9}
+--- phase 3: pruning at backoff=0.4
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-prune-1-1.pkl.gz (6.93 MB) in 7.3 s
+  built lm-prune-1-1.pkl.gz in 7 s
+{"it": 0.2734674685079318, "en": 0.17305289851019, "macro": 0.2232601835090609, "min_bigram": 1, "min_trigram": 1, "lm_bytes": 6930646, "seconds": 235.5}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-prune-2-2.pkl.gz (3.55 MB) in 6.7 s
+  built lm-prune-2-2.pkl.gz in 7 s
+{"it": 0.281560125720791, "en": 0.17803136245827972, "macro": 0.22979574408953535, "min_bigram": 2, "min_trigram": 2, "lm_bytes": 3545325, "seconds": 234.0}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-prune-3-3.pkl.gz (2.67 MB) in 6.4 s
+  built lm-prune-3-3.pkl.gz in 7 s
+{"it": 0.28767292795802707, "en": 0.18314034793309839, "macro": 0.2354066379455627, "min_bigram": 3, "min_trigram": 3, "lm_bytes": 2668927, "seconds": 234.8}
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-023/lm-prune-2-3.pkl.gz (2.76 MB) in 6.4 s
+  built lm-prune-2-3.pkl.gz in 7 s
+{"it": 0.286979978716559, "en": 0.1830284723387593, "macro": 0.23500422552765915, "min_bigram": 2, "min_trigram": 3, "lm_bytes": 2757682, "seconds": 235.4}
+best phase1: {"it": 0.281560125720791, "en": 0.17803136245827972, "macro": 0.22979574408953535, "lm_weight": 0.5, "gamma": 2.4, "seconds": 233.4}
+best phase2: {"it": 0.281560125720791, "en": 0.17803136245827972, "macro": 0.22979574408953535, "backoff": 0.4, "lm_weight": 0.5, "gamma": 2.4, "lm_bytes": 3545327, "seconds": 234.9}
+best phase3: {"it": 0.2734674685079318, "en": 0.17305289851019, "macro": 0.2232601835090609, "min_bigram": 1, "min_trigram": 1, "lm_bytes": 6930646, "seconds": 235.5}

@@ -1,0 +1,219 @@
+{
+  "release": "0.6.0",
+  "date": "2026-11-09",
+  "checkpoint": "runs/E-017/checkpoints/ckpt_best.pt (step 26442, unchanged)",
+  "lm": "runs/E-008/lm_bpe3_aug.pkl.gz (unchanged)",
+  "reason": "Same weights and same LM as 0.5.1. Only the decode configuration changes (E-022): token_bonus 2.4, lm_weight 0.5, beam 12, top_k 10. model.int8.onnx is byte-identical to 0.5.1, so the package size does not move; config.json drops the never-read hotword_bonus key and the packager now writes the decode settings explicitly.",
+  "build": "uv run python stt/export.py --out release --checkpoint runs/E-017/checkpoints/ckpt_best.pt --vocab release/vocab.json --head-blocks 2 --version 0.6.0",
+  "package": "uv run python runs/E-010/package_browser.py --lm runs/E-008/lm_bpe3_aug.pkl.gz --beam 12 --top-k 10 --lm-weight 0.5 --token-bonus 2.4",
+  "decode": {
+    "default": "beam",
+    "beam": 12,
+    "top_k": 10,
+    "lm": "lm_bpe3.bin",
+    "lm_weight": 0.5,
+    "token_bonus": 2.4
+  },
+  "package_bytes": 19436178,
+  "package_mb": 19.44,
+  "payload_mb": 19.44,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "fe1afcc2bb53f8ddcf5e1c9e959673f70099f76a37e38785b42c42a19dc1d482"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5116464,
+      "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    },
+    "config.json": {
+      "bytes": 1322,
+      "sha256": "5ce8d461a90632ec8a9f429945eab77dc7569b8470ecefd3c64ce09fde1efab6"
+    },
+    "NOTICE": {
+      "bytes": 3260,
+      "sha256": "6ca7672f006155be816fa3b28072add859ca020c22a2c4e47eaaf4433c341d32"
+    }
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.1
+  },
+  "verification": {
+    "fp32": {
+      "gate": "seeded sweep, D29: median <= 1e-3, worst <= 1e-2",
+      "median_abs": 0.0002127,
+      "worst_abs": 0.001472,
+      "draws_over_1e-3": "3/80",
+      "source": "stt/export.py stdout for this build"
+    },
+    "int8": {
+      "max_abs": 2.857,
+      "top1_agreement": 1.0
+    }
+  },
+  "wer": {
+    "t600": {
+      "wer": 0.2592,
+      "eta": 0.5264
+    },
+    "t-s3": {
+      "wer": 0.2666,
+      "eta": 0.4732
+    },
+    "fleurs_it_test": {
+      "wer": 0.2046
+    },
+    "source": "runs/E-022/eval/frozen/ (PyTorch) and eval/frozen/int8/ (this artifact)"
+  },
+  "browser_rtfx": [
+    {
+      "threads": 4,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 105.7325000166893,
+      "total_ms_min": 103.97500002384186,
+      "vad_ms_median": 14.967500030994415,
+      "feature_ms_median": 36.88249999284744,
+      "inference_ms_median": 37.689999997615814,
+      "decode_ms_median": 15.612499952316284,
+      "rtfx_median": 47.289149497181825,
+      "rtfx_inference": 132.66118334614723,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 223.21749997138977,
+      "total_ms_min": 219.90500009059906,
+      "vad_ms_median": 29.060000002384186,
+      "feature_ms_median": 73.31749999523163,
+      "inference_ms_median": 81.50749999284744,
+      "decode_ms_median": 39.26249998807907,
+      "rtfx_median": 44.79935489503162,
+      "rtfx_inference": 122.68809619823371,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 4,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 511.02499997615814,
+      "total_ms_min": 504.2850000858307,
+      "vad_ms_median": 55.92999994754791,
+      "feature_ms_median": 150.59750002622604,
+      "inference_ms_median": 199.87250006198883,
+      "decode_ms_median": 103.8474999666214,
+      "rtfx_median": 39.13702852293547,
+      "rtfx_inference": 100.06379063551596,
+      "num_threads": 4,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 5,
+      "runs": 10,
+      "audio_s": 5,
+      "total_ms_median": 205.58749997615814,
+      "total_ms_min": 205.13499999046326,
+      "vad_ms_median": 21.212500035762787,
+      "feature_ms_median": 36.722500026226044,
+      "inference_ms_median": 132.13499999046326,
+      "decode_ms_median": 15.375,
+      "rtfx_median": 24.320544783023514,
+      "rtfx_inference": 37.84008779173475,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 10,
+      "runs": 10,
+      "audio_s": 10,
+      "total_ms_median": 435.53250002861023,
+      "total_ms_min": 434.8700000047684,
+      "vad_ms_median": 41.37000000476837,
+      "feature_ms_median": 72.75499999523163,
+      "inference_ms_median": 284.24250000715256,
+      "decode_ms_median": 37.252499997615814,
+      "rtfx_median": 22.960399050227245,
+      "rtfx_inference": 35.181227296228975,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    },
+    {
+      "threads": 1,
+      "seconds": 20,
+      "runs": 10,
+      "audio_s": 20,
+      "total_ms_median": 985.9950000047684,
+      "total_ms_min": 985.1999999284744,
+      "vad_ms_median": 81.8474999666214,
+      "feature_ms_median": 145.52249997854233,
+      "inference_ms_median": 657.1474999785423,
+      "decode_ms_median": 101.27250003814697,
+      "rtfx_median": 20.284078519569853,
+      "rtfx_inference": 30.434567582853248,
+      "num_threads": 1,
+      "cross_origin_isolated": true,
+      "simd": true
+    }
+  ],
+  "browser_parity": {
+    "shipped": {
+      "clips": 200,
+      "identical": 140,
+      "identical_ratio": 0.7,
+      "browser_wer": 0.30782459157351677,
+      "python_wer": 0.29492691315563196,
+      "wer_diff": 0.012897678417884806,
+      "wer_ci": [
+        0.0008554319931565746,
+        0.0258843830888697
+      ],
+      "wer_tie": false,
+      "browser_eta": 0.48955223880597015,
+      "python_eta": 0.5194029850746269
+    },
+    "frozen": {
+      "clips": 200,
+      "identical": 154,
+      "identical_ratio": 0.77,
+      "browser_wer": 0.23731728288907997,
+      "python_wer": 0.23817712811693895,
+      "wer_diff": -0.0008598452278589797,
+      "wer_ci": [
+        -0.012163336229365773,
+        0.009590235396687019
+      ],
+      "wer_tie": true,
+      "browser_eta": 0.5880597014925373,
+      "python_eta": 0.6
+    }
+  }
+}

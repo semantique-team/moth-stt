@@ -1,6 +1,20 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-11-07** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **262 test verdi**, `ruff` pulito.
+> Aggiornato: **2026-11-09** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **294 test verdi**
+> + 9 Playwright, `ruff` pulito.
+>
+> **Decisione (2026-11-09, D30):** il **decoder** era mal calibrato, non il modello. `beam_search`
+> pagava il costo LM per token emesso senza contrappeso, quindi cancellava ~12% delle parole. Con
+> `token_bonus` 2.4 + `lm_weight` 0.5 (beam 12/top-k 10) il WER scende di **6–9 punti su ogni set**
+> **senza training** (T-600 32,77 → 25,92; S3 held-out 35,43 → 26,66; FLEURS-IT 26,52 → 20,46) e
+> **FLEURS-IT batte finalmente Whisper** — la barra che bloccava il progetto da E-008. Release
+> **0.6.0**, pesi invariati, int8 e LM byte-identici a 0.5.1, pacchetto 19,44 MB.
+> Browser↔Python verificato in parità (tie, 77% trascrizioni identiche). Vedi `runs/E-022/`.
+>
+> **Nota (2026-11-09):** la parità browser↔Python è **verificata, non aperta** — al decode E-022 è
+> un **tie** (−0,09 [−0,012, +0,010], 154/200 trascrizioni identiche, il 77% contro il 70% del
+> decode 0.5.1). Il "+3,27 WER" del primo passaggio era un artefatto del packaging: il packager
+> puntava all'LM **non aumentato** per default; ora punta a `lm_bpe3_aug`.
 >
 > **Decisione (2026-10-22):** per ora si resta sul **modello piccolo** (8 → 11,6 M, ≤ ~12 MB int8) e lo si
 > ottimizza al massimo (P0 velocità, +2 blocchi, beam/LM, InterCTC/CR-CTC). Un modello grande (Whisper-base
@@ -26,6 +40,9 @@
 
 | Area | Cosa | Dove |
 |---|---|---|
+| **E-022** | **Ricalibrazione del decoder (2026-11-09, D30)**: `token_bonus` (γ=2,4) + `lm_weight` 0,5 + beam 12/top-k 10. T-600 **−6,85** [−7,94, −5,72], **S3 held-out −8,77** [−11,13, −6,50], FLEURS-IT −6,06, FLEURS-EN −5,85, CV-IT dev −5,01 — tutti i CI escludono 0. Greedy invariato, `token_bonus=0` no-op bit-esatto, int8 byte-identico, **nessun training**. Release **0.6.0** (19,44 MB), browser 1T 20,3× a 20 s, parità browser↔Python tie. **FLEURS-IT vs Whisper auto+beam5: −6,95 [−8,02, −5,87], vinto** | `stt/decode.py`, `web/decode.js`, `runs/E-022/` |
+| **E-023** | **Re-tune LM — FATTO (2026-11-09), niente adottato (D31)**: su dev completo (3.939 clip, 10× il set di E-022) l'ottimo è **esattamente** la cella di E-022 (w 0,5 / γ 2,4, macro **22,98**); backoff 0,4 resta il migliore. L'LM **non potato** (pruning ≥1) vale **−0,65 punti dev** e vince i gate (T-600 −0,77, FLEURS-IT −0,72, CV-IT −0,65) **ma pesa 12,31 MB** → pacchetto **26,63 MB** contro il tetto di 20, ed è un **tie sullo speaker held-out** (+0,43). Quindi: il tetto costa WER italiano, **non** il claim code-switching | `runs/E-023/` |
+| **Browser↔Python** | **Parità verificata (tie)**: al decode E-022, 200 clip S1 su int8 → browser 23,73 vs Python 23,82, **−0,09 [−0,012, +0,010]**, **154/200 identiche (77%)** contro 140/200 (70%) del decode 0.5.1 (+1,29 [0,0009, 0,0259], il numero di E-010). Il beam più largo **migliora** la parità. Il primo "+3,27" era un artefatto del packaging (LM non aumentato per default) | `runs/E-022/parity-wer.json` |
 | M0 | normalize, scorer (WER/ETA/bootstrap), manifest schema, E-000 | `stt/text.py`, `stt/eval.py`, `stt/manifest.py`, `EXPERIMENTS.md` |
 | M1 (1.1–1.3) | script generator (quote/dedupe/review), recorder guidato + manifest builder + consenso, runner baseline (Whisper/Whistle/Parakeet) | `recordings/`, `baselines/` |
 | Dati (2.1–2.4, 2.6) | registry+download+reader, filtri, BPE tokenizer (codice), log-mel con parità Whisper (+ asset 64 KB), dataset+augmentation | `stt/data/`, `stt/features.py`, `stt/tokenizer.py`, `stt/assets/`, `data/en_terms.txt` (580 termini) |
@@ -350,7 +367,7 @@ La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per i
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-017 è il modello migliore**: T-600 **32,77 WER / 42,86 ETA** (E-016 38,50/36,05; E-014 53,50/20,33), FLEURS-IT **26,52**, FLEURS-EN 55,48, CV 30,36, noise 0 parole. **Su S3, che non ha mai contribuito audio, E-017 vs E-016: WER −6,13 [−8,68, −3,51], ETA +4,79 [+0,51, +9,06]** — lo stesso guadagno degli speaker in training (S1 −4,47, S2 −6,60): il gold **non** è adattamento allo speaker (D27). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): **WER −11,07 [−16,28, −5,89] VINTO**, **ETA −2,82 [−11,65, +6,56] tie** → gate misto non passato, ma il WER è vinto per la prima volta su uno speaker held-out; contro Whisper auto vince entrambi; Whistle resta avanti (28,36/52,11). **FLEURS-IT**: 26,52 vs Whisper-tiny auto+beam5 27,42 → −0,89 [−2,08, +0,19] **tie** (era −0,66). **Respinti: A (200h EN), B (V=4096), H3b splicing**. Prossimo: **E-018** (più gold: S4 e più frasi) perché il secondo speaker ha valso ~6 punti, oppure E-015 distillazione (bloccata sulla fonte audio), oppure re-scope | decisione |
+| H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-022 è il sistema migliore**: stesso checkpoint E-017, decoder ricalibrato — T-600 **25,92 WER / 52,64 ETA**, **S3 held-out 26,66 / 47,32**, FLEURS-IT **20,46**, FLEURS-EN 49,63, CV-IT dev 19,90, noise 0 parole. **FLEURS-IT vs Whisper-tiny auto+beam5 (27,42): −6,95 [−8,02, −5,87] → VINTO**, finalmente (era +1,60 e il gate falliva da E-008). Su T-600 vs Whisper it+beam5 vince **entrambe** (WER −24,80, ETA +16,59); vs **Whistle il WER è vinto la prima volta** (−3,50 [−5,85, −1,24], ETA tie). Su **S3** vs Whisper it+beam5: **WER −19,51 VINTO**, **ETA +8,73 [−1,49, +18,86] tie** → il gate misto stretto (`docs/05` §5) resta **non certificato** su speaker held-out, ma la stima puntuale è passata da −3,4 a +8,7. Whistle avanti su FLEURS-IT (+8,61). **Respinti: A (200h EN), B (V=4096), H3b splicing**. **Parità browser↔Python verificata: tie** (−0,09 [−0,012, +0,010], 154/200 identiche, contro 140/200 a 0.5.1). **Prossimo: re-tune dell'LM col bonus in place** (20 min, CPU), poi E-018 (gold S4, attesa rivista a ~4–6 punti/speaker) o re-scope | E-022 chiuso, adottato |
 | M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). **Review fatta** (2026-11-07). Resta **S4**: registra T (200), A (60) e R-S4, poi **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 | **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |

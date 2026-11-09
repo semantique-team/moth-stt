@@ -1,0 +1,32 @@
+{
+  "shipped": {
+    "clips": 200,
+    "identical": 140,
+    "identical_ratio": 0.7,
+    "browser_wer": 0.30782459157351677,
+    "python_wer": 0.29492691315563196,
+    "wer_diff": 0.012897678417884806,
+    "wer_ci": [
+      0.0008554319931565746,
+      0.0258843830888697
+    ],
+    "wer_tie": false,
+    "browser_eta": 0.48955223880597015,
+    "python_eta": 0.5194029850746269
+  },
+  "frozen": {
+    "clips": 200,
+    "identical": 154,
+    "identical_ratio": 0.77,
+    "browser_wer": 0.23731728288907997,
+    "python_wer": 0.23817712811693895,
+    "wer_diff": -0.0008598452278589797,
+    "wer_ci": [
+      -0.012163336229365773,
+      0.009590235396687019
+    ],
+    "wer_tie": true,
+    "browser_eta": 0.5880597014925373,
+    "python_eta": 0.6
+  }
+}
