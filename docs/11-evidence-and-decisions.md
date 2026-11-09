@@ -219,6 +219,56 @@ overrode the default by hand. With the correct LM, on 200 clips: shipped decode 
 improves parity rather than hurting it. `docs/11` §3.5 carries the corrected numbers; §4 records
 the auditor's error next to the project's own.
 
+### 3.6 The model was deaf to noise, and nobody had measured it
+
+E-024 (2026-11-09) started from a complaint, not a hypothesis: the demo produced poor transcripts
+when tested with a real microphone. Two candidate causes were tested against existing artifacts,
+and the first one was **wrong**:
+
+- **clip duration** — falsified. On FLEURS-IT the WER by duration quartile is 17.8 / 19.9 / 23.1 /
+  20.0: not monotonic, and the longest quartile is better than the third. MLS and LibriSpeech have
+  14–15 s medians, so the model had seen long clips all along.
+- **several sentences in one pass** — confirmed, and fixed by splitting at pauses (9.4 WER points,
+  80% recovered by the VAD that already shipped).
+- **noise** — confirmed, and it was the big one. Measured on 100 held-out-speaker clips with MUSAN
+  mixed at a controlled SNR: **26.99 at 30 dB, 32.09 at 20 dB, 38.37 at 15 dB, 48.05 at 10 dB,
+  58.23 at 5 dB**, against 22.24 clean. Every condition significant. Deletions went from 5.6% of
+  reference words to **24.6%**: the model did not mis-hear words under noise, it **dropped** them,
+  which is the signature of a training set with no noise in it. At 15 dB — an ordinary noisy office
+  — it scored worse than Whisper-tiny does on clean audio.
+
+Half of Common Voice IT was then re-rendered through noise at 10–30 dB, with the mixture held at
+exactly the same 589.5 h so that "noise" could not be confused with "more CV". Result, shipped as
+0.7.0:
+
+| SNR | before | after | Δ |
+|---|---|---|---|
+| clean | 22.24 | 23.94 | +1.70 (tie) |
+| 30 dB | 25.98 | 23.26 | −2.72 (tie) |
+| 20 dB | 27.50 | 26.83 | −0.68 (tie) |
+| **15 dB** | 33.62 | **27.33** | **−6.28** |
+| **10 dB** | 44.82 | **33.28** | **−11.54** |
+| **5 dB** | 50.93 | **41.26** | **−9.68** |
+
+Three lessons.
+
+1. **The measurement existed to be made and had not been.** The project had known since
+   `docs/10` §4.2.6 that noise augmentation was its biggest robustness gap; what nobody had done was
+   put a number on the gap, so it never competed for budget against levers that looked more
+   interesting. One afternoon of measurement turned "we should probably do noise one day" into a
+   16-point hole at 15 dB, which then outranked everything else on the list.
+2. **The prediction was right on the mean and wrong on the shape.** `PLAN.md` predicted −3 to −6 at
+   20 dB and −4 to −10 at 10 dB; measured −0.68 and −11.54. The gain is concentrated where the noise
+   is worst. A model at 20 dB was already holding on; what it could not do was survive 10 dB. That
+   is recorded as a wrong prediction, not reframed after the fact.
+3. **A plausible hypothesis was falsified in ten minutes.** Clip duration felt like the obvious
+   explanation for the bad transcript and cost one query on existing artifacts to kill. The
+   expensive mistake is not testing the cheap one first.
+
+The honest limit, stated in the card: the noise used for training and the noise used for this curve
+come from the same 217 clips, so the gain is an **upper bound** for an unfamiliar room, and the
+per-source control (train on 80% of the noise, evaluate on the other 20%) has not been run.
+
 ## 4. Self-corrections
 
 Recorded because a paper about failures should include the failures of the authors, not only of the

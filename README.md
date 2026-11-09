@@ -23,16 +23,20 @@ acronyms, Italianised verbs (*deployato*, *pushare*, *loggare*).
 
 | Set | n | WER | ETA |
 |---|---|---|---|
-| Mixed test T, all speakers | 600 | **25.92** | **52.64** |
-| T, speaker S3 — **never seen in training** | 200 | **26.66** | **47.32** |
-| FLEURS-IT test | 697 | **20.46** | — |
-| FLEURS-EN test | 525 | **49.63** | — |
-| Common Voice IT test | 14 643 | **24.88** | — |
+| Mixed test T, all speakers | 600 | **25.20** | **54.17** |
+| T, speaker S3 — **never seen in training** | 200 | **26.92** | **48.45** |
+| FLEURS-IT test | 697 | **20.14** | — |
+| FLEURS-EN test | 525 | **49.14** | — |
+| Common Voice IT test | 14 643 | **24.37** | — |
 
-Against Whisper-tiny on the same 600 clips (forced `it`, beam 5): WER **−24.80** [−28.05, −21.80]
-and ETA **+16.59** [+10.61, +22.74], both won. On FLEURS-IT it beats Whisper-tiny's best H0
-variant by **6.95 points** [−8.02, −5.87]. It now also beats Whistle on the mixed set's WER
-(−3.50 [−5.85, −1.24]), though Whistle stays ahead on monolingual Italian read speech.
+Against Whisper-tiny on the same 600 clips (forced `it`, beam 5): WER **−25.52** and ETA **+18.12**,
+both won. On FLEURS-IT it beats Whisper-tiny's best H0 variant by **7.28 points**. It also beats
+Whistle on the mixed set's WER (−4.22), though Whistle stays ahead on monolingual Italian read
+speech.
+
+**Noise (0.7.0):** on a controlled SNR curve it gains **6.3 WER points at 15 dB** and **11.5 at
+10 dB** over the previous checkpoint, with clean performance a tie. Before that, at 15 dB it scored
+worse than Whisper-tiny does on clean audio.
 
 **Speed:** 47× real time on 4 threads, 24× on 1 thread, with the VAD in the loop (Apple M5, WASM
 SIMD).
@@ -44,7 +48,7 @@ is three people, and a fourth was recruited and never recorded. **Noise hurts a 
 +9.9 WER at 20 dB SNR against clean, so use it somewhere quiet. English terms remain the weak spot
 (~27% WER on a sentence containing one, ~14% without).
 
-The full list, with numbers, is in the [model card](runs/E-022/MODEL_CARD.md#limitations-stated-plainly).
+The full list, with numbers, is in the [model card](runs/E-024/MODEL_CARD.md#limitations-stated-plainly).
 
 ## Using it
 
@@ -88,11 +92,11 @@ uv run pytest -q                      # 300 tests
 uv run ruff check .                   # line length 100
 
 # evaluate a checkpoint on the ship-gate sets
-uv run python runs/E-022/eval.py --arm frozen --int8
+uv run python runs/E-022/eval.py --arm frozen --int8     --checkpoint runs/E-024/checkpoints/ckpt_best.pt
 
 # rebuild the release (verifies the export gates) and the browser package
 uv run python -m stt.export --checkpoint runs/E-017/checkpoints/ckpt_best.pt --head-blocks 2 \
-    --tokenizer data/tokenizer/moth_bpe.model --version 0.6.0
+    --tokenizer data/tokenizer/moth_bpe.model --version 0.7.0
 uv run python runs/E-010/package_browser.py --beam 12 --top-k 10 --lm-weight 0.5 --token-bonus 2.4
 ```
 

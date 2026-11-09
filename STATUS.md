@@ -12,9 +12,9 @@
 > modello e demo sono alla 0.7.0.
 >
 > **PUBBLICATO (2026-11-09):** il modello è **online** — <https://huggingface.co/semantique-team/moth-stt>
-> (pubblico, artefatti ri-scaricati e verificati sha256 contro `runs/E-022/release-0.6.0.json`) e la
+> (pubblico, artefatti ri-scaricati e verificati sha256 contro `runs/E-024/release-0.7.0.json`) e la
 > **demo gira nel browser** — <https://semantique-team-moth-demo.static.hf.space> (Space statico:
-> l'audio non lascia il tab; 16× realtime a 1 thread perché gli Space statici non hanno COOP/COEP,
+> l'audio non lascia il tab; 19× realtime a 1 thread perché gli Space statici non hanno COOP/COEP,
 > quindi niente SharedArrayBuffer). Ripubblicabili con `runs/E-021/upload_hf.py` e
 > `runs/E-022/publish_space.py`.
 >
@@ -158,11 +158,12 @@
   la modifica di codice necessaria (l'invariante `kind R` rifiuta S3/S4 in `generate_scripts.py`),
   e i rischi (terzo canale, rendimenti decrescenti, E-019 che rende il claim architecture-bound).
 - **E-021 (gate fp32)** — chiuso, vedi sopra.
-- **M8 — model card + publisher HF — PRONTI per 0.6.0, non pubblicati (aggiornato 2026-11-09)**:
-  `runs/E-022/MODEL_CARD.md` è la card della **0.6.0** (rigenerata: numeri presi dagli artefatti e
-  verificati uno per uno, tabella contro Whisper/Whistle/Parakeet, costo int8 rimisurato al nuovo
-  decode, sezione sul perché il decoder conta, **10** limiti dichiarati). La card 0.5.1 resta in
-  `runs/E-021/MODEL_CARD.md` con un rimando in testa. `runs/E-021/upload_hf.py` verifica `release/`
+- **M8 — model card + publisher HF — PUBBLICATI (2026-11-09, aggiornato alla 0.7.0)**:
+  `runs/E-024/MODEL_CARD.md` è la card della **0.7.0** (numeri presi dagli artefatti e verificati uno
+  per uno, sezione sulla curva del rumore col suo caveat, costo int8 rimisurato, **11** limiti
+  dichiarati), con il logo. Le card 0.5.1 e 0.6.0 restano in `runs/E-021/` e `runs/E-022/`. Modello e
+  Space sono **online** con gli sha verificati dopo il caricamento.
+  `runs/E-021/upload_hf.py` verifica `release/` `runs/E-021/upload_hf.py` verifica `release/`
   contro gli sha registrati **e che la card dichiari la stessa versione della release** (guard
   aggiunto il 2026-11-09: senza, si poteva pubblicare una card vecchia con artefatti nuovi), è
   **dry run di default**, 8 test. **Serve da te**: (1) il **token HF** con write, passato via
@@ -392,7 +393,7 @@ La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per i
 | Task | Cosa | Blocco |
 |---|---|---|
 | 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **Noise: risolto (VAD, 0 parole)** — **0/337 clip non-music** (240 MUSAN/silenzio + **97 room tone, tutti gated**) con entrambi i decoder (addendum E-011). **E-022 è il sistema migliore**: stesso checkpoint E-017, decoder ricalibrato — T-600 **25,92 WER / 52,64 ETA**, **S3 held-out 26,66 / 47,32**, FLEURS-IT **20,46**, FLEURS-EN 49,63, CV-IT dev 19,90, noise 0 parole. **FLEURS-IT vs Whisper-tiny auto+beam5 (27,42): −6,95 [−8,02, −5,87] → VINTO**, finalmente (era +1,60 e il gate falliva da E-008). Su T-600 vs Whisper it+beam5 vince **entrambe** (WER −24,80, ETA +16,59); vs **Whistle il WER è vinto la prima volta** (−3,50 [−5,85, −1,24], ETA tie). Su **S3** vs Whisper it+beam5: **WER −19,51 VINTO**, **ETA +8,73 [−1,49, +18,86] tie** → il gate misto stretto (`docs/05` §5) resta **non certificato** su speaker held-out, ma la stima puntuale è passata da −3,4 a +8,7. Whistle avanti su FLEURS-IT (+8,61). **Respinti: A (200h EN), B (V=4096), H3b splicing**. **Parità browser↔Python verificata: tie** (−0,09 [−0,012, +0,010], 154/200 identiche, contro 140/200 a 0.5.1). **Prossimo: re-tune dell'LM col bonus in place** (20 min, CPU), poi E-018 (gold S4, attesa rivista a ~4–6 punti/speaker) o re-scope | E-022 chiuso, adottato |
+| H2 gate | **Noise: risolto due volte** — il VAD toglie le parole su non-parlato (**0/337 clip**, 240 MUSAN/silenzio + 97 room tone, entrambi i decoder), e **E-024** rende il modello robusto al rumore sul parlato: curva SNR appaiata **15 dB −6,28** [−10,58, −2,38], **10 dB −11,54** [−16,18, −7,43], **5 dB −9,68**; 30 e 20 dB tie. **0.7.0 è il sistema migliore**: T-600 **25,20 / 54,17**, S3 held-out **26,92 / 48,45**, FLEURS-IT **20,14**, FLEURS-EN 49,14, CV-IT test 24,37 (**−0,52 significativo** vs 0.6.0). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): WER vinto, **ETA +8,73 [−1,08, +20,00] tie** → il gate misto stretto (`docs/05` §5) resta **non certificato** su speaker held-out, ma il WER è vinto e la stima puntuale dell'ETA è passata da −3,4 a +8,7. **Whistle** resta avanti su FLEURS-IT (+8,29) e in tie su S3; Parakeet resta il ceiling. **Respinti: A (200h EN), B (V=4096), H3b splicing**, e il re-tune dell'LM (E-023, non ci sta nel tetto). Prossimo: controllo hold-out del rumore (30 min), poi re-scope o E-018 se mai arriva S4 |
 | M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). **Review fatta** (2026-11-07). Resta **S4**: registra T (200), A (60) e R-S4, poi **E-018** con tre speaker | registrazioni T-S4 |
 | M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
 | **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
