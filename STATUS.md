@@ -379,28 +379,34 @@
 
 ## Da fare (prossimi task)
 
-**Piano operativo attuale:** [`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md)
-— riallineato il **2026-11-07**: fasi 1 e 3 chiuse (E-016, E-017), cross-cutting chiuso
-(release 0.5.1, room tone, VAD); restano solo le voci che dipendono da te o da S4 (review,
-decisione E-015, re-scope, E-018). Il piano E-018 è
-[`2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md).
+**Aggiornato 2026-11-09 dopo E-024.** Il piano operativo
+[`docs/plans/2026-10-24-post-E014-plan.md`](docs/plans/2026-10-24-post-E014-plan.md) **non è più
+allineato**: descrive la distillazione come fase 2 e il re-scope come fase 4, mentre la realtà è
+che il rumore ha preso la scena e **S4 non esiste**. Va riallineato o sostituito prima del prossimo
+esperimento — è l'unico documento di piano ancora stantio.
 
-**In attesa di S4 (2026-11-07):** **E-019 chiuso** (kill a L1, `docs/11` §3.4), **E-020/E-021 fatti**
-(misure), **piano E-018 scritto**. L'attesa di S4 resta aperta e ora ha un piano:
-[`docs/plans/2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md).
-La sonda Whistle LoRA **non si riprende**: H2 respinta, H3/H4 non eseguiti per il criterio di kill.
+### Aperto, in ordine di valore
 
-| Task | Cosa | Blocco |
+| Cosa | Perché | Costo |
 |---|---|---|
-| 1.4 | E-001: Whisper tiny greedy/beam5 (FLEURS, T), Whistle e Parakeet (FLEURS, T; CV-IT Whistle in corso), base greedy già fatto; CV-IT Whisper non fatto (informativo) | — |
-| H2 gate | **Noise: risolto due volte** — il VAD toglie le parole su non-parlato (**0/337 clip**, 240 MUSAN/silenzio + 97 room tone, entrambi i decoder), e **E-024** rende il modello robusto al rumore sul parlato: curva SNR appaiata **15 dB −6,28** [−10,58, −2,38], **10 dB −11,54** [−16,18, −7,43], **5 dB −9,68**; 30 e 20 dB tie. **0.7.0 è il sistema migliore**: T-600 **25,20 / 54,17**, S3 held-out **26,92 / 48,45**, FLEURS-IT **20,14**, FLEURS-EN 49,14, CV-IT test 24,37 (**−0,52 significativo** vs 0.6.0). **Gate misto su S3 vs Whisper it+beam5** (46,51/38,03): WER vinto, **ETA +8,73 [−1,08, +20,00] tie** → il gate misto stretto (`docs/05` §5) resta **non certificato** su speaker held-out, ma il WER è vinto e la stima puntuale dell'ETA è passata da −3,4 a +8,7. **Whistle** resta avanti su FLEURS-IT (+8,29) e in tie su S3; Parakeet resta il ceiling. **Respinti: A (200h EN), B (V=4096), H3b splicing**, e il re-tune dell'LM (E-023, non ci sta nel tetto). Prossimo: controllo hold-out del rumore (30 min), poi re-scope o E-018 se mai arriva S4 |
-| M6 | H3a **fatto**: R-S1 641/641, R-S2 622/623, **E-017 eseguito** (gold S1+S2 → eval S3). **Review fatta** (2026-11-07). Resta **S4**: registra T (200), A (60) e R-S4, poi **E-018** con tre speaker | registrazioni T-S4 |
-| M7–M8 | demo e release; benchmark browser con **pesi veri** | dopo H3 |
-| **E-019** | **Sonda Whistle LoRA (D28) — FATTA e CHIUSA 2026-11-07, kill a L1**: su S3 +2,30 WER (tie), FLEURS/CV significativamente peggiori; H2 respinta, H3/H4 non eseguiti. `runs/E-019/RESULT.md`, `docs/11` §3.4 | — (nessun seguito) |
-| **E-020** | **Costo WER dell'int8 — FATTO 2026-11-07**: T-600 +0,43 (greedy) / +0,17 (beam+LM), entrambi tie; FLEURS-IT +0,32 significativo. `stt/onnx_runner.py`, `runs/E-020/RESULT.md` | — (misura chiusa) |
-| **E-021** | **Gate fp32 — FATTO 2026-11-07**: 1,05e-3 è la coda di una singola estrazione (1/80 sopra, solo 29 s), non un bug; reale ≤ 3,1e-4. **Gate sostituito da uno sweep seedato (D29)** e release **0.5.1 ricostruita verificata**: mediana 2,13e-4, peggiore 1,47e-3, int8 byte-identico. `runs/E-021/RESULT.md` | — (chiuso) |
-| **M8** | **Card 0.6.0 + publisher HF pronti, non pubblicati**: `runs/E-022/MODEL_CARD.md` (rigenerata 2026-11-09, numeri verificati), `runs/E-021/upload_hf.py` (verifica gli sha **e la versione della card**, dry run di default, 8 test) | **token HF + namespace** |
-| **E-018** | **Piano scritto 2026-11-07**: [`2026-11-07-e018-scale-the-gold.md`](docs/plans/2026-11-07-e018-scale-the-gold.md). Bracci G3/G3+/G3×, criteri di successo e plateau, unica modifica di codice (invariante `kind R`) | review T-S4 + R-S4 |
+| **Controllo hold-out del rumore** | l'unico buco nel claim di E-024: training e valutazione usano lo **stesso pool** di 217 clip, quindi il guadagno è un tetto superiore. Si risolve con split per sorgente (80/20) sul rumore e ri-valutando | ~30 min, nessun training |
+| **Re-scope (fase 4)** | decidere il gate misto con i numeri di 0.7.0: WER vinto su S3, ETA tie. `docs/11` §7.3 | ~2 h di scrittura, decisione tua |
+| **E-018 (gold)** | **bloccato e probabilmente morto**: senza S4 la domanda "il terzo speaker paga?" è irrispondibile per costruzione. Il rendimento marginale del secondo speaker era già sceso da −5,73 a −4,07 | serve S4 |
+| **E-015 (distillazione)** | bloccata sulla provenienza dell'audio (gold, CC0/BY, o TTS), non sul compute. Ora **meno urgente**: E-024 ha reso più di quanto il pilota puntasse | decisione tua |
+| **InterCTC (E-024-bis?)** | sonda già fatta: **+4,4% di tempo per step** (misurato con controllo di sensibilità). Attesa 0,2–0,7 punti. **Rimandato**, non rifiutato | ~3 h 30 + 2 h tue |
+| **Rumore su MLS/LS** | E-024 ha augmentato **solo CV-IT**: MLS e LibriSpeech richiedono un riscarico (~22 GB) | 22 GB + 3 h 30 |
+| **LM 4-gram** | con il tetto dei 20 MB saturo, l'unica strada per un LM migliore è un formato nuovo (`web/lm.js`) | ~1 giorno |
+| **Word timestamps** | Whistle li ha (dall'attenzione del decoder); noi possiamo averli **gratis** con un Viterbi forzato sulla matrice CTC | ~mezza giornata |
+| **Frame rate 25 Hz** | Whistle gira a 12,5 Hz, noi a 50 Hz con 10,6 frame per token: lavoro sprecato. `docs/10` lo proponeva già | training run |
+| **`en_terms.txt` 580 → 1–2k** | target del design, mai chiuso | ~1 h + rebuild LM |
+
+### Fatto di recente, per contesto
+
+- **0.7.0 pubblicato** (modello + demo), artefatti verificati sha256 dopo il caricamento
+- **E-022** decoder ricalibrato (−6,9 WER, zero training), **E-023** re-tune LM (niente da adottare),
+  **E-024** noise augmentation (−6 a −11 con rumore, pulito tie)
+- **Segmentazione** delle registrazioni multi-frase (il VAD recupera l'80% del divario)
+- **Guida alla pubblicazione HF** per colleghi: [`docs/guides/publishing-to-huggingface.md`](docs/guides/publishing-to-huggingface.md)
 
 ## Backlog ottimizzazioni (`docs/10`, living review)
 
