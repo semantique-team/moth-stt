@@ -11,6 +11,11 @@
 > Pesi nuovi (`7a075da4…`), architettura e LM invariati, pacchetto 19,44 MB. Pubblicato su HF:
 > modello e demo sono alla 0.7.0.
 >
+> **Decisione (2026-11-09, D34):** l'**ETA resta un gate**: il caso d'uso richiede i termini inglesi
+> rari usati in italiano. E-015 riparte come **gold addendum** (100 frasi, 44 termini mai visti),
+> non Parakeet. Misura su 0.7.0: **17,0%** sui 44 termini mai visti, **74,1%** sui 18 già coperti;
+> il tetto diretto è **+3,7 ETA**, non +5. Le 100 frasi sono importate e aspettano la registrazione.
+>
 > **PUBBLICATO (2026-11-09):** il modello è **online** — <https://huggingface.co/semantique-team/moth-stt>
 > (pubblico, artefatti ri-scaricati e verificati sha256 contro `runs/E-024/release-0.7.0.json`) e la
 > **demo gira nel browser** — <https://semantique-team-moth-demo.static.hf.space> (Space statico:
@@ -383,30 +388,28 @@
 
 ## Da fare (prossimi task)
 
-**Aggiornato 2026-11-09 dopo E-025.** Due cose da fare subito, prima del prossimo esperimento:
-il **re-scope** (decide il gate) e il **riallineamento del piano** — `docs/plans/2026-10-24-post-E014-plan.md`
-descrive ancora la distillazione come fase 2 e il re-scope come fase 4. La lista delle domande
-aperte (`docs/11` §7) è già stata riallineata.
+**Aggiornato 2026-11-09 dopo D34.** L'**ETA resta un gate** (il caso d'uso richiede i termini rari),
+quindi la priorità è **E-015**: le 100 frasi sono importate, manca la registrazione. Poi il memo che
+chiude il re-scope e riallinea il piano operativo, che resta l'unico documento stantio.
 
 ### Prossimi passi, in ordine di valore
 
 | # | Cosa | Cosa vuol dire | Tempo | Training | Guadagno atteso | Stato |
 |---|---|---|---|---|---|---|
-| 1 | **Re-scope (fase 4)** | Decidere il gate misto con i numeri di 0.7.0: su S3 il WER è **vinto**, l'ETA è **tie**. Si accetta il WER come gate e l'ETA diventa secondario, o si continua a inseguirlo | ~2 h di scrittura, **decisione tua** | No | **0 WER**; sblocca la domanda "il gate è passato?" | **da fare ora** |
-| 2 | **Riallineare il piano operativo** | `2026-10-24-post-E014` descrive la distillazione come fase 2 e il re-scope come fase 4: è l'unico documento di piano ancora stantio | ~45 min | No | 0; evita di ripartire da premesse false | **da fare ora** |
+| 1 | **E-015 gold addendum (attivo)** | 100 frasi con i **44 termini mai visti** (50 S1 + 50 S2), gold, non Parakeet. Baseline 0.7.0: **17,0%** sui 44, **74,1%** sui 18 già coperti | 15–20 min registrazione + ~2 h fine-tune + 15 min eval | **Sì** | **ETA +2,8–3,7** (tetto diretto misurato; +5 non raggiungibile coi soli 47 termini) | **frasi pronte**: registrare S1 (`--start 642`) e S2 (`--start 624`) |
+| 2 | **Chiudere re-scope (D34) + piano** | Documentare "ETA resta un gate" e riallineare `2026-10-24-post-E014` (distillazione fase 2, re-scope fase 4) | ~45 min | No | 0; evita di ripartire da premesse false | dopo la registrazione |
 | 3 | **InterCTC** | CTC ausiliario su un blocco intermedio: regolarizza l'allenamento e **non aggiunge nulla al modello esportato**. Sonda: **+4,4% di tempo per step** | ~4 h training + ~1 h codice/eval | **Sì** | **+0,2–0,7 WER** (stima da letteratura; con 4 blocchi è probabile il lato basso) | pronto, nessun blocco |
-| 4 | **Distillazione E-015** | Parakeet etichetta audio con i termini rari, poi fine-tune di Moth. Segnale misurato: Parakeet **78%** vs Moth **5%** sui termini rari | 3,3 h labeling + 3,5 h fine-tune | **Sì** | **ETA +5** (criterio di successo), WER non peggiore | **bloccata**: provenienza audio (gold / CC0-BY / TTS), decisione tua |
-| 5 | **Rumore su MLS/LS** | E-024 ha augmentato solo CV-IT (84 h); MLS+LS sono altre 270 h di parlato letto ancora pulite | 22 GB + ~4 h | **Sì** | **+1–2 a 10–15 dB, ~0 sul pulito** (stima non misurata) | **bloccata dal disco**: 19 GB liberi |
-| 6 | **LM 4-gram** | Sostituire il trigramma. Il tetto di 20 MB ha **0,56 MB** di margine, quindi serve un formato compresso nuovo (`web/lm.js`) | ~1 giorno | No | **+0,5–1,0 WER** *se* entra nel tetto (stima); rischio alto | dopo il re-scope |
-| 7 | **Word timestamps** | Viterbi forzato sulla matrice CTC: tempi di parola gratis dal modello attuale | ~mezza giornata | No | **0 WER**; è una feature (sottotitoli, evidenziazione) | solo se serve UX |
-| 8 | **Frame rate 25 Hz** | Pooling dei frame dopo l'encoder: metà frame, più profondità a parità di compute (`docs/10`: "25 Hz + 2 blocchi") | ~4 h + modifiche runtime | **Sì** | **20–30% più veloce**, WER ±0,5–1,5 (stima) | cambio architetturale, non ora |
-| 9 | **`en_terms.txt` 580 → 1–2k** | Espandere la lista di termini del LM | ~1 h + rebuild LM | No | **+1–2 ETA** sui termini plausibili; **0 sui 47 mai sentiti** (diagnosi E-015) | basso valore senza audio nuovo |
-| 10 | **Secondo seed di E-024** | Rifare il fine-tune del rumore con un seed diverso | ~3,5 h | **Sì** | **0 guadagno**; dice se il **−0,52 CV-IT** sul pulito è reale o rumore di run | rigore, non prodotto |
-| 11 | **E-018 (gold)** | Terzo speaker per la domanda "il gold scala?" | registrazioni + review | **Sì** | ~2–3 WER da un terzo speaker (stima), ma il rendimento marginale cala (−5,73 → −4,07) | **morto senza S4** |
+| 4 | **Rumore su MLS/LS** | E-024 ha augmentato solo CV-IT (84 h); MLS+LS sono altre 270 h di parlato letto ancora pulite | 22 GB + ~4 h | **Sì** | **+1–2 a 10–15 dB, ~0 sul pulito** (stima non misurata) | **bloccata dal disco**: 19 GB liberi |
+| 5 | **LM 4-gram** | Sostituire il trigramma. Il tetto di 20 MB ha **0,56 MB** di margine, quindi serve un formato compresso nuovo (`web/lm.js`) | ~1 giorno | No | **+0,5–1,0 WER** *se* entra nel tetto (stima); rischio alto | dopo il re-scope |
+| 6 | **Word timestamps** | Viterbi forzato sulla matrice CTC: tempi di parola gratis dal modello attuale | ~mezza giornata | No | **0 WER**; è una feature (sottotitoli, evidenziazione) | solo se serve UX |
+| 7 | **Frame rate 25 Hz** | Pooling dei frame dopo l'encoder: metà frame, più profondità a parità di compute (`docs/10`: "25 Hz + 2 blocchi") | ~4 h + modifiche runtime | **Sì** | **20–30% più veloce**, WER ±0,5–1,5 (stima) | cambio architetturale, non ora |
+| 8 | **`en_terms.txt` 580 → 1–2k** | Espandere la lista di termini del LM | ~1 h + rebuild LM | No | **+1–2 ETA** sui termini plausibili; **0 sui 44 mai sentiti** (diagnosi E-015) | basso valore senza audio nuovo |
+| 9 | **Secondo seed di E-024** | Rifare il fine-tune del rumore con un seed diverso | ~3,5 h | **Sì** | **0 guadagno**; dice se il **−0,52 CV-IT** sul pulito è reale o rumore di run | rigore, non prodotto |
+| 10 | **E-018 (gold)** | Terzo speaker per la domanda "il gold scala?" | registrazioni + review | **Sì** | ~2–3 WER da un terzo speaker (stima), ma il rendimento marginale cala (−5,73 → −4,07) | **morto senza S4** |
 
-**Misurato vs stimato**: l'unico costo misurato è il **+4,4% per step** di InterCTC; gli altri
-guadagni in tabella sono priori da letteratura o criteri di successo, non promesse. Due previsioni
-consecutive (E-024, E-025) sono state troppo prudenti, quindi trattali come ordini di grandezza.
+**Misurato vs stimato**: l'unico costo misurato è il **+4,4% per step** di InterCTC; per E-015 il
+tetto **+2,8–3,7** è misurato sul set, il guadagno effettivo no. Due previsioni consecutive (E-024,
+E-025) sono state troppo prudenti, quindi tratta gli altri numeri come ordini di grandezza.
 
 **Non adesso, e perché**: rumore MLS/LS (disco), LM 4-gram (tetto di 20 MB), 25 Hz (cambio
 architetturale), `en_terms` (non risolve i termini mai sentiti), word timestamps (feature, non

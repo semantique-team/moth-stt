@@ -75,3 +75,68 @@ questionable corpus just to have a number.
 - **Cost**: Parakeet labels 100 h in ≈3.3 h; fine-tune ≈3.5 h; no model-size change.
 - **Artifacts**: `runs/E-015/{config.yaml,train.log.jsonl,eval/}`; new manifest + mel shards under
   `data/`.
+
+---
+
+## Addendum (2026-11-09) — the baseline moved, and the target is narrower
+
+This plan was written before E-017 added the S1+S2 gold (41.87 h, x50) and before 0.7.0. The
+"5%" baseline above is E-014's, and it is obsolete. Measured on the **0.7.0** hypotheses
+(`runs/E-024/eval/gate/t600.hyp.jsonl`), on the 600 recorded T clips, by provenance of each
+annotated English term:
+
+| Term group | Occurrences | Correct | Accuracy |
+|---|---|---|---|
+| Present in the natural training text (CV + MLS + spliced) | 817 | 439 | **53.7%** |
+| Present **only in the gold** (R-S1/R-S2) | 179 | 123 | **68.7%** |
+| **Never seen** in any training text (natural or gold) | 47 | 8 | **17.0%** |
+
+The sanity check holds: overall term accuracy is 570/1043 = **54.65%**, against the card's ETA
+54.17. On the **18 terms** that were added to the gold on 2026-10-24, 0.7.0 gets **20/27
+utterances = 74.1%**, not 5%. **The gold already fixed the original target.**
+
+What remains is a different set: **44 distinct terms, 47 occurrences in 47 T utterances, that
+appear in no training text at all** (`airpods, baskin, bitbucket, cadbury, charger, checkout,
+chromecast, delivery, domain, dyson, exam, folder, hosting, invision, ipad, kfc, logout, mondays,
+oral, popup, prototype, reset, restart, roomba, scaleup, screenshot, selfie, sharing, shutdown,
+shutterstock, skills, skyscanner, smartwatch, solving, starbucks, startup, subway, swipe,
+tripadvisor, twinings, unfollow, upload, wallpaper, website`). The model gets **8/47 = 17%**.
+
+### Revised expectation (important)
+
+The 47 never-seen occurrences are **4.5%** of all 1,043 annotated term occurrences. Fixing only
+them cannot buy +5 ETA:
+
+- at the teacher's 78% (37/47): **+2.8 ETA**;
+- at 100% (47/47): **+3.7 ETA** (hard ceiling of this intervention alone).
+
+The original success criterion (**ETA ≥ +5**) is therefore unreachable by design if the new audio
+covers only these terms. Revised:
+
+- **primary**: rare-term accuracy on the 47 utterances from **17% to ≥50%** (target ≥70%);
+- **secondary**: ETA **+2 to +4**, WER not worse than +0.5 (CI);
+- **regression check**: the 18 gold-covered terms must stay **≥70%** (currently 74.1%).
+
+### Revised design: gold, not Parakeet
+
+The gold path is cheaper and better than 100 h of pseudo-labelling: the model already learns from
+gold (the 18 terms went 5% → 74%), the labels are human, and no teacher-noise ceiling applies.
+Parakeet remains the fallback if the gold addendum does not transfer.
+
+- **Data**: ~100 new sentences, **50 for S1 and 50 for S2**, distinct wording, each covering all 44
+  terms once per speaker (plus six two-term sentences per speaker). Same canonical script rules as
+  R-S1/R-S2; reviewed and recorded by the author.
+- **Mix**: add the new gold to E-017's 589.5 h mixture with **x20 oversampling** (~1.7 h of
+  effective audio for 100 sentences at ~3 s), not x50: the existing gold is 41.87 h and the new
+  sentences are highly repetitive, so x50 would overfit 100 templates.
+- **Recipe**: continue from `runs/E-024/checkpoints/ckpt_best.pt` (0.7.0), 1 epoch (13,221 steps,
+  ~1 h 50) with the E-017 LRs (head 3e-4, encoder 5e-5), then evaluate. One epoch, not two: the
+  intervention is small and the baseline is already trained.
+- **Readout**: the 47 rare-term utterances (primary), T-600/S3 clean WER, FLEURS-IT, CV-IT test;
+  paired bootstrap as always.
+- **Kill**: rare-term accuracy <30%, or clean WER worse by >0.5 with a CI excluding 0.
+
+### Cost
+
+100 sentences: ~15–20 min of recording. Build + fine-tune: ~2 h. Evaluation: ~15 min. **No
+teacher, no 100 h labelling, no new downloads.**
