@@ -1,7 +1,18 @@
 # STATUS — snapshot per riprendere i lavori
 
-> Aggiornato: **2026-11-09** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **294 test verdi**
-> + 9 Playwright, `ruff` pulito.
+> Aggiornato: **2026-11-09** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **300 test
+> verdi** + 11 Playwright, `ruff` pulito.
+>
+> **PUBBLICATO (2026-11-09):** il modello è **online** — <https://huggingface.co/semantique-team/moth-stt>
+> (pubblico, artefatti ri-scaricati e verificati sha256 contro `runs/E-022/release-0.6.0.json`) e la
+> **demo gira nel browser** — <https://semantique-team-moth-demo.static.hf.space> (Space statico:
+> l'audio non lascia il tab; 16× realtime a 1 thread perché gli Space statici non hanno COOP/COEP,
+> quindi niente SharedArrayBuffer). Ripubblicabili con `runs/E-021/upload_hf.py` e
+> `runs/E-022/publish_space.py`.
+>
+> **In corso (2026-11-09):** **E-024** — noise augmentation su metà di CV-IT, partita dalle misure
+> dell'audit: a 20 dB il WER passa da 22,2 a 32,1 e a 15 dB a 38,4 (peggio di Whisper su audio
+> pulito). Miscela identica a E-017 (589,5 h). Risultato in `runs/E-024/`.
 >
 > **Decisione (2026-11-09, D30):** il **decoder** era mal calibrato, non il modello. `beam_search`
 > pagava il costo LM per token emesso senza contrappeso, quindi cancellava ~12% delle parole. Con
@@ -40,6 +51,8 @@
 
 | Area | Cosa | Dove |
 |---|---|---|
+| **Pubblicazione + demo** | **Modello su HF** (`semantique-team/moth-stt`, pubblico) e **demo nel browser** (`semantique-team-moth-demo.static.hf.space`): Space **statico**, la card verifica gli sha256 nel browser prima di eseguire il modello, l'audio non esce dal tab. 6,3 s al primo caricamento, 16× realtime a 1 thread. Lo Space si ricostruisce con un comando (`publish_space.py`) | `runs/E-021/upload_hf.py`, `runs/E-022/publish_space.py`, `runs/E-022/space/` |
+| **Segmentazione** | **Registrazioni multi-frase**: 5 frasi concatenate fanno **36,6% WER** contro **26,6%** decodificate separate (−9,37 [−12,22, −3,51]); il VAD già spedito recupera l'**80%** (→ 28,5). Si segmenta **solo** se trova ≥2 sequenze (tagliare una singola costa +1,6). La durata non c'entra: la curva su FLEURS non è monotona | `stt/vad.py`, `web/vad.js`, `runs/audit-2026-11-09/` |
 | **E-022** | **Ricalibrazione del decoder (2026-11-09, D30)**: `token_bonus` (γ=2,4) + `lm_weight` 0,5 + beam 12/top-k 10. T-600 **−6,85** [−7,94, −5,72], **S3 held-out −8,77** [−11,13, −6,50], FLEURS-IT −6,06, FLEURS-EN −5,85, CV-IT dev −5,01 — tutti i CI escludono 0. Greedy invariato, `token_bonus=0` no-op bit-esatto, int8 byte-identico, **nessun training**. Release **0.6.0** (19,44 MB), browser 1T 20,3× a 20 s, parità browser↔Python tie. **FLEURS-IT vs Whisper auto+beam5: −6,95 [−8,02, −5,87], vinto** | `stt/decode.py`, `web/decode.js`, `runs/E-022/` |
 | **E-023** | **Re-tune LM — FATTO (2026-11-09), niente adottato (D31)**: su dev completo (3.939 clip, 10× il set di E-022) l'ottimo è **esattamente** la cella di E-022 (w 0,5 / γ 2,4, macro **22,98**); backoff 0,4 resta il migliore. L'LM **non potato** (pruning ≥1) vale **−0,65 punti dev** e vince i gate (T-600 −0,77, FLEURS-IT −0,72, CV-IT −0,65) **ma pesa 12,31 MB** → pacchetto **26,63 MB** contro il tetto di 20, ed è un **tie sullo speaker held-out** (+0,43). Quindi: il tetto costa WER italiano, **non** il claim code-switching | `runs/E-023/` |
 | **Browser↔Python** | **Parità verificata (tie)**: al decode E-022, 200 clip S1 su int8 → browser 23,73 vs Python 23,82, **−0,09 [−0,012, +0,010]**, **154/200 identiche (77%)** contro 140/200 (70%) del decode 0.5.1 (+1,29 [0,0009, 0,0259], il numero di E-010). Il beam più largo **migliora** la parità. Il primo "+3,27" era un artefatto del packaging (LM non aumentato per default) | `runs/E-022/parity-wer.json` |

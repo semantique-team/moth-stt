@@ -1,0 +1,45 @@
+---
+title: Moth STT — Italian + English, in your browser
+emoji: 🦋
+colorFrom: green
+colorTo: gray
+sdk: static
+pinned: false
+short_description: A 19 MB code-switching STT model that runs on your device
+models:
+  - semantique-team/moth-stt
+license: apache-2.0
+---
+
+# Moth — live demo
+
+Speech-to-text for **Italian with English words mixed in**, running **entirely in your browser**.
+
+Nothing is uploaded: the 19.4 MB package (11.9 MB int8 ONNX, a 5.1 MB trigram LM, a 2.3 MB VAD)
+is fetched once and then runs on your machine through ONNX Runtime Web / WebAssembly. Your audio
+never leaves the tab, and the page keeps working if you disconnect after it has loaded.
+
+This Space serves the same artifact that is published at
+[`semantique-team/moth-stt`](https://huggingface.co/semantique-team/moth-stt), byte for byte, and
+verifies every file's sha256 at load time before running it.
+
+## What it is good at, honestly
+
+- Italian sentences with English terms inside them: *"il deploy è andato bene, facciamo un quick
+  sync dopo la call"*.
+- Italian tech jargon, acronyms, Italianised verbs (*deployato*, *pushare*, *loggare*).
+- It emits **nothing** on silence and steady noise (a Silero VAD gates the input).
+
+## What it is not
+
+- No punctuation, no casing: output is lowercase, unpunctuated, numbers spelled out.
+- Pure English is weak (~50% WER); this is a code-switching model, not a bilingual one.
+- **English terms remain the weak spot** (~27% WER on a sentence containing one, against ~14% on a
+  sentence without). If it gets a term wrong, that is the known limit.
+- Speaker coverage is three people. A fourth was recruited and never recorded.
+- **Noise hurts a lot**: measured +9.9 WER at 20 dB SNR and +16.1 at 15 dB against clean. Use it
+  somewhere quiet.
+- Max 30 s per recording. Speak one sentence at a time — the page splits on pauses, but pauses help.
+
+Numbers, limitations and provenance: [`semantique-team/moth-stt`](https://huggingface.co/semantique-team/moth-stt).
+Code: `github.com/semantique-team/moth-stt`. Apache-2.0; the initial encoder is `openai/whisper-tiny` (MIT).

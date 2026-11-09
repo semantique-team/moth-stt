@@ -40,6 +40,10 @@ model-index:
 
 # Moth STT 0.6.0 — Italian + English code-switching, 19.4 MB, CPU-only
 
+> **Live demo:** [semantique-team/moth-demo](https://huggingface.co/spaces/semantique-team/moth-demo) —
+> runs entirely in your browser. The audio never leaves the tab: the same 19.4 MB package on this
+> page is what the demo downloads and executes through ONNX Runtime Web.
+
 A very small open **Italian + English code-switching** speech-to-text model: a Whisper-tiny
 encoder initialised from `openai/whisper-tiny` (MIT), fine-tuned behind a **linear CTC head** over
 a shared IT+EN SentencePiece BPE, 11.6 M parameters, shipped as an **11.9 MB int8 ONNX** graph with
