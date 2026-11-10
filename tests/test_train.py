@@ -176,7 +176,7 @@ def test_train_one_step_and_log_schema(tmp_path: Path) -> None:
     assert len(lines) == 1
     line = lines[0]
     assert line["step"] == 1 and line["epoch"] == 0 and isinstance(line["batch"], int)
-    for key in ("loss", "lr", "grad_norm", "audio_seconds", "audio_seconds_per_s", "memory_mb"):
+    for key in ("loss", "lr", "grad_norm", "audio_seconds", "audio_seconds_per_s", "memory_mib"):
         assert key in line
     assert np.isfinite(line["loss"]) and line["loss"] > 0
     assert np.isfinite(line["grad_norm"]) and line["grad_norm"] > 0  # pre-clip norm
@@ -377,9 +377,20 @@ def test_apply_model_init_skips_a_different_vocab_head(tmp_path: Path) -> None:
     assert target.head.weight.shape == (33, source.head.weight.shape[1])
 
 
-def test_prepare_batch_crops_a_long_augmented_mel() -> None:
+@pytest.mark.parametrize("input_mode", ["truncated", "padded30"])
+def test_prepare_batch_rejects_a_long_mel(input_mode) -> None:
     items = [{"mel": np.zeros((80, 3248), dtype=np.float32), "row": {"id": "x"}}]
-    tensor, lengths, rows = _prepare_batch(items, "truncated")
-    assert tensor.shape == (1, 80, 3000)
-    assert lengths.tolist() == [3000]
-    assert rows[0]["id"] == "x"
+    with pytest.raises(ValueError, match="x: input exceeds 3000"):
+        _prepare_batch(items, input_mode)
+
+
+@pytest.mark.parametrize("input_mode", ["truncated", "padded30"])
+@pytest.mark.parametrize("frames", [2999, 3000])
+def test_prepare_batch_preserves_complete_audio_and_transcript(input_mode, frames) -> None:
+    mel = np.arange(80 * frames, dtype=np.float32).reshape(80, frames)
+    row = {"id": "x", "norm": "ciao fino alla fine"}
+    tensor, lengths, rows = _prepare_batch([{"mel": mel, "row": row}], input_mode)
+    assert tensor.shape[2] == (3000 if input_mode == "padded30" else frames)
+    assert lengths.tolist() == [frames]
+    np.testing.assert_array_equal(tensor[0, :, :frames].numpy(), mel)
+    assert rows[0] is row

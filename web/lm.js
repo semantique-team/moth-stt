@@ -4,6 +4,7 @@
  * The layout is sparse CSR: unigram float32, bigram rows by previous id, trigram rows keyed by
  * `prev2 * V + prev1` with sorted uint32 keys. Log-probs are int16-quantized; missing entries
  * back off exactly like the Python score().
+ * Empty trigram rows may be omitted without changing scores or the MOTHLMB1 layout.
  */
 
 export const LM_BOS_ID = 1024;

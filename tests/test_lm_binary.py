@@ -145,6 +145,21 @@ def test_empty_csr_roundtrip(tmp_path):
     assert math.isfinite(lm.score(BOS_ID, BOS_ID, EOS_ID))
 
 
+def test_writer_omits_empty_trigram_rows(tmp_path):
+    lm = BPETrigramLM.from_sequences([[1, 2], [1, 2], [3, 4]])
+    assert any(not row for row in lm._trigram_counts.values())
+    path = tmp_path / "pruned.bin"
+    lm.save_browser(path)
+    expected = path.read_bytes()
+    # Enforce the writer contract even if an empty log row reaches serialization.
+    lm._trigram_log[(3, 4)] = {}
+    lm.save_browser(path)
+    assert path.read_bytes() == expected
+    binary = BinaryBPELM(expected)
+    assert np.all(binary.trigram_offsets[1:] > binary.trigram_offsets[:-1])
+    assert len(binary.trigram_keys) == 3
+
+
 def test_browser_validation_and_score_parity(binary):
     if not shutil.which("node"):
         pytest.skip("Node.js is required for browser LM parity")

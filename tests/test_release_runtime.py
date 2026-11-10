@@ -13,6 +13,7 @@ import pytest
 
 from stt.decode import beam_search
 from stt.features import DEFAULT_FILTERS, log_mel
+from stt.hotwords import ContextualBias
 from stt.lm import BPETrigramLM
 from stt.onnx_runner import OnnxMoth, ReleaseMoth, decode_clip, main
 from stt.vad import ASSET_PATH, STATE_SHAPE, WINDOW, segment_bounds, speech_probabilities
@@ -381,3 +382,87 @@ def test_optional_shipped_release():
     pytest.importorskip("onnxruntime")
     runtime = ReleaseMoth(Path(root))
     assert runtime.transcribe(np.zeros(16000, np.float32))[0] == ""
+
+
+def test_contextual_runtime_forwarding_and_actual_bonus(release, monkeypatch):
+    runtime = ReleaseMoth(release)
+    runtime.model.pieces = {1: "\u2581il", 2: "\u2581api"}
+    scores = np.array([[-10, 0, -0.5]], np.float32)
+    monkeypatch.setattr(runtime.model, "log_probs", lambda mel: scores)
+    runtime.config["decode"].update(lm_weight=0, token_bonus=0)
+    monkeypatch.setattr("stt.onnx_runner.speech_probabilities", lambda *a, **k: np.ones(2))
+    monkeypatch.setattr("stt.onnx_runner.segment_bounds", lambda *a, **k: [(0, 560), (560, 1120)])
+    bias = ContextualBias([(2,)], runtime.model.pieces)
+    mel = np.zeros((80, 4), np.float32)
+    assert runtime.model.transcribe(mel, decoder="beam")[0] == "il"
+    assert runtime.model.transcribe(mel, decoder="beam", contextual=bias)[0] == "api"
+    assert decode_clip(runtime.model, mel, decoder="beam", contextual=bias) == "api"
+    original = beam_search
+    seen = []
+
+    def beam(*args, **kwargs):
+        seen.append(kwargs.get("contextual"))
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr("stt.onnx_runner.beam_search", beam)
+    audio = np.zeros(1120, np.float32)
+    assert runtime.transcribe(audio, contextual=bias)[0] == "api api"
+    assert seen == [bias, bias]
+    seen.clear()
+    assert runtime.transcribe(audio)[0] == "il il"
+    assert seen == [None, None]
+
+
+def test_contextual_none_is_not_forwarded(release, monkeypatch):
+    model = OnnxMoth(release / "model.onnx")
+
+    def beam(*args, **kwargs):
+        assert "contextual" not in kwargs
+        return "ok"
+
+    monkeypatch.setattr("stt.onnx_runner.beam_search", beam)
+    assert model.transcribe(np.zeros((80, 4)), decoder="beam", contextual=None)[0] == "ok"
+
+    def transcribe(*args, **kwargs):
+        assert "contextual" not in kwargs
+        return "ok", 0
+
+    monkeypatch.setattr(model, "transcribe", transcribe)
+    assert decode_clip(model, np.zeros((80, 4)), contextual=None) == "ok"
+
+
+def test_contextual_type_vocab_and_decoder_validated_before_compute(release, monkeypatch):
+    runtime = ReleaseMoth(release)
+    runtime.model.pieces = {1: "\u2581il", 2: "\u2581api"}
+    source = dict(runtime.model.pieces)
+    bias = ContextualBias([(2,)], source)
+    source[2] = "\u2581other"
+    assert bias.pieces[2] == "\u2581api"
+    with pytest.raises(TypeError):
+        bias.pieces[2] = "changed"
+    with pytest.raises(AttributeError):
+        bias.pieces = source
+    monkeypatch.setattr("stt.onnx_runner.speech_probabilities", lambda *a, **k: pytest.fail("VAD"))
+    monkeypatch.setattr(runtime.model, "log_probs", lambda *a: pytest.fail("inference"))
+    mismatch = ContextualBias([(2,)], {1: "\u2581other", 2: "\u2581api"})
+    for invalid, error, message in [
+        (object(), TypeError, "ContextualBias"),
+        (mismatch, ValueError, "vocabulary"),
+    ]:
+        with pytest.raises(error, match=message):
+            runtime.transcribe(np.zeros(560), contextual=invalid)
+        with pytest.raises(error, match=message):
+            runtime.model.transcribe(np.zeros((80, 4)), decoder="beam", contextual=invalid)
+    with pytest.raises(ValueError, match="beam decoder"):
+        runtime.model.transcribe(np.zeros((80, 4)), contextual=bias)
+    runtime.config["decode"]["default"] = "greedy"
+    with pytest.raises(ValueError, match="beam decoder"):
+        runtime.transcribe(np.zeros(560), contextual=bias)
+
+
+def test_contextual_preserves_silence_gate(release, monkeypatch):
+    runtime = ReleaseMoth(release)
+    bias = ContextualBias([], runtime.model.pieces)
+    monkeypatch.setattr("stt.onnx_runner.speech_probabilities", lambda *a, **k: np.zeros(2))
+    monkeypatch.setattr(runtime.model, "transcribe", lambda *a, **k: pytest.fail("decoded"))
+    assert runtime.transcribe(np.zeros(560), contextual=bias)[0] == ""

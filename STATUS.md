@@ -1,5 +1,12 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Audit follow-up locale (2026-11-10, non pubblicato):** sul branch
+> `feat/audit-quality-tooling` sono preparati safe tempo, InterCTC opzionale solo training,
+> preflight/resume con hash, selezione separata dei finalisti su mixed-dev, diagnostica CTC,
+> bias contestuale opt-in Python/JS e strumenti LM da corpus congelato. Nessun nuovo modello
+> addestrato o peso pubblicato. La compattazione lossless del LM attuale risparmia **0 byte**.
+> Uso, limiti e lavoro sull'altro PC: [guida audit](docs/guides/audit-improvements-no-training.md).
+
 > **Runtime follow-up (2026-11-10, non pubblicato):** implementati caricamento release Python,
 > lettura LM binario, guardie/parita' decoder e budget, dipendenze runtime separate e test CI
 > leggeri. Pesi 0.7.0 invariati; nessun guadagno qualitativo dichiarato. Piano/stato:

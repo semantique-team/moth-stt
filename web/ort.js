@@ -8,7 +8,7 @@
 
 import * as ort from "./node_modules/onnxruntime-web/dist/ort.wasm.min.mjs";
 
-import { beamSearch, greedy } from "./decode.js";
+import { ContextualBias, beamSearch, greedy } from "./decode.js";
 import { loadLM } from "./lm.js";
 import { computeMel, N_MELS, N_FFT, HOP_LENGTH, SAMPLE_RATE } from "./mel.js";
 import { createVad } from "./vad.js";
@@ -117,7 +117,14 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
   });
   const loadMs = performance.now() - loadStarted;
 
-  async function transcribeUnlocked(pcm, { segment: segmentOverride = null } = {}) {
+  // Opt in per call with CTC IDs from this release's frozen tokenizer, not guessed text.
+  // Build once against loaded pieces and reuse for every span; never enable from config.
+  async function transcribeUnlocked(pcm, {
+    segment: segmentOverride = null,
+    contextualSequences = null,
+    contextualBonus = 1,
+    contextualPrefixBonus = 0,
+  } = {}) {
     if (!(pcm instanceof Float32Array)) {
       throw new Error(`pcm must be a mono Float32Array at ${SAMPLE_RATE} Hz`);
     }
@@ -126,6 +133,16 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
     }
     for (const sample of pcm) {
       if (!Number.isFinite(sample)) throw new Error("pcm samples must be finite");
+    }
+    const decodeConfig = config.decode ?? {};
+    let contextual = null;
+    if (contextualSequences !== null) {
+      if (!Array.isArray(contextualSequences)) throw new Error("contextualSequences must be an array or null");
+      if (decodeConfig.default !== "beam") throw new Error("contextual bias requires the beam decoder");
+      contextual = new ContextualBias(contextualSequences, pieces, {
+        bonus: contextualBonus,
+        prefixBonus: contextualPrefixBonus,
+      });
     }
     const t0 = performance.now();
     // No-speech guard (D25, E-011) and sentence segmentation from a **single** VAD pass: the
@@ -159,7 +176,6 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
     // is trained on sentence-sized clips and reads several sentences as one unpunctuated stream,
     // which costs 9.4 WER points on five concatenated sentences. Only split when the VAD finds two
     // or more runs — cutting a single run removes the leading silence the model expects (+1.6 WER).
-    const decodeConfig = config.decode ?? {};
     const segmentEnabled = segmentOverride ?? segment ?? decodeConfig.segment ?? true;
     const wantsSegments = segmentEnabled && probabilities !== null;
     const bounds = wantsSegments ? vad.segmentsFrom(pcm.length, probabilities) : [];
@@ -203,6 +219,7 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
               lm,
               lmWeight: decodeConfig.lm_weight ?? 0,
               tokenBonus: decodeConfig.token_bonus ?? 0,
+              ...(contextual ? { contextual } : {}),
             })
           : greedy(output.data, framesOut, size, pieces);
       if (text) texts.push(text);
