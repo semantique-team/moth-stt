@@ -1574,3 +1574,14 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Artifacts**: `runs/E-015/` (`PLAN.md`, `RESULT.md`, `RECORDING.md`, `config.yaml`,
   `train.log.jsonl`, `eval/`, `eval_terms.py`, `prepare_terms.py`), `recordings/manifests/R-S1.jsonl`
   (691 rows), `runs/E-015/candidates-S{1,2}.jsonl`.
+## Runtime acceptance follow-up (2026-11-10, no new model)
+
+Infrastructure validation, not a new quality-optimization arm. Original 0.7.0 assets
+verified against the committed E-024 record. See
+[`runs/runtime-2026-11-10/RESULT.md`](runs/runtime-2026-11-10/RESULT.md) for all measurements,
+normalization, hashes and limitations. No training, tuning, new weights or release published.
+104 previously used FLEURS/spliced/control clips; no independent natural code-switching ETA.
+VAD pipeline WER 40.48% vs no-VAD 39.82%, paired delta +0.66 points (CI includes zero).
+Four synthetic nonspeech controls suppressed; shared-logit Python/JS transcripts match
+10/10 for beam and greedy. Runtime-only dependency profile and release integrity gates added.
+New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missing data.

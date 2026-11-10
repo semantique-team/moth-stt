@@ -7,14 +7,22 @@ license = "Apache-2.0"
 license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = [
-    "torch==2.14.*",
     "numpy",
-    "sentencepiece",
+    "onnxruntime",
     "soundfile",
     "num2words",
-    "onnx",
-    "onnxruntime",
+]
+
+[project.optional-dependencies]
+training = [
+    "torch==2.14.*",
+    "sentencepiece",
     "pyyaml",
+]
+export = [
+    "onnx",
+    "torch==2.14.*",
+    "sentencepiece",
 ]
 
 [dependency-groups]
@@ -31,6 +39,10 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["stt"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"stt/assets/mel_filters.bin" = "stt/assets/mel_filters.bin"
+"stt/assets/silero_vad.onnx" = "stt/assets/silero_vad.onnx"
 
 [tool.ruff]
 line-length = 100

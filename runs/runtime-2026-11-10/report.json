@@ -1,0 +1,4483 @@
+{
+  "purpose": "runtime acceptance only; no training or quality optimization",
+  "command": [
+    ".venv/Scripts/python.exe",
+    "runs/runtime-2026-11-10/benchmark.py",
+    "--release",
+    "../moth-stt",
+    "--manifest",
+    "../moth-stt-experiments/evaluation/manifest.json",
+    "--out",
+    "runs/runtime-2026-11-10",
+    "--parity-clips",
+    "10"
+  ],
+  "release": {
+    "release": "../moth-stt",
+    "files": {
+      "NOTICE": {
+        "bytes": 3260,
+        "sha256": "6ca7672f006155be816fa3b28072add859ca020c22a2c4e47eaaf4433c341d32",
+        "hash_verified": false
+      },
+      "config.json": {
+        "bytes": 1322,
+        "sha256": "55d7c7196e27013cc1b9c5c2303b39d14d594ab4e92414fe2ed22148538585e0",
+        "hash_verified": false
+      },
+      "lm_bpe3.bin": {
+        "bytes": 5116464,
+        "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e",
+        "hash_verified": true
+      },
+      "mel_filters.bin": {
+        "bytes": 64320,
+        "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e",
+        "hash_verified": true
+      },
+      "model.int8.onnx": {
+        "bytes": 11910677,
+        "sha256": "7a075da40eb37de6988947efc717824db8b144769628db078e48dcc35b5ab0af",
+        "hash_verified": true
+      },
+      "silero_vad.onnx": {
+        "bytes": 2327524,
+        "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+        "hash_verified": true
+      },
+      "vocab.json": {
+        "bytes": 17193,
+        "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb",
+        "hash_verified": true
+      }
+    },
+    "total_bytes": 19440760,
+    "budget_bytes": 20000000,
+    "remaining_bytes": 559240
+  },
+  "original_release_pin": {
+    "record": "runs/E-024/release-0.7.0.json",
+    "git_commit": "a64f2a1f06843fc34d4ad1e1d948de67476263f1",
+    "record_sha256": "caa436337a0e9334fcc7393d6e0e94dcbf8504d32eb987518cbd54f2d29a63e3",
+    "version": "0.7.0",
+    "all_seven_files_match": true
+  },
+  "release_files_unchanged": true,
+  "config": {
+    "name": "moth-stt",
+    "version": "0.7.0",
+    "sample_rate": 16000,
+    "features": {
+      "n_fft": 400,
+      "hop": 160,
+      "n_mels": 80,
+      "window": "hann_periodic",
+      "center": true,
+      "pad_mode": "reflect",
+      "drop_last_frame": true,
+      "floor_range": 8.0,
+      "scale": "(x+4)/4",
+      "mel_filters": "mel_filters.bin"
+    },
+    "model": {
+      "file": "model.int8.onnx",
+      "input": "mel",
+      "output": "log_probs",
+      "frame_rate_hz": 50,
+      "max_seconds": 30
+    },
+    "tokenizer": {
+      "vocab": "vocab.json",
+      "blank_id": 0,
+      "space_marker": "\u2581"
+    },
+    "decode": {
+      "default": "beam",
+      "beam": 12,
+      "top_k": 10,
+      "lm": "lm_bpe3.bin",
+      "lm_weight": 0.5,
+      "token_bonus": 2.4
+    },
+    "vad": {
+      "file": "silero_vad.onnx",
+      "window": 512,
+      "context": 64,
+      "threshold": 0.1
+    },
+    "files": {
+      "model.int8.onnx": "sha256:7a075da40eb37de6988947efc717824db8b144769628db078e48dcc35b5ab0af",
+      "vocab.json": "sha256:22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb",
+      "mel_filters.bin": "sha256:4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e",
+      "silero_vad.onnx": "sha256:1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+      "lm_bpe3.bin": "sha256:dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    }
+  },
+  "input_manifest_sha256": "7bcd69f66919cc4f66c2d9e67beec3f96b3ceea79d030cc3c49c07d3d974f65f",
+  "audio_sha256": {
+    "it_it/10000151032537989529.wav": "65e5fc8ce454bf33767fb2aa2f85f7c1b4409ec55579c79824a325d33480d374",
+    "it_it/10011138801715101183.wav": "15bed091c6279bacdfe9202fbd5060149bce0f08bf1f4b7a7550c89831211780",
+    "it_it/10017896147709177739.wav": "7c9a0fb7bd7faa6bc6e37ef9c8313c15b16f9fb20f7b40b0fd7046a9ac907d93",
+    "it_it/10037759924455051213.wav": "24d8b5e731e96139eff13be427a541389c4c9349a9be687eab9930c5ca133f1c",
+    "it_it/1006729518827641482.wav": "5672391e9d06efa5d7c46adb35494575d2dc39b836abba7ea120953aab660757",
+    "it_it/10127750728509182272.wav": "5a1ba84d97b4bc24bff172a5cb9c8416a1acc3c816aa2967c1d435236a6fcf9c",
+    "it_it/10159398106668856572.wav": "3204509de9931b6ee1a364ba9592212dc1e0f474ab7e7ca208899f694ebd9f76",
+    "it_it/10163392299961827450.wav": "3fa3997080051e6e7a880b44e0512cdc57bcc2f8dea6400e0ffc7677c2845dd1",
+    "it_it/10166843301601278560.wav": "bb0021cbc9d24620a561a9b893b6a03b8ba759b64b2485eb55f21180d8ee6cd9",
+    "it_it/10168148107941542925.wav": "e95f675f6fce4b07c19b29f3ba9810d9c4c9e1e6bf22d005fbf60cb1b119e652",
+    "it_it/10173541521390065753.wav": "337a28fbf86cfddc64c056de10e5d0fba5878f5e7fded140a085e6ea72afc1f0",
+    "it_it/10210638754804006465.wav": "6c0b6970fe21c22105f359804bee2d3bfa6b6c5cd5ee62bb5a1f8bcecb0ca3a5",
+    "it_it/1021451608744266497.wav": "16523f08e8db67188fce5b383cf33da1814a835d3d39f912494d9707a6cfccc1",
+    "it_it/10225734229056439938.wav": "014b91165d56cb7acacc953acae4799e89139cddc4230bc5e551c85c3cd70318",
+    "it_it/1024005671072986451.wav": "722cdce46e0082c6b0aa699ff94bac810d78b97ad9f432d56a5ba8828c2fb727",
+    "it_it/10275928643200034491.wav": "5baaf51ccbd762d741b572a728a7989bb4b7edcbef17fbb970563e16dff23dfe",
+    "it_it/10294884782884582016.wav": "a2123191ba02adcb94ebc9f61994d105ee5374735ce7be1d6899670f68ea026b",
+    "it_it/10324513969638088871.wav": "a7a5ad88027524e526af479442ead7473c284bf33a24eb30265ced05e7118c7d",
+    "it_it/10331901392264121024.wav": "128be0be4f6f505a8f2906dad9ea34c7b2b1435a763caeaef61e724ef8bdc8e4",
+    "it_it/10363722267618555781.wav": "3c432a9f1d26796c6880050f7bb429d0887be9cd69974040d8ee98750ab00bd3",
+    "it_it/1040642958705021773.wav": "c4217f24919aef6191e87ad80e7b30bc802fc461ce3867d9e3a1f5352e10f285",
+    "it_it/10421376619578532077.wav": "d625b9595a91df978fe460c2420879665e560d9c9a8f985ccb0a10b7118bd561",
+    "it_it/10434945468030652443.wav": "8e83c3ef91e8962fdc7a372c641b2abe83ae28f78483dfe6563710f1fc20cbd3",
+    "it_it/10437794928490533393.wav": "955385bcb262479d7f22b03a08ff2d70b43bc0c7039e6c1a04b4653d2c0effcd",
+    "it_it/10479866160281873942.wav": "64672bb33dfb409a16580ba27d37b202aa58abe1fd275c21494ac12ebc6c0d80",
+    "it_it/10503040099407806416.wav": "2a63c85555ab5b7ccff32aed6574f44340b2d5b5208bcee490dcc8854dc34676",
+    "it_it/10529316262657848687.wav": "eefc7c88ead4d87fff180136f0208df0ed87de106b03f0af83f52942b9265833",
+    "it_it/10536267797820820051.wav": "e62c83e01ae385eb90ea539901d20c3adee140195dcf34c04ba4eca82dfdab31",
+    "it_it/10557144981026796249.wav": "1b0caf25b3adccc6302265dfbc380364f2d436501870a3d013fc7975dc9aa13f",
+    "it_it/10568286449112693066.wav": "34d0c331aaf4c5d3e8111528d42dcc2735b405235d11a1df9a13af675307b5ad",
+    "it_it/10571870825120879633.wav": "b3f252fa16a908eb1e074da987a78fe4bb6115db73f686d3209e453885e68672",
+    "it_it/1061754421613910766.wav": "18d72ed9748432ea45f795f16385cbbc14059f168eea67e3b86aa78c90f6c058",
+    "it_it/10663019413117022741.wav": "9a81ab70e730606131b49baec84a787a76ea1db66d6acb99b93be63d41193c4a",
+    "it_it/10669712606378135112.wav": "55fa58d91230cc68bc4f19cbd7e695f927301220263e2b9282fe07ddaa9065b8",
+    "it_it/10707717394504269796.wav": "4e0251844626a5505c60993f0336afb0f88d163d3e27a9310ddbebe3257fd9f0",
+    "it_it/10713904656493882072.wav": "12029a05b03495a3d4c552df0bc37adc522f1eda4b8eafd3e6a78279ee976461",
+    "it_it/10724761538669846878.wav": "f8c94124e2b2489b4384968037b1212405991d44f23f4438592174f7e50974c3",
+    "it_it/10775229660857585342.wav": "e1b10491d83d1f665bafcbd4b6993da5b08831c2ac55982f54e60deb53254d6a",
+    "it_it/10817315806590584870.wav": "08e05e0351e9d8567b0020ac13da346abe7b0a211278915d8466f95674d80023",
+    "it_it/1086199108496852370.wav": "93577a6e4f199fe8e4c62d7136776dfb41ffd425fefc36a4d46e49928e950161",
+    "en_us/1003119935936341070.wav": "33aca50159ec2e3cbcc894eb26faa916d6badb1b49fb75994973561540a7f012",
+    "en_us/10052240106321793346.wav": "7603cae3294309ef70d234180cefccc3b13865ee525262228a636069b9b62841",
+    "en_us/10167324587744183095.wav": "260bdd1a15e1d35bcc5d91667516ca3bc659285e10f94872182715bcd7880398",
+    "en_us/10197164397713068203.wav": "b174be7730f0aab6a26762130b66f2125392b50550645727bd057d8479fb6219",
+    "en_us/10233995782544396174.wav": "bfa2f3fb72a05cbcb7c0000a460435f2d0eedca7c5cc90f01aacc89127df7f63",
+    "en_us/10235738076911595987.wav": "3802ffc3e69c66e0d2e66652015bff0c6b1b8498bfb8670623eb4e34bc9e008d",
+    "en_us/10323357556845456822.wav": "6b3081a29a5bb6fc6434e8525690edc26b23844841e119c916183f4ba1863372",
+    "en_us/10335587906469246566.wav": "14c9f40d7087ed487823917a9bc1838a037d78d315a694f7ace632651c612a61",
+    "en_us/10344335557154974057.wav": "8152d901627ad1bb88fee68b1f3adb706e33d2292bca02ef4d92465e2db4c84f",
+    "en_us/1036771894648013441.wav": "9514bffb9e0bd3397f2cf90041eff51b87e68293335f7ff904515a19f8d416e3",
+    "en_us/1038214857203833067.wav": "0471eb4c8306e143524c09a45c2b4137204ac2a19fc7ed896ed8391ac864347c",
+    "en_us/10383288285905292158.wav": "76e349546fc73bf40326c0ac33d62b87ffe7b5455afd825f431494e2f7690a8c",
+    "en_us/10405958125670257178.wav": "cd878b528dca67fdf3754d07a5d43c64dc3577e2105966ba529267d35dc5968b",
+    "en_us/10411016628242228511.wav": "f93693f080704373d85c2761a4fe12c2a2a4a6ea721576c5c3bf4226dfefa44c",
+    "en_us/1042003289011443756.wav": "80c74220cd80f918367c517e5ddff1ea9b2d366b7711b83a276a828564cfcc49",
+    "en_us/1043394666292127188.wav": "8c5d2b4634bab071370c4d03aca8134cdc25dc256f7409fe872dc82803d3b4c7",
+    "en_us/1045619486290403122.wav": "b32ac05d6df3e023930ff5687e27634e5ca78a44474437e634a794158654a4de",
+    "en_us/1046653381869710616.wav": "32bafaf58802bef28cbde443d173e51c0afe7c58c8260cb0f5776e2c60a2a3a5",
+    "en_us/10471564175308895403.wav": "5a56cbc0ec373f9873b762d79e8b6874c889ba07e2bd195c40098e84bd170f5e",
+    "en_us/10481451226514948764.wav": "6ba50cd176389e65cafd4172d0f6b9849dd12ee2962ee3b0f224bbf55e4a2365",
+    "en_us/10492135991603561867.wav": "ed78d88661c8f76d7b8951665a3c2e9adea23828fe3e70fd9df95465cb8f8ede",
+    "en_us/10492761258488775721.wav": "3f498f6216c60544714c9b334c4cfe4811b60b2dadbc710e68d127371a5ffdfd",
+    "en_us/10536763405165824117.wav": "efd479bbb60aebde59283b7cbb6ba748113d16799427a052c43fa02da5e68f8a",
+    "en_us/1054805305879816018.wav": "62a8881cf2a0aaec9fa70155b452ce23e5a46738490fe764011b927b24842ef1",
+    "en_us/10550734868852131138.wav": "3b008cd258b15a8c0ed5bdcaf26b3139b3fcfc8709509f0b2a279dc1bede4f7e",
+    "en_us/10614481583312370701.wav": "0f92f2bed63210286148e6947faf7ca90bb635ec7525bcb7f48bdedfe79b425d",
+    "en_us/10622204403793540766.wav": "aa4cd22d9233bf4c94a28c9eaa76fe7e0f20cfb60cfd0ce7690522f5ac7b0643",
+    "en_us/10731896540541531669.wav": "bf0d559b48ed4a6e241f81db66fe7224d615b63eea0cb04bde55f4b18ea95b33",
+    "en_us/10751756685109361684.wav": "07cce1e9fe871d0d584490855fcb02a029eb6a0cc6e37b316e39990c4164a1a2",
+    "en_us/10768814098664478369.wav": "72f827270ff9808e65b0ea15f47313207d360a0d5b49ad4c647b9c93fecb9f47",
+    "en_us/10849792007407044602.wav": "48040b2408179454e0299ee86e69c7f1e59c66003a8967aa3ae0b06e53eb654e",
+    "en_us/10861831846737909528.wav": "6684928f432514e69a5fb8157b817981e63f2c2697ce09c4dbe8a946e1a30062",
+    "en_us/10894616243452123700.wav": "7df2a964d8ce3931be897abeac59dd02669c709163fe23e928d917d31cf27601",
+    "en_us/10899527843662463911.wav": "6fb8634b7820a56c76d53120be3accf3c63059a338fdef4b0fe2ca09665ee0a8",
+    "en_us/10903101168349732260.wav": "6450b7622ccab79fd14d3d317c9d88e6e54bbad391004e12e0aa981bd77fb764",
+    "en_us/10933070083389897676.wav": "50a77dbf37a15f5529162b650c7c5f76486d9215cebb026a6be9f95aa9e65a01",
+    "en_us/10937407360976471523.wav": "5c67e2a8371caa74a5445a30dedd91dc43e4b6a8a7ffadbf67e06d7acc1349eb",
+    "en_us/10938576782105608041.wav": "34eef6d3531779f297c25d5f695baf92a37ef32149e293d79b9afac4ff36654c",
+    "en_us/10969774925516121312.wav": "087fbfdba69858b9397d67a2c80f34d827ce09a46e895ac1c7df97fc8c44d635",
+    "en_us/11060294228176938598.wav": "dd8c3487228312b2728a28872c02006f76df42ab0600b6957c0a46af31d274bd",
+    "spliced/000": "5a0c78a54d86eed0d160d26418dbfd01b474d6d8c6ecc465151d14cc3cc09e46",
+    "spliced/001": "be1e9f210fe5278cec6dfbd389255099b69be2014479c94e92ea7490a456a88a",
+    "spliced/002": "a208e239302c858caabf6e262c1c5e096465ca3161d937687bfc121cbaf7a65d",
+    "spliced/003": "f41d67c0383d53ce8253474d25d0e71b9884d96e73b21e6c205fcd38ee92cc6c",
+    "spliced/004": "81352ffae7e2e554c8151430035adae115e83f52087a38254c3638021217dbd5",
+    "spliced/005": "1395e46db142d30f368ca6878bc4b3f1816fc6334f91bfa43cde1d6e814adc92",
+    "spliced/006": "eaae1e3864dce72e4d398239c805f4c809a0e6e2bb69ae930ccff095ee09be17",
+    "spliced/007": "7dc5d587c59dac85a116ac5d91cf947932d670421a2da0cad963fce48f6b6521",
+    "spliced/008": "ca270c1be7b39cd0038b08db73027f459af24643069c7d4bba6634eda76e8d1f",
+    "spliced/009": "19cb57c734808ea705526520f40411ecb6ddf137b99b81bbb490d01fd4c20211",
+    "spliced/010": "ea6741679256df2b2a39646f6a9795353db011b0d3fb085a43c56138d272b032",
+    "spliced/011": "2460536259213211fc82731d575ce2bed3214b10063a5cf2f0eaa6100abb727d",
+    "spliced/012": "96060c376cf3dded292f8c57f3727f10ae3df2d651afc0051731b4b127124c3d",
+    "spliced/013": "6d9a7f08627394962df0783538a2be4c9b1e1aed18e3787e11d035e250d254c7",
+    "spliced/014": "4a695994b9ec954488b15b95eae1b9e14f9ccf686fbdea808d98aaceb673e0e2",
+    "spliced/015": "6cf3d7bbb03ba23eb5d7ad371766b87b720476c5c03c0f74cef9e333eed88faf",
+    "spliced/016": "3f426300e9ec5d16d45b2a919ec3e3419d6b6bb59fd3c7003e27077f88b65545",
+    "spliced/017": "94f71da18e084c04c75ced92e7e848bdd274ce9f7494ad7cbb58aee29bde890e",
+    "spliced/018": "51342a33af21bec0e3c557a0e0256feb0630d03dbcbf7e67ddb97ca04e174c48",
+    "spliced/019": "11b9fcab8c1888136cbd8f8bf28fcc9b8a4b1475237312ae78d40276f62c3390",
+    "silence_3": "4c3816b62692d83990026dd9530ee6aaaa679482f653eb0eaf43fe32760735f4",
+    "silence_10": "6b02308d1465dcc1c0ba4abeca19ffab0080e74dbc848eaca33e08e737e78b73",
+    "white_noise_3": "6098f4f730959ac45b7a6e15c0ef696468af7ef72244faf9d82d4064df8a01a1",
+    "white_noise_10": "12a6590ade4f41473637868b0d080e43e8c837f4af94febee170648a373df397"
+  },
+  "code_sha256": {
+    "stt/onnx_runner.py": "ed52a0b72f584ca57f2d230158a8d1b9c00d6ace745761d8e6a71e813c302b15",
+    "stt/release.py": "004b2fa0254a3a0e803bff39df87d60f7a84e7c06a6ab2de8c3961f8650250aa",
+    "stt/decode.py": "3b1d7188a0a591a61cdead4e371ebdca4d2e32687b115b2e86326a56b6f59c8d",
+    "stt/lm.py": "802a1897e6b669b042fa64996dc40587f9f94404c755f1f9b339b1acc82b7fa8",
+    "stt/features.py": "78fadbcebeec2011fd8b73a0f6d06a28f2ce7e5444299ca393751c883601525a",
+    "stt/vad.py": "134d574355213c06ea7760b1f3f825c0f0c1742195b393907e9753aca938b11b",
+    "stt/text.py": "d74abd1ed067e9f65436c502b919121df5911936a9aa09d24f47cadc67783d25",
+    "stt/eval.py": "ef965edf72dcb0b5a6cf36b50915de06b65603b8120bc68580cbed10a6b4c1d7",
+    "web/decode.js": "d780a30c1729ebb0140c9faf19bcaa9b6833b62b2430b48eae86b7999305cf5c",
+    "web/lm.js": "31884d4b376698d04d370d84df437205a44a70b68ed252c01a79e3bfafe45290",
+    "web/package.json": "c78d25ad1f930959ddfd8935aebe50858da707582e772b20d96df264876af482",
+    "tests/test_decoder_parity.py": "253744862e9950c453b67d529696bf70bb7d26748bf9ce2a359bd727bbf28c44"
+  },
+  "code_unchanged_during_run": true,
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "d74abd1ed067e9f65436c502b919121df5911936a9aa09d24f47cadc67783d25",
+  "scorer": "stt.eval.main",
+  "scorer_sha256": "ef965edf72dcb0b5a6cf36b50915de06b65603b8120bc68580cbed10a6b4c1d7",
+  "host": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 189 Stepping 1, GenuineIntel",
+    "logical_cpu_count": 8,
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "node": "v20.20.2",
+    "versions": {
+      "numpy": "2.5.4",
+      "onnxruntime": "1.31.0",
+      "soundfile": "0.14.0",
+      "num2words": "0.5.14"
+    },
+    "provider": "CPUExecutionProvider",
+    "ort_intra_op_threads": 0,
+    "thread_environment": {
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null,
+      "MKL_NUM_THREADS": null
+    }
+  },
+  "timing": {
+    "python_release_load_seconds": 0.28008459999909974,
+    "node": {
+      "ready": true,
+      "load_seconds": 0.014474299999999999
+    },
+    "vad": {
+      "clips": 104,
+      "audio_seconds": 1305.6,
+      "total_seconds": 52.4987872000238,
+      "rtf": 0.04021046813727313,
+      "realtime_factor_x": 24.869145929516026,
+      "stage_seconds": {
+        "vad": 8.842724500005716,
+        "segmentation": 0.0056707000330789015,
+        "mel": 13.338696600018011,
+        "acoustic": 9.05842999999004,
+        "decoder": 21.037064800024382
+      },
+      "other_seconds": 0.2162005999525718
+    },
+    "no_vad": {
+      "clips": 104,
+      "audio_seconds": 1305.6,
+      "total_seconds": 35.91865350001535,
+      "rtf": 0.02751122357537941,
+      "realtime_factor_x": 36.34880132684935,
+      "stage_seconds": {
+        "mel": 9.832050300014089,
+        "acoustic": 7.502038200014795,
+        "decoder": 18.57858640001723
+      },
+      "other_seconds": 0.00597859996923944
+    },
+    "per_clip": [
+      {
+        "id": "it_it/10000151032537989529.wav",
+        "group": "it_it",
+        "seconds": 11.52,
+        "read_hash_seconds": 0.001956100000825245,
+        "vad": {
+          "total_seconds": 0.2955379000013636,
+          "runtime_reported_seconds": 0.2955298999986553,
+          "stages": {
+            "vad": 0.03513999999995576,
+            "segmentation": 4.930000068270601e-05,
+            "mel": 0.011145399999804795,
+            "acoustic": 0.039607800001249416,
+            "decoder": 0.20825319999858038
+          },
+          "speech_fraction": 0.7805555555555556,
+          "detected_bounds_samples": [
+            [
+              23936,
+              174208
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.35976339999979245,
+          "stages": {
+            "mel": 0.03803229999903124,
+            "acoustic": 0.13023149999935413,
+            "decoder": 0.1914704000009806
+          }
+        }
+      },
+      {
+        "id": "it_it/10011138801715101183.wav",
+        "group": "it_it",
+        "seconds": 16.08,
+        "read_hash_seconds": 0.0012695000004896428,
+        "vad": {
+          "total_seconds": 0.47231530000135535,
+          "runtime_reported_seconds": 0.4723101999989012,
+          "stages": {
+            "vad": 0.04998720000003232,
+            "segmentation": 5.5900000006658956e-05,
+            "mel": 0.009068999999726657,
+            "acoustic": 0.12200060000031954,
+            "decoder": 0.289144700003817
+          },
+          "speech_fraction": 0.7117296222664016,
+          "detected_bounds_samples": [
+            [
+              18304,
+              88704
+            ],
+            [
+              89984,
+              148608
+            ],
+            [
+              149888,
+              225408
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.4511297999997623,
+          "stages": {
+            "mel": 0.1848772999983339,
+            "acoustic": 0.058506900000793394,
+            "decoder": 0.2077051999985997
+          }
+        }
+      },
+      {
+        "id": "it_it/10017896147709177739.wav",
+        "group": "it_it",
+        "seconds": 11.4,
+        "read_hash_seconds": 0.0013815000020258594,
+        "vad": {
+          "total_seconds": 0.2937308000000485,
+          "runtime_reported_seconds": 0.2937270999973407,
+          "stages": {
+            "vad": 0.03597720000107074,
+            "segmentation": 4.100000296602957e-05,
+            "mel": 0.00820209999801591,
+            "acoustic": 0.03725309999936144,
+            "decoder": 0.21085149999998976
+          },
+          "speech_fraction": 0.8123249299719888,
+          "detected_bounds_samples": [
+            [
+              14208,
+              172672
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.43577770000047167,
+          "stages": {
+            "mel": 0.1609865999998874,
+            "acoustic": 0.1019086000014795,
+            "decoder": 0.17284809999910067
+          }
+        }
+      },
+      {
+        "id": "it_it/10037759924455051213.wav",
+        "group": "it_it",
+        "seconds": 11.28,
+        "read_hash_seconds": 0.001048300000547897,
+        "vad": {
+          "total_seconds": 0.3743041000016092,
+          "runtime_reported_seconds": 0.3743008999990707,
+          "stages": {
+            "vad": 0.04240329999811365,
+            "segmentation": 5.860000237589702e-05,
+            "mel": 0.006694100000459002,
+            "acoustic": 0.10641360000226996,
+            "decoder": 0.2174696000001859
+          },
+          "speech_fraction": 0.8526912181303116,
+          "detected_bounds_samples": [
+            [
+              11648,
+              175232
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.29866949999995995,
+          "stages": {
+            "mel": 0.029306399999768473,
+            "acoustic": 0.0794333000012557,
+            "decoder": 0.18979030000264174
+          }
+        }
+      },
+      {
+        "id": "it_it/1006729518827641482.wav",
+        "group": "it_it",
+        "seconds": 7.08,
+        "read_hash_seconds": 0.0008686000001034699,
+        "vad": {
+          "total_seconds": 0.15814820000014151,
+          "runtime_reported_seconds": 0.1581458999971801,
+          "stages": {
+            "vad": 0.021300500000506872,
+            "segmentation": 3.6299999919719994e-05,
+            "mel": 0.012264900000445778,
+            "acoustic": 0.01268770000024233,
+            "decoder": 0.11133759999938775
+          },
+          "speech_fraction": 0.7657657657657657,
+          "detected_bounds_samples": [
+            [
+              11136,
+              105600
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.23154630000135512,
+          "stages": {
+            "mel": 0.08102539999890723,
+            "acoustic": 0.019925799999327864,
+            "decoder": 0.13044450000234065
+          }
+        }
+      },
+      {
+        "id": "it_it/10127750728509182272.wav",
+        "group": "it_it",
+        "seconds": 12.0,
+        "read_hash_seconds": 0.0013736999972024933,
+        "vad": {
+          "total_seconds": 0.5687940000025264,
+          "runtime_reported_seconds": 0.5687901999990572,
+          "stages": {
+            "vad": 0.08718429999862565,
+            "segmentation": 4.3399999412940815e-05,
+            "mel": 0.17440460000216262,
+            "acoustic": 0.16585670000131358,
+            "decoder": 0.13999089999924763
+          },
+          "speech_fraction": 0.43733333333333335,
+          "detected_bounds_samples": [
+            [
+              42368,
+              136832
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.3171939999992901,
+          "stages": {
+            "mel": 0.12654699999984587,
+            "acoustic": 0.052391200002603,
+            "decoder": 0.1382262000006449
+          }
+        }
+      },
+      {
+        "id": "it_it/10159398106668856572.wav",
+        "group": "it_it",
+        "seconds": 14.34,
+        "read_hash_seconds": 0.006665700002486119,
+        "vad": {
+          "total_seconds": 0.4573201999992307,
+          "runtime_reported_seconds": 0.45731420000083745,
+          "stages": {
+            "vad": 0.12315190000299481,
+            "segmentation": 6.339999890769832e-05,
+            "mel": 0.12767140000141808,
+            "acoustic": 0.03534880000006524,
+            "decoder": 0.16946539999480592
+          },
+          "speech_fraction": 0.6146993318485523,
+          "detected_bounds_samples": [
+            [
+              33152,
+              87168
+            ],
+            [
+              86912,
+              187520
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.35838370000055875,
+          "stages": {
+            "mel": 0.03978089999873191,
+            "acoustic": 0.10071640000023763,
+            "decoder": 0.21785230000023148
+          }
+        }
+      },
+      {
+        "id": "it_it/10163392299961827450.wav",
+        "group": "it_it",
+        "seconds": 17.88,
+        "read_hash_seconds": 0.0023114999967219774,
+        "vad": {
+          "total_seconds": 0.7323622999974759,
+          "runtime_reported_seconds": 0.7323570000007749,
+          "stages": {
+            "vad": 0.10921400000006543,
+            "segmentation": 5.2299998060334474e-05,
+            "mel": 0.20132809999631718,
+            "acoustic": 0.08429160000014235,
+            "decoder": 0.33537770000475575
+          },
+          "speech_fraction": 0.7155635062611807,
+          "detected_bounds_samples": [
+            [
+              25472,
+              98944
+            ],
+            [
+              97152,
+              148096
+            ],
+            [
+              152960,
+              255104
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.3852323000028264,
+          "stages": {
+            "mel": 0.09734759999992093,
+            "acoustic": 0.07553940000070725,
+            "decoder": 0.21230710000236286
+          }
+        }
+      },
+      {
+        "id": "it_it/10166843301601278560.wav",
+        "group": "it_it",
+        "seconds": 11.88,
+        "read_hash_seconds": 0.006705799998599105,
+        "vad": {
+          "total_seconds": 0.5777527999998711,
+          "runtime_reported_seconds": 0.5777470000030007,
+          "stages": {
+            "vad": 0.07719250000081956,
+            "segmentation": 4.270000135875307e-05,
+            "mel": 0.1602195000014035,
+            "acoustic": 0.12365820000195527,
+            "decoder": 0.21556599999894388
+          },
+          "speech_fraction": 0.7741935483870968,
+          "detected_bounds_samples": [
+            [
+              16768,
+              173696
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.318574400000216,
+          "stages": {
+            "mel": 0.16286780000154977,
+            "acoustic": 0.022925600002054125,
+            "decoder": 0.13274549999914598
+          }
+        }
+      },
+      {
+        "id": "it_it/10168148107941542925.wav",
+        "group": "it_it",
+        "seconds": 12.12,
+        "read_hash_seconds": 0.0063236999994842336,
+        "vad": {
+          "total_seconds": 0.3707438000019465,
+          "runtime_reported_seconds": 0.370740599999408,
+          "stages": {
+            "vad": 0.06588050000209478,
+            "segmentation": 4.760000228998251e-05,
+            "mel": 0.1217733000012231,
+            "acoustic": 0.05693320000136737,
+            "decoder": 0.12461950000215438
+          },
+          "speech_fraction": 0.6121372031662269,
+          "detected_bounds_samples": [
+            [
+              20352,
+              81536
+            ],
+            [
+              79232,
+              158848
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.3641845000020112,
+          "stages": {
+            "mel": 0.09786049999820534,
+            "acoustic": 0.05128169999807142,
+            "decoder": 0.21500590000141528
+          }
+        }
+      },
+      {
+        "id": "it_it/10173541521390065753.wav",
+        "group": "it_it",
+        "seconds": 9.54,
+        "read_hash_seconds": 0.0010963000022456981,
+        "vad": {
+          "total_seconds": 0.515396700000565,
+          "runtime_reported_seconds": 0.5153940000018338,
+          "stages": {
+            "vad": 0.0571313000000373,
+            "segmentation": 3.819999983534217e-05,
+            "mel": 0.1416054000001168,
+            "acoustic": 0.13450419999935548,
+            "decoder": 0.18102769999677548
+          },
+          "speech_fraction": 0.7993311036789298,
+          "detected_bounds_samples": [
+            [
+              11648,
+              142464
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.24474499999996624,
+          "stages": {
+            "mel": 0.07515889999922365,
+            "acoustic": 0.016519599997991463,
+            "decoder": 0.15304180000021006
+          }
+        }
+      },
+      {
+        "id": "it_it/10210638754804006465.wav",
+        "group": "it_it",
+        "seconds": 6.54,
+        "read_hash_seconds": 0.004584400001476752,
+        "vad": {
+          "total_seconds": 0.40332760000092094,
+          "runtime_reported_seconds": 0.40332459999990533,
+          "stages": {
+            "vad": 0.04679509999914444,
+            "segmentation": 3.360000118846074e-05,
+            "mel": 0.16844120000314433,
+            "acoustic": 0.041236299999582116,
+            "decoder": 0.14632290000008652
+          },
+          "speech_fraction": 0.697560975609756,
+          "detected_bounds_samples": [
+            [
+              14208,
+              93824
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.41098389999751817,
+          "stages": {
+            "mel": 0.1235515000007581,
+            "acoustic": 0.1845038999999815,
+            "decoder": 0.10290150000219
+          }
+        }
+      },
+      {
+        "id": "it_it/1021451608744266497.wav",
+        "group": "it_it",
+        "seconds": 15.18,
+        "read_hash_seconds": 0.0015128999984881375,
+        "vad": {
+          "total_seconds": 0.5397687000004225,
+          "runtime_reported_seconds": 0.5397658000001684,
+          "stages": {
+            "vad": 0.09820979999858537,
+            "segmentation": 6.679999933112413e-05,
+            "mel": 0.0477960999996867,
+            "acoustic": 0.13304369999968912,
+            "decoder": 0.25041050000072573
+          },
+          "speech_fraction": 0.8273684210526315,
+          "detected_bounds_samples": [
+            [
+              13696,
+              64640
+            ],
+            [
+              63360,
+              89216
+            ],
+            [
+              86912,
+              233088
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.36265759999878355,
+          "stages": {
+            "mel": 0.09343510000326205,
+            "acoustic": 0.10979569999835803,
+            "decoder": 0.15938670000105049
+          }
+        }
+      },
+      {
+        "id": "it_it/10225734229056439938.wav",
+        "group": "it_it",
+        "seconds": 17.76,
+        "read_hash_seconds": 0.01402349999989383,
+        "vad": {
+          "total_seconds": 0.8025675999997475,
+          "runtime_reported_seconds": 0.802563299999747,
+          "stages": {
+            "vad": 0.10837130000072648,
+            "segmentation": 7.579999873996712e-05,
+            "mel": 0.30315169999812497,
+            "acoustic": 0.12466840000342927,
+            "decoder": 0.264238399999158
+          },
+          "speech_fraction": 0.8504504504504504,
+          "detected_bounds_samples": [
+            [
+              15744,
+              145536
+            ],
+            [
+              144256,
+              273536
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.37140199999703327,
+          "stages": {
+            "mel": 0.09879839999848627,
+            "acoustic": 0.05745740000202204,
+            "decoder": 0.21511269999973592
+          }
+        }
+      },
+      {
+        "id": "it_it/1024005671072986451.wav",
+        "group": "it_it",
+        "seconds": 15.9,
+        "read_hash_seconds": 0.008144300001731608,
+        "vad": {
+          "total_seconds": 0.723352299999533,
+          "runtime_reported_seconds": 0.7233468999984325,
+          "stages": {
+            "vad": 0.12391239999851678,
+            "segmentation": 6.829999983892776e-05,
+            "mel": 0.1594411999976728,
+            "acoustic": 0.13835850000032224,
+            "decoder": 0.2996815999977116
+          },
+          "speech_fraction": 0.6680080482897385,
+          "detected_bounds_samples": [
+            [
+              19328,
+              51328
+            ],
+            [
+              52096,
+              92800
+            ],
+            [
+              94592,
+              176256
+            ],
+            [
+              175488,
+              217216
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.3436881999987236,
+          "stages": {
+            "mel": 0.1014480999983789,
+            "acoustic": 0.03504619999876013,
+            "decoder": 0.20716349999929662
+          }
+        }
+      },
+      {
+        "id": "it_it/10275928643200034491.wav",
+        "group": "it_it",
+        "seconds": 19.38,
+        "read_hash_seconds": 0.013806200000544777,
+        "vad": {
+          "total_seconds": 0.8549845000015921,
+          "runtime_reported_seconds": 0.854980300002353,
+          "stages": {
+            "vad": 0.10239250000086031,
+            "segmentation": 7.530000220867805e-05,
+            "mel": 0.34158920000118087,
+            "acoustic": 0.1027031999983592,
+            "decoder": 0.30583889999979874
+          },
+          "speech_fraction": 0.7557755775577558,
+          "detected_bounds_samples": [
+            [
+              17792,
+              71808
+            ],
+            [
+              73600,
+              147584
+            ],
+            [
+              153984,
+              228992
+            ],
+            [
+              231808,
+              299648
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.3702510999974038,
+          "stages": {
+            "mel": 0.118482199999562,
+            "acoustic": 0.046736100000998704,
+            "decoder": 0.20499610000115354
+          }
+        }
+      },
+      {
+        "id": "it_it/10294884782884582016.wav",
+        "group": "it_it",
+        "seconds": 21.48,
+        "read_hash_seconds": 0.006817899997258792,
+        "vad": {
+          "total_seconds": 0.7162025999969046,
+          "runtime_reported_seconds": 0.7161940000005416,
+          "stages": {
+            "vad": 0.14759290000074543,
+            "segmentation": 9.15000018721912e-05,
+            "mel": 0.12914760000057868,
+            "acoustic": 0.09427769999820157,
+            "decoder": 0.3425601000053575
+          },
+          "speech_fraction": 0.6994047619047619,
+          "detected_bounds_samples": [
+            [
+              15744,
+              40064
+            ],
+            [
+              41856,
+              103552
+            ],
+            [
+              111488,
+              140928
+            ],
+            [
+              140160,
+              167552
+            ],
+            [
+              172416,
+              240768
+            ],
+            [
+              242560,
+              271488
+            ],
+            [
+              270208,
+              320640
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 7
+        },
+        "no_vad": {
+          "total_seconds": 0.34942919999957667,
+          "stages": {
+            "mel": 0.06220799999937299,
+            "acoustic": 0.05489849999867147,
+            "decoder": 0.23228919999746722
+          }
+        }
+      },
+      {
+        "id": "it_it/10324513969638088871.wav",
+        "group": "it_it",
+        "seconds": 18.78,
+        "read_hash_seconds": 0.00806160000138334,
+        "vad": {
+          "total_seconds": 0.7263530999989598,
+          "runtime_reported_seconds": 0.7263487999989593,
+          "stages": {
+            "vad": 0.11158699999941746,
+            "segmentation": 6.660000144620426e-05,
+            "mel": 0.1338294000015594,
+            "acoustic": 0.15668680000089807,
+            "decoder": 0.32217300000047544
+          },
+          "speech_fraction": 0.8500851788756388,
+          "detected_bounds_samples": [
+            [
+              16768,
+              287872
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.3463763999970979,
+          "stages": {
+            "mel": 0.09053440000207047,
+            "acoustic": 0.03817010000057053,
+            "decoder": 0.21763640000062878
+          }
+        }
+      },
+      {
+        "id": "it_it/10331901392264121024.wav",
+        "group": "it_it",
+        "seconds": 16.74,
+        "read_hash_seconds": 0.008920100000977982,
+        "vad": {
+          "total_seconds": 0.6846420000001672,
+          "runtime_reported_seconds": 0.6846350999985589,
+          "stages": {
+            "vad": 0.08660589999999502,
+            "segmentation": 6.330000178422779e-05,
+            "mel": 0.2298147000001336,
+            "acoustic": 0.11454830000002403,
+            "decoder": 0.25191149999955087
+          },
+          "speech_fraction": 0.8435114503816794,
+          "detected_bounds_samples": [
+            [
+              13184,
+              77440
+            ],
+            [
+              78720,
+              260224
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.2743878000001132,
+          "stages": {
+            "mel": 0.010876100001041777,
+            "acoustic": 0.045604099999764,
+            "decoder": 0.2178724000004877
+          }
+        }
+      },
+      {
+        "id": "it_it/10363722267618555781.wav",
+        "group": "it_it",
+        "seconds": 8.28,
+        "read_hash_seconds": 0.00753689999692142,
+        "vad": {
+          "total_seconds": 0.25170839999918826,
+          "runtime_reported_seconds": 0.2517054999989341,
+          "stages": {
+            "vad": 0.07100360000185901,
+            "segmentation": 5.060000330558978e-05,
+            "mel": 0.028625599999941187,
+            "acoustic": 0.016900800001167227,
+            "decoder": 0.13417019999906188
+          },
+          "speech_fraction": 0.7258687258687259,
+          "detected_bounds_samples": [
+            [
+              14208,
+              118400
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.35548740000012913,
+          "stages": {
+            "mel": 0.13938810000036028,
+            "acoustic": 0.08478259999901638,
+            "decoder": 0.1312778999999864
+          }
+        }
+      },
+      {
+        "id": "it_it/1040642958705021773.wav",
+        "group": "it_it",
+        "seconds": 12.18,
+        "read_hash_seconds": 0.0014102999994065613,
+        "vad": {
+          "total_seconds": 0.49310650000188616,
+          "runtime_reported_seconds": 0.49310249999689404,
+          "stages": {
+            "vad": 0.09081569999761996,
+            "segmentation": 5.6799999583745375e-05,
+            "mel": 0.08592439999847556,
+            "acoustic": 0.12086859999544686,
+            "decoder": 0.1939957000031427
+          },
+          "speech_fraction": 0.7034120734908137,
+          "detected_bounds_samples": [
+            [
+              23424,
+              69760
+            ],
+            [
+              70016,
+              173696
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.42603410000083386,
+          "stages": {
+            "mel": 0.1689157000000705,
+            "acoustic": 0.0935375999979442,
+            "decoder": 0.1635543999982474
+          }
+        }
+      },
+      {
+        "id": "it_it/10421376619578532077.wav",
+        "group": "it_it",
+        "seconds": 8.82,
+        "read_hash_seconds": 0.008916700000554556,
+        "vad": {
+          "total_seconds": 0.5122152000003553,
+          "runtime_reported_seconds": 0.5122112999997626,
+          "stages": {
+            "vad": 0.06101879999914672,
+            "segmentation": 6.149999899207614e-05,
+            "mel": 0.17467100000067148,
+            "acoustic": 0.10781280000082916,
+            "decoder": 0.16776650000247173
+          },
+          "speech_fraction": 0.5362318840579711,
+          "detected_bounds_samples": [
+            [
+              15232,
+              100480
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.23418239999955404,
+          "stages": {
+            "mel": 0.005307799998263363,
+            "acoustic": 0.09683080000104383,
+            "decoder": 0.1316893999974127
+          }
+        }
+      },
+      {
+        "id": "it_it/10434945468030652443.wav",
+        "group": "it_it",
+        "seconds": 17.28,
+        "read_hash_seconds": 0.0071746000030543655,
+        "vad": {
+          "total_seconds": 0.7212515999999596,
+          "runtime_reported_seconds": 0.7212461999988591,
+          "stages": {
+            "vad": 0.14227609999943525,
+            "segmentation": 5.729999975301325e-05,
+            "mel": 0.15660140000181855,
+            "acoustic": 0.1569701000044006,
+            "decoder": 0.2635952999989968
+          },
+          "speech_fraction": 0.5925925925925926,
+          "detected_bounds_samples": [
+            [
+              36224,
+              58496
+            ],
+            [
+              59264,
+              93312
+            ],
+            [
+              97664,
+              139904
+            ],
+            [
+              140672,
+              173696
+            ],
+            [
+              176512,
+              245888
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 5
+        },
+        "no_vad": {
+          "total_seconds": 0.38932220000060624,
+          "stages": {
+            "mel": 0.13151030000153696,
+            "acoustic": 0.06981169999926351,
+            "decoder": 0.18795980000140844
+          }
+        }
+      },
+      {
+        "id": "it_it/10437794928490533393.wav",
+        "group": "it_it",
+        "seconds": 13.08,
+        "read_hash_seconds": 0.007090099999913946,
+        "vad": {
+          "total_seconds": 0.5650549000019964,
+          "runtime_reported_seconds": 0.565048399999796,
+          "stages": {
+            "vad": 0.11604440000155591,
+            "segmentation": 6.659999780822545e-05,
+            "mel": 0.02380789999733679,
+            "acoustic": 0.15333880000252975,
+            "decoder": 0.2703183000012359
+          },
+          "speech_fraction": 0.8312958435207825,
+          "detected_bounds_samples": [
+            [
+              19328,
+              202368
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.2926815999999235,
+          "stages": {
+            "mel": 0.03398790000210283,
+            "acoustic": 0.09111459999985527,
+            "decoder": 0.16754729999956908
+          }
+        }
+      },
+      {
+        "id": "it_it/10479866160281873942.wav",
+        "group": "it_it",
+        "seconds": 14.16,
+        "read_hash_seconds": 0.0012013000014121644,
+        "vad": {
+          "total_seconds": 0.640036600001622,
+          "runtime_reported_seconds": 0.6400301000030595,
+          "stages": {
+            "vad": 0.09128639999835286,
+            "segmentation": 4.489999992074445e-05,
+            "mel": 0.15056149999873014,
+            "acoustic": 0.17537330000050133,
+            "decoder": 0.22081840000100783
+          },
+          "speech_fraction": 0.8577878103837472,
+          "detected_bounds_samples": [
+            [
+              10624,
+              122496
+            ],
+            [
+              121216,
+              216704
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.3190518000010343,
+          "stages": {
+            "mel": 0.12378439999883994,
+            "acoustic": 0.027018799999495968,
+            "decoder": 0.16822099999990314
+          }
+        }
+      },
+      {
+        "id": "it_it/10503040099407806416.wav",
+        "group": "it_it",
+        "seconds": 7.5,
+        "read_hash_seconds": 0.009588000000803731,
+        "vad": {
+          "total_seconds": 0.36283650000041234,
+          "runtime_reported_seconds": 0.36283259999981965,
+          "stages": {
+            "vad": 0.05140219999884721,
+            "segmentation": 3.2899999496294186e-05,
+            "mel": 0.15412149999974645,
+            "acoustic": 0.028698199999780627,
+            "decoder": 0.12817500000164728
+          },
+          "speech_fraction": 0.7276595744680852,
+          "detected_bounds_samples": [
+            [
+              12672,
+              106624
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.3091472000014619,
+          "stages": {
+            "mel": 0.08962729999984731,
+            "acoustic": 0.10948329999882844,
+            "decoder": 0.11001140000007581
+          }
+        }
+      },
+      {
+        "id": "it_it/10529316262657848687.wav",
+        "group": "it_it",
+        "seconds": 29.52,
+        "read_hash_seconds": 0.002738600000157021,
+        "vad": {
+          "total_seconds": 1.324862800000119,
+          "runtime_reported_seconds": 1.3248593000025721,
+          "stages": {
+            "vad": 0.18147420000241254,
+            "segmentation": 7.499999992433004e-05,
+            "mel": 0.41759340000498923,
+            "acoustic": 0.22341239999514073,
+            "decoder": 0.4990631000036956
+          },
+          "speech_fraction": 0.7843986998916577,
+          "detected_bounds_samples": [
+            [
+              16256,
+              39040
+            ],
+            [
+              38272,
+              77952
+            ],
+            [
+              78720,
+              140928
+            ],
+            [
+              141184,
+              203392
+            ],
+            [
+              204160,
+              264320
+            ],
+            [
+              270208,
+              318080
+            ],
+            [
+              318848,
+              354432
+            ],
+            [
+              352128,
+              373888
+            ],
+            [
+              371584,
+              458880
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 9
+        },
+        "no_vad": {
+          "total_seconds": 0.44505130000106874,
+          "stages": {
+            "mel": 0.020962800001143478,
+            "acoustic": 0.10367390000101295,
+            "decoder": 0.32038289999763947
+          }
+        }
+      },
+      {
+        "id": "it_it/10536267797820820051.wav",
+        "group": "it_it",
+        "seconds": 14.28,
+        "read_hash_seconds": 0.005869700002222089,
+        "vad": {
+          "total_seconds": 0.7437393000000156,
+          "runtime_reported_seconds": 0.7437361999982386,
+          "stages": {
+            "vad": 0.09282290000192006,
+            "segmentation": 7.120000009308569e-05,
+            "mel": 0.2557133000045724,
+            "acoustic": 0.20087590000184719,
+            "decoder": 0.19265429999359185
+          },
+          "speech_fraction": 0.7785234899328859,
+          "detected_bounds_samples": [
+            [
+              12160,
+              91264
+            ],
+            [
+              90496,
+              159360
+            ],
+            [
+              158592,
+              177280
+            ],
+            [
+              175488,
+              218752
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.28229519999877084,
+          "stages": {
+            "mel": 0.025067399998079054,
+            "acoustic": 0.042305400002078386,
+            "decoder": 0.21488700000190875
+          }
+        }
+      },
+      {
+        "id": "it_it/10557144981026796249.wav",
+        "group": "it_it",
+        "seconds": 16.32,
+        "read_hash_seconds": 0.01057569999829866,
+        "vad": {
+          "total_seconds": 0.7176538999992772,
+          "runtime_reported_seconds": 0.7176507000003767,
+          "stages": {
+            "vad": 0.10309570000026724,
+            "segmentation": 5.390000296756625e-05,
+            "mel": 0.30367409999962547,
+            "acoustic": 0.12492439999914495,
+            "decoder": 0.18402699999933247
+          },
+          "speech_fraction": 0.6705882352941176,
+          "detected_bounds_samples": [
+            [
+              29056,
+              100992
+            ],
+            [
+              101760,
+              195712
+            ],
+            [
+              196480,
+              231040
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.2965972999991209,
+          "stages": {
+            "mel": 0.032690899999579415,
+            "acoustic": 0.07174179999856278,
+            "decoder": 0.19212919999699807
+          }
+        }
+      },
+      {
+        "id": "it_it/10568286449112693066.wav",
+        "group": "it_it",
+        "seconds": 12.06,
+        "read_hash_seconds": 0.006660799997916911,
+        "vad": {
+          "total_seconds": 0.4596205000016198,
+          "runtime_reported_seconds": 0.4596157999985735,
+          "stages": {
+            "vad": 0.15061280000008992,
+            "segmentation": 6.600000051548705e-05,
+            "mel": 0.00655689999985043,
+            "acoustic": 0.12514010000086273,
+            "decoder": 0.17583539999759523
+          },
+          "speech_fraction": 0.6472148541114059,
+          "detected_bounds_samples": [
+            [
+              23936,
+              91776
+            ],
+            [
+              93568,
+              163456
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.3360147000021243,
+          "stages": {
+            "mel": 0.035860300002241274,
+            "acoustic": 0.12295889999950305,
+            "decoder": 0.17716220000147587
+          }
+        }
+      },
+      {
+        "id": "it_it/10571870825120879633.wav",
+        "group": "it_it",
+        "seconds": 9.54,
+        "read_hash_seconds": 0.00648179999916465,
+        "vad": {
+          "total_seconds": 0.4287473000003956,
+          "runtime_reported_seconds": 0.428742100000818,
+          "stages": {
+            "vad": 0.07164019999981974,
+            "segmentation": 4.930000068270601e-05,
+            "mel": 0.09262550000130432,
+            "acoustic": 0.05862949999936973,
+            "decoder": 0.20447309999872232
+          },
+          "speech_fraction": 0.7558528428093646,
+          "detected_bounds_samples": [
+            [
+              13696,
+              136832
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.36483339999904274,
+          "stages": {
+            "mel": 0.13262800000302377,
+            "acoustic": 0.12242700000206241,
+            "decoder": 0.10973960000046645
+          }
+        }
+      },
+      {
+        "id": "it_it/1061754421613910766.wav",
+        "group": "it_it",
+        "seconds": 13.68,
+        "read_hash_seconds": 0.005999700002575992,
+        "vad": {
+          "total_seconds": 0.6663880000014615,
+          "runtime_reported_seconds": 0.6663828999990073,
+          "stages": {
+            "vad": 0.11526869999943301,
+            "segmentation": 4.230000195093453e-05,
+            "mel": 0.15489579999848502,
+            "acoustic": 0.1301753000007011,
+            "decoder": 0.2645106999989366
+          },
+          "speech_fraction": 0.8364485981308412,
+          "detected_bounds_samples": [
+            [
+              15232,
+              206464
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.2721281000012823,
+          "stages": {
+            "mel": 0.02180679999946733,
+            "acoustic": 0.09207940000123926,
+            "decoder": 0.1582111999996414
+          }
+        }
+      },
+      {
+        "id": "it_it/10663019413117022741.wav",
+        "group": "it_it",
+        "seconds": 14.7,
+        "read_hash_seconds": 0.007427399999869522,
+        "vad": {
+          "total_seconds": 0.5282287999980326,
+          "runtime_reported_seconds": 0.5282249000010779,
+          "stages": {
+            "vad": 0.12032530000215047,
+            "segmentation": 5.869999949936755e-05,
+            "mel": 0.053602400003001094,
+            "acoustic": 0.12309969999841996,
+            "decoder": 0.22941939999873284
+          },
+          "speech_fraction": 0.8478260869565217,
+          "detected_bounds_samples": [
+            [
+              10624,
+              36992
+            ],
+            [
+              34688,
+              223872
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.4603919000001042,
+          "stages": {
+            "mel": 0.17505960000198684,
+            "acoustic": 0.09100709999984247,
+            "decoder": 0.19429149999996298
+          }
+        }
+      },
+      {
+        "id": "it_it/10669712606378135112.wav",
+        "group": "it_it",
+        "seconds": 14.4,
+        "read_hash_seconds": 0.001259699998627184,
+        "vad": {
+          "total_seconds": 0.6793214999997872,
+          "runtime_reported_seconds": 0.6793117000015627,
+          "stages": {
+            "vad": 0.14298060000146506,
+            "segmentation": 4.999999873689376e-05,
+            "mel": 0.2148468999985198,
+            "acoustic": 0.08739689999856637,
+            "decoder": 0.23223490000600577
+          },
+          "speech_fraction": 0.7422222222222222,
+          "detected_bounds_samples": [
+            [
+              14720,
+              50304
+            ],
+            [
+              51072,
+              134784
+            ],
+            [
+              134016,
+              162432
+            ],
+            [
+              161664,
+              215168
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.4082401000014215,
+          "stages": {
+            "mel": 0.14558820000092965,
+            "acoustic": 0.04652269999860437,
+            "decoder": 0.21598680000170134
+          }
+        }
+      },
+      {
+        "id": "it_it/10707717394504269796.wav",
+        "group": "it_it",
+        "seconds": 20.46,
+        "read_hash_seconds": 0.0026018000025942456,
+        "vad": {
+          "total_seconds": 0.7124607000005199,
+          "runtime_reported_seconds": 0.7124578000002657,
+          "stages": {
+            "vad": 0.09857869999905233,
+            "segmentation": 9.159999899566174e-05,
+            "mel": 0.04910319999544299,
+            "acoustic": 0.14968129999761004,
+            "decoder": 0.4126637999979721
+          },
+          "speech_fraction": 0.753125,
+          "detected_bounds_samples": [
+            [
+              10112,
+              60544
+            ],
+            [
+              62336,
+              91776
+            ],
+            [
+              92544,
+              128640
+            ],
+            [
+              128384,
+              166016
+            ],
+            [
+              164736,
+              212096
+            ],
+            [
+              212864,
+              262272
+            ],
+            [
+              262528,
+              309888
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 7
+        },
+        "no_vad": {
+          "total_seconds": 0.4234366999990016,
+          "stages": {
+            "mel": 0.13812759999927948,
+            "acoustic": 0.07060279999859631,
+            "decoder": 0.21466940000027535
+          }
+        }
+      },
+      {
+        "id": "it_it/10713904656493882072.wav",
+        "group": "it_it",
+        "seconds": 9.0,
+        "read_hash_seconds": 0.011584899999434128,
+        "vad": {
+          "total_seconds": 0.3643314000000828,
+          "runtime_reported_seconds": 0.36432870000135154,
+          "stages": {
+            "vad": 0.04856139999901643,
+            "segmentation": 4.260000059730373e-05,
+            "mel": 0.15162100000088685,
+            "acoustic": 0.01745389999996405,
+            "decoder": 0.1456255000011879
+          },
+          "speech_fraction": 0.8368794326241135,
+          "detected_bounds_samples": [
+            [
+              8064,
+              138368
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.32531740000194986,
+          "stages": {
+            "mel": 0.10269650000191177,
+            "acoustic": 0.0447243000016897,
+            "decoder": 0.17786350000096718
+          }
+        }
+      },
+      {
+        "id": "it_it/10724761538669846878.wav",
+        "group": "it_it",
+        "seconds": 12.48,
+        "read_hash_seconds": 0.0013080999997328036,
+        "vad": {
+          "total_seconds": 0.5312656999994942,
+          "runtime_reported_seconds": 0.5312604999999166,
+          "stages": {
+            "vad": 0.08734040000126697,
+            "segmentation": 6.669999856967479e-05,
+            "mel": 0.15998479999689152,
+            "acoustic": 0.09141360000285204,
+            "decoder": 0.1865661000010732
+          },
+          "speech_fraction": 0.6692307692307692,
+          "detected_bounds_samples": [
+            [
+              18304,
+              91264
+            ],
+            [
+              93568,
+              168576
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.3975532000004023,
+          "stages": {
+            "mel": 0.15061280000008992,
+            "acoustic": 0.10494689999904949,
+            "decoder": 0.1419605999981286
+          }
+        }
+      },
+      {
+        "id": "it_it/10775229660857585342.wav",
+        "group": "it_it",
+        "seconds": 9.6,
+        "read_hash_seconds": 0.008707599998160731,
+        "vad": {
+          "total_seconds": 0.44268920000104117,
+          "runtime_reported_seconds": 0.4426856000027328,
+          "stages": {
+            "vad": 0.08102389999839943,
+            "segmentation": 4.090000220458023e-05,
+            "mel": 0.15733539999928325,
+            "acoustic": 0.02258580000125221,
+            "decoder": 0.18061690000104136
+          },
+          "speech_fraction": 0.8166666666666667,
+          "detected_bounds_samples": [
+            [
+              8064,
+              142976
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.2885375000005297,
+          "stages": {
+            "mel": 0.005534300002182135,
+            "acoustic": 0.08891349999976228,
+            "decoder": 0.19406080000044312
+          }
+        }
+      },
+      {
+        "id": "it_it/10817315806590584870.wav",
+        "group": "it_it",
+        "seconds": 25.92,
+        "read_hash_seconds": 0.008225800000218442,
+        "vad": {
+          "total_seconds": 1.2312504000001354,
+          "runtime_reported_seconds": 1.2312455999999656,
+          "stages": {
+            "vad": 0.15997219999917434,
+            "segmentation": 0.00014209999790182337,
+            "mel": 0.46829759999673115,
+            "acoustic": 0.13432249999823398,
+            "decoder": 0.46547170000485494
+          },
+          "speech_fraction": 0.7666666666666667,
+          "detected_bounds_samples": [
+            [
+              13184,
+              37504
+            ],
+            [
+              36224,
+              104576
+            ],
+            [
+              104832,
+              142976
+            ],
+            [
+              146304,
+              201344
+            ],
+            [
+              205696,
+              233600
+            ],
+            [
+              231296,
+              315520
+            ],
+            [
+              319360,
+              363136
+            ],
+            [
+              360832,
+              399488
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 8
+        },
+        "no_vad": {
+          "total_seconds": 0.4017740999988746,
+          "stages": {
+            "mel": 0.01596849999987171,
+            "acoustic": 0.08240139999907115,
+            "decoder": 0.3033729000017047
+          }
+        }
+      },
+      {
+        "id": "it_it/1086199108496852370.wav",
+        "group": "it_it",
+        "seconds": 8.52,
+        "read_hash_seconds": 0.011218300001928583,
+        "vad": {
+          "total_seconds": 0.388645600000018,
+          "runtime_reported_seconds": 0.3886418000001868,
+          "stages": {
+            "vad": 0.08815289999984088,
+            "segmentation": 4.030000127386302e-05,
+            "mel": 0.02161060000071302,
+            "acoustic": 0.084784499998932,
+            "decoder": 0.19305100000201492
+          },
+          "speech_fraction": 0.7415730337078652,
+          "detected_bounds_samples": [
+            [
+              13184,
+              122496
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.33517639999990934,
+          "stages": {
+            "mel": 0.029911400000855792,
+            "acoustic": 0.12089940000078059,
+            "decoder": 0.18432409999877564
+          }
+        }
+      },
+      {
+        "id": "en_us/1003119935936341070.wav",
+        "group": "en_us",
+        "seconds": 10.56,
+        "read_hash_seconds": 0.0010565999982645735,
+        "vad": {
+          "total_seconds": 0.4300081000001228,
+          "runtime_reported_seconds": 0.4300002999989374,
+          "stages": {
+            "vad": 0.0560998999972071,
+            "segmentation": 4.489999992074445e-05,
+            "mel": 0.14969409999685013,
+            "acoustic": 0.08523059999788529,
+            "decoder": 0.1375547000025108
+          },
+          "speech_fraction": 0.6060606060606061,
+          "detected_bounds_samples": [
+            [
+              14208,
+              28800
+            ],
+            [
+              30080,
+              62592
+            ],
+            [
+              67968,
+              143488
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.2896400000026915,
+          "stages": {
+            "mel": 0.028008500001305947,
+            "acoustic": 0.027810899999167304,
+            "decoder": 0.23366750000059255
+          }
+        }
+      },
+      {
+        "id": "en_us/10052240106321793346.wav",
+        "group": "en_us",
+        "seconds": 8.76,
+        "read_hash_seconds": 0.0009742000002006534,
+        "vad": {
+          "total_seconds": 0.26240689999758615,
+          "runtime_reported_seconds": 0.26240429999961634,
+          "stages": {
+            "vad": 0.035577099999500206,
+            "segmentation": 5.430000237538479e-05,
+            "mel": 0.03833359999771346,
+            "acoustic": 0.019588899998780107,
+            "decoder": 0.1677073000028031
+          },
+          "speech_fraction": 0.7737226277372263,
+          "detected_bounds_samples": [
+            [
+              6528,
+              57984
+            ],
+            [
+              55680,
+              97408
+            ],
+            [
+              96128,
+              130688
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.43499319999682484,
+          "stages": {
+            "mel": 0.14831430000049295,
+            "acoustic": 0.14872470000045723,
+            "decoder": 0.13793010000154027
+          }
+        }
+      },
+      {
+        "id": "en_us/10167324587744183095.wav",
+        "group": "en_us",
+        "seconds": 11.46,
+        "read_hash_seconds": 0.0012010000027657952,
+        "vad": {
+          "total_seconds": 0.4752347000030568,
+          "runtime_reported_seconds": 0.47522960000060266,
+          "stages": {
+            "vad": 0.042847700002312195,
+            "segmentation": 5.7100001868093386e-05,
+            "mel": 0.12696800000048825,
+            "acoustic": 0.10939589999907184,
+            "decoder": 0.19450050000159536
+          },
+          "speech_fraction": 0.8551532033426184,
+          "detected_bounds_samples": [
+            [
+              4480,
+              102528
+            ],
+            [
+              103296,
+              176768
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.3755622000026051,
+          "stages": {
+            "mel": 0.17781860000104643,
+            "acoustic": 0.0235367999994196,
+            "decoder": 0.17418490000272868
+          }
+        }
+      },
+      {
+        "id": "en_us/10197164397713068203.wav",
+        "group": "en_us",
+        "seconds": 5.76,
+        "read_hash_seconds": 0.001103400001738919,
+        "vad": {
+          "total_seconds": 0.17965639999965788,
+          "runtime_reported_seconds": 0.17965339999864227,
+          "stages": {
+            "vad": 0.02123840000058408,
+            "segmentation": 5.030000102124177e-05,
+            "mel": 0.013168200002837693,
+            "acoustic": 0.011353599998983555,
+            "decoder": 0.13326650000090012
+          },
+          "speech_fraction": 0.8111111111111111,
+          "detected_bounds_samples": [
+            [
+              4992,
+              87168
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.28968650000024354,
+          "stages": {
+            "mel": 0.13393660000292584,
+            "acoustic": 0.04578200000105426,
+            "decoder": 0.10994239999854472
+          }
+        }
+      },
+      {
+        "id": "en_us/10233995782544396174.wav",
+        "group": "en_us",
+        "seconds": 4.32,
+        "read_hash_seconds": 0.02040109999870765,
+        "vad": {
+          "total_seconds": 0.31549579999773414,
+          "runtime_reported_seconds": 0.31549269999959506,
+          "stages": {
+            "vad": 0.016389800002798438,
+            "segmentation": 2.9299997549969703e-05,
+            "mel": 0.14182910000090487,
+            "acoustic": 0.05539419999695383,
+            "decoder": 0.10146350000286475
+          },
+          "speech_fraction": 0.7851851851851852,
+          "detected_bounds_samples": [
+            [
+              6016,
+              66688
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.13407290000031935,
+          "stages": {
+            "mel": 0.01997250000204076,
+            "acoustic": 0.011293899999145651,
+            "decoder": 0.10276940000039758
+          }
+        }
+      },
+      {
+        "id": "en_us/10235738076911595987.wav",
+        "group": "en_us",
+        "seconds": 11.42,
+        "read_hash_seconds": 0.0010709999987739138,
+        "vad": {
+          "total_seconds": 0.4483986000013829,
+          "runtime_reported_seconds": 0.4483957000011287,
+          "stages": {
+            "vad": 0.06382350000058068,
+            "segmentation": 5.929999679210596e-05,
+            "mel": 0.128780299997743,
+            "acoustic": 0.03234330000123009,
+            "decoder": 0.2219340999981796
+          },
+          "speech_fraction": 0.7843137254901961,
+          "detected_bounds_samples": [
+            [
+              11648,
+              150656
+            ],
+            [
+              148352,
+              175232
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.35843820000081905,
+          "stages": {
+            "mel": 0.13809369999944465,
+            "acoustic": 0.05068390000087675,
+            "decoder": 0.16963140000007115
+          }
+        }
+      },
+      {
+        "id": "en_us/10323357556845456822.wav",
+        "group": "en_us",
+        "seconds": 10.8,
+        "read_hash_seconds": 0.008485599999403348,
+        "vad": {
+          "total_seconds": 0.5796311000012793,
+          "runtime_reported_seconds": 0.5796272000006866,
+          "stages": {
+            "vad": 0.0981342000013683,
+            "segmentation": 5.280000186758116e-05,
+            "mel": 0.1812196999999287,
+            "acoustic": 0.11637830000108806,
+            "decoder": 0.182486699999572
+          },
+          "speech_fraction": 0.606508875739645,
+          "detected_bounds_samples": [
+            [
+              10624,
+              121984
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.27959030000056373,
+          "stages": {
+            "mel": 0.0951256000007561,
+            "acoustic": 0.01900259999820264,
+            "decoder": 0.16543559999990975
+          }
+        }
+      },
+      {
+        "id": "en_us/10335587906469246566.wav",
+        "group": "en_us",
+        "seconds": 6.96,
+        "read_hash_seconds": 0.007081499999912921,
+        "vad": {
+          "total_seconds": 0.2563904000016919,
+          "runtime_reported_seconds": 0.2563859000001685,
+          "stages": {
+            "vad": 0.08061969999835128,
+            "segmentation": 7.589999950141646e-05,
+            "mel": 0.026900900000327965,
+            "acoustic": 0.01179250000132015,
+            "decoder": 0.1361983999995573
+          },
+          "speech_fraction": 0.6697247706422018,
+          "detected_bounds_samples": [
+            [
+              17792,
+              98944
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.16035679999913555,
+          "stages": {
+            "mel": 0.005616299997200258,
+            "acoustic": 0.043459500000608386,
+            "decoder": 0.11124840000047698
+          }
+        }
+      },
+      {
+        "id": "en_us/10344335557154974057.wav",
+        "group": "en_us",
+        "seconds": 11.04,
+        "read_hash_seconds": 0.011625399998592911,
+        "vad": {
+          "total_seconds": 0.49295730000085314,
+          "runtime_reported_seconds": 0.4929534999973839,
+          "stages": {
+            "vad": 0.0808802999999898,
+            "segmentation": 4.690000059781596e-05,
+            "mel": 0.16622299999653478,
+            "acoustic": 0.03697040000042762,
+            "decoder": 0.20706570000038482
+          },
+          "speech_fraction": 0.7739130434782608,
+          "detected_bounds_samples": [
+            [
+              14208,
+              119936
+            ],
+            [
+              118656,
+              166016
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.2794577999993635,
+          "stages": {
+            "mel": 0.02040610000040033,
+            "acoustic": 0.09690129999944475,
+            "decoder": 0.16211069999917527
+          }
+        }
+      },
+      {
+        "id": "en_us/1036771894648013441.wav",
+        "group": "en_us",
+        "seconds": 9.9,
+        "read_hash_seconds": 0.008525600002030842,
+        "vad": {
+          "total_seconds": 0.4332013999992341,
+          "runtime_reported_seconds": 0.43319399999745656,
+          "stages": {
+            "vad": 0.046762400001171045,
+            "segmentation": 4.0800001443130895e-05,
+            "mel": 0.1464586000001873,
+            "acoustic": 0.06259370000043418,
+            "decoder": 0.17640359999859356
+          },
+          "speech_fraction": 0.7774193548387097,
+          "detected_bounds_samples": [
+            [
+              11136,
+              140928
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.4134020999990753,
+          "stages": {
+            "mel": 0.18695520000255783,
+            "acoustic": 0.06609400000161259,
+            "decoder": 0.16030980000141426
+          }
+        }
+      },
+      {
+        "id": "en_us/1038214857203833067.wav",
+        "group": "en_us",
+        "seconds": 4.8,
+        "read_hash_seconds": 0.0009323999984189868,
+        "vad": {
+          "total_seconds": 0.2874335999986215,
+          "runtime_reported_seconds": 0.2874303000025975,
+          "stages": {
+            "vad": 0.06772970000019995,
+            "segmentation": 4.8400001105619594e-05,
+            "mel": 0.0027946000009251293,
+            "acoustic": 0.10732609999831766,
+            "decoder": 0.10930199999711476
+          },
+          "speech_fraction": 0.8266666666666667,
+          "detected_bounds_samples": [
+            [
+              4480,
+              74368
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.17506589999902644,
+          "stages": {
+            "mel": 0.025009699998918222,
+            "acoustic": 0.04067050000230665,
+            "decoder": 0.1093561999987287
+          }
+        }
+      },
+      {
+        "id": "en_us/10383288285905292158.wav",
+        "group": "en_us",
+        "seconds": 11.28,
+        "read_hash_seconds": 0.0011264000022492837,
+        "vad": {
+          "total_seconds": 0.5817404999979772,
+          "runtime_reported_seconds": 0.5817371000011917,
+          "stages": {
+            "vad": 0.09415269999954035,
+            "segmentation": 6.570000186911784e-05,
+            "mel": 0.14943540000240318,
+            "acoustic": 0.11226020000322023,
+            "decoder": 0.22448410000288277
+          },
+          "speech_fraction": 0.8980169971671388,
+          "detected_bounds_samples": [
+            [
+              3968,
+              98432
+            ],
+            [
+              96640,
+              177280
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.39542530000107945,
+          "stages": {
+            "mel": 0.14283369999975548,
+            "acoustic": 0.060611699998844415,
+            "decoder": 0.1919508000028145
+          }
+        }
+      },
+      {
+        "id": "en_us/10405958125670257178.wav",
+        "group": "en_us",
+        "seconds": 10.92,
+        "read_hash_seconds": 0.0032608000001346227,
+        "vad": {
+          "total_seconds": 0.43375100000048405,
+          "runtime_reported_seconds": 0.43374709999989136,
+          "stages": {
+            "vad": 0.0473803000022599,
+            "segmentation": 4.529999932856299e-05,
+            "mel": 0.18450540000048932,
+            "acoustic": 0.027237400001467904,
+            "decoder": 0.17325339999661082
+          },
+          "speech_fraction": 0.7719298245614035,
+          "detected_bounds_samples": [
+            [
+              17792,
+              163968
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.4395685000017693,
+          "stages": {
+            "mel": 0.15666090000013355,
+            "acoustic": 0.12708710000151768,
+            "decoder": 0.15570590000061202
+          }
+        }
+      },
+      {
+        "id": "en_us/10411016628242228511.wav",
+        "group": "en_us",
+        "seconds": 11.28,
+        "read_hash_seconds": 0.010784800000692485,
+        "vad": {
+          "total_seconds": 0.6660800000026939,
+          "runtime_reported_seconds": 0.6660750000010012,
+          "stages": {
+            "vad": 0.09650409999812837,
+            "segmentation": 5.6400000175926834e-05,
+            "mel": 0.17199859999891487,
+            "acoustic": 0.17858239999986836,
+            "decoder": 0.21753890000036336
+          },
+          "speech_fraction": 0.7365439093484419,
+          "detected_bounds_samples": [
+            [
+              19840,
+              159360
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.24347510000006878,
+          "stages": {
+            "mel": 0.09572610000032,
+            "acoustic": 0.018527200001699384,
+            "decoder": 0.1291897000010067
+          }
+        }
+      },
+      {
+        "id": "en_us/1042003289011443756.wav",
+        "group": "en_us",
+        "seconds": 5.72,
+        "read_hash_seconds": 0.0014888000005157664,
+        "vad": {
+          "total_seconds": 0.2257567000015115,
+          "runtime_reported_seconds": 0.22575350000261096,
+          "stages": {
+            "vad": 0.07389079999848036,
+            "segmentation": 4.569999873638153e-05,
+            "mel": 0.028954400000657188,
+            "acoustic": 0.012743600000248989,
+            "decoder": 0.10914290000073379
+          },
+          "speech_fraction": 0.7206703910614525,
+          "detected_bounds_samples": [
+            [
+              16256,
+              88704
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.2696372999998857,
+          "stages": {
+            "mel": 0.08905489999960992,
+            "acoustic": 0.08356800000183284,
+            "decoder": 0.09663779999755207
+          }
+        }
+      },
+      {
+        "id": "en_us/1043394666292127188.wav",
+        "group": "en_us",
+        "seconds": 15.56,
+        "read_hash_seconds": 0.03359640000053332,
+        "vad": {
+          "total_seconds": 0.5756816000030085,
+          "runtime_reported_seconds": 0.5756740999968315,
+          "stages": {
+            "vad": 0.09336439999970025,
+            "segmentation": 4.939999780617654e-05,
+            "mel": 0.147390499998437,
+            "acoustic": 0.08121160000155214,
+            "decoder": 0.2518953999970108
+          },
+          "speech_fraction": 0.7433264887063655,
+          "detected_bounds_samples": [
+            [
+              13696,
+              46720
+            ],
+            [
+              44416,
+              215680
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.30366870000216295,
+          "stages": {
+            "mel": 0.029583700001239777,
+            "acoustic": 0.11057530000107363,
+            "decoder": 0.16332570000304258
+          }
+        }
+      },
+      {
+        "id": "en_us/1045619486290403122.wav",
+        "group": "en_us",
+        "seconds": 13.92,
+        "read_hash_seconds": 0.005821999999170657,
+        "vad": {
+          "total_seconds": 0.7310891000015545,
+          "runtime_reported_seconds": 0.731082599999354,
+          "stages": {
+            "vad": 0.09798919999957434,
+            "segmentation": 0.00010770000153570436,
+            "mel": 0.1804645000011078,
+            "acoustic": 0.18418770000062068,
+            "decoder": 0.2664928999984113
+          },
+          "speech_fraction": 0.6574712643678161,
+          "detected_bounds_samples": [
+            [
+              22400,
+              42624
+            ],
+            [
+              41856,
+              119424
+            ],
+            [
+              122240,
+              191104
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.23797239999839803,
+          "stages": {
+            "mel": 0.008244399999966845,
+            "acoustic": 0.030711499999597436,
+            "decoder": 0.19898800000009942
+          }
+        }
+      },
+      {
+        "id": "en_us/1046653381869710616.wav",
+        "group": "en_us",
+        "seconds": 8.64,
+        "read_hash_seconds": 0.005455099999380764,
+        "vad": {
+          "total_seconds": 0.5390286000001652,
+          "runtime_reported_seconds": 0.5390250000018568,
+          "stages": {
+            "vad": 0.09525429999848711,
+            "segmentation": 6.529999882332049e-05,
+            "mel": 0.202962799998204,
+            "acoustic": 0.05435880000004545,
+            "decoder": 0.18519149999701767
+          },
+          "speech_fraction": 0.7666666666666667,
+          "detected_bounds_samples": [
+            [
+              13696,
+              126592
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.3457791000000725,
+          "stages": {
+            "mel": 0.18794160000106785,
+            "acoustic": 0.0190876999986358,
+            "decoder": 0.1387109999996028
+          }
+        }
+      },
+      {
+        "id": "en_us/10471564175308895403.wav",
+        "group": "en_us",
+        "seconds": 5.36,
+        "read_hash_seconds": 0.00947979999909876,
+        "vad": {
+          "total_seconds": 0.3836427999995067,
+          "runtime_reported_seconds": 0.38363919999756035,
+          "stages": {
+            "vad": 0.03795480000189855,
+            "segmentation": 4.7999998059822246e-05,
+            "mel": 0.16344929999831947,
+            "acoustic": 0.08362259999921662,
+            "decoder": 0.0983172000014747
+          },
+          "speech_fraction": 0.7619047619047619,
+          "detected_bounds_samples": [
+            [
+              8064,
+              83072
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.3079446000010648,
+          "stages": {
+            "mel": 0.1361328000020876,
+            "acoustic": 0.026683200001571095,
+            "decoder": 0.14510349999909522
+          }
+        }
+      },
+      {
+        "id": "en_us/10481451226514948764.wav",
+        "group": "en_us",
+        "seconds": 10.14,
+        "read_hash_seconds": 0.027265799999440787,
+        "vad": {
+          "total_seconds": 0.5579268000001321,
+          "runtime_reported_seconds": 0.5579207999981008,
+          "stages": {
+            "vad": 0.12719280000237632,
+            "segmentation": 5.94000011915341e-05,
+            "mel": 0.21907990000181599,
+            "acoustic": 0.022138799999083858,
+            "decoder": 0.18809809999584104
+          },
+          "speech_fraction": 0.6466876971608833,
+          "detected_bounds_samples": [
+            [
+              12160,
+              25216
+            ],
+            [
+              31616,
+              86656
+            ],
+            [
+              85888,
+              147072
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.2823324000019056,
+          "stages": {
+            "mel": 0.07661349999762024,
+            "acoustic": 0.020678400000178954,
+            "decoder": 0.18500590000257944
+          }
+        }
+      },
+      {
+        "id": "en_us/10492135991603561867.wav",
+        "group": "en_us",
+        "seconds": 5.64,
+        "read_hash_seconds": 0.000906000001123175,
+        "vad": {
+          "total_seconds": 0.40268379999906756,
+          "runtime_reported_seconds": 0.40268050000304356,
+          "stages": {
+            "vad": 0.032383400000981055,
+            "segmentation": 3.2100000680657104e-05,
+            "mel": 0.16513429999758955,
+            "acoustic": 0.08048820000112755,
+            "decoder": 0.12442850000297767
+          },
+          "speech_fraction": 0.6836158192090396,
+          "detected_bounds_samples": [
+            [
+              9600,
+              77952
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.16931710000062594,
+          "stages": {
+            "mel": 0.0029338000022107735,
+            "acoustic": 0.013267700000142213,
+            "decoder": 0.15266649999830406
+          }
+        }
+      },
+      {
+        "id": "en_us/10492761258488775721.wav",
+        "group": "en_us",
+        "seconds": 8.58,
+        "read_hash_seconds": 0.015184900003077928,
+        "vad": {
+          "total_seconds": 0.37774260000151116,
+          "runtime_reported_seconds": 0.3777393000018492,
+          "stages": {
+            "vad": 0.07354940000004717,
+            "segmentation": 3.730000025825575e-05,
+            "mel": 0.08136319999903208,
+            "acoustic": 0.0488973999999871,
+            "decoder": 0.17281350000121165
+          },
+          "speech_fraction": 0.758364312267658,
+          "detected_bounds_samples": [
+            [
+              7552,
+              54400
+            ],
+            [
+              53120,
+              123520
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.23121670000182348,
+          "stages": {
+            "mel": 0.05765140000221436,
+            "acoustic": 0.02029190000030212,
+            "decoder": 0.1532404999998107
+          }
+        }
+      },
+      {
+        "id": "en_us/10536763405165824117.wav",
+        "group": "en_us",
+        "seconds": 11.44,
+        "read_hash_seconds": 0.02499280000120052,
+        "vad": {
+          "total_seconds": 0.4795579000019643,
+          "runtime_reported_seconds": 0.47954979999849456,
+          "stages": {
+            "vad": 0.07922890000190819,
+            "segmentation": 4.73000000056345e-05,
+            "mel": 0.05416950000653742,
+            "acoustic": 0.07859660000030999,
+            "decoder": 0.26581260000239126
+          },
+          "speech_fraction": 0.6731843575418994,
+          "detected_bounds_samples": [
+            [
+              12672,
+              57472
+            ],
+            [
+              55168,
+              78976
+            ],
+            [
+              77696,
+              104576
+            ],
+            [
+              103296,
+              128640
+            ],
+            [
+              127360,
+              168064
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 5
+        },
+        "no_vad": {
+          "total_seconds": 0.3001594999986992,
+          "stages": {
+            "mel": 0.03917559999899822,
+            "acoustic": 0.14091600000028848,
+            "decoder": 0.11996079999880749
+          }
+        }
+      },
+      {
+        "id": "en_us/1054805305879816018.wav",
+        "group": "en_us",
+        "seconds": 9.6,
+        "read_hash_seconds": 0.005885499998839805,
+        "vad": {
+          "total_seconds": 0.5421649999989313,
+          "runtime_reported_seconds": 0.5421607999996922,
+          "stages": {
+            "vad": 0.0951762000004237,
+            "segmentation": 4.810000245925039e-05,
+            "mel": 0.16808939999828,
+            "acoustic": 0.09773029999996652,
+            "decoder": 0.1797850999973889
+          },
+          "speech_fraction": 0.73,
+          "detected_bounds_samples": [
+            [
+              13696,
+              135296
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.42539059999762685,
+          "stages": {
+            "mel": 0.17919540000002598,
+            "acoustic": 0.057381999999051914,
+            "decoder": 0.18878160000167554
+          }
+        }
+      },
+      {
+        "id": "en_us/10550734868852131138.wav",
+        "group": "en_us",
+        "seconds": 10.12,
+        "read_hash_seconds": 0.006938499998796033,
+        "vad": {
+          "total_seconds": 0.5016599000009592,
+          "runtime_reported_seconds": 0.5016557000017201,
+          "stages": {
+            "vad": 0.10213680000015302,
+            "segmentation": 4.059999992023222e-05,
+            "mel": 0.19318829999974696,
+            "acoustic": 0.024012899997615023,
+            "decoder": 0.1808987000003981
+          },
+          "speech_fraction": 0.6813880126182965,
+          "detected_bounds_samples": [
+            [
+              15744,
+              35456
+            ],
+            [
+              48000,
+              154752
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.33362750000014785,
+          "stages": {
+            "mel": 0.13310229999842704,
+            "acoustic": 0.06322480000017094,
+            "decoder": 0.1372497000011208
+          }
+        }
+      },
+      {
+        "id": "en_us/10614481583312370701.wav",
+        "group": "en_us",
+        "seconds": 8.38,
+        "read_hash_seconds": 0.0009776000006240793,
+        "vad": {
+          "total_seconds": 0.4149918999974034,
+          "runtime_reported_seconds": 0.4149890000007872,
+          "stages": {
+            "vad": 0.05434669999885955,
+            "segmentation": 4.149999949731864e-05,
+            "mel": 0.13267070000438252,
+            "acoustic": 0.07683680000263848,
+            "decoder": 0.1499238000033074
+          },
+          "speech_fraction": 0.7061068702290076,
+          "detected_bounds_samples": [
+            [
+              10624,
+              60032
+            ],
+            [
+              58752,
+              118912
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.330889599998045,
+          "stages": {
+            "mel": 0.18134590000045137,
+            "acoustic": 0.016404599999077618,
+            "decoder": 0.13308340000003227
+          }
+        }
+      },
+      {
+        "id": "en_us/10622204403793540766.wav",
+        "group": "en_us",
+        "seconds": 11.4,
+        "read_hash_seconds": 0.0036436000009416603,
+        "vad": {
+          "total_seconds": 0.622803100002784,
+          "runtime_reported_seconds": 0.6227981000010914,
+          "stages": {
+            "vad": 0.12516300000061165,
+            "segmentation": 4.41999982285779e-05,
+            "mel": 0.1324869000018225,
+            "acoustic": 0.0777855999986059,
+            "decoder": 0.2851291000006313
+          },
+          "speech_fraction": 0.927170868347339,
+          "detected_bounds_samples": [
+            [
+              1920,
+              177792
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.27986849999797414,
+          "stages": {
+            "mel": 0.011392399999749614,
+            "acoustic": 0.07600509999974747,
+            "decoder": 0.19243160000041826
+          }
+        }
+      },
+      {
+        "id": "en_us/10731896540541531669.wav",
+        "group": "en_us",
+        "seconds": 14.66,
+        "read_hash_seconds": 0.00381310000011581,
+        "vad": {
+          "total_seconds": 0.716593200002535,
+          "runtime_reported_seconds": 0.7165893999990658,
+          "stages": {
+            "vad": 0.10327779999715858,
+            "segmentation": 6.260000009206124e-05,
+            "mel": 0.1708327999949688,
+            "acoustic": 0.12169689999791444,
+            "decoder": 0.31221089999962715
+          },
+          "speech_fraction": 0.775599128540305,
+          "detected_bounds_samples": [
+            [
+              10112,
+              116352
+            ],
+            [
+              116608,
+              148096
+            ],
+            [
+              147328,
+              173184
+            ],
+            [
+              175488,
+              225920
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.295359700001427,
+          "stages": {
+            "mel": 0.043956000001344364,
+            "acoustic": 0.03768589999890537,
+            "decoder": 0.2136833000004117
+          }
+        }
+      },
+      {
+        "id": "en_us/10751756685109361684.wav",
+        "group": "en_us",
+        "seconds": 6.3,
+        "read_hash_seconds": 0.006909300002007512,
+        "vad": {
+          "total_seconds": 0.3089153000000806,
+          "runtime_reported_seconds": 0.3089128999999957,
+          "stages": {
+            "vad": 0.0696927000026335,
+            "segmentation": 4.73000000056345e-05,
+            "mel": 0.09059669999987818,
+            "acoustic": 0.020317200000135927,
+            "decoder": 0.1280098999995971
+          },
+          "speech_fraction": 0.7817258883248731,
+          "detected_bounds_samples": [
+            [
+              6528,
+              96384
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.33052329999918584,
+          "stages": {
+            "mel": 0.12824670000190963,
+            "acoustic": 0.059551800000917865,
+            "decoder": 0.14263349999964703
+          }
+        }
+      },
+      {
+        "id": "en_us/10768814098664478369.wav",
+        "group": "en_us",
+        "seconds": 14.6,
+        "read_hash_seconds": 0.03645930000129738,
+        "vad": {
+          "total_seconds": 0.6407001999978092,
+          "runtime_reported_seconds": 0.6406954000012774,
+          "stages": {
+            "vad": 0.07671510000000126,
+            "segmentation": 6.70000008540228e-05,
+            "mel": 0.1578008000033151,
+            "acoustic": 0.08025110000016866,
+            "decoder": 0.323261099994852
+          },
+          "speech_fraction": 0.7527352297592997,
+          "detected_bounds_samples": [
+            [
+              9600,
+              98944
+            ],
+            [
+              97152,
+              133760
+            ],
+            [
+              132992,
+              171136
+            ],
+            [
+              168832,
+              219776
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.3473788000010245,
+          "stages": {
+            "mel": 0.030609400000685127,
+            "acoustic": 0.08712419999937993,
+            "decoder": 0.2296027000011236
+          }
+        }
+      },
+      {
+        "id": "en_us/10849792007407044602.wav",
+        "group": "en_us",
+        "seconds": 5.64,
+        "read_hash_seconds": 0.012539299998024944,
+        "vad": {
+          "total_seconds": 0.26500279999891063,
+          "runtime_reported_seconds": 0.264999800001533,
+          "stages": {
+            "vad": 0.07783410000047297,
+            "segmentation": 3.260000084992498e-05,
+            "mel": 0.08776860000216402,
+            "acoustic": 0.01189890000023297,
+            "decoder": 0.08721700000023702
+          },
+          "speech_fraction": 0.8531073446327684,
+          "detected_bounds_samples": [
+            [
+              3456,
+              87168
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.17148900000029244,
+          "stages": {
+            "mel": 0.07189730000027339,
+            "acoustic": 0.012166100001195446,
+            "decoder": 0.08690379999825382
+          }
+        }
+      },
+      {
+        "id": "en_us/10861831846737909528.wav",
+        "group": "en_us",
+        "seconds": 9.58,
+        "read_hash_seconds": 0.0463253000016266,
+        "vad": {
+          "total_seconds": 0.47354339999947115,
+          "runtime_reported_seconds": 0.4735380999991321,
+          "stages": {
+            "vad": 0.04293799999868497,
+            "segmentation": 4.0499999158782884e-05,
+            "mel": 0.16414850000364822,
+            "acoustic": 0.07527099999788334,
+            "decoder": 0.15937919999851147
+          },
+          "speech_fraction": 0.6133333333333333,
+          "detected_bounds_samples": [
+            [
+              19328,
+              70784
+            ],
+            [
+              69504,
+              103552
+            ],
+            [
+              101248,
+              131200
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.3497538999981771,
+          "stages": {
+            "mel": 0.18408749999798601,
+            "acoustic": 0.07100220000211266,
+            "decoder": 0.09463659999892116
+          }
+        }
+      },
+      {
+        "id": "en_us/10894616243452123700.wav",
+        "group": "en_us",
+        "seconds": 10.2,
+        "read_hash_seconds": 0.0010034000006271526,
+        "vad": {
+          "total_seconds": 0.5361401999980444,
+          "runtime_reported_seconds": 0.5361372000006668,
+          "stages": {
+            "vad": 0.041091099999903236,
+            "segmentation": 5.6000000768108293e-05,
+            "mel": 0.15963560000091093,
+            "acoustic": 0.17136119999850052,
+            "decoder": 0.16260899999906542
+          },
+          "speech_fraction": 0.7115987460815048,
+          "detected_bounds_samples": [
+            [
+              19328,
+              150144
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.2344892000000982,
+          "stages": {
+            "mel": 0.027912600002309773,
+            "acoustic": 0.07704290000037872,
+            "decoder": 0.12950570000248263
+          }
+        }
+      },
+      {
+        "id": "en_us/10899527843662463911.wav",
+        "group": "en_us",
+        "seconds": 6.84,
+        "read_hash_seconds": 0.007740000000922009,
+        "vad": {
+          "total_seconds": 0.34956980000060867,
+          "runtime_reported_seconds": 0.34956679999959306,
+          "stages": {
+            "vad": 0.07761360000222339,
+            "segmentation": 4.779999653692357e-05,
+            "mel": 0.0143476000012015,
+            "acoustic": 0.12937349999992875,
+            "decoder": 0.12758239999675425
+          },
+          "speech_fraction": 0.5373831775700935,
+          "detected_bounds_samples": [
+            [
+              17792,
+              83072
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.34682320000138134,
+          "stages": {
+            "mel": 0.18453439999939292,
+            "acoustic": 0.05063670000163256,
+            "decoder": 0.11162830000102986
+          }
+        }
+      },
+      {
+        "id": "en_us/10903101168349732260.wav",
+        "group": "en_us",
+        "seconds": 8.34,
+        "read_hash_seconds": 0.012689700000919402,
+        "vad": {
+          "total_seconds": 0.2889245000005758,
+          "runtime_reported_seconds": 0.28892089999862947,
+          "stages": {
+            "vad": 0.08034530000077211,
+            "segmentation": 8.069999967119657e-05,
+            "mel": 0.007260700000188081,
+            "acoustic": 0.05320390000269981,
+            "decoder": 0.14671680000174092
+          },
+          "speech_fraction": 0.7509578544061303,
+          "detected_bounds_samples": [
+            [
+              14720,
+              126080
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.20593670000016573,
+          "stages": {
+            "mel": 0.031028900000819704,
+            "acoustic": 0.05085550000148942,
+            "decoder": 0.12402420000216807
+          }
+        }
+      },
+      {
+        "id": "en_us/10933070083389897676.wav",
+        "group": "en_us",
+        "seconds": 10.92,
+        "read_hash_seconds": 0.02407419999872218,
+        "vad": {
+          "total_seconds": 0.5158723000022292,
+          "runtime_reported_seconds": 0.5158661999994365,
+          "stages": {
+            "vad": 0.06093889999829116,
+            "segmentation": 4.2499999835854396e-05,
+            "mel": 0.19040099999983795,
+            "acoustic": 0.05086759999903734,
+            "decoder": 0.21156730000075186
+          },
+          "speech_fraction": 0.6666666666666666,
+          "detected_bounds_samples": [
+            [
+              18816,
+              34432
+            ],
+            [
+              33152,
+              154752
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.4158233999987715,
+          "stages": {
+            "mel": 0.17968459999974584,
+            "acoustic": 0.06799700000192388,
+            "decoder": 0.16810830000031274
+          }
+        }
+      },
+      {
+        "id": "en_us/10937407360976471523.wav",
+        "group": "en_us",
+        "seconds": 9.82,
+        "read_hash_seconds": 0.007803500000591157,
+        "vad": {
+          "total_seconds": 0.37812640000265674,
+          "runtime_reported_seconds": 0.3781221999997797,
+          "stages": {
+            "vad": 0.06284190000224044,
+            "segmentation": 4.099999932805076e-05,
+            "mel": 0.1195815000028233,
+            "acoustic": 0.061956500001542736,
+            "decoder": 0.13237460000163992
+          },
+          "speech_fraction": 0.6677524429967426,
+          "detected_bounds_samples": [
+            [
+              21888,
+              82560
+            ],
+            [
+              80256,
+              138880
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.4342085999996925,
+          "stages": {
+            "mel": 0.15216639999925974,
+            "acoustic": 0.1606869999995979,
+            "decoder": 0.12132610000116983
+          }
+        }
+      },
+      {
+        "id": "en_us/10938576782105608041.wav",
+        "group": "en_us",
+        "seconds": 8.76,
+        "read_hash_seconds": 0.0011978000002272893,
+        "vad": {
+          "total_seconds": 0.35083429999940563,
+          "runtime_reported_seconds": 0.3508311000005051,
+          "stages": {
+            "vad": 0.03993079999781912,
+            "segmentation": 5.1300001359777525e-05,
+            "mel": 0.08918740000081016,
+            "acoustic": 0.06033480000041891,
+            "decoder": 0.16011559999969904
+          },
+          "speech_fraction": 0.8540145985401459,
+          "detected_bounds_samples": [
+            [
+              7552,
+              136320
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.40181659999871044,
+          "stages": {
+            "mel": 0.0807877000006556,
+            "acoustic": 0.1737012000012328,
+            "decoder": 0.14727529999800026
+          }
+        }
+      },
+      {
+        "id": "en_us/10969774925516121312.wav",
+        "group": "en_us",
+        "seconds": 4.5,
+        "read_hash_seconds": 0.0008655000019643921,
+        "vad": {
+          "total_seconds": 0.14774490000127116,
+          "runtime_reported_seconds": 0.14774150000084774,
+          "stages": {
+            "vad": 0.03126960000008694,
+            "segmentation": 6.919999941601418e-05,
+            "mel": 0.0077235999997355975,
+            "acoustic": 0.009763199999724748,
+            "decoder": 0.0983981000026688
+          },
+          "speech_fraction": 0.7021276595744681,
+          "detected_bounds_samples": [
+            [
+              9600,
+              67712
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.26155389999985346,
+          "stages": {
+            "mel": 0.12880980000045383,
+            "acoustic": 0.02832759999728296,
+            "decoder": 0.10437049999745796
+          }
+        }
+      },
+      {
+        "id": "en_us/11060294228176938598.wav",
+        "group": "en_us",
+        "seconds": 7.56,
+        "read_hash_seconds": 0.035402600002271356,
+        "vad": {
+          "total_seconds": 0.3486716000006709,
+          "runtime_reported_seconds": 0.34866909999982454,
+          "stages": {
+            "vad": 0.02810690000114846,
+            "segmentation": 3.610000203480013e-05,
+            "mel": 0.16478300000017043,
+            "acoustic": 0.05026299999735784,
+            "decoder": 0.10486010000022361
+          },
+          "speech_fraction": 0.7932489451476793,
+          "detected_bounds_samples": [
+            [
+              3456,
+              89216
+            ],
+            [
+              88960,
+              118400
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.3119293000017933,
+          "stages": {
+            "mel": 0.11899779999657767,
+            "acoustic": 0.019446199999947567,
+            "decoder": 0.17344090000187862
+          }
+        }
+      },
+      {
+        "id": "spliced/000",
+        "group": "spliced_it_en",
+        "seconds": 11.11,
+        "read_hash_seconds": 0.020951800001057563,
+        "vad": {
+          "total_seconds": 0.5643573999986984,
+          "runtime_reported_seconds": 0.5643482000014046,
+          "stages": {
+            "vad": 0.08443679999982123,
+            "segmentation": 3.80000019504223e-05,
+            "mel": 0.15293329999985872,
+            "acoustic": 0.1732120999986364,
+            "decoder": 0.15220340000087162
+          },
+          "speech_fraction": 0.4109195402298851,
+          "detected_bounds_samples": [
+            [
+              14208,
+              93824
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.25133049999931245,
+          "stages": {
+            "mel": 0.02274559999932535,
+            "acoustic": 0.08617260000028182,
+            "decoder": 0.14239449999877252
+          }
+        }
+      },
+      {
+        "id": "spliced/001",
+        "group": "spliced_it_en",
+        "seconds": 11.83,
+        "read_hash_seconds": 0.0010984000000462402,
+        "vad": {
+          "total_seconds": 0.3293658000002324,
+          "runtime_reported_seconds": 0.32936229999904754,
+          "stages": {
+            "vad": 0.04664039999988745,
+            "segmentation": 5.6700002460274845e-05,
+            "mel": 0.007868200002121739,
+            "acoustic": 0.040824700001394376,
+            "decoder": 0.23258840000198688
+          },
+          "speech_fraction": 0.4594594594594595,
+          "detected_bounds_samples": [
+            [
+              11136,
+              105600
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.3496670999993512,
+          "stages": {
+            "mel": 0.03257059999668854,
+            "acoustic": 0.10984140000073239,
+            "decoder": 0.20723029999862774
+          }
+        }
+      },
+      {
+        "id": "spliced/002",
+        "group": "spliced_it_en",
+        "seconds": 12.55,
+        "read_hash_seconds": 0.0011207000025024172,
+        "vad": {
+          "total_seconds": 0.35078989999965415,
+          "runtime_reported_seconds": 0.3507857000004151,
+          "stages": {
+            "vad": 0.03819640000074287,
+            "segmentation": 4.2400002712383866e-05,
+            "mel": 0.00867380000272533,
+            "acoustic": 0.05383100000108243,
+            "decoder": 0.24832980000064708
+          },
+          "speech_fraction": 0.48346055979643765,
+          "detected_bounds_samples": [
+            [
+              12672,
+              106624
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.4202141000023403,
+          "stages": {
+            "mel": 0.15347660000043106,
+            "acoustic": 0.07092719999855035,
+            "decoder": 0.19579180000073393
+          }
+        }
+      },
+      {
+        "id": "spliced/003",
+        "group": "spliced_it_en",
+        "seconds": 13.89,
+        "read_hash_seconds": 0.0012296999993850477,
+        "vad": {
+          "total_seconds": 0.46273830000063754,
+          "runtime_reported_seconds": 0.4627330000002985,
+          "stages": {
+            "vad": 0.047420700000657234,
+            "segmentation": 4.810000245925039e-05,
+            "mel": 0.15546199999880628,
+            "acoustic": 0.03621049999856041,
+            "decoder": 0.2219600000025821
+          },
+          "speech_fraction": 0.735632183908046,
+          "detected_bounds_samples": [
+            [
+              14208,
+              118400
+            ],
+            [
+              144256,
+              218240
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.40668060000098194,
+          "stages": {
+            "mel": 0.15309909999996307,
+            "acoustic": 0.09739379999882658,
+            "decoder": 0.15613110000049346
+          }
+        }
+      },
+      {
+        "id": "spliced/004",
+        "group": "spliced_it_en",
+        "seconds": 14.41,
+        "read_hash_seconds": 0.006011500001477543,
+        "vad": {
+          "total_seconds": 0.46672319999925094,
+          "runtime_reported_seconds": 0.4667191000007733,
+          "stages": {
+            "vad": 0.09583839999686461,
+            "segmentation": 9.349999891128391e-05,
+            "mel": 0.14834909999990487,
+            "acoustic": 0.021935500000836328,
+            "decoder": 0.19914750000316417
+          },
+          "speech_fraction": 0.49667405764966743,
+          "detected_bounds_samples": [
+            [
+              13184,
+              122496
+            ],
+            [
+              192384,
+              213632
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.49489140000150655,
+          "stages": {
+            "mel": 0.1572329999980866,
+            "acoustic": 0.09757769999851007,
+            "decoder": 0.24003060000177356
+          }
+        }
+      },
+      {
+        "id": "spliced/005",
+        "group": "spliced_it_en",
+        "seconds": 14.71,
+        "read_hash_seconds": 0.006431900001189206,
+        "vad": {
+          "total_seconds": 0.3718215999979293,
+          "runtime_reported_seconds": 0.3718178999988595,
+          "stages": {
+            "vad": 0.09612760000163689,
+            "segmentation": 4.5600001612911e-05,
+            "mel": 0.08528370000203722,
+            "acoustic": 0.038074300002335804,
+            "decoder": 0.14959470000030706
+          },
+          "speech_fraction": 0.4,
+          "detected_bounds_samples": [
+            [
+              15232,
+              100480
+            ],
+            [
+              202112,
+              229504
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.46361870000328054,
+          "stages": {
+            "mel": 0.1498113999987254,
+            "acoustic": 0.11661599999933969,
+            "decoder": 0.1971603000019968
+          }
+        }
+      },
+      {
+        "id": "spliced/006",
+        "group": "spliced_it_en",
+        "seconds": 14.97,
+        "read_hash_seconds": 0.0011712999985320494,
+        "vad": {
+          "total_seconds": 0.5932726000028197,
+          "runtime_reported_seconds": 0.593267600001127,
+          "stages": {
+            "vad": 0.06366679999700864,
+            "segmentation": 4.9199999921256676e-05,
+            "mel": 0.22799550000127056,
+            "acoustic": 0.09507689999736613,
+            "decoder": 0.20480660000248463
+          },
+          "speech_fraction": 0.7777777777777778,
+          "detected_bounds_samples": [
+            [
+              8064,
+              138368
+            ],
+            [
+              164224,
+              236160
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.4362905999987561,
+          "stages": {
+            "mel": 0.18363419999877806,
+            "acoustic": 0.038770600000134436,
+            "decoder": 0.21384709999983897
+          }
+        }
+      },
+      {
+        "id": "spliced/007",
+        "group": "spliced_it_en",
+        "seconds": 15.55,
+        "read_hash_seconds": 0.0015454999993380625,
+        "vad": {
+          "total_seconds": 0.5712638000004517,
+          "runtime_reported_seconds": 0.5712604000000283,
+          "stages": {
+            "vad": 0.12991459999830113,
+            "segmentation": 6.009999924572185e-05,
+            "mel": 0.15864979999969364,
+            "acoustic": 0.0763643999962369,
+            "decoder": 0.19652539999879082
+          },
+          "speech_fraction": 0.5679012345679012,
+          "detected_bounds_samples": [
+            [
+              11648,
+              142464
+            ],
+            [
+              209280,
+              240768
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.43802940000023227,
+          "stages": {
+            "mel": 0.03434900000138441,
+            "acoustic": 0.13463670000055572,
+            "decoder": 0.269000699998287
+          }
+        }
+      },
+      {
+        "id": "spliced/008",
+        "group": "spliced_it_en",
+        "seconds": 16.09,
+        "read_hash_seconds": 0.007179399999586167,
+        "vad": {
+          "total_seconds": 0.6978525999984413,
+          "runtime_reported_seconds": 0.6978484999999637,
+          "stages": {
+            "vad": 0.06461549999949057,
+            "segmentation": 6.379999831551686e-05,
+            "mel": 0.1451768999977503,
+            "acoustic": 0.19113170000127866,
+            "decoder": 0.2942722000007052
+          },
+          "speech_fraction": 0.46520874751491054,
+          "detected_bounds_samples": [
+            [
+              13696,
+              136832
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.30709469999783323,
+          "stages": {
+            "mel": 0.03244230000200332,
+            "acoustic": 0.04851820000112639,
+            "decoder": 0.2260997999983374
+          }
+        }
+      },
+      {
+        "id": "spliced/009",
+        "group": "spliced_it_en",
+        "seconds": 16.69,
+        "read_hash_seconds": 0.006411499998648651,
+        "vad": {
+          "total_seconds": 0.515598999998474,
+          "runtime_reported_seconds": 0.5155942000019422,
+          "stages": {
+            "vad": 0.08323190000010072,
+            "segmentation": 9.839999984251335e-05,
+            "mel": 0.16642370000045048,
+            "acoustic": 0.04950749999625259,
+            "decoder": 0.21433790000082809
+          },
+          "speech_fraction": 0.6494252873563219,
+          "detected_bounds_samples": [
+            [
+              8064,
+              142976
+            ],
+            [
+              176000,
+              191616
+            ],
+            [
+              194432,
+              239744
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.5119668999977876,
+          "stages": {
+            "mel": 0.15439300000070943,
+            "acoustic": 0.1503666999997222,
+            "decoder": 0.20716019999963464
+          }
+        }
+      },
+      {
+        "id": "spliced/010",
+        "group": "spliced_it_en",
+        "seconds": 18.49,
+        "read_hash_seconds": 0.007488100000045961,
+        "vad": {
+          "total_seconds": 0.6453326999981073,
+          "runtime_reported_seconds": 0.6453293000013218,
+          "stages": {
+            "vad": 0.17869929999869782,
+            "segmentation": 5.249999958323315e-05,
+            "mel": 0.018580700001621153,
+            "acoustic": 0.1356487000011839,
+            "decoder": 0.3101310999991256
+          },
+          "speech_fraction": 0.5432525951557093,
+          "detected_bounds_samples": [
+            [
+              11648,
+              175232
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 1
+        },
+        "no_vad": {
+          "total_seconds": 0.4581227000016952,
+          "stages": {
+            "mel": 0.14882280000165338,
+            "acoustic": 0.07372259999829112,
+            "decoder": 0.2355459000027622
+          }
+        }
+      },
+      {
+        "id": "spliced/011",
+        "group": "spliced_it_en",
+        "seconds": 19.21,
+        "read_hash_seconds": 0.0024109000005410053,
+        "vad": {
+          "total_seconds": 0.7040719999968132,
+          "runtime_reported_seconds": 0.70406709999952,
+          "stages": {
+            "vad": 0.1337863999979163,
+            "segmentation": 5.6000000768108293e-05,
+            "mel": 0.2676220000030298,
+            "acoustic": 0.08570709999912651,
+            "decoder": 0.21480270000029122
+          },
+          "speech_fraction": 0.5590682196339434,
+          "detected_bounds_samples": [
+            [
+              14208,
+              172672
+            ],
+            [
+              255872,
+              272512
+            ],
+            [
+              275840,
+              295040
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.5117838000005577,
+          "stages": {
+            "mel": 0.14903770000091754,
+            "acoustic": 0.04533799999990151,
+            "decoder": 0.3173707000023569
+          }
+        }
+      },
+      {
+        "id": "spliced/012",
+        "group": "spliced_it_en",
+        "seconds": 20.11,
+        "read_hash_seconds": 0.008026499999687076,
+        "vad": {
+          "total_seconds": 0.6832045999981347,
+          "runtime_reported_seconds": 0.6831993000014336,
+          "stages": {
+            "vad": 0.1200059999973746,
+            "segmentation": 5.2900002629030496e-05,
+            "mel": 0.23009879999881377,
+            "acoustic": 0.0779636000006576,
+            "decoder": 0.2527453000002424
+          },
+          "speech_fraction": 0.7551669316375199,
+          "detected_bounds_samples": [
+            [
+              23936,
+              174208
+            ],
+            [
+              203136,
+              309888
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.519545900002413,
+          "stages": {
+            "mel": 0.1650688000008813,
+            "acoustic": 0.1129810999991605,
+            "decoder": 0.2414398999972036
+          }
+        }
+      },
+      {
+        "id": "spliced/013",
+        "group": "spliced_it_en",
+        "seconds": 20.51,
+        "read_hash_seconds": 0.014923299997462891,
+        "vad": {
+          "total_seconds": 0.7457576000015251,
+          "runtime_reported_seconds": 0.7457532999978866,
+          "stages": {
+            "vad": 0.1401826000001165,
+            "segmentation": 7.890000051702373e-05,
+            "mel": 0.10469689999445109,
+            "acoustic": 0.19483260000197333,
+            "decoder": 0.3036140000040177
+          },
+          "speech_fraction": 0.7457098283931357,
+          "detected_bounds_samples": [
+            [
+              16768,
+              173696
+            ],
+            [
+              204672,
+              254080
+            ],
+            [
+              252800,
+              316032
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.412308099999791,
+          "stages": {
+            "mel": 0.10117040000113775,
+            "acoustic": 0.047353000001749024,
+            "decoder": 0.2637453000024834
+          }
+        }
+      },
+      {
+        "id": "spliced/014",
+        "group": "spliced_it_en",
+        "seconds": 20.83,
+        "read_hash_seconds": 0.002364500000112457,
+        "vad": {
+          "total_seconds": 0.4460118999995757,
+          "runtime_reported_seconds": 0.44600789999822155,
+          "stages": {
+            "vad": 0.16178930000023684,
+            "segmentation": 5.700000110664405e-05,
+            "mel": 0.07891579999704845,
+            "acoustic": 0.055337300000246614,
+            "decoder": 0.14706209999712883
+          },
+          "speech_fraction": 0.35023041474654376,
+          "detected_bounds_samples": [
+            [
+              42368,
+              136832
+            ],
+            [
+              266624,
+              310912
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.5742860999998811,
+          "stages": {
+            "mel": 0.16414789999907953,
+            "acoustic": 0.16754040000159875,
+            "decoder": 0.24256039999818313
+          }
+        }
+      },
+      {
+        "id": "spliced/015",
+        "group": "spliced_it_en",
+        "seconds": 20.95,
+        "read_hash_seconds": 0.008438599998044083,
+        "vad": {
+          "total_seconds": 0.7463090000019292,
+          "runtime_reported_seconds": 0.7463045000004058,
+          "stages": {
+            "vad": 0.1494392999993579,
+            "segmentation": 7.810000170138665e-05,
+            "mel": 0.26016879999951925,
+            "acoustic": 0.12431009999636444,
+            "decoder": 0.20982050000020536
+          },
+          "speech_fraction": 0.5282442748091603,
+          "detected_bounds_samples": [
+            [
+              23936,
+              91776
+            ],
+            [
+              93568,
+              163456
+            ],
+            [
+              257920,
+              272000
+            ],
+            [
+              271232,
+              322688
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 4
+        },
+        "no_vad": {
+          "total_seconds": 0.4319692000026407,
+          "stages": {
+            "mel": 0.03666760000123759,
+            "acoustic": 0.09301069999855827,
+            "decoder": 0.3022490999974252
+          }
+        }
+      },
+      {
+        "id": "spliced/016",
+        "group": "spliced_it_en",
+        "seconds": 21.13,
+        "read_hash_seconds": 0.011714000000210945,
+        "vad": {
+          "total_seconds": 0.6217456000013044,
+          "runtime_reported_seconds": 0.6217419999993581,
+          "stages": {
+            "vad": 0.12004480000177864,
+            "segmentation": 5.779999992228113e-05,
+            "mel": 0.09191179999834276,
+            "acoustic": 0.14171599999826867,
+            "decoder": 0.26542759999938426
+          },
+          "speech_fraction": 0.6762481089258698,
+          "detected_bounds_samples": [
+            [
+              20352,
+              81536
+            ],
+            [
+              79232,
+              158848
+            ],
+            [
+              204672,
+              255616
+            ],
+            [
+              253312,
+              295040
+            ],
+            [
+              294272,
+              330880
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 5
+        },
+        "no_vad": {
+          "total_seconds": 0.4662056000015582,
+          "stages": {
+            "mel": 0.06700949999867589,
+            "acoustic": 0.09790690000227187,
+            "decoder": 0.30125699999916833
+          }
+        }
+      },
+      {
+        "id": "spliced/017",
+        "group": "spliced_it_en",
+        "seconds": 21.19,
+        "read_hash_seconds": 0.011132899999211077,
+        "vad": {
+          "total_seconds": 0.549857999998494,
+          "runtime_reported_seconds": 0.5498531000012008,
+          "stages": {
+            "vad": 0.17582129999937024,
+            "segmentation": 7.280000136233866e-05,
+            "mel": 0.0336472999988473,
+            "acoustic": 0.1425597999987076,
+            "decoder": 0.19543469999916852
+          },
+          "speech_fraction": 0.4042232277526395,
+          "detected_bounds_samples": [
+            [
+              23424,
+              69760
+            ],
+            [
+              70016,
+              173696
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 2
+        },
+        "no_vad": {
+          "total_seconds": 0.5872694000026968,
+          "stages": {
+            "mel": 0.18730539999887696,
+            "acoustic": 0.12196210000183783,
+            "decoder": 0.2779746999985946
+          }
+        }
+      },
+      {
+        "id": "spliced/018",
+        "group": "spliced_it_en",
+        "seconds": 22.31,
+        "read_hash_seconds": 0.010470400000485824,
+        "vad": {
+          "total_seconds": 0.7854583000007551,
+          "runtime_reported_seconds": 0.7854532999990624,
+          "stages": {
+            "vad": 0.15718810000180383,
+            "segmentation": 8.97999998414889e-05,
+            "mel": 0.1573008000086702,
+            "acoustic": 0.13560299999880954,
+            "decoder": 0.332769399999961
+          },
+          "speech_fraction": 0.6375358166189111,
+          "detected_bounds_samples": [
+            [
+              18304,
+              91264
+            ],
+            [
+              93568,
+              168576
+            ],
+            [
+              223104,
+              274560
+            ],
+            [
+              273280,
+              306816
+            ],
+            [
+              304512,
+              334976
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 5
+        },
+        "no_vad": {
+          "total_seconds": 0.3981859000014083,
+          "stages": {
+            "mel": 0.044548699999722885,
+            "acoustic": 0.07675789999848348,
+            "decoder": 0.2768385000017588
+          }
+        }
+      },
+      {
+        "id": "spliced/019",
+        "group": "spliced_it_en",
+        "seconds": 22.93,
+        "read_hash_seconds": 0.012365200000203913,
+        "vad": {
+          "total_seconds": 0.9355202999977337,
+          "runtime_reported_seconds": 0.9355155000012019,
+          "stages": {
+            "vad": 0.174262100001215,
+            "segmentation": 7.94000006862916e-05,
+            "mel": 0.14779360000102315,
+            "acoustic": 0.24502919999940787,
+            "decoder": 0.36480780000056257
+          },
+          "speech_fraction": 0.7364016736401674,
+          "detected_bounds_samples": [
+            [
+              19328,
+              202368
+            ],
+            [
+              235392,
+              256640
+            ],
+            [
+              254336,
+              348288
+            ]
+          ],
+          "gated": false,
+          "decoded_spans": 3
+        },
+        "no_vad": {
+          "total_seconds": 0.5611121000001731,
+          "stages": {
+            "mel": 0.030331999998452375,
+            "acoustic": 0.09005890000116779,
+            "decoder": 0.44067009999707807
+          }
+        }
+      },
+      {
+        "id": "silence_3",
+        "group": "nonspeech",
+        "seconds": 3.0,
+        "read_hash_seconds": 0.00305819999994128,
+        "vad": {
+          "total_seconds": 0.023336200003541308,
+          "runtime_reported_seconds": 0.0233330000010028,
+          "stages": {
+            "vad": 0.02307199999995646
+          },
+          "speech_fraction": 0.0,
+          "gated": true,
+          "decoded_spans": 0
+        },
+        "no_vad": {
+          "total_seconds": 0.07113069999832078,
+          "stages": {
+            "mel": 0.010280700000294019,
+            "acoustic": 0.011774499998864485,
+            "decoder": 0.049043800001527416
+          }
+        }
+      },
+      {
+        "id": "silence_10",
+        "group": "nonspeech",
+        "seconds": 10.0,
+        "read_hash_seconds": 0.01278479999746196,
+        "vad": {
+          "total_seconds": 0.07402160000128788,
+          "runtime_reported_seconds": 0.07401900000331807,
+          "stages": {
+            "vad": 0.07219420000183163
+          },
+          "speech_fraction": 0.0,
+          "gated": true,
+          "decoded_spans": 0
+        },
+        "no_vad": {
+          "total_seconds": 0.24711459999889485,
+          "stages": {
+            "mel": 0.09227019999889308,
+            "acoustic": 0.060127799999463605,
+            "decoder": 0.09468399999968824
+          }
+        }
+      },
+      {
+        "id": "white_noise_3",
+        "group": "nonspeech",
+        "seconds": 3.0,
+        "read_hash_seconds": 0.03971530000126222,
+        "vad": {
+          "total_seconds": 0.012753400002111448,
+          "runtime_reported_seconds": 0.012750099998811493,
+          "stages": {
+            "vad": 0.012582299998030066
+          },
+          "speech_fraction": 0.0,
+          "gated": true,
+          "decoded_spans": 0
+        },
+        "no_vad": {
+          "total_seconds": 0.061538099998870166,
+          "stages": {
+            "mel": 0.012400699997670017,
+            "acoustic": 0.021945300002698787,
+            "decoder": 0.027167500000359723
+          }
+        }
+      },
+      {
+        "id": "white_noise_10",
+        "group": "nonspeech",
+        "seconds": 10.0,
+        "read_hash_seconds": 0.040123200000380166,
+        "vad": {
+          "total_seconds": 0.0508479999989504,
+          "runtime_reported_seconds": 0.05084519999945769,
+          "stages": {
+            "vad": 0.049474700001155725
+          },
+          "speech_fraction": 0.0,
+          "gated": true,
+          "decoded_spans": 0
+        },
+        "no_vad": {
+          "total_seconds": 0.38704210000287276,
+          "stages": {
+            "mel": 0.16150740000011865,
+            "acoustic": 0.11615560000063851,
+            "decoder": 0.10933640000075684
+          }
+        }
+      }
+    ],
+    "validation_tests_seconds": 1.88732379999783,
+    "whole_benchmark_seconds": 95.18335500000103
+  },
+  "parity": {
+    "clips": [
+      {
+        "id": "it_it/10000151032537989529.wav",
+        "hyp": "i blog \u00e8 uno strumento che si preficie di incoraggiare la collaborazione e sviluppare la prendimento di studenti per giornata scolastica normale",
+        "greedy": "i e blog \u00e8 strumento che si prefici d incoraggiare la collaborazione e sviluppare la prendimento digli stududienti bentre giornata scolastica normale",
+        "beam_seconds": 0.10778589999999998,
+        "greedy_seconds": 0.0040951000000000026,
+        "python_hyp": "i blog \u00e8 uno strumento che si preficie di incoraggiare la collaborazione e sviluppare la prendimento di studenti per giornata scolastica normale",
+        "python_greedy": "i e blog \u00e8 strumento che si prefici d incoraggiare la collaborazione e sviluppare la prendimento digli stududienti bentre giornata scolastica normale",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          576,
+          1025
+        ],
+        "logits_sha256": "b6b315a74ec3de186d16aa6bffd448037c510de77e11c904a825953f43d157fe",
+        "ipc_and_python_greedy_seconds": 0.13246800000342773,
+        "python_greedy_seconds": 0.00023610000062035397,
+        "python_beam_seconds": 0.1914704000009806
+      },
+      {
+        "id": "it_it/10011138801715101183.wav",
+        "hyp": "sotto il ponte lo spazio in verticare libero e di quindici metri la costruzione terminata nella gssa il demile undici ma la bertura al traffico e avvenuta nel marzo duemile",
+        "greedy": "sotto il ponte lo spazi in verticcare libero e di quindicimeetri la costruzione at terminata nellagostra il de mile undici ma laperertura al traffico e av venuta nel marzo duemileette",
+        "beam_seconds": 0.15334260000000016,
+        "greedy_seconds": 0.003787700000000086,
+        "python_hyp": "sotto il ponte lo spazio in verticare libero e di quindici metri la costruzione terminata nella gssa il demile undici ma la bertura al traffico e avvenuta nel marzo duemile",
+        "python_greedy": "sotto il ponte lo spazi in verticcare libero e di quindicimeetri la costruzione at terminata nellagostra il de mile undici ma laperertura al traffico e av venuta nel marzo duemileette",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          804,
+          1025
+        ],
+        "logits_sha256": "dd7c1c16a839e3f5b24b9e78fde355a31d5f8ade66a6619df4589bb70977f6c9",
+        "ipc_and_python_greedy_seconds": 0.18306640000082552,
+        "python_greedy_seconds": 0.0003158000035909936,
+        "python_beam_seconds": 0.2077051999985997
+      },
+      {
+        "id": "it_it/10017896147709177739.wav",
+        "hyp": "se avete visto il film il mistero dei templari potrete pensare che sul retro della dichiarazione di indipendenza si disegnata una mappa del tesoro",
+        "greedy": "se avete visto il film il mistero dei templari potresse pensare che sul re della dichiarazione di indipendenza sia disegnata una mappa del tesoro",
+        "beam_seconds": 0.08402880000000004,
+        "greedy_seconds": 0.00048279999999977007,
+        "python_hyp": "se avete visto il film il mistero dei templari potrete pensare che sul retro della dichiarazione di indipendenza si disegnata una mappa del tesoro",
+        "python_greedy": "se avete visto il film il mistero dei templari potresse pensare che sul re della dichiarazione di indipendenza sia disegnata una mappa del tesoro",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          570,
+          1025
+        ],
+        "logits_sha256": "b0c57681ea34a7e646669b9d7a74ca3262f4d131bbd340be2ea4a0ae21f8e4e0",
+        "ipc_and_python_greedy_seconds": 0.10443690000101924,
+        "python_greedy_seconds": 0.0002888999988499563,
+        "python_beam_seconds": 0.17284809999910067
+      },
+      {
+        "id": "it_it/10037759924455051213.wav",
+        "hyp": "conioni dgono sintendono dei protoni cui sono stati e strappati via gli elettroni dato che gliatomi di drogeno sono formati da un protone e da un elettrone",
+        "greedy": "cononi dgo sitendono dei protoni cui sono stati strappati via gli elettroni dato chegliatomi didrogo sono formati da un protone e da un elettrone",
+        "beam_seconds": 0.1085659999999998,
+        "greedy_seconds": 0.0006811999999999898,
+        "python_hyp": "conioni dgono sintendono dei protoni cui sono stati e strappati via gli elettroni dato che gliatomi di drogeno sono formati da un protone e da un elettrone",
+        "python_greedy": "cononi dgo sitendono dei protoni cui sono stati strappati via gli elettroni dato chegliatomi didrogo sono formati da un protone e da un elettrone",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          564,
+          1025
+        ],
+        "logits_sha256": "c0a73f8dcee89f75807bbfaf02a1207756d177da08aa9672ede211520b4d0dc5",
+        "ipc_and_python_greedy_seconds": 0.12877979999757372,
+        "python_greedy_seconds": 0.00023249999867402948,
+        "python_beam_seconds": 0.18979030000264174
+      },
+      {
+        "id": "en_us/1003119935936341070.wav",
+        "hyp": "however did to the slow communication channels styles in the west con laged behigh and by twenty five to thirty years",
+        "greedy": "however did do the s commication chnes stys in the west could lag behighon by twenty five to thirty years",
+        "beam_seconds": 0.10963990000000194,
+        "greedy_seconds": 0.000670299999997951,
+        "python_hyp": "however did to the slow communication channels styles in the west con laged behigh and by twenty five to thirty years",
+        "python_greedy": "however did do the s commication chnes stys in the west could lag behighon by twenty five to thirty years",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          528,
+          1025
+        ],
+        "logits_sha256": "a174bff2bd859b1487cd440c3c0bd8199e605392148b03f03f85a5bd3d816dab",
+        "ipc_and_python_greedy_seconds": 0.12829150000106893,
+        "python_greedy_seconds": 0.00021629999901051633,
+        "python_beam_seconds": 0.23366750000059255
+      },
+      {
+        "id": "en_us/10052240106321793346.wav",
+        "hyp": "whole house a most side the world sa for you always weagin with a capitale letter even the middle of a cents",
+        "greedy": "all nows mo si the world sa for you always weagin with apita leatter even the mile of assents",
+        "beam_seconds": 0.07132679999999528,
+        "greedy_seconds": 0.0003917000000001281,
+        "python_hyp": "whole house a most side the world sa for you always weagin with a capitale letter even the middle of a cents",
+        "python_greedy": "all nows mo si the world sa for you always weagin with apita leatter even the mile of assents",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          438,
+          1025
+        ],
+        "logits_sha256": "7a378997b46fcfd723e0a3725d7e8860af701bd23dd966cb363e8d90fbc4a427",
+        "ipc_and_python_greedy_seconds": 0.08579969999846071,
+        "python_greedy_seconds": 0.0002066000015474856,
+        "python_beam_seconds": 0.13793010000154027
+      },
+      {
+        "id": "en_us/10167324587744183095.wav",
+        "hyp": "to the north and with an easy reached as a romansic and fasghting town of centra in which was made famous to freigners of a glowing a account of the splen recorded by lord byron",
+        "greedy": "to the north and on within easy reache is the a romansic and fas theghten town of centra and which was made famous to freigners uut a glowing a account of the splenero recordted by lordron",
+        "beam_seconds": 0.1201108000000022,
+        "greedy_seconds": 0.0007059000000008382,
+        "python_hyp": "to the north and with an easy reached as a romansic and fasghting town of centra in which was made famous to freigners of a glowing a account of the splen recorded by lord byron",
+        "python_greedy": "to the north and on within easy reache is the a romansic and fas theghten town of centra and which was made famous to freigners uut a glowing a account of the splenero recordted by lordron",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          573,
+          1025
+        ],
+        "logits_sha256": "8239377e60c286b38e876e2fd94ab763928154351a8859f0a725218428ab7209",
+        "ipc_and_python_greedy_seconds": 0.1423190000023169,
+        "python_greedy_seconds": 0.00024820000180625357,
+        "python_beam_seconds": 0.17418490000272868
+      },
+      {
+        "id": "spliced/000",
+        "hyp": "eppure gli uccelli hanno molte caratteristiche che gli haomano ai diinosauri",
+        "greedy": "eppure gli uccelli hanno molte caratteristiche che glim unano ai diinosauri",
+        "beam_seconds": 0.09012559999999939,
+        "greedy_seconds": 0.00048099999999976715,
+        "python_hyp": "eppure gli uccelli hanno molte caratteristiche che gli haomano ai diinosauri",
+        "python_greedy": "eppure gli uccelli hanno molte caratteristiche che glim unano ai diinosauri",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          556,
+          1025
+        ],
+        "logits_sha256": "39b5633fafdb3f59ba28e0c769ac7395391d8c227554385db170a49d704e82dd",
+        "ipc_and_python_greedy_seconds": 0.11420429999998305,
+        "python_greedy_seconds": 0.0002482999989297241,
+        "python_beam_seconds": 0.14239449999877252
+      },
+      {
+        "id": "spliced/001",
+        "hyp": "l'incidente avvenuto in alta montagna e si ritiene sia stato causato da fuoco nemicomorting to distinguist some burs",
+        "greedy": "l'incidentevenuto in alta montagna e si ritiene sia stato causato da fuoco nemico is ises import we to distis spe some bs no",
+        "beam_seconds": 0.12187639999999374,
+        "greedy_seconds": 0.0004964000000036321,
+        "python_hyp": "l'incidente avvenuto in alta montagna e si ritiene sia stato causato da fuoco nemicomorting to distinguist some burs",
+        "python_greedy": "l'incidentevenuto in alta montagna e si ritiene sia stato causato da fuoco nemico is ises import we to distis spe some bs no",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          592,
+          1025
+        ],
+        "logits_sha256": "bf140ebe3467ed128517302e37fec2cce217341cdb724066b4884ec004473882",
+        "ipc_and_python_greedy_seconds": 0.14780789999713306,
+        "python_greedy_seconds": 0.00041739999869605526,
+        "python_beam_seconds": 0.20723029999862774
+      },
+      {
+        "id": "spliced/002",
+        "hyp": "le squadre anti incendio alla fine sono riuscita a domare il fuoco alle ventitre i trentacinque the ma piettersi in paese",
+        "greedy": "le squadre anti incendio alla fina sono riuscita a domare il fuoco alle ventirae tren pacinque the ma piteresti li pap seve no",
+        "beam_seconds": 0.10802139999999781,
+        "greedy_seconds": 0.0005332999999955064,
+        "python_hyp": "le squadre anti incendio alla fine sono riuscita a domare il fuoco alle ventitre i trentacinque the ma piettersi in paese",
+        "python_greedy": "le squadre anti incendio alla fina sono riuscita a domare il fuoco alle ventirae tren pacinque the ma piteresti li pap seve no",
+        "beam_exact": true,
+        "greedy_exact": true,
+        "shape": [
+          628,
+          1025
+        ],
+        "logits_sha256": "818f92a77bcb8fd31aad1b1b6f1ad35ba11fc4da857842270af6c07170686f60",
+        "ipc_and_python_greedy_seconds": 0.12919170000168378,
+        "python_greedy_seconds": 0.00036919999911333434,
+        "python_beam_seconds": 0.19579180000073393
+      }
+    ],
+    "n": 10,
+    "beam_exact": 10,
+    "greedy_exact": 10
+  },
+  "tests": {
+    "returncode": 0,
+    "synthetic_paired_fixtures": 459,
+    "log": "validation-tests.txt"
+  },
+  "limitations": [
+    "Reused known public FLEURS sample; not an independent quality test.",
+    "Spliced clips reuse constituent IT/EN audio; samples are correlated.",
+    "No natural code-switching set or validated en_spans; ETA is null, no natural ETA claim.",
+    "Mixed numeric text uses official Italian fallback, not language-aware span normalization.",
+    "Four existing synthetic silence/white-noise controls only; no real-world nonspeech claim.",
+    "JS decoder only on native ONNX float32 outputs; no browser/WASM acoustic or JS mel parity.",
+    "Serial VAD then baseline, no warmup, default ORT threads, shared host; timings not isolated.",
+    "RTF excludes asset loading, file IO/hash, scoring, Node IPC and validation tests.",
+    "Per-utterance bootstrap is descriptive, not independent-speaker inference."
+  ],
+  "acceptance_pass": true
+}

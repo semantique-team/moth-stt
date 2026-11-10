@@ -102,6 +102,7 @@ export function greedy(logProbs, frames, vocabSize, pieces) {
 
 /**
  * CTC prefix beam search, a port of stt/decode.py.
+ * `topK` counts nonblank labels; blank is always kept separately. Candidate ties use ascending ID.
  *
  * @param {Float32Array} logProbs row-major `[frames, vocabSize]`
  * @param {number} frames usable frames

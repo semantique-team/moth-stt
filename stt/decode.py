@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import math
 from collections.abc import Callable, Iterable, Mapping
+from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
@@ -92,12 +93,13 @@ def _lm_bonus(
     prefix: tuple[int, ...],
     token: int,
     weight: float,
+    scorer: Callable[[int, int, int], float] | None = None,
 ) -> float:
     if lm is None or weight == 0.0:
         return 0.0
     prev1 = prefix[-1] - 1 if prefix else BOS_ID
     prev2 = prefix[-2] - 1 if len(prefix) >= 2 else BOS_ID
-    return weight * lm.score(prev2, prev1, token - 1)
+    return weight * (scorer if scorer is not None else lm.score)(prev2, prev1, token - 1)
 
 
 def beam_search(
@@ -115,7 +117,8 @@ def beam_search(
 ) -> str:
     """CTC prefix beam search over the first ``length`` frames.
 
-    ``top_k`` is the number of non-blank labels expanded per frame; blank is always kept. The
+    ``top_k`` is the number of non-blank labels expanded per frame; blank is always kept.
+    Equal-scoring candidates are selected and expanded by ascending token ID. The
     hotword bonus is added when a prefix completes a term; ``hotword_prefix_bonus`` can keep
     partial terms alive (default 0, since it can accumulate on multi-piece terms).
 
@@ -145,14 +148,18 @@ def beam_search(
     vocab = int(array.shape[1])
     beams: dict[tuple[int, ...], list[float]] = {(): [0.0, _NEG_INF]}
     logaddexp = _logaddexp
+    # Prefixes revisit the same trigram across frames; keep the cache local to this decode.
+    lm_score = lru_cache(maxsize=8192)(lm.score) if lm is not None and lm_weight != 0.0 else None
 
     for frame in array:
-        if top_k >= vocab:
-            candidates = list(range(vocab))
+        if top_k >= vocab - 1:
+            candidates = list(range(1, vocab))
         else:
-            candidates = np.argpartition(frame, -top_k)[-top_k:].astype(int).tolist()
-            if BLANK_ID not in candidates:
-                candidates.append(BLANK_ID)
+            nonblank = frame[1:]
+            cutoff = np.partition(nonblank, -top_k)[-top_k]
+            above = np.flatnonzero(nonblank > cutoff)
+            tied = np.flatnonzero(nonblank == cutoff)[: top_k - len(above)]
+            candidates = (np.concatenate((above, tied)) + 1).tolist()
         # Deterministic order: best score first, lowest id on ties.
         candidates.sort(key=lambda token: (-float(frame[token]), token))
 
@@ -167,8 +174,6 @@ def beam_search(
 
             last = prefix[-1] if prefix else -1
             for token in candidates:
-                if token == BLANK_ID:
-                    continue
                 logp = float(frame[token])
                 if token == last:
                     # Repeating a label without a blank keeps the same prefix.
@@ -177,7 +182,7 @@ def beam_search(
                     bonus = token_bonus + _hotword_bonus(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
-                    bonus += _lm_bonus(lm, prefix, token, lm_weight)
+                    bonus += _lm_bonus(lm, prefix, token, lm_weight, lm_score)
                     new_entry = next_beams.get(new_prefix)
                     if new_entry is None:
                         new_entry = [_NEG_INF, _NEG_INF]
@@ -188,7 +193,7 @@ def beam_search(
                     bonus = token_bonus + _hotword_bonus(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
-                    bonus += _lm_bonus(lm, prefix, token, lm_weight)
+                    bonus += _lm_bonus(lm, prefix, token, lm_weight, lm_score)
                     new_entry = next_beams.get(new_prefix)
                     if new_entry is None:
                         new_entry = [_NEG_INF, _NEG_INF]
@@ -201,13 +206,13 @@ def beam_search(
         )
         beams = dict(ranked[:beam_width])
 
-    if lm is not None and lm_weight != 0.0:
+    if lm_score is not None:
 
         def final_score(item: tuple[tuple[int, ...], list[float]]) -> float:
             prefix, (p_blank, p_nonblank) = item
             prev1 = prefix[-1] - 1 if prefix else BOS_ID
             prev2 = prefix[-2] - 1 if len(prefix) >= 2 else BOS_ID
-            return logaddexp(p_blank, p_nonblank) + lm_weight * lm.score(prev2, prev1, EOS_ID)
+            return logaddexp(p_blank, p_nonblank) + lm_weight * lm_score(prev2, prev1, EOS_ID)
 
         best_prefix = max(beams.items(), key=final_score)[0]
     else:
