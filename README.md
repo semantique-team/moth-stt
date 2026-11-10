@@ -3,7 +3,7 @@
 # moth-stt
 
 **Moth** — a very small, open **Italian + English code-switching speech-to-text** model: a
-Whisper-tiny encoder (pretrained, MIT) fine-tuned behind a **linear CTC head** over a shared
+Whisper-tiny encoder (pretrained, MIT), **two additional transformer blocks** and a linear CTC head over a shared
 IT+EN SentencePiece BPE. **11.6 M parameters, 19.4 MB shipped**, running in a browser tab
 (ONNX Runtime Web / WASM) and on any CPU.
 
@@ -12,6 +12,10 @@ IT+EN SentencePiece BPE. **11.6 M parameters, 19.4 MB shipped**, running in a br
 [**Live demo**](https://semantique-team-moth-demo.static.hf.space) ·
 [**Weights**](https://huggingface.co/semantique-team/moth-stt) ·
 [Design docs](docs/README.md) · [Live status](STATUS.md) · [Experiment log](EXPERIMENTS.md)
+
+For reproducible research: [artifact-audited experiment ledger](docs/12-experiment-ledger.md),
+[current model and paper limitations](docs/13-current-model-and-paper-readiness.md), and
+[verified operational workflows](docs/guides/repository-workflows.md).
 
 The demo runs **in the browser**: the audio never leaves the tab.
 
@@ -24,13 +28,19 @@ acronyms, Italianised verbs (*deployato*, *pushare*, *loggare*).
 | Set | n | WER | ETA |
 |---|---|---|---|
 | Mixed test T, all speakers | 600 | **25.20** | **54.17** |
-| T, speaker S3 — **never seen in training** | 200 | **26.92** | **48.45** |
+| T, S3 — **no acoustic training audio; repeatedly evaluated** | 200 | **26.92** | **48.45** |
 | FLEURS-IT test | 697 | **20.14** | — |
 | FLEURS-EN test | 525 | **49.14** | — |
 | Common Voice IT test | 14 643 | **24.37** | — |
 
+These are **PyTorch fp32 reference** results with beam 12/top-k 10/LM weight 0.5/token
+bonus 2.4, not measurements of the shipped browser path. FLEURS uses filtered test subsets.
+The int8 ONNX reference scores **25.14 WER / 54.65 ETA** on T-600 and **27.00 / 48.45** on S3.
+S1/S2 supply 400/600 test clips and training audio; S3 shares S1's microphone. T is scripted read
+speech and has repeatedly informed development, not an untouched natural code-switching test.
+
 Against Whisper-tiny on the same 600 clips (forced `it`, beam 5): WER **−25.52** and ETA **+18.12**,
-both won. On FLEURS-IT it beats Whisper-tiny's best H0 variant by **7.28 points**. It also beats
+both nominal paired comparisons won on that reused aggregate. On FLEURS-IT it beats Whisper-tiny's best H0 variant by **7.28 points**. It also beats
 Whistle on the mixed set's WER (−4.22), though Whistle stays ahead on monolingual Italian read
 speech.
 
@@ -38,7 +48,8 @@ speech.
 10 dB** over the previous checkpoint, with clean performance a tie. On a **room recorded after
 training** — one the model has never heard — the gain is larger (**11.2** and **18.3**), because that
 room is harsher; absolute WER there is 36.5 at 15 dB. Before 0.7.0, at 15 dB it scored worse than
-Whisper-tiny does on clean audio.
+Whisper-tiny does on clean audio in an earlier diagnostic probe; the paired E-024 control is
+**33.62% at 15 dB**, not 38.4%. Do not combine those two protocols.
 
 **Speed:** 45× real time on 4 threads, 24× on 1 thread, with the VAD in the loop (Apple M5, WASM
 SIMD; 5 s clips).
@@ -105,7 +116,8 @@ uv run --locked --all-extras pytest -q
 uv run --locked --all-extras ruff check .
 node --experimental-vm-modules --test web/tests/unit-runtime.test.mjs
 
-# evaluate a checkpoint on the ship-gate sets
+# Historical E-022 evaluation; requires its fixed tokenizer/LM/data paths.
+# --int8 reads release/model.int8.onnx, NOT the checkpoint passed below.
 uv run python runs/E-022/eval.py --arm frozen --int8     --checkpoint runs/E-024/checkpoints/ckpt_best.pt
 
 # rebuild the release (verifies the export gates) and the browser package
@@ -113,6 +125,11 @@ uv run --locked --all-extras python -m stt.export --checkpoint runs/E-024/checkp
     --tokenizer data/tokenizer/moth_bpe.model --version 0.7.0
 uv run python runs/E-010/package_browser.py --beam 12 --top-k 10 --lm-weight 0.5 --token-bonus 2.4
 ```
+
+For a new experiment or a generic checkpoint evaluation, use the
+[workflow guide](docs/guides/repository-workflows.md#new-experiments), not the historical command
+as a complete ship-gate evaluation. Native Windows training currently has a Unix `resource`
+import limitation; runtime use is separate.
 
 Checkpoints, raw audio, mel shards and the built `release/` are **not** in git — the mel cache
 alone is 44 GB. Every number in the table above traces to a committed `runs/E-0NN/` artifact.
@@ -129,7 +146,13 @@ completed runtime work from experiments blocked on recordings and the frozen LM 
 Apache-2.0 code. The initial encoder weights come from [`openai/whisper-tiny`](https://github.com/openai/whisper)
 (MIT); the no-speech guard is Silero VAD v5 (MIT). Training data: Common Voice IT (CC0), MLS
 Italian (CC-BY 4.0), LibriSpeech (CC-BY 4.0), MUSAN (CC-BY 4.0), plus 50 minutes recorded for this
-project. Full attributions in [`NOTICE`](NOTICE).
+project. Attributions are generated in `release/NOTICE` by
+[`stt/export.py`](stt/export.py), using [`stt/data/sources.py`](stt/data/sources.py);
+there is no top-level NOTICE in this checkout.
+
+The audit found unresolved checkpoint-step and S3 baseline-delta metadata conflicts in historical
+records/cards. See the [paper dossier](docs/13-current-model-and-paper-readiness.md) before citing
+them. The model's recorded publication is not a new verification of live hosting.
 
 The name and the mark come from the family naming thread (insects); `stt` names the task, not the
 parameter scale.

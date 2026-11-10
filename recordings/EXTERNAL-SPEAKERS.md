@@ -8,15 +8,18 @@ spieghiamo solo come registrare e come restituire l’audio.
 
 | Speaker | T (test) | Anchor A | R (training) |
 |---|---|---|---|
-| S1 | 200, già fatto | 60, già fatto | R-S1, in corso |
-| **S2** | **200** | **60** | **R-S2** (600–1000, quando lo script esiste) |
+| S1 | 200, completo | 60, completo | 641 take base valide, usate in E-017/E-024 |
+| **S2** | **200, completo** | **60, completo** | **622/623 take base valide**, usate in E-017/E-024; addendum separato |
 | **S3** | **200** | **60** | **mai** (held-out) |
-| **S4** | **200** | **60** | **mai** (held-out) |
+| **S4** | **200, da registrare** | **60, da registrare** | Consentito dal codice per un nuovo protocollo; non ancora eseguito |
 
 - **T** è il test set misto: ogni frase è stata revisionata a mano. S4 può registrare **solo dopo**
-  che le sue 200 frasi sono state revisionate.
+  che le sue 200 frasi sono state revisionate (review completata il 2026-11-07).
 - **A** è l’anchor: 60 frasi di T lette da tutti gli speaker.
-- **R** è il training gold per H3. Solo S1 e S2. S3/S4 non registrano mai R.
+- **R** e' il training gold. S3 non registra mai R. S4 puo' contribuire solo su richiesta
+  dell'organizzatore con un nuovo protocollo: dopo non sara' uno speaker held-out.
+- **A** riusa frasi di T: non usarlo come dev indipendente. S3 non ha audio nel training,
+  ma i suoi risultati sono gia' stati osservati piu' volte durante lo sviluppo.
 - T e R sono script diversi: non confondere le cartelle (vedi sotto).
 
 ## 2. Prima di registrare
@@ -32,15 +35,14 @@ spieghiamo solo come registrare e come restituire l’audio.
 git clone git@github.com:semantique-team/moth-stt.git   # oppure HTTPS, se non hai chiavi SSH
 cd moth-stt
 git checkout main          # oppure il commit che ti passa l’organizzatore
-uv sync                    # ~2.5 GB: installa anche torch, che per registrare non serve
+uv sync --locked --no-dev   # sole dipendenze runtime, senza Torch/dev
 brew install ffmpeg         # solo macOS
 ```
 
-Se vuoi evitare i 2.5 GB di torch, il recorder gira anche senza l’ambiente del progetto
-(servono solo `numpy` e `soundfile`; verificato):
+Per un ambiente isolato minimo il recorder richiede anche `num2words` tramite il normalizzatore:
 
 ```bash
-PYTHONPATH=. uv run --no-project --with numpy --with soundfile \
+PYTHONPATH=. uv run --no-project --with numpy --with soundfile --with num2words \
     python recordings/record.py --speaker S2 --kind T --dry-run
 ```
 
@@ -54,10 +56,10 @@ Chiede una frase alla volta e salva un WAV per frase.
 ### T — S2 e S3 (S4 solo dopo review)
 
 ```bash
-uv run recordings/record.py --speaker S2 --kind T
-uv run recordings/record.py --speaker S3 --kind T
-# S4: attendere la review delle T-0601…T-0800
-uv run recordings/record.py --speaker S4 --kind T
+uv run --locked --no-dev recordings/record.py --speaker S2 --kind T
+uv run --locked --no-dev recordings/record.py --speaker S3 --kind T
+# S4: review completata; confermare il protocollo con l'organizzatore
+uv run --locked --no-dev recordings/record.py --speaker S4 --kind T
 ```
 
 Comandi durante la sessione:
@@ -74,18 +76,19 @@ Comandi durante la sessione:
 Dopo il T:
 
 ```bash
-uv run recordings/record.py --speaker S2 --kind A
-uv run recordings/record.py --speaker S3 --kind A
-uv run recordings/record.py --speaker S4 --kind A
+uv run --locked --no-dev recordings/record.py --speaker S2 --kind A
+uv run --locked --no-dev recordings/record.py --speaker S3 --kind A
+uv run --locked --no-dev recordings/record.py --speaker S4 --kind A
 ```
 
 ### R-S2 — solo S2
 
-Lo script R-S2 deve arrivare a **600 frasi** (2026-10-24: 344, in completamento) e va **rivisto
-dall’organizzatore** prima di costruire il manifest. Quando l’organizzatore conferma che è pronto:
+Il blocco base R-S2 e' gia' registrato: 623 take, 622 valide, senza rinumerare quella esclusa.
+Non sovrascriverlo. Per nuove frasi/addendum chiedere all'organizzatore script, review e indice
+di partenza; il comando senza `--overwrite` riprende dalla prima take mancante:
 
 ```bash
-uv run recordings/record.py --speaker S2 --kind R
+uv run --locked --no-dev recordings/record.py --speaker S2 --kind R
 ```
 
 Il builder applica il controllo `reviewed` **solo a T e A**, non a R: per R la revisione resta una
@@ -113,7 +116,7 @@ file: il manifest si costruisce **per posizione** (`S2_0001.wav` = prima frase d
 
 ```bash
 # basta rilanciare lo stesso comando
-uv run recordings/record.py --speaker S2 --kind T
+uv run --locked --no-dev recordings/record.py --speaker S2 --kind T
 ```
 
 - `--dry-run` mostra solo cosa manca, senza registrare.
@@ -131,13 +134,13 @@ Non costruire un manifest parziale e non committarlo. A fine set:
 
 ```bash
 # T di tutti gli speaker presenti
-uv run recordings/build_manifest.py build --kind T
+uv run --locked --no-dev recordings/build_manifest.py build --kind T
 
 # Anchor di uno speaker
-uv run recordings/build_manifest.py build --kind A --speaker S2
+uv run --locked --no-dev recordings/build_manifest.py build --kind A --speaker S2
 
 # R-S2
-uv run recordings/build_manifest.py build --kind R --speaker S2
+uv run --locked --no-dev recordings/build_manifest.py build --kind R --speaker S2
 ```
 
 Il builder controlla nome, durata 1–30 s, silenzio, clipping ≤1% e frasi T revisionate. Se ci sono
@@ -162,7 +165,7 @@ forzarlo. Usa il **phone/desktop path**:
 1. L’organizzatore genera un cue sheet:
 
 ```bash
-uv run recordings/build_manifest.py cue --kind T --speaker S3 --out recordings/cues/T-S3.txt
+uv run --locked --no-dev recordings/build_manifest.py cue --kind T --speaker S3 --out recordings/cues/T-S3.txt
 ```
 
 2. Lo speaker registra **un file per frase**, seguendo l’ordine del cue sheet, con il registratore
@@ -178,7 +181,7 @@ sono quelli della tabella sopra.
 ## 7. Cose da non fare
 
 - Non registrare T per S4 prima della review delle sue 200 frasi.
-- Non registrare R per S3/S4: sono held-out.
+- Non registrare R per S3; per S4 serve un protocollo concordato, e dopo non sara' held-out.
 - Non usare `--overwrite` senza motivo.
 - Non rinominare i file o cambiarne l’ordine.
 - Non committare audio, candidati, cue o dati personali.
@@ -194,7 +197,8 @@ Se sei un agente che assiste S2/S3/S4:
    sheet e fai registrare un file per frase.
 3. Prima di registrare esegui `--dry-run`; poi rilancia il comando senza `--start` per riprendere.
 4. Non usare `--overwrite` e non modificare script, manifest o nomi dei file.
-5. Non marcare T come reviewed: la review è umana. S4 aspetta.
+5. Non marcare T come reviewed: la review e' umana. Per S4 e' gia' completata; confermare
+   con l'organizzatore lo script congelato e il set prima di registrare.
 6. Dopo la sessione esegui il `build_manifest` del set e riporta gli errori. Non usare
    `--allow-unreviewed` con T o A senza autorizzazione scritta dell’organizzatore: salta la
    revisione umana delle frasi.

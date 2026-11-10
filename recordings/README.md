@@ -3,8 +3,9 @@
 > External speakers: see [`EXTERNAL-SPEAKERS.md`](EXTERNAL-SPEAKERS.md) for the Mac recorder,
 > the Windows/phone path, speaker roles and the privacy rules.
 
-This folder holds the recording protocol, the script tooling and (soon) the data card. Audio files
-never enter git; they live on Hugging Face once the dataset is published (see `docs/03-data.md` §7).
+This folder holds the recording protocol, script tooling and data card. Audio files never enter
+git. Dataset publication requires explicit consent; it is not established by publishing model
+weights. See [verified workflows](../docs/guides/repository-workflows.md#recording-workflow).
 
 ## Sentence scripts
 
@@ -15,7 +16,7 @@ The mixed IT+EN sentences that speakers read are imported into JSONL files under
 |---|---|---|
 | `T.jsonl` | Test script, split across S1–S4 | 800 (200 per speaker) |
 | `A.jsonl` | Anchor: 60 T sentences read by every speaker (separate audio folder) | 60 |
-| `R-S1.jsonl` / `R-S2.jsonl` | Training script, one per speaker (S3/S4 never) | 600–1000 each |
+| `R-S1.jsonl` / `R-S2.jsonl` | Current training scripts; S4 may contribute under a new protocol, S3 never | 600–1000 each |
 | `pool.jsonl` | Extra sentences for tokenizer text and later synthesis | 3,000–5,000 |
 
 `T` and `R` are disjoint; duplicates (exact or near, word-3-gram Jaccard > 0.8) are refused
@@ -151,10 +152,11 @@ warnings). Fix the flagged files and rerun. For the training script:
 
 ## Recording protocol (from `docs/03-data.md` §7)
 
-- **Speakers:** S1 (the author), S2 (a friend), S3 and S4 (**held out** from every training use;
-  S3/S4 read only the T script).
+- **Speakers:** S1 and S2 supply current gold training audio; S3 never supplies training audio.
+  Current code permits R for S4, but no S4 training has run. If S4 contributes R, its T results
+  are no longer held-out-speaker results. S3 has already been repeatedly evaluated.
 - **Order:** T first — it unblocks H0 — then R for S1/S2. Optional anchor A: 60 T sentences read
-  by all three speakers.
+  by every participating speaker. A reuses T sentences and is not independent dev/test.
 - **Conditions:** quiet room; at least one speaker through the browser-demo path on a laptop
   microphone, one through a phone; record in the conditions the model will see.
 - **Format:** WAV 16-bit mono (native rate is fine, the pipeline resamples); one sentence per

@@ -1,5 +1,57 @@
 # STATUS — snapshot per riprendere i lavori
 
+## Stato Corrente Verificato (2026-11-10)
+
+Questa sezione sostituisce le priorita' e le affermazioni di stato dello snapshot storico sotto.
+Audit su `main` **`cd1ce1b`**, dopo fast-forward di due commit; il branch
+`docs/lightweight-stt-architecture-audit` e' rimasto invariato. Nessun commit/push durante l'audit.
+La CLI `gh` non e' disponibile: lo stato live della PR non e' stato verificato.
+
+| Area | Stato verificato / fonte |
+|---|---|
+| Modello pubblicato secondo i record | **0.7.0 / E-024**, 11.575.169 parametri acustici; due blocchi aggiunti all'encoder tiny, non sola testa lineare. Hosting non riverificato live |
+| Pacchetto | **19.440.760 byte**, sette file; il totale nel record E-024 esclude 4.582 byte di config e NOTICE. ORT/WASM e dipendenze esclusi |
+| Qualita' fp32 di riferimento | T-600 WER **25,20%**, ETA **54,17%**; S3 **26,92 / 48,45**; FLEURS-IT **20,14**, EN **49,14**; CV-IT test **24,37** |
+| Qualita' int8 misurata | T-600 **25,14 / 54,65**; S3 **27,00 / 48,45**. Non confondere questi risultati con fp32 o browser |
+| Decoder adottato | beam 12 / top-k 10 / LM weight 0,5 / token bonus 2,4, trigram aumentato, Silero VAD |
+| Ultimo training accettato | E-024 rumore; E-025 e' valutazione su nuova stanza, non nuovi pesi |
+| Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. Distillazione Parakeet originaria mai eseguita |
+| Non eseguito | E-018 gold scaling, E-015 seconda voce/ricetta gentile, nuovi esperimenti LM/glossario; previsioni non sono risultati |
+| Runtime su main | PR #2 gia' integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. Pesi invariati; non prova che il codice della demo pubblicata sia aggiornato |
+| Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
+| Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
+
+**Percorsi autorevoli per lavorare e scrivere il paper:**
+
+- [Workflow operativi verificati](docs/guides/repository-workflows.md): installazione, dati,
+  registrazioni, nuovi esperimenti, scoring, export e pubblicazione.
+- [Registro E-000-E-025 e audit extra](docs/12-experiment-ledger.md): protocolli, numeri,
+  benchmark/split, accettazioni, scarti, confondenti e link agli artefatti.
+- [Modello corrente e paper readiness](docs/13-current-model-and-paper-readiness.md): architettura,
+  lineage, tabelle fp32/int8/baseline, statistica, riproducibilita' e lacune.
+- [Decisioni corrette](docs/11-evidence-and-decisions.md): ragionamento e risultati negativi.
+
+**Prima del paper:** riconciliare il best E-024 (log: step 26.000; release: 26.442),
+le differenze S3 copiate nelle card e i riferimenti esatti delle baseline. Una ricetta Whistle LoRA
+fallita non dimostra causalita' architetturale. Il recupero VAD dell'80% non e' verificato dagli
+artefatti conservati. I CI sono nominali per utterance, non su seed/speaker/stanza; "tie" non
+significa equivalenza. Servono test misti nuovi congelati, piu' speaker/canali e seed multipli.
+Il dossier elenca i deliverable e separa incongruenze correggibili da misure da rifare.
+
+**Verifica locale dell'audit (Windows, 2026-11-10):** `ruff check .` pulito, test unitari JS
+**7/7** passati. `pytest -q` si ferma in collection su `test_train.py` per `resource` assente;
+`pytest -q --ignore=tests/test_train.py`: **450 passati, 3 skipped, 5 falliti**. I fallimenti
+sono nei test baseline (separatori path e quoting subprocess con spazi) e LibriSpeech
+(separatori path). Non sono stati nascosti con patch o dichiarati verdi. Nessun training,
+export, inferenza con pesi, browser end-to-end o controllo live HF eseguito.
+
+## Snapshot Storico (Non Operativo)
+
+Il testo seguente conserva il contesto delle sessioni precedenti, **incluse affermazioni superate
+o contestate dall'audit**. Numeri di test, path Mac, blocchi "in corso", richieste HF, stime,
+claim sui gate e prossimi passi qui sotto non descrivono automaticamente lo stato corrente.
+Per comandi e conclusioni usare le fonti sopra, non questo archivio.
+
 > **Runtime follow-up (2026-11-10, non pubblicato):** implementati caricamento release Python,
 > lettura LM binario, guardie/parita' decoder e budget, dipendenze runtime separate e test CI
 > leggeri. Pesi 0.7.0 invariati; nessun guadagno qualitativo dichiarato. Piano/stato:

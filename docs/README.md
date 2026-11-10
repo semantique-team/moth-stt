@@ -1,6 +1,26 @@
 # moth-stt — IT+EN code-switching speech-to-text (design)
 
-> **Status:** these documents are the **design snapshot of 2026-10-18** and are kept as written.
+## Current Documentation (Audited 2026-11-10)
+
+| Need | Source |
+|---|---|
+| Current checkout/model state and blockers | [STATUS.md](../STATUS.md), current verified section |
+| How to install, record, prepare data, train, evaluate, export or publish | [Repository workflows](guides/repository-workflows.md) |
+| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md), E-000-E-025 and extra audits |
+| Exact model, release assets, fp32/int8/baseline tables, paper caveats | [13 - Current model and paper readiness](13-current-model-and-paper-readiness.md) |
+| Executed decisions and corrected scientific interpretations | [11 - Evidence and decisions](11-evidence-and-decisions.md) |
+| Independent mixed-dev and future quality experiment safeguards | [Mixed-dev protocol](guides/mixed-dev-and-quality-experiments.md) |
+
+The audit baseline is `main` **`cd1ce1b`**. Recorded published weights remain **0.7.0 / E-024**;
+main also contains newer runtime infrastructure, not a new acoustic model. Original experiment
+JSON and cards are retained as evidence, including conflicts explicitly flagged in docs 12/13.
+These documents do not certify live hosting, recover missing weights/audio, or replace new
+experiments needed for stronger paper claims.
+
+## Historical Design
+
+> **Status:** docs 01-09 began as the **design snapshot of 2026-10-18**; some sections were later
+> amended, but unqualified design numbers and proposals are not current implementation evidence.
 > The project has since been implemented and run: the live state is [`STATUS.md`](../STATUS.md), the
 > experiment log is [`EXPERIMENTS.md`](../EXPERIMENTS.md), and the executed decision log, negative
 > results, self-corrections and threats to validity are in
@@ -38,7 +58,7 @@ Kaggle/Colab are the fallback. The total paid-compute budget is **10 USD** and i
 
 ## Documents
 
-Read in order; each file is self-contained enough to be reviewed alone.
+Read the current guides above first. The following table indexes both historical and live material.
 
 | File | Contents |
 |---|---|
@@ -53,13 +73,16 @@ Read in order; each file is self-contained enough to be reviewed alone.
 | [`09-research-notes.md`](09-research-notes.md) | The evidence behind the decisions, with links and a verified/unverified marker per claim. |
 | [`10-optimization-review.md`](10-optimization-review.md) | Architecture/code optimization review: loader, attention, CTC head, eval, export, capacity variants, recent STT papers, and what can safely run while H2 trains. |
 | [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) | What the project actually decided, rejected and corrected: executed decision log, negative results, self-corrections, threats to validity, reproduction index. |
+| [`12-experiment-ledger.md`](12-experiment-ledger.md) | Artifact-audited E-000-E-025 ledger, benchmark inventory, release measurements, discrepancies and acceptance/rejection rationale. |
+| [`13-current-model-and-paper-readiness.md`](13-current-model-and-paper-readiness.md) | Current architecture, exact parameter/asset counts, lineage, benchmark precision/splits, reproducibility limits and paper deliverables. |
+| [`guides/repository-workflows.md`](guides/repository-workflows.md) | Source-checked operational commands, platform restrictions and protocol for new experiments. |
 | [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Original implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points (historical; not maintained). |
-| [`plans/2026-11-10-lightweight-it-en-runtime-plan.md`](plans/2026-11-10-lightweight-it-en-runtime-plan.md) | Proposed runtime and quality plan: release parity, explicit 20/25 MB asset budgets, mixed-dev safeguards and bounded no-acoustic-training experiments. Not executed. |
-| [`plans/2026-10-24-post-E014-plan.md`](plans/2026-10-24-post-E014-plan.md) | **Current plan:** gold data first (E-016), distillation pilot (E-015), cross-speaker gold (E-017), then the re-scope decision, with acceptance criteria and time estimates. |
+| [`plans/2026-11-10-lightweight-it-en-runtime-plan.md`](plans/2026-11-10-lightweight-it-en-runtime-plan.md) | Runtime follow-up merged in main via PR #2; consult its implementation-status table. Mixed-dev recordings and quality experiments remain blocked/not executed; native acceptance is not browser acceptance. |
+| [`plans/2026-10-24-post-E014-plan.md`](plans/2026-10-24-post-E014-plan.md) | Historical post-E-014 plan; E-016/E-017 completed, original distillation not run, D34 keeps ETA as a gate, first E-015 gold addendum rejected. Not a current task list. |
 | [`plans/2026-10-30-vad-guard.md`](plans/2026-10-30-vad-guard.md) | Silero VAD as the no-speech guard (D25, release 0.4.0): implemented, with the measurement table and the invocation trap. |
-| [`plans/2026-11-07-whistle-lora-probe.md`](plans/2026-11-07-whistle-lora-probe.md) | **E-019, not started:** exploratory Whistle LoRA probe (D28) — a second, explicitly "less ours" artifact, never presented as Moth. Protocol, arms, kill criteria. |
+| [`plans/2026-11-07-whistle-lora-probe.md`](plans/2026-11-07-whistle-lora-probe.md) | **E-019 completed and rejected at L1:** historical exploratory Whistle LoRA protocol, never Moth; later arms not run after kill. One recipe, not architecture-causality proof. |
 | [`../STATUS.md`](../STATUS.md) | Live state: what is done, what is in progress, what is next. |
-| [`../EXPERIMENTS.md`](../EXPERIMENTS.md) | Experiment log E-000…E-014 with hypothesis, configuration, metrics and conclusion. |
+| [`../EXPERIMENTS.md`](../EXPERIMENTS.md) | Historical research log through E-025 and the later E-015 addendum; use doc 12 for corrected evidence and unexecuted IDs. |
 
 ## Decision log
 
@@ -91,6 +114,7 @@ Read in order; each file is self-contained enough to be reviewed alone.
 
 ## Next step
 
-The design phase is closed: see [`STATUS.md`](../STATUS.md) for the live state and the next
-experiment, and [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) §7 for the open
-decision between distillation, gold recordings and a re-scope of the mixed gate.
+The design phase is closed. Use the verified section of [`STATUS.md`](../STATUS.md) for current
+state, [the workflow guide](guides/repository-workflows.md) for execution, and
+[paper readiness](13-current-model-and-paper-readiness.md#7-paper-readiness) for the evidence
+still needed. The 2026-11-10 audit does not authorize or execute a new training experiment.

@@ -64,7 +64,7 @@ errors, and (for our runs) the git SHA and config path.
 | **H1 gate** | Head learns; truncated not worse than padded beyond the noise interval (`04` §5). |
 | **H2 gate** | Beats Whisper-tiny on Italian FLEURS and Common Voice dev; else escalation list in `04`. |
 | **H3 gate** | Keep a data source only if it improves mixed WER or ETA beyond the noise interval without hurting FLEURS IT/EN. |
-| **Export gate** | PyTorch fp32 vs ONNX fp32 logits within 1e-3 max-abs; int8 greedy transcripts within the noise interval; browser vs Python transcripts equal on the 20-clip e2e set (`06`). |
+| **Export gate (implemented D29 update)** | Seeded fp32 sweep: median max-absolute gap <= 1e-3, worst <= 1e-2 (`stt/export.py`, `06` section 4.2). Int8 WER and browser/Python quality require separately matched evaluations; a CI containing zero does not establish exact transcript equality or equivalence. |
 
 ## 6. Reference points from other people's reports (not our measurements)
 

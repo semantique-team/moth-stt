@@ -1,5 +1,13 @@
 # Research log
 
+> Historical research narrative. For the 2026-11-10 artifact audit of **all E-000-E-025 IDs**,
+> benchmark populations, adoption reasons, missing runs and contradictions, read
+> [the experiment ledger](docs/12-experiment-ledger.md). Original entries are preserved rather
+> than silently changing old results. In disagreements, use the ledger's cited evidence and
+> [paper dossier](docs/13-current-model-and-paper-readiness.md), not an unqualified old conclusion.
+> In particular: higher ETA is better; CV-dev subsets differ; CI fractions must be converted to
+> percentage points; one failed LoRA recipe does not establish architectural causality.
+
 Every experiment records: hypothesis, model configuration, dataset, training parameters,
 hardware, compute and cost, metrics, result, conclusion (template:
 `docs/07-repo-layout-and-roadmap.md` §4). Architecture changes are never made without an entry here.

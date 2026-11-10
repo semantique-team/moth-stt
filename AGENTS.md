@@ -12,13 +12,19 @@ Instructions for AI agents working on this repository.
 ## What this repository is
 
 **Moth** (`moth-stt`) — a very small, open **Italian + English code-switching speech-to-text** model:
-pretrained Whisper-tiny encoder (MIT) + a linear CTC head over a shared IT+EN SentencePiece BPE, ≈ 8 M
-parameters, ≈ 8–10 MB int8 ONNX, record-then-transcribe in the browser (ONNX Runtime Web / WASM) and on CPU.
+pretrained Whisper-tiny encoder (MIT) + two additional transformer blocks + a linear CTC head over
+a shared IT+EN SentencePiece BPE. The recorded 0.7.0 release has 11,575,169 acoustic parameters,
+an 11.91 MB int8 ONNX graph and 19,440,760 bytes of required assets including LM and VAD.
+It is record-then-transcribe in the browser (ONNX Runtime Web / WASM) and on CPU, not streaming.
 
-- Design docs: [`docs/README.md`](docs/README.md), then `docs/01` … `docs/09`.
+- Documentation index: [`docs/README.md`](docs/README.md). Original design is historical.
+- Verified workflows: [`docs/guides/repository-workflows.md`](docs/guides/repository-workflows.md).
+- Experiment evidence: [`docs/12-experiment-ledger.md`](docs/12-experiment-ledger.md).
+- Model and paper caveats: [`docs/13-current-model-and-paper-readiness.md`](docs/13-current-model-and-paper-readiness.md).
 - Current state (read first when resuming): [`STATUS.md`](STATUS.md) — done / in progress / next tasks.
 - Implementation plan: [`docs/plans/2026-10-19-implementation-plan.md`](docs/plans/2026-10-19-implementation-plan.md)
-  — follow it task by task (`- [ ]` checkboxes); the design docs win over guesses.
+  — historical, not a current task checklist. Use STATUS and executed evidence for current work;
+  resolve disagreements against code and retained artifacts, documenting rather than guessing.
 
 ## Conventions
 
@@ -26,12 +32,16 @@ parameters, ≈ 8–10 MB int8 ONNX, record-then-transcribe in the browser (ONNX
 - Every experiment gets an `EXPERIMENTS.md` entry and a `runs/<id>/` directory (config, metrics and logs are
   committed; checkpoints, mel shards and raw audio never enter git).
 - All text (training, tokenizer, scoring) passes through `stt.text.normalize` — the one text rule.
-- Test and dev sets are never trained on; the recorded mixed test set `T` is reviewed by hand before recording.
-- Apache-2.0; keep the Whisper MIT notice and dataset attributions in `NOTICE`.
+- Test and dev sets must never be directly trained on; review `T` by hand before recording.
+  T/S3 have repeatedly informed development: do not call them untouched final tests. Anchor A
+  reuses T sentences and is not independent dev. S3 must not contribute training audio.
+- Apache-2.0; keep Whisper MIT and dataset attributions in generated `release/NOTICE`.
 - No secrets in the repository, ever.
 
 ## Rules of the road
 
 - Don't add dependencies without a reason in the plan or an explicit request.
 - Keep changes small and within the plan's task boundaries; update the plan when reality diverges.
-- On this machine (M5 MacBook Pro 16 GB): long runs on power with `caffeinate -i`, checkpoints every ~20 min.
+- Historical training host: M5 MacBook Pro 16 GB; on macOS use power and `caffeinate -i` for long
+  runs, checkpoints every ~20 min. Native Windows training currently fails on Unix `resource`;
+  use the platform notes in the workflows guide rather than assuming this checkout is the Mac.
