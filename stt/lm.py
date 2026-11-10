@@ -18,12 +18,119 @@ from pathlib import Path
 
 import numpy as np
 
-__all__ = ["BOS_ID", "EOS_ID", "LM_VOCAB_SIZE", "BPETrigramLM"]
+__all__ = ["BOS_ID", "EOS_ID", "LM_VOCAB_SIZE", "BPETrigramLM", "BinaryBPELM"]
 
 #: SentencePiece vocabulary is 1024; the two ids after it are LM-only.
 BOS_ID = 1024
 EOS_ID = 1025
 LM_VOCAB_SIZE = 1026
+
+
+class BinaryBPELM:
+    """Read-only MOTHLMB1 scorer over CSR arrays, without reconstructing counts.
+
+    Construct from bytes or use ``load(path)``. Scores include the writer's int16
+    quantization and the browser's float32 unigram fallback rounding.
+    """
+
+    def __init__(self, data: bytes) -> None:
+        data = bytes(data)
+        offset = 0
+
+        def read(dtype: str, count: int) -> np.ndarray:
+            nonlocal offset
+            size = np.dtype(dtype).itemsize * count
+            if size > len(data) - offset:
+                raise ValueError("truncated LM buffer")
+            array = np.frombuffer(data, dtype=dtype, count=count, offset=offset)
+            offset += size
+            return array
+
+        if len(data) < 28:
+            raise ValueError("truncated LM header")
+        if data[:8] != b"MOTHLMB1":
+            raise ValueError("bad LM magic")
+        version, vocab, backoff, unigram_length, log_scale = struct.unpack_from("<IIfIf", data, 8)
+        if version != 1:
+            raise ValueError(f"unsupported LM version: {version}")
+        if vocab != LM_VOCAB_SIZE or unigram_length != LM_VOCAB_SIZE:
+            raise ValueError("LM vocab mismatch")
+        if not math.isfinite(backoff) or backoff <= 0:
+            raise ValueError("LM backoff must be finite and positive")
+        if not math.isfinite(log_scale) or log_scale <= 0:
+            raise ValueError("LM log scale must be finite and positive")
+        self.backoff = backoff
+        self.log_scale = log_scale
+        offset = 28
+        self.unigram = read("<f4", unigram_length)
+        if not np.isfinite(self.unigram).all():
+            raise ValueError("LM unigram must be finite")
+
+        def read_rows(contexts: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+            offsets = read("<u4", contexts + 1)
+            if offsets[0] != 0 or np.any(offsets[1:] < offsets[:-1]):
+                raise ValueError("LM offsets must start at zero and be monotonic")
+            entries = int(offsets[-1])
+            tokens = read("<u2", entries)
+            logs = read("<i2", entries)
+            if np.any(tokens >= vocab):
+                raise ValueError("LM token outside vocabulary")
+            ordered = tokens[1:] > tokens[:-1]
+            boundaries = offsets[1:-1]
+            boundaries = boundaries[(boundaries > 0) & (boundaries < entries)]
+            ordered[boundaries - 1] = True
+            if not ordered.all():
+                raise ValueError("LM row tokens must be strictly sorted")
+            return offsets, tokens, logs
+
+        bigram_contexts = int(read("<u4", 1)[0])
+        if bigram_contexts != vocab:
+            raise ValueError("LM bigram contexts mismatch")
+        self.bigram_offsets, self.bigram_tokens, self.bigram_logq = read_rows(bigram_contexts)
+        offset = (offset + 3) // 4 * 4
+        trigram_contexts = int(read("<u4", 1)[0])
+        if trigram_contexts > vocab * vocab:
+            raise ValueError("too many LM trigram contexts")
+        self.trigram_keys = read("<u4", trigram_contexts)
+        if np.any(self.trigram_keys >= vocab * vocab) or np.any(
+            self.trigram_keys[1:] <= self.trigram_keys[:-1]
+        ):
+            raise ValueError("LM trigram keys must be in range and strictly sorted")
+        self.trigram_offsets, self.trigram_tokens, self.trigram_logq = read_rows(trigram_contexts)
+        if offset != len(data):
+            raise ValueError("trailing LM bytes")
+        # JS adds in float64, then stores the fallback in a Float32Array.
+        self.unigram_floor = (self.unigram.astype(np.float64) + 2.0 * math.log(backoff)).astype(
+            np.float32
+        )
+        self.unigram_floor.flags.writeable = False
+
+    @classmethod
+    def load(cls, path: Path | str) -> BinaryBPELM:
+        return cls(Path(path).read_bytes())
+
+    def score(self, prev2: int, prev1: int, token: int) -> float:
+        """Log probability using trigram, bigram, then unigram fallback."""
+        prev2, prev1, token = int(prev2), int(prev1), int(token)
+        if not 0 <= token < LM_VOCAB_SIZE:
+            raise ValueError("token outside LM vocabulary")
+        token_id = np.uint16(token)
+        if 0 <= prev1 < LM_VOCAB_SIZE:
+            if 0 <= prev2 < LM_VOCAB_SIZE:
+                key = prev2 * LM_VOCAB_SIZE + prev1
+                row = int(np.searchsorted(self.trigram_keys, np.uint32(key)))
+                if row < len(self.trigram_keys) and self.trigram_keys[row] == key:
+                    start, end = self.trigram_offsets[row : row + 2]
+                    index = int(start) + int(
+                        np.searchsorted(self.trigram_tokens[start:end], token_id)
+                    )
+                    if index < end and self.trigram_tokens[index] == token:
+                        return int(self.trigram_logq[index]) * self.log_scale
+            start, end = self.bigram_offsets[prev1 : prev1 + 2]
+            index = int(start) + int(np.searchsorted(self.bigram_tokens[start:end], token_id))
+            if index < end and self.bigram_tokens[index] == token:
+                return int(self.bigram_logq[index]) * self.log_scale
+        return float(self.unigram_floor[token])
 
 
 class BPETrigramLM:

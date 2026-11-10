@@ -49,7 +49,7 @@ def load_mel_filters(path: Path | str = DEFAULT_FILTERS) -> np.ndarray:
     if not path.exists():
         raise FileNotFoundError(
             f"{path} is missing — regenerate it from openai-whisper: "
-            "python -c \"from stt.features import extract_mel_filters; "
+            'python -c "from stt.features import extract_mel_filters; '
             "import whisper, pathlib; "
             "extract_mel_filters(pathlib.Path(whisper.__file__).parent/'assets'/'mel_filters.npz')\""
         )
@@ -61,8 +61,10 @@ def _periodic_hann() -> np.ndarray:
     return 0.5 - 0.5 * np.cos(2.0 * np.pi * np.arange(N_FFT) / N_FFT)
 
 
-def log_mel(wav: np.ndarray, sample_rate: int = SAMPLE_RATE) -> np.ndarray:
-    """Log-mel spectrogram ``[80, N // 160]`` for mono float audio in [-1, 1]."""
+def log_mel(
+    wav: np.ndarray, sample_rate: int = SAMPLE_RATE, *, filters: np.ndarray | None = None
+) -> np.ndarray:
+    """Log-mel ``[80, N // 160]``; optionally use a release's finite 80x201 filterbank."""
     if sample_rate != SAMPLE_RATE:
         raise ValueError(f"expected {SAMPLE_RATE} Hz, got {sample_rate}")
     audio = np.asarray(wav, dtype=np.float64)
@@ -70,6 +72,11 @@ def log_mel(wav: np.ndarray, sample_rate: int = SAMPLE_RATE) -> np.ndarray:
         raise ValueError("expected mono audio (1-D array)")
     if len(audio) < _MIN_SAMPLES:
         raise ValueError(f"clip too short: {len(audio)} samples < {_MIN_SAMPLES}")
+    if not np.isfinite(audio).all():
+        raise ValueError("audio must contain only finite samples")
+    filters = load_mel_filters() if filters is None else np.asarray(filters, dtype=np.float32)
+    if filters.shape != (N_MELS, N_FFT // 2 + 1) or not np.isfinite(filters).all():
+        raise ValueError("filters must be finite with shape [80, 201]")
 
     pad = N_FFT // 2
     padded = np.pad(audio, (pad, pad), mode="reflect")
@@ -78,7 +85,6 @@ def log_mel(wav: np.ndarray, sample_rate: int = SAMPLE_RATE) -> np.ndarray:
     spectrum = np.fft.rfft(frames * _periodic_hann(), n=N_FFT, axis=1)
     power = np.abs(spectrum) ** 2  # [T, 201]
 
-    filters = load_mel_filters()
     mel = filters @ power.T  # [80, T]
     log_spec = np.log10(np.maximum(mel, 1e-10))
     log_spec = np.maximum(log_spec, log_spec.max() - FLOOR_RANGE)

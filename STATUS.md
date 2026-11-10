@@ -1,5 +1,12 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Runtime follow-up (2026-11-10, non pubblicato):** implementati caricamento release Python,
+> lettura LM binario, guardie/parita' decoder e budget, dipendenze runtime separate e test CI
+> leggeri. Pesi 0.7.0 invariati; nessun guadagno qualitativo dichiarato. Piano/stato:
+> [`docs/plans/2026-11-10-lightweight-it-en-runtime-plan.md`](docs/plans/2026-11-10-lightweight-it-en-runtime-plan.md).
+> Acceptance su x86_64 e campione riusato: [`runs/runtime-2026-11-10/RESULT.md`](runs/runtime-2026-11-10/RESULT.md).
+> Mixed-dev naturale e nuovi esperimenti LM/glossario restano bloccati sui dati mancanti.
+
 > Aggiornato: **2026-11-09** — ultimo commit su `origin/main`: vedi `git log -1`. Suite: **300 test
 > verdi** + 11 Playwright, `ruff` pulito.
 >

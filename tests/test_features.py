@@ -65,3 +65,23 @@ def test_shipped_filters_exist_and_match_whisper() -> None:
     npz = Path(whisper.__file__).parent / "assets" / "mel_filters.npz"
     reference = np.load(npz)["mel_80"].astype(np.float32)
     assert np.array_equal(load_mel_filters(), reference)
+
+
+def test_explicit_filters_match_default_and_do_not_reload(monkeypatch) -> None:
+    audio = _clip(0.1)
+    filters = load_mel_filters()
+    expected = log_mel(audio)
+    monkeypatch.setattr("stt.features.load_mel_filters", lambda: pytest.fail("reloaded filters"))
+    assert np.array_equal(log_mel(audio, filters=filters), expected)
+    assert np.all(log_mel(audio, filters=np.zeros((80, 201), np.float32)) == -1.5)
+
+
+@pytest.mark.parametrize("filters", [np.zeros((80, 200)), np.full((80, 201), np.nan)])
+def test_invalid_explicit_filters(filters) -> None:
+    with pytest.raises(ValueError, match="filters"):
+        log_mel(_clip(0.1), filters=filters)
+
+
+def test_nonfinite_audio_rejected() -> None:
+    with pytest.raises(ValueError, match="finite"):
+        log_mel(np.full(560, np.inf))

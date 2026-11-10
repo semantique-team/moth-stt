@@ -46,8 +46,9 @@ SIMD; 5 s clips).
 ## What it does not do
 
 No punctuation, no casing, numbers spelled out. Pure English is weak (~50% WER). Speaker coverage
-is three people, and a fourth was recruited and never recorded. **Noise hurts a lot**: measured
-+9.9 WER at 20 dB SNR against clean, so use it somewhere quiet. English terms remain the weak spot
+is three people, and a fourth was recruited and never recorded. **Noise still hurts**: 0.7.0
+was evaluated on a controlled noise pool and one unseen room, not every real environment.
+English terms remain the weak spot
 (~27% WER on a sentence containing one, ~14% without).
 
 The full list, with numbers, is in the [model card](runs/E-024/MODEL_CARD.md#limitations-stated-plainly).
@@ -55,23 +56,32 @@ The full list, with numbers, is in the [model card](runs/E-024/MODEL_CARD.md#lim
 ## Using it
 
 ```python
-import onnxruntime as ort
-import numpy as np
-from stt.features import log_mel          # the reference front-end, also ported to JS in web/
-from stt.decode import beam_search, load_pieces
-from stt.lm import BPETrigramLM
+import soundfile as sf
+from stt.onnx_runner import ReleaseMoth
 
-session = ort.InferenceSession("release/model.int8.onnx")
-mel = log_mel(audio_16k_mono)             # [80, T]
-log_probs = session.run(None, {"mel": mel[None]})[0][0]
-
-text = beam_search(
-    log_probs, log_probs.shape[0], load_pieces("release/vocab.json"),
-    beam_width=12, top_k=10,
-    lm=BPETrigramLM.load("runs/E-008/lm_bpe3_aug.pkl.gz"), lm_weight=0.5,
-    token_bonus=2.4,
-)
+runtime = ReleaseMoth("release")  # complete downloaded package; validates hashes and size
+audio, sample_rate = sf.read("speech.wav", dtype="float32")
+text, seconds = runtime.transcribe(audio, sample_rate=sample_rate)
 ```
+
+Requires mono 16 kHz PCM in `[-1, 1]`; no implicit resampling. Sessions, filters and the
+shipped binary LM load once. VAD runs once per recording; only multiple speech runs are
+segmented, and any selected speech span over 30 seconds raises rather than truncating.
+The release config supplies the decoder settings. No training-side pickle is required.
+
+```bash
+uv sync --locked --no-dev             # runtime-only checkout; no Torch
+uv run --locked --no-dev python -m stt.onnx_runner release speech.wav
+uv run --locked --no-dev python -m stt.release release
+# Explicit extended asset tier, never more than 25 MB:
+uv run --locked --no-dev python -m stt.release release --budget-bytes 25000000
+```
+
+The 19.44 MB figure counts the seven required model assets, including config and NOTICE.
+It excludes ORT Web/WASM, page assets and Python dependencies. Use `--browser-root PATH`
+with `stt.release` to report the complete browser directory separately (raw bytes, not
+compressed cold HTTP transfer). `ReleaseMoth(..., budget_bytes=25000000)` explicitly enables
+the extended asset tier; 20 MB remains the default.
 
 `token_bonus` is not optional: it is what stops the beam from under-emitting. See
 [`runs/E-022/RESULT.md`](runs/E-022/RESULT.md) — without it the same weights score 6.9 WER worse.
@@ -90,20 +100,29 @@ text = beam_search(
 ## Reproducing
 
 ```bash
-uv run pytest -q                      # 300 tests
-uv run ruff check .                   # line length 100
+uv sync --locked --all-extras         # training/export and dev dependencies
+uv run --locked --all-extras pytest -q
+uv run --locked --all-extras ruff check .
+node --experimental-vm-modules --test web/tests/unit-runtime.test.mjs
 
 # evaluate a checkpoint on the ship-gate sets
 uv run python runs/E-022/eval.py --arm frozen --int8     --checkpoint runs/E-024/checkpoints/ckpt_best.pt
 
 # rebuild the release (verifies the export gates) and the browser package
-uv run python -m stt.export --checkpoint runs/E-017/checkpoints/ckpt_best.pt --head-blocks 2 \
+uv run --locked --all-extras python -m stt.export --checkpoint runs/E-024/checkpoints/ckpt_best.pt --head-blocks 2 \
     --tokenizer data/tokenizer/moth_bpe.model --version 0.7.0
 uv run python runs/E-010/package_browser.py --beam 12 --top-k 10 --lm-weight 0.5 --token-bonus 2.4
 ```
 
 Checkpoints, raw audio, mel shards and the built `release/` are **not** in git — the mel cache
 alone is 44 GB. Every number in the table above traces to a committed `runs/E-0NN/` artifact.
+
+Runtime acceptance and limitations of the infrastructure changes are recorded in
+[`runs/runtime-2026-11-10/RESULT.md`](runs/runtime-2026-11-10/RESULT.md).
+These changes do not replace the published acoustic weights or establish a quality gain.
+The [implementation status](docs/plans/2026-11-10-lightweight-it-en-runtime-plan.md#implementation-status)
+and [mixed-dev protocol](docs/guides/mixed-dev-and-quality-experiments.md) distinguish
+completed runtime work from experiments blocked on recordings and the frozen LM corpus.
 
 ## Provenance
 

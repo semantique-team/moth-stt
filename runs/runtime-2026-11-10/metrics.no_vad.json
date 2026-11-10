@@ -1,0 +1,874 @@
+{
+  "n_utterances": 100,
+  "overall": {
+    "n": 100,
+    "ref_words": 2574,
+    "sub": 634,
+    "del": 320,
+    "ins": 71,
+    "wer": 0.39821289821289824,
+    "insertion_rate": 2.7583527583527583,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": [
+      0.35737704918032787,
+      0.4424920127795527
+    ]
+  },
+  "breakdown": {
+    "category": {
+      "it_it": {
+        "n": 40,
+        "ref_words": 964,
+        "sub": 132,
+        "del": 45,
+        "ins": 20,
+        "wer": 0.20435684647302904,
+        "insertion_rate": 2.074688796680498,
+        "eta": null
+      },
+      "en_us": {
+        "n": 40,
+        "ref_words": 876,
+        "sub": 335,
+        "del": 98,
+        "ins": 40,
+        "wer": 0.5399543378995434,
+        "insertion_rate": 4.566210045662101,
+        "eta": null
+      },
+      "spliced_it_en": {
+        "n": 20,
+        "ref_words": 734,
+        "sub": 167,
+        "del": 177,
+        "ins": 11,
+        "wer": 0.48365122615803813,
+        "insertion_rate": 1.4986376021798364,
+        "eta": null
+      }
+    }
+  },
+  "noise": {
+    "clips": 4,
+    "total_words": 5,
+    "non_empty_clips": 3,
+    "non_music_clips": 4,
+    "non_music_words": 5,
+    "non_music_non_empty_clips": 3,
+    "music_clips": 0,
+    "music_words": 0,
+    "music_non_empty_clips": 0
+  },
+  "per_utterance": {
+    "it_it/10000151032537989529.wav": {
+      "ref_words": 23,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10011138801715101183.wav": {
+      "ref_words": 29,
+      "sub": 10,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10017896147709177739.wav": {
+      "ref_words": 23,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10037759924455051213.wav": {
+      "ref_words": 29,
+      "sub": 5,
+      "del": 3,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/1006729518827641482.wav": {
+      "ref_words": 15,
+      "sub": 0,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10127750728509182272.wav": {
+      "ref_words": 15,
+      "sub": 2,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10159398106668856572.wav": {
+      "ref_words": 23,
+      "sub": 8,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10163392299961827450.wav": {
+      "ref_words": 27,
+      "sub": 5,
+      "del": 2,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10166843301601278560.wav": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10168148107941542925.wav": {
+      "ref_words": 19,
+      "sub": 4,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10173541521390065753.wav": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10210638754804006465.wav": {
+      "ref_words": 11,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/1021451608744266497.wav": {
+      "ref_words": 35,
+      "sub": 4,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10225734229056439938.wav": {
+      "ref_words": 41,
+      "sub": 4,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/1024005671072986451.wav": {
+      "ref_words": 30,
+      "sub": 7,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10275928643200034491.wav": {
+      "ref_words": 25,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10294884782884582016.wav": {
+      "ref_words": 28,
+      "sub": 9,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10324513969638088871.wav": {
+      "ref_words": 29,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10331901392264121024.wav": {
+      "ref_words": 35,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10363722267618555781.wav": {
+      "ref_words": 16,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/1040642958705021773.wav": {
+      "ref_words": 21,
+      "sub": 2,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10421376619578532077.wav": {
+      "ref_words": 10,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10434945468030652443.wav": {
+      "ref_words": 24,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10437794928490533393.wav": {
+      "ref_words": 32,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10479866160281873942.wav": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10503040099407806416.wav": {
+      "ref_words": 14,
+      "sub": 3,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10529316262657848687.wav": {
+      "ref_words": 39,
+      "sub": 1,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10536267797820820051.wav": {
+      "ref_words": 22,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10557144981026796249.wav": {
+      "ref_words": 31,
+      "sub": 3,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10568286449112693066.wav": {
+      "ref_words": 17,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10571870825120879633.wav": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/1061754421613910766.wav": {
+      "ref_words": 30,
+      "sub": 3,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10663019413117022741.wav": {
+      "ref_words": 34,
+      "sub": 1,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10669712606378135112.wav": {
+      "ref_words": 19,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10707717394504269796.wav": {
+      "ref_words": 21,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10713904656493882072.wav": {
+      "ref_words": 18,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10724761538669846878.wav": {
+      "ref_words": 21,
+      "sub": 6,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10775229660857585342.wav": {
+      "ref_words": 20,
+      "sub": 2,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/10817315806590584870.wav": {
+      "ref_words": 35,
+      "sub": 4,
+      "del": 0,
+      "ins": 3,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "it_it/1086199108496852370.wav": {
+      "ref_words": 18,
+      "sub": 1,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1003119935936341070.wav": {
+      "ref_words": 20,
+      "sub": 5,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10052240106321793346.wav": {
+      "ref_words": 21,
+      "sub": 8,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10167324587744183095.wav": {
+      "ref_words": 33,
+      "sub": 12,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10197164397713068203.wav": {
+      "ref_words": 15,
+      "sub": 6,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10233995782544396174.wav": {
+      "ref_words": 15,
+      "sub": 6,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10235738076911595987.wav": {
+      "ref_words": 20,
+      "sub": 8,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10323357556845456822.wav": {
+      "ref_words": 16,
+      "sub": 3,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10335587906469246566.wav": {
+      "ref_words": 16,
+      "sub": 6,
+      "del": 4,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10344335557154974057.wav": {
+      "ref_words": 23,
+      "sub": 11,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1036771894648013441.wav": {
+      "ref_words": 33,
+      "sub": 12,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1038214857203833067.wav": {
+      "ref_words": 19,
+      "sub": 7,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10383288285905292158.wav": {
+      "ref_words": 38,
+      "sub": 21,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10405958125670257178.wav": {
+      "ref_words": 29,
+      "sub": 17,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10411016628242228511.wav": {
+      "ref_words": 22,
+      "sub": 7,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1042003289011443756.wav": {
+      "ref_words": 10,
+      "sub": 4,
+      "del": 2,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1043394666292127188.wav": {
+      "ref_words": 34,
+      "sub": 8,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1045619486290403122.wav": {
+      "ref_words": 29,
+      "sub": 9,
+      "del": 0,
+      "ins": 4,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1046653381869710616.wav": {
+      "ref_words": 19,
+      "sub": 13,
+      "del": 0,
+      "ins": 4,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10471564175308895403.wav": {
+      "ref_words": 15,
+      "sub": 8,
+      "del": 7,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10481451226514948764.wav": {
+      "ref_words": 18,
+      "sub": 6,
+      "del": 1,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10492135991603561867.wav": {
+      "ref_words": 16,
+      "sub": 9,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10492761258488775721.wav": {
+      "ref_words": 22,
+      "sub": 11,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10536763405165824117.wav": {
+      "ref_words": 19,
+      "sub": 7,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/1054805305879816018.wav": {
+      "ref_words": 34,
+      "sub": 4,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10550734868852131138.wav": {
+      "ref_words": 20,
+      "sub": 7,
+      "del": 5,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10614481583312370701.wav": {
+      "ref_words": 21,
+      "sub": 3,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10622204403793540766.wav": {
+      "ref_words": 38,
+      "sub": 15,
+      "del": 5,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10731896540541531669.wav": {
+      "ref_words": 28,
+      "sub": 11,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10751756685109361684.wav": {
+      "ref_words": 17,
+      "sub": 8,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10768814098664478369.wav": {
+      "ref_words": 23,
+      "sub": 17,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10849792007407044602.wav": {
+      "ref_words": 18,
+      "sub": 10,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10861831846737909528.wav": {
+      "ref_words": 20,
+      "sub": 8,
+      "del": 0,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10894616243452123700.wav": {
+      "ref_words": 26,
+      "sub": 4,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10899527843662463911.wav": {
+      "ref_words": 9,
+      "sub": 4,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10903101168349732260.wav": {
+      "ref_words": 18,
+      "sub": 4,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10933070083389897676.wav": {
+      "ref_words": 25,
+      "sub": 3,
+      "del": 1,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10937407360976471523.wav": {
+      "ref_words": 19,
+      "sub": 7,
+      "del": 0,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10938576782105608041.wav": {
+      "ref_words": 27,
+      "sub": 15,
+      "del": 8,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/10969774925516121312.wav": {
+      "ref_words": 12,
+      "sub": 2,
+      "del": 0,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "en_us/11060294228176938598.wav": {
+      "ref_words": 19,
+      "sub": 9,
+      "del": 1,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/000": {
+      "ref_words": 26,
+      "sub": 3,
+      "del": 15,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/001": {
+      "ref_words": 27,
+      "sub": 3,
+      "del": 9,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/002": {
+      "ref_words": 29,
+      "sub": 9,
+      "del": 9,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/003": {
+      "ref_words": 31,
+      "sub": 3,
+      "del": 12,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/004": {
+      "ref_words": 34,
+      "sub": 7,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/005": {
+      "ref_words": 28,
+      "sub": 5,
+      "del": 16,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/006": {
+      "ref_words": 28,
+      "sub": 6,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/007": {
+      "ref_words": 33,
+      "sub": 13,
+      "del": 6,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/008": {
+      "ref_words": 36,
+      "sub": 3,
+      "del": 16,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/009": {
+      "ref_words": 29,
+      "sub": 6,
+      "del": 6,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/010": {
+      "ref_words": 45,
+      "sub": 8,
+      "del": 15,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/011": {
+      "ref_words": 42,
+      "sub": 8,
+      "del": 14,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/012": {
+      "ref_words": 41,
+      "sub": 12,
+      "del": 2,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/013": {
+      "ref_words": 42,
+      "sub": 8,
+      "del": 4,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/014": {
+      "ref_words": 37,
+      "sub": 18,
+      "del": 5,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/015": {
+      "ref_words": 36,
+      "sub": 14,
+      "del": 5,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/016": {
+      "ref_words": 40,
+      "sub": 14,
+      "del": 3,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/017": {
+      "ref_words": 48,
+      "sub": 6,
+      "del": 22,
+      "ins": 0,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/018": {
+      "ref_words": 41,
+      "sub": 10,
+      "del": 3,
+      "ins": 2,
+      "en_ref": 0,
+      "en_hit": 0
+    },
+    "spliced/019": {
+      "ref_words": 61,
+      "sub": 11,
+      "del": 4,
+      "ins": 1,
+      "en_ref": 0,
+      "en_hit": 0
+    }
+  },
+  "manifest": "runs/runtime-2026-11-10/manifest.official.jsonl",
+  "manifest_sha256": "b41373251813ccf5cd12b526e83e6a4602dd720e2bb339be159fc4240a76e2a6",
+  "hyp": "runs/runtime-2026-11-10/hyp.no_vad.jsonl",
+  "hyp_sha256": "794072c56756c6853dd17ead3ed3c59289402d8d9c46296bb8ffde5d456b98d1",
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "d74abd1ed067e9f65436c502b919121df5911936a9aa09d24f47cadc67783d25",
+  "git_sha": "a64f2a1f06843fc34d4ad1e1d948de67476263f1",
+  "config_path": null,
+  "extra_hypotheses": 0
+}

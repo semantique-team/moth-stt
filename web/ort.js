@@ -10,7 +10,7 @@ import * as ort from "./node_modules/onnxruntime-web/dist/ort.wasm.min.mjs";
 
 import { beamSearch, greedy } from "./decode.js";
 import { loadLM } from "./lm.js";
-import { computeMel, N_MELS, N_FFT, SAMPLE_RATE } from "./mel.js";
+import { computeMel, N_MELS, N_FFT, HOP_LENGTH, SAMPLE_RATE } from "./mel.js";
 import { createVad } from "./vad.js";
 
 const FILTER_FLOATS = N_MELS * (N_FFT / 2 + 1);
@@ -69,6 +69,16 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
   const config = JSON.parse(
     new TextDecoder().decode(await fetchChecked(`${root}config.json`)),
   );
+  if ((config.sample_rate ?? SAMPLE_RATE) !== SAMPLE_RATE) {
+    throw new Error(`expected ${SAMPLE_RATE} Hz release sample_rate`);
+  }
+  const configuredMaxSeconds = config.model.max_seconds ?? 30;
+  const minSamples = N_FFT + HOP_LENGTH;
+  if (!Number.isFinite(configuredMaxSeconds) || configuredMaxSeconds * SAMPLE_RATE < minSamples) {
+    throw new Error("model.max_seconds must be finite and allow at least 560 samples");
+  }
+  const maxSeconds = Math.min(30, configuredMaxSeconds);
+  const maxSamples = Math.floor(maxSeconds * SAMPLE_RATE);
   const files = config.files ?? {};
   const modelBuffer = await fetchChecked(`${root}${config.model.file}`, files[config.model.file]);
   const vocabBuffer = await fetchChecked(
@@ -107,7 +117,16 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
   });
   const loadMs = performance.now() - loadStarted;
 
-  async function transcribe(pcm, { segment: segmentOverride = null } = {}) {
+  async function transcribeUnlocked(pcm, { segment: segmentOverride = null } = {}) {
+    if (!(pcm instanceof Float32Array)) {
+      throw new Error(`pcm must be a mono Float32Array at ${SAMPLE_RATE} Hz`);
+    }
+    if (pcm.length < minSamples) {
+      throw new Error(`clip too short: ${pcm.length} samples < ${minSamples}`);
+    }
+    for (const sample of pcm) {
+      if (!Number.isFinite(sample)) throw new Error("pcm samples must be finite");
+    }
     const t0 = performance.now();
     // No-speech guard (D25, E-011) and sentence segmentation from a **single** VAD pass: the
     // per-window probabilities answer both questions, and running the graph twice would double a
@@ -145,6 +164,14 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
     const wantsSegments = segmentEnabled && probabilities !== null;
     const bounds = wantsSegments ? vad.segmentsFrom(pcm.length, probabilities) : [];
     const spans = bounds.length >= 2 ? bounds : [{ start: 0, end: pcm.length }];
+    for (const span of spans) {
+      const samples = span.end - span.start;
+      if (samples < minSamples || samples > maxSamples) {
+        throw new Error(
+          `segment must contain ${minSamples}..${maxSamples} samples (max ${maxSeconds} s); got ${samples}`,
+        );
+      }
+    }
 
     let outFrames = 0;
     let vocabSize = pieces.length + 1;
@@ -202,6 +229,17 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
       },
       rtfx: (audioSeconds * 1000) / totalMs,
     };
+  }
+
+  let transcribing = false;
+  async function transcribe(pcm, options = {}) {
+    if (transcribing) throw new Error("transcription already in progress on this runner");
+    transcribing = true;
+    try {
+      return await transcribeUnlocked(pcm, options);
+    } finally {
+      transcribing = false;
+    }
   }
 
   /** 3 warm-ups then the runs of docs/05 §3, reporting medians and RTFx. */

@@ -1,0 +1,27 @@
+......                                                                   [100%]
+6 passed in 0.76s
+
+All commands below used repository .venv/Scripts/python.exe with PYTHONPATH cleared.
+Targeted post-run verification:
+python -m pytest -q runs/runtime-2026-11-10/test_benchmark.py tests/test_decoder_parity.py tests/test_release_runtime.py tests/test_release.py tests/test_lm_binary.py
+139 passed, 2 skipped in 16.40s
+
+.venv/Scripts/ruff.exe check runs/runtime-2026-11-10
+All checks passed!
+
+Repository Windows suite:
+python -m pytest -q --ignore=tests/test_train.py
+5 failed, 446 passed, 3 skipped in 137.98s
+Excluded test_train.py: stt.train imports Unix-only resource, unavailable on Windows.
+Unrelated failures (not changed):
+tests/test_baselines_common.py::test_render_command_substitutes_values
+  POSIX /tmp path expectation versus Windows separators.
+tests/test_baselines_common.py::test_external_transcriber_success_and_audio_substitution
+tests/test_baselines_common.py::test_external_transcriber_takes_last_non_empty_line
+tests/test_baselines_common.py::test_external_transcriber_failure_is_actionable
+  Unquoted executable/script paths with spaces fail under the Windows shell.
+tests/test_sources.py::test_read_librispeech_transcripts
+  POSIX slash suffix expectation versus Windows separators.
+
+The final benchmark timing rerun was serial, after the repository suite completed.
+Publishable artifact scan: no absolute drive paths, username, corporate workspace or temporary tool paths.

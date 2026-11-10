@@ -115,9 +115,9 @@ def _chunks(audio: np.ndarray) -> Iterator[np.ndarray]:
         carry = frame[-CONTEXT:]
 
 
-def speech_probabilities(audio: np.ndarray) -> np.ndarray:
-    """``P(speech)`` for each 32 ms window of ``audio`` (16 kHz mono float32), in order."""
-    session = _session()
+def speech_probabilities(audio: np.ndarray, session=None) -> np.ndarray:
+    """Window probabilities; an optional preloaded session selects the release's VAD."""
+    session = _session() if session is None else session
     state = np.zeros(STATE_SHAPE, dtype=np.float32)
     sample_rate = np.array(SAMPLE_RATE, dtype=np.int64)
     probabilities = []
@@ -148,6 +148,8 @@ def segment_bounds(
     margin_s: float = SEGMENT_MARGIN_S,
     min_silence_s: float = SEGMENT_MIN_SILENCE_S,
     min_segment_s: float = SEGMENT_MIN_SEGMENT_S,
+    *,
+    probabilities: np.ndarray | None = None,
 ) -> list[tuple[int, int]]:
     """Sample offsets of the speech runs in ``audio``, for splitting a long recording.
 
@@ -163,7 +165,16 @@ def segment_bounds(
 
     Returns ``[]`` when there is no speech. ``mirror`` of ``web/vad.js::segments``; keep in sync.
     """
-    probabilities = speech_probabilities(audio)
+    probabilities = (
+        speech_probabilities(audio) if probabilities is None else np.asarray(probabilities)
+    )
+    if (
+        probabilities.ndim != 1
+        or probabilities.size != (audio.size + WINDOW - 1) // WINDOW
+        or not np.isfinite(probabilities).all()
+        or np.any((probabilities < 0) | (probabilities > 1))
+    ):
+        raise ValueError("probabilities must contain one finite value in [0, 1] per VAD window")
     if probabilities.size == 0:
         return []
     voiced = probabilities > WINDOW_THRESHOLD

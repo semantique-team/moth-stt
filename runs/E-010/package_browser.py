@@ -12,6 +12,7 @@ from pathlib import Path
 
 from stt.data.sources import sha256_file
 from stt.lm import BPETrigramLM
+from stt.release import validate_release
 
 RELEASE = Path("release")
 #: The shipped LM is the *augmented* one (runs/E-008/build_lm_augmented.py, adopted in 0.3.1):
@@ -25,13 +26,14 @@ LM_BINARY = Path("release/lm_bpe3.bin")
 def main() -> int:
     parser = argparse.ArgumentParser(description="Package the LM and decode settings into release/")
     parser.add_argument("--lm", default=str(LM_PICKLE), help="BPETrigramLM pickle to package")
-    parser.add_argument("--beam", type=int, default=5, help="beam width in config.json")
-    parser.add_argument("--top-k", type=int, default=8, dest="top_k")
-    parser.add_argument("--lm-weight", type=float, default=0.2, dest="lm_weight")
+    parser.add_argument("--beam", type=int, default=12, help="beam width in config.json")
+    parser.add_argument("--top-k", type=int, default=10, dest="top_k")
+    parser.add_argument("--lm-weight", type=float, default=0.5, dest="lm_weight")
+    parser.add_argument("--budget-bytes", type=int, default=20_000_000)
     parser.add_argument(
         "--token-bonus",
         type=float,
-        default=0.0,
+        default=2.4,
         dest="token_bonus",
         help="per-token score bonus (gamma); tune it *with* --lm-weight, see runs/E-022/",
     )
@@ -56,8 +58,10 @@ def main() -> int:
     }
     config["files"][LM_BINARY.name] = f"sha256:{sha256_file(LM_BINARY)}"
     config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    _, report = validate_release(RELEASE, budget_bytes=args.budget_bytes)
     print(f"{LM_BINARY}: {LM_BINARY.stat().st_size / 1e6:.2f} MB")
     print(f"decode: {json.dumps(config['decode'], sort_keys=True)}")
+    print(f"required release files: {report['total_bytes']} bytes (not browser transfer size)")
     return 0
 
 
