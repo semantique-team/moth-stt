@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "playwright test",
+    "test:acceptance": "playwright test --config playwright.acceptance.config.ts",
     "serve": "python3 server.py --root .. --port 8765"
   }
 }

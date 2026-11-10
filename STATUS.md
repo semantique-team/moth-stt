@@ -1,5 +1,13 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Acceptance/preflight locale (2026-11-10, non pubblicato):** Chromium/WASM reale passa
+> quattro configurazioni (isolated auto/1/4 thread, nonisolated auto); VAD, guardie,
+> concorrenza e uso effettivo del contextual scorer verificati. Nessun claim WER/ETA
+> naturale. [Report](runs/browser-acceptance-2026-11-10/RESULT.md).
+> `stt.preflight` inventaria dipendenze, file mancanti, hash e disco senza training:
+> [guida altro PC](docs/guides/other-pc-preflight.md). Le registrazioni dell'altro PC
+> vanno associate a manifest e storia di esposizione; non sono automaticamente test indipendente.
+
 > **Audit follow-up locale (2026-11-10, non pubblicato):** sul branch
 > `feat/audit-quality-tooling` sono preparati safe tempo, InterCTC opzionale solo training,
 > preflight/resume con hash, selezione separata dei finalisti su mixed-dev, diagnostica CTC,
