@@ -1,5 +1,11 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Handoff di sessione (2026-11-11, HEAD `9bd552c`):** tutto il contesto è compattato in
+> [`docs/15-session-handoff-2026-11-11.md`](docs/15-session-handoff-2026-11-11.md): PR #3, E-026,
+> E-027, dati S2, E-028 fp32/INT8, sweep di quantizzazione, decisioni D36-D37. **0.7.0 resta
+> pubblicato; 0.8.0 non è pubblicato.** Prossimo esperimento: **E-029 QAT**, piano in
+> [`runs/E-029/PLAN.md`](runs/E-029/PLAN.md).
+
 > **Acceptance/preflight locale (2026-11-10, mergiato con PR #3):** Chromium/WASM reale passa
 > quattro configurazioni (isolated auto/1/4 thread, nonisolated auto); VAD, guardie,
 > concorrenza e uso effettivo del contextual scorer verificati. Nessun claim WER/ETA
@@ -65,6 +71,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Bias contestuale | E-027 (2026-11-11, no training): glossario 24 termini, 47 rari invariati (22,22%), T-600 ETA +0,10 tie; **respinto** |
 | Dati S2 | 2026-11-11: addendum 50/50 valido, R-S2 672 righe; E-028 (E-015 v2) eseguito |
 | INT8 E-028 | 2026-11-11: pacchetto 19.440.760 byte, browser 4/4; T-600 25,49 / 53,50, T-S3 25,89 / 49,01, rari 12/47, naturali 428/817; **non pubblicato** |
+| Prossimo esperimento | **E-029 QAT** (pianificato): custom straight-through quantization su MPS; gate INT8 T-600/naturali/rari, package ≤20 MB, browser 4/4. Vedi `runs/E-029/PLAN.md` |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

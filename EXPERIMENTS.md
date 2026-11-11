@@ -1702,6 +1702,9 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `train.log.jsonl`, `train.out`, `eval/`), `recordings/manifests/R-S2.jsonl` (672 rows),
   `recordings/manifests/R-S2-terms.jsonl`, `data/shards/R-S2-terms`,
   `data/shards/gold-terms-S2-x20`.
+- **Next**: **E-029 QAT** is planned, not executed (`runs/E-029/PLAN.md`): custom MPS
+  straight-through quantization, because PyTorch fake-quant is unsupported on MPS; gate on INT8
+  T-600/natural/rare, package ≤20 MB and browser acceptance. No 0.8.0 before that gate.
 
 ## Runtime acceptance follow-up (2026-11-10, no new model)
 

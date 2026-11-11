@@ -10,6 +10,7 @@
 | Exact model, release assets, fp32/int8/baseline tables, paper caveats | [13 - Current model and paper readiness](13-current-model-and-paper-readiness.md) |
 | Executed decisions and corrected scientific interpretations | [11 - Evidence and decisions](11-evidence-and-decisions.md) |
 | Architecture audit, observed risks and 20/25 MB budget | [14 - Architecture audit](14-architecture-audit-2026-11-10.md) |
+| Resume after compaction: full session state and next experiment | [15 - Session handoff](15-session-handoff-2026-11-11.md) |
 | Audit tooling: safe tempo, InterCTC, finalist eval, diagnostics, contextual bias, LM builder | [Audit improvements guide](guides/audit-improvements-no-training.md) |
 | Portable readiness check for the other PC | [Other-PC preflight](guides/other-pc-preflight.md) |
 | Real Chromium/WASM acceptance | [Browser acceptance report](../runs/browser-acceptance-2026-11-10/RESULT.md) |
@@ -80,6 +81,7 @@ Read the current guides above first. The following table indexes both historical
 | [`12-experiment-ledger.md`](12-experiment-ledger.md) | Artifact-audited E-000-E-025 ledger, benchmark inventory, release measurements, discrepancies and acceptance/rejection rationale. |
 | [`13-current-model-and-paper-readiness.md`](13-current-model-and-paper-readiness.md) | Current architecture, exact parameter/asset counts, lineage, benchmark precision/splits, reproducibility limits and paper deliverables. |
 | [`14-architecture-audit-2026-11-10.md`](14-architecture-audit-2026-11-10.md) | Detailed architecture audit: observed risks, parameter/asset budgets, prior experiments, and conditional improvement paths within 20-25 MB. Read-only findings, not new measured gains. |
+| [`15-session-handoff-2026-11-11.md`](15-session-handoff-2026-11-11.md) | Session handoff: PR #3, S2 data, E-026/E-027, E-028 fp32/INT8 results, quantization sweep, decisions D36-D37 and the E-029 QAT plan. |
 | [`guides/audit-improvements-no-training.md`](guides/audit-improvements-no-training.md) | Local implementation follow-up: safe tempo, optional training-only InterCTC, guarded finalist selection, CTC diagnostics, contextual bias and frozen-corpus LM tooling. No new trained model. |
 | [`guides/other-pc-preflight.md`](guides/other-pc-preflight.md) | Portable no-training readiness report: required dependencies, missing assets, hashes, disk and recording-provenance checklist. |
 | [`../runs/browser-acceptance-2026-11-10/RESULT.md`](../runs/browser-acceptance-2026-11-10/RESULT.md) | Real Chromium/WASM acceptance in isolated 1/4-thread and nonisolated modes, with contextual scorer instrumentation and explicit measurement limits. |
