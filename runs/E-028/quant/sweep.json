@@ -1,0 +1,120 @@
+{
+  "variants": {
+    "fp32_reference": {
+      "model_bytes": 46369047,
+      "package_bytes": 53899130,
+      "per_set": {
+        "cv_it_dev": {
+          "n": 600,
+          "wer": 0.19781328847771237
+        },
+        "fleurs_it_dev": {
+          "n": 334,
+          "wer": 0.2053683769047952
+        },
+        "fleurs_en_dev": {
+          "n": 343,
+          "wer": 0.5116580310880829
+        }
+      },
+      "dev_wer": 0.3092886361368852
+    },
+    "int8_default": {
+      "model_bytes": 11910677,
+      "package_bytes": 19440760,
+      "per_set": {
+        "cv_it_dev": {
+          "n": 600,
+          "wer": 0.20151387720773759
+        },
+        "fleurs_it_dev": {
+          "n": 334,
+          "wer": 0.206906193205648
+        },
+        "fleurs_en_dev": {
+          "n": 343,
+          "wer": 0.5129533678756477
+        }
+      },
+      "dev_wer": 0.3113838172203931
+    },
+    "int8_per_tensor": {
+      "model_bytes": 11801687,
+      "package_bytes": 19331770,
+      "per_set": {
+        "cv_it_dev": {
+          "n": 600,
+          "wer": 0.2030277544154752
+        },
+        "fleurs_it_dev": {
+          "n": 334,
+          "wer": 0.2022927443030896
+        },
+        "fleurs_en_dev": {
+          "n": 343,
+          "wer": 0.5200057570523892
+        }
+      },
+      "dev_wer": 0.31263094881771925
+    },
+    "int8_reduce_range": {
+      "model_bytes": 11910677,
+      "package_bytes": 19440760,
+      "per_set": {
+        "cv_it_dev": {
+          "n": 600,
+          "wer": 0.2043734230445753
+        },
+        "fleurs_it_dev": {
+          "n": 334,
+          "wer": 0.20830420802460506
+        },
+        "fleurs_en_dev": {
+          "n": 343,
+          "wer": 0.5213010938399539
+        }
+      },
+      "dev_wer": 0.315624064651302
+    },
+    "int8_quint8": {
+      "model_bytes": 11922430,
+      "package_bytes": 19452513,
+      "per_set": {
+        "cv_it_dev": {
+          "n": 600,
+          "wer": 0.20353238015138772
+        },
+        "fleurs_it_dev": {
+          "n": 334,
+          "wer": 0.20620718579616945
+        },
+        "fleurs_en_dev": {
+          "n": 343,
+          "wer": 0.5166954519286125
+        }
+      },
+      "dev_wer": 0.3130300309288636
+    },
+    "int8_head_fp32": {
+      "model_bytes": 13085481,
+      "package_bytes": 20615564,
+      "per_set": {
+        "cv_it_dev": {
+          "n": 600,
+          "wer": 0.19915895710681245
+        },
+        "fleurs_it_dev": {
+          "n": 334,
+          "wer": 0.20606738431427374
+        },
+        "fleurs_en_dev": {
+          "n": 343,
+          "wer": 0.5135290731145653
+        }
+      },
+      "dev_wer": 0.31058565299810437
+    }
+  },
+  "best_dev_overall": "fp32_reference",
+  "chosen_in_budget": "int8_default"
+}

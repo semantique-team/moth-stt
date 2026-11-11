@@ -141,12 +141,32 @@ comparison needs a mixed-dev (A1/A3).
    significant; two gold terms lost. A 0.8.0 decision should weigh these against the rare-term
    and held-out-speaker gains.
 
+## INT8 artifact (the thing that ships)
+
+The fp32 checkpoint is the candidate above; the browser runs INT8. The exported package is
+**19,440,760 bytes**, the same as 0.7.0, and the real Chromium/WASM acceptance passes **4/4**.
+But the INT8 model does not repeat the fp32 gains:
+
+| Set | 0.7.0 INT8 | E-028 INT8 | Δ |
+|---|---:|---:|---|
+| T-600 WER / ETA | 25.14 / **54.65** | 25.49 / **53.50** | +0.34 tie / −1.15 tie |
+| T-S3 WER / ETA | 27.00 / 48.45 | **25.89 / 49.01** | −1.11 tie / +0.56 tie |
+| Rare presence | 8/47 | **12/47** | +8.5 [+2.1, +17.0] |
+| Natural-term presence | 441/817 | 428/817 | −13 |
+
+The rare gain survives quantization, but the artifact gives back 13 natural terms and 1.15
+T-600 ETA points relative to 0.7.0 INT8 (both T-600 deltas are ties by CI). The full quantization
+sweep is in `QUANTIZATION.md`: the default dynamic INT8 is the best variant inside 20 MB;
+per-tensor, reduce-range, QUInt8 and static QDQ are worse or broken; head-fp32 is only 0.08 dev
+points better and exceeds the budget at 20.62 MB.
+
 ## Recommendation
 
-**Candidate for 0.8.0.** I would not publish automatically: the dev caveat and the FLEURS-IT
-regression need an explicit product decision, and a new mixed-dev remains the correct selection
-instrument. The next no-training step is to freeze this checkpoint, export INT8, run the size and
-browser acceptance gates, and compare against 0.7.0 on the same T/S3 readouts before any upload.
+**Do not publish 0.8.0 as-is.** The fp32 arm is a strong candidate, but the shipped INT8 artifact
+is a tradeoff: rare terms better, natural terms and T-600 ETA worse than 0.7.0 INT8. The cheap
+post-training quantization routes are exhausted. The remaining serious option is **QAT /
+quantization-aware fine-tuning** (fake quantization in the forward pass), a new training
+experiment; otherwise keep 0.7.0 and treat E-028 as evidence for the next recipe.
 
 ## Cost and artifacts
 

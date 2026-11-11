@@ -50,3 +50,6 @@ recordings/cues/
 
 # Incoming external recordings (personal data: archivi e staging, mai in git)
 recordings/incoming/
+
+# E-028 quantization sweep: derived ONNX variants, never committed
+runs/E-028/quant/*.onnx

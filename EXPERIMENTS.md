@@ -1686,10 +1686,17 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   (first arm) but never beats the baseline. The final checkpoint is best inside the run, so gate 6
   passes literally; under a dev-only rule that includes 0.7.0 the baseline would still win. This
   is the A1 misalignment: a real mixed-dev is still needed for product selection.
-- **Verdict**: **candidate for 0.8.0**, not an automatic release. Caveats: dev +0.20, S1 WER
+- **INT8 artifact (what ships)**: package **19,440,760 bytes**, browser acceptance **4/4**; but
+  T-600 **25.49 / 53.50** (0.7.0 INT8 25.14 / 54.65, both ties), T-S3 **25.89 / 49.01**
+  (better WER), rare presence 8/47 → 12/47 (+8.5), natural presence **441 → 428 (−13)**. The
+  dynamic default is the best in-budget variant; per-tensor/reduce-range/QUInt8/static QDQ are
+  worse or broken, and head-fp32 is 20.62 MB (over budget) for only 0.08 dev points. See
+  `runs/E-028/QUANTIZATION.md`.
+- **Verdict**: **fp32 candidate, not published**. The shipped INT8 trades rare gains for natural
+  terms and 1.15 T-600 ETA vs 0.7.0 INT8 (ties by CI). Cheap post-training quantization is
+  exhausted; the next serious route is QAT or staying on 0.7.0. Other caveats: dev +0.20, S1 WER
   +0.43, FLEURS-IT +0.33 significant (inside the 0.5 margin), 16 gold terms −2 (`milestone`,
-  `paypal`). Next: freeze/export INT8, size/browser gates, final independent readout before any
-  upload.
+  `paypal`).
 - **Cost**: data prep ~2 min, training **1 h 47**, eval ~4 min; no teacher, no downloads, 0 USD.
 - **Artifacts**: `runs/E-028/` (`PLAN.md`, `RESULT.md`, `config.yaml`, `prepare_terms.py`,
   `train.log.jsonl`, `train.out`, `eval/`), `recordings/manifests/R-S2.jsonl` (672 rows),

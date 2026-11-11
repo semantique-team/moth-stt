@@ -416,9 +416,15 @@ regression is roughly halved (IT +0.33, EN +0.24). The 16-term gold check drops 
 
 The caveat is the dev: **31.01% vs 30.81%**, still worse than 0.7.0, although the final checkpoint is
 the best inside the run. This is the A1 problem in practice: greedy IT/EN dev does not select for
-the mixed product. A real mixed-dev is still needed before a product release. The result is a
-**candidate for 0.8.0**, not an automatic ship; INT8 export, size/browser gates and a final
-independent readout remain. `runs/E-028/RESULT.md`.
+the mixed product. A real mixed-dev is still needed before a product release.
+
+The INT8 artifact, which is what the browser ships, does not repeat the fp32 gains. The package is
+19,440,760 bytes and browser acceptance passes 4/4, but T-600 INT8 is 25.49 / 53.50 against
+0.7.0 INT8 25.14 / 54.65 (both ties), rare presence improves 8/47 → 12/47, and natural presence
+falls 441 → 428. The default dynamic quantization is the best variant inside 20 MB; per-tensor,
+reduce-range, QUInt8 and static QDQ are worse or broken, and head-fp32 costs 20.62 MB for only
+0.08 dev points. **0.8.0 is not published**; cheap post-training quantization is exhausted, so the
+next route is QAT or keeping 0.7.0. `runs/E-028/QUANTIZATION.md`.
 
 ## 4. Self-corrections
 

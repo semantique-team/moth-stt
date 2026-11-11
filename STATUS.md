@@ -31,12 +31,15 @@
 > vero. [Report](runs/E-027/RESULT.md).
 >
 > **E-028 (E-015 v2) finito (2026-11-11):** S2 + head 1e-4 / encoder 1e-5, 13.283 step.
-> **Passa i gate pre-registrati:** rare presence **17,0% → 27,7%** (+10,6 [+2,1, +21,3]), ETA
-> allineata rara **23,5% → 30,9%** (+7,4 [0,0, +15,4]), naturali **439 → 438**, T-600 **25,20 →
-> 24,66** WER / **54,17 → 54,65** ETA, T-S3 **26,92 → 25,55**. **Candidato 0.8.0**, non pubblicato:
-> dev **31,01 vs 30,81** (+0,20), S1 WER +0,43, FLEURS-IT **+0,33** significativo (dentro il
-> margine 0,5), 16 gold **20/27 → 18/27**. Serve export INT8 + gate browser e una decisione
-> prodotto; mixed-dev ancora mancante. [Risultato](runs/E-028/RESULT.md).
+> **Passa i gate pre-registrati sul fp32:** rare presence **17,0% → 27,7%** (+10,6 [+2,1, +21,3]),
+> ETA allineata rara **23,5% → 30,9%** (+7,4 [0,0, +15,4]), naturali **439 → 438**, T-600
+> **25,20 → 24,66** WER / **54,17 → 54,65** ETA, T-S3 **26,92 → 25,55**. Caveat: dev **31,01 vs
+> 30,81** (+0,20), S1 WER +0,43, FLEURS-IT **+0,33** significativo (dentro il margine 0,5), 16 gold
+> **20/27 → 18/27**. **INT8** (l'artefatto che si scarica): pacchetto 19.440.760 byte, browser 4/4,
+> ma T-600 **25,49 / 53,50** contro 25,14 / 54,65 di 0.7.0 INT8 (tie), T-S3 25,89 / 49,01, rari
+> 8/47 → 12/47, naturali **441 → 428**. Lo sweep non recupera: default migliore dentro 20 MB,
+> head-fp32 20,62 MB per +0,08 dev, statica QDQ rotta. **0.8.0 non pubblicato**; prossima strada QAT
+> o restare a 0.7.0. [Risultato](runs/E-028/RESULT.md), [sweep](runs/E-028/QUANTIZATION.md).
 
 ## Stato Corrente Verificato (2026-11-10)
 
@@ -61,6 +64,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Diagnostica rari | E-026 (2026-11-11, no training): 41/47 riferimenti nel top-k, 6/47 potati; ETA allineata 47 rari 23,5% → 30,9% con E-015, ma T-600 54,17% → 53,40% |
 | Bias contestuale | E-027 (2026-11-11, no training): glossario 24 termini, 47 rari invariati (22,22%), T-600 ETA +0,10 tie; **respinto** |
 | Dati S2 | 2026-11-11: addendum 50/50 valido, R-S2 672 righe; E-028 (E-015 v2) eseguito |
+| INT8 E-028 | 2026-11-11: pacchetto 19.440.760 byte, browser 4/4; T-600 25,49 / 53,50, T-S3 25,89 / 49,01, rari 12/47, naturali 428/817; **non pubblicato** |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 
