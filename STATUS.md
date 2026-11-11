@@ -3,8 +3,9 @@
 > **Handoff di sessione (2026-11-11, HEAD `9bd552c`):** tutto il contesto è compattato in
 > [`docs/15-session-handoff-2026-11-11.md`](docs/15-session-handoff-2026-11-11.md): PR #3, E-026,
 > E-027, dati S2, E-028 fp32/INT8, sweep di quantizzazione, decisioni D36-D37. **0.7.0 resta
-> pubblicato; 0.8.0 non è pubblicato.** Prossimo esperimento: **E-029 QAT**, piano in
-> [`runs/E-029/PLAN.md`](runs/E-029/PLAN.md).
+> pubblicato; 0.8.0 non è pubblicato.** **E-029 QAT eseguito e negativo** (vedi sotto): la probe
+> chiude il gap di quantizzazione su dev ma fallisce i gate prodotto; il braccio completo non è
+> stato finanziato. [Piano](runs/E-029/PLAN.md), [risultato](runs/E-029/RESULT.md).
 
 > **Acceptance/preflight locale (2026-11-10, mergiato con PR #3):** Chromium/WASM reale passa
 > quattro configurazioni (isolated auto/1/4 thread, nonisolated auto); VAD, guardie,
@@ -46,6 +47,14 @@
 > 8/47 → 12/47, naturali **441 → 428**. Lo sweep non recupera: default migliore dentro 20 MB,
 > head-fp32 20,62 MB per +0,08 dev, statica QDQ rotta. **0.8.0 non pubblicato**; prossima strada QAT
 > o restare a 0.7.0. [Risultato](runs/E-028/RESULT.md), [sweep](runs/E-028/QUANTIZATION.md).
+>
+> **E-029 QAT (2026-11-11, probe):** STE custom su MPS (pesi per-canale int8 + attivazioni
+> uint8), 4 bracci da 200–500 step da E-028. Il migliore (500 step, encoder congelato) chiude
+> il gap INT8–fp32 su dev (**31,13 vs 31,08**; E-028 INT8 31,14), ma sul prodotto fallisce:
+> T-600 **25,34 / 53,21** (gate ≤25,14 / ≥54,65), rari **10/47**, ETA rara 27,2%, naturali
+> **428/817**. Anche il controllo fp32 è sotto E-028 (24,97 / 54,07, naturali 434). **Braccio
+> completo non finanziato; 0.8.0 non pubblicato; 0.7.0 resta online.**
+> [Risultato](runs/E-029/RESULT.md).
 
 ## Stato Corrente Verificato (2026-11-10)
 
@@ -71,7 +80,8 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Bias contestuale | E-027 (2026-11-11, no training): glossario 24 termini, 47 rari invariati (22,22%), T-600 ETA +0,10 tie; **respinto** |
 | Dati S2 | 2026-11-11: addendum 50/50 valido, R-S2 672 righe; E-028 (E-015 v2) eseguito |
 | INT8 E-028 | 2026-11-11: pacchetto 19.440.760 byte, browser 4/4; T-600 25,49 / 53,50, T-S3 25,89 / 49,01, rari 12/47, naturali 428/817; **non pubblicato** |
-| Prossimo esperimento | **E-029 QAT** (pianificato): custom straight-through quantization su MPS; gate INT8 T-600/naturali/rari, package ≤20 MB, browser 4/4. Vedi `runs/E-029/PLAN.md` |
+| QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
+| Prossimo passo | Tenere **0.7.0**; QAT chiuso. Se si riprende: un **mixed-dev naturale vero** per la selezione prodotto, oppure mixed precision (head fp32 + trade LM) dentro 20 MB |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

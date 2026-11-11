@@ -4,6 +4,11 @@
 and exhausted the cheap INT8 quantization routes. It is deliberately detailed so a fresh agent can
 continue without reading the whole conversation.
 
+> **Update, same day:** E-029 QAT was executed after this handoff and is **negative**. The probe
+> closes the dev quantization gap but fails the T-600, rare and natural gates; the full arm was
+> not funded, 0.8.0 is **not** published and 0.7.0 stays online. See
+> [`runs/E-029/RESULT.md`](../runs/E-029/RESULT.md) and the live `STATUS.md`.
+
 ## TL;DR
 
 - **Published model: 0.7.0 / E-024, unchanged.** The Hugging Face model and the static demo still

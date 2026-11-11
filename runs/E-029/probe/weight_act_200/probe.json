@@ -1,0 +1,71 @@
+{
+  "mode": "weight_act",
+  "steps": 200,
+  "warmup": 20,
+  "lr_head": 5e-05,
+  "lr_encoder": 5e-06,
+  "wrapped_modules": 39,
+  "fp32_baseline": {
+    "steps": 20,
+    "skipped_nonfinite": 0,
+    "first_loss": 0.5372834205627441,
+    "last_loss": 0.8292901515960693,
+    "median_seconds": 0.46175870852312073,
+    "mean_seconds": 0.41703097291174346,
+    "total_seconds": 8.356360959005542,
+    "grad_modules_ok": 39
+  },
+  "qat": {
+    "steps": 200,
+    "skipped_nonfinite": 0,
+    "first_loss": 0.5763217210769653,
+    "last_loss": 0.4130498170852661,
+    "median_seconds": 0.656680874992162,
+    "mean_seconds": 0.590654302474577,
+    "total_seconds": 118.26641299994662,
+    "grad_modules_ok": 39
+  },
+  "references": {
+    "e028_fp32_dev_wer": 0.30929,
+    "e028_int8_dev_wer": 0.31138
+  },
+  "fp32_onnx": {
+    "model_bytes": 46369047,
+    "package_bytes": 53899130,
+    "dev_wer": 0.31307991619275666,
+    "per_set": {
+      "cv_it_dev": {
+        "n": 600,
+        "wer": 0.20134566862910008
+      },
+      "fleurs_it_dev": {
+        "n": 334,
+        "wer": 0.20858381098839648
+      },
+      "fleurs_en_dev": {
+        "n": 343,
+        "wer": 0.5162636729994243
+      }
+    }
+  },
+  "int8_onnx": {
+    "model_bytes": 11910677,
+    "package_bytes": 19440760,
+    "dev_wer": 0.3148757856929063,
+    "per_set": {
+      "cv_it_dev": {
+        "n": 600,
+        "wer": 0.20168208578637511
+      },
+      "fleurs_it_dev": {
+        "n": 334,
+        "wer": 0.2091430169159793
+      },
+      "fleurs_en_dev": {
+        "n": 343,
+        "wer": 0.5205814622913069
+      }
+    }
+  },
+  "step_time_ratio": 1.4221299195254513
+}

@@ -1,7 +1,7 @@
 # E-029 — QAT: recover the INT8 gap without losing the E-028 rare gains
 
-**Status:** planned 2026-11-11; not executed. This plan exists so a fresh session can start the
-experiment without re-deriving the constraints.
+**Status:** executed 2026-11-11. The probe is **negative**: QAT closes the dev quantization gap
+but fails the product gates, and the full arm was not funded. See `RESULT.md`.
 
 ## Goal
 
@@ -93,11 +93,14 @@ uv run python -m stt.export --out runs/E-029/probe/release \
     --checkpoint runs/E-028/checkpoints/ckpt_best.pt \
     --vocab release/vocab.json --head-blocks 2 --version 0.9.0-dev
 
-# 1. Probe: custom STE, 200 steps, dev eval
-uv run python runs/E-029/probe_qat.py --steps 200 --device mps
+# 1. Probe: custom STE, 500 steps, encoder frozen, dev eval (the selected arm)
+uv run python runs/E-029/probe_qat.py --mode weight_act --steps 500 \
+    --baseline-steps 20 --warmup 50 --lr-head 2e-5 --lr-encoder 2e-6 \
+    --freeze-encoder --out runs/E-029/probe/frozen_500
 
-# 2. Full arm only if the probe passes its pre-registered check
+# 2. Full arm only if the probe passes its pre-registered check (it did not)
 uv run python -m stt.train --config runs/E-029/config.yaml
 ```
 
-The probe script and config are not written yet; this plan is the contract for the next session.
+`probe_qat.py` is implemented; `config.yaml` was deliberately not written because the probe
+failed. The result and all four probe arms are in `RESULT.md`.

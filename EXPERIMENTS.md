@@ -1702,9 +1702,43 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `train.log.jsonl`, `train.out`, `eval/`), `recordings/manifests/R-S2.jsonl` (672 rows),
   `recordings/manifests/R-S2-terms.jsonl`, `data/shards/R-S2-terms`,
   `data/shards/gold-terms-S2-x20`.
-- **Next**: **E-029 QAT** is planned, not executed (`runs/E-029/PLAN.md`): custom MPS
-  straight-through quantization, because PyTorch fake-quant is unsupported on MPS; gate on INT8
-  T-600/natural/rare, package ≤20 MB and browser acceptance. No 0.8.0 before that gate.
+- **Follow-up**: **E-029 QAT executed, negative**; see the E-029 entry below. The full arm was
+  not funded, and 0.8.0 is not published.
+
+## E-029 — QAT probe: the quantizer is not the missing lever (2026-11-11)
+
+- **Question**: E-028 fp32 passes the gates, but the shipped INT8 artifact gives back natural
+  terms and T-600 ETA. Can quantization-aware fine-tuning close that gap inside 20 MB?
+- **Constraint**: PyTorch fake-quant is not implemented on MPS
+  (`aten::_fake_quantize_per_tensor_affine_cachemask_tensor_qparams`). The probe uses a custom
+  straight-through quantizer: per-output-channel symmetric int8 weights and per-tensor
+  asymmetric uint8 activations, mirroring ONNX `DynamicQuantizeLinear`, over all 39
+  Linear/Conv modules. Forward wrappers are removed before export.
+- **Protocol**: 200–500 steps from `runs/E-028/checkpoints/ckpt_best.pt`, dev selection
+  (CV-IT 600 + FLEURS-IT/EN), T read once on the selected arm. Probe plan and dev-selected
+  variants: `runs/E-029/PLAN.md`.
+- **Probe arms (dev WER, fp32 → INT8)**:
+
+| Arm | Steps | Encoder | Dev fp32 | Dev INT8 | Step ratio |
+|---|---:|---|---:|---:|---:|
+| weight only | 200 | train | 31.09 | 31.17 | 1.12× |
+| weight + act | 200 | train | 31.31 | 31.49 | 1.42× |
+| weight + act | 500 | train | 31.36 | 31.41 | 1.35× |
+| **weight + act** | **500** | **frozen** | **31.08** | **31.13** | 1.58× |
+
+  Reference: E-028 fp32 30.93, E-028 INT8 31.14. Weight-only does not help; activation
+  quantization is the main gap; freezing the encoder is the best trade (INT8 gap 0.05) but
+  does not improve the baseline. No non-finite steps; step time below the 2× kill threshold.
+- **Product readout of the best arm (INT8, 19,440,760-byte package)**: T-600 **25.34 / 53.21**
+  (0.7.0 INT8 25.14 / 54.65; E-028 INT8 25.49 / 53.50), T-S3 **25.55 / 49.30** (better),
+  rare **10/47** (E-028 INT8 12/47), rare aligned ETA **27.2%**, natural **428/817**. The
+  unquantized control is T-600 24.97 / 54.07 and natural 434 — already below E-028 fp32.
+- **Verdict**: **negative; do not publish 0.8.0; keep 0.7.0.** The T-600, rare and natural
+  gates fail (five individual conditions); T-S3 and package pass; browser was not run because
+  no candidate emerged. QAT closes the dev quantization gap but not
+  the product gap; a longer arm would first have to reverse the fine-tune drift. Cheap
+  post-training quantization and QAT are both exhausted. [Result](runs/E-029/RESULT.md).
+- **Cost**: probe ~30 min total (4 arms), no teacher, no downloads, 0 USD.
 
 ## Runtime acceptance follow-up (2026-11-10, no new model)
 
