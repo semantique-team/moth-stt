@@ -20,11 +20,23 @@ import numpy as np
 
 from stt.decode import beam_search, greedy, load_pieces
 from stt.features import load_mel_filters, log_mel
+from stt.hotwords import ContextualBias
 from stt.lm import BinaryBPELM, BPETrigramLM
 from stt.release import validate_release
 from stt.vad import WINDOW_THRESHOLD, segment_bounds, speech_probabilities
 
 __all__ = ["OnnxMoth", "ReleaseMoth", "decode_clip"]
+
+
+def _validate_contextual(contextual, pieces, decoder):
+    if contextual is None:
+        return
+    if not isinstance(contextual, ContextualBias):
+        raise TypeError("contextual must be a ContextualBias or None")
+    if contextual.pieces != pieces:
+        raise ValueError("contextual vocabulary does not match model pieces")
+    if decoder != "beam":
+        raise ValueError("contextual bias requires the beam decoder")
 
 
 class OnnxMoth:
@@ -117,9 +129,11 @@ class OnnxMoth:
         lm: BPETrigramLM | BinaryBPELM | None = None,
         lm_weight: float = 0.0,
         token_bonus: float = 0.0,
+        contextual: ContextualBias | None = None,
     ) -> tuple[str, float]:
         """Decode one clip; returns ``(text, wall_seconds)``."""
         started = time.perf_counter()
+        _validate_contextual(contextual, self.pieces, decoder)
         log_probs = self.log_probs(mel)
         if decoder == "beam":
             text = beam_search(
@@ -131,6 +145,7 @@ class OnnxMoth:
                 lm=lm,
                 lm_weight=lm_weight,
                 token_bonus=token_bonus,
+                **({"contextual": contextual} if contextual is not None else {}),
             )
         elif decoder == "greedy":
             text = greedy(log_probs, log_probs.shape[0], self.pieces)
@@ -149,6 +164,7 @@ def decode_clip(
     lm: BPETrigramLM | BinaryBPELM | None = None,
     lm_weight: float = 0.0,
     token_bonus: float = 0.0,
+    contextual: ContextualBias | None = None,
 ) -> str:
     """Thin function form of :meth:`OnnxMoth.transcribe` for callers that already hold a model."""
     text, _ = model.transcribe(
@@ -159,6 +175,7 @@ def decode_clip(
         lm=lm,
         lm_weight=lm_weight,
         token_bonus=token_bonus,
+        **({"contextual": contextual} if contextual is not None else {}),
     )
     return text
 
@@ -172,6 +189,11 @@ class ReleaseMoth:
     used only for >=2 speech runs. After the no-speech gate, each selected span
     must be 560 samples to 30 seconds; longer spans raise instead of truncating.
     ``config`` and ``report`` expose the validated settings and asset size/hash report.
+
+    Opt in per call with ``contextual=ContextualBias(sequences, runtime.model.pieces)``.
+    Sequences must be CTC IDs from the release's frozen tokenizer, not guessed from
+    text. The vocabulary snapshot must match exactly; bias requires beam decoding.
+    No contextual settings are read from release config.
     """
 
     def __init__(self, path: Path | str, *, budget_bytes: int = 20_000_000) -> None:
@@ -196,10 +218,16 @@ class ReleaseMoth:
         )
 
     def transcribe(
-        self, audio: np.ndarray, sample_rate: int = 16000, *, segment: bool | None = None
+        self,
+        audio: np.ndarray,
+        sample_rate: int = 16000,
+        *,
+        segment: bool | None = None,
+        contextual: ContextualBias | None = None,
     ) -> tuple[str, float]:
         """Decode PCM without resampling or gain adjustment; see the class contract."""
         started = time.perf_counter()
+        _validate_contextual(contextual, self.model.pieces, self.config["decode"]["default"])
         if segment is None:
             segment = self.config["decode"].get("segment", True)
         if type(segment) is not bool:
@@ -237,6 +265,7 @@ class ReleaseMoth:
                 lm=self.lm,
                 lm_weight=settings["lm_weight"],
                 token_bonus=settings["token_bonus"],
+                **({"contextual": contextual} if contextual is not None else {}),
             )
             if text:
                 texts.append(text)

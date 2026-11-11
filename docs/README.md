@@ -9,11 +9,15 @@
 | Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md), E-000-E-025 and extra audits |
 | Exact model, release assets, fp32/int8/baseline tables, paper caveats | [13 - Current model and paper readiness](13-current-model-and-paper-readiness.md) |
 | Executed decisions and corrected scientific interpretations | [11 - Evidence and decisions](11-evidence-and-decisions.md) |
+| Architecture audit, observed risks and 20/25 MB budget | [14 - Architecture audit](14-architecture-audit-2026-11-10.md) |
+| Audit tooling: safe tempo, InterCTC, finalist eval, diagnostics, contextual bias, LM builder | [Audit improvements guide](guides/audit-improvements-no-training.md) |
+| Portable readiness check for the other PC | [Other-PC preflight](guides/other-pc-preflight.md) |
+| Real Chromium/WASM acceptance | [Browser acceptance report](../runs/browser-acceptance-2026-11-10/RESULT.md) |
 | Independent mixed-dev and future quality experiment safeguards | [Mixed-dev protocol](guides/mixed-dev-and-quality-experiments.md) |
 
 The audit baseline is `main` **`cd1ce1b`**. Recorded published weights remain **0.7.0 / E-024**;
 main also contains newer runtime infrastructure, not a new acoustic model. Original experiment
-JSON and cards are retained as evidence, including conflicts explicitly flagged in docs 12/13.
+JSON and cards are retained as evidence, including conflicts explicitly flagged in docs 12-14.
 These documents do not certify live hosting, recover missing weights/audio, or replace new
 experiments needed for stronger paper claims.
 
@@ -75,6 +79,10 @@ Read the current guides above first. The following table indexes both historical
 | [`11-evidence-and-decisions.md`](11-evidence-and-decisions.md) | What the project actually decided, rejected and corrected: executed decision log, negative results, self-corrections, threats to validity, reproduction index. |
 | [`12-experiment-ledger.md`](12-experiment-ledger.md) | Artifact-audited E-000-E-025 ledger, benchmark inventory, release measurements, discrepancies and acceptance/rejection rationale. |
 | [`13-current-model-and-paper-readiness.md`](13-current-model-and-paper-readiness.md) | Current architecture, exact parameter/asset counts, lineage, benchmark precision/splits, reproducibility limits and paper deliverables. |
+| [`14-architecture-audit-2026-11-10.md`](14-architecture-audit-2026-11-10.md) | Detailed architecture audit: observed risks, parameter/asset budgets, prior experiments, and conditional improvement paths within 20-25 MB. Read-only findings, not new measured gains. |
+| [`guides/audit-improvements-no-training.md`](guides/audit-improvements-no-training.md) | Local implementation follow-up: safe tempo, optional training-only InterCTC, guarded finalist selection, CTC diagnostics, contextual bias and frozen-corpus LM tooling. No new trained model. |
+| [`guides/other-pc-preflight.md`](guides/other-pc-preflight.md) | Portable no-training readiness report: required dependencies, missing assets, hashes, disk and recording-provenance checklist. |
+| [`../runs/browser-acceptance-2026-11-10/RESULT.md`](../runs/browser-acceptance-2026-11-10/RESULT.md) | Real Chromium/WASM acceptance in isolated 1/4-thread and nonisolated modes, with contextual scorer instrumentation and explicit measurement limits. |
 | [`guides/repository-workflows.md`](guides/repository-workflows.md) | Source-checked operational commands, platform restrictions and protocol for new experiments. |
 | [`plans/2026-10-19-implementation-plan.md`](plans/2026-10-19-implementation-plan.md) | Original implementation plan: ordered tasks M0–M8 with tests, commands, gates and commit points (historical; not maintained). |
 | [`plans/2026-11-10-lightweight-it-en-runtime-plan.md`](plans/2026-11-10-lightweight-it-en-runtime-plan.md) | Runtime follow-up merged in main via PR #2; consult its implementation-status table. Mixed-dev recordings and quality experiments remain blocked/not executed; native acceptance is not browser acceptance. |

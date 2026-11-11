@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 import soundfile as sf
 import torch
 
@@ -88,6 +89,62 @@ def test_tempo_stretch_length_bounds() -> None:
     assert abs(tempo_stretch(mel, 1.1).shape[1] - 500 / 1.1) <= 1
     assert abs(tempo_stretch(mel, 0.9).shape[1] - 500 / 0.9) <= 1
     assert np.array_equal(tempo_stretch(mel, 1.0), mel)
+
+
+@pytest.mark.parametrize("frames,factor,expected", [
+    (2700, 0.9, 3000), (2701, 0.9, 2701), (3000, 0.9, 3000),
+    (3000, 1.0, 3000), (3000, 1.1, 2727),
+])
+def test_tempo_limit_keeps_both_endpoints(frames, factor, expected) -> None:
+    mel = _mel((80, frames))
+    out = tempo_stretch(mel, factor)
+    assert out.shape[1] == expected
+    np.testing.assert_array_equal(out[:, 0], mel[:, 0])
+    np.testing.assert_array_equal(out[:, -1], mel[:, -1])
+    if expected == frames:
+        np.testing.assert_array_equal(out, mel)
+
+
+@pytest.mark.parametrize("factor", [0.0, -1.0, float("nan"), float("inf")])
+def test_tempo_rejects_invalid_factors(factor) -> None:
+    with pytest.raises(ValueError, match="finite and positive"):
+        tempo_stretch(_mel(), factor)
+
+
+@pytest.mark.parametrize("augmented", [False, True])
+def test_dataset_rejects_overlong_source(monkeypatch, augmented) -> None:
+    dataset = MelDataset({}, ".", [{"id": "too-long"}],
+                         augment=AugmentConfig() if augmented else None)
+    monkeypatch.setattr(dataset, "raw_mel", lambda _position: _mel((80, 3001)))
+    with pytest.raises(ValueError, match="too-long: input exceeds 3000"):
+        dataset[0]
+    with pytest.raises(ValueError, match="input exceeds 3000"):
+        tempo_stretch(_mel((80, 3001)), 1.1)
+
+
+def test_overflow_fallback_is_deterministic_and_preserves_transcript(monkeypatch) -> None:
+    mel = _mel((80, 2999))
+    row = {"id": "last-word", "norm": "ciao fino alla fine"}
+    config = AugmentConfig(freq_masks=0, time_masks=0, tempo_range=(0.9, 0.9))
+    dataset = MelDataset({}, ".", [row], augment=config, seed=3)
+    monkeypatch.setattr(dataset, "raw_mel", lambda _position: mel)
+    first, second = dataset[0], dataset[0]
+    np.testing.assert_array_equal(first["mel"], mel)
+    np.testing.assert_array_equal(first["mel"], second["mel"])
+    assert first["row"] is row and second["row"] is row
+
+
+def test_tempo_augmentation_deterministic_across_resume(monkeypatch) -> None:
+    mel = _mel((80, 2800))
+    config = AugmentConfig(freq_masks=0, time_masks=0)
+    dataset = MelDataset({}, ".", [{"id": "x"}], augment=config, seed=42, epoch=2)
+    monkeypatch.setattr(dataset, "raw_mel", lambda _position: mel)
+    first = dataset[0]["mel"].copy()
+    dataset.epoch = 3
+    later = dataset[0]["mel"]
+    dataset.epoch = 2
+    np.testing.assert_array_equal(first, dataset[0]["mel"])
+    assert first.shape != later.shape or not np.array_equal(first, later)
 
 
 def test_augment_flags_and_determinism() -> None:

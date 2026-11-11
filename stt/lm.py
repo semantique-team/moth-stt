@@ -303,7 +303,7 @@ class BPETrigramLM:
         while len(buffer) % 4:
             buffer.append(0)
 
-        contexts = sorted(self._trigram_log)
+        contexts = sorted(context for context, row in self._trigram_log.items() if row)
         keys = [prev2 * LM_VOCAB_SIZE + prev1 for prev2, prev1 in contexts]
         trigram_offsets = [0]
         trigram_tokens: list[int] = []

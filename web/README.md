@@ -34,3 +34,62 @@ repository root so `/release/…` and `/node_modules/…` resolve).
 Notes: the benchmark follows `docs/05` §3 (warm-ups then medians). With random weights the
 transcript is meaningless — the smoke measures that the graph runs and the speed bar is
 reachable. Mel parity against `stt/features.py` and the record-then-transcribe demo are M7.
+
+## Real WASM Acceptance
+
+From `web/`, use the existing lockfile (no new dependencies):
+
+```powershell
+npm ci
+npx playwright install chromium
+npm run test:acceptance
+```
+
+On this Windows host, keep downloads outside the repository. Verify the temporary parent exists
+first; use your configured trusted CA with `NODE_EXTRA_CA_CERTS` if corporate TLS requires it
+(do not disable certificate verification):
+
+```powershell
+Test-Path -LiteralPath "$env:TEMP\opencode"
+$env:npm_config_cache = "$env:TEMP\opencode\npm-cache"
+$env:PLAYWRIGHT_BROWSERS_PATH = "$env:TEMP\opencode\playwright-browsers"
+npm ci
+npx playwright install chromium
+npm run test:acceptance
+```
+
+`playwright.acceptance.config.ts` is independent of the old smoke config: Python from `PYTHON`
+(an executable path, not shell arguments), otherwise `python`. It starts repo-root-only servers
+on `127.0.0.1:8767` (`server.py`, COOP/COEP) and `:8768` (stdlib, no isolation), refuses server
+reuse, and uses no SharedArrayBuffer-enabling flags. Projects cover isolated auto/1/4 threads
+and non-isolated auto fallback. Each uses a fresh browser context and a minimal routed
+`/acceptance.html`, not the demo startup.
+
+The original real release defaults to sibling `../moth-stt` relative to the repository root;
+override with absolute `MOTH_RELEASE_DIR`. Node verifies every configured asset SHA256 before
+an exact filename allowlist fulfills same-origin requests. No release binaries are copied.
+The required public speech fixture is `tests/fixtures/speech.wav` (FLEURS, CC-BY 4.0).
+Optional audio defaults to sibling `../moth-stt-experiments/evaluation/manifest.json`; set
+`MOTH_ACCEPTANCE_AUDIO` to an absolute manifest JSON path to override it. The first IT, EN and
+spliced entries are read in place, hashed and checked against manifest hashes where provided
+(the existing splices have no manifest hash). An absent default records reduced
+coverage; an explicit missing manifest, missing group or bad hash fails. No audio is copied.
+
+Acceptance asserts real isolation and runner/benchmark thread selection, nonempty real speech,
+silence/tone gating, invalid PCM, overlap rejection and recovery, and a 31-second speech input
+rejected with segmentation disabled (the production limit is per segment, not per recording).
+Contextual calls require a verified single-piece whole output word and the release start
+marker; missing positive coverage fails. Temporary scorer instrumentation preserves original
+scores and asserts delta/finish use, exact bonus/prefix/terminal settings and positive completion
+scores, with no-options, empty-context and zero-bonus controls. Methods are restored before
+timing. This synthetic glossary is API coverage, not evidence of natural code-switching or
+recognition improvement.
+
+Each project attaches JSON and writes portable measurements under
+`runs/browser-acceptance-2026-11-10/`. Reports include source/asset/audio hashes, Node/browser/ORT
+versions, cold raw asset responses and Resource Timing, and end-to-end same-audio timings
+with/without bias (one warmup, three repeats, no hardware speed threshold). Route fulfillment
+disables cache and its byte counts are **not HTTP-compressed transfer claims**. Optional
+`usedJSHeapSize` snapshots are **not RSS, peak memory or total WASM memory**. No recordings,
+traces, screenshots, environment dumps or private absolute paths are retained. The dated
+`RESULT.md` describes the actual verified run; these checks are not a required heavyweight CI job.

@@ -1,11 +1,27 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Acceptance/preflight locale (2026-11-10, mergiato con PR #3):** Chromium/WASM reale passa
+> quattro configurazioni (isolated auto/1/4 thread, nonisolated auto); VAD, guardie,
+> concorrenza e uso effettivo del contextual scorer verificati. Nessun claim WER/ETA
+> naturale e nessun nuovo modello. [Report](runs/browser-acceptance-2026-11-10/RESULT.md).
+> `stt.preflight` inventaria dipendenze, file mancanti, hash e disco senza training:
+> [guida altro PC](docs/guides/other-pc-preflight.md). Le registrazioni dell'altro PC
+> vanno associate a manifest e storia di esposizione; non sono automaticamente test indipendente.
+>
+> **Audit follow-up (2026-11-10, mergiato con PR #3):** in main sono entrati safe tempo,
+> InterCTC opzionale solo training, preflight/resume con hash, selezione separata dei
+> finalisti su mixed-dev, diagnostica CTC, bias contestuale opt-in Python/JS e strumenti LM
+> da corpus congelato. Nessun nuovo modello addestrato o peso pubblicato. La compattazione
+> lossless del LM attuale risparmia **0 byte**. Uso, limiti e lavoro sull'altro PC:
+> [guida audit](docs/guides/audit-improvements-no-training.md); findings e budget:
+> [audit 14](docs/14-architecture-audit-2026-11-10.md).
+
 ## Stato Corrente Verificato (2026-11-10)
 
 Questa sezione sostituisce le priorita' e le affermazioni di stato dello snapshot storico sotto.
-Audit su `main` **`cd1ce1b`**, dopo fast-forward di due commit; il branch
-`docs/lightweight-stt-architecture-audit` e' rimasto invariato. Nessun commit/push durante l'audit.
-La CLI `gh` non e' disponibile: lo stato live della PR non e' stato verificato.
+Audit su `main` **`cd1ce1b`**; la PR #3 (audit + tooling) e' stata **mergiata l'11-11-2026**.
+L'audit in se' non ha modificato pesi, checkpoint o audio e non ha eseguito training.
+La verifica di questa macchina e' riportata sotto la tabella.
 
 | Area | Stato verificato / fonte |
 |---|---|
@@ -18,6 +34,7 @@ La CLI `gh` non e' disponibile: lo stato live della PR non e' stato verificato.
 | Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. Distillazione Parakeet originaria mai eseguita |
 | Non eseguito | E-018 gold scaling, E-015 seconda voce/ricetta gentile, nuovi esperimenti LM/glossario; previsioni non sono risultati |
 | Runtime su main | PR #2 gia' integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. Pesi invariati; non prova che il codice della demo pubblicata sia aggiornato |
+| Audit/tooling su main | PR #3 mergiata 2026-11-11: audit 20/25 MB, tempo sicuro, InterCTC opt-in, preflight/resume, finalist eval, diagnostica, bias contestuale, LM builder/compaction. Nessun peso nuovo; il LM attuale risparmia 0 byte |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 
@@ -30,6 +47,8 @@ La CLI `gh` non e' disponibile: lo stato live della PR non e' stato verificato.
 - [Modello corrente e paper readiness](docs/13-current-model-and-paper-readiness.md): architettura,
   lineage, tabelle fp32/int8/baseline, statistica, riproducibilita' e lacune.
 - [Decisioni corrette](docs/11-evidence-and-decisions.md): ragionamento e risultati negativi.
+- [Audit architetturale e budget 20/25 MB](docs/14-architecture-audit-2026-11-10.md):
+  parametri, asset, rischi osservati e sequenza raccomandata; non certifica guadagni.
 
 **Prima del paper:** riconciliare il best E-024 (log: step 26.000; release: 26.442),
 le differenze S3 copiate nelle card e i riferimenti esatti delle baseline. Una ricetta Whistle LoRA
@@ -44,6 +63,12 @@ Il dossier elenca i deliverable e separa incongruenze correggibili da misure da 
 sono nei test baseline (separatori path e quoting subprocess con spazi) e LibriSpeech
 (separatori path). Non sono stati nascosti con patch o dichiarati verdi. Nessun training,
 export, inferenza con pesi, browser end-to-end o controllo live HF eseguito.
+
+**Verifica locale della merge (macOS, 2026-11-11):** `ruff check .` pulito, `git diff --check`
+pulito; `pytest -q` **881 passati, 1 skipped**; unit test Node **17/17** con
+`--experimental-vm-modules`; Playwright **11/11**. L'acceptance WASM reale (4/4) e' quella
+riportata dal report della PR su Windows e non e' stata rieseguita qui: richiede la release
+esterna e un host con Chromium. Nessun training, export, inferenza con pesi o controllo live HF.
 
 ## Snapshot Storico (Non Operativo)
 

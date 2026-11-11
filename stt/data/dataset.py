@@ -12,6 +12,7 @@ of 0.9–1.1 by interpolation (no pitch shift). ``AugmentConfig.light()`` keeps 
 
 from __future__ import annotations
 
+import math
 import random
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,6 +21,8 @@ import numpy as np
 import torch
 
 from stt.data.build_mel import read_clip
+
+MAX_MEL_FRAMES = 3000
 
 __all__ = [
     "AugmentConfig",
@@ -96,6 +99,12 @@ def collate(items: list[dict]) -> tuple[torch.Tensor, torch.Tensor, list[dict]]:
 
 def tempo_stretch(mel: np.ndarray, factor: float) -> np.ndarray:
     """Time-interpolation tempo stretch (factor > 1 is faster → shorter mel). No pitch shift."""
+    if mel.shape[1] > MAX_MEL_FRAMES:
+        raise ValueError(f"input exceeds {MAX_MEL_FRAMES} mel frames: {mel.shape[1]}")
+    if not math.isfinite(factor) or factor <= 0:
+        raise ValueError("tempo factor must be finite and positive")
+    if max(2, round(mel.shape[1] / factor)) > MAX_MEL_FRAMES:
+        factor = 1.0  # Keep the whole utterance and its transcript, never crop a stretched tail.
     if factor == 1.0:
         return mel
     frames = mel.shape[1]
@@ -151,6 +160,8 @@ def mask_time(
 def augment(mel: np.ndarray, config: AugmentConfig, rng: np.random.Generator) -> np.ndarray:
     """Tempo stretch first (on the whole mel), then SpecAugment on the resulting length."""
     out = np.asarray(mel, dtype=np.float32)
+    if out.shape[1] > MAX_MEL_FRAMES:
+        raise ValueError(f"input exceeds {MAX_MEL_FRAMES} mel frames: {out.shape[1]}")
     if config.tempo:
         out = tempo_stretch(out, float(rng.uniform(*config.tempo_range)))
     fill = float(out.min())
@@ -198,6 +209,8 @@ class MelDataset:
     def __getitem__(self, position: int) -> dict:
         row = self.rows[position]
         mel = self.raw_mel(position)
+        if mel.shape[1] > MAX_MEL_FRAMES:
+            raise ValueError(f"{row['id']}: input exceeds {MAX_MEL_FRAMES} mel frames")
         if self.augment_config is not None:
             rng = np.random.default_rng(self.seed + self.epoch * 1_000_003 + position)
             mel = augment(mel, self.augment_config, rng)

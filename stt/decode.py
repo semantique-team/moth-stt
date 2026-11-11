@@ -15,7 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
-from stt.hotwords import HotwordIndex
+from stt.hotwords import ContextualBias, HotwordIndex
 from stt.lm import BOS_ID, EOS_ID, BPETrigramLM
 
 __all__ = ["BLANK_ID", "beam_search", "greedy", "greedy_ids", "load_pieces"]
@@ -114,6 +114,7 @@ def beam_search(
     lm: BPETrigramLM | None = None,
     lm_weight: float = 0.0,
     token_bonus: float = 0.0,
+    contextual: ContextualBias | None = None,
 ) -> str:
     """CTC prefix beam search over the first ``length`` frames.
 
@@ -121,6 +122,10 @@ def beam_search(
     Equal-scoring candidates are selected and expanded by ascending token ID. The
     hotword bonus is added when a prefix completes a term; ``hotword_prefix_bonus`` can keep
     partial terms alive (default 0, since it can accumulate on multi-piece terms).
+
+    ``contextual`` opts into separate bounded, word-aware scoring. Its potential
+    telescopes on label extensions and is finalized at EOS, including without an LM.
+    It cannot restore labels excluded by acoustic top-k or prefixes already pruned.
 
     ``token_bonus`` (``gamma``) is added **once per emitted token**, and it exists because the LM
     term is not self-normalising: ``lm_weight * LM(token)`` is always negative, so with a positive
@@ -183,6 +188,8 @@ def beam_search(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
                     bonus += _lm_bonus(lm, prefix, token, lm_weight, lm_score)
+                    if contextual is not None:
+                        bonus += contextual.delta(prefix, token)
                     new_entry = next_beams.get(new_prefix)
                     if new_entry is None:
                         new_entry = [_NEG_INF, _NEG_INF]
@@ -194,6 +201,8 @@ def beam_search(
                         hotwords, new_prefix, hotword_bonus, hotword_prefix_bonus
                     )
                     bonus += _lm_bonus(lm, prefix, token, lm_weight, lm_score)
+                    if contextual is not None:
+                        bonus += contextual.delta(prefix, token)
                     new_entry = next_beams.get(new_prefix)
                     if new_entry is None:
                         new_entry = [_NEG_INF, _NEG_INF]
@@ -206,13 +215,18 @@ def beam_search(
         )
         beams = dict(ranked[:beam_width])
 
-    if lm_score is not None:
+    if lm_score is not None or contextual is not None:
 
         def final_score(item: tuple[tuple[int, ...], list[float]]) -> float:
             prefix, (p_blank, p_nonblank) = item
-            prev1 = prefix[-1] - 1 if prefix else BOS_ID
-            prev2 = prefix[-2] - 1 if len(prefix) >= 2 else BOS_ID
-            return logaddexp(p_blank, p_nonblank) + lm_weight * lm_score(prev2, prev1, EOS_ID)
+            score = logaddexp(p_blank, p_nonblank)
+            if lm_score is not None:
+                prev1 = prefix[-1] - 1 if prefix else BOS_ID
+                prev2 = prefix[-2] - 1 if len(prefix) >= 2 else BOS_ID
+                score += lm_weight * lm_score(prev2, prev1, EOS_ID)
+            if contextual is not None:
+                score += contextual.finish(prefix)
+            return score
 
         best_prefix = max(beams.items(), key=final_score)[0]
     else:

@@ -16,6 +16,69 @@ import { LM_BOS_ID, LM_EOS_ID } from "./lm.js";
 export const BLANK_ID = 0;
 const SPACE_MARKER = "▁";
 
+/** Experimental single-word bias. Sequences are CTC IDs from the frozen tokenizer,
+ * not strings guessed from the vocabulary. Terms must already be canonically normalized.
+ * delta() is only for emitted labels; finish() confirms the last word at EOS.
+ */
+export class ContextualBias {
+  constructor(sequences, pieces, { bonus = 1, prefixBonus = 0 } = {}) {
+    if (!Number.isFinite(bonus) || !Number.isFinite(prefixBonus) ||
+        prefixBonus < 0 || prefixBonus > bonus) {
+      throw new Error("require finite 0 <= prefixBonus <= bonus");
+    }
+    this.bonus = bonus;
+    this.prefixBonus = prefixBonus;
+    this.boundaries = new Set(Object.keys(pieces).filter(
+      (id) => pieces[id].startsWith(SPACE_MARKER),
+    ).map(Number));
+    this.terminals = new Set();
+    this.prefixes = new Set();
+    this.maxLen = 0;
+    for (const sequence of sequences) {
+      const ids = [...sequence];
+      if (!ids.length || ids.some((id) => !Number.isInteger(id) || id <= 0 ||
+          typeof pieces[id] !== "string" || !pieces[id])) {
+        throw new Error("contextual sequences require known nonblank integer CTC IDs");
+      }
+      const spelling = ids.map((id) => pieces[id]).join("");
+      if (!this.boundaries.has(ids[0]) ||
+          !/^[a-z\u00e0\u00e8\u00e9\u00ec\u00ed\u00f2\u00f3\u00f9\u00fa']+$/.test(spelling.slice(1))) {
+        throw new Error("contextual terms must be normalized single words with a start marker");
+      }
+      this.terminals.add(ids.join(","));
+      for (let size = 1; size < ids.length; size += 1) {
+        this.prefixes.add(ids.slice(0, size).join(","));
+      }
+      this.maxLen = Math.max(this.maxLen, ids.length);
+    }
+  }
+
+  word(tokens) {
+    for (let size = 1; size <= Math.min(tokens.length, this.maxLen); size += 1) {
+      if (this.boundaries.has(tokens[tokens.length - size])) return tokens.slice(-size);
+    }
+    return [];
+  }
+
+  potential(word) {
+    const key = word.join(",");
+    return this.terminals.has(key) || this.prefixes.has(key) ? this.prefixBonus : 0;
+  }
+
+  delta(prefix, token) {
+    const word = this.word(prefix);
+    const boundary = this.boundaries.has(token);
+    const next = boundary ? [token] : word.length ? word.concat(token) : [];
+    const completion = boundary && this.terminals.has(word.join(",")) ? this.bonus : 0;
+    return completion + this.potential(next) - this.potential(word);
+  }
+
+  finish(prefix) {
+    const word = this.word(prefix);
+    return (this.terminals.has(word.join(",")) ? this.bonus : 0) - this.potential(word);
+  }
+}
+
 function idsToText(ids, pieces) {
   let text = "";
   for (const id of ids) text += pieces[id] ?? "";
@@ -108,14 +171,15 @@ export function greedy(logProbs, frames, vocabSize, pieces) {
  * @param {number} frames usable frames
  * @param {number} vocabSize `V_ctc`
  * @param {string[]} pieces piece per CTC id; blank at 0
- * @param {{beamWidth?: number, topK?: number, lm?: object, lmWeight?: number, tokenBonus?: number}} options
+ * Contextual scoring is opt-in and cannot rescue acoustic top-k exclusions.
+ * @param {{beamWidth?: number, topK?: number, lm?: object, lmWeight?: number, tokenBonus?: number, contextual?: ContextualBias}} options
  */
 export function beamSearch(
   logProbs,
   frames,
   vocabSize,
   pieces,
-  { beamWidth = 5, topK = 8, lm = null, lmWeight = 0, tokenBonus = 0 } = {},
+  { beamWidth = 5, topK = 8, lm = null, lmWeight = 0, tokenBonus = 0, contextual = null } = {},
 ) {
   if (beamWidth <= 0 || topK <= 0) throw new Error("beamWidth and topK must be positive");
   if (frames <= 0) return "";
@@ -141,7 +205,8 @@ export function beamSearch(
             next,
             extended,
             null,
-            pBlank + logp + tokenBonus + lmBonus(lm, ids, token, lmWeight),
+            pBlank + logp + tokenBonus + lmBonus(lm, ids, token, lmWeight) +
+              (contextual ? contextual.delta(ids, token) : 0),
           );
         } else {
           const extended = ids.concat(token);
@@ -149,7 +214,8 @@ export function beamSearch(
             next,
             extended,
             null,
-            total + logp + tokenBonus + lmBonus(lm, ids, token, lmWeight),
+            total + logp + tokenBonus + lmBonus(lm, ids, token, lmWeight) +
+              (contextual ? contextual.delta(ids, token) : 0),
           );
         }
       }
@@ -163,6 +229,7 @@ export function beamSearch(
   let bestScore = -Infinity;
   for (const entry of beams.values()) {
     let score = beamScore(entry);
+    if (contextual) score += contextual.finish(entry.ids);
     if (lm && lmWeight !== 0) {
       const ids = entry.ids;
       const prev1 = ids.length ? ids[ids.length - 1] - 1 : LM_BOS_ID;
