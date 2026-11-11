@@ -47,8 +47,11 @@ def _vocabulary(paths: tuple[str, ...]) -> Counter:
             if not line.strip():
                 continue
             row = json.loads(line)
-            # R-S1-0642 onward is the E-015 addendum; the diagnostic describes what 0.7.0 saw.
+            # R-S1-0642 and R-S2-0624 onward are the E-015/E-028 addenda; the diagnostic
+            # describes what 0.7.0 saw before either arm.
             if path.endswith("R-S1.jsonl") and int(row["id"].rsplit("-", 1)[1]) >= 642:
+                continue
+            if path.endswith("R-S2.jsonl") and int(row["id"].rsplit("-", 1)[1]) >= 624:
                 continue
             counts.update(_tokens(row.get("text") or row.get("norm") or ""))
     return counts

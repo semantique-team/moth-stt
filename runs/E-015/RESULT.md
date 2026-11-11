@@ -129,6 +129,11 @@ therefore a new experiment, not a rerun:
 The 50 S1 sentences are recorded, validated and reusable; the `gold-terms-x20` source is built.
 No audio or data work is lost.
 
+**Update 2026-11-11:** the next arm ran as **E-028** with S2 and head 1e-4 / encoder 1e-5. It
+passes the pre-registered gates: rare presence 17.0% → 27.7%, aligned ETA 23.5% → 30.9%, natural
+terms 439 → 438, T-600 24.66 / 54.65, T-S3 25.55 / 49.01; caveats dev +0.20 and FLEURS-IT +0.33.
+See `runs/E-028/RESULT.md`. This first arm remains the historical negative result.
+
 ## Cost
 
 Data prep + mel + x20 **2 min**; training **1 h 50** (13,252 steps, 0 non-finite); gate + rare-term

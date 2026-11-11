@@ -1,0 +1,118 @@
+{
+  "release": "0.8.0",
+  "date": "2026-11-11",
+  "status": "candidate; not uploaded",
+  "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt (step 13283, S2 + gentle fine-tune from E-024/0.7.0)",
+  "lm": "unchanged from 0.7.0 (dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e)",
+  "reason": "S2 term addendum (50 sentences) + head 1e-4 / encoder 1e-5. Raises rare aligned ETA 23.5 -> 30.9% and rare presence 17.0 -> 27.7%, T-S3 26.92 -> 25.55; T-600 fp32 24.66 / 54.65. INT8 T-600 25.49 / 53.50, T-S3 25.89 / 49.01.",
+  "build": "uv run python -m stt.export --out runs/E-028/release --checkpoint runs/E-028/checkpoints/ckpt_best.pt --vocab release/vocab.json --head-blocks 2 --version 0.8.0",
+  "package": "uv run python runs/E-028/package_release.py (copies unchanged 0.7.0 LM and writes decode settings)",
+  "decode": {
+    "default": "beam",
+    "beam": 12,
+    "top_k": 10,
+    "lm": "lm_bpe3.bin",
+    "lm_weight": 0.5,
+    "token_bonus": 2.4
+  },
+  "package_bytes": 19436178,
+  "package_mb": 19.44,
+  "total_bytes": 19440760,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5116464,
+      "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
+    },
+    "config.json": {
+      "bytes": 1322,
+      "sha256": "d9503dccd291fcfe3f1e1e4687ba20255af87b59a2273c427328d8e61c6cc450"
+    },
+    "NOTICE": {
+      "bytes": 3260,
+      "sha256": "6ca7672f006155be816fa3b28072add859ca020c22a2c4e47eaaf4433c341d32"
+    }
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.1
+  },
+  "verification": {
+    "fp32": {
+      "median_abs": 0.0001822,
+      "worst_abs": 0.001013,
+      "draws": 80,
+      "over_gate": 1
+    },
+    "int8": {
+      "max_abs": 2.01,
+      "top1_agreement": 1.0
+    }
+  },
+  "wer": {
+    "fp32": {
+      "t600": {
+        "wer": 0.2466,
+        "eta": 0.5465
+      },
+      "t-s3": {
+        "wer": 0.2555,
+        "eta": 0.4901
+      },
+      "fleurs_it_test": {
+        "wer": 0.2014
+      },
+      "fleurs_en_test": {
+        "wer": 0.4914
+      },
+      "cv_it_dev": {
+        "wer": 0.198
+      }
+    },
+    "int8": {
+      "t600": {
+        "wer": 0.2549,
+        "eta": 0.535
+      },
+      "t-s3": {
+        "wer": 0.2589,
+        "eta": 0.4901
+      }
+    },
+    "rare": {
+      "presence_base": 8,
+      "presence_new": 13,
+      "n": 47,
+      "aligned_eta_base": 0.2346,
+      "aligned_eta_new": 0.3086,
+      "int8_presence_base": 8,
+      "int8_presence_new": 12,
+      "int8_aligned_eta_base": 0.2222,
+      "int8_aligned_eta_new": 0.2963
+    }
+  },
+  "browser": {
+    "acceptance": "runs/E-028/browser-acceptance (4/4 Chromium projects)",
+    "release_version": "0.8.0",
+    "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+    "rtfx": "not summarized here; see per-project JSON"
+  },
+  "uploaded": false
+}

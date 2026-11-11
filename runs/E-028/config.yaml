@@ -1,0 +1,74 @@
+# E-028 — E-015 second arm: S2 as a second voice + a gentler fine-tune.
+#
+# Two variables change against E-015's first arm: S2 contributes 50 term sentences (2.1 min x20
+# = 0.70 h) next to the 50 S1 sentences, and the LRs drop from head 3e-4 / encoder 5e-5 to head
+# 1e-4 / encoder 1e-5. The first arm shocked dev 30.81 -> 33.64 and lost natural terms; this arm
+# is the product attempt to keep the rare gain without the damage. It is not a causal ablation.
+#
+# See runs/E-028/PLAN.md for the pre-registered gates. Init: E-024 best (0.7.0).
+run: E-028
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-024/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  # Base mixture unchanged from E-024/E-015; the old gold stays x50, the two term sources x20.
+  train:
+    - manifest: data/manifests/cv_it_train_clean50.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/cv_it_train_noisy50.jsonl
+      shards: data/shards/cv_it_noisy50
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+    - manifest: data/manifests/spliced_it_en.jsonl
+      shards: data/shards/spliced_it_en
+    - manifest: data/shards/gold-x50/manifest.jsonl
+      shards: data/shards/gold-x50
+    - manifest: data/shards/gold-terms-x20/manifest.jsonl
+      shards: data/shards/gold-terms-x20
+    # S2 term addendum: 50 new sentences, 2.1 min x20 = 0.70 h. Separate from gold-x50.
+    - manifest: data/shards/gold-terms-S2-x20/manifest.jsonl
+      shards: data/shards/gold-terms-S2-x20
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  lr_head: 1.0e-4
+  lr_encoder: 1.0e-5
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 1
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 10
+  keep_last: 3
+  max_nonfinite_steps: 20
+  empty_cache_every: 10
+  eval_every_steps: 1000

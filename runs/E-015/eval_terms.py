@@ -48,8 +48,9 @@ def toks(text: str) -> list[str]:
 
 
 def vocabulary(paths: tuple[str, ...]) -> Counter:
-    """Token counts of the training text. R-S1-0642 onward is the E-015 addendum itself, so the
-    baseline's gold is everything before it: the groups must describe what 0.7.0 had seen."""
+    """Token counts of the training text. R-S1-0642 and R-S2-0624 onward are the E-015/E-028
+    term addenda, so the baseline's gold is everything before them: the groups must describe what
+    0.7.0 had seen."""
     counts: Counter = Counter()
     for path in paths:
         for line in (REPO / path).read_text(encoding="utf-8").splitlines():
@@ -57,6 +58,8 @@ def vocabulary(paths: tuple[str, ...]) -> Counter:
                 continue
             row = json.loads(line)
             if path.endswith("R-S1.jsonl") and int(row["id"].rsplit("-", 1)[1]) >= 642:
+                continue
+            if path.endswith("R-S2.jsonl") and int(row["id"].rsplit("-", 1)[1]) >= 624:
                 continue
             counts.update(toks(row.get("text") or row.get("norm") or ""))
     return counts

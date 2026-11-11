@@ -394,6 +394,32 @@ glossary validated on a real mixed-dev, not one mined from T failures; the six t
 (`startup`, `prototype`, `chromecast`, `charger`, `exam`, `mondays`) need acoustic/data work.
 `runs/E-027/RESULT.md`.
 
+### 3.10 The S2 arm is the first one that passes the gates
+
+E-028 repeated the E-015 gold question with **S2 as a second voice** (50 new sentences, 2.1 min,
+x20) and a **gentler fine-tune** (head 1e-4 / encoder 1e-5 instead of 3e-4 / 5e-5). It passes the
+pre-registered gates:
+
+| Readout | 0.7.0 | E-028 | Δ |
+|---|---:|---:|---|
+| Rare presence (47) | 8/47 (17.0%) | **13/47 (27.7%)** | +10.6 [+2.1, +21.3] |
+| Rare aligned ETA (81) | 19/81 (23.5%) | **25/81 (30.9%)** | +7.4 [0.0, +15.4] |
+| Natural terms | 439/817 | 438/817 | −1 |
+| T-600 WER / ETA | 25.20 / 54.17 | **24.66 / 54.65** | −0.54 tie / +0.48 tie |
+| T-S3 WER / ETA | 26.92 / 48.45 | **25.55 / 49.01** | −1.36 tie / +0.56 tie |
+| FLEURS-IT / EN | 20.14 / 49.14 | 20.47 / 49.38 | **+0.33** significant / +0.24 tie |
+
+The rare gain is no longer confined to the training voices: **S1 6/14 → 8/14, S2 0/15 → 2/15,
+held-out S3 2/18 → 3/18**. The natural terms are preserved (−1) and the first arm's FLEURS
+regression is roughly halved (IT +0.33, EN +0.24). The 16-term gold check drops 20/27 → 18/27
+(`milestone`, `paypal`).
+
+The caveat is the dev: **31.01% vs 30.81%**, still worse than 0.7.0, although the final checkpoint is
+the best inside the run. This is the A1 problem in practice: greedy IT/EN dev does not select for
+the mixed product. A real mixed-dev is still needed before a product release. The result is a
+**candidate for 0.8.0**, not an automatic ship; INT8 export, size/browser gates and a final
+independent readout remain. `runs/E-028/RESULT.md`.
+
 ## 4. Self-corrections
 
 Recorded because a paper about failures should include the failures of the authors, not only of the

@@ -18,9 +18,9 @@ terms never seen in training:
 ## Data and protocol
 
 - **Rows:** T rows with at least one English term absent from the pre-E-015 acoustic/tokenizer
-  text. The gold vocabulary excludes `R-S1-0642` onward (the E-015 addendum itself), so the
-  groups describe what 0.7.0 had actually seen. This is the same selection as
-  `runs/E-015/eval_terms.py`.
+  text. The gold vocabulary excludes `R-S1-0642` onward and `R-S2-0624` onward (the E-015/E-028
+  addenda themselves), so the groups describe what 0.7.0 had actually seen. This is the same
+  selection as `runs/E-015/eval_terms.py`.
 - **Audio:** each T file is read with `stt.data.build_mel.load_audio_16k` (mono, 16 kHz, FFT
   resampling when needed). Clips are decoded whole; no VAD and no segmentation. This is deliberate:
   the diagnostic measures the acoustic/decoder path, not the production VAD.

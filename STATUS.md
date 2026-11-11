@@ -29,6 +29,14 @@
 > irrilevante cambia leggermente (non specifico). **Respinto** dal gate ≥ +1,0 ETA. Il meccanismo è
 > sicuro ma non è la leva mancante; il prossimo passo resta S2 + fine-tune gentile e un mixed-dev
 > vero. [Report](runs/E-027/RESULT.md).
+>
+> **E-028 (E-015 v2) finito (2026-11-11):** S2 + head 1e-4 / encoder 1e-5, 13.283 step.
+> **Passa i gate pre-registrati:** rare presence **17,0% → 27,7%** (+10,6 [+2,1, +21,3]), ETA
+> allineata rara **23,5% → 30,9%** (+7,4 [0,0, +15,4]), naturali **439 → 438**, T-600 **25,20 →
+> 24,66** WER / **54,17 → 54,65** ETA, T-S3 **26,92 → 25,55**. **Candidato 0.8.0**, non pubblicato:
+> dev **31,01 vs 30,81** (+0,20), S1 WER +0,43, FLEURS-IT **+0,33** significativo (dentro il
+> margine 0,5), 16 gold **20/27 → 18/27**. Serve export INT8 + gate browser e una decisione
+> prodotto; mixed-dev ancora mancante. [Risultato](runs/E-028/RESULT.md).
 
 ## Stato Corrente Verificato (2026-11-10)
 
@@ -46,11 +54,13 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Decoder adottato | beam 12 / top-k 10 / LM weight 0,5 / token bonus 2,4, trigram aumentato, Silero VAD |
 | Ultimo training accettato | E-024 rumore; E-025 e' valutazione su nuova stanza, non nuovi pesi |
 | Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. Distillazione Parakeet originaria mai eseguita |
+| Ultimo training candidato | E-028 (E-015 v2): S2 + ricetta gentile, passa i gate; 0.8.0 solo dopo export/gate e decisione prodotto |
 | Non eseguito | E-018 gold scaling, E-015 seconda voce/ricetta gentile, nuovi esperimenti LM; E-026 (diagnostica) e E-027 (bias) sono eseguiti, E-027 negativo. Previsioni non sono risultati |
 | Runtime su main | PR #2 gia' integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. Pesi invariati; non prova che il codice della demo pubblicata sia aggiornato |
 | Audit/tooling su main | PR #3 mergiata 2026-11-11: audit 20/25 MB, tempo sicuro, InterCTC opt-in, preflight/resume, finalist eval, diagnostica, bias contestuale, LM builder/compaction. Nessun peso nuovo; il LM attuale risparmia 0 byte |
 | Diagnostica rari | E-026 (2026-11-11, no training): 41/47 riferimenti nel top-k, 6/47 potati; ETA allineata 47 rari 23,5% → 30,9% con E-015, ma T-600 54,17% → 53,40% |
 | Bias contestuale | E-027 (2026-11-11, no training): glossario 24 termini, 47 rari invariati (22,22%), T-600 ETA +0,10 tie; **respinto** |
+| Dati S2 | 2026-11-11: addendum 50/50 valido, R-S2 672 righe; E-028 (E-015 v2) eseguito |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

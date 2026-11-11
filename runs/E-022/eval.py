@@ -168,7 +168,10 @@ def main() -> int:
     parser.add_argument(
         "--checkpoint", default=str(CHECKPOINT.relative_to(REPO)) if CHECKPOINT.is_absolute() else str(CHECKPOINT)
     )
-    parser.add_argument("--int8", action="store_true", help="also decode the shipped int8 artifact")
+    parser.add_argument("--int8", action="store_true", help="also decode an int8 release artifact")
+    parser.add_argument(
+        "--release", default="release", help="release directory for --int8 (default: release/)"
+    )
     parser.add_argument("--sets", default=None, help="comma list of set names")
     parser.add_argument("--greedy", action="store_true", help="also run greedy (VAD-free control)")
     parser.add_argument("--out", default=None)
@@ -294,8 +297,9 @@ def main() -> int:
     if args.int8:
         from stt.onnx_runner import OnnxMoth
 
-        moth = OnnxMoth(REPO / "release/model.int8.onnx", REPO / "release/vocab.json")
-        int8_pieces = load_pieces(REPO / "release/vocab.json")
+        release_root = REPO / args.release
+        moth = OnnxMoth(release_root / "model.int8.onnx", release_root / "vocab.json")
+        int8_pieces = load_pieces(release_root / "vocab.json")
         for name in ("t600", "t-s3"):
             if name not in available:
                 continue

@@ -1655,6 +1655,47 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   paired deltas are interpreted.
 - **Artifacts**: `runs/E-027/` (`PLAN.md`, `RESULT.md`, `eval_bias.py`, `metrics.json`, `hyp/`).
 
+## E-028 — E-015 v2: S2 + a gentler fine-tune passes the gates (2026-11-11)
+
+- **Date**: 2026-11-11. Training run, 13,283 steps (1 epoch), init
+  `runs/E-024/checkpoints/ckpt_best.pt` (0.7.0). Pre-registered in `runs/E-028/PLAN.md`.
+- **Changes against E-015**: **S2 as the second voice** (50 new sentences, 2.1 min, x20 = 0.70 h)
+  next to the 50 S1 sentences (0.84 h), and lower LRs (**head 1e-4 / encoder 1e-5** instead of
+  3e-4 / 5e-5), dev every 1,000 steps. Two variables by design; this is a product arm, not a
+  causal ablation.
+- **Result — PASSES the pre-registered gates**:
+
+| Readout | 0.7.0 | E-028 | Δ |
+|---|---|---|---|
+| Rare presence (47) | 8/47 (17.0%) | **13/47 (27.7%)** | +10.6 [+2.1, +21.3] |
+| Rare aligned ETA (81) | 19/81 (23.5%) | **25/81 (30.9%)** | +7.4 [0.0, +15.4] |
+| Rare WER | 40.54% | **35.91%** | −4.63 [−8.98, −0.75] |
+| Natural terms | 439/817 | 438/817 | −1 |
+| Gold-only | 123/179 | 126/179 | +3 |
+| All terms | 570/1043 (54.65%) | 577/1043 (55.32%) | +0.67 |
+| 16 gold terms (regression) | 20/27 (74.1%) | 18/27 (66.7%) | −2 |
+| T-600 WER / ETA | 25.20 / 54.17 | **24.66 / 54.65** | −0.54 tie / +0.48 tie |
+| T-S3 WER / ETA | 26.92 / 48.45 | **25.55 / 49.01** | −1.36 tie / +0.56 tie |
+| FLEURS-IT / EN | 20.14 / 49.14 | 20.47 / 49.38 | **+0.33** significant / +0.24 tie |
+| CV-IT dev | 19.85 | 19.80 | −0.05 tie |
+
+- **By speaker**: rare presence S1 6/14 → 8/14, S2 0/15 → 2/15, **held-out S3 2/18 → 3/18**;
+  T-600 S1 21.67 → 22.10, S2 26.93 → 26.32, S3 27.00 → 25.55. The gain is no longer confined to
+  the training voices, but S1’s general WER is slightly worse.
+- **Dev**: final **31.01%** vs 30.81% for 0.7.0; the curve recovers from 33.64-style shock
+  (first arm) but never beats the baseline. The final checkpoint is best inside the run, so gate 6
+  passes literally; under a dev-only rule that includes 0.7.0 the baseline would still win. This
+  is the A1 misalignment: a real mixed-dev is still needed for product selection.
+- **Verdict**: **candidate for 0.8.0**, not an automatic release. Caveats: dev +0.20, S1 WER
+  +0.43, FLEURS-IT +0.33 significant (inside the 0.5 margin), 16 gold terms −2 (`milestone`,
+  `paypal`). Next: freeze/export INT8, size/browser gates, final independent readout before any
+  upload.
+- **Cost**: data prep ~2 min, training **1 h 47**, eval ~4 min; no teacher, no downloads, 0 USD.
+- **Artifacts**: `runs/E-028/` (`PLAN.md`, `RESULT.md`, `config.yaml`, `prepare_terms.py`,
+  `train.log.jsonl`, `train.out`, `eval/`), `recordings/manifests/R-S2.jsonl` (672 rows),
+  `recordings/manifests/R-S2-terms.jsonl`, `data/shards/R-S2-terms`,
+  `data/shards/gold-terms-S2-x20`.
+
 ## Runtime acceptance follow-up (2026-11-10, no new model)
 
 Infrastructure validation, not a new quality-optimization arm. Original 0.7.0 assets
