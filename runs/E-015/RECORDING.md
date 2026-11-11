@@ -87,6 +87,9 @@ for one epoch (~2 h), and evaluate on the 47 rare-term utterances plus the clean
 
 ## S2 — 50 sentences
 
+**Recorded 2026-11-11:** 50/50 clips, 2.1 min, 48 kHz mono, builder 0 errors; the full R-S2
+manifest now has 672 valid rows. The second arm is E-028 (`runs/E-028/`).
+
 | # | id | sentence |
 |---|---|---|
 | 624 | `R-S2-0624` | gli airpods nuovi hanno una buona durata |

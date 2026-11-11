@@ -9,7 +9,7 @@ spieghiamo solo come registrare e come restituire l’audio.
 | Speaker | T (test) | Anchor A | R (training) |
 |---|---|---|---|
 | S1 | 200, completo | 60, completo | 641 take base valide, usate in E-017/E-024 |
-| **S2** | **200, completo** | **60, completo** | **622/623 take base valide**, usate in E-017/E-024; addendum separato |
+| **S2** | **200, completo** | **60, completo** | **672 take valide**: 622 base (623 take, una esclusa) + 50 addendum (2026-11-11); usate in E-017/E-024 ed E-028 |
 | **S3** | **200** | **60** | **mai** (held-out) |
 | **S4** | **200, da registrare** | **60, da registrare** | Consentito dal codice per un nuovo protocollo; non ancora eseguito |
 
@@ -83,9 +83,10 @@ uv run --locked --no-dev recordings/record.py --speaker S4 --kind A
 
 ### R-S2 — solo S2
 
-Il blocco base R-S2 e' gia' registrato: 623 take, 622 valide, senza rinumerare quella esclusa.
-Non sovrascriverlo. Per nuove frasi/addendum chiedere all'organizzatore script, review e indice
-di partenza; il comando senza `--overwrite` riprende dalla prima take mancante:
+Il blocco base R-S2 e' registrato (623 take, 622 valide, senza rinumerare quella esclusa) e
+l'addendum 0624-0673 e' stato registrato il 2026-11-11 (50/50, 2,1 min). Non sovrascrivere
+nessuna take. Per un nuovo addendum chiedere all'organizzatore script, review e indice di
+partenza; il comando senza `--overwrite` riprende dalla prima take mancante:
 
 ```bash
 uv run --locked --no-dev recordings/record.py --speaker S2 --kind R
