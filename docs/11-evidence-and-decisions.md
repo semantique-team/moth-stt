@@ -64,7 +64,7 @@ each with the evidence that forced it.
 | D27 | 2026-11-07 | **Adopt E-017 historically**, superseded by E-024 in 0.7.0; ETA gate unresolved | E-017 vs E-016: T-600 WER −5.73 [−7.14, −4.26], ETA +6.81 [+4.18, +9.55]; S3 WER −6.13 [−8.68, −3.51], ETA +4.79 [+0.51, +9.06]. Transfer beyond trained voices is observed, not equality of effects or removal of speaker/channel confounds (§3.3) | Keeping E-016; waiting for more gold |
 | D28 | 2026-11-07 | **Stop exploratory Whistle LoRA at L1**, not a Moth release | S3 +2.30 WER [−0.68, +5.46] (no detected gain); FLEURS-IT/EN and first 1,000 CV-test clips regress. This rejects adoption of this recipe, **not** architecture-independent transfer in general. H3/H4 unrun (§3.4) | Continuing past the kill; presenting LoRA as Moth. [Protocol](plans/2026-11-07-whistle-lora-probe.md), [result](../runs/E-019/RESULT.md) |
 | D24 | 2026-10-24 | **Reject H3b splicing as an ETA lever**; keep E-014 as the best acoustic checkpoint | E-014: FLEURS-IT −2.27, FLEURS-EN −0.95 (both significant), CV/T/noise ties, T ETA −0.90 (tie) | More splicing, word-level splicing (too early) |
-| D35 | 2026-11-09 | **Do not adopt E-015 first gold addendum**, keep 0.7.0 | 50 S1 sentences x20, one epoch: rare accuracy 8/47 → 11/47 (+6.4 [−4.3, +17.0] pp), S3 2/18 unchanged; natural hits 439 → 423; FLEURS-IT +0.72 / EN +1.31 pp regress. Dev best is near-start step 20; no useful new checkpoint selected | Final checkpoint; repeating this recipe. Follow-up S2 plus gentler LR changes two variables and cannot isolate either cause |
+| D35 | 2026-11-09 | **Do not adopt E-015 first gold addendum**, keep 0.7.0 | 50 S1 sentences x20, one epoch: presence 8/47 → 11/47 (+6.4 [−4.3, +17.0] pp), S3 2/18 unchanged; natural hits 439 → 423; FLEURS-IT +0.72 / EN +1.31 pp regress. E-026 correction: aligned ETA on the same 47 is 19/81 → 25/81 (23.5% → 30.9%), but full T-600 ETA is 565/1043 → 557/1043 (54.17% → 53.40%). Dev best is near-start step 20; no useful new checkpoint selected | Final checkpoint; repeating this recipe. Follow-up S2 plus gentler LR changes two variables and cannot isolate either cause |
 | D34 | 2026-11-09 | **Keep ETA as a gate** and fund **E-015 as a gold addendum**, not Parakeet | 0.7.0 term-presence diagnostic: natural 53.7%, gold-only 68.7%, rare 8/47 = **17.0%** across 44 missing term strings. Historical `TERMS18` group actually contains **16 strings**, 20/27 = **74.1%**. These presence readouts are not official aligned ETA. Direct ETA ceiling **+2.8-3.7 pp** is an estimate, not an observed gain; historical target revised to >=50% rare, ETA +2-4, WER not worse | WER-first; blocked Parakeet distillation; retaining unreachable +5 target |
 | D33 | 2026-11-09 | **Add one unseen-noise-recording control**, no weights change | E-025 uses 38 s of new ambience on the same first 100 S3 clips: gains −3.90/−6.79/−11.21/−18.34/−14.60 pp at 30/20/15/10/5 dB; all WER CIs exclude zero, all ETA CIs include zero. Mean −10.06 pp over 30/20/15/10 dB; absolute WER 36.50 at 15 dB. Shared-pool concern narrowed, general robustness not certified | A post-hoc 80/20 split cannot make an already-trained checkpoint source-disjoint; retraining with a source-level split is needed |
 | D32 | 2026-11-09 | **Noise augmentation on half of CV-IT**, release **0.7.0** | E-024: fixed per-clip hash-selected SNR 10–30 dB, same ≈589.5 h mixture; gains −6.28 at 15 dB, −11.54 at 10 dB, −9.68 at 5 dB. Clean T-600 −0.72, S3 +0.26 (ties), CV-test −0.52 pp (CI excludes zero). This is not a confidence-bound non-inferiority proof or an isolated decoder/acoustic diagnosis | Noising all CV; adding a full noisy copy (changes source share); noising MLS/LS (raw audio absent) |
@@ -355,6 +355,13 @@ rates. The result was a **kill**:
 | Historical `TERMS18` group (16 strings) | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
 | FLEURS-IT / EN | 20.14 / 49.14 | 20.86 / 50.45 | **+0.72 / +1.31** |
 
+The 2026-11-11 diagnostic **E-026** adds the missing canonical readout. On the same 47 rows the
+aligned ETA (81 English occurrences) is **19/81 = 23.5% → 25/81 = 30.9%**, so the rare-subset gain
+was larger than presence suggested; but full T-600 aligned ETA fell **565/1043 = 54.17% →
+557/1043 = 53.40%**, so the arm gave back more on natural terms than it gained on the rare ones.
+The verdict is unchanged, and the next arm must treat aligned ETA as primary and presence as a
+diagnostic.
+
 The dev curve is **30.81 after 20 smoke updates, 33.64 at step 2,000, 31.22 at the end**.
 The model was pulled three points away and spent the whole epoch recovering; the best checkpoint by
 dev is step 20, a near-start checkpoint, **not an untouched baseline**. The final-checkpoint
@@ -370,6 +377,22 @@ Three lessons.
 3. **A failed arm still buys information.** The 50 clips, the x20 source and the readout are
    reusable; the next arm changes S2 + the learning rate, not the data. The kill rule was fixed
    before the run and it fired on both criteria; the bar is not moved after the fact.
+
+### 3.9 Contextual bias did not recover the rare terms
+
+E-026 showed that 41/47 rare T references survive top-k 10, so E-027 tested the opt-in
+`ContextualBias` on the published 0.7.0 release with a pre-registered 24-term work/meeting glossary
+from `data/en_terms.txt`. At bonus 1.0 / prefix 0.25 it changed T-600 WER by **−0.03 points**
+(95% CI [−0.12, +0.06]) and aligned ETA by **+0.10** ([−0.20, +0.42]); the 47 rare rows did not
+move at all (ETA **22.22% → 22.22%**, presence 8/47). The irrelevant-glossary control produced a
+small non-specific change (+1.23 rare ETA, CI [0.00, +3.49]), so there is no glossary-specific
+effect. Zero bonus is byte-identical to baseline, and Italian controls show **0 → 0** glossary
+insertions: the mechanism is safe but not the missing lever.
+
+Rejected by the pre-registered gate (≥ +1.0 aligned-ETA point). A future bias needs a product
+glossary validated on a real mixed-dev, not one mined from T failures; the six top-k-pruned rows
+(`startup`, `prototype`, `chromecast`, `charger`, `exam`, `mondays`) need acoustic/data work.
+`runs/E-027/RESULT.md`.
 
 ## 4. Self-corrections
 
@@ -503,11 +526,13 @@ importing Unix-only `resource`. See doc 13 before attempting a reproduction.
    used in Italian, so **ETA stays a gate**; the WER-first option is out. The remaining work is a
    short memo documenting the choice and the realigned phases, not a new debate.
 2. **E-015 v2 — the first arm failed, the next changes two variables.** The 50 S1 sentences moved
-   the 47 rare utterances **17.0% → 23.4%** (not significant), with **S3 unchanged** (2/18), and
-   the E-017 learning rates shocked the dev (30.81 → 33.64); FLEURS-IT/EN regressed. The data is
-   reusable. The next arm adds **S2 as the second voice** (the 50 sentences are already imported,
-   `--start 624`) and uses a **gentler fine-tune** (head 5e-5 / encoder 1e-5, or a frozen encoder),
-   with the same kill rule and the 47-utterance readout. D35; `runs/E-015/RESULT.md`.
+   the 47 rare utterances **17.0% → 23.4%** on presence (not significant), with **S3 unchanged**
+   (2/18), and the E-017 learning rates shocked the dev (30.81 → 33.64); FLEURS-IT/EN regressed.
+   E-026: aligned ETA on the same 47 is **23.5% → 30.9%**, but full T-600 ETA **54.17% → 53.40%**;
+   presence and ETA are not interchangeable. The data is reusable. The next arm adds **S2 as the
+   second voice** (the 50 sentences are already imported, `--start 624`) and uses a **gentler
+   fine-tune** (head 5e-5 / encoder 1e-5, or a frozen encoder), with the same kill rule and aligned
+   ETA primary. D35; `runs/E-015/RESULT.md`, `runs/E-026/RESULT.md`.
 3. **Gold scaling (E-018)** needs new speaker/channel data. Historical marginal deltas −5.73
    and −4.07 depend on decoder/recipe; a third speaker's 2–3 pp gain is a **forecast, not a
    measurement or upper bound**. S4 audio is absent; its scripts were subsequently reviewed.

@@ -1,13 +1,18 @@
 """E-015 — the rare-term readout, by provenance, with a paired bootstrap.
 
 The primary metric is the 47 T utterances that contain one of the 44 terms never seen in any
-training text. The 18 terms the gold already covers are a regression check; the natural/gold-only
+training text. The 16 terms the gold already covers are a regression check; the natural/gold-only
 groups are context. The baseline is 0.7.0's `t600.hyp.jsonl`; the new arm is E-015's.
+
+The historical E-015 readout used term *presence* (a term anywhere in the hypothesis). Since
+2026-11-11 this script also reports **aligned ETA** on the same rows, which is the canonical
+metric: a term only counts when it is aligned to the reference occurrence. Presence remains a
+diagnostic. The historical result is not rewritten.
 
     uv run python runs/E-015/eval_terms.py \
         --hyp runs/E-015/eval/gate/t600.hyp.jsonl \
         --baseline runs/E-024/eval/gate/t600.hyp.jsonl \
-        --out runs/E-015/eval/terms.json
+        --out runs/E-015/eval/terms-eta.json
 """
 
 from __future__ import annotations
@@ -19,6 +24,7 @@ from pathlib import Path
 
 import numpy as np
 
+from stt.eval import score_rows
 from stt.text import normalize
 
 REPO = Path(__file__).resolve().parents[2]
@@ -29,8 +35,9 @@ NATURAL = (
     "data/manifests/spliced_it_en.jsonl",
 )
 GOLD = ("recordings/manifests/R-S1.jsonl", "recordings/manifests/R-S2.jsonl")
-#: The 18 terms added to the gold on 2026-10-24; the regression check.
-TERMS18 = [
+#: The terms added to the gold on 2026-10-24; the historical constant was named TERMS18 but
+#: contains 16 strings. The regression check is reported as ``gold_terms`` (16).
+GOLD_TERMS = [
     "backlog", "cfo", "cpu", "crm", "deadline", "deploy", "erp", "kpi", "merge", "milestone",
     "okr", "onboarding", "paypal", "phishing", "url", "warranty",
 ]
@@ -172,25 +179,54 @@ def main() -> int:
         f"(n={result['rare']['n']})"
     )
 
-    # Regression check: the 18 terms already covered by the gold.
-    def terms18_accuracy(hyps: dict[str, str]) -> tuple[int, int]:
+    # Canonical metric: aligned ETA on the same 47 rows, and on all 600 T rows.
+    def aligned_eta(rows_subset: list[dict], hyps: dict[str, str]) -> dict:
+        metrics = score_rows(rows_subset, hyps, bootstrap=0)
+        overall = metrics["overall"]
+        per = metrics["per_utterance"].values()
+        return {
+            "eta": overall["eta"],
+            "wer": overall["wer"],
+            "en_hit": sum(item["en_hit"] for item in per),
+            "en_ref": sum(item["en_ref"] for item in per),
+        }
+
+    rare_ids = sorted(rid for rid, _, _ in base_rare)
+    rare_subset = [rows[rid] for rid in rare_ids]
+    all_subset = list(rows.values())
+    result["aligned_eta"] = {
+        "rare": {"base": aligned_eta(rare_subset, base), "new": aligned_eta(rare_subset, new)},
+        "all": {"base": aligned_eta(all_subset, base), "new": aligned_eta(all_subset, new)},
+    }
+    for name, subset in (("47 rare", rare_subset), ("T-600", all_subset)):
+        base_eta = result["aligned_eta"]["rare" if name == "47 rare" else "all"]["base"]
+        new_eta = result["aligned_eta"]["rare" if name == "47 rare" else "all"]["new"]
+        print(
+            f"aligned ETA {name}: base {base_eta['eta'] * 100:.1f}% "
+            f"({base_eta['en_hit']}/{base_eta['en_ref']}) "
+            f"new {new_eta['eta'] * 100:.1f}% ({new_eta['en_hit']}/{new_eta['en_ref']})"
+        )
+
+    # Regression check: the 16 terms already covered by the gold.
+    def gold_terms_accuracy(hyps: dict[str, str]) -> tuple[int, int]:
         correct = total = 0
         for rid, row in rows.items():
             if rid not in hyps:
                 continue
             hyp = set(toks(hyps[rid]))
-            present = [t for t in term_occurrences(row) if t in TERMS18]
+            present = [t for t in term_occurrences(row) if t in GOLD_TERMS]
             if not present:
                 continue
             total += 1
             correct += int(any(t in hyp for t in present))
         return correct, total
 
-    base18, new18 = terms18_accuracy(base), terms18_accuracy(new)
-    result["terms18"] = {"base": base18, "new": new18}
+    base_gold, new_gold = gold_terms_accuracy(base), gold_terms_accuracy(new)
+    result["gold_terms"] = {"base": base_gold, "new": new_gold}
     print(
-        f"18 gold terms: base {base18[0]}/{base18[1]} = {base18[0] / base18[1] * 100:.1f}% "
-        f"new {new18[0]}/{new18[1]} = {new18[0] / new18[1] * 100:.1f}%"
+        f"16 gold terms: base {base_gold[0]}/{base_gold[1]} = "
+        f"{base_gold[0] / base_gold[1] * 100:.1f}% "
+        f"new {new_gold[0]}/{new_gold[1]} = {new_gold[0] / new_gold[1] * 100:.1f}%"
     )
 
     out = Path(args.out)

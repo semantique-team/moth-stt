@@ -1547,7 +1547,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Motivation**: E-015's 5% baseline was E-014's. On 0.7.0, measured on the committed T
   hypotheses, the 600-clip term accuracy splits by provenance: **53.7%** on terms present in the
   natural training text, **68.7%** on gold-only terms, **17.0%** on the **44 terms never seen in
-  any training text** (47 utterances). The 18 terms the gold already covers are at **74.1%**.
+  any training text** (47 utterances). The 16 terms the gold already covers (historical `TERMS18` label) are at **74.1%**.
   The target is the 44, and the direct ETA ceiling from fixing them is **+3.7** (100%) or
   **+2.8** at Parakeet's 78%, not the +5 in the original plan.
 - **Method**: 50 new **S1** sentences covering all 44 terms once (2.5 min), recorded and validated
@@ -1564,7 +1564,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 | Natural-term occurrences | 439/817 (53.7%) | 423/817 (51.8%) | **−16** |
 | Gold-only occurrences | 123/179 | 129/179 | +6 |
 | All term occurrences | 570/1043 (54.65%) | 563/1043 (53.98%) | −0.67 |
-| 18 gold terms (regression) | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
+| 16 gold terms (regression; historical `TERMS18` label) | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
 | T-600 / T-S3 | 25.20 / 26.92 | 24.91 / 25.55 | −0.29 tie / −1.36 tie |
 | FLEURS-IT / FLEURS-EN | 20.14 / 49.14 | 20.86 / 50.45 | **+0.72** / **+1.31**, both worse |
 | CV-IT dev | 19.85 | 19.97 | +0.12 tie |
@@ -1573,6 +1573,12 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   pulled the model almost 3 dev points away and spent the epoch recovering; it never beat the start.
   The best checkpoint by dev is **step 20, i.e. the baseline itself**, so the run selects no new
   model. The final checkpoint was evaluated only as the arm that saw the data.
+- **Correction 2026-11-11 (E-026)**: the historical primary readout above is term *presence*, not
+  aligned ETA. On the same 47 rows, aligned ETA is **19/81 (23.5%) → 25/81 (30.9%)**, while full
+  T-600 ETA is **565/1043 (54.17%) → 557/1043 (53.40%)**. The arm improved the rare subset more
+  than presence suggested but lost more on natural terms; the kill verdict stands. The next arm
+  uses aligned ETA as primary and presence as diagnostic. `TERMS18` actually contains **16**
+  strings; the regression label is now `gold_terms`.
 - **Reading**: the data is not disproven; the recipe is. 50 sentences in **one** voice at the E-017
   LRs for a full epoch is too much update for a converged model, and the term gain is confined to
   the training speakers. The next arm must change **two** variables (S2 as a second voice +
@@ -1582,6 +1588,73 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Artifacts**: `runs/E-015/` (`PLAN.md`, `RESULT.md`, `RECORDING.md`, `config.yaml`,
   `train.log.jsonl`, `eval/`, `eval_terms.py`, `prepare_terms.py`), `recordings/manifests/R-S1.jsonl`
   (691 rows), `runs/E-015/candidates-S{1,2}.jsonl`.
+## E-026 — rare-term diagnostic: presence vs aligned ETA and top-k reachability (2026-11-11)
+
+- **Date**: 2026-11-11. Diagnostic only; **no training, no adoption, no model selection**.
+  Retrospective formalization of an exploratory run executed the same day.
+- **Question**: on 0.7.0 int8, for the 47 T utterances with a never-seen term, is the reference
+  reachable under the decoder top-k, and how do greedy, beam without LM and beam+LM behave?
+- **Protocol**: 47 T rows, 16 kHz resampled audio, no VAD/segmentation; release `model.int8.onnx`,
+  `vocab.json`, `lm_bpe3.bin`; `stt.diagnose` with greedy, beam acoustic0 and beam+LM
+  (12/10/0.5/2.4); forced-reference CTC full/top-k support.
+- **Result**:
+
+| Decoder | WER | Aligned ETA | Insertion rate |
+|---|---:|---:|---:|
+| Greedy | 48.65% | 17.28% | 3.47 |
+| Beam, no LM | 49.81% | 16.05% | 3.86 |
+| Beam + LM | **40.54%** | **23.46%** | 4.63 |
+
+  Full CTC path reachable **47/47**; reference reachable under top-k 10 **41/47 (87.2%)**;
+  completely pruned **6/47** (`startup`, `prototype`, `chromecast`, `charger`, `exam`, `mondays`).
+  Aligned ETA on the 47: 0.7.0 **19/81 = 23.5%**, E-015 **25/81 = 30.9%**; presence 8/47 → 11/47.
+  Full T-600 ETA: **54.17% → 53.40%**; WER 25.20% → 24.91%.
+- **Reading**: top-k is not the main bottleneck for 41/47; the LM/prior chooses wrong alternatives,
+  so a bounded contextual bias is the cheapest next test, while the six pruned rows need
+  acoustic/data work. The E-015 presence readout understated the rare-subset aligned gain but the
+  full-set ETA fell; the next arm must use aligned ETA primary and protect natural terms.
+- **Caveats**: T is reused; int8 release vs fp32 E-015 checkpoint; audio resampled; no VAD;
+  forced-reference support is oracle diagnostics, not production accuracy; small sample.
+- **Artifacts**: `runs/E-026/` (`PLAN.md`, `RESULT.md`, `report.json`, `hyp/`,
+  `rare47-16k.jsonl`, `reproduce.py`), `runs/E-015/eval/terms-eta.json`.
+
+## E-027 — contextual-bias pilot: no movement on the rare terms (2026-11-11)
+
+- **Date**: 2026-11-11. Decoding-only pilot, **no training, no weights, no release changes**;
+  pre-registered in `runs/E-027/PLAN.md`.
+- **Question**: E-026 found the reference inside top-k for 41/47 rare T rows. Can a bounded,
+  word-aware glossary recover them without hurting controls?
+- **Glossary**: 24 single-word work/meeting terms from `data/en_terms.txt`, fixed before the run
+  (`meeting call team sprint ticket deploy deployment release deadline backlog roadmap standup
+  feedback update report budget forecast target task project workflow pipeline feature bug`).
+  Arms: baseline, product 1.0/0.25, product 0.5/0.0, irrelevant 1.0/0.25, zero bonus.
+- **Result**:
+
+| Arm | T-600 WER | T-600 ETA | 47-rare ETA | 47-rare presence |
+|---|---:|---:|---:|---:|
+| Baseline | 25.32% | 54.75% | 22.22% | 8/47 (17.0%) |
+| Product 1.0/0.25 | 25.29% | 54.84% | 22.22% | 8/47 (17.0%) |
+| Product 0.5/0.00 | 25.32% | 54.75% | 22.22% | 8/47 (17.0%) |
+| Irrelevant 1.0/0.25 | 25.29% | 54.84% | 23.46% | 8/47 (17.0%) |
+| Zero bonus | 25.32% | 54.75% | 22.22% | 8/47 (17.0%) |
+
+  Paired product-bias vs baseline: T-600 WER **−0.03 [−0.12, +0.06]**, ETA **+0.10
+  [−0.20, +0.42]**, both ties; rare ETA **+0.00**. Controls: T `control_it` 13.24% unchanged,
+  CV-IT dev 21.06% unchanged, FLEURS-EN 47.28% → 47.18%. Product-glossary hits on Italian controls
+  **0 → 0**; `zero_bonus` byte-identical to baseline.
+- **Decision — REJECTED**. The pre-registered gate required ≥ +1.0 aligned-ETA point; it measured
+  +0.10 and did not move the 47 rare rows. The irrelevant glossary produced a small non-specific
+  change (+1.23 rare ETA, CI [0.00, +3.49]), so there is no glossary-specific effect. The six
+  top-k-pruned rows (`startup`, `prototype`, `chromecast`, `charger`, `exam`, `mondays`) cannot be
+  recovered by this scorer.
+- **Reading**: the scorer path is safe (zero-bonus no-op, no Italian false insertions), but this
+  common work/meeting glossary is not the missing lever. A future bias needs a product glossary
+  validated on a real mixed-dev; do not mine the 47 T failures. The training response remains the
+  gentle S2 arm for the acoustic/data gap.
+- **Caveats**: T reused; no VAD; float32 resampling means absolute T-600 is 25.32 not 25.20; only
+  paired deltas are interpreted.
+- **Artifacts**: `runs/E-027/` (`PLAN.md`, `RESULT.md`, `eval_bias.py`, `metrics.json`, `hyp/`).
+
 ## Runtime acceptance follow-up (2026-11-10, no new model)
 
 Infrastructure validation, not a new quality-optimization arm. Original 0.7.0 assets

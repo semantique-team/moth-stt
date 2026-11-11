@@ -32,6 +32,28 @@ not move.** One recorded voice did not produce a speaker-independent term mappin
 The flips: T-0055 `startup`, T-0112 `screenshot` (S1), T-0086 `popup`, T-0329 `ipad` (S2),
 T-0069 `checkout` (S3) became correct; T-0346 `cadbury` (S1) and T-0309 `invision` (S3) regressed.
 
+### Correction (2026-11-11): the primary readout was presence, not aligned ETA
+
+The table above is the historical **presence** readout: a term counts if it appears anywhere in the
+hypothesis. The canonical metric is **aligned ETA**, which only counts a term aligned to its
+reference occurrence. On the same 47 rows:
+
+| Metric | 0.7.0 | E-015 |
+|---|---:|---:|
+| Presence (47 rare terms) | 8/47 = 17.0% | 11/47 = 23.4% |
+| Aligned ETA (81 English occurrences) | 19/81 = **23.5%** | 25/81 = **30.9%** |
+| Full T-600 aligned ETA (1,043 occurrences) | 565/1043 = **54.17%** | 557/1043 = **53.40%** |
+| Full T-600 WER | 25.20% | 24.91% |
+
+The arm improved the rare subset by **+7.4 aligned-ETA points**, more than the presence number
+suggested, but lost **0.77 points of full-set ETA** on the natural terms. The kill verdict is
+unchanged: FLEURS-IT/EN regressed significantly and held-out S3 did not move. The next arm uses
+aligned ETA as the primary readout and presence as a diagnostic; see E-026.
+
+The historical `TERMS18` constant actually contains **16 strings**; the regression check is
+reported below as **16 gold terms**. This was already corrected in `docs/11` and `docs/12`; the
+name is kept here only as a historical reference.
+
 ## What happened to the rest of the terms
 
 | Group | 0.7.0 | E-015 | Δ |
@@ -40,7 +62,7 @@ T-0069 `checkout` (S3) became correct; T-0346 `cadbury` (S1) and T-0309 `invisio
 | Gold-only (179) | 123 (68.7%) | 129 (72.1%) | +6 |
 | Never seen (47) | 8 (17.0%) | 11 (23.4%) | +3 |
 | **All terms (1,043)** | **570 (54.65%)** | **563 (53.98%)** | **−0.67** |
-| 18 gold-covered terms (regression check) | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
+| 16 gold-covered terms (regression check; historical `TERMS18` label) | 20/27 (74.1%) | 19/27 (70.4%) | −1 |
 
 The model traded **16 natural-term occurrences** for 3 rare-term utterances. That is not a good
 trade, and it is the opposite of the intended one.
@@ -117,6 +139,7 @@ evaluation **~3 min**. **No teacher, no downloads, 0 USD.**
 - `PLAN.md` — the pre-registered target and kill rule (addendum)
 - `RECORDING.md`, `recordings/manifests/R-S1.jsonl` — the 50 recorded S1 sentences
 - `config.yaml`, `train.log.jsonl`, `train.out` — the run
-- `eval/final/`, `eval/gate/`, `eval/terms.json` — gate and rare-term readout
+- `eval/final/`, `eval/gate/`, `eval/terms.json` — gate and historical rare-term (presence) readout
+- `eval/terms-eta.json` — aligned-ETA correction (2026-11-11), same rows
 - `eval_terms.py`, `prepare_terms.py` — the readout and the data source
 - `checkpoints/` — gitignored, as always

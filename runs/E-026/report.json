@@ -1,0 +1,5002 @@
+{
+  "release": {
+    "release": "release",
+    "files": {
+      "NOTICE": {
+        "bytes": 3260,
+        "sha256": "6ca7672f006155be816fa3b28072add859ca020c22a2c4e47eaaf4433c341d32",
+        "hash_verified": false
+      },
+      "config.json": {
+        "bytes": 1322,
+        "sha256": "55d7c7196e27013cc1b9c5c2303b39d14d594ab4e92414fe2ed22148538585e0",
+        "hash_verified": false
+      },
+      "lm_bpe3.bin": {
+        "bytes": 5116464,
+        "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e",
+        "hash_verified": true
+      },
+      "mel_filters.bin": {
+        "bytes": 64320,
+        "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e",
+        "hash_verified": true
+      },
+      "model.int8.onnx": {
+        "bytes": 11910677,
+        "sha256": "7a075da40eb37de6988947efc717824db8b144769628db078e48dcc35b5ab0af",
+        "hash_verified": true
+      },
+      "silero_vad.onnx": {
+        "bytes": 2327524,
+        "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+        "hash_verified": true
+      },
+      "vocab.json": {
+        "bytes": 17193,
+        "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb",
+        "hash_verified": true
+      }
+    },
+    "total_bytes": 19440760,
+    "budget_bytes": 20000000,
+    "remaining_bytes": 559240
+  },
+  "version": "0.7.0",
+  "manifest": "rare47-16k.jsonl",
+  "manifest_sha256": "e8b4b05d1a424d176871fede79d816612593ebaccd2c29acb5e4f6827f49c7b3",
+  "normalizer": "stt.text.normalize",
+  "code_sha256": {
+    "diagnose.py": "6f509826b3e8a7e7fced295c10fba5eb2e994f7f3595321a02d50d0391a89d86",
+    "decode.py": "4cedf04557299babc68ac94ad2a2c44255b1a2bfd7d370fa64dafb0088e86bf4",
+    "eval.py": "1e514c52c78a731539bf24f26eed0f3f6bfe28e98f2f05190dcb03f87ad7ce96",
+    "features.py": "bf9f4ba74e0d739bcef3a2513f713ccf936907fbe5e8784bbbc968b447563dbb",
+    "text.py": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07"
+  },
+  "git_sha": "7b4396c13fabc12522b5529a115b72bd48bf2d1d",
+  "tokenizer": {
+    "path": "data/tokenizer/moth_bpe.model",
+    "sha256": "d6e1054e9273915db4e706898286f90d4b97e6b703386ed8b84f0a148caed2fd"
+  },
+  "input": {
+    "kind": "release_onnx_audio"
+  },
+  "decode": {
+    "greedy": {
+      "method": "greedy"
+    },
+    "beam_acoustic0": {
+      "method": "beam",
+      "beam": 12,
+      "top_k": 10,
+      "lm_weight": 0,
+      "token_bonus": 0
+    },
+    "beam_lm": {
+      "method": "beam",
+      "beam": 12,
+      "top_k": 10,
+      "lm_weight": 0.5,
+      "token_bonus": 2.4,
+      "lm": "lm_bpe3.bin"
+    }
+  },
+  "limitations": [
+    "No training, tuning, invented labels or independent quality claim.",
+    "References and en_spans are supplied annotations, never inferred or repaired.",
+    "No VAD gating or segmentation; each row is assumed to be one utterance <=30s.",
+    "beam_acoustic0 vs beam_lm changes BOTH LM weight and token bonus; not causal LM isolation.",
+    "Reference CTC likelihood/top-k support uses oracle refs, not deployable accuracy.",
+    "Top-k support is not prefix-beam survival; prefix survival and N-best are NOT implemented.",
+    "No Viterbi alignment/timestamps; exact forward sums all paths for one reference encoding.",
+    "Reachability or low reference likelihood is not proof of an acoustic/model-capacity cause.",
+    "Term presence anywhere is not aligned ETA; only stt.eval scores are canonical metrics.",
+    "Supplied logits are not evidence that the validated release produced those arrays."
+  ],
+  "metrics": {
+    "greedy": {
+      "n_utterances": 47,
+      "overall": {
+        "n": 47,
+        "ref_words": 259,
+        "sub": 81,
+        "del": 36,
+        "ins": 9,
+        "wer": 0.4864864864864865,
+        "insertion_rate": 3.474903474903475,
+        "eta": 0.1728395061728395,
+        "eta_errors": [
+          {
+            "id": "T-0055",
+            "term": "startup",
+            "got": "starteu"
+          },
+          {
+            "id": "T-0067",
+            "term": "website",
+            "got": "websiet"
+          },
+          {
+            "id": "T-0094",
+            "term": "restart",
+            "got": "resstart"
+          },
+          {
+            "id": "T-0112",
+            "term": "screenshot",
+            "got": "scrierht"
+          },
+          {
+            "id": "T-0121",
+            "term": "unfollow",
+            "got": "follow"
+          },
+          {
+            "id": "T-0187",
+            "term": "skills",
+            "got": "scklls"
+          },
+          {
+            "id": "T-0214",
+            "term": "file",
+            "got": "fal"
+          },
+          {
+            "id": "T-0214",
+            "term": "sharing",
+            "got": "shar"
+          },
+          {
+            "id": "T-0316",
+            "term": "bitbucket",
+            "got": "subitbacket"
+          },
+          {
+            "id": "T-0331",
+            "term": "airpods",
+            "got": "ebos"
+          },
+          {
+            "id": "T-0343",
+            "term": "baskin",
+            "got": "buskin"
+          },
+          {
+            "id": "T-0343",
+            "term": "robbins",
+            "got": "robins"
+          },
+          {
+            "id": "T-0346",
+            "term": "cadbury",
+            "got": "cadbur"
+          },
+          {
+            "id": "T-0544",
+            "term": "you",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "have",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "a",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "charger",
+            "got": "chger"
+          },
+          {
+            "id": "T-0044",
+            "term": "smartwatch",
+            "got": "smartwch"
+          },
+          {
+            "id": "T-0056",
+            "term": "scaleup",
+            "got": "salep"
+          },
+          {
+            "id": "T-0065",
+            "term": "hosting",
+            "got": "loting"
+          },
+          {
+            "id": "T-0086",
+            "term": "popup",
+            "got": "popap"
+          },
+          {
+            "id": "T-0107",
+            "term": "logout",
+            "got": "fattologg"
+          },
+          {
+            "id": "T-0113",
+            "term": "selfie",
+            "got": null
+          },
+          {
+            "id": "T-0230",
+            "term": "swipe",
+            "got": "s"
+          },
+          {
+            "id": "T-0230",
+            "term": "left",
+            "got": "pleft"
+          },
+          {
+            "id": "T-0278",
+            "term": "skyscanner",
+            "got": "skcener"
+          },
+          {
+            "id": "T-0323",
+            "term": "shutterstock",
+            "got": "stock"
+          },
+          {
+            "id": "T-0329",
+            "term": "tablet",
+            "got": "tabet"
+          },
+          {
+            "id": "T-0335",
+            "term": "roomba",
+            "got": "romb"
+          },
+          {
+            "id": "T-0338",
+            "term": "starbucks",
+            "got": "starbax"
+          },
+          {
+            "id": "T-0341",
+            "term": "kfc",
+            "got": "c"
+          },
+          {
+            "id": "T-0350",
+            "term": "tripadvisor",
+            "got": "tripvisor"
+          },
+          {
+            "id": "T-0593",
+            "term": "study",
+            "got": "studi"
+          },
+          {
+            "id": "T-0593",
+            "term": "the",
+            "got": null
+          },
+          {
+            "id": "T-0593",
+            "term": "exam",
+            "got": "dxer"
+          },
+          {
+            "id": "T-0054",
+            "term": "prototype",
+            "got": "tiyp"
+          },
+          {
+            "id": "T-0066",
+            "term": "domain",
+            "got": "nuovodomain"
+          },
+          {
+            "id": "T-0069",
+            "term": "checkout",
+            "got": "chekut"
+          },
+          {
+            "id": "T-0093",
+            "term": "reset",
+            "got": "unsetto"
+          },
+          {
+            "id": "T-0096",
+            "term": "shutdown",
+            "got": "down"
+          },
+          {
+            "id": "T-0105",
+            "term": "upload",
+            "got": "dilode"
+          },
+          {
+            "id": "T-0111",
+            "term": "wallpaper",
+            "got": "paper"
+          },
+          {
+            "id": "T-0201",
+            "term": "problem",
+            "got": null
+          },
+          {
+            "id": "T-0201",
+            "term": "solving",
+            "got": "probleenolv"
+          },
+          {
+            "id": "T-0213",
+            "term": "screen",
+            "got": "scri"
+          },
+          {
+            "id": "T-0213",
+            "term": "sharing",
+            "got": "shairing"
+          },
+          {
+            "id": "T-0231",
+            "term": "swipe",
+            "got": null
+          },
+          {
+            "id": "T-0231",
+            "term": "right",
+            "got": "facewigrite"
+          },
+          {
+            "id": "T-0309",
+            "term": "invision",
+            "got": "indisian"
+          },
+          {
+            "id": "T-0333",
+            "term": "tv",
+            "got": "via"
+          },
+          {
+            "id": "T-0333",
+            "term": "chromecast",
+            "got": "unruest"
+          },
+          {
+            "id": "T-0336",
+            "term": "dyson",
+            "got": "èzon"
+          },
+          {
+            "id": "T-0339",
+            "term": "subway",
+            "got": "saboway"
+          },
+          {
+            "id": "T-0345",
+            "term": "twinings",
+            "got": "deads"
+          },
+          {
+            "id": "T-0348",
+            "term": "oral",
+            "got": null
+          },
+          {
+            "id": "T-0348",
+            "term": "b",
+            "got": "alb"
+          },
+          {
+            "id": "T-0588",
+            "term": "you",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "send",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "me",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "the",
+            "got": "youyusemm"
+          },
+          {
+            "id": "T-0588",
+            "term": "link",
+            "got": "thelen"
+          },
+          {
+            "id": "T-0588",
+            "term": "folder",
+            "got": "fll"
+          },
+          {
+            "id": "T-0594",
+            "term": "restaurant",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "is",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "closed",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "on",
+            "got": "ressttss"
+          },
+          {
+            "id": "T-0594",
+            "term": "mondays",
+            "got": "onmandas"
+          }
+        ],
+        "wer_ci": null
+      },
+      "breakdown": {
+        "category": {
+          "single_word": {
+            "n": 20,
+            "ref_words": 110,
+            "sub": 32,
+            "del": 12,
+            "ins": 5,
+            "wer": 0.44545454545454544,
+            "insertion_rate": 4.545454545454546,
+            "eta": 0.1
+          },
+          "phrase": {
+            "n": 6,
+            "ref_words": 34,
+            "sub": 12,
+            "del": 4,
+            "ins": 1,
+            "wer": 0.5,
+            "insertion_rate": 2.9411764705882355,
+            "eta": 0.08333333333333333
+          },
+          "brand": {
+            "n": 17,
+            "ref_words": 83,
+            "sub": 28,
+            "del": 8,
+            "ins": 3,
+            "wer": 0.46987951807228917,
+            "insertion_rate": 3.6144578313253013,
+            "eta": 0.09090909090909091
+          },
+          "switch": {
+            "n": 1,
+            "ref_words": 10,
+            "sub": 2,
+            "del": 5,
+            "ins": 0,
+            "wer": 0.7,
+            "insertion_rate": 0.0,
+            "eta": 0.2
+          },
+          "control_en": {
+            "n": 3,
+            "ref_words": 22,
+            "sub": 7,
+            "del": 7,
+            "ins": 0,
+            "wer": 0.6363636363636364,
+            "insertion_rate": 0.0,
+            "eta": 0.36363636363636365
+          }
+        },
+        "speaker": {
+          "S1": {
+            "n": 14,
+            "ref_words": 79,
+            "sub": 22,
+            "del": 9,
+            "ins": 2,
+            "wer": 0.4177215189873418,
+            "insertion_rate": 2.5316455696202533,
+            "eta": 0.19047619047619047
+          },
+          "S2": {
+            "n": 15,
+            "ref_words": 78,
+            "sub": 25,
+            "del": 6,
+            "ins": 5,
+            "wer": 0.46153846153846156,
+            "insertion_rate": 6.410256410256411,
+            "eta": 0.25
+          },
+          "S3": {
+            "n": 18,
+            "ref_words": 102,
+            "sub": 34,
+            "del": 21,
+            "ins": 2,
+            "wer": 0.5588235294117647,
+            "insertion_rate": 1.9607843137254901,
+            "eta": 0.1111111111111111
+          }
+        },
+        "speaker_group": {
+          "S1+S2": {
+            "n": 29,
+            "ref_words": 157,
+            "sub": 47,
+            "del": 15,
+            "ins": 7,
+            "wer": 0.4394904458598726,
+            "insertion_rate": 4.45859872611465,
+            "eta": 0.2222222222222222
+          },
+          "S3+S4": {
+            "n": 18,
+            "ref_words": 102,
+            "sub": 34,
+            "del": 21,
+            "ins": 2,
+            "wer": 0.5588235294117647,
+            "insertion_rate": 1.9607843137254901,
+            "eta": 0.1111111111111111
+          }
+        }
+      },
+      "noise": null,
+      "per_utterance": {
+        "T-0052": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0055": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0067": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0094": {
+          "ref_words": 7,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0109": {
+          "ref_words": 5,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0112": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0121": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0187": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0214": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0316": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0331": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0343": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0346": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0544": {
+          "ref_words": 10,
+          "sub": 2,
+          "del": 5,
+          "ins": 0,
+          "en_ref": 5,
+          "en_hit": 1
+        },
+        "T-0044": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0056": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0065": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0086": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0107": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0113": {
+          "ref_words": 7,
+          "sub": 2,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0230": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0278": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0323": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0329": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0335": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0338": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0341": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 2,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0350": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0593": {
+          "ref_words": 7,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 7,
+          "en_hit": 4
+        },
+        "T-0054": {
+          "ref_words": 7,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0066": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0069": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0093": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0096": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 1,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0105": {
+          "ref_words": 8,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0111": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0201": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0213": {
+          "ref_words": 7,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0231": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0309": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0333": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0336": {
+          "ref_words": 3,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0339": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0345": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0348": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0588": {
+          "ref_words": 9,
+          "sub": 3,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 9,
+          "en_hit": 3
+        },
+        "T-0594": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 6,
+          "en_hit": 1
+        }
+      }
+    },
+    "beam_acoustic0": {
+      "n_utterances": 47,
+      "overall": {
+        "n": 47,
+        "ref_words": 259,
+        "sub": 82,
+        "del": 37,
+        "ins": 10,
+        "wer": 0.4980694980694981,
+        "insertion_rate": 3.861003861003861,
+        "eta": 0.16049382716049382,
+        "eta_errors": [
+          {
+            "id": "T-0055",
+            "term": "startup",
+            "got": "starteu"
+          },
+          {
+            "id": "T-0067",
+            "term": "website",
+            "got": "websiet"
+          },
+          {
+            "id": "T-0094",
+            "term": "restart",
+            "got": "resstart"
+          },
+          {
+            "id": "T-0112",
+            "term": "screenshot",
+            "got": "scrierht"
+          },
+          {
+            "id": "T-0121",
+            "term": "unfollow",
+            "got": "follow"
+          },
+          {
+            "id": "T-0187",
+            "term": "skills",
+            "got": "sckills"
+          },
+          {
+            "id": "T-0214",
+            "term": "file",
+            "got": "fal"
+          },
+          {
+            "id": "T-0214",
+            "term": "sharing",
+            "got": "shar"
+          },
+          {
+            "id": "T-0316",
+            "term": "bitbucket",
+            "got": "subitbacket"
+          },
+          {
+            "id": "T-0331",
+            "term": "airpods",
+            "got": "ebos"
+          },
+          {
+            "id": "T-0343",
+            "term": "baskin",
+            "got": "buskin"
+          },
+          {
+            "id": "T-0343",
+            "term": "robbins",
+            "got": "robins"
+          },
+          {
+            "id": "T-0346",
+            "term": "cadbury",
+            "got": "cadbur"
+          },
+          {
+            "id": "T-0544",
+            "term": "you",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "have",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "a",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "charger",
+            "got": "chger"
+          },
+          {
+            "id": "T-0044",
+            "term": "smartwatch",
+            "got": "smartwch"
+          },
+          {
+            "id": "T-0056",
+            "term": "scaleup",
+            "got": "salep"
+          },
+          {
+            "id": "T-0065",
+            "term": "hosting",
+            "got": "loting"
+          },
+          {
+            "id": "T-0086",
+            "term": "popup",
+            "got": "popap"
+          },
+          {
+            "id": "T-0107",
+            "term": "logout",
+            "got": "fattologg"
+          },
+          {
+            "id": "T-0113",
+            "term": "selfie",
+            "got": null
+          },
+          {
+            "id": "T-0230",
+            "term": "swipe",
+            "got": "s"
+          },
+          {
+            "id": "T-0230",
+            "term": "left",
+            "got": "pleft"
+          },
+          {
+            "id": "T-0278",
+            "term": "skyscanner",
+            "got": "skcener"
+          },
+          {
+            "id": "T-0323",
+            "term": "shutterstock",
+            "got": "stock"
+          },
+          {
+            "id": "T-0329",
+            "term": "tablet",
+            "got": "tabet"
+          },
+          {
+            "id": "T-0335",
+            "term": "roomba",
+            "got": "romb"
+          },
+          {
+            "id": "T-0338",
+            "term": "starbucks",
+            "got": "starbax"
+          },
+          {
+            "id": "T-0341",
+            "term": "kfc",
+            "got": "c"
+          },
+          {
+            "id": "T-0350",
+            "term": "tripadvisor",
+            "got": "tripvisor"
+          },
+          {
+            "id": "T-0593",
+            "term": "study",
+            "got": "studi"
+          },
+          {
+            "id": "T-0593",
+            "term": "the",
+            "got": null
+          },
+          {
+            "id": "T-0593",
+            "term": "exam",
+            "got": "dxer"
+          },
+          {
+            "id": "T-0054",
+            "term": "prototype",
+            "got": "tiyp"
+          },
+          {
+            "id": "T-0066",
+            "term": "domain",
+            "got": "nuovodomain"
+          },
+          {
+            "id": "T-0069",
+            "term": "checkout",
+            "got": "chekut"
+          },
+          {
+            "id": "T-0093",
+            "term": "reset",
+            "got": "unsetto"
+          },
+          {
+            "id": "T-0096",
+            "term": "shutdown",
+            "got": "down"
+          },
+          {
+            "id": "T-0105",
+            "term": "upload",
+            "got": "dilode"
+          },
+          {
+            "id": "T-0111",
+            "term": "wallpaper",
+            "got": "paper"
+          },
+          {
+            "id": "T-0201",
+            "term": "problem",
+            "got": null
+          },
+          {
+            "id": "T-0201",
+            "term": "solving",
+            "got": "probleenolv"
+          },
+          {
+            "id": "T-0213",
+            "term": "screen",
+            "got": "scri"
+          },
+          {
+            "id": "T-0213",
+            "term": "sharing",
+            "got": "shairing"
+          },
+          {
+            "id": "T-0231",
+            "term": "swipe",
+            "got": null
+          },
+          {
+            "id": "T-0231",
+            "term": "right",
+            "got": "facewigrite"
+          },
+          {
+            "id": "T-0309",
+            "term": "invision",
+            "got": "indisian"
+          },
+          {
+            "id": "T-0333",
+            "term": "tv",
+            "got": "via"
+          },
+          {
+            "id": "T-0333",
+            "term": "chromecast",
+            "got": "unruest"
+          },
+          {
+            "id": "T-0336",
+            "term": "dyson",
+            "got": "èzon"
+          },
+          {
+            "id": "T-0339",
+            "term": "subway",
+            "got": "saboway"
+          },
+          {
+            "id": "T-0345",
+            "term": "twinings",
+            "got": "deads"
+          },
+          {
+            "id": "T-0348",
+            "term": "oral",
+            "got": null
+          },
+          {
+            "id": "T-0348",
+            "term": "b",
+            "got": "alb"
+          },
+          {
+            "id": "T-0588",
+            "term": "can",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "you",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "send",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "me",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "the",
+            "got": "canyusemm"
+          },
+          {
+            "id": "T-0588",
+            "term": "link",
+            "got": "thelen"
+          },
+          {
+            "id": "T-0588",
+            "term": "folder",
+            "got": "fll"
+          },
+          {
+            "id": "T-0594",
+            "term": "restaurant",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "is",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "closed",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "on",
+            "got": "ressttss"
+          },
+          {
+            "id": "T-0594",
+            "term": "mondays",
+            "got": "onmandas"
+          }
+        ],
+        "wer_ci": null
+      },
+      "breakdown": {
+        "category": {
+          "single_word": {
+            "n": 20,
+            "ref_words": 110,
+            "sub": 32,
+            "del": 12,
+            "ins": 6,
+            "wer": 0.45454545454545453,
+            "insertion_rate": 5.454545454545454,
+            "eta": 0.1
+          },
+          "phrase": {
+            "n": 6,
+            "ref_words": 34,
+            "sub": 12,
+            "del": 4,
+            "ins": 1,
+            "wer": 0.5,
+            "insertion_rate": 2.9411764705882355,
+            "eta": 0.08333333333333333
+          },
+          "brand": {
+            "n": 17,
+            "ref_words": 83,
+            "sub": 28,
+            "del": 8,
+            "ins": 3,
+            "wer": 0.46987951807228917,
+            "insertion_rate": 3.6144578313253013,
+            "eta": 0.09090909090909091
+          },
+          "switch": {
+            "n": 1,
+            "ref_words": 10,
+            "sub": 3,
+            "del": 5,
+            "ins": 0,
+            "wer": 0.8,
+            "insertion_rate": 0.0,
+            "eta": 0.2
+          },
+          "control_en": {
+            "n": 3,
+            "ref_words": 22,
+            "sub": 7,
+            "del": 8,
+            "ins": 0,
+            "wer": 0.6818181818181818,
+            "insertion_rate": 0.0,
+            "eta": 0.3181818181818182
+          }
+        },
+        "speaker": {
+          "S1": {
+            "n": 14,
+            "ref_words": 79,
+            "sub": 23,
+            "del": 9,
+            "ins": 2,
+            "wer": 0.43037974683544306,
+            "insertion_rate": 2.5316455696202533,
+            "eta": 0.19047619047619047
+          },
+          "S2": {
+            "n": 15,
+            "ref_words": 78,
+            "sub": 25,
+            "del": 6,
+            "ins": 5,
+            "wer": 0.46153846153846156,
+            "insertion_rate": 6.410256410256411,
+            "eta": 0.25
+          },
+          "S3": {
+            "n": 18,
+            "ref_words": 102,
+            "sub": 34,
+            "del": 22,
+            "ins": 3,
+            "wer": 0.5784313725490197,
+            "insertion_rate": 2.9411764705882355,
+            "eta": 0.08333333333333333
+          }
+        },
+        "speaker_group": {
+          "S1+S2": {
+            "n": 29,
+            "ref_words": 157,
+            "sub": 48,
+            "del": 15,
+            "ins": 7,
+            "wer": 0.445859872611465,
+            "insertion_rate": 4.45859872611465,
+            "eta": 0.2222222222222222
+          },
+          "S3+S4": {
+            "n": 18,
+            "ref_words": 102,
+            "sub": 34,
+            "del": 22,
+            "ins": 3,
+            "wer": 0.5784313725490197,
+            "insertion_rate": 2.9411764705882355,
+            "eta": 0.08333333333333333
+          }
+        }
+      },
+      "noise": null,
+      "per_utterance": {
+        "T-0052": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0055": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0067": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0094": {
+          "ref_words": 7,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0109": {
+          "ref_words": 5,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0112": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0121": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0187": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0214": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0316": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0331": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0343": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0346": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0544": {
+          "ref_words": 10,
+          "sub": 3,
+          "del": 5,
+          "ins": 0,
+          "en_ref": 5,
+          "en_hit": 1
+        },
+        "T-0044": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0056": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0065": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0086": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0107": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0113": {
+          "ref_words": 7,
+          "sub": 2,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0230": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0278": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0323": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0329": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0335": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0338": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0341": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 2,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0350": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0593": {
+          "ref_words": 7,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 7,
+          "en_hit": 4
+        },
+        "T-0054": {
+          "ref_words": 7,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0066": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0069": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0093": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0096": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 1,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0105": {
+          "ref_words": 8,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0111": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0201": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0213": {
+          "ref_words": 7,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0231": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0309": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0333": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0336": {
+          "ref_words": 3,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0339": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0345": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0348": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0588": {
+          "ref_words": 9,
+          "sub": 3,
+          "del": 4,
+          "ins": 0,
+          "en_ref": 9,
+          "en_hit": 2
+        },
+        "T-0594": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 6,
+          "en_hit": 1
+        }
+      }
+    },
+    "beam_lm": {
+      "n_utterances": 47,
+      "overall": {
+        "n": 47,
+        "ref_words": 259,
+        "sub": 71,
+        "del": 22,
+        "ins": 12,
+        "wer": 0.40540540540540543,
+        "insertion_rate": 4.633204633204633,
+        "eta": 0.2345679012345679,
+        "eta_errors": [
+          {
+            "id": "T-0055",
+            "term": "startup",
+            "got": "stup"
+          },
+          {
+            "id": "T-0067",
+            "term": "website",
+            "got": "si"
+          },
+          {
+            "id": "T-0112",
+            "term": "screenshot",
+            "got": "schot"
+          },
+          {
+            "id": "T-0121",
+            "term": "unfollow",
+            "got": "follow"
+          },
+          {
+            "id": "T-0214",
+            "term": "file",
+            "got": "fal"
+          },
+          {
+            "id": "T-0214",
+            "term": "sharing",
+            "got": "shar"
+          },
+          {
+            "id": "T-0316",
+            "term": "bitbucket",
+            "got": "bucket"
+          },
+          {
+            "id": "T-0331",
+            "term": "airpods",
+            "got": "esps"
+          },
+          {
+            "id": "T-0343",
+            "term": "baskin",
+            "got": "buskin"
+          },
+          {
+            "id": "T-0343",
+            "term": "robbins",
+            "got": "robins"
+          },
+          {
+            "id": "T-0544",
+            "term": "you",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "have",
+            "got": null
+          },
+          {
+            "id": "T-0544",
+            "term": "a",
+            "got": null
+          },
+          {
+            "id": "T-0044",
+            "term": "smartwatch",
+            "got": "wach"
+          },
+          {
+            "id": "T-0056",
+            "term": "scaleup",
+            "got": "slap"
+          },
+          {
+            "id": "T-0065",
+            "term": "hosting",
+            "got": "l'ting"
+          },
+          {
+            "id": "T-0086",
+            "term": "popup",
+            "got": "popp"
+          },
+          {
+            "id": "T-0107",
+            "term": "logout",
+            "got": "fattologg"
+          },
+          {
+            "id": "T-0113",
+            "term": "selfie",
+            "got": null
+          },
+          {
+            "id": "T-0230",
+            "term": "swipe",
+            "got": "sw"
+          },
+          {
+            "id": "T-0230",
+            "term": "left",
+            "got": "plft"
+          },
+          {
+            "id": "T-0278",
+            "term": "skyscanner",
+            "got": "skycener"
+          },
+          {
+            "id": "T-0323",
+            "term": "shutterstock",
+            "got": "stock"
+          },
+          {
+            "id": "T-0329",
+            "term": "ipad",
+            "got": "ipt"
+          },
+          {
+            "id": "T-0335",
+            "term": "roomba",
+            "got": "roma"
+          },
+          {
+            "id": "T-0338",
+            "term": "starbucks",
+            "got": "starbox"
+          },
+          {
+            "id": "T-0341",
+            "term": "kfc",
+            "got": "feci"
+          },
+          {
+            "id": "T-0350",
+            "term": "tripadvisor",
+            "got": "tripvisor"
+          },
+          {
+            "id": "T-0593",
+            "term": "study",
+            "got": null
+          },
+          {
+            "id": "T-0593",
+            "term": "for",
+            "got": null
+          },
+          {
+            "id": "T-0593",
+            "term": "the",
+            "got": "studi"
+          },
+          {
+            "id": "T-0593",
+            "term": "exam",
+            "got": "forxer"
+          },
+          {
+            "id": "T-0054",
+            "term": "prototype",
+            "got": "type"
+          },
+          {
+            "id": "T-0069",
+            "term": "checkout",
+            "got": "checkuto"
+          },
+          {
+            "id": "T-0093",
+            "term": "reset",
+            "got": "regente"
+          },
+          {
+            "id": "T-0096",
+            "term": "shutdown",
+            "got": "down"
+          },
+          {
+            "id": "T-0105",
+            "term": "upload",
+            "got": "diplode"
+          },
+          {
+            "id": "T-0111",
+            "term": "wallpaper",
+            "got": "paper"
+          },
+          {
+            "id": "T-0201",
+            "term": "problem",
+            "got": "proble"
+          },
+          {
+            "id": "T-0201",
+            "term": "solving",
+            "got": "inolving"
+          },
+          {
+            "id": "T-0213",
+            "term": "screen",
+            "got": "scri"
+          },
+          {
+            "id": "T-0213",
+            "term": "sharing",
+            "got": "shairing"
+          },
+          {
+            "id": "T-0231",
+            "term": "swipe",
+            "got": "fa"
+          },
+          {
+            "id": "T-0231",
+            "term": "right",
+            "got": "swigrite"
+          },
+          {
+            "id": "T-0333",
+            "term": "tv",
+            "got": "via"
+          },
+          {
+            "id": "T-0333",
+            "term": "chromecast",
+            "got": "crucast"
+          },
+          {
+            "id": "T-0336",
+            "term": "dyson",
+            "got": "èzon"
+          },
+          {
+            "id": "T-0339",
+            "term": "subway",
+            "got": "sabo"
+          },
+          {
+            "id": "T-0345",
+            "term": "twinings",
+            "got": "twins"
+          },
+          {
+            "id": "T-0348",
+            "term": "oral",
+            "got": null
+          },
+          {
+            "id": "T-0348",
+            "term": "b",
+            "got": "alb"
+          },
+          {
+            "id": "T-0588",
+            "term": "can",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "you",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "send",
+            "got": null
+          },
+          {
+            "id": "T-0588",
+            "term": "me",
+            "got": "cayusemm"
+          },
+          {
+            "id": "T-0588",
+            "term": "link",
+            "got": "leng"
+          },
+          {
+            "id": "T-0588",
+            "term": "folder",
+            "got": "faller"
+          },
+          {
+            "id": "T-0594",
+            "term": "restaurant",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "is",
+            "got": null
+          },
+          {
+            "id": "T-0594",
+            "term": "closed",
+            "got": "rest"
+          },
+          {
+            "id": "T-0594",
+            "term": "on",
+            "got": "untiss"
+          },
+          {
+            "id": "T-0594",
+            "term": "mondays",
+            "got": "onmandays"
+          }
+        ],
+        "wer_ci": null
+      },
+      "breakdown": {
+        "category": {
+          "single_word": {
+            "n": 20,
+            "ref_words": 110,
+            "sub": 23,
+            "del": 6,
+            "ins": 8,
+            "wer": 0.33636363636363636,
+            "insertion_rate": 7.2727272727272725,
+            "eta": 0.2
+          },
+          "phrase": {
+            "n": 6,
+            "ref_words": 34,
+            "sub": 12,
+            "del": 0,
+            "ins": 2,
+            "wer": 0.4117647058823529,
+            "insertion_rate": 5.882352941176471,
+            "eta": 0.16666666666666666
+          },
+          "brand": {
+            "n": 17,
+            "ref_words": 83,
+            "sub": 27,
+            "del": 4,
+            "ins": 2,
+            "wer": 0.39759036144578314,
+            "insertion_rate": 2.4096385542168677,
+            "eta": 0.18181818181818182
+          },
+          "switch": {
+            "n": 1,
+            "ref_words": 10,
+            "sub": 1,
+            "del": 5,
+            "ins": 0,
+            "wer": 0.6,
+            "insertion_rate": 0.0,
+            "eta": 0.4
+          },
+          "control_en": {
+            "n": 3,
+            "ref_words": 22,
+            "sub": 8,
+            "del": 7,
+            "ins": 0,
+            "wer": 0.6818181818181818,
+            "insertion_rate": 0.0,
+            "eta": 0.3181818181818182
+          }
+        },
+        "speaker": {
+          "S1": {
+            "n": 14,
+            "ref_words": 79,
+            "sub": 16,
+            "del": 5,
+            "ins": 3,
+            "wer": 0.3037974683544304,
+            "insertion_rate": 3.7974683544303796,
+            "eta": 0.38095238095238093
+          },
+          "S2": {
+            "n": 15,
+            "ref_words": 78,
+            "sub": 21,
+            "del": 6,
+            "ins": 5,
+            "wer": 0.41025641025641024,
+            "insertion_rate": 6.410256410256411,
+            "eta": 0.20833333333333334
+          },
+          "S3": {
+            "n": 18,
+            "ref_words": 102,
+            "sub": 34,
+            "del": 11,
+            "ins": 4,
+            "wer": 0.4803921568627451,
+            "insertion_rate": 3.9215686274509802,
+            "eta": 0.16666666666666666
+          }
+        },
+        "speaker_group": {
+          "S1+S2": {
+            "n": 29,
+            "ref_words": 157,
+            "sub": 37,
+            "del": 11,
+            "ins": 8,
+            "wer": 0.35668789808917195,
+            "insertion_rate": 5.095541401273885,
+            "eta": 0.28888888888888886
+          },
+          "S3+S4": {
+            "n": 18,
+            "ref_words": 102,
+            "sub": 34,
+            "del": 11,
+            "ins": 4,
+            "wer": 0.4803921568627451,
+            "insertion_rate": 3.9215686274509802,
+            "eta": 0.16666666666666666
+          }
+        }
+      },
+      "noise": null,
+      "per_utterance": {
+        "T-0052": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0055": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0067": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0094": {
+          "ref_words": 7,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0109": {
+          "ref_words": 5,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0112": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0121": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0187": {
+          "ref_words": 6,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 2
+        },
+        "T-0214": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0316": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0331": {
+          "ref_words": 4,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0343": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0346": {
+          "ref_words": 5,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0544": {
+          "ref_words": 10,
+          "sub": 1,
+          "del": 5,
+          "ins": 0,
+          "en_ref": 5,
+          "en_hit": 2
+        },
+        "T-0044": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0056": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0065": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0086": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0107": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0113": {
+          "ref_words": 7,
+          "sub": 1,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0230": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0278": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0323": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0329": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0335": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 1
+        },
+        "T-0338": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0341": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0350": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0593": {
+          "ref_words": 7,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 7,
+          "en_hit": 3
+        },
+        "T-0054": {
+          "ref_words": 7,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0066": {
+          "ref_words": 5,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0069": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0093": {
+          "ref_words": 6,
+          "sub": 1,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0096": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 1,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0105": {
+          "ref_words": 8,
+          "sub": 1,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0111": {
+          "ref_words": 4,
+          "sub": 1,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0201": {
+          "ref_words": 6,
+          "sub": 2,
+          "del": 0,
+          "ins": 1,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0213": {
+          "ref_words": 7,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0231": {
+          "ref_words": 5,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0309": {
+          "ref_words": 5,
+          "sub": 0,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 1
+        },
+        "T-0333": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0336": {
+          "ref_words": 3,
+          "sub": 3,
+          "del": 0,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0339": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0345": {
+          "ref_words": 5,
+          "sub": 2,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 1,
+          "en_hit": 0
+        },
+        "T-0348": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 1,
+          "ins": 0,
+          "en_ref": 2,
+          "en_hit": 0
+        },
+        "T-0588": {
+          "ref_words": 9,
+          "sub": 3,
+          "del": 3,
+          "ins": 0,
+          "en_ref": 9,
+          "en_hit": 3
+        },
+        "T-0594": {
+          "ref_words": 6,
+          "sub": 3,
+          "del": 2,
+          "ins": 0,
+          "en_ref": 6,
+          "en_hit": 1
+        }
+      }
+    }
+  },
+  "utterances": [
+    {
+      "id": "T-0052",
+      "reference": "la delivery è prevista per venerdì",
+      "frames": 103,
+      "hypotheses": {
+        "greedy": "la delivery è prevista per benerdey",
+        "beam_acoustic0": "la delivery è prevista per benerdey",
+        "beam_lm": "la delivery è prevista per berby"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          52,
+          35,
+          126,
+          1009,
+          162,
+          167,
+          1005,
+          65,
+          27,
+          60,
+          273,
+          6,
+          999,
+          1017
+        ],
+        "full_log_probability": -15.082441326262419,
+        "top_k_log_probability": -15.082444987311677,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999963389574441,
+        "log_probability_loss": 3.6610492575306353e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0052.wav",
+      "audio_sha256": "b4bf2f564602cad77f09dfc89fd121838bfe6aa5097c5e96fa8615629f96f230",
+      "audio_seconds": 2.0586875
+    },
+    {
+      "id": "T-0055",
+      "reference": "la startup ha raccolto un finanziamento",
+      "frames": 113,
+      "hypotheses": {
+        "greedy": "la starteu up raccolto un fi finanziamento",
+        "beam_acoustic0": "la starteu up raccolto un fi finanziamento",
+        "beam_lm": "la stup ha raccolto un fi finanziamento"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          154,
+          25,
+          751,
+          1003,
+          173,
+          183,
+          55,
+          51,
+          17,
+          54,
+          404,
+          15,
+          415,
+          382
+        ],
+        "full_log_probability": -14.445308449141658,
+        "top_k_log_probability": null,
+        "full_reachable": true,
+        "top_k_reachable": false,
+        "retained_probability_fraction": 0.0,
+        "log_probability_loss": null,
+        "all_reference_mass_pruned": true
+      },
+      "audio": "T-0055.wav",
+      "audio_sha256": "8052e46de0ee5316485aa428ac646b2775bc7792695bcdb273dc35afbd2af7b0",
+      "audio_seconds": 2.2613125
+    },
+    {
+      "id": "T-0067",
+      "reference": "il website è ancora in costruzione",
+      "frames": 119,
+      "hypotheses": {
+        "greedy": "il websiet è ancoratruzione",
+        "beam_acoustic0": "il websiet è ancoratruzione",
+        "beam_lm": "il web si è ancora in costruzione"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          297,
+          1007,
+          112,
+          26,
+          162,
+          546,
+          37,
+          178,
+          994,
+          298,
+          323
+        ],
+        "full_log_probability": -9.105994083046177,
+        "top_k_log_probability": -9.153708552121845,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9534059751059414,
+        "log_probability_loss": 0.04771446907566812,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0067.wav",
+      "audio_sha256": "911a57b78ea6d4550c214794b413db85777cd662ef0166e181df2136fec8a50c",
+      "audio_seconds": 2.3786875
+    },
+    {
+      "id": "T-0094",
+      "reference": "serve un restart per applicare le modifiche",
+      "frames": 123,
+      "hypotheses": {
+        "greedy": "serve un resstart per applicare le modifiche",
+        "beam_acoustic0": "serve un resstart per applicare le modifiche",
+        "beam_lm": "serve un restart per applicare le modifiche"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          436,
+          72,
+          54,
+          111,
+          200,
+          25,
+          994,
+          60,
+          317,
+          35,
+          998,
+          99,
+          67,
+          169,
+          134,
+          362,
+          151
+        ],
+        "full_log_probability": -4.602177398546986,
+        "top_k_log_probability": -4.602177935972848,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999994625742824,
+        "log_probability_loss": 5.374258620349792e-07,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0094.wav",
+      "audio_sha256": "762db816ff03505c1195a43c843d755c83553bf39ff9a3d92e0b7a165d6c2776",
+      "audio_seconds": 2.464
+    },
+    {
+      "id": "T-0109",
+      "reference": "ho creato una folder nuova",
+      "frames": 129,
+      "hypotheses": {
+        "greedy": "ho creato una folder nuova",
+        "beam_acoustic0": "ho creato una folder nuova",
+        "beam_lm": "ho creato una folder nuova"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          373,
+          315,
+          148,
+          21,
+          51,
+          303,
+          669,
+          50
+        ],
+        "full_log_probability": -0.9797223690914147,
+        "top_k_log_probability": -0.979722392264695,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999999768267199,
+        "log_probability_loss": 2.3173280294663812e-08,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0109.wav",
+      "audio_sha256": "ca5075ffa5e275dbd86f32c90a95908bcdde565a054f51aceabc2ba70b7d9c76",
+      "audio_seconds": 2.5706875
+    },
+    {
+      "id": "T-0112",
+      "reference": "mi mandi uno screenshot",
+      "frames": 102,
+      "hypotheses": {
+        "greedy": "mi mandiino scrierht",
+        "beam_acoustic0": "mi mandiino scrierht",
+        "beam_lm": "mi mandi una schot"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          124,
+          194,
+          134,
+          489,
+          189,
+          14,
+          16,
+          997,
+          1001,
+          992,
+          994
+        ],
+        "full_log_probability": -15.743914987626802,
+        "top_k_log_probability": -15.743993797483416,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999211932488011,
+        "log_probability_loss": 7.880985661401496e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0112.wav",
+      "audio_sha256": "1165776e61ea3dd77ab36ca127afb2052486bc888598f49a95cd7d24bb51ae36",
+      "audio_seconds": 2.048
+    },
+    {
+      "id": "T-0121",
+      "reference": "ho fatto unfollow subito",
+      "frames": 138,
+      "hypotheses": {
+        "greedy": "ho fatto un follow subito",
+        "beam_acoustic0": "ho fatto un follow subito",
+        "beam_lm": "ho fatto un follow subito"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          480,
+          54,
+          1006,
+          992,
+          940,
+          716
+        ],
+        "full_log_probability": -12.954371878536197,
+        "top_k_log_probability": -12.954372228704997,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999996498312607,
+        "log_probability_loss": 3.5016880062244127e-07,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0121.wav",
+      "audio_sha256": "f903066dfeac796eadabbab21d34fb0f7dc1c1178d049056da778ecb481bc42c",
+      "audio_seconds": 2.752
+    },
+    {
+      "id": "T-0187",
+      "reference": "il corso copre le soft skills",
+      "frames": 111,
+      "hypotheses": {
+        "greedy": "il corso copre le soft scklls",
+        "beam_acoustic0": "il corso copre le soft sckills",
+        "beam_lm": "il corso copre le soft skills"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 2
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          292,
+          220,
+          45,
+          660,
+          67,
+          103,
+          1006,
+          994,
+          2,
+          1013,
+          991,
+          18,
+          997
+        ],
+        "full_log_probability": -3.4063908457424064,
+        "top_k_log_probability": -3.406392561909769,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999982838341102,
+        "log_probability_loss": 1.716167362442178e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0187.wav",
+      "audio_sha256": "32e4ee3c5a55e1fc55edcfbfa4cdf6f7377fc3d1a30fd50118dd8ae99a37350c",
+      "audio_seconds": 2.2186875
+    },
+    {
+      "id": "T-0214",
+      "reference": "il file sharing è bloccato",
+      "frames": 104,
+      "hypotheses": {
+        "greedy": "il fal shar è bloccato",
+        "beam_acoustic0": "il fal shar è bloccato",
+        "beam_lm": "il fal shar è bloccato"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          172,
+          92,
+          334,
+          25,
+          78,
+          162,
+          28,
+          175,
+          55,
+          315
+        ],
+        "full_log_probability": -7.479714774483365,
+        "top_k_log_probability": -7.479715558212233,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999992162714386,
+        "log_probability_loss": 7.837288684697796e-07,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0214.wav",
+      "audio_sha256": "20eba33e25c4a6492332f4bb4e1590a0ba3262df1a56c45fb817d2e09e441a5b",
+      "audio_seconds": 2.08
+    },
+    {
+      "id": "T-0316",
+      "reference": "il codice è su bitbucket",
+      "frames": 105,
+      "hypotheses": {
+        "greedy": "il codice è subitbacket",
+        "beam_acoustic0": "il codice è subitbacket",
+        "beam_lm": "il codice è subit bucket"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          45,
+          134,
+          76,
+          162,
+          69,
+          28,
+          98,
+          1007,
+          1000,
+          291,
+          81
+        ],
+        "full_log_probability": -14.510538047412656,
+        "top_k_log_probability": -14.510545724639567,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999923228025588,
+        "log_probability_loss": 7.677226911084745e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0316.wav",
+      "audio_sha256": "ff54fe5d914287ff0b2af9f1dfec6082fde0aa41bec7f03724c9ad7969851005",
+      "audio_seconds": 2.0906875
+    },
+    {
+      "id": "T-0331",
+      "reference": "le cuffie sono airpods",
+      "frames": 100,
+      "hypotheses": {
+        "greedy": "le cffi sono ebos",
+        "beam_acoustic0": "le cffi sono ebos",
+        "beam_lm": "le cuffi sono esps"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          67,
+          613,
+          711,
+          989,
+          431,
+          3,
+          254,
+          230,
+          999,
+          997
+        ],
+        "full_log_probability": -17.438833051806924,
+        "top_k_log_probability": -17.439653879472665,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9991795091211328,
+        "log_probability_loss": 0.0008208276657413194,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0331.wav",
+      "audio_sha256": "9951f9973d437216fe8fe0231f6c70bd5ba7a64ab91d63ba8f2f7311f96c4b88",
+      "audio_seconds": 2.0053125
+    },
+    {
+      "id": "T-0343",
+      "reference": "il gelato è di baskin robbins",
+      "frames": 140,
+      "hypotheses": {
+        "greedy": "il glato è di buskin robins",
+        "beam_acoustic0": "il glato è di buskin robins",
+        "beam_lm": "il glato è di buskin robins"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          30,
+          989,
+          153,
+          17,
+          162,
+          24,
+          28,
+          62,
+          1013,
+          22,
+          223,
+          142,
+          22,
+          997
+        ],
+        "full_log_probability": -15.192975812569806,
+        "top_k_log_probability": -15.192978815502556,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999969970717584,
+        "log_probability_loss": 3.0029327504621506e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0343.wav",
+      "audio_sha256": "26f371881601493d8976709f5a6cb05d96e1820d143668f9140829e6bd97c8cd",
+      "audio_seconds": 2.8053125
+    },
+    {
+      "id": "T-0346",
+      "reference": "la cioccolata è di cadbury",
+      "frames": 100,
+      "hypotheses": {
+        "greedy": "la cccolata è di cadbur",
+        "beam_acoustic0": "la cccolata è di cadbur",
+        "beam_lm": "la cioccolata è di cadbury"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          4,
+          63,
+          55,
+          246,
+          27,
+          162,
+          24,
+          4,
+          106,
+          1007,
+          155,
+          1009
+        ],
+        "full_log_probability": -4.766559906918299,
+        "top_k_log_probability": -4.766561959097757,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999979478226474,
+        "log_probability_loss": 2.0521794583672204e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0346.wav",
+      "audio_sha256": "3ba6e3a8085eea1e9a74719575d24153089d8e98e5f79fbc15687c0c371c87c9",
+      "audio_seconds": 1.9946875
+    },
+    {
+      "id": "T-0544",
+      "reference": "il mio telefono è scarico do you have a charger",
+      "frames": 154,
+      "hypotheses": {
+        "greedy": "il mref scarico do chger",
+        "beam_acoustic0": "il mref scariico do chger",
+        "beam_lm": "il mref scarico do charger"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 5,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 5,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 5,
+          "present_anywhere": 2
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          376,
+          232,
+          92,
+          1006,
+          182,
+          162,
+          189,
+          426,
+          117,
+          118,
+          209,
+          386,
+          3,
+          197,
+          25,
+          1004,
+          6
+        ],
+        "full_log_probability": -41.01618748992828,
+        "top_k_log_probability": null,
+        "full_reachable": true,
+        "top_k_reachable": false,
+        "retained_probability_fraction": 0.0,
+        "log_probability_loss": null,
+        "all_reference_mass_pruned": true
+      },
+      "audio": "T-0544.wav",
+      "audio_sha256": "22f99d3d2e4605cb82653896ab9fcb2418519004411f889bd59649ac844bef18",
+      "audio_seconds": 3.072
+    },
+    {
+      "id": "T-0044",
+      "reference": "ho comprato uno smartwatch per allenarmi",
+      "frames": 133,
+      "hypotheses": {
+        "greedy": "ho comprato un smartwch per allearmi",
+        "beam_acoustic0": "ho comprato un smartwch per allearmi",
+        "beam_lm": "ho comprato un smart wach per learmi"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          329,
+          38,
+          17,
+          489,
+          2,
+          1002,
+          25,
+          994,
+          1008,
+          61,
+          105,
+          60,
+          190,
+          16,
+          25,
+          128
+        ],
+        "full_log_probability": -26.27670776309608,
+        "top_k_log_probability": -26.873194346649544,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.5507432311843263,
+        "log_probability_loss": 0.5964865835534638,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0044.wav",
+      "audio_sha256": "07a7b3d88973a549193a1e8bf6acaa85de0728cca8a82e345db4521ca77bcb52",
+      "audio_seconds": 2.656
+    },
+    {
+      "id": "T-0056",
+      "reference": "la scaleup assume dieci persone",
+      "frames": 135,
+      "hypotheses": {
+        "greedy": "la salep a suumeedici persone",
+        "beam_acoustic0": "la salep a suumeedici persone",
+        "beam_lm": "la slap assume dieci persone"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          189,
+          249,
+          1000,
+          1003,
+          3,
+          34,
+          1000,
+          73,
+          24,
+          989,
+          104,
+          740,
+          107
+        ],
+        "full_log_probability": -19.643651493639798,
+        "top_k_log_probability": -19.64425192202658,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9993997518342697,
+        "log_probability_loss": 0.0006004283867824256,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0056.wav",
+      "audio_sha256": "5577c13f4cdc0abc0f59fe898b191f059c54184d51b4797ddbafc433efd34748",
+      "audio_seconds": 2.7093125
+    },
+    {
+      "id": "T-0065",
+      "reference": "il hosting costa troppo",
+      "frames": 135,
+      "hypotheses": {
+        "greedy": "loting costa troppo",
+        "beam_acoustic0": "loting costa troppo",
+        "beam_lm": "l'ting costa troppo"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          42,
+          506,
+          78,
+          178,
+          27,
+          351,
+          687
+        ],
+        "full_log_probability": -17.27721286028879,
+        "top_k_log_probability": -23.598036348523355,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.0017984618840632724,
+        "log_probability_loss": 6.320823488234563,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0065.wav",
+      "audio_sha256": "9a48fa412a648f593c3062ae689ce653c6b977b211aa47a818cb93b38e7d256e",
+      "audio_seconds": 2.6986875
+    },
+    {
+      "id": "T-0086",
+      "reference": "è apparso un popup fastidioso",
+      "frames": 126,
+      "hypotheses": {
+        "greedy": "è appar su un popap fastiioso",
+        "beam_acoustic0": "è appar su un popap fastiioso",
+        "beam_lm": "è appar su un popp fastidioso"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          162,
+          317,
+          25,
+          220,
+          54,
+          93,
+          1003,
+          1000,
+          1003,
+          21,
+          62,
+          32,
+          999,
+          63,
+          220
+        ],
+        "full_log_probability": -12.227175688432665,
+        "top_k_log_probability": -12.22723146461332,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999442253748068,
+        "log_probability_loss": 5.577618065544243e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0086.wav",
+      "audio_sha256": "d60d2afd8f6d57fad3dbfe4a4fe776583bf72a64e714ff7ac315152934b3655b",
+      "audio_seconds": 2.5173125
+    },
+    {
+      "id": "T-0107",
+      "reference": "ho fatto logout per sicurezza",
+      "frames": 121,
+      "hypotheses": {
+        "greedy": "ho fattologg per sicurezza",
+        "beam_acoustic0": "ho fattologg per sicurezza",
+        "beam_lm": "ho fattologg per sicurezza"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          480,
+          132,
+          289,
+          74,
+          60,
+          68,
+          998,
+          306,
+          312
+        ],
+        "full_log_probability": -11.281903348416995,
+        "top_k_log_probability": -11.281914209061856,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999891394141149,
+        "log_probability_loss": 1.0860644861665492e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0107.wav",
+      "audio_sha256": "82429dbcef89cbcd36ffd915faf3c79f47ad87347d641534b6a18c41d586bcd0",
+      "audio_seconds": 2.4213125
+    },
+    {
+      "id": "T-0113",
+      "reference": "ci siamo fatti un selfie al mare",
+      "frames": 111,
+      "hypotheses": {
+        "greedy": "ci siamo fat unildmre",
+        "beam_acoustic0": "ci siamo fat unildmre",
+        "beam_lm": "ci siamo fatti unil mare"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          193,
+          2,
+          543,
+          332,
+          32,
+          54,
+          87,
+          996,
+          362,
+          989,
+          97,
+          79,
+          14
+        ],
+        "full_log_probability": -22.540568338737994,
+        "top_k_log_probability": -22.540579001114295,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.999989337680542,
+        "log_probability_loss": 1.0662376300984988e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0113.wav",
+      "audio_sha256": "90de8f52c4a2337a7a5c4e88aabe11fef63a7c477746c0fff78b41460bd293de",
+      "audio_seconds": 2.2293125
+    },
+    {
+      "id": "T-0230",
+      "reference": "fai swipe left per cancellare",
+      "frames": 100,
+      "hypotheses": {
+        "greedy": "il fa s pleft per cancellare",
+        "beam_acoustic0": "il fa s pleft per cancellare",
+        "beam_lm": "il fai sw plft per cancellare"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          146,
+          991,
+          2,
+          1008,
+          991,
+          305,
+          67,
+          1006,
+          994,
+          60,
+          345,
+          76,
+          58,
+          14
+        ],
+        "full_log_probability": -17.59392745769022,
+        "top_k_log_probability": -17.596946520957516,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.996985489521339,
+        "log_probability_loss": 0.0030190632672955076,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0230.wav",
+      "audio_sha256": "3bc15691c8f6c7ab9352915f0d6c15c8731405957190aea24ef924e94a915bdb",
+      "audio_seconds": 1.9946875
+    },
+    {
+      "id": "T-0278",
+      "reference": "il volo è su skyscanner",
+      "frames": 88,
+      "hypotheses": {
+        "greedy": "il volo è su skcener",
+        "beam_acoustic0": "il volo è su skcener",
+        "beam_lm": "il volo è su skycener"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          187,
+          992,
+          162,
+          69,
+          2,
+          1013,
+          1009,
+          240,
+          15,
+          993,
+          6
+        ],
+        "full_log_probability": -14.923108283301026,
+        "top_k_log_probability": -14.923523753233376,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9995846163633315,
+        "log_probability_loss": 0.0004154699323493105,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0278.wav",
+      "audio_sha256": "49dc212d2419210e5800ef7f5e2fad7fc70b365f831e41b57e9b667e4a937c93",
+      "audio_seconds": 1.76
+    },
+    {
+      "id": "T-0323",
+      "reference": "le foto sono su shutterstock",
+      "frames": 116,
+      "hypotheses": {
+        "greedy": "le foto sono su shtter stock",
+        "beam_acoustic0": "le foto sono su shtter stock",
+        "beam_lm": "le foto sono su shuttter stock"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          67,
+          265,
+          17,
+          431,
+          69,
+          334,
+          74,
+          144,
+          904,
+          291
+        ],
+        "full_log_probability": -8.857786109454052,
+        "top_k_log_probability": -8.857995881951364,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9997902495033997,
+        "log_probability_loss": 0.0002097724973122439,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0323.wav",
+      "audio_sha256": "c802ff5fee04e4a3e01930bc45d2e271d74048fc10aea73bd7af440472902ece",
+      "audio_seconds": 2.3146875
+    },
+    {
+      "id": "T-0329",
+      "reference": "il tablet è un ipad",
+      "frames": 94,
+      "hypotheses": {
+        "greedy": "il tabet è un ipad",
+        "beam_acoustic0": "il tabet è un ipad",
+        "beam_lm": "il tablet è un ipt"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          354,
+          1007,
+          996,
+          81,
+          162,
+          54,
+          9,
+          1003,
+          106
+        ],
+        "full_log_probability": -4.4649242095337325,
+        "top_k_log_probability": -4.464936294258829,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999879153479239,
+        "log_probability_loss": 1.2084725096173088e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0329.wav",
+      "audio_sha256": "c3ef72209e1ff249ce605ba3256bd02a163e09976ef7c8594488dfef8122a22a",
+      "audio_seconds": 1.8773125
+    },
+    {
+      "id": "T-0335",
+      "reference": "il robot è roomba",
+      "frames": 79,
+      "hypotheses": {
+        "greedy": "il robot è romb",
+        "beam_acoustic0": "il robot è romb",
+        "beam_lm": "il robot è roma"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          223,
+          433,
+          994,
+          162,
+          223,
+          992,
+          199,
+          990
+        ],
+        "full_log_probability": -9.694808401913757,
+        "top_k_log_probability": -9.69482631232852,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999820897456285,
+        "log_probability_loss": 1.7910414761956872e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0335.wav",
+      "audio_sha256": "f31009a7f35f99c18b8023d28d89028544030a6f561fcb71d1dfcda8ff965f08",
+      "audio_seconds": 1.5786875
+    },
+    {
+      "id": "T-0338",
+      "reference": "la colazione è di starbucks",
+      "frames": 94,
+      "hypotheses": {
+        "greedy": "la colazione è di starbax",
+        "beam_acoustic0": "la colazione è di starbax",
+        "beam_lm": "la colazione è di starbox"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          45,
+          153,
+          323,
+          162,
+          24,
+          154,
+          25,
+          1007,
+          1000,
+          291,
+          997
+        ],
+        "full_log_probability": -21.054287019823576,
+        "top_k_log_probability": -21.058759007927254,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9955379963461303,
+        "log_probability_loss": 0.00447198810367766,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0338.wav",
+      "audio_sha256": "04179623b0d8f628a78faf0120035afeefc65455d2a912755c1f9c436bd587e6",
+      "audio_seconds": 1.8773125
+    },
+    {
+      "id": "T-0341",
+      "reference": "il pollo è di kfc",
+      "frames": 98,
+      "hypotheses": {
+        "greedy": "il pollo è di cap fe c",
+        "beam_acoustic0": "il pollo è di cap fe c",
+        "beam_lm": "il pallo è di cap feci"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          93,
+          160,
+          162,
+          24,
+          302,
+          1006,
+          998
+        ],
+        "full_log_probability": -18.197265034800946,
+        "top_k_log_probability": -18.197909998044217,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9993552447008135,
+        "log_probability_loss": 0.0006449632432712349,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0341.wav",
+      "audio_sha256": "1a085780ce075b4e87a240c06dd3f1915db72414733235da62c3f36be33940a7",
+      "audio_seconds": 1.952
+    },
+    {
+      "id": "T-0350",
+      "reference": "il ristorante è su tripadvisor",
+      "frames": 115,
+      "hypotheses": {
+        "greedy": "il ristorante è su tripvisor",
+        "beam_acoustic0": "il ristorante è su tripvisor",
+        "beam_lm": "il ristorante è su tripvisor"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          86,
+          904,
+          198,
+          26,
+          162,
+          69,
+          659,
+          1003,
+          106,
+          1005,
+          65,
+          23
+        ],
+        "full_log_probability": -6.588847798945347,
+        "top_k_log_probability": -6.598876401109668,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9900215165861049,
+        "log_probability_loss": 0.010028602164321221,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0350.wav",
+      "audio_sha256": "d2b9152cabf76a3b19bdea397890c785ba9f74b98fb58a85afa757c4a9233351",
+      "audio_seconds": 2.304
+    },
+    {
+      "id": "T-0593",
+      "reference": "i have to study for the exam",
+      "frames": 106,
+      "hypotheses": {
+        "greedy": "i have to studi for dxer",
+        "beam_acoustic0": "i have to studi for dxer",
+        "beam_lm": "i have to studi forxer"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 7,
+          "present_anywhere": 4
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 7,
+          "present_anywhere": 4
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 7,
+          "present_anywhere": 3
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          9,
+          386,
+          75,
+          154,
+          641,
+          1009,
+          140,
+          36,
+          422,
+          727
+        ],
+        "full_log_probability": -23.947392775083973,
+        "top_k_log_probability": null,
+        "full_reachable": true,
+        "top_k_reachable": false,
+        "retained_probability_fraction": 0.0,
+        "log_probability_loss": null,
+        "all_reference_mass_pruned": true
+      },
+      "audio": "T-0593.wav",
+      "audio_sha256": "4ffb6a915bcae25467b3183eab3c3881045731028f8ae86776b6580183dbacc0",
+      "audio_seconds": 2.112
+    },
+    {
+      "id": "T-0054",
+      "reference": "ho visto il prototype del nuovo prodotto",
+      "frames": 125,
+      "hypotheses": {
+        "greedy": "ho visto il proto tiyp del nuovo prodotto",
+        "beam_acoustic0": "ho visto il proto tiyp del nuovo prodotto",
+        "beam_lm": "ho visto il proto type del nuovo prodotto"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          414,
+          17,
+          57,
+          177,
+          17,
+          618,
+          305,
+          158,
+          669,
+          217,
+          177,
+          64,
+          149
+        ],
+        "full_log_probability": -17.353442899286584,
+        "top_k_log_probability": null,
+        "full_reachable": true,
+        "top_k_reachable": false,
+        "retained_probability_fraction": 0.0,
+        "log_probability_loss": null,
+        "all_reference_mass_pruned": true
+      },
+      "audio": "T-0054.wav",
+      "audio_sha256": "70db249827bbad515434beeb72106c169c054faa23a355d17986598d539bbe83",
+      "audio_seconds": 2.496
+    },
+    {
+      "id": "T-0066",
+      "reference": "ho comprato un nuovo domain",
+      "frames": 94,
+      "hypotheses": {
+        "greedy": "ho comprato il nuovodomain",
+        "beam_acoustic0": "ho comprato il nuovodomain",
+        "beam_lm": "ho comprato il nuovo domain"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          329,
+          38,
+          17,
+          54,
+          669,
+          217,
+          118,
+          110,
+          22
+        ],
+        "full_log_probability": -4.3316916407325134,
+        "top_k_log_probability": -4.3316927791418145,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.999998861591347,
+        "log_probability_loss": 1.138409301049137e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0066.wav",
+      "audio_sha256": "02d2cd139a4ca6e1b7a0f62284c439ff528fc16db6bfdc506389c558792f85cd",
+      "audio_seconds": 1.888
+    },
+    {
+      "id": "T-0069",
+      "reference": "il checkout non funziona",
+      "frames": 119,
+      "hypotheses": {
+        "greedy": "il chekut non funziona",
+        "beam_acoustic0": "il chekut non funziona",
+        "beam_lm": "il checkuto non funziona"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          46,
+          291,
+          992,
+          74,
+          70,
+          21,
+          31,
+          150,
+          385
+        ],
+        "full_log_probability": -5.478159687329047,
+        "top_k_log_probability": -5.4781634277598865,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999962595761557,
+        "log_probability_loss": 3.7404308397270825e-06,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0069.wav",
+      "audio_sha256": "0005a66810f04596d7ab13f1486a292d90acc36437b0115dbcd1c9e7c4baea45",
+      "audio_seconds": 2.3893125
+    },
+    {
+      "id": "T-0093",
+      "reference": "ho provato un reset del sistema",
+      "frames": 125,
+      "hypotheses": {
+        "greedy": "ho provato unsetto del sistema",
+        "beam_acoustic0": "ho provato unsetto del sistema",
+        "beam_lm": "ho provato un regente del sistema"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          177,
+          50,
+          17,
+          54,
+          628,
+          81,
+          158,
+          2,
+          65,
+          26,
+          110
+        ],
+        "full_log_probability": -5.673591239308263,
+        "top_k_log_probability": -5.673591954299161,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.999999285009358,
+        "log_probability_loss": 7.149908975989661e-07,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0093.wav",
+      "audio_sha256": "5dde8ba21e206ab31845470072351f0ccfbfa9ba4f28cd24632968b6b6d6c8ad",
+      "audio_seconds": 2.5066875
+    },
+    {
+      "id": "T-0096",
+      "reference": "il shutdown è programmato per stasera",
+      "frames": 169,
+      "hypotheses": {
+        "greedy": "il sht down è programmato sera",
+        "beam_acoustic0": "il sht down è programmato sera",
+        "beam_lm": "il short down è programmato sera"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          334,
+          74,
+          64,
+          407,
+          162,
+          177,
+          689,
+          535,
+          17,
+          60,
+          219,
+          997,
+          91
+        ],
+        "full_log_probability": -20.069754160907323,
+        "top_k_log_probability": -20.070067332608144,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9996868773323174,
+        "log_probability_loss": 0.0003131717008209023,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0096.wav",
+      "audio_sha256": "12e26cc8e37615802928483ec142ea586c1513b41ab46f1662f770f85a25dcd8",
+      "audio_seconds": 3.3813125
+    },
+    {
+      "id": "T-0105",
+      "reference": "la procedura di upload delle foto è lenta",
+      "frames": 148,
+      "hypotheses": {
+        "greedy": "la procedura dilode delle foto è lenta",
+        "beam_acoustic0": "la procedura dilode delle fotoa è lenta",
+        "beam_lm": "la procedura diplode delle foto è lenta"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          177,
+          922,
+          252,
+          24,
+          405,
+          175,
+          106,
+          396,
+          265,
+          17,
+          162,
+          11,
+          16,
+          27
+        ],
+        "full_log_probability": -11.57689703131351,
+        "top_k_log_probability": -11.59099702272788,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.985998947904182,
+        "log_probability_loss": 0.014099991414369129,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0105.wav",
+      "audio_sha256": "45bfcf80488901b3da17876e118de80e3ec8af4c56ed55ed72c3c5b9603aba78",
+      "audio_seconds": 2.9546875
+    },
+    {
+      "id": "T-0111",
+      "reference": "ho cambiato il wallpaper",
+      "frames": 84,
+      "hypotheses": {
+        "greedy": "ho cambiato w paper",
+        "beam_acoustic0": "ho cambiato il w paper",
+        "beam_lm": "ho cambiato il w paper"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          237,
+          115,
+          199,
+          48,
+          17,
+          57,
+          39,
+          990,
+          18,
+          542,
+          423
+        ],
+        "full_log_probability": -16.57783537352103,
+        "top_k_log_probability": -16.578162412097278,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9996730148950376,
+        "log_probability_loss": 0.00032703857624838406,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0111.wav",
+      "audio_sha256": "a0ea0b5c386f74027b2ab350335954cdb785067483830f86008f27dcebc657ef",
+      "audio_seconds": 1.6853125
+    },
+    {
+      "id": "T-0201",
+      "reference": "serve problem solving in questa situazione",
+      "frames": 189,
+      "hypotheses": {
+        "greedy": "serve probleenolv in questatituazione",
+        "beam_acoustic0": "serve probleenolv in questatituazione",
+        "beam_lm": "serve il proble inolving in questa situazione"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          436,
+          72,
+          177,
+          454,
+          1002,
+          638,
+          943,
+          37,
+          477,
+          68,
+          751,
+          990,
+          323
+        ],
+        "full_log_probability": -15.092936318008865,
+        "top_k_log_probability": -15.093779018839435,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9991576541420568,
+        "log_probability_loss": 0.000842700830569143,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0201.wav",
+      "audio_sha256": "6d5a5d962fef82af0c446c7f078f0102ba60441b0b272134c3a92deebdae3ddd",
+      "audio_seconds": 3.776
+    },
+    {
+      "id": "T-0213",
+      "reference": "uso la screen sharing durante la riunione",
+      "frames": 114,
+      "hypotheses": {
+        "greedy": "usò la scri shairing durante la riunione",
+        "beam_acoustic0": "usò la scri shairing durante la riunione",
+        "beam_lm": "usa la scri shairing durante la riunione"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          421,
+          992,
+          43,
+          189,
+          14,
+          16,
+          334,
+          25,
+          78,
+          5,
+          155,
+          406,
+          43,
+          86,
+          31,
+          991,
+          107
+        ],
+        "full_log_probability": -12.085529368326453,
+        "top_k_log_probability": -12.085549074350284,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999802941703311,
+        "log_probability_loss": 1.970602383138953e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0213.wav",
+      "audio_sha256": "c102ac65b21e172a0b83a9772fee186db954e0c57f58b6347633e310587bfd51",
+      "audio_seconds": 2.2826875
+    },
+    {
+      "id": "T-0231",
+      "reference": "fai swipe right per accettare",
+      "frames": 105,
+      "hypotheses": {
+        "greedy": "facewigrite per accettare",
+        "beam_acoustic0": "facewigrite per accettare",
+        "beam_lm": "il fa swigrite per accettare"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          146,
+          991,
+          2,
+          1008,
+          991,
+          305,
+          86,
+          264,
+          60,
+          271,
+          366,
+          14
+        ],
+        "full_log_probability": -12.191938223089373,
+        "top_k_log_probability": -12.192535489330133,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9994029120872162,
+        "log_probability_loss": 0.0005972662407600637,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0231.wav",
+      "audio_sha256": "0174a3893a12580ecfaaaa00fc5caeec170963b1f111dbe28b5e4fd3ec8c2207",
+      "audio_seconds": 2.0906875
+    },
+    {
+      "id": "T-0309",
+      "reference": "il prototipo è su invision",
+      "frames": 130,
+      "hypotheses": {
+        "greedy": "il prototipo è su indisian",
+        "beam_acoustic0": "il prototipo è su indisian",
+        "beam_lm": "il prototipo è su invision"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          177,
+          17,
+          32,
+          230,
+          162,
+          69,
+          37,
+          1005,
+          65,
+          991,
+          10
+        ],
+        "full_log_probability": -5.8150863811404925,
+        "top_k_log_probability": -5.815120367936346,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999660137816914,
+        "log_probability_loss": 3.398679585320252e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0309.wav",
+      "audio_sha256": "f8ba041e2919f3d3bed5b753f05a851638a732300bc9a9a1ad24a4421fbcb4d5",
+      "audio_seconds": 2.592
+    },
+    {
+      "id": "T-0333",
+      "reference": "la tv è un chromecast",
+      "frames": 74,
+      "hypotheses": {
+        "greedy": "lati via è unruest",
+        "beam_acoustic0": "lati via è unruest",
+        "beam_lm": "la via è un crucast"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          43,
+          7,
+          1005,
+          162,
+          54,
+          197,
+          44,
+          73,
+          998,
+          650
+        ],
+        "full_log_probability": -27.275497340566865,
+        "top_k_log_probability": null,
+        "full_reachable": true,
+        "top_k_reachable": false,
+        "retained_probability_fraction": 0.0,
+        "log_probability_loss": null,
+        "all_reference_mass_pruned": true
+      },
+      "audio": "T-0333.wav",
+      "audio_sha256": "81b3eee7243e0b3fa281014877129f50df039991a1eadb8dd889a68d614b9157",
+      "audio_seconds": 1.4826875
+    },
+    {
+      "id": "T-0336",
+      "reference": "l'aspirapolvere è dyson",
+      "frames": 85,
+      "hypotheses": {
+        "greedy": "ilspira polvere èzon",
+        "beam_acoustic0": "ilspira polvere èzon",
+        "beam_lm": "ilspira polvere èzon"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          11,
+          1012,
+          62,
+          319,
+          38,
+          1003,
+          51,
+          692,
+          162,
+          5,
+          1009,
+          997,
+          10
+        ],
+        "full_log_probability": -40.0273759501496,
+        "top_k_log_probability": -40.02847704115046,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.998899514977401,
+        "log_probability_loss": 0.0011010910008621977,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0336.wav",
+      "audio_sha256": "e15519d099f25b8f54203949c48d0cd8e3f59a5cb8f50324ba218c783e26824f",
+      "audio_seconds": 1.696
+    },
+    {
+      "id": "T-0339",
+      "reference": "il pranzo è da subway",
+      "frames": 74,
+      "hypotheses": {
+        "greedy": "il pranz la saboway",
+        "beam_acoustic0": "il pranz la saboway",
+        "beam_lm": "il pranzo la sabo"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          8,
+          198,
+          1010,
+          992,
+          162,
+          89,
+          69,
+          1007,
+          728
+        ],
+        "full_log_probability": -16.692876881160263,
+        "top_k_log_probability": -16.69291194738471,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999649343903643,
+        "log_probability_loss": 3.506622444859886e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0339.wav",
+      "audio_sha256": "f2c532575670379de9217c0fb8c993761991a137bd8b18e2c4d1448cd7e6722d",
+      "audio_seconds": 1.4826875
+    },
+    {
+      "id": "T-0345",
+      "reference": "il tè è di twinings",
+      "frames": 78,
+      "hypotheses": {
+        "greedy": "il deads",
+        "beam_acoustic0": "il deads",
+        "beam_lm": "il dead twins"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 1,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          7,
+          1015,
+          162,
+          24,
+          649,
+          22,
+          962
+        ],
+        "full_log_probability": -37.362411670587534,
+        "top_k_log_probability": -37.84589836616773,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.6166296394102493,
+        "log_probability_loss": 0.4834866955801971,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0345.wav",
+      "audio_sha256": "5e4c12614383c9a6917631e8a94e3188a4822a9edeb5c8784186d2c0b5104e5f",
+      "audio_seconds": 1.568
+    },
+    {
+      "id": "T-0348",
+      "reference": "il dentifricio è di oral b",
+      "frames": 81,
+      "hypotheses": {
+        "greedy": "dentifrice è di alb",
+        "beam_acoustic0": "dentifrice è di alb",
+        "beam_lm": "i dentifrice è di alb"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 2,
+          "present_anywhere": 0
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          57,
+          5,
+          410,
+          1006,
+          33,
+          558,
+          162,
+          24,
+          272,
+          59,
+          28
+        ],
+        "full_log_probability": -18.59056723663678,
+        "top_k_log_probability": -18.590619398923913,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9999478390732952,
+        "log_probability_loss": 5.216228713322835e-05,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0348.wav",
+      "audio_sha256": "b2e6bad19c5fd91331f84d5ebf2d63894f518b9e729f8f264068d80ff07ce71d",
+      "audio_seconds": 1.6106875
+    },
+    {
+      "id": "T-0588",
+      "reference": "can you send me the link to the folder",
+      "frames": 116,
+      "hypotheses": {
+        "greedy": "can youyusemm thelen to the fll",
+        "beam_acoustic0": "canyusemm thelen to the fll",
+        "beam_lm": "cayusemm the leng to the faller"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 9,
+          "present_anywhere": 4
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 9,
+          "present_anywhere": 3
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 9,
+          "present_anywhere": 3
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          345,
+          209,
+          213,
+          999,
+          129,
+          36,
+          11,
+          22,
+          1013,
+          75,
+          36,
+          21,
+          51,
+          303
+        ],
+        "full_log_probability": -43.39863777023957,
+        "top_k_log_probability": -43.41571308761627,
+        "full_reachable": true,
+        "top_k_reachable": true,
+        "retained_probability_fraction": 0.9830696396201358,
+        "log_probability_loss": 0.017075317376701094,
+        "all_reference_mass_pruned": false
+      },
+      "audio": "T-0588.wav",
+      "audio_sha256": "06f226c135ed00dc6e2ef6dbc53a037143d1b6368348c64b55c210bd7792d99d",
+      "audio_seconds": 2.3146875
+    },
+    {
+      "id": "T-0594",
+      "reference": "the restaurant is closed on mondays",
+      "frames": 101,
+      "hypotheses": {
+        "greedy": "the ressttss onmandas",
+        "beam_acoustic0": "the ressttss onmandas",
+        "beam_lm": "the rest untiss onmandays"
+      },
+      "english_word_presence_not_eta": {
+        "greedy": {
+          "reference_word_occurrences": 6,
+          "present_anywhere": 1
+        },
+        "beam_acoustic0": {
+          "reference_word_occurrences": 6,
+          "present_anywhere": 1
+        },
+        "beam_lm": {
+          "reference_word_occurrences": 6,
+          "present_anywhere": 1
+        }
+      },
+      "forced_reference": {
+        "available": true,
+        "ctc_ids": [
+          36,
+          628,
+          27,
+          155,
+          398,
+          268,
+          4,
+          996,
+          83,
+          53,
+          212,
+          684,
+          152,
+          1009,
+          997
+        ],
+        "full_log_probability": -45.20364311762041,
+        "top_k_log_probability": null,
+        "full_reachable": true,
+        "top_k_reachable": false,
+        "retained_probability_fraction": 0.0,
+        "log_probability_loss": null,
+        "all_reference_mass_pruned": true
+      },
+      "audio": "T-0594.wav",
+      "audio_sha256": "7a8a0c8bf47589ca9b9fca5db87cdb566eb5af989224646ab38c375d3b2513b5",
+      "audio_seconds": 2.0266875
+    }
+  ]
+}
