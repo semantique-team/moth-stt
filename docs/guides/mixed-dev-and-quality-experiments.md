@@ -76,6 +76,26 @@ manifest validator does not enforce all of these). `control_it` has no spans; En
 cover all reference English words. Use the existing eight categories from
 `recordings/generate_scripts.py`; report counts and denominators alongside metrics.
 
+### Importer
+
+`recordings/import_manifest.py` is the separate path for this collection (the guided recorder and
+`build_manifest.py` remain T/A/R only). It joins an audio directory with the human transcripts,
+enforces mono/1–30 s/non-silent/clipping, the normalized text rule, category and `en_spans`
+bounds, and the `source="natural_mixed_dev"` / `split="dev"` fields. Exact normalized duplicates
+against the stored scripts and manifests are refused; near duplicates (Jaccard > 0.8) are
+reported for human review. Nothing is written unless every row validates.
+
+```bash
+uv run python recordings/import_manifest.py \
+  --transcripts data/natural_mixed_dev/transcripts.jsonl \
+  --audio-dir data/natural_mixed_dev/audio \
+  --out data/manifests/natural_mixed_dev.jsonl
+```
+
+Transcript rows carry `id`, `text`, `speaker`, `category`, `en_spans` and optionally `audio`;
+`lang` is `mix` for this protocol. The tool does not grant consent, freeze roles or verify that
+the audio was elicited independently of model errors.
+
 ### Development Is Not Holdout
 
 Mixed-dev is for selection/debugging and becomes development evidence as soon as inspected.
