@@ -39,7 +39,7 @@ The E-028 fp32 checkpoint is a strong candidate, but the INT8 artifact is a trad
 
 The rare gain is significant (+8.5 points presence), but the INT8 artifact gives back 13 natural
 terms and 1.15 ETA points on T-600 relative to 0.7.0 INT8 (the T-600 differences are ties by CI).
-**0.8.0 is not published.** The remaining serious route is quantization-aware fine-tuning
+**At the time of this sweep 0.8.0 was not published; it was later released with the E-030 decoder.** The remaining serious route was quantization-aware fine-tuning
 (fake-quantization in the forward pass / QAT), which is a new training experiment; the cheap
 post-training variants are exhausted.
 

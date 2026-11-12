@@ -1,7 +1,8 @@
 # E-030 — Decoder recalibration on the E-028 INT8 artifact
 
 **Status:** executed 2026-11-11. Dev-selected arm; T read once. Result: 5 of 6 E-028 gates pass;
-the primary rare-ETA gate is missed by two aligned occurrences. Not published.
+the primary rare-ETA gate is missed by two aligned occurrences. **Published 2026-11-12 as 0.8.0**
+with that documented exception.
 
 ## Question
 

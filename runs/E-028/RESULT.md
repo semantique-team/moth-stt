@@ -1,8 +1,9 @@
 # E-028 — RESULT: S2 + a gentler fine-tune is the first arm that passes the gates
 
 > Executed 2026-11-11, pre-registered in `PLAN.md`. Training 1 h 47, 13,283 steps, 0 non-finite.
-> **No weights have been published.** The result is a candidate for a product decision, not an
-> automatic release.
+> **Published 2026-11-12 as 0.8.0 with the E-030 decoder**, with a documented exception on the
+> rare aligned-ETA gate (28.4% vs 30%). The fp32 result remains the reference; the shipped int8
+> artifact is the E-030 decoder arm.
 
 ## Verdict
 
@@ -169,11 +170,11 @@ primary rare gate is two occurrences short. See `runs/E-030/RESULT.md`.
 
 ## Recommendation
 
-**Do not publish 0.8.0 as-is.** The fp32 arm is a strong candidate, but the shipped INT8 artifact
-is a tradeoff: rare terms better, natural terms and T-600 ETA worse than 0.7.0 INT8. The cheap
-post-training quantization routes are exhausted. The remaining serious option is **QAT /
-quantization-aware fine-tuning** (fake quantization in the forward pass), a new training
-experiment; otherwise keep 0.7.0 and treat E-028 as evidence for the next recipe.
+**Published 2026-11-12 as 0.8.0 with the E-030 decoder.** The original int8 artifact with the
+shipped decoder was not publishable (rare better, natural and T-600 ETA worse). The decoder
+recalibration (E-030) recovered T-600 to 24.71 / 54.17, T-S3 to 25.21 / 50.14 and natural to
+436/817, leaving only the primary rare gate two aligned occurrences short. That is a documented
+product exception, not a clean gate pass. See `runs/E-030/RESULT.md`.
 
 ## Cost and artifacts
 

@@ -1,8 +1,8 @@
 # E-030 — RESULT: decoder recalibration brings E-028 INT8 to 5 of 6 gates
 
-> Executed 2026-11-11 on the unchanged E-028 INT8 graph; planned in `PLAN.md`. **No weights have
-> been published.** The artifact passes five of the six E-028 gates; the primary rare-ETA gate is
-> missed by two aligned occurrences, so publication is a product decision, not an automatic ship.
+> Executed 2026-11-11 on the unchanged E-028 INT8 graph; planned in `PLAN.md`. **Published
+> 2026-11-12 as 0.8.0 with this decoder.** The artifact passes five of the six E-028 gates; the
+> primary rare-ETA gate is missed by two aligned occurrences and is a documented exception.
 
 ## Verdict
 
@@ -126,15 +126,11 @@ its package is 20.62 MB. It is not worth the size work for this arm.
 
 ## Decision
 
-**Do not publish automatically.** Two honest options:
-
-1. **Product decision to publish 0.8.0 with the E-030 decoder**, documenting the 2-occurrence
-   rare shortfall and the significant rare gain; the model artifact is unchanged and the package
-   stays at 19,440,760 bytes. A JS decoder-config update and a browser acceptance run are needed.
-2. **Keep 0.7.0** and treat the remaining gap as a data/model problem: targeted rare data (audit
-   §9.1/§12 #5), a same-size LM retrain or pruning (audit §8/§12 #3), or a real natural mixed-dev
-   for product-aligned selection (audit §12 #1). A mixed-dev alone will not create the two rare
-   occurrences; it changes how future candidates are selected.
+**Published 2026-11-12 as 0.8.0 with the E-030 decoder.** The package is **19,440,761 bytes**
+(config grew one byte), browser acceptance is **4/4** with decoder 0.55 / 2.7, and the HF model +
+Space were verified live. The rare shortfall is documented in the model card and release record.
+The remaining work is a data/model problem: targeted rare data, a same-size LM, or a natural
+mixed-dev for future selection.
 
 ## Artifacts
 

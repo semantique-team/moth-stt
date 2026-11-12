@@ -16,8 +16,7 @@
 | Real Chromium/WASM acceptance | [Browser acceptance report](../runs/browser-acceptance-2026-11-10/RESULT.md) |
 | Independent mixed-dev and future quality experiment safeguards | [Mixed-dev protocol](guides/mixed-dev-and-quality-experiments.md) |
 
-The audit baseline is `main` **`cd1ce1b`**. Recorded published weights remain **0.7.0 / E-024**;
-main also contains newer runtime infrastructure, not a new acoustic model. Original experiment
+The audit baseline is `main` **`cd1ce1b`**. Published weights are **0.8.0 / E-028 + the E-030 decoder** (released 2026-11-12); **0.7.0 / E-024** remains the historical control. Main also contains newer runtime infrastructure. Original experiment
 JSON and cards are retained as evidence, including conflicts explicitly flagged in docs 12-14.
 These documents do not certify live hosting, recover missing weights/audio, or replace new
 experiments needed for stronger paper claims.

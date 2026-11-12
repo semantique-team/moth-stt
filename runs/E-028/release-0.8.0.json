@@ -1,7 +1,7 @@
 {
   "release": "0.8.0",
-  "date": "2026-11-11",
-  "status": "not published; E-030 decoder arm reaches 5/6 gates (rare aligned ETA 28.4% vs >=30); product decision pending",
+  "date": "2026-11-12",
+  "status": "published 2026-11-12 with the E-030 decoder; rare aligned ETA 28.4% vs >=30 is a documented exception",
   "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt (step 13283, S2 + gentle fine-tune from E-024/0.7.0)",
   "lm": "unchanged from 0.7.0 (dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e)",
   "reason": "S2 term addendum (50 sentences) + head 1e-4 / encoder 1e-5. Raises rare aligned ETA 23.5 -> 30.9% and rare presence 17.0 -> 27.7%, T-S3 26.92 -> 25.55; T-600 fp32 24.66 / 54.65. INT8 T-600 25.49 / 53.50, T-S3 25.89 / 49.01.",
@@ -12,12 +12,12 @@
     "beam": 12,
     "top_k": 10,
     "lm": "lm_bpe3.bin",
-    "lm_weight": 0.5,
-    "token_bonus": 2.4
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
   },
   "package_bytes": 19436178,
   "package_mb": 19.44,
-  "total_bytes": 19440760,
+  "total_bytes": 19440761,
   "files": {
     "model.int8.onnx": {
       "bytes": 11910677,
@@ -40,8 +40,8 @@
       "sha256": "dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e"
     },
     "config.json": {
-      "bytes": 1322,
-      "sha256": "d9503dccd291fcfe3f1e1e4687ba20255af87b59a2273c427328d8e61c6cc450"
+      "bytes": 1323,
+      "sha256": "aa5ecaa07e60bdb5a8bddb07677104a2428f2a658f53c7f79663d4a4a3fc40d5"
     },
     "NOTICE": {
       "bytes": 3260,
@@ -88,12 +88,18 @@
     },
     "int8": {
       "t600": {
-        "wer": 0.2549,
-        "eta": 0.535
+        "wer": 0.2471,
+        "eta": 0.5417
       },
       "t-s3": {
-        "wer": 0.2589,
-        "eta": 0.4901
+        "wer": 0.2521,
+        "eta": 0.5014
+      },
+      "fleurs_it_test": {
+        "wer": 0.2025
+      },
+      "fleurs_en_test": {
+        "wer": 0.4981
       }
     },
     "rare": {
@@ -103,18 +109,40 @@
       "aligned_eta_base": 0.2346,
       "aligned_eta_new": 0.3086,
       "int8_presence_base": 8,
-      "int8_presence_new": 12,
+      "int8_presence_new": 11,
       "int8_aligned_eta_base": 0.2222,
-      "int8_aligned_eta_new": 0.2963
+      "int8_aligned_eta_new": 0.284
+    },
+    "int8_old_arm": {
+      "t600": {
+        "wer": 0.2549,
+        "eta": 0.535
+      },
+      "t-s3": {
+        "wer": 0.2589,
+        "eta": 0.4901
+      }
     }
   },
   "browser": {
-    "acceptance": "runs/E-028/browser-acceptance (4/4 Chromium projects)",
+    "acceptance": "runs/E-028/browser-acceptance (4/4 Chromium projects, re-run with the E-030 decoder)",
     "release_version": "0.8.0",
     "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
-    "rtfx": "not summarized here; see per-project JSON"
+    "decode": {
+      "beam": 12,
+      "top_k": 10,
+      "lm_weight": 0.55,
+      "token_bonus": 2.7
+    },
+    "rtfx_median": {
+      "isolated-4": 46.42,
+      "isolated-1": 25.66,
+      "isolated-auto": 46.52,
+      "nonisolated-auto": 25.4
+    },
+    "notes": "Cold load and guard/recovery/contextual checks; RTFx median over 3 runs on a 3 s public fixture. Not a full release-quality benchmark."
   },
-  "uploaded": false,
+  "uploaded": true,
   "quantization_sweep": {
     "file": "runs/E-028/QUANTIZATION.md",
     "chosen_in_budget": "int8_default",
@@ -144,7 +172,16 @@
     "natural": 436,
     "rare_presence": 11,
     "rare_aligned_eta": 0.284,
-    "gates": "5/6; rare aligned ETA misses the >=30% gate by two aligned occurrences (23/81 vs 25/81)",
+    "gate": "rare aligned ETA >=30% missed by two aligned occurrences (23/81 vs 25/81); published with documented exception",
     "result": "runs/E-030/RESULT.md"
+  },
+  "published": {
+    "date": "2026-11-12",
+    "model": "https://huggingface.co/semantique-team/moth-stt",
+    "space": "https://huggingface.co/spaces/semantique-team/moth-demo",
+    "model_revision": "e5339bc01aec284974685269310a6f735d8e9ea8",
+    "space_revision": "70d930b6167671b6541e2a5c725151165d3a3ff3",
+    "remote_config_sha256": "aa5ecaa07e60bdb5a8bddb07677104a2428f2a658f53c7f79663d4a4a3fc40d5",
+    "remote_model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d"
   }
 }

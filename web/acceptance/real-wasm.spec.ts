@@ -8,7 +8,9 @@ import { expect, test } from "@playwright/test";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const hash = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const release = path.resolve(process.env.MOTH_RELEASE_DIR || path.join(root, "../moth-stt"));
-const reportDir = path.join(root, "runs/browser-acceptance-2026-11-10");
+const reportDir = process.env.MOTH_ACCEPTANCE_REPORT_DIR
+  ? path.resolve(process.env.MOTH_ACCEPTANCE_REPORT_DIR)
+  : path.join(root, "runs/browser-acceptance-2026-11-10");
 
 test("original release executes real WASM with guards, recovery and contextual timing", async ({ page }, info) => {
   const { isolated, threads } = info.project.metadata;
@@ -37,6 +39,7 @@ test("original release executes real WASM with guards, recovery and contextual t
     const configBytes = readFileSync(path.join(release, "config.json"));
     const config = JSON.parse(configBytes.toString());
     report.release_version = config.version;
+    report.decode_config = config.decode;
     const assets = new Map<string, Buffer>([["config.json", configBytes]]);
     const releaseRoot = realpathSync(release) + path.sep;
     for (const [name, expected] of Object.entries(config.files)) {

@@ -2,12 +2,11 @@
 
 > **Handoff di sessione (2026-11-11, HEAD `9bd552c`):** tutto il contesto è compattato in
 > [`docs/15-session-handoff-2026-11-11.md`](docs/15-session-handoff-2026-11-11.md): PR #3, E-026,
-> E-027, dati S2, E-028 fp32/INT8, sweep di quantizzazione, decisioni D36-D37. **0.7.0 resta
-> pubblicato; 0.8.0 non è pubblicato.** **E-029 QAT eseguito e negativo** (vedi sotto): la probe
-> chiude il gap di quantizzazione su dev ma fallisce i gate prodotto; il braccio completo non è
-> stato finanziato. **E-030** (decoder, stesso artefatto INT8) porta E-028 a **5 gate su 6**:
-> manca solo l'ETA rara (28,4% vs 30%). [Piano](runs/E-029/PLAN.md),
-> [risultato QAT](runs/E-029/RESULT.md), [risultato decoder](runs/E-030/RESULT.md).
+> E-027, dati S2, E-028 fp32/INT8, sweep di quantizzazione, decisioni D36-D37. **0.8.0 è
+> pubblicato dal 2026-11-12** su Hugging Face e Space, con il decoder E-030 e un'eccezione
+> documentata sul gate raro (28,4% vs 30%). **E-029 QAT è negativo**; **E-030** (decoder) porta
+> E-028 a 5 gate su 6. [Piano](runs/E-029/PLAN.md), [QAT](runs/E-029/RESULT.md),
+> [decoder](runs/E-030/RESULT.md), [record 0.8.0](runs/E-028/release-0.8.0.json).
 
 > **Acceptance/preflight locale (2026-11-10, mergiato con PR #3):** Chromium/WASM reale passa
 > quattro configurazioni (isolated auto/1/4 thread, nonisolated auto); VAD, guardie,
@@ -47,24 +46,24 @@
 > **20/27 → 18/27**. **INT8** (l'artefatto che si scarica): pacchetto 19.440.760 byte, browser 4/4,
 > ma T-600 **25,49 / 53,50** contro 25,14 / 54,65 di 0.7.0 INT8 (tie), T-S3 25,89 / 49,01, rari
 > 8/47 → 12/47, naturali **441 → 428**. Lo sweep non recupera: default migliore dentro 20 MB,
-> head-fp32 20,62 MB per +0,08 dev, statica QDQ rotta. **0.8.0 non pubblicato**; prossima strada QAT
-> o restare a 0.7.0. [Risultato](runs/E-028/RESULT.md), [sweep](runs/E-028/QUANTIZATION.md).
+> head-fp32 20,62 MB per +0,08 dev, statica QDQ rotta. **0.8.0 è stato poi pubblicato il
+> 2026-11-12 con l'arm E-030** (vedi sotto). [Risultato](runs/E-028/RESULT.md),
+> [sweep](runs/E-028/QUANTIZATION.md).
 >
 > **E-029 QAT (2026-11-11, probe):** STE custom su MPS (pesi per-canale int8 + attivazioni
 > uint8), 4 bracci da 200–500 step da E-028. Il migliore (500 step, encoder congelato) chiude
 > il gap INT8–fp32 su dev (**31,13 vs 31,08**; E-028 INT8 31,14), ma sul prodotto fallisce:
 > T-600 **25,34 / 53,21** (gate ≤25,14 / ≥54,65), rari **10/47**, ETA rara 27,2%, naturali
 > **428/817**. Anche il controllo fp32 è sotto E-028 (24,97 / 54,07, naturali 434). **Braccio
-> completo non finanziato; 0.8.0 non pubblicato; 0.7.0 resta online.**
-> [Risultato](runs/E-029/RESULT.md).
+> completo non finanziato.** [Risultato](runs/E-029/RESULT.md).
 >
 > **E-030 decoder (2026-11-11, stesso artefatto INT8):** ri-calibrazione del decoder
 > (beam 12 / top-k 10 / LM 0,55 / bonus 2,7), selezionata su dev. E-028 INT8 passa a
 > T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436/817**, rari **11/47** con
 > ETA rara **28,4% (23/81)** contro 22,2% di 0.7.0 (+6,2 [+1,1, +11,8]). **5 gate su 6**:
 > manca il gate primario raro per **2 occorrenze**; head-fp32 non recupera (23/81) ed è
-> fuori budget. **Non pubblicato automaticamente**: serve una decisione prodotto.
-> [Risultato](runs/E-030/RESULT.md).
+> fuori budget. **Pubblicato il 2026-11-12 come 0.8.0** con l'eccezione documentata; 0.7.0
+> resta lo storico. [Risultato](runs/E-030/RESULT.md).
 
 ## Stato Corrente Verificato (2026-11-10)
 
@@ -75,24 +74,24 @@ La verifica di questa macchina e' riportata sotto la tabella.
 
 | Area | Stato verificato / fonte |
 |---|---|
-| Modello pubblicato secondo i record | **0.7.0 / E-024**, 11.575.169 parametri acustici; due blocchi aggiunti all'encoder tiny, non sola testa lineare. Hosting non riverificato live |
-| Pacchetto | **19.440.760 byte**, sette file; il totale nel record E-024 esclude 4.582 byte di config e NOTICE. ORT/WASM e dipendenze esclusi |
-| Qualita' fp32 di riferimento | T-600 WER **25,20%**, ETA **54,17%**; S3 **26,92 / 48,45**; FLEURS-IT **20,14**, EN **49,14**; CV-IT test **24,37** |
-| Qualita' int8 misurata | T-600 **25,14 / 54,65**; S3 **27,00 / 48,45**. Non confondere questi risultati con fp32 o browser |
-| Decoder adottato | beam 12 / top-k 10 / LM weight 0,5 / token bonus 2,4, trigram aumentato, Silero VAD |
-| Ultimo training accettato | E-024 rumore; E-025 e' valutazione su nuova stanza, non nuovi pesi |
+| Modello pubblicato | **0.8.0 / E-028 + decoder E-030**, 11.575.169 parametri acustici; HF e Space verificati live il 2026-11-12 (model sha `7bbfad7e…`, config 0,55/2,7) |
+| Pacchetto | **19.440.761 byte**, sette file; il payload runtime è 19.436.178 byte, config+NOTICE 4.583. ORT/WASM e dipendenze esclusi |
+| Qualita' fp32 di riferimento | E-028 fp32: T-600 **24,66 / 54,65**; S3 **25,55 / 49,01**; FLEURS-IT **20,47**, EN **49,38**; CV-IT dev **19,80** |
+| Qualita' int8 pubblicata | T-600 **24,71 / 54,17**; S3 **25,21 / 50,14**; rari **11/47**, ETA rara **28,4%**; naturali **436**. Eccezione documentata: gate raro 30% mancato di 2 occorrenze |
+| Decoder adottato | beam 12 / top-k 10 / LM weight **0,55** / token bonus **2,7**, trigram aumentato, Silero VAD |
+| Ultimo training accettato | **E-028 (0.8.0)**: S2 + ricetta gentile + decoder E-030; E-024/E-025 restano l'evidenza rumore |
 | Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. Distillazione Parakeet originaria mai eseguita |
-| Ultimo training candidato | E-028 (E-015 v2): S2 + ricetta gentile, passa i gate; 0.8.0 solo dopo export/gate e decisione prodotto |
+| Ultimo training candidato | nessuno; E-028 è pubblicato come 0.8.0 con eccezione rara documentata |
 | Non eseguito | E-018 gold scaling, E-015 seconda voce/ricetta gentile, nuovi esperimenti LM; E-026 (diagnostica) e E-027 (bias) sono eseguiti, E-027 negativo. Previsioni non sono risultati |
 | Runtime su main | PR #2 gia' integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. Pesi invariati; non prova che il codice della demo pubblicata sia aggiornato |
 | Audit/tooling su main | PR #3 mergiata 2026-11-11: audit 20/25 MB, tempo sicuro, InterCTC opt-in, preflight/resume, finalist eval, diagnostica, bias contestuale, LM builder/compaction. Nessun peso nuovo; il LM attuale risparmia 0 byte |
 | Diagnostica rari | E-026 (2026-11-11, no training): 41/47 riferimenti nel top-k, 6/47 potati; ETA allineata 47 rari 23,5% → 30,9% con E-015, ma T-600 54,17% → 53,40% |
 | Bias contestuale | E-027 (2026-11-11, no training): glossario 24 termini, 47 rari invariati (22,22%), T-600 ETA +0,10 tie; **respinto** |
 | Dati S2 | 2026-11-11: addendum 50/50 valido, R-S2 672 righe; E-028 (E-015 v2) eseguito |
-| INT8 E-028 | 2026-11-11: pacchetto 19.440.760 byte, browser 4/4; T-600 25,49 / 53,50, T-S3 25,89 / 49,01, rari 12/47, naturali 428/817; **non pubblicato** |
+| INT8 E-028 (storico) | 2026-11-11: vecchio decoder, T-600 25,49 / 53,50; superato dall'arm E-030 |
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
-| E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **non pubblicato** |
-| Prossimo passo | **Decisione prodotto** su 0.8.0 con l'arm E-030 (eccezione rara documentata) oppure tenere **0.7.0** e proseguire con dati rari mirati, LM same-size o **mixed-dev naturale** |
+| E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **pubblicato come 0.8.0 il 2026-11-12** |
+| Prossimo passo | Monitorare 0.8.0; raccogliere un **mixed-dev naturale** e/o **dati rari mirati** per chiudere il gate raro e la selezione prodotto |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

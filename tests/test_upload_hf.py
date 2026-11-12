@@ -161,6 +161,25 @@ def test_the_real_release_passes_the_guard() -> None:
     candidates = sorted(REPO.glob(f"runs/*/release-{version}.json"))
     if not candidates:
         pytest.skip(f"no recorded build for release {version}")
-    result = _run(REPO, "--repo", "someone/moth-test", "--record", str(candidates[-1]))
+    cards = [
+        path
+        for path in sorted(REPO.glob("runs/*/MODEL_CARD.md"))
+        if version
+        in next(
+            (line for line in path.read_text(encoding="utf-8").splitlines() if line.startswith("# ")),
+            "",
+        )
+    ]
+    if not cards:
+        pytest.skip(f"no model card for release {version}")
+    result = _run(
+        REPO,
+        "--repo",
+        "someone/moth-test",
+        "--record",
+        str(candidates[-1]),
+        "--card",
+        str(cards[-1]),
+    )
     assert result.returncode == 0, result.stderr
     assert f"verified release {version}" in result.stdout

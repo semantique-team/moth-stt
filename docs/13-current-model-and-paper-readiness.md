@@ -5,6 +5,17 @@ architecture, committed measurements, historical publication records and evidenc
 It complements [the corrected decision log](11-evidence-and-decisions.md); it does not rewrite
 the experiment reports or model cards. Only repository evidence was audited, not live HF hosting.
 
+> **Update 2026-11-12 — 0.8.0 is now the published model.** The audit below was written on
+> 2026-11-11 against 0.7.0 and is kept as the 0.7.0 dossier. The new release is **E-028 + the
+> E-030 decoder** (same 11,575,169-parameter architecture; int8 graph hash `7bbfad7e…`; package
+> 19,440,761 bytes). Published metrics: T-600 **24.71 / 54.17**, T-S3 **25.21 / 50.14**,
+> FLEURS-IT **20.25**, FLEURS-EN **49.81**, natural **436/817**, rare presence **11/47**, rare
+> aligned ETA **28.4%**. The rare gate target of 30% is missed by two aligned occurrences; this is
+> a documented publication exception. Live model and Space were verified on 2026-11-12:
+> [release record](../runs/E-028/release-0.8.0.json), [E-030 result](../runs/E-030/RESULT.md),
+> [model card](../runs/E-028/MODEL_CARD.md). The 0.7.0 tables below are historical, not the
+> current release.
+
 ## 1. Identity and Architecture
 
 The recorded published model is **Moth 0.7.0**, acoustic checkpoint **E-024**. The release labels

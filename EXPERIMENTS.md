@@ -1692,9 +1692,10 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   dynamic default is the best in-budget variant; per-tensor/reduce-range/QUInt8/static QDQ are
   worse or broken, and head-fp32 is 20.62 MB (over budget) for only 0.08 dev points. See
   `runs/E-028/QUANTIZATION.md`.
-- **Verdict**: **fp32 candidate, not published**. The shipped INT8 trades rare gains for natural
-  terms and 1.15 T-600 ETA vs 0.7.0 INT8 (ties by CI). Cheap post-training quantization is
-  exhausted; the next serious route is QAT or staying on 0.7.0. Other caveats: dev +0.20, S1 WER
+- **Verdict**: **published 2026-11-12 as 0.8.0 with the E-030 decoder**, with a documented
+  exception on the rare aligned-ETA gate. The original int8 export was a tradeoff; E-030's
+  decoder recalibration recovered T-600/T-S3/natural and left only the rare gate two aligned
+  occurrences short. Cheap post-training quantization and QAT are exhausted. Other caveats: dev +0.20, S1 WER
   +0.43, FLEURS-IT +0.33 significant (inside the 0.5 margin), 16 gold terms −2 (`milestone`,
   `paypal`).
 - **Cost**: data prep ~2 min, training **1 h 47**, eval ~4 min; no teacher, no downloads, 0 USD.
@@ -1703,7 +1704,7 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   `recordings/manifests/R-S2-terms.jsonl`, `data/shards/R-S2-terms`,
   `data/shards/gold-terms-S2-x20`.
 - **Follow-up**: **E-029 QAT executed, negative**; see the E-029 entry below. The full arm was
-  not funded, and 0.8.0 is not published.
+  not funded; 0.8.0 was later published on 2026-11-12 with the E-030 decoder.
 
 ## E-029 — QAT probe: the quantizer is not the missing lever (2026-11-11)
 
@@ -1757,11 +1758,11 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
 - **Gates**: **5 of 6 pass** (T-600 ETA/WER, natural, FLEURS, dev-selected checkpoint). The primary
   rare-ETA gate is **missed by two aligned occurrences** (28.4% vs ≥30%). E-028 fp32 has 25/81,
   so the loss is quantization; head-fp32 also stays at 23/81 and is over budget (20.62 MB).
-- **Verdict**: **not published automatically**. The artifact is a much stronger tradeoff than the
-  old E-028 INT8 (T-600 tie vs 0.7.0, T-S3 better, rare significantly better, natural within the
-  431 gate), but the pre-registered primary gate is missed. Publication is an explicit product
-  decision; otherwise keep 0.7.0 and pursue targeted rare data, a same-size LM, or a natural
-  mixed-dev. [Result](runs/E-030/RESULT.md).
+- **Verdict**: **published 2026-11-12 as 0.8.0 with this decoder**, documenting the 2-occurrence
+  rare shortfall. The artifact is a much stronger tradeoff than the old E-028 INT8 (T-600 tie vs
+  0.7.0, T-S3 better, rare significantly better, natural within the 431 gate). Remaining work is
+  targeted rare data, a same-size LM, or a natural mixed-dev for selection.
+  [Result](runs/E-030/RESULT.md).
 - **Cost**: dev sweep ~17 min, T/FLEURS readout ~5 min, no training, 0 USD.
 
 ## Runtime acceptance follow-up (2026-11-10, no new model)

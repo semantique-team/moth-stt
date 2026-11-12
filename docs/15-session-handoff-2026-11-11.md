@@ -8,8 +8,9 @@ continue without reading the whole conversation.
 > closes the dev quantization gap but fails the T-600, rare and natural gates; the full arm was
 > not funded. **E-030** then recalibrated the decoder on the same E-028 INT8 artifact: T-600
 > 24.71 / 54.17, T-S3 25.21 / 50.14, natural 436, rare ETA 28.4%. That is **5 of 6 gates**; the
-> primary rare gate is two occurrences short. 0.8.0 is **not** published and 0.7.0 stays online
-> pending a product decision. See [`runs/E-029/RESULT.md`](../runs/E-029/RESULT.md),
+> primary rare gate is two occurrences short. **0.8.0 was published on 2026-11-12** with that
+> documented exception; 0.7.0 is the historical control. See
+> [`runs/E-029/RESULT.md`](../runs/E-029/RESULT.md),
 > [`runs/E-030/RESULT.md`](../runs/E-030/RESULT.md) and the live `STATUS.md`.
 
 ## TL;DR
@@ -25,7 +26,7 @@ continue without reading the whole conversation.
 - **E-028 INT8 is not a clean ship:** T-600 25.49 / 53.50 against 0.7.0 INT8 25.14 / 54.65 (ties),
   rare presence 8/47 → 12/47, natural 441 → 428. The post-training quantization sweep is exhausted
   (default is best in budget; head-fp32 over budget; static QDQ broken).
-- **Decision:** 0.8.0 is **not published**. The next experiment is **E-029 QAT**
+- **Decision at handoff time:** 0.8.0 was **not published** (it was later released on 2026-11-12 with the E-030 decoder). The next experiment was **E-029 QAT**
   (`runs/E-029/PLAN.md`), using a custom MPS-compatible straight-through quantization because
   PyTorch's fake-quant op is not implemented on MPS.
 
@@ -116,7 +117,7 @@ Dev = CV-IT dev 600 + FLEURS-IT dev 334 + FLEURS-EN dev 343.
 | Static QDQ | **91.44** | 19.52 MB | broken |
 
 No cheap post-training variant closes the gap. Head-fp32 would require pruning ~0.62 MB of LM
-for a 0.08 dev gain; not worth it. **0.8.0 is not published.**
+for a 0.08 dev gain; not worth it. **At handoff time 0.8.0 was not published**; it was later released with the E-030 decoder.
 
 ## Decisions to carry forward
 

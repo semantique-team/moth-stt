@@ -30,7 +30,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 SPACE_SRC = REPO / "runs/E-024/space"
 RELEASE = REPO / "release"
-RECORD = REPO / "runs/E-024/release-0.7.0.json"
+RECORD = REPO / "runs/E-028/release-0.8.0.json"
 
 #: The demo page, its runtime, and the ORT build the WASM backend loads. `ort.wasm.min.mjs`
 #: dynamically imports `ort-wasm-simd-threaded.mjs`, which loads the `.wasm` — all three must sit
@@ -71,7 +71,7 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def stage(destination: Path) -> dict:
+def stage(destination: Path, record_path: Path = RECORD) -> dict:
     """Build the Space tree; returns a report of what went in and whether it verifies."""
     if destination.exists():
         shutil.rmtree(destination)
@@ -101,7 +101,7 @@ def stage(destination: Path) -> dict:
         shutil.copy2(source, destination / ORT_DIR / name)
 
     # The demo loads ./release/ and verifies these sha256 values in the browser before running.
-    record = json.loads(RECORD.read_text(encoding="utf-8"))
+    record = json.loads(record_path.read_text(encoding="utf-8"))
     for name in RELEASE_FILES:
         source = RELEASE / name
         if not source.is_file():
@@ -128,10 +128,11 @@ def main() -> int:
     parser.add_argument("--serve", action="store_true", help="serve the staged site locally")
     parser.add_argument("--dest", default=None, help="staging directory (default: a temp dir)")
     parser.add_argument("--private", action="store_true", help="create the Space private")
+    parser.add_argument("--record", default=str(RECORD), help="release record with hashes")
     args = parser.parse_args()
 
     destination = Path(args.dest) if args.dest else Path(tempfile.mkdtemp(prefix="moth-space-"))
-    report = stage(destination)
+    report = stage(destination, Path(args.record))
     print(json.dumps(report, indent=1))
     print(f"staged in {destination}")
     if report["problems"]:

@@ -1,10 +1,10 @@
 {
   "project": "nonisolated-auto",
   "passed": true,
-  "timestamp": "2026-11-11T16:31:40.712Z",
+  "timestamp": "2026-11-12T07:13:54.224Z",
   "node": "v25.5.0",
   "platform": "darwin/arm64",
-  "code_sha": "eacba0b7c38ffd765aab49cba4b4c21af47d9179",
+  "code_sha": "3f5a4711e7dd636b63f3a2b2f388f2c859fcb39e",
   "source_sha256": {
     "web/ort.js": "d6d5c50daf7cf8dfcf29f7a910df5a27c2eee868bd2b0cb83665cdd2ced47153",
     "web/decode.js": "40bd00ca736da1914215d976fb4351a5277b3079b0fb73ebcc547f72dd59952c",
@@ -14,15 +14,15 @@
     "web/server.py": "6a782324816c1f8270c363a476480070e98347853d0fadd72c9015504b8d698d",
     "web/package-lock.json": "327543732950ec6045783c6c9455798d9403de99a958ee873d5586e853236fe2",
     "web/playwright.acceptance.config.ts": "e57d8e91298b408452c670dad1a7b45e09db1ebb89ecd3342a8774411d8589d3",
-    "web/acceptance/real-wasm.spec.ts": "fce7073ec72ac81f92d73295da50868fd004d1fa2848edd2a0955cc5406a0291"
+    "web/acceptance/real-wasm.spec.ts": "cc0d8affe95b0652c350566428d0727ab50d0048638adaf2f6988caaf434740c"
   },
   "assets": [
     {
       "name": "config.json",
-      "bytes": 1322,
-      "sha256": "d9503dccd291fcfe3f1e1e4687ba20255af87b59a2273c427328d8e61c6cc450",
+      "bytes": 1323,
+      "sha256": "aa5ecaa07e60bdb5a8bddb07677104a2428f2a658f53c7f79663d4a4a3fc40d5",
       "fulfilled_responses": 1,
-      "fulfilled_raw_bytes": 1322
+      "fulfilled_raw_bytes": 1323
     },
     {
       "name": "model.int8.onnx",
@@ -72,6 +72,14 @@
   "ort_package_version": "1.30.0",
   "playwright_version": "1.64.1",
   "release_version": "0.8.0",
+  "decode_config": {
+    "default": "beam",
+    "beam": 12,
+    "top_k": 10,
+    "lm": "lm_bpe3.bin",
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
   "optional_audio_coverage": "Not available; public versioned Italian fixture only.",
   "environment": {
     "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
@@ -84,8 +92,8 @@
       "common": "1.30.0",
       "web": "1.30.0"
     },
-    "cold_load_ms": 312.39999997615814,
-    "session_load_ms": 33.60000002384186,
+    "cold_load_ms": 304.10000002384186,
+    "session_load_ms": 33,
     "threads": 1,
     "single": {
       "text": "le diffuseo proteste iniziate a ottobrek con testa",
@@ -96,25 +104,25 @@
       "audioSeconds": 3,
       "segments": 1,
       "timings": {
-        "vad_ms": 30.100000023841858,
+        "vad_ms": 30.200000047683716,
         "feature_ms": 27,
-        "inference_ms": 90.59999990463257,
+        "inference_ms": 90.09999990463257,
         "decode_ms": 10.100000023841858,
-        "total_ms": 158
+        "total_ms": 157.5
       },
-      "rtfx": 18.9873417721519
+      "rtfx": 19.047619047619047
     },
     "baseline": {
       "runs": 3,
       "audio_s": 3,
-      "total_ms_median": 121.39999997615814,
-      "total_ms_min": 120.70000004768372,
-      "vad_ms_median": 14,
-      "feature_ms_median": 22,
-      "inference_ms_median": 77.29999995231628,
-      "decode_ms_median": 8.299999952316284,
-      "rtfx_median": 24.711696874704884,
-      "rtfx_inference": 38.809831848002545,
+      "total_ms_median": 118.09999990463257,
+      "total_ms_min": 117.70000004768372,
+      "vad_ms_median": 13.399999976158142,
+      "feature_ms_median": 21.600000023841858,
+      "inference_ms_median": 75.20000004768372,
+      "decode_ms_median": 7.899999976158142,
+      "rtfx_median": 25.40220154464473,
+      "rtfx_inference": 39.89361699598037,
       "num_threads": 1,
       "cross_origin_isolated": false,
       "simd": true
@@ -135,13 +143,13 @@
       "audioSeconds": 3,
       "segments": 1,
       "timings": {
-        "vad_ms": 13.299999952316284,
-        "feature_ms": 22.100000023841858,
-        "inference_ms": 77.30000007152557,
-        "decode_ms": 8,
-        "total_ms": 120.70000004768372
+        "vad_ms": 13,
+        "feature_ms": 21.799999952316284,
+        "inference_ms": 74.80000007152557,
+        "decode_ms": 7.899999976158142,
+        "total_ms": 117.5
       },
-      "rtfx": 24.855012417686996
+      "rtfx": 25.53191489361702
     },
     "recovered": {
       "text": "le diffuseo proteste iniziate a ottobrek con testa",
@@ -152,13 +160,13 @@
       "audioSeconds": 3,
       "segments": 1,
       "timings": {
-        "vad_ms": 13,
-        "feature_ms": 22.200000047683716,
-        "inference_ms": 77.09999990463257,
-        "decode_ms": 8.100000023841858,
-        "total_ms": 120.39999997615814
+        "vad_ms": 12.600000023841858,
+        "feature_ms": 21.799999952316284,
+        "inference_ms": 74.90000009536743,
+        "decode_ms": 7.899999976158142,
+        "total_ms": 117.20000004768372
       },
-      "rtfx": 24.91694352652879
+      "rtfx": 25.597269614158932
     },
     "silence": {
       "text": "",
@@ -186,13 +194,13 @@
       "guarded": true,
       "audioSeconds": 3,
       "timings": {
-        "vad_ms": 13,
+        "vad_ms": 12.399999976158142,
         "feature_ms": 0,
         "inference_ms": 0,
         "decode_ms": 0,
-        "total_ms": 13
+        "total_ms": 12.399999976158142
       },
-      "rtfx": 230.76923076923077
+      "rtfx": 241.93548433614447
     },
     "longRejection": "segment must contain 560..480000 samples (max 30 s); got 496000",
     "afterLong": {
@@ -204,13 +212,13 @@
       "audioSeconds": 3,
       "segments": 1,
       "timings": {
-        "vad_ms": 12.300000071525574,
-        "feature_ms": 22,
-        "inference_ms": 77.19999992847443,
+        "vad_ms": 11.899999976158142,
+        "feature_ms": 21.200000047683716,
+        "inference_ms": 74.69999992847443,
         "decode_ms": 8,
-        "total_ms": 119.5
+        "total_ms": 115.79999995231628
       },
-      "rtfx": 25.10460251046025
+      "rtfx": 25.90673576196312
     },
     "extraAudio": [],
     "contextual": {
@@ -230,13 +238,13 @@
         "audioSeconds": 3,
         "segments": 1,
         "timings": {
-          "vad_ms": 12.399999976158142,
-          "feature_ms": 21.899999976158142,
-          "inference_ms": 77.20000004768372,
-          "decode_ms": 8.100000023841858,
-          "total_ms": 119.70000004768372
+          "vad_ms": 11.799999952316284,
+          "feature_ms": 21.40000009536743,
+          "inference_ms": 74.89999997615814,
+          "decode_ms": 7.799999952316284,
+          "total_ms": 116
         },
-        "rtfx": 25.062656631620044
+        "rtfx": 25.862068965517242
       },
       "emptyContext": {
         "text": "le diffuseo proteste iniziate a ottobrek con testa",
@@ -247,13 +255,13 @@
         "audioSeconds": 3,
         "segments": 1,
         "timings": {
-          "vad_ms": 12.600000023841858,
-          "feature_ms": 22.09999990463257,
-          "inference_ms": 77,
-          "decode_ms": 12.400000095367432,
-          "total_ms": 124.10000002384186
+          "vad_ms": 12.100000023841858,
+          "feature_ms": 21.5,
+          "inference_ms": 74.5,
+          "decode_ms": 10.899999976158142,
+          "total_ms": 119
         },
-        "rtfx": 24.17405317827273
+        "rtfx": 25.210084033613445
       },
       "zeroBonus": {
         "text": "le diffuseo proteste iniziate a ottobrek con testa",
@@ -264,13 +272,13 @@
         "audioSeconds": 3,
         "segments": 1,
         "timings": {
-          "vad_ms": 12.799999952316284,
-          "feature_ms": 23.600000023841858,
-          "inference_ms": 77.20000004768372,
-          "decode_ms": 12.299999952316284,
-          "total_ms": 125.89999997615814
+          "vad_ms": 12.099999904632568,
+          "feature_ms": 21.700000047683716,
+          "inference_ms": 75.29999995231628,
+          "decode_ms": 13,
+          "total_ms": 122.09999990463257
         },
-        "rtfx": 23.828435270596618
+        "rtfx": 24.570024589215233
       },
       "result": {
         "text": "le diffuseo proteste iniziate a ottobrek con testa",
@@ -281,13 +289,13 @@
         "audioSeconds": 3,
         "segments": 1,
         "timings": {
-          "vad_ms": 12.700000047683716,
-          "feature_ms": 21.799999952316284,
-          "inference_ms": 77.10000002384186,
-          "decode_ms": 11.700000047683716,
-          "total_ms": 123.30000007152557
+          "vad_ms": 12.100000023841858,
+          "feature_ms": 38.799999952316284,
+          "inference_ms": 75.10000002384186,
+          "decode_ms": 11.399999976158142,
+          "total_ms": 137.39999997615814
         },
-        "rtfx": 24.330900229194796
+        "rtfx": 21.834061139159857
       },
       "scorerUse": {
         "no_options": {
@@ -325,7 +333,7 @@
         "positive_bonus": {
           "delta_calls": 17880,
           "finish_calls": 12,
-          "positive_scores": 274,
+          "positive_scores": 300,
           "settings": [
             {
               "bonus": 1.75,
@@ -342,39 +350,39 @@
       "without_bias": {
         "warmups": 1,
         "repeats": 3,
-        "wall_ms_median": 119.5,
-        "rtfx": 25.10460251046025,
+        "wall_ms_median": 116.39999997615814,
+        "rtfx": 25.773195881567705,
         "samples": [
           {
-            "wall_ms": 119.5,
+            "wall_ms": 116.39999997615814,
             "timings": {
-              "vad_ms": 12.5,
-              "feature_ms": 21.700000047683716,
-              "inference_ms": 77,
-              "decode_ms": 8,
-              "total_ms": 119.20000004768372
+              "vad_ms": 12.200000047683716,
+              "feature_ms": 21.399999976158142,
+              "inference_ms": 74.79999995231628,
+              "decode_ms": 7.700000047683716,
+              "total_ms": 116.10000002384186
             },
             "text": "le diffuseo proteste iniziate a ottobrek con testa"
           },
           {
-            "wall_ms": 119.5,
+            "wall_ms": 115.69999992847443,
             "timings": {
-              "vad_ms": 12.700000047683716,
-              "feature_ms": 21.699999928474426,
-              "inference_ms": 77,
-              "decode_ms": 7.900000095367432,
-              "total_ms": 119.30000007152557
+              "vad_ms": 12,
+              "feature_ms": 21.200000047683716,
+              "inference_ms": 74.60000002384186,
+              "decode_ms": 7.699999928474426,
+              "total_ms": 115.5
             },
             "text": "le diffuseo proteste iniziate a ottobrek con testa"
           },
           {
-            "wall_ms": 119.39999997615814,
+            "wall_ms": 116.40000009536743,
             "timings": {
-              "vad_ms": 12.5,
-              "feature_ms": 21.700000047683716,
-              "inference_ms": 77,
-              "decode_ms": 8,
-              "total_ms": 119.20000004768372
+              "vad_ms": 12,
+              "feature_ms": 21.199999928474426,
+              "inference_ms": 75.10000002384186,
+              "decode_ms": 7.800000071525574,
+              "total_ms": 116.10000002384186
             },
             "text": "le diffuseo proteste iniziate a ottobrek con testa"
           }
@@ -383,39 +391,39 @@
       "with_bias": {
         "warmups": 1,
         "repeats": 3,
-        "wall_ms_median": 120.89999997615814,
-        "rtfx": 24.813895786531095,
+        "wall_ms_median": 117.20000004768372,
+        "rtfx": 25.597269614158932,
         "samples": [
           {
-            "wall_ms": 121,
+            "wall_ms": 117.20000004768372,
             "timings": {
-              "vad_ms": 12.600000023841858,
-              "feature_ms": 21.600000023841858,
-              "inference_ms": 77.10000002384186,
-              "decode_ms": 9.399999976158142,
-              "total_ms": 120.70000004768372
+              "vad_ms": 12,
+              "feature_ms": 21.299999952316284,
+              "inference_ms": 74.79999995231628,
+              "decode_ms": 8.800000071525574,
+              "total_ms": 116.89999997615814
             },
             "text": "le diffuseo proteste iniziate a ottobrek con testa"
           },
           {
-            "wall_ms": 120.89999997615814,
+            "wall_ms": 117,
             "timings": {
-              "vad_ms": 12.600000023841858,
-              "feature_ms": 21.700000047683716,
-              "inference_ms": 76.79999995231628,
-              "decode_ms": 9.399999976158142,
-              "total_ms": 120.5
+              "vad_ms": 11.899999976158142,
+              "feature_ms": 21.200000047683716,
+              "inference_ms": 74.60000002384186,
+              "decode_ms": 8.899999976158142,
+              "total_ms": 116.60000002384186
             },
             "text": "le diffuseo proteste iniziate a ottobrek con testa"
           },
           {
-            "wall_ms": 120.60000002384186,
+            "wall_ms": 117.60000002384186,
             "timings": {
-              "vad_ms": 12.399999976158142,
-              "feature_ms": 21.699999928474426,
-              "inference_ms": 77.10000002384186,
-              "decode_ms": 9.100000023841858,
-              "total_ms": 120.29999995231628
+              "vad_ms": 11.899999976158142,
+              "feature_ms": 21.200000047683716,
+              "inference_ms": 74.39999997615814,
+              "decode_ms": 9.800000071525574,
+              "total_ms": 117.30000007152557
             },
             "text": "le diffuseo proteste iniziate a ottobrek con testa"
           }
@@ -433,14 +441,28 @@
         "transferSize": 12324,
         "encodedBodySize": 12024,
         "decodedBodySize": 12024,
-        "duration_ms": 1.8000000715255737
+        "duration_ms": 1.6999999284744263
       },
       {
         "path": "/web/decode.js",
         "transferSize": 9087,
         "encodedBodySize": 8787,
         "decodedBodySize": 8787,
-        "duration_ms": 1.600000023841858
+        "duration_ms": 1.2999999523162842
+      },
+      {
+        "path": "/web/lm.js",
+        "transferSize": 5964,
+        "encodedBodySize": 5664,
+        "decodedBodySize": 5664,
+        "duration_ms": 1.7000000476837158
+      },
+      {
+        "path": "/web/node_modules/onnxruntime-web/dist/ort.wasm.min.mjs",
+        "transferSize": 50426,
+        "encodedBodySize": 50126,
+        "decodedBodySize": 50126,
+        "duration_ms": 1.100000023841858
       },
       {
         "path": "/web/mel.js",
@@ -450,39 +472,25 @@
         "duration_ms": 1.899999976158142
       },
       {
-        "path": "/web/lm.js",
-        "transferSize": 5964,
-        "encodedBodySize": 5664,
-        "decodedBodySize": 5664,
-        "duration_ms": 2
-      },
-      {
         "path": "/web/vad.js",
         "transferSize": 5584,
         "encodedBodySize": 5284,
         "decodedBodySize": 5284,
-        "duration_ms": 2.5
-      },
-      {
-        "path": "/web/node_modules/onnxruntime-web/dist/ort.wasm.min.mjs",
-        "transferSize": 50426,
-        "encodedBodySize": 50126,
-        "decodedBodySize": 50126,
-        "duration_ms": 2.5
+        "duration_ms": 2.399999976158142
       },
       {
         "path": "/acceptance-release/config.json",
-        "transferSize": 1622,
-        "encodedBodySize": 1322,
-        "decodedBodySize": 1322,
-        "duration_ms": 0.6000000238418579
+        "transferSize": 1623,
+        "encodedBodySize": 1323,
+        "decodedBodySize": 1323,
+        "duration_ms": 0.8000000715255737
       },
       {
         "path": "/acceptance-release/model.int8.onnx",
         "transferSize": 11910977,
         "encodedBodySize": 11910677,
         "decodedBodySize": 11910677,
-        "duration_ms": 83.60000002384186
+        "duration_ms": 80.20000004768372
       },
       {
         "path": "/acceptance-release/vocab.json",
@@ -496,21 +504,21 @@
         "transferSize": 64620,
         "encodedBodySize": 64320,
         "decodedBodySize": 64320,
-        "duration_ms": 0.9000000953674316
+        "duration_ms": 1
       },
       {
         "path": "/acceptance-release/lm_bpe3.bin",
         "transferSize": 5116764,
         "encodedBodySize": 5116464,
         "decodedBodySize": 5116464,
-        "duration_ms": 34.5
+        "duration_ms": 32.89999997615814
       },
       {
         "path": "/acceptance-release/silero_vad.onnx",
         "transferSize": 2327824,
         "encodedBodySize": 2327524,
         "decodedBodySize": 2327524,
-        "duration_ms": 16.09999990463257
+        "duration_ms": 15.100000023841858
       },
       {
         "path": "/web/node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.mjs",
@@ -524,7 +532,7 @@
         "transferSize": 14240197,
         "encodedBodySize": 14239897,
         "decodedBodySize": 14239897,
-        "duration_ms": 11.899999976158142
+        "duration_ms": 13.100000023841858
       },
       {
         "path": "/web/tests/fixtures/speech.wav",

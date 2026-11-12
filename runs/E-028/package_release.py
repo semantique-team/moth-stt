@@ -1,4 +1,4 @@
-"""Add the unchanged 0.7.0 LM to the E-028 export and set the shipped decode parameters."""
+"""Add the unchanged 0.7.0 LM to the E-028 export and set the published decode parameters."""
 
 from __future__ import annotations
 
@@ -25,8 +25,8 @@ def main() -> int:
         "beam": 12,
         "top_k": 10,
         "lm": "lm_bpe3.bin",
-        "lm_weight": 0.5,
-        "token_bonus": 2.4,
+        "lm_weight": 0.55,
+        "token_bonus": 2.7,
     }
     config["files"]["lm_bpe3.bin"] = f"sha256:{sha256_file(RELEASE / 'lm_bpe3.bin')}"
     config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
