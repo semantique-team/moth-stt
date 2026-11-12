@@ -1,4 +1,6 @@
 import json
+import os
+import shlex
 import sys
 from pathlib import Path
 
@@ -85,14 +87,17 @@ def test_render_command_substitutes_values() -> None:
     command = render_command(
         "needle transcribe --language {lang} --keywords {keywords} {audio}",
         lang="it",
-        keywords_path=Path("/tmp/k.txt"),
+        keywords_path="/tmp/k.txt",
     )
-    assert command == "needle transcribe --language it --keywords /tmp/k.txt {audio}"
+    quoted = '"/tmp/k.txt"' if os.name == "nt" else "/tmp/k.txt"
+    assert command == f"needle transcribe --language it --keywords {quoted} {{audio}}"
 
 
-def test_render_command_drops_absent_flags() -> None:
+@pytest.mark.parametrize("quote", ["", '"', "'"])
+def test_render_command_drops_absent_flags(quote: str) -> None:
     command = render_command(
-        "needle transcribe --language {lang} --keywords={keywords} {audio}", lang=""
+        f"needle transcribe --language {quote}{{lang}}{quote} "
+        f"--keywords={quote}{{keywords}}{quote} {{audio}}", lang=""
     )
     assert command == "needle transcribe {audio}"
 
@@ -149,22 +154,56 @@ def test_terms_in_rows_and_oracle_hotwords(tmp_path: Path) -> None:
     assert hotwords_for("none", rows, tmp_path / "none", tmp_path / "none.txt") == ([], False)
 
 
-def test_external_transcriber_success_and_audio_substitution(tmp_path: Path) -> None:
-    script = tmp_path / "echo_audio.py"
-    script.write_text("import sys\nprint(sys.argv[1])\n", encoding="utf-8")
-    transcribe = external_transcriber(f"{sys.executable} {script} {{audio}}")
-    assert transcribe(Path("/tmp/clip.wav")) == "/tmp/clip.wav"
+def _shell_path(path: Path | str) -> str:
+    return f'"{path}"' if os.name == "nt" else shlex.quote(str(path))
+
+
+@pytest.mark.parametrize("placeholder", [" {audio}", ' "{audio}"', " '{audio}'", ""])
+@pytest.mark.parametrize("name", ["clip & take's (1).wav", "clip&take.wav"])
+def test_external_transcriber_success_and_audio_substitution(
+    tmp_path: Path, placeholder: str, name: str
+) -> None:
+    script = tmp_path / "echo audio.py"
+    script.write_text("import sys\nassert len(sys.argv) == 2\nprint(sys.argv[1])\n", encoding="utf-8")
+    transcribe = external_transcriber(
+        f"{_shell_path(sys.executable)} {_shell_path(script)}{placeholder}"
+    )
+    audio = tmp_path / name
+    assert transcribe(audio) == str(audio)
+
+
+@pytest.mark.parametrize("quote", ["", '"', "'"])
+@pytest.mark.parametrize("name", ["hot words.txt", "hot&words.txt"])
+def test_render_command_quotes_keyword_paths_with_spaces(
+    tmp_path: Path, quote: str, name: str
+) -> None:
+    script = tmp_path / "keywords reader.py"
+    script.write_text("import sys\nassert len(sys.argv) == 3\nprint(sys.argv[1])\n")
+    keywords = tmp_path / name
+    command = render_command(
+        f"{_shell_path(sys.executable)} {_shell_path(script)} "
+        f"{quote}{{keywords}}{quote} {quote}{{audio}}{quote}",
+        keywords_path=keywords,
+    )
+    assert external_transcriber(command)(tmp_path / "audio file.wav") == str(keywords)
+
+
+@pytest.mark.skipif(os.name != "nt", reason="cmd-specific expansion")
+@pytest.mark.parametrize("name", ["%PATH%.wav", "!PATH!.wav", 'bad"name.wav', "bad\nname.wav"])
+def test_external_transcriber_rejects_cmd_expansion_in_audio(name: str) -> None:
+    with pytest.raises(ValueError, match="unsafe"):
+        external_transcriber("unused {audio}")(Path(name))
 
 
 def test_external_transcriber_takes_last_non_empty_line(tmp_path: Path) -> None:
     script = tmp_path / "banner.py"
     script.write_text("print('loading model...')\nprint('')\nprint('ciao come stai')\n")
-    transcribe = external_transcriber(f"{sys.executable} {script}")
+    transcribe = external_transcriber(f"{_shell_path(sys.executable)} {_shell_path(script)}")
     assert transcribe(Path("x.wav")) == "ciao come stai"
 
 
 def test_external_transcriber_failure_is_actionable() -> None:
-    transcribe = external_transcriber(f'{sys.executable} -c "import sys; sys.exit(3)"')
+    transcribe = external_transcriber(f'{_shell_path(sys.executable)} -c "import sys; sys.exit(3)"')
     with pytest.raises(RuntimeError, match="exit 3"):
         transcribe(Path("x.wav"))
 

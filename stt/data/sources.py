@@ -209,7 +209,7 @@ def read_librispeech_transcripts(root: Path | str) -> list[dict]:
             rows.append(
                 {
                     "id": f"ls-{uid}",
-                    "audio": str(audio),
+                    "audio": audio.as_posix(),
                     "text": text.strip(),
                     "speaker": speaker,
                 }

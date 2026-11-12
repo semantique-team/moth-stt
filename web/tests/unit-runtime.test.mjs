@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { SourceTextModule, SyntheticModule } from "node:vm";
@@ -11,7 +12,7 @@ const source = await readFile(new URL("../ort.js", import.meta.url), "utf8");
 const pieces = ["", "a", "b", "c"];
 
 async function runner({ maxSeconds = 30, sampleRate = 16000, vad = true,
-  vocab = pieces, decode = undefined } = {}) {
+  vocab = pieces, decode = undefined, hashes = {}, fetches = [] } = {}) {
   const calls = { vad: 0, mel: [], inference: 0, beam: [] };
   const state = { bounds: [], speech: true, pause: null, fail: null,
     scores: [-10, 0, -10, -10] };
@@ -23,6 +24,16 @@ async function runner({ maxSeconds = 30, sampleRate = 16000, vad = true,
     ...(decode ? { decode } : {}),
     ...(vad ? { vad: { file: "vad", threshold: 0.1 } } : {}),
   };
+  const assets = {
+    model: new ArrayBuffer(0),
+    vocab: new TextEncoder().encode(JSON.stringify(vocab)).buffer,
+    filters: new Float32Array(80 * 201).buffer,
+    vad: new ArrayBuffer(0),
+    lm: new ArrayBuffer(0),
+  };
+  config.files = Object.fromEntries(Object.entries(assets).map(([name, bytes]) =>
+    [name, `sha256:${createHash("sha256").update(new Uint8Array(bytes)).digest("hex")}`]));
+  Object.assign(config.files, hashes);
   const fakeVad = {
     gate: 0.1,
     async probabilities() {
@@ -55,7 +66,7 @@ async function runner({ maxSeconds = 30, sampleRate = 16000, vad = true,
       calls.beam.push(args[4]);
       return beamSearch(...args);
     } },
-    "./lm.js": { loadLM() { throw new Error("unexpected LM asset"); } },
+    "./lm.js": { loadLM: () => ({}) },
     "./mel.js": {
       N_MELS: 80, N_FFT: 400, HOP_LENGTH: 160, SAMPLE_RATE: 16000,
       computeMel(pcm) {
@@ -76,21 +87,48 @@ async function runner({ maxSeconds = 30, sampleRate = 16000, vad = true,
   });
   await module.evaluate();
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = async (url) => ({
-    ok: true,
-    arrayBuffer: async () => {
-      if (url.endsWith("config.json")) return new TextEncoder().encode(JSON.stringify(config)).buffer;
-      if (url.endsWith("vocab")) return new TextEncoder().encode(JSON.stringify(vocab)).buffer;
-      if (url.endsWith("filters")) return new Float32Array(80 * 201).buffer;
-      return new ArrayBuffer(0);
-    },
-  });
+  const originalCrypto = Object.getOwnPropertyDescriptor(globalThis, "crypto");
+  Object.defineProperty(globalThis, "crypto", { configurable: true, value: {
+    subtle: { async digest(algorithm, bytes) {
+      assert.equal(algorithm, "SHA-256");
+      return Uint8Array.from(createHash("sha256").update(new Uint8Array(bytes)).digest()).buffer;
+    } },
+  } });
+  globalThis.fetch = async (url) => {
+    fetches.push(url);
+    return {
+      ok: true,
+      arrayBuffer: async () => {
+        if (url.endsWith("config.json")) return new TextEncoder().encode(JSON.stringify(config)).buffer;
+        return assets[url.split("/").at(-1)];
+      },
+    };
+  };
   try {
     return { runtime: await module.namespace.createRunner({ threads: 1 }), calls, state };
   } finally {
     globalThis.fetch = originalFetch;
+    if (originalCrypto) Object.defineProperty(globalThis, "crypto", originalCrypto);
+    else delete globalThis.crypto;
   }
 }
+
+test("runner validates every required hash before fetching any asset", async () => {
+  for (const file of ["model", "vocab", "filters", "lm", "vad"]) {
+    for (const hash of [undefined, null, "", 123, "sha256:abc", "g".repeat(64)]) {
+      const fetches = [];
+      await assert.rejects(runner({ decode: { lm: "lm" }, hashes: { [file]: hash }, fetches }),
+        /missing or malformed sha256/);
+      assert.deepEqual(fetches, ["../release/config.json"]);
+    }
+  }
+  await runner({ decode: { lm: "lm" } });
+  await runner({ vad: false, hashes: { vad: undefined, lm: undefined } });
+});
+
+test("runner rejects an asset whose bytes do not match its valid hash", async () => {
+  await assert.rejects(runner({ hashes: { model: "sha256:" + "0".repeat(64) } }), /sha256 mismatch/);
+});
 
 test("decoder topK counts nonblank plus blank, with stable cutoff ID ties", () => {
   assert.equal(beamSearch([0, -0.1, -0.2, -10], 1, 4, pieces,

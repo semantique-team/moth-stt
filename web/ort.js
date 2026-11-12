@@ -80,6 +80,15 @@ export async function createRunner({ baseUrl = "../release/", threads = null, se
   const maxSeconds = Math.min(30, configuredMaxSeconds);
   const maxSamples = Math.floor(maxSeconds * SAMPLE_RATE);
   const files = config.files ?? {};
+  const requiredFiles = [config.model.file, config.tokenizer.vocab, config.features.mel_filters];
+  if (config.decode?.lm) requiredFiles.push(config.decode.lm);
+  if (config.vad?.file) requiredFiles.push(config.vad.file);
+  for (const file of requiredFiles) {
+    if (typeof file !== "string" || !file || typeof files[file] !== "string" ||
+        !/^(?:sha256:)?[0-9a-f]{64}$/.test(files[file])) {
+      throw new Error(`${file}: missing or malformed sha256 hash`);
+    }
+  }
   const modelBuffer = await fetchChecked(`${root}${config.model.file}`, files[config.model.file]);
   const vocabBuffer = await fetchChecked(
     `${root}${config.tokenizer.vocab}`,
