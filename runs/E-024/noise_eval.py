@@ -79,6 +79,11 @@ def main() -> int:
     parser.add_argument("--skip-clean", action="store_true")
     parser.add_argument("--lm-weight", type=float, default=PARAMS["lm_weight"])
     parser.add_argument("--token-bonus", type=float, default=PARAMS["token_bonus"])
+    parser.add_argument(
+        "--lm",
+        default="runs/E-008/lm_bpe3_aug.pkl.gz",
+        help="pickle trigram LM used by the PyTorch decode (default: shipped augmented LM)",
+    )
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 
@@ -93,7 +98,7 @@ def main() -> int:
     cfg = load_config(REPO / args.config)
     processor = load_tokenizer(REPO / cfg["tokenizer"])
     pieces = {i + 1: processor.id_to_piece(i) for i in range(processor.vocab_size())}
-    lm = BPETrigramLM.load(REPO / "runs/E-008/lm_bpe3_aug.pkl.gz")
+    lm = BPETrigramLM.load(REPO / args.lm)
     model = build_model(REPO / args.checkpoint, int(cfg["model"].get("head_blocks", 0)))
 
     rows = [
@@ -176,6 +181,7 @@ def main() -> int:
     result: dict[str, object] = {
         "checkpoint": args.checkpoint,
         "decode": params,
+        "lm": args.lm,
         "clips": len(s3),
         "noise_curve": curve,
         "mean_noise_wer_10_30": float(

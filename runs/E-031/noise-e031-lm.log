@@ -1,0 +1,10 @@
+{"snr_db": "clean", "wer": 0.2003, "eta": 0.527}
+{"snr_db": 30.0, "wer": 0.2122, "eta": 0.5338}
+{"snr_db": 20.0, "wer": 0.2428, "eta": 0.4662}
+{"snr_db": 15.0, "wer": 0.2767, "eta": 0.4122}
+{"snr_db": 10.0, "wer": 0.3379, "eta": 0.3851}
+{"snr_db": 5.0, "wer": 0.4041, "eta": 0.3243}
+{"clean_set": "t600", "wer": 0.2368119266055046, "eta": 0.5599232981783318, "n": 600}
+{"clean_set": "fleurs_it_test", "wer": 0.20330526972248206, "eta": null, "n": 697}
+{"clean_set": "cv_it_test", "wer": 0.24284707445006168, "eta": null, "n": 14643}
+wrote runs/E-031/noise-e031-lm/result.json
