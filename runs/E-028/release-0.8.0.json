@@ -179,9 +179,11 @@
     "date": "2026-11-12",
     "model": "https://huggingface.co/semantique-team/moth-stt",
     "space": "https://huggingface.co/spaces/semantique-team/moth-demo",
-    "model_revision": "e5339bc01aec284974685269310a6f735d8e9ea8",
+    "model_revision": "c5cca27bca17ce7e1d7a7a95340961fa3b13d6d6",
     "space_revision": "70d930b6167671b6541e2a5c725151165d3a3ff3",
     "remote_config_sha256": "aa5ecaa07e60bdb5a8bddb07677104a2428f2a658f53c7f79663d4a4a3fc40d5",
-    "remote_model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d"
+    "remote_model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+    "model_release_revision": "e5339bc01aec284974685269310a6f735d8e9ea8",
+    "model_card_revision": "c5cca27bca17ce7e1d7a7a95340961fa3b13d6d6"
   }
 }

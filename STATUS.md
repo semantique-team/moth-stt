@@ -1,6 +1,12 @@
 # STATUS — snapshot per riprendere i lavori
 
-> **Handoff di sessione (2026-11-11, HEAD `9bd552c`):** tutto il contesto è compattato in
+> **Handoff corrente (2026-11-12, HEAD `3d399a4`):** leggi
+> [`docs/16-session-handoff-2026-11-12.md`](docs/16-session-handoff-2026-11-12.md). **0.8.0 è
+> pubblicato** su HF e Space con il decoder E-030, pacchetto 19.440.761 byte, eccezione rara
+> documentata (28,4% vs 30%). Prossimi passi: **mixed-dev naturale + voce nuova**, poi eventuale
+> fine-tune raro mirato. Il handoff precedente resta sotto come storia.
+>
+> **Handoff precedente (2026-11-11, HEAD `9bd552c`):** tutto il contesto è compattato in
 > [`docs/15-session-handoff-2026-11-11.md`](docs/15-session-handoff-2026-11-11.md): PR #3, E-026,
 > E-027, dati S2, E-028 fp32/INT8, sweep di quantizzazione, decisioni D36-D37. **0.8.0 è
 > pubblicato dal 2026-11-12** su Hugging Face e Space, con il decoder E-030 e un'eccezione

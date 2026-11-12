@@ -11,7 +11,8 @@ continue without reading the whole conversation.
 > primary rare gate is two occurrences short. **0.8.0 was published on 2026-11-12** with that
 > documented exception; 0.7.0 is the historical control. See
 > [`runs/E-029/RESULT.md`](../runs/E-029/RESULT.md),
-> [`runs/E-030/RESULT.md`](../runs/E-030/RESULT.md) and the live `STATUS.md`.
+> [`runs/E-030/RESULT.md`](../runs/E-030/RESULT.md) and the live `STATUS.md`. The current
+> resume document for the published release is [`docs/16`](16-session-handoff-2026-11-12.md).
 
 ## TL;DR
 

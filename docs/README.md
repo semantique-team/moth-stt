@@ -4,16 +4,18 @@
 
 | Need | Source |
 |---|---|
+| Current 0.8.0 release state and next steps | [16 - Session handoff 2026-11-12](16-session-handoff-2026-11-12.md) |
 | Current checkout/model state and blockers | [STATUS.md](../STATUS.md), current verified section |
 | How to install, record, prepare data, train, evaluate, export or publish | [Repository workflows](guides/repository-workflows.md) |
-| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md), E-000-E-025 and extra audits |
+| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md) (E-000-E-025) and [EXPERIMENTS.md](../EXPERIMENTS.md) (E-028-E-030 and later) |
 | Exact model, release assets, fp32/int8/baseline tables, paper caveats | [13 - Current model and paper readiness](13-current-model-and-paper-readiness.md) |
 | Executed decisions and corrected scientific interpretations | [11 - Evidence and decisions](11-evidence-and-decisions.md) |
 | Architecture audit, observed risks and 20/25 MB budget | [14 - Architecture audit](14-architecture-audit-2026-11-10.md) |
-| Resume after compaction: full session state and next experiment | [15 - Session handoff](15-session-handoff-2026-11-11.md) |
+| Earlier handoff (2026-11-11, pre-0.8.0) | [15 - Session handoff](15-session-handoff-2026-11-11.md) |
 | Audit tooling: safe tempo, InterCTC, finalist eval, diagnostics, contextual bias, LM builder | [Audit improvements guide](guides/audit-improvements-no-training.md) |
 | Portable readiness check for the other PC | [Other-PC preflight](guides/other-pc-preflight.md) |
-| Real Chromium/WASM acceptance | [Browser acceptance report](../runs/browser-acceptance-2026-11-10/RESULT.md) |
+| Real Chromium/WASM acceptance, 0.8.0 | [0.8.0 acceptance](../runs/E-028/browser-acceptance/RESULT.md) |
+| Real Chromium/WASM acceptance, 0.7.0 (historical) | [0.7.0 acceptance](../runs/browser-acceptance-2026-11-10/RESULT.md) |
 | Independent mixed-dev and future quality experiment safeguards | [Mixed-dev protocol](guides/mixed-dev-and-quality-experiments.md) |
 
 The audit baseline is `main` **`cd1ce1b`**. Published weights are **0.8.0 / E-028 + the E-030 decoder** (released 2026-11-12); **0.7.0 / E-024** remains the historical control. Main also contains newer runtime infrastructure. Original experiment
@@ -81,6 +83,7 @@ Read the current guides above first. The following table indexes both historical
 | [`13-current-model-and-paper-readiness.md`](13-current-model-and-paper-readiness.md) | Current architecture, exact parameter/asset counts, lineage, benchmark precision/splits, reproducibility limits and paper deliverables. |
 | [`14-architecture-audit-2026-11-10.md`](14-architecture-audit-2026-11-10.md) | Detailed architecture audit: observed risks, parameter/asset budgets, prior experiments, and conditional improvement paths within 20-25 MB. Read-only findings, not new measured gains. |
 | [`15-session-handoff-2026-11-11.md`](15-session-handoff-2026-11-11.md) | Session handoff: PR #3, S2 data, E-026/E-027, E-028 fp32/INT8 results, quantization sweep, decisions D36-D37 and the E-029 QAT plan; same-day update records the negative QAT outcome. |
+| [`16-session-handoff-2026-11-12.md`](16-session-handoff-2026-11-12.md) | Current handoff: 0.8.0 publication (E-028 + E-030 decoder), rare-gate exception, browser acceptance, noise check, remote revisions, known gaps and next steps. |
 | [`guides/audit-improvements-no-training.md`](guides/audit-improvements-no-training.md) | Local implementation follow-up: safe tempo, optional training-only InterCTC, guarded finalist selection, CTC diagnostics, contextual bias and frozen-corpus LM tooling. No new trained model. |
 | [`guides/other-pc-preflight.md`](guides/other-pc-preflight.md) | Portable no-training readiness report: required dependencies, missing assets, hashes, disk and recording-provenance checklist. |
 | [`../runs/browser-acceptance-2026-11-10/RESULT.md`](../runs/browser-acceptance-2026-11-10/RESULT.md) | Real Chromium/WASM acceptance in isolated 1/4-thread and nonisolated modes, with contextual scorer instrumentation and explicit measurement limits. |
