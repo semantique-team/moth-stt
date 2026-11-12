@@ -4,7 +4,7 @@
 
 | Need | Source |
 |---|---|
-| Current state: 0.8.0 published, 0.8.1 candidate, E-031/E-032 | [17 - Session handoff 2026-11-12 (E-031)](17-session-handoff-2026-11-12-e031.md) |
+| Current state: 0.8.1 published, E-031/E-032 | [17 - Session handoff 2026-11-12 (E-031)](17-session-handoff-2026-11-12-e031.md) |
 | 0.8.0 release state and its session | [16 - Session handoff 2026-11-12](16-session-handoff-2026-11-12.md) |
 | Current checkout/model state and blockers | [STATUS.md](../STATUS.md), current verified section |
 | How to install, record, prepare data, train, evaluate, export or publish | [Repository workflows](guides/repository-workflows.md) |
@@ -15,15 +15,16 @@
 | Earlier handoff (2026-11-11, pre-0.8.0) | [15 - Session handoff](15-session-handoff-2026-11-11.md) |
 | Audit tooling: safe tempo, InterCTC, finalist eval, diagnostics, contextual bias, LM builder | [Audit improvements guide](guides/audit-improvements-no-training.md) |
 | Portable readiness check for the other PC | [Other-PC preflight](guides/other-pc-preflight.md) |
-| 0.8.1 candidate model card and release record | [E-031 card](../runs/E-031/MODEL_CARD.md), [record](../runs/E-031/release-0.8.1.json) |
-| Real Chromium/WASM acceptance, 0.8.1 candidate | [0.8.1 acceptance](../runs/E-031/browser-acceptance/RESULT.md), [parity](../runs/E-031/browser-parity/RESULT.md) |
+| 0.8.1 published model card and release record | [E-031 card](../runs/E-031/MODEL_CARD.md), [record](../runs/E-031/release-0.8.1.json) |
+| Real Chromium/WASM acceptance, 0.8.1 | [0.8.1 acceptance](../runs/E-031/browser-acceptance/RESULT.md), [parity](../runs/E-031/browser-parity/RESULT.md) |
+| Noise curve with the 0.8.1 LM | [E-031 noise](../runs/E-031/noise-e031-lm/RESULT.md) |
 | Real Chromium/WASM acceptance, 0.8.0 | [0.8.0 acceptance](../runs/E-028/browser-acceptance/RESULT.md) |
 | Real Chromium/WASM acceptance, 0.7.0 (historical) | [0.7.0 acceptance](../runs/browser-acceptance-2026-11-10/RESULT.md) |
 | Independent mixed-dev and future quality experiment safeguards | [Mixed-dev protocol](guides/mixed-dev-and-quality-experiments.md) |
 
-The audit baseline is `main` **`cd1ce1b`**. Published weights are **0.8.0 / E-028 + the E-030
-decoder** (released 2026-11-12); **0.8.1** is a staged decode-only candidate (same int8 graph, new
-LM, 19,706,289 B) and is **not published**. **0.7.0 / E-024** remains the historical control. Main
+The audit baseline is `main` **`cd1ce1b`**. Published weights are **0.8.1 / E-028 + LM E-031 +
+decoder E-030** (released 2026-11-12, decode-only update; 19,706,289 B). **0.8.0** remains the
+historical comparison; **0.7.0 / E-024** the earlier control. Main
 also contains newer runtime infrastructure. Original experiment
 JSON and cards are retained as evidence, including conflicts explicitly flagged in docs 12-14.
 These documents do not certify live hosting, recover missing weights/audio, or replace new

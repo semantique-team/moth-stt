@@ -1790,14 +1790,14 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   **24.96 / 51.27** (Δ ties), FLEURS-IT **20.16** (tie), FLEURS-EN 49.81 (tie), natural
   **432/817** (gate ≥431), gold 127/179, never-seen presence **24/47**. **Rare aligned ETA
   **28.4% (23/81) → 46.9% (38/81), +18.5 [+9.6, +31.0]**: the primary ≥30% gate passes.
-- **Verdict**: **adopted** by the pre-registered rule — all nine gates pass and both rare ETA and
-  T-600 WER improve with a CI excluding zero. Decode-only release candidate: same acoustic
+- **Verdict**: **adopted and published as 0.8.1 on 2026-11-12** — all nine gates pass and both
+  rare ETA and T-600 WER improve with a CI excluding zero. Decode-only release: same acoustic
   weights, one new `lm_bpe3.bin` (5,381,992 B). Browser acceptance is **4/4** and JS↔Python
   decoder parity is exact on identical logits; the 3 s fixture differs by two words with both the
-  0.8.0 and 0.8.1 LM (browser acoustic path). Card `runs/E-031/MODEL_CARD.md` and record
-  `runs/E-031/release-0.8.1.json` are prepared (`published: false`). Publication and the
-  independent-data readout remain. The noise check is relative (559 vs 567 emitted words on the
-  E-011 set without VAD), not the VAD-gated product metric.
+  0.8.0 and 0.8.1 LM (browser acoustic path). The full E-024 noise curve with the new LM is
+  **all ties** (mean 5–30 dB 29.47 vs 30.05). Card `runs/E-031/MODEL_CARD.md`, record
+  `runs/E-031/release-0.8.1.json` (`published: true`), HF rev `1257327e…`, Space `9dfe70df…`
+  `RUNNING`. Independent natural mixed-dev and a new-voice rare readout remain missing.
   [Result](runs/E-031/RESULT.md).
 - **Cost**: no training, no downloads, 0 USD; build seconds, dev ~16 min, gate readout ~5 min.
 
