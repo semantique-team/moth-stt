@@ -2,8 +2,9 @@
 
 > **Current update (2026-11-12):** published model **0.8.1 / E-028 + E-031 LM**. Current
 > download, reproduction and publishing commands supersede the old 0.7.0 defaults.
-> [Audit 18](../18-audit-fixes-2026-11-12.md) describes other agents' no-weight worktree fixes;
-> verification is pending. Historical test totals below remain 2026-11-10 snapshots.
+> [Audit 18](../18-audit-fixes-2026-11-12.md) describes the no-weight worktree fixes and their
+> verification (Windows pytest 1015 passed / 3 skipped, Ruff clean, Node 26/26, GitHub CI green).
+> Historical test totals below remain 2026-11-10 snapshots.
 > The Windows `resource` import blocker was already fixed before this branch; CPU pytest can
 > collect on Windows, but production Windows training is not certified. No full LM build,
 > staging, quality gate rerun or model release was performed by this documentation task.
@@ -274,7 +275,9 @@ silence/clipping health checks suggested by its upstream manifest builder's docs
 Run explicit audio health checks before accepting a new corpus. The no-weight audit fix makes
 `--delete-audio` fail on build errors or incomplete coverage, verifies every current deletion
 candidate against its cached mel, and bounds paths to the audio root. Verification failure
-keeps raw audio; limited builds retain excluded rows. Integration verification is pending.
+keeps raw audio; limited builds retain excluded rows. Covered by unit tests
+(`tests/test_build_mel.py`); no destructive end-to-end deletion was run on the real corpus
+during the audit.
 Retain evaluation PCM for VAD, browser parity and later audits even when training mel exists;
 deletion remains an explicit destructive opt-in.
 
@@ -479,7 +482,9 @@ rejection (T/A, FLEURS, S3), plus ID, splice/source-ID and comparable audio-path
 against configured dev inputs. Identical normalized text with distinct audio is allowed;
 there is no exact normalized-text train/dev guard here. Tokenizer and splicing also gain
 training-only input validation. These are bounded checks, not full audio-hash, text-duplicate
-or upstream leakage audits; verification is pending. Tokenizer vocabulary and head size must agree.
+or upstream leakage audits. Unit-tested, and checked during the audit against the shipped
+E-028 train mixture, but not certified by a new training run. Tokenizer vocabulary and head
+size must agree.
 
 `model.init` loads a converted encoder; `model.init_checkpoint` loads a full Moth
 checkpoint, after `init` if both are set. For encoder-only initialization use:

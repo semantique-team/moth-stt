@@ -9,8 +9,9 @@
 > T-S3 is **26.75 / 46.76 with the 0.8.0 LM**, **26.41 / 47.61 with E-031**, not the mixed
 > 26.75 / 47.61 pair copied into summaries. The original gate table contains **six FAIL rows**,
 > not five. "Rare aligned ETA" includes all **81 annotated span tokens** in 47 rare-bearing
-> utterances (47 target + 34 co-occurring tokens); target-only ETA is a separate pending
-> diagnostic, not a replacement gate. E-031 is now the published 0.8.1, not just a candidate.
+> utterances (47 target + 34 co-occurring tokens); target-only ETA is a separate diagnostic —
+> computed for 0.8.1 in `runs/E-031/audit-readout.json` (24/47 vs 11/47), not for E-032 — and
+> not a replacement gate. E-031 is now the published 0.8.1, not just a candidate.
 
 ## Training
 

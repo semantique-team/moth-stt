@@ -6,7 +6,7 @@
 blocker. Read this first, then `STATUS.md`, then the experiment reports.
 
 > **Audit corrections (2026-11-12):** historical execution/publication figures are retained;
-> no new training or gate run claimed. See [audit scope and pending verification](18-audit-fixes-2026-11-12.md).
+> no new training or gate run claimed. See [audit scope and verification](18-audit-fixes-2026-11-12.md).
 > "Rare aligned ETA" covers all 81 span tokens in 47 rare-bearing utterances
 > (47 target + 34 co-occurring tokens), not target-only ETA; presence 24/47 is separate.
 > E-031 PLAN used 28.4% (0.284), later reports the historical E-028/E-030 30% target;
