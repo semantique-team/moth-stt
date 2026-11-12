@@ -1,0 +1,54 @@
+{
+  "tag": "e031-0.8.1",
+  "release": "runs/E-031/release",
+  "audio": {
+    "path": "web/tests/fixtures/speech.wav",
+    "seconds": 3.0,
+    "sha256": "631f1356f23e176e0f7d902f779f780cf5344d8097644816895a87a2d3205cdb"
+  },
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "browser_text": "le diffuseo proteste iniziate a ottobrek con testa",
+  "python_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "exact_normalized_match": false,
+  "wer_browser_as_reference": 0.25,
+  "projects": {
+    "isolated-1": {
+      "passed": true,
+      "release_version": "0.8.1",
+      "threads": 1,
+      "text": "le diffuseo proteste iniziate a ottobrek con testa",
+      "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+      "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    },
+    "isolated-4": {
+      "passed": true,
+      "release_version": "0.8.1",
+      "threads": 4,
+      "text": "le diffuseo proteste iniziate a ottobrek con testa",
+      "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+      "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    },
+    "isolated-auto": {
+      "passed": true,
+      "release_version": "0.8.1",
+      "threads": 4,
+      "text": "le diffuseo proteste iniziate a ottobrek con testa",
+      "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+      "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    },
+    "nonisolated-auto": {
+      "passed": true,
+      "release_version": "0.8.1",
+      "threads": 1,
+      "text": "le diffuseo proteste iniziate a ottobrek con testa",
+      "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+      "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    }
+  },
+  "note": "One public 3 s fixture; runtime parity, not a WER or natural-speech benchmark."
+}

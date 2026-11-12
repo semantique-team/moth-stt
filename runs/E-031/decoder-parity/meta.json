@@ -1,0 +1,11 @@
+{
+  "frames": 150,
+  "vocab": 1025,
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "audio_sha256": "631f1356f23e176e0f7d902f779f780cf5344d8097644816895a87a2d3205cdb"
+}

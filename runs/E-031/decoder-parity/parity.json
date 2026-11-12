@@ -1,0 +1,12 @@
+{
+  "python_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "js_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "exact_match": true,
+  "frames": 150,
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "release": "0.8.1",
+  "date": "2026-11-12",
+  "status": "release candidate prepared 2026-11-12; not uploaded",
+  "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt (step 13283, unchanged from 0.8.0)",
+  "lm": "runs/E-031/build/frozen_1_2_terms.bin (frozen corpus, bigrams >= 1, trigrams >= 2, term sentences x3)",
+  "reason": "Decode-side only. The 2026-10-30 LM predates the E-015/E-028 term sentences; rebuilding it from a frozen training-side corpus with all bigrams and term-sentence weighting raises rare aligned ETA 28.4% -> 46.9% and improves T-600 24.71/54.17 -> 24.08/55.23, inside the 20 MB ceiling. No acoustic weights or decoder settings changed.",
+  "build": "bash runs/E-031/freeze.sh && uv run python runs/E-031/build_lm.py && uv run python runs/E-031/stage_release.py",
+  "decode": {
+    "default": "beam",
+    "beam": 12,
+    "top_k": 10,
+    "lm": "lm_bpe3.bin",
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "package_bytes": 19701706,
+  "total_bytes": 19706289,
+  "package_mb": 19.71,
+  "budget_bytes": 20000000,
+  "remaining_bytes": 293711,
+  "files": {
+    "model.int8.onnx": {
+      "bytes": 11910677,
+      "sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d"
+    },
+    "vocab.json": {
+      "bytes": 17193,
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    },
+    "mel_filters.bin": {
+      "bytes": 64320,
+      "sha256": "4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e"
+    },
+    "silero_vad.onnx": {
+      "bytes": 2327524,
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    "lm_bpe3.bin": {
+      "bytes": 5381992,
+      "sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    },
+    "config.json": {
+      "bytes": 1323,
+      "sha256": "0a5ca2243801ba7b50f53dde8165a3b899862de12fa3d2622a0872c83856b56d"
+    },
+    "NOTICE": {
+      "bytes": 3260,
+      "sha256": "6ca7672f006155be816fa3b28072add859ca020c22a2c4e47eaaf4433c341d32"
+    }
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.1
+  },
+  "verification": {
+    "fp32": "unchanged 0.8.0 graph: median 1.822e-4, worst 1.013e-3, 1/80 draws over 1e-3",
+    "int8": "unchanged 0.8.0 graph: max |delta| 2.01, top-1 agreement 1.0"
+  },
+  "wer": {
+    "int8": {
+      "t600": {"wer": 0.2408, "eta": 0.5523},
+      "t-s3": {"wer": 0.2496, "eta": 0.5127},
+      "t-s1": {"wer": 0.2098, "eta": 0.6328},
+      "t-s2": {"wer": 0.2632, "eta": 0.5156},
+      "fleurs_it_test": {"wer": 0.2016},
+      "fleurs_en_test": {"wer": 0.4981},
+      "t600_aligned_eta": {"hits": 576, "occurrences": 1043}
+    },
+    "vs_0.8.0": {
+      "t600_wer": {"diff": -0.0063, "ci": [-0.01111, -0.00199]},
+      "t600_eta": {"diff": 0.01055, "ci": [0.00091, 0.02035]},
+      "t_s3_wer": {"diff": -0.00256, "ci": [-0.01018, 0.00510], "tie": true},
+      "t_s3_eta": {"diff": 0.01127, "ci": [-0.00826, 0.03226], "tie": true},
+      "fleurs_it": {"diff": -0.00087, "ci": [-0.00207, 0.00037], "tie": true},
+      "fleurs_en": {"diff": 0.0, "ci": [-0.00191, 0.00204], "tie": true}
+    },
+    "rare": {
+      "presence_base": 11,
+      "presence_new": 24,
+      "n_utterances": 47,
+      "aligned_eta_base": 0.28395,
+      "aligned_eta_new": 0.46914,
+      "aligned_hits": 38,
+      "aligned_occurrences": 81,
+      "eta_diff": 0.18519,
+      "eta_ci": [0.09615, 0.30986],
+      "rare_wer_new": 0.2819
+    },
+    "natural": 432,
+    "natural_occurrences": 817,
+    "gold_only": 127,
+    "gold_occurrences": 179,
+    "gold_terms_16": "19/27"
+  },
+  "gates": {
+    "rare_aligned_eta": {"required": 0.30, "result": 0.46914, "pass": true},
+    "t600_wer": {"required_max": 0.2521, "result": 0.2408, "pass": true},
+    "t600_eta": {"required_min": 0.5367, "result": 0.5523, "pass": true},
+    "t_s3_wer": {"required_max": 0.2571, "result": 0.2496, "pass": true},
+    "t_s3_eta": {"required_min": 0.4964, "result": 0.5127, "pass": true},
+    "natural": {"required_min": 431, "result": 432, "pass": true},
+    "fleurs_it": {"required_max": 0.2075, "result": 0.2016, "pass": true},
+    "fleurs_en": {"required_max": 0.5031, "result": 0.4981, "pass": true},
+    "package": {"required_max": 20000000, "result": 19706289, "pass": true}
+  },
+  "browser": {
+    "acceptance": "runs/E-031/browser-acceptance (4/4 Chromium projects)",
+    "release_version": "0.8.1",
+    "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+    "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
+    "rtfx_median": {
+      "isolated-4": 46.23,
+      "isolated-1": 25.10,
+      "isolated-auto": 46.69,
+      "nonisolated-auto": 24.83
+    },
+    "parity": "browser and Python differ by 2/8 words on the single 3 s fixture with both 0.8.0 and 0.8.1; JS and Python decoders are exact on identical logits (runs/E-031/browser-parity/RESULT.md)",
+    "notes": "Runtime acceptance and parity, not a WER benchmark."
+  },
+  "experiment": "E-031",
+  "rejected_in_same_session": "E-032 acoustic addendum (rare 32.1% vs 0.8.0, but T-S3/FLEURS/natural regress; not part of this package)",
+  "published": false,
+  "published_note": "No HF or Space upload was performed. Publishing requires a separate explicit decision; independent natural mixed-dev is still missing."
+}

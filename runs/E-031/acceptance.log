@@ -1,0 +1,23 @@
+
+> test:acceptance
+> playwright test --config playwright.acceptance.config.ts
+
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:29] "GET /web/ort.js HTTP/1.1" 200 -
+
+Running 4 tests using 1 worker
+
+  ✓  1 [isolated-auto] › acceptance/real-wasm.spec.ts:15:1 › original release executes real WASM with guards, recovery and contextual timing (2.0s)
+  ✓  2 [isolated-1] › acceptance/real-wasm.spec.ts:15:1 › original release executes real WASM with guards, recovery and contextual timing (3.0s)
+  ✓  3 [isolated-4] › acceptance/real-wasm.spec.ts:15:1 › original release executes real WASM with guards, recovery and contextual timing (1.9s)
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/ort.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/node_modules/onnxruntime-web/dist/ort.wasm.min.mjs HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/lm.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/mel.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/decode.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/vad.js HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.mjs HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.wasm HTTP/1.1" 200 -
+[WebServer] 127.0.0.1 - - [12/Nov/2026 11:36:37] "GET /web/tests/fixtures/speech.wav HTTP/1.1" 200 -
+  ✓  4 [nonisolated-auto] › acceptance/real-wasm.spec.ts:15:1 › original release executes real WASM with guards, recovery and contextual timing (3.0s)
+
+  4 passed (11.5s)
