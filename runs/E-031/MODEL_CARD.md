@@ -46,18 +46,20 @@ model-index:
 > model; only the trigram LM and the version string changed.
 
 A very small open **Italian + English code-switching** speech-to-text model: a Whisper-tiny
-encoder initialised from `openai/whisper-tiny` (MIT), fine-tuned behind a **linear CTC head** over
+encoder initialised from `openai/whisper-tiny` (MIT), **two additional transformer blocks** and a linear CTC head over
 a shared IT+EN SentencePiece BPE, 11.6 M parameters, shipped as an **11.9 MB int8 ONNX** graph with
 a **5.4 MB trigram LM** and a 2.3 MB Silero VAD in the loop.
 
 It runs **record-then-transcribe** in the browser on ONNX Runtime Web (WASM) and on CPU. This is
-not a streaming model and not a general-purpose multilingual model: it recognises *natural Italian
-speech with English terms embedded in it* — the way Italians talk about work, tech and media.
+not a streaming model and not a general-purpose multilingual model. Its intended use is Italian
+speech with embedded English terms; the retained mixed quality evidence is scripted T, not an
+independent natural conversational benchmark.
 
 > **What changed in 0.8.1.** A decode-side change only: the trigram LM was rebuilt from a frozen
 > training-side corpus with **all bigrams** (trigrams still count ≥2) and the term-containing
 > sentences repeated ×3. The acoustic weights, the decoder settings and the runtime are unchanged.
-> The pre-registered rare-term gate now **passes**: rare aligned ETA **28.4% → 46.9%** (23/81 →
+> The original E-031 28.4% gate and historical 30% target both **pass**: aligned ETA on the
+> rare-bearing utterance subset **28.4% → 46.9%** (23/81 →
 > 38/81, **+18.5 [95% CI +9.6, +31.0]**), T-600 improves **24.71 → 24.08 WER** and **54.17 →
 > 55.23 ETA** (both CIs exclude zero), T-S3 is a tie at **24.96 / 51.27**, FLEURS is a tie, and
 > natural-term presence is **432/817** (gate ≥431). Package **19,706,289 bytes**.
@@ -71,7 +73,7 @@ per-token bonus 2.7.
 | Set | n | Moth 0.8.1 WER | ETA |
 |---|---|---|---|
 | **Mixed test T, all speakers** | 600 | **24.08** | **55.23** |
-| **T, speaker S3 — never seen in training** | 200 | **24.96** | **51.27** |
+| **T, speaker S3 — no acoustic training audio; repeatedly evaluated** | 200 | **24.96** | **51.27** |
 | T, speaker S1 (training speaker) | 200 | 20.98 | 63.28 |
 | T, speaker S2 (training speaker) | 200 | 26.32 | 51.56 |
 | FLEURS-IT test | 697 | 20.16 | — |
@@ -94,24 +96,36 @@ Against the published 0.8.0 int8 model, with the same decoder:
 
 | Readout | 0.7.0 int8 | 0.8.0 int8 | **0.8.1 int8** |
 |---|---:|---:|---:|
-| Rare aligned ETA (81 occurrences) | 22.2% | 28.4% | **46.9%** |
+| Aligned ETA, all 81 span tokens in 47 rare-bearing utterances | 22.2% | 28.4% | **46.9%** |
 | Rare presence (47 utterances) | 8/47 | 11/47 | **24/47** |
 | Rare WER | 40.2% | 35.9% | **28.2%** |
 | Natural-term presence | 441/817 | 436/817 | **432/817** |
 | 16-term gold regression | 22/27 | 19/27 | 19/27 |
-| T-600 aligned ETA | 565/1043 | 565/1043 | **576/1043** |
+| T-600 aligned ETA | 570/1043 | 565/1043 | **576/1043** |
 
-The pre-registered primary gate was rare aligned ETA ≥30%; 0.8.1 reaches **46.9%** with 13
-occurrences to spare. The gain comes from the LM prior, not from new acoustic weights: the frozen
+**Audit correction (2026-11-12):** the 0.7.0 INT8 count is **570/1043**, not the previously
+copied 565. The 81-token subset includes **47 target tokens and 34 co-occurring annotated tokens**;
+it is not target-only rare accuracy. Presence 24/47 is measured separately. The original E-031
+PLAN threshold was **28.4% (0.284)**, while the later report/record used the historical
+E-028/E-030 **30%** target. **46.9% passes both**, without retroactively changing the PLAN.
+
+The separate retained-hypothesis audit readout measures target-only aligned ETA
+**24/47 (51.1%) vs 11/47 (23.4%)**, delta **+27.66 pp [14.89, 40.43]**. This is a post-hoc
+recomputation on the same reused T subset, not a new decode, new gate or independent test.
+
+The measured gain is decode-side, not from new acoustic weights: the frozen
 corpus contains the 50+50 training-side term sentences the 2026-10-30 LM never saw, and repeats
 the 143 term-containing sentences ×3. This is build-time data weighting, not decode-time contextual
-bias (E-027, rejected).
+bias (E-027, rejected). The shipped comparison combines corpus refresh, pruning and weighting;
+it does not isolate their causal effects. Repetition adds **579 retained trigrams** across the
+count threshold (A2 801,858 → A3 802,437), although it adds no raw n-gram types.
 
 ## Int8 cost
 
 The acoustic graph `model.int8.onnx` is **byte-identical** to 0.8.0 (sha256 `7bbfad7e…`). The int8
-cost measured for 0.8.0 therefore applies unchanged: T-600 and T-S3 are ties against PyTorch fp32,
-and no quantization-aware training was used. The change is the 5.4 MB browser LM binary
+graph identity does **not** establish an unchanged WER/ETA quantization cost: that requires a
+matched fp32/INT8 comparison with the **same E-031 LM**, audio and decoder. No such new comparison
+is claimed here, and no quantization-aware training was used. The change is the 5.4 MB browser LM binary
 (`3be1177b…`), which is a deterministic export of the frozen-corpus trigram table.
 
 ## Noise
@@ -119,13 +133,17 @@ and no quantization-aware training was used. The change is the 5.4 MB browser LM
 The acoustic checkpoint is unchanged. Re-measured with the **same fp32 checkpoint, decoder,
 100 S3 clips, pool and seed** as the 0.8.0 control, changing only the LM: clean 20.03 vs 20.37,
 30 dB 21.22 vs 21.90, 20 dB 24.28 vs 25.47, 15 dB 27.67 vs 27.33, 10 dB 33.79 vs 34.63, 5 dB
-40.41 vs 40.92. **Every condition is a statistical tie**; mean 5–30 dB **29.47 vs 30.05**. No
-regression. This is a same-pool upper bound, one speaker, not the E-025 unseen-room curve. The
+40.41 vs 40.92. **Every condition is a statistical tie**; descriptive mean 5–30 dB **29.47 vs
+30.05**, with no CI for that mean. No significant condition-level regression was detected;
+ties do not prove equivalence or non-inferiority. This is shared-pool evidence from one speaker,
+not a rigorous upper bound or the E-025 unseen-room curve. The
 int8/browser path was not re-measured here; the graph is unchanged and acceptance is 4/4.
 
 ## How to use
 
-The package is the whole runtime — no PyTorch, no Python:
+The **19,706,289-byte** package contains the seven required model assets below. It excludes
+ORT JS/WASM, page assets and Python dependencies; it is not the whole runtime footprint.
+Browser use needs no PyTorch or Python:
 
 ```text
 model.int8.onnx     11.9 MB   encoder + head + log-softmax, batch 1, dynamic time

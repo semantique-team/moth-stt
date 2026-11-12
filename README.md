@@ -4,7 +4,7 @@
 
 **Moth** — a very small, open **Italian + English code-switching speech-to-text** model: a
 Whisper-tiny encoder (pretrained, MIT), **two additional transformer blocks** and a linear CTC head over a shared
-IT+EN SentencePiece BPE. **11.6 M parameters, 19.4 MB shipped**, running in a browser tab
+IT+EN SentencePiece BPE. **11.6 M parameters, 19.7 MB required model assets (0.8.1)**, running in a browser tab
 (ONNX Runtime Web / WASM) and on any CPU.
 
 <br clear="left" />
@@ -27,19 +27,19 @@ acronyms, Italianised verbs (*deployato*, *pushare*, *loggare*).
 
 | Set | n | WER | ETA |
 |---|---|---|---|
-| Mixed test T, all speakers | 600 | **25.20** | **54.17** |
-| T, S3 — **no acoustic training audio; repeatedly evaluated** | 200 | **26.92** | **48.45** |
-| FLEURS-IT test | 697 | **20.14** | — |
-| FLEURS-EN test | 525 | **49.14** | — |
-| Common Voice IT test | 14 643 | **24.37** | — |
+| Mixed test T, all speakers | 600 | **24.08** | **55.23** |
+| T, S3 — **no acoustic training audio; repeatedly evaluated** | 200 | **24.96** | **51.27** |
+| FLEURS-IT test | 697 | **20.16** | — |
+| FLEURS-EN test | 525 | **49.81** | — |
 
-These are **PyTorch fp32 reference** results with beam 12/top-k 10/LM weight 0.5/token
-bonus 2.4, not measurements of the shipped browser path. FLEURS uses filtered test subsets.
-The int8 ONNX reference scores **25.14 WER / 54.65 ETA** on T-600 and **27.00 / 48.45** on S3.
+These are **0.8.1 INT8 ONNX reference** results with beam 12/top-k 10/LM weight 0.55/token
+bonus 2.7 and the E-031 LM, not browser acoustic WER measurements. FLEURS uses filtered test
+subsets. No current Common Voice test result is retained; the historical 0.7.0 fp32 result
+was 24.37 WER on 14,643 clips.
 S1/S2 supply 400/600 test clips and training audio; S3 shares S1's microphone. T is scripted read
 speech and has repeatedly informed development, not an untouched natural code-switching test.
 
-Against Whisper-tiny on the same 600 clips (forced `it`, beam 5): WER **−25.52** and ETA **+18.12**,
+**Historical 0.7.0 fp32 comparisons:** against Whisper-tiny on the same 600 clips (forced `it`, beam 5): WER **−25.52** and ETA **+18.12**,
 both nominal paired comparisons won on that reused aggregate. On FLEURS-IT it beats Whisper-tiny's best H0 variant by **7.28 points**. It also beats
 Whistle on the mixed set's WER (−4.22), though Whistle stays ahead on monolingual Italian read
 speech.
@@ -51,7 +51,7 @@ room is harsher; absolute WER there is 36.5 at 15 dB. Before 0.7.0, at 15 dB it 
 Whisper-tiny does on clean audio in an earlier diagnostic probe; the paired E-024 control is
 **33.62% at 15 dB**, not 38.4%. Do not combine those two protocols.
 
-**Speed:** 45× real time on 4 threads, 24× on 1 thread, with the VAD in the loop (Apple M5, WASM
+**Historical speed (0.7.0):** 45× real time on 4 threads, 24× on 1 thread, with the VAD in the loop (Apple M5, WASM
 SIMD; 5 s clips).
 
 ## What it does not do
@@ -62,7 +62,7 @@ was evaluated on a controlled noise pool and one unseen room, not every real env
 English terms remain the weak spot
 (~27% WER on a sentence containing one, ~14% without).
 
-The full list, with numbers, is in the [model card](runs/E-024/MODEL_CARD.md#limitations-stated-plainly).
+The current limitations are in the [0.8.1 model card](runs/E-031/MODEL_CARD.md#limitations-stated-plainly).
 
 ## Using it
 
@@ -88,7 +88,8 @@ uv run --locked --no-dev python -m stt.release release
 uv run --locked --no-dev python -m stt.release release --budget-bytes 25000000
 ```
 
-The 19.44 MB figure counts the seven required model assets, including config and NOTICE.
+The **19,706,289-byte (19.7 decimal MB)** figure counts the seven required 0.8.1 model assets,
+including config and NOTICE. It is not the whole runtime or download footprint.
 It excludes ORT Web/WASM, page assets and Python dependencies. Use `--browser-root PATH`
 with `stt.release` to report the complete browser directory separately (raw bytes, not
 compressed cold HTTP transfer). `ReleaseMoth(..., budget_bytes=25000000)` explicitly enables
@@ -116,20 +117,24 @@ uv run --locked --all-extras pytest -q
 uv run --locked --all-extras ruff check .
 node --experimental-vm-modules --test web/tests/unit-runtime.test.mjs
 
-# Historical E-022 evaluation; requires its fixed tokenizer/LM/data paths.
-# --int8 reads release/model.int8.onnx, NOT the checkpoint passed below.
-uv run python runs/E-022/eval.py --arm frozen --int8     --checkpoint runs/E-024/checkpoints/ckpt_best.pt
-
-# rebuild the release (verifies the export gates) and the browser package
-uv run --locked --all-extras python -m stt.export --checkpoint runs/E-024/checkpoints/ckpt_best.pt --head-blocks 2 \
-    --tokenizer data/tokenizer/moth_bpe.model --version 0.7.0
-uv run python runs/E-010/package_browser.py --beam 12 --top-k 10 --lm-weight 0.5 --token-bonus 2.4
+# Requires full git history; see workflow guide for shallow-clone recovery.
+# Current 0.8.1 LM reproduction from pinned pre-E-032 git inputs:
+uv run --locked --all-extras python runs/E-031/reproduce_corpus.py
+# Bash equivalent: bash runs/E-031/freeze.sh
+# Requires the original tokenizer. Build in a disposable checkout: writes build.json.
+uv run --locked --all-extras python runs/E-031/build_lm.py
+# Requires verified E-028/0.8.0 source assets in release/, not a generic 0.7 export.
+uv run --locked --all-extras python runs/E-031/stage_release.py
+uv run --locked --no-dev python -m stt.release runs/E-031/release
 ```
 
-For a new experiment or a generic checkpoint evaluation, use the
-[workflow guide](docs/guides/repository-workflows.md#new-experiments), not the historical command
-as a complete ship-gate evaluation. Native Windows training currently has a Unix `resource`
-import limitation; runtime use is separate.
+For the immutable HF download pin, required hashes and staging prerequisites, use the
+[workflow guide](docs/guides/repository-workflows.md#current-081-reproduction). These commands
+do not rerun quality gates or train new weights. For new experiments use its
+[experiment workflow](docs/guides/repository-workflows.md#new-experiments). The historical Windows
+`resource` import blocker was already fixed before this branch: CPU pytest can collect on
+Windows, but CPU unit tests do not certify production Windows training. This documentation
+task ran no full LM build, staging, quality gate or model release.
 
 Checkpoints, raw audio, mel shards and the built `release/` are **not** in git — the mel cache
 alone is 44 GB. Every number in the table above traces to a committed `runs/E-0NN/` artifact.

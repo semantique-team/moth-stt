@@ -1,13 +1,25 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Audit no-weight PR (2026-11-12):** correzioni documentali e tooling di sicurezza/riproduzione
+> sul branch `fix/audit-release-integrity`; **pytest 1013 passed / 3 skipped**, Ruff pulito,
+> Node **26/26**. Corpus storico riprodotto con hash esatto; macro CI e target-only readout
+> ricalcolati da artefatti conservati, non da nuova inferenza o test indipendente.
+> Nessun training, nuovo modello o gate rieseguito dichiarato da questo audit. Scope e limiti:
+> [`docs/18-audit-fixes-2026-11-12.md`](docs/18-audit-fixes-2026-11-12.md).
+> Il blocco import Windows `resource` era gia' risolto prima di questo branch: CPU pytest puo'
+> fare collection, non certifica training Windows di produzione. I risultati del 2026-11-10
+> sotto restano snapshot storici. Nessun full LM build/staging o nuova release da questo task.
+>
 > **Handoff corrente (2026-11-12, 0.8.1):** leggi
 > [`docs/17-session-handoff-2026-11-12-e031.md`](docs/17-session-handoff-2026-11-12-e031.md).
 > **0.8.1 è pubblicato** su HF e Space (2026-11-12): stesso grafo int8 0.8.0 + LM E-031
 > (`(1,2)` + frasi termine ×3), pacchetto **19.706.289 byte**, T-600 **24,08 / 55,23**,
-> T-S3 **24,96 / 51,27**, rari **46,9% (38/81)** — il gate raro non è più un'eccezione.
+> T-S3 **24,96 / 51,27**, ETA su tutti gli 81 token span delle 47 frasi rare **46,9% (38/81)**;
+> presence separata **24/47**. Supera sia PLAN E-031 28,4% sia soglia storica E-028/E-030 30%.
 > **E-032 (addendum acustico S1) è negativo** ed è respinto: rari 32,1% (LM 0.8.0) / 51,9%
-> (LM E-031) ma T-S3, FLEURS e naturali peggiori. Browser acceptance **4/4**, parità decoder
-> esatta, curva rumore con il nuovo LM **tutte tie**. Resta il **mixed-dev indipendente**,
+> (LM E-031) ma T-S3, FLEURS e naturali peggiori (sei FAIL nella tabella originale).
+> Browser acceptance **4/4**, parità decoder esatta, curva rumore con il nuovo LM **tutte tie**
+> (non equivalenza). Resta il **mixed-dev indipendente**,
 > bloccato finché non c'è uno speaker nuovo.
 >
 > **Handoff precedente (2026-11-12, HEAD `3d399a4`):** leggi
@@ -94,14 +106,14 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Release 0.8.0 (storica) | **E-028 + decoder E-030**, 0.8.0 pubblicata il 2026-11-12, sostituita da 0.8.1; resta il confronto di riferimento |
 | Pacchetto | **0.8.1: 19.706.289 byte** (payload 19.701.706, config+NOTICE 4.583); margine 293.711 sul tetto 20.000.000. 0.8.0 era 19.440.761 byte |
 | Qualita' fp32 di riferimento | E-028 fp32: T-600 **24,66 / 54,65**; S3 **25,55 / 49,01**; FLEURS-IT **20,47**, EN **49,38**; CV-IT dev **19,80** |
-| Qualita' int8 pubblicata (0.8.1) | T-600 **24,08 / 55,23**; S3 **24,96 / 51,27**; FLEURS-IT **20,16**, EN **49,81**; rari **24/47**, ETA rara **46,9% (38/81)**; naturali **432/817**; gold 127/179; 16 termini 19/27 |
+| Qualita' int8 pubblicata (0.8.1) | T-600 **24,08 / 55,23**; S3 **24,96 / 51,27**; FLEURS-IT **20,16**, EN **49,81**; presence rara **24/47**, ETA su tutti i token span delle 47 frasi **46,9% (38/81)** (47 target + 34 co-token); naturali **432/817**; gold 127/179; 16 termini 19/27 |
 | Delta 0.8.1 vs 0.8.0 | T-600 WER **−0,63 [−1,11, −0,20]**, ETA **+1,06 [+0,09, +2,04]**; T-S3 tie; FLEURS tie; rari **+18,5 [+9,6, +31,0]**; naturali −4 (436 → 432, gate ≥431); pacchetto +265.528 B |
 | LM E-031 | 2026-11-12: corpus congelato (186.003 frasi, 939 duplicati, 36.065 esclusioni, nessuna sovrapposizione); armi (2,2)/(1,2)/(1,2)+termini ×3; dev macro 22,946 / 22,854 / 22,849; adottata A3 (binario 5.381.992 B, sha `3be1177b…`) |
 | Browser 0.8.1 | 2026-11-12: acceptance reale **4/4** (RTFx 46,69 / 46,23 / 25,10 / 24,83); parità decoder JS↔Python esatta sugli stessi logit; il fixture 3 s differisce da Python di 2 parole **anche con il LM 0.8.0** (path acustico browser, non il LM) |
-| Rumore 0.8.1 | 2026-11-12: stessa ricetta E-024, stesso checkpoint/decoder/100 clip S3, cambia solo il LM; clean 20,03 vs 20,37, 30/20/15/10/5 dB 21,22/24,28/27,67/33,79/40,41 vs 21,90/25,47/27,33/34,63/40,92; **tutte tie**, media 5–30 dB **29,47 vs 30,05** |
+| Rumore 0.8.1 | 2026-11-12: stessa ricetta E-024, stesso checkpoint/decoder/100 clip S3, cambia solo il LM; clean 20,03 vs 20,37, 30/20/15/10/5 dB 21,22/24,28/27,67/33,79/40,41 vs 21,90/25,47/27,33/34,63/40,92; **tutte tie**, media descrittiva 5–30 dB **29,47 vs 30,05** senza CI della media; non equivalenza ne' upper bound |
 | Decoder adottato | beam 12 / top-k 10 / LM weight **0,55** / token bonus **2,7**, trigram aumentato, Silero VAD |
 | Ultimo training accettato | **E-028 (acustica, 0.8.0/0.8.1)**: S2 + ricetta gentile + decoder E-030; 0.8.1 cambia solo il LM. E-024/E-025 restano l'evidenza rumore |
-| Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. **E-032 (S1, 50 frasi nuove, 2026-11-12):** rari 32,1% (LM 0.8.0) / 51,9% (LM E-031) ma T-S3 26,75/47,61, FLEURS peggiori, naturali 424/415; 5 gate falliti. Distillazione Parakeet originaria mai eseguita |
+| Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. **E-032 (S1, 50 frasi nuove, 2026-11-12):** ETA sulle frasi rare 32,1% (LM 0.8.0) / 51,9% (LM E-031), T-S3 **26,75/46,76** (LM 0.8.0) / **26,41/47,61** (LM E-031), FLEURS peggiori, naturali 424/415; **6 gate falliti** nella tabella originale. Distillazione Parakeet originaria mai eseguita |
 | Ultimo training candidato | nessuno; E-032 respinto, E-031 è decode-only e non cambia i pesi |
 | Non eseguito | E-018 gold scaling; **mixed-dev naturale indipendente** (bloccato: serve uno speaker nuovo); E-028/E-029/E-030/E-031/E-032 eseguiti. Previsioni non sono risultati |
 | Runtime su main | PR #2 integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. La demo **0.8.1** è pubblicata e verificata live il 2026-11-12 (model sha `7bbfad7e…`, LM `3be1177b…`, config 0,55/2,7, Space `RUNNING`); non è una misura di qualità browser |

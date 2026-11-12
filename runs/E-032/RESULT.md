@@ -5,6 +5,13 @@
 > slice but fails the T-600, T-S3, natural and FLEURS-EN gates. 0.8.1 remains the E-031 LM
 > candidate; no acoustic change is adopted.
 
+> **Documentary correction (2026-11-12):** original measured pairs and CIs below are preserved.
+> T-S3 is **26.75 / 46.76 with the 0.8.0 LM**, **26.41 / 47.61 with E-031**, not the mixed
+> 26.75 / 47.61 pair copied into summaries. The original gate table contains **six FAIL rows**,
+> not five. "Rare aligned ETA" includes all **81 annotated span tokens** in 47 rare-bearing
+> utterances (47 target + 34 co-occurring tokens); target-only ETA is a separate pending
+> diagnostic, not a replacement gate. E-031 is now the published 0.8.1, not just a candidate.
+
 ## Training
 
 | Item | Value |
@@ -31,7 +38,7 @@ The dev curve dipped to 31.56% at step 4,000, recovered to 31.12% at step 9,000 
 | Natural | 436/817 | **424/817** | −12 | gate ≥431 | **fail** |
 | Rare aligned ETA | 28.4% (23/81) | **32.1% (26/81)** | +3.7 | [0.0, +9.0] | borderline |
 
-## Readout, E-031 A3 LM (current product candidate)
+## Readout, E-031 A3 LM (Now Published 0.8.1)
 
 | Set | E-031 | **E-032** | Δ | 95% CI | Tie? |
 |---|---:|---:|---:|---|---|
@@ -66,7 +73,7 @@ clean win: the CI touches zero and the natural group loses 17 occurrences.
 
 - The 50 new S1 contexts do give the decoder more rare-term evidence: +3.7 pp over 0.8.0 and
   +4.9 pp over E-031, with presence 11→14 and 24→29 of 47. But the size is small and the CI
-  touches zero; it is not the clean +18 pp that the LM reweighting produced.
+  touches zero; it is not the +18 pp observed for E-031's composite corpus/pruning/weighting change.
 - The acoustic fine-tune costs the general model: T-S3 WER and ETA regress significantly against
   both baselines, FLEURS-IT/EN regress, and natural terms fall below the 431 gate.
 - The S1-only addendum cannot separate speaker adaptation from term learning; the declared

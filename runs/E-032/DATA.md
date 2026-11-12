@@ -16,10 +16,16 @@ The rows are the candidate set in `candidates.jsonl`; no text was edited after r
 
 ## SHA-256
 
+**Audit correction (2026-11-12):** the original table copied the script hash to the manifest
+and called them byte-identical. They are different schemas/files; only the shared annotation
+fields (`id`, `text`, `category`, `en_spans`) match; the manifest also stores `norm`. That does not certify span validity;
+later annotation review may still be needed. Other entries below remain historical recorded
+prefixes, not new hash verification.
+
 | File | sha256 |
 |---|---|
 | `recordings/scripts/R-S1.jsonl` | `f137e5a6…` |
-| `recordings/manifests/R-S1.jsonl` | `f137e5a6…` (same bytes) |
+| `recordings/manifests/R-S1.jsonl` | Original copied hash withdrawn; matching shared annotation fields, not same bytes |
 | `recordings/manifests/R-S1-terms3.jsonl` | `9a3e8bdb…` |
 | `data/shards/R-S1-terms3/index.json` | `6f1ae271…` |
 | `data/shards/gold-terms3-x20/manifest.jsonl` | `5a3551e2…` |

@@ -5,6 +5,13 @@
 **0.8.1 release**, the browser and noise checks, the new mixed-dev tooling and the remaining
 blocker. Read this first, then `STATUS.md`, then the experiment reports.
 
+> **Audit corrections (2026-11-12):** historical execution/publication figures are retained;
+> no new training or gate run claimed. See [audit scope and pending verification](18-audit-fixes-2026-11-12.md).
+> "Rare aligned ETA" covers all 81 span tokens in 47 rare-bearing utterances
+> (47 target + 34 co-occurring tokens), not target-only ETA; presence 24/47 is separate.
+> E-031 PLAN used 28.4% (0.284), later reports the historical E-028/E-030 30% target;
+> 38/81 passes both. PLAN and historical JSON remain unchanged.
+
 ## TL;DR
 
 - **Published model is 0.8.1** (HF `semantique-team/moth-stt`, rev `1257327e…`;
@@ -19,13 +26,15 @@ blocker. Read this first, then `STATUS.md`, then the experiment reports.
   - Natural **432/817** (gate ≥431), gold 127/179, 16-term 19/27.
   - **The 0.8.0 rare-gate exception is closed.**
 - **E-032 rejected:** 50 new S1 rare-term sentences (six pruned terms ×4), gentle fine-tune from
-  E-028. Rare 32.1% (0.8.0 LM) / 51.9% (E-031 LM), but T-S3 26.75 / 47.61, FLEURS worse, natural
-  424 / 415; five pre-registered gates fail. The data remain reusable.
+  E-028. Rare-subset ETA 32.1% (0.8.0 LM) / 51.9% (E-031 LM), but T-S3 **26.75 / 46.76**
+  (0.8.0 LM) / **26.41 / 47.61** (E-031 LM), FLEURS worse, natural
+  424 / 415; six FAIL rows in the original gate table. The data remain reusable.
 - **Browser:** real Chromium acceptance **4/4** on 0.8.1; JS↔Python **decoder parity exact**
   on identical logits. The 3 s fixture differs by 2 words with **both** the 0.8.0 and 0.8.1 LM, so
   the residual is the browser acoustic path, not the new LM.
 - **Noise:** full E-024 curve re-run with the new LM on the same checkpoint, decoder, 100 S3 clips
-  and seed; **all conditions tie**, mean 5–30 dB **29.47 vs 30.05**, no regression.
+  and seed; **all conditions tie**, descriptive mean 5–30 dB **29.47 vs 30.05** without a mean CI;
+  no significant condition-level regression detected, not equivalence or an upper bound.
 - **Blocker:** independent natural mixed-dev + a new-voice rare readout. **No new speaker is
   available**, so this cannot proceed yet. Do not publish 0.8.1 as if it had independent evidence.
 
@@ -57,14 +66,18 @@ script and manifest and every IT/EN dev/test manifest as explicit exclusions. 18
 rebuild, `(1,2)`, `(1,2)` + term sentences ×3. Selection on full dev (3,939 clips), decoder fixed
 at 0.55/2.7. Bytes first.
 
-| Arm | Dev macro | Δ vs control | 95% CI | Binary |
+| Arm | Dev macro | Macro Δ vs control (pp) | Historical pooled Δ / 95% CI (pp) | Binary |
 |---|---:|---:|---|---:|
 | shipped | 22.9463 | — | — | 5,116,464 |
-| frozen (2,2) | 22.9352 | −0.010 | [−0.031, +0.015] | 5,099,304 |
-| frozen (1,2) | 22.8541 | −0.084 | [−0.140, −0.035] | 5,378,740 |
-| **frozen (1,2) + terms ×3** | **22.8494** | **−0.091** | **[−0.147, −0.040]** | **5,381,992** |
+| frozen (2,2) | 22.9352 | −0.01114 | −0.010 / [−0.031, +0.015] | 5,099,304 |
+| frozen (1,2) | 22.8541 | −0.09226 | −0.084 / [−0.140, −0.035] | 5,378,740 |
+| **frozen (1,2) + terms ×3** | **22.8494** | **−0.09696** | **−0.091 / [−0.147, −0.040]** | **5,381,992** |
 
-All nine pre-registered gates pass; rare ETA and T-600 WER improve with CIs excluding zero. Report:
+The old intervals are pooled WER and do not certify the PLAN's macro-CI selection rule; no
+macro CI is claimed until a retained recomputation. x3 adds **579 retained trigrams**
+(A2 801,858 → A3 802,437); the shipped comparison is a composite intervention.
+Historically all nine release-record gates were reported passing; rare-subset ETA and T-600 WER
+improve with CIs excluding zero. This is not new gate verification. Report:
 `runs/E-031/RESULT.md`; plan: `runs/E-031/PLAN.md`; frozen corpus + receipt:
 `runs/E-031/frozen/`; build: `runs/E-031/build.json`; gate: `runs/E-031/gate.json`.
 
@@ -78,7 +91,7 @@ fine-tune from E-028, 13,314 steps, dev **31.06%** (E-028 31.01%), final checkpo
 | 0.8.0 LM | **32.1% (26/81)**, +3.7 [0.0, +9.0] | 25.23 / 53.21 | **26.75 / 46.76** | 20.66 / 50.47 | **424** |
 | E-031 LM | **51.9% (42/81)**, +4.9 [0.0, +12.0] | 24.83 / 53.88 | **26.41 / 47.61** | 20.54 / 50.28 | **415** |
 
-Five pre-registered gates fail; the rare CI touches zero. Report: `runs/E-032/RESULT.md`; data
+Six FAIL rows appear in the original gate table; the rare CI touches zero. Report: `runs/E-032/RESULT.md`; data
 provenance: `runs/E-032/DATA.md`; plan/config/scripts in `runs/E-032/`.
 
 ## 0.8.1 release (published 2026-11-12)
@@ -94,7 +107,7 @@ provenance: `runs/E-032/DATA.md`; plan/config/scripts in `runs/E-032/`.
 - Browser acceptance: `runs/E-031/browser-acceptance/RESULT.md` (4/4).
 - Parity: `runs/E-031/browser-parity/RESULT.md`; decoder-level exact match; fixture difference
   identical with 0.8.0.
-- Noise: `runs/E-031/noise-e031-lm/RESULT.md`; all conditions tie, mean 5–30 dB **29.47 vs 30.05**.
+- Noise: `runs/E-031/noise-e031-lm/RESULT.md`; all conditions tie, descriptive mean 5–30 dB **29.47 vs 30.05**, no mean CI or equivalence claim.
 
 ## Mixed-dev tooling
 

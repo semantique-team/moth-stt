@@ -1,16 +1,24 @@
 # Repository Workflows And Reproducibility
 
+> **Current update (2026-11-12):** published model **0.8.1 / E-028 + E-031 LM**. Current
+> download, reproduction and publishing commands supersede the old 0.7.0 defaults.
+> [Audit 18](../18-audit-fixes-2026-11-12.md) describes other agents' no-weight worktree fixes;
+> verification is pending. Historical test totals below remain 2026-11-10 snapshots.
+> The Windows `resource` import blocker was already fixed before this branch; CPU pytest can
+> collect on Windows, but production Windows training is not certified. No full LM build,
+> staging, quality gate rerun or model release was performed by this documentation task.
+
 > Documentation-audit verification on Windows, 2026-11-10: Ruff passed and JS runtime unit
 > tests passed 7/7. Full pytest stops in collection on the Unix-only `resource` import.
 > Explicitly excluding `tests/test_train.py` yields 450 passed, 3 skipped and 5 failed
 > (baseline command/path handling and LibriSpeech path separators). This is not a green
 > full-suite certification; source documentation changes do not fix those portability issues.
 
-This is an operational guide to **main at `cd1ce1b`**, not a list of proposed
-features. Commands and configuration keys below were checked against that revision's
-source. Lightweight CLI help was also checked in an existing Windows Python 3.12
-environment; training help fails there because `resource` is Unix-only. No downloads,
-recording, training, export, publishing, or quality experiments were run for this guide.
+The original guide audited **main at `cd1ce1b`** on 2026-11-10; current updates above and below
+supersede that snapshot's operational limitations. At that historical revision, commands and
+configuration keys were checked against source and lightweight CLI help in Windows Python 3.12;
+training help then failed on Unix-only `resource`. No downloads, recording, training, export,
+publishing or quality experiments were run for the original guide.
 
 Start with [AGENTS.md](../../AGENTS.md), [STATUS.md](../../STATUS.md), and
 [EXPERIMENTS.md](../../EXPERIMENTS.md). The numbered design documents are explicitly
@@ -68,9 +76,12 @@ are separate.
 
 Obtain the complete authorized published bundle from
 [the model repository](https://huggingface.co/semantique-team/moth-stt), preserving all
-seven files below under `release/`. Pin the remote revision and verify against the
-trusted [0.7.0 release record](../../runs/E-024/release-0.7.0.json), not merely a mutable
-remote `main`. Downloading is a separate, explicit action, not performed by the CLI.
+seven files below under `release/`. Use immutable **0.8.1 HF revision
+`1257327e3622f3ac6c5653a32f87b793049c36b7`**, e.g.
+[`config.json` at that revision](https://huggingface.co/semantique-team/moth-stt/resolve/1257327e3622f3ac6c5653a32f87b793049c36b7/config.json),
+and verify all seven hashes against the trusted
+[0.8.1 release record](../../runs/E-031/release-0.8.1.json), not mutable remote `main`.
+Downloading is separate and was not performed in this documentary audit.
 
 ```text
 release/
@@ -120,15 +131,15 @@ budget option. No supported budget exceeds 25,000,000 bytes.
 
 | Environment | Current behavior and prerequisites |
 |---|---|
-| Windows native | CPU release runtime and non-training utilities can run with compatible wheels. Use PowerShell commands above. Full training/test collection is not portable unchanged: `stt.train` imports Unix `resource` at module import time. |
+| Windows native | CPU runtime and pytest collection can run with compatible wheels; `resource` is optional, fixed before this branch. Use PowerShell commands above. CPU tests do not certify production Windows training, acceleration or throughput. |
 | Linux / WSL2 | Use a separate Linux environment, not Windows `.venv`. CPU is the training default when MPS is absent. CUDA must be requested explicitly and needs a compatible Torch build/driver. CI validates Linux CPU, not CUDA quality or speed. |
 | macOS Apple Silicon | Historical training platform is M5/MPS. Training auto-selects MPS when available and checks fresh-run CTC loss parity against CPU. `caffeinate` is macOS-only. |
 | macOS Intel | No MPS assumption; use CPU and measure feasibility rather than quoting M5 throughput. |
 | Recording hardware | The guided capture code uses AVFoundation and `afplay`, so actual capture/playback is macOS-only. Dry-run planning and cue generation do not require a microphone. |
 
-For native Windows training use WSL2/Linux rather than inventing a nonexistent CLI
-switch for `resource`. Compatible package availability, audio codecs, microphone
-permissions, and acceleration must be checked on the actual machine.
+WSL2/Linux remains an alternative for Windows users; do not infer production native Windows
+training support from successful imports or CPU unit tests. Compatible package availability,
+audio codecs, microphone permissions and acceleration must be checked on the actual machine.
 
 ## Training Environment
 
@@ -260,10 +271,12 @@ Inspect errors and require every manifest ID in the index before training.
 
 Mel construction catches decode/feature errors, but does **not** implement the
 silence/clipping health checks suggested by its upstream manifest builder's docstring.
-Run explicit audio health checks before accepting a new corpus. Avoid `--delete-audio`:
-it spot-checks only a sample, then can delete all manifest audio, including files absent
-from a partial/error cache. Retain evaluation PCM for VAD, browser parity, and later
-audits even when training mel exists.
+Run explicit audio health checks before accepting a new corpus. The no-weight audit fix makes
+`--delete-audio` fail on build errors or incomplete coverage, verifies every current deletion
+candidate against its cached mel, and bounds paths to the audio root. Verification failure
+keeps raw audio; limited builds retain excluded rows. Integration verification is pending.
+Retain evaluation PCM for VAD, browser parity and later audits even when training mel exists;
+deletion remains an explicit destructive opt-in.
 
 ## Recording Workflow
 
@@ -461,7 +474,12 @@ Choose learning rates and schedule in the plan, not by blindly copying this exam
 At least one dev group is needed for meaningful best-checkpoint selection. All source
 shard directories within a merged group must share one parent; manifest IDs must be
 unique across sources and present in the indexes. The loader does **not** enforce
-training split roles itself. Tokenizer vocabulary and head size must agree.
+training split roles in the historical revision described here. The audit adds split/source/role
+rejection (T/A, FLEURS, S3), plus ID, splice/source-ID and comparable audio-path overlap checks
+against configured dev inputs. Identical normalized text with distinct audio is allowed;
+there is no exact normalized-text train/dev guard here. Tokenizer and splicing also gain
+training-only input validation. These are bounded checks, not full audio-hash, text-duplicate
+or upstream leakage audits; verification is pending. Tokenizer vocabulary and head size must agree.
 
 `model.init` loads a converted encoder; `model.init_checkpoint` loads a full Moth
 checkpoint, after `init` if both are set. For encoder-only initialization use:
@@ -592,9 +610,11 @@ SHA, config **path**, per-utterance counts, requested breakdowns, noise counts, 
 and optional paired differences. It does not hash the config, infer checkpoint/LM
 provenance, or write hypotheses. Historical direct `score_rows` outputs can lack the
 CLI's provenance fields: `--vs` requires the matching `manifest_sha256` and identical
-ID coverage, so re-score both first. Missing hypotheses become empty strings;
-duplicate hypothesis IDs collapse in a dictionary and extras are counted, not
-automatically rejected. Audit complete unique ID coverage before interpreting results.
+ID coverage, so re-score both first. The audit fix rejects duplicate reference/hypothesis IDs,
+missing or non-string hypotheses, invalid/overlapping spans and empty speech references.
+Extras are still counted, not automatically rejected; audit complete unique ID coverage.
+New stratified macro bootstrap support resamples within each language and averages language
+WERs equally. Retained E-031 `sweep.json` intervals are pooled, not macro CIs.
 
 WER and ETA in JSON are ratios: 0.25 means 25%. Insertion rate is insertions per
 100 reference words. ETA counts **aligned exact matches** inside reference English
@@ -671,6 +691,54 @@ is infrastructure evidence, not new acoustic weights or a new quality gain.
 
 ## Export And Packaging
 
+### Current 0.8.1 Reproduction
+
+0.8.1 is **LM-only**, not a generic acoustic export of 0.7.0. Recover the original
+`data/tokenizer/moth_bpe.model` (SHA256
+`d6e1054e9273915db4e706898286f90d4b97e6b703386ed8b84f0a148caed2fd`) and verified
+E-028/0.8.0 source assets. For staging, `release/` must contain the E-028 graph/vocabulary/
+filters/VAD/NOTICE and E-030 decoder/VAD config checked against
+[`runs/E-028/release-0.8.0.json`](../../runs/E-028/release-0.8.0.json), not the E-024 graph.
+The current 0.8.1 download above is for runtime use, not recreation of the old source LM.
+
+```text
+uv run --locked --all-extras python runs/E-031/reproduce_corpus.py
+uv run --locked --all-extras python runs/E-031/build_lm.py
+uv run --locked --all-extras python runs/E-031/stage_release.py
+uv run --locked --no-dev python -m stt.release runs/E-031/release --budget-bytes 20000000
+```
+
+`bash runs/E-031/freeze.sh` wraps the first command; native PowerShell uses Python directly.
+The reproducer pins pre-E-032 inputs at **`bd13c19ad45cef63c4588b73e5c8e001d0b4b2da`**,
+historical freeze/normalizer/receipt at `8c2f449a89ed0c6024b3f0c8b73b51856d951d06`, and the
+recorded `num2words` version. It verifies pinned code/normalizer identity, all **22 input hashes**
+and receipt metadata, preserves the receipt and checks original corpus SHA256
+`c8d941921ad6bf7905dd486770493bf172c34c9b183ead80cf50ed450fffe720`, rather than freezing
+today's mutable scripts. **Full git history is required**: use a normal clone without `--depth`,
+or, for an existing shallow clone, explicitly fetch history with `git fetch --unshallow` before
+reproduction. This is a network operation, not executed here. The current CI checkout uses
+`fetch-depth: 0`; a shallow checkout is not a sufficient reproduction prerequisite.
+
+**Build in a disposable checkout with recovered prerequisites:** `build_lm.py` writes
+`build.json` and build outputs at fixed paths; do not overwrite historical JSON in the working
+research checkout. Staging writes `runs/E-031/release/`, not source `release/`, and checks the
+adopted LM hash against the pinned release record. No command here trains or certifies quality
+gates, and none was executed by this documentation task.
+
+**Historical gate prerequisite:** the stricter term fingerprint requires original inputs at
+`bd13c19ad45cef63c4588b73e5c8e001d0b4b2da`; today's R-S1 includes E-032 rows and fails that
+check. Use a separate disposable checkout at that input snapshot with the reviewed changed
+code applied, or safely restore the exact pinned inputs only in a disposable checkout. Recover
+the matching assets/audio/cache there too. Do not revert shared main inputs, bypass the check,
+or describe the current main checkout as a working generic historical-gate harness.
+
+For a separately approved gate rerun in that prepared checkout, use a fresh `--name` and
+attributed decoder-parity report. Audit tooling fingerprints caches by inputs/assets/code/settings,
+preserves old reports, requires music/non-music evidence separately and marks `--skip-noise`
+or missing parity incomplete.
+Target-only rare ETA is a new diagnostic, not a replacement for the historical 81-token subset
+gate. No new gate result or macro CI is available from this audit.
+
 ### Build The Model Assets
 
 Back up any existing local `release/` first. The following reconstructs the historical
@@ -711,9 +779,9 @@ quality evidence or publishable weights.
 uv run --locked --no-dev python -m stt.release release --budget-bytes 20000000
 ```
 
-The trusted 0.7.0 record totals **19,440,760 bytes** for all seven required files.
-Its legacy `package_bytes=19,436,178` means only the five runtime payload files;
-do not use that smaller field for the current all-required-assets budget. Report
+The current 0.8.1 record totals **19,706,289 bytes** for all seven required files.
+Its `package_bytes=19,701,706` counts only five payload files; use `total_bytes` for the full
+asset budget. Historical 0.7.0 totals 19,440,760 B, not payload-only 19,436,178 B. Report
 ORT/WASM, browser page/JS, dependencies, and compressed cold HTTP transfer separately.
 `stt.release --browser-root PATH` counts all raw files in a browser staging directory,
 not compressed network traffic. It does not check model authenticity, consent, quality,
@@ -725,8 +793,8 @@ The [general Hugging Face guide](publishing-to-huggingface.md) explains accounts
 tokens. For this repo prefer the guarded publishers, **without `--push`** first:
 
 ```text
-uv run --locked --no-dev python runs/E-021/upload_hf.py --repo semantique-team/moth-stt --release release --card runs/E-024/MODEL_CARD.md --record runs/E-024/release-0.7.0.json
-uv run --locked --no-dev python runs/E-022/publish_space.py --check
+uv run --locked --no-dev python runs/E-021/upload_hf.py --repo semantique-team/moth-stt --release runs/E-031/release --card runs/E-031/MODEL_CARD.md --record runs/E-031/release-0.8.1.json
+uv run --locked --no-dev python runs/E-022/publish_space.py --check --record runs/E-031/release-0.8.1.json --release runs/E-031/release
 ```
 
 [The model publisher](../../runs/E-021/upload_hf.py) compares record hashes, card
@@ -736,11 +804,10 @@ card/record. For a new release, supply its own `--release`, `--card`, `--record`
 and approved repo; create a reviewed record from actual new measurements, not by
 running the historical E-024 recorder with hardcoded results.
 
-[The Space publisher](../../runs/E-022/publish_space.py) is more version-bound:
-source page/card is `runs/E-024/space`, record is E-024's 0.7.0 record, and assets
-come from `release/` plus `web/node_modules/onnxruntime-web/dist`. It has no flags
-to swap these release/card/record paths. A different-version Space needs an explicit
-reviewed code change or new experiment-local publisher, not just `--repo`.
+[The Space publisher](../../runs/E-022/publish_space.py) supports **`--record` and `--release`**;
+old defaults select 0.7.0, so supply current paths explicitly. The source page is
+`runs/E-024/space`; ORT assets come from `web/node_modules/onnxruntime-web/dist` and the staged
+version comes from the supplied record.
 Install the locked Node packages first (see below). `--check` still stages files
 locally and is not a no-write operation. Default staging is a temporary directory;
 **`--dest PATH` recursively deletes an existing PATH before staging**. Use only a
@@ -778,12 +845,15 @@ uv build --wheel
 
 [CI](../../.github/workflows/ci.yml) runs lint, Python tests, wheel build, a fresh
 runtime-only wheel smoke, and all lightweight `*.test.js/mjs/cjs` Node tests. The
-single `.mjs` command above is the current lightweight test file. These Node tests
+single `.mjs` command above covers runtime tests; also run
+`node --experimental-vm-modules --test web/tests/unit-mic.test.mjs` for audit mic-cap tests.
+These Node tests
 do not require npm installation, Playwright, a browser, or model downloads.
 Python decoder/mel parity tests call Node and **skip if it is missing**; install
 Node to avoid mistaking skipped parity for coverage. Conversion tests use synthetic
 Transformers configs, not an automatic upstream weight download. Full pytest on
-native Windows can fail collection through the Unix `resource` import.
+native Windows can collect with compatible CPU dependencies: the old Unix `resource` import
+blocker was fixed before this branch. This does not certify production Windows training.
 
 The wheel smoke is important: run from an isolated environment, install only locked
 runtime dependencies plus the built wheel, and verify Torch/SentencePiece/ONNX are
