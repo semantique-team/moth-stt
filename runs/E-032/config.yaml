@@ -1,0 +1,74 @@
+# E-032 — targeted rare addendum (S1, new contexts) + gentle fine-tune from 0.8.0.
+#
+# Same mixture and recipe as E-028; one new source: 50 S1 sentences covering the 44 never-seen
+# terms, with four new contexts for the six terms E-026 found acoustically pruned. The old gold
+# stays x50, the E-015/E-028 term sources x20, the new source x20.
+#
+# See runs/E-032/PLAN.md for the pre-registered gates. Init: E-028 best (0.8.0).
+run: E-032
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-028/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  freeze_encoder: false
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  train:
+    - manifest: data/manifests/cv_it_train_clean50.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/cv_it_train_noisy50.jsonl
+      shards: data/shards/cv_it_noisy50
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+    - manifest: data/manifests/spliced_it_en.jsonl
+      shards: data/shards/spliced_it_en
+    - manifest: data/shards/gold-x50/manifest.jsonl
+      shards: data/shards/gold-x50
+    - manifest: data/shards/gold-terms-x20/manifest.jsonl
+      shards: data/shards/gold-terms-x20
+    - manifest: data/shards/gold-terms-S2-x20/manifest.jsonl
+      shards: data/shards/gold-terms-S2-x20
+    # E-032: 50 new S1 sentences, ~3 min x20 = ~1 h.
+    - manifest: data/shards/gold-terms3-x20/manifest.jsonl
+      shards: data/shards/gold-terms3-x20
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  lr_head: 1.0e-4
+  lr_encoder: 1.0e-5
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 1
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 10
+  keep_last: 3
+  max_nonfinite_steps: 20
+  empty_cache_every: 10
+  eval_every_steps: 1000
