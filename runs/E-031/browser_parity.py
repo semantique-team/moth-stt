@@ -19,6 +19,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from audit import digest, require_new
+
 from stt.data.build_mel import load_audio_16k
 from stt.decode import beam_search, load_pieces
 from stt.eval import score_rows
@@ -41,6 +43,7 @@ def main() -> int:
     parser.add_argument("--tag", default="e031-0.8.1")
     args = parser.parse_args()
     release = args.release.resolve()
+    require_new(args.out)
 
     reports = {}
     for path in sorted(args.reports.glob("*.json")):
@@ -59,6 +62,14 @@ def main() -> int:
         }
     if not reports:
         raise SystemExit(f"no reports in {args.reports}")
+    config = json.loads((release / "config.json").read_text(encoding="utf-8"))
+    for report in reports.values():
+        if (report["passed"] is not True or report["release_version"] != config["version"]
+                or report["model_sha256"] != digest((release / "model.int8.onnx").read_bytes())
+                or report["lm_sha256"] != digest((release / "lm_bpe3.bin").read_bytes())):
+            raise SystemExit("failed or mismatched browser report; rerun acceptance for this release")
+    if any(config["decode"].get(key) != value for key, value in PARAMS.items()):
+        raise SystemExit("release decoder differs from parity parameters")
     texts = {normalize(row["text"]) for row in reports.values()}
     if len(texts) != 1:
         raise SystemExit(f"browser projects disagree: {texts}")
@@ -116,7 +127,7 @@ def main() -> int:
     print(json.dumps({k: result[k] for k in ("browser_text", "python_text",
                                             "exact_normalized_match", "wer_browser_as_reference")},
                      indent=2))
-    return 0
+    return 0 if result["exact_normalized_match"] else 1
 
 
 if __name__ == "__main__":

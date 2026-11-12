@@ -14,6 +14,8 @@ import json
 import shutil
 from pathlib import Path
 
+from audit import release_record, verify_file, verify_source
+
 from stt.data.sources import sha256_file
 from stt.release import validate_release
 
@@ -27,6 +29,8 @@ VERSION = "0.8.1"
 def main() -> int:
     if not LM.is_file():
         raise SystemExit(f"missing E-031 LM: {LM}")
+    verify_source(SOURCE)
+    verify_file(LM, release_record("0.8.1"), "lm_bpe3.bin")
     TARGET.mkdir(parents=True, exist_ok=True)
     for item in SOURCE.iterdir():
         if item.is_file():

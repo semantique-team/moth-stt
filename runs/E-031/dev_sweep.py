@@ -9,19 +9,21 @@ here; the advancing arm gets one readout in `gate.py`.
 
 from __future__ import annotations
 
+import argparse
 import json
+import tempfile
 import time
 from pathlib import Path
 
 import torch
+from audit import digest, release_record, require_new
 
 from stt.data.dataset import MelDataset, plan_batches
 from stt.decode import beam_search
-from stt.eval import _compare, score_rows
+from stt.eval import _compare, macro_wer_bootstrap, score_rows
 from stt.lm import BPETrigramLM
 from stt.model import MothSTT
 from stt.tokenizer import load_tokenizer
-from stt.train import _prepare_batch, load_config, load_sources
 
 REPO = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent
@@ -38,6 +40,8 @@ ARMS = {
 
 
 def load_dev(cfg) -> tuple[dict, list[dict], Path]:
+    from stt.train import load_sources
+
     index: dict = {}
     rows: list[dict] = []
     root = None
@@ -52,6 +56,8 @@ def load_dev(cfg) -> tuple[dict, list[dict], Path]:
 
 
 def decode_arm(model, pieces, lm, index, rows, root) -> dict[str, str]:
+    from stt.train import _prepare_batch
+
     dataset = MelDataset(index, root, rows)
     batches = plan_batches(
         [float(row["duration"]) for row in rows],
@@ -94,6 +100,21 @@ def write_jsonl(path: Path, hypotheses: dict[str, str]) -> None:
 
 
 def main() -> int:
+    from stt.train import load_config
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--name", required=True, help="new output directory; preserves historical sweep")
+    args = parser.parse_args()
+    if Path(args.name).name != args.name or args.name in (".", ".."):
+        parser.error("--name must be one directory name")
+    output = OUT / "dev" / args.name
+    require_new(output)
+    with tempfile.TemporaryDirectory(prefix="e031-a0-") as directory:
+        binary_path = Path(directory) / "lm.bin"
+        BPETrigramLM.load(ARMS["A0_shipped"]).save_browser(binary_path)
+        baseline_binary = binary_path.read_bytes()
+    if digest(baseline_binary) != release_record("0.8.0")["files"]["lm_bpe3.bin"]["sha256"]:
+        raise ValueError("A0 pickle does not reproduce the pinned 0.8.0 LM")
     cfg = load_config(CONFIG)
     processor = load_tokenizer(TOKENIZER)
     pieces = {i + 1: processor.id_to_piece(i) for i in range(processor.vocab_size())}
@@ -113,7 +134,7 @@ def main() -> int:
         print(f"--- {name}: {lm_path.relative_to(REPO)}", flush=True)
         lm = BPETrigramLM.load(lm_path)
         hypotheses = decode_arm(model, pieces, lm, index, rows, root)
-        out_dir = OUT / "dev" / name
+        out_dir = output / name
         write_jsonl(out_dir / "dev.hyp.jsonl", hypotheses)
         scored = score_rows(rows, hypotheses, bootstrap=1000, seed=0)
         scored["hyp"] = str((out_dir / "dev.hyp.jsonl").relative_to(REPO))
@@ -135,16 +156,20 @@ def main() -> int:
             "it": per_language["it"],
             "en": per_language["en"],
             "macro": (per_language["it"] + per_language["en"]) / 2,
+            "macro_bootstrap": macro_wer_bootstrap(rows, scored),
+            "pooled_wer_ci": scored["overall"]["wer_ci"],
             "seconds": round(time.time() - started, 1),
         }
         if base_metrics is not None:
             row["vs_A0"] = _compare(scored, base_metrics, bootstrap=1000, seed=0)
+            row["macro_vs_A0"] = macro_wer_bootstrap(rows, scored, base_metrics)
+            row["advances_vs_A0"] = row["macro_vs_A0"]["ci"][1] < 0
         results[name] = row
         print(json.dumps(row, ensure_ascii=False), flush=True)
         if base_metrics is None:
             base_metrics = scored
 
-    (OUT / "sweep.json").write_text(
+    (output / "sweep.json").write_text(
         json.dumps({"params": PARAMS, "arms": results}, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )

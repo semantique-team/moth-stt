@@ -1,0 +1,180 @@
+{
+  "evidence": "Retained development evidence, not an independent test or new decode. T/S3 repeatedly informed development; dev selection CIs are post-hoc recomputation.",
+  "revision": "8c2f449a89ed0c6024b3f0c8b73b51856d951d06",
+  "inputs_sha256": {
+    "data/manifests/mls_it_dev.jsonl": "e0355fa641241cffac14ae5c0f2af1f51ec564a6bc499993d8676a2b4859d602",
+    "data/manifests/ls_en_dev.jsonl": "51053e0a21d561dda20dfd0f7136e9063712a9f37be97507aac125e1595de8f6",
+    "runs/E-031/dev/A0_shipped/dev.metrics.json": "56404315ad5beb6fac4c8f78cf7652db1637bef7ff2c116dd6f86f01742cd9ce",
+    "runs/E-031/dev/A1_frozen_2_2/dev.metrics.json": "b43f87dbb14abce6f53fd09da88389cfd2504a2ffe992d7fd351111585a77b23",
+    "runs/E-031/dev/A2_frozen_1_2/dev.metrics.json": "154e842fb953171ec6678bb5cf50aed69734e8340a8f865e9fa6a0a4b1841746",
+    "runs/E-031/dev/A3_frozen_1_2_terms/dev.metrics.json": "bd6bcb96f9c97fb9b8b64fd5ffa745f8b4f54926f61a9097e6bc0209410030a7",
+    "recordings/manifests/T.jsonl": "11e002d88dbfaee900ff24a8c3770e60eca7d683de19f7156fc7169f85497786",
+    "runs/E-026/rare47-16k.jsonl": "e8b4b05d1a424d176871fede79d816612593ebaccd2c29acb5e4f6827f49c7b3",
+    "runs/E-031/eval/frozen_1_2_terms/t600.hyp.jsonl": "a07fc630eccb5bdb5cf047aa242bec60ce204d77fa9377a3ac2a77635e00e828",
+    "runs/E-030/eval/e028-int8/t600.hyp.jsonl": "be8d3c9b115a50bd4c6c3cf342604f3ac335a3cc20199e42113c0fe6e5406014"
+  },
+  "code_sha256": {
+    "runs/E-031/audit_readout.py": "79cf0346f9dd3f085918e22a58371ad0bd622899c734952d46338d092f131d1a",
+    "runs/E-031/audit.py": "d14ec9e16bba29a80c10042ef3c858cc4a66394caaeaebfa3e9187f7905c62f2",
+    "runs/E-031/gate.py": "92d477c0fa5381c228f27a36efcfef500913a47b8a108e5cde081778d255c2f9",
+    "runs/E-031/build_lm.py": "6729e99d8b5cfc82426f9e513f0800e95cc9bc439638d7d044fe33fe51a14995",
+    "stt/eval.py": "84a3174332172cbb243d58c2f01a2ba5f80ad54f7606e796ca121ad378478aea",
+    "stt/text.py": "bb5d86e4df1a05e612757cdfa1df852e3ad7c5ce88ba7c3a8c13171012892886",
+    "stt/data/sources.py": "d19c5ec5a1a2560d5877d7fa9e4a38ccfe85309ed9b7c13ac235c6bcb1e6d91d"
+  },
+  "versions": {
+    "num2words": "0.5.14",
+    "numpy": "2.5.4"
+  },
+  "bootstrap": {
+    "resamples": 1000,
+    "seed": 0,
+    "confidence": 0.95,
+    "macro": "paired utterance resampling within language; equal-language macro",
+    "eta": "paired utterance ratio bootstrap on target occurrences"
+  },
+  "dev": {
+    "A0_shipped": {
+      "macro_wer": {
+        "point": 0.22946333940226663,
+        "ci": [
+          0.22520354246145452,
+          0.23359477738702616
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      }
+    },
+    "A1_frozen_2_2": {
+      "macro_wer": {
+        "point": 0.22935197255988782,
+        "ci": [
+          0.2251425721728249,
+          0.23354811189648939
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      },
+      "vs_A0": {
+        "point": -0.00011136684237880723,
+        "ci": [
+          -0.0003777158348026721,
+          0.0001701230974310297
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": true
+      }
+    },
+    "A2_frozen_1_2": {
+      "macro_wer": {
+        "point": 0.2285407063013017,
+        "ci": [
+          0.22425962055267973,
+          0.2327361609533612
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      },
+      "vs_A0": {
+        "point": -0.0009226331009649369,
+        "ci": [
+          -0.0014910012584137822,
+          -0.00036801627169030793
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      }
+    },
+    "A3_frozen_1_2_terms": {
+      "macro_wer": {
+        "point": 0.22849375230235353,
+        "ci": [
+          0.22423141234849883,
+          0.23264260030605216
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      },
+      "vs_A0": {
+        "point": -0.0009695870999130995,
+        "ci": [
+          -0.0015519457669332937,
+          -0.0004065729654729733
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      }
+    }
+  },
+  "rare_target_only": {
+    "n_rows": 47,
+    "candidate": {
+      "en_ref": 47,
+      "en_hit": 24,
+      "aligned_eta": 0.5106382978723404
+    },
+    "baseline_0.8.0": {
+      "en_ref": 47,
+      "en_hit": 11,
+      "aligned_eta": 0.23404255319148937
+    },
+    "vs_0.8.0": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": -0.07722007722007723,
+      "wer_diff_ci": [
+        -0.1155378486055777,
+        -0.04365079365079366
+      ],
+      "wer_tie": false,
+      "eta_diff": 0.276595744680851,
+      "eta_diff_ci": [
+        0.14893617021276595,
+        0.4042553191489362
+      ],
+      "eta_tie": false
+    },
+    "historical_all_span_tokens": 81,
+    "definition": "exactly aligned annotated occurrences of the 44 frozen target terms",
+    "gate": false
+  },
+  "historical_gate": {
+    "rare_threshold": 0.284,
+    "unchanged": true
+  }
+}

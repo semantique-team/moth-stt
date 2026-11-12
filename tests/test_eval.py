@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from stt.eval import align, main, op_counts, score_rows
+from stt.eval import align, macro_wer_bootstrap, main, op_counts, read_hypotheses, score_rows
 
 
 def test_align_perfect_match() -> None:
@@ -168,3 +168,63 @@ def test_cli_writes_metrics_and_vs_block(tmp_path) -> None:
     assert data_a["overall"]["wer"] == 0
     assert data_a["overall"]["eta"] == 1.0
     assert data_a["manifest_sha256"]
+
+
+def test_duplicate_reference_ids_rejected():
+    with pytest.raises(ValueError, match="duplicate reference"):
+        score_rows([{"id": "a", "norm": "a"}] * 2, {"a": "a"})
+
+
+def test_duplicate_hypothesis_ids_rejected(tmp_path):
+    path = tmp_path / "hyp.jsonl"
+    path.write_text('{"id":"a","hyp":"a"}\n{"id":"a","hyp":"b"}\n')
+    with pytest.raises(ValueError, match="duplicate hypothesis"):
+        read_hypotheses(path)
+
+
+def test_invalid_hypothesis_type_rejected(tmp_path):
+    path = tmp_path / "hyp.jsonl"
+    path.write_text('{"id":"a","hyp":null}\n')
+    with pytest.raises(TypeError, match="hyp must be a string"):
+        read_hypotheses(path)
+
+
+@pytest.mark.parametrize("row", [
+    {"id": "a", "text": "speech"}, {"id": "a", "text": "speech", "norm": ""},
+    {"id": "a", "norm": 1},
+    {"id": "a", "text": "speech", "norm": " "},
+])
+def test_speech_requires_norm(row):
+    with pytest.raises(ValueError, match="requires nonempty norm"):
+        score_rows([row], {"a": "speech"})
+
+
+@pytest.mark.parametrize("spans", [
+    [[-1, 1]], [[0, 3]], [[1, 1]], [[0, 1.0]], [[True, 2]], [[0]],
+    [[0, 2], [1, 2]], [[0, 1], [0, 1]],
+    1,
+])
+def test_invalid_or_overlapping_spans_rejected(spans):
+    with pytest.raises(ValueError, match="en_spans"):
+        score_rows([{"id": "a", "norm": "a b", "en_spans": spans}], {"a": "a b"})
+
+
+def test_minimal_historical_references_remain_valid():
+    result = score_rows([{"id": "s", "norm": "a"}, {"id": "n"}], {"s": "a", "n": ""})
+    assert result["overall"]["wer"] == 0
+    assert result["noise"]["clips"] == 1
+
+
+def test_macro_bootstrap_stratifies_and_pairs_by_language():
+    rows = [{"id": "it", "norm": "a", "lang": "it"}] + [
+        {"id": f"en{i}", "norm": "b", "lang": "en"} for i in range(9)
+    ]
+    base = score_rows(rows, {row["id"]: row["norm"] for row in rows}, bootstrap=0)
+    new = score_rows(rows, {row["id"]: "x" if row["lang"] == "it" else "b" for row in rows},
+                     bootstrap=0)
+    assert new["overall"]["wer"] == 0.1
+    result = macro_wer_bootstrap(rows, new, base, bootstrap=100)
+    assert result["point"] == 0.5
+    assert result["ci"] == [0.5, 0.5]
+    assert result["strata"] == {"it": 1, "en": 9}
+    assert result == macro_wer_bootstrap(rows, new, base, bootstrap=100)
