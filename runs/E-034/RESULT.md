@@ -65,4 +65,9 @@ binaries and pickles are reproducible and gitignored), `dev_sweep.py`,
 `dev/dev-only/{A3_shipped,N1_2_1,N2_1_1,N3_1_2_terms5}/{dev.hyp.jsonl,dev.metrics.json}`,
 `dev/dev-only/sweep.json`, `decide.py` + `decision.log`, `dev_sweep.log`.
 
+Reproduction order: the control loads `runs/E-031/build/frozen_1_2_terms.pkl.gz`, which is
+gitignored — rebuild E-031 first (`uv run python runs/E-031/build_lm.py`, corpus already present
+or reproduced with `runs/E-031/reproduce_corpus.py`), then `runs/E-034/build_variants.py`, then
+`runs/E-034/dev_sweep.py --name <new-name>`. `decide.py` needs no audio.
+
 Cost: build 3 variants 18 s, four dev decodes ~16 min, no training, no download, 0 USD.

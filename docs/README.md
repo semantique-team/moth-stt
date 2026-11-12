@@ -10,7 +10,7 @@
 | 0.8.0 release state and its session | [16 - Session handoff 2026-11-12](16-session-handoff-2026-11-12.md) |
 | Current checkout/model state and blockers | [STATUS.md](../STATUS.md), current verified section |
 | How to install, record, prepare data, train, evaluate, export or publish | [Repository workflows](guides/repository-workflows.md) |
-| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md) (E-000-E-025) and [EXPERIMENTS.md](../EXPERIMENTS.md) (E-028-E-032 and later) |
+| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md) (E-000-E-025) and [EXPERIMENTS.md](../EXPERIMENTS.md) (E-028 and later) |
 | Exact model, release assets, fp32/int8/baseline tables, paper caveats | [13 - Current model and paper readiness](13-current-model-and-paper-readiness.md) |
 | Executed decisions and corrected scientific interpretations | [11 - Evidence and decisions](11-evidence-and-decisions.md) |
 | Architecture audit, observed risks and 20/25 MB budget | [14 - Architecture audit](14-architecture-audit-2026-11-10.md) |

@@ -194,6 +194,14 @@ Non ripartire da una grande griglia su T. E-027 non giustifica aspettarsi molto 
 glossario generico. Con appena 293.711 B liberi, un LM piu' grande richiede spazio recuperato
 altrove; loss training-only e dati sono piu' comodi entro il tetto stretto.
 
+**Gia' misurato (E-034, 2026-11-12, solo dev).** Tenere i trigrammi visti una volta vale
+**−0,598 pp** di macro dev con (2,1) e **−0,644 pp** con (1,1), entrambi con CI che esclude
+zero, ma i binari pesano 12,03/12,31 MB: pacchetti 26,36/26,64 MB, fuori sia dai 20 MB sia dal
+tier 25 MB. Il peso dei termini ×5 e' un tie, quindi ×3 e' saturo. Il seguito coerente e' una
+**selezione budgeted** (~65k dei 1.477.990 trigrammi extra nei 293.711 B liberi), da
+pre-registrare contro A3; non eseguita. Dettagli:
+[E-034](../../runs/E-034/RESULT.md).
+
 ## Strade Da Rimandare
 
 | Strada | Motivo |
@@ -212,7 +220,8 @@ Le opzioni rimandate possono tornare utili se diagnostiche e nuovi dati le giust
 ## Sequenza Raccomandata
 
 1. Congelare un piccolo mixed-dev spontaneo reale, anche S1/S2, con limiti speaker/canale espliciti.
-2. Provare InterCTC con/senza, mantenendo dati e ricetta controllati.
+2. Provare InterCTC con/senza, mantenendo dati e ricetta controllati
+   (pre-registrato in [`runs/E-033/PLAN.md`](../../runs/E-033/PLAN.md), non eseguito).
 3. Qualificare TTS con ascolto/licenze e fare un solo pilot contro controllo senza TTS.
 4. Riservare una nuova voce disponibile al readout di un candidato gia' congelato.
 5. Solo dopo diagnosticare eventuale anti-forgetting, audio reale aggiuntivo o interventi LM/ricerca.
