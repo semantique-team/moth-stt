@@ -60,3 +60,7 @@ runs/E-031/decoder-parity/logits.bin
 
 # E-028 quantization sweep: derived ONNX variants, never committed
 runs/E-028/quant/*.onnx
+
+# E-034: LM variants are reproducible from the pinned corpus and build_variants.py
+runs/E-034/build/*.bin
+runs/E-034/build/*.pkl.gz
