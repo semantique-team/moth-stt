@@ -1870,3 +1870,33 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
 - **Artifacts**: `runs/E-034/` (`PLAN.md`, `build.json`, `dev_sweep.py`, `dev/dev-only/`,
   `decide.py`, logs; binaries reproducible and gitignored).
 - **Cost**: no training, no downloads, 0 USD; build 18 s, four dev decodes ~16 min.
+
+## E-033 — InterCTC at weight 0.3: no dev benefit, option closed (2026-11-12)
+
+- **Question**: with data, recipe and seed held fixed, does a training-only auxiliary CTC loss on
+  the encoder output improve the fine-tune enough to be worth adopting? The strategy put it first
+  because it is training-only: the aux head is never registered on the deployable model, so the
+  graph and the 19,706,289-byte package cannot change.
+- **Method**: two paired arms from `runs/E-024/checkpoints/ckpt_best.pt`, E-028 data mixture and
+  recipe, seed 0, 1 epoch (13,283 steps), identical except `train.interctc`
+  (`weight: 0.3`, `tap: encoder_output`). Selection on full dev (3,939 clips, greedy, no LM):
+  macro WER with a paired within-language bootstrap, plus the E-024 checkpoint as a candidate.
+  Decision rule fixed in `runs/E-033/PLAN.md` before the run: arm macro lower by >= 0.05 pp and
+  paired CI upper < 0; only then a product readout.
+- **Result — rejected**:
+  - Paired dev macro **31.0350% vs 31.0101%** control, delta **+0.0249 pp [−0.0998, +0.1557]**
+    (pooled +0.0308 [−0.0923, +0.1657]): a tie pointing the wrong way. In-run curve agrees: the
+    arm is 32.137% vs 31.331% at step 1,000 and closes to 31.0335 vs 31.0077 at the end.
+  - `aux_loss` learns from **66.9 to 0.72** (min 0.35) over 394,625 training-only parameters, so
+    the head was exercised, not inert. Weighted `0.7 main + 0.3 aux` raised the early gradient
+    (mean 7.15 vs 6.60, max 66.0 vs 18.9) and the step-1,000 shock.
+  - The control reproduced E-028 exactly (loss at 500/1,000/1,500 and dev macro to 4-6 decimals),
+    so the comparison is genuinely paired: same machine, torch 2.14.1, commit `767122b`, seed 0,
+    parity gate 4.6e-6.
+- **Verdict**: **no dev benefit at weight 0.3; the option is closed for this recipe.** Nothing
+  exported, no product readout, T/T-S3/FLEURS/noise untouched. A lower weight, an aux-head
+  warm-up, another tap or a length-normalized auxiliary loss are untested and would each need a
+  new pre-registration; one seed cannot resolve a 0.02 pp difference either way.
+  [Result](runs/E-033/RESULT.md).
+- **Cost**: 1 h 56 (control) + 1 h 53 (arm) wall on the M5, no downloads, 0 USD. The E-024
+  +4.4% step-time probe did not reproduce as a slowdown here.

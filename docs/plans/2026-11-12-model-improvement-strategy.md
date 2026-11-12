@@ -154,7 +154,14 @@ Confrontare ricetta identica con/senza loss, budget breve e predefinito. Include
 checkpoint iniziale tra i candidati: non obbligare la selezione a produrre un modello nuovo.
 Misurare memoria e tempo. La sonda storica circa **+4,4% per step**
 ([E-024 PLAN](../../runs/E-024/PLAN.md), `probe_cost.py`) non e' un risultato WER ne' una
-previsione del costo sul run reale. Non abbiamo ancora prova di beneficio su Moth.
+previsione del costo sul run reale.
+
+**Gia' misurato (E-033, 2026-11-12).** Due armi appaiate dalla E-024 best, ricetta E-028, seed 0:
+il braccio InterCTC (weight 0,3) chiude a **31,0350%** di macro dev contro **31,0101%** del
+controllo (**+0,0249 pp**, CI [−0,0998, +0,1557]); l'aux loss impara (66,9 → 0,72) ma non produce
+guadagno, e il controllo riproduce E-028 esattamente. Opzione **chiusa** per questa ricetta: un
+peso più basso, un warm-up della testa ausiliaria o un tap diverso sarebbero una nuova arma da
+pre-registrare. Vedi [E-033](../../runs/E-033/RESULT.md).
 
 ### Fine-Tune Che Protegge Il Generale
 
@@ -220,8 +227,9 @@ Le opzioni rimandate possono tornare utili se diagnostiche e nuovi dati le giust
 ## Sequenza Raccomandata
 
 1. Congelare un piccolo mixed-dev spontaneo reale, anche S1/S2, con limiti speaker/canale espliciti.
-2. Provare InterCTC con/senza, mantenendo dati e ricetta controllati
-   (pre-registrato in [`runs/E-033/PLAN.md`](../../runs/E-033/PLAN.md), non eseguito).
+2. ~~Provare InterCTC con/senza~~ — **fatto (E-033, 2026-11-12): nessun beneficio a weight 0,3**
+   (dev macro +0,0249 pp, CI che include zero), opzione chiusa; un peso diverso sarebbe una nuova
+   arma. Vedi [`runs/E-033/RESULT.md`](../../runs/E-033/RESULT.md).
 3. Qualificare TTS con ascolto/licenze e fare un solo pilot contro controllo senza TTS.
 4. Riservare una nuova voce disponibile al readout di un candidato gia' congelato.
 5. Solo dopo diagnosticare eventuale anti-forgetting, audio reale aggiuntivo o interventi LM/ricerca.
