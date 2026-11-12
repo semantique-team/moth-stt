@@ -1,7 +1,8 @@
 # STATUS — snapshot per riprendere i lavori
 
 > **Audit no-weight PR (2026-11-12):** correzioni documentali e tooling di sicurezza/riproduzione
-> sul branch `fix/audit-release-integrity`; **pytest 1013 passed / 3 skipped**, Ruff pulito,
+> sul branch `fix/audit-release-integrity`; **pytest 1015 passed / 3 skipped** (anche con
+> `CI=true` su Windows), Ruff pulito,
 > Node **26/26**. Corpus storico riprodotto con hash esatto; macro CI e target-only readout
 > ricalcolati da artefatti conservati, non da nuova inferenza o test indipendente.
 > Nessun training, nuovo modello o gate rieseguito dichiarato da questo audit. Scope e limiti:

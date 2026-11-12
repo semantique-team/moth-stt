@@ -206,12 +206,21 @@ def test_receipt_comparison_uses_relative_identity_not_order(tmp_path):
 
 
 def test_missing_history_skips_explicitly(monkeypatch, request):
+    monkeypatch.delenv("CI", raising=False)
     monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess(
         args[0], 1, stdout=b"", stderr=b"missing commit"))
     with pytest.raises(pytest.skip.Exception, match="missing pinned Git history.*full history"):
         request.getfixturevalue("pinned_history")
     with pytest.raises(RuntimeError, match="full Git history is required"):
         audit.git_bytes("runs/E-031/PLAN.md")
+
+
+def test_missing_history_fails_in_ci(monkeypatch, request):
+    monkeypatch.setenv("CI", "true")
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: subprocess.CompletedProcess(
+        args[0], 1, stdout=b"", stderr=b"missing commit"))
+    with pytest.raises(pytest.fail.Exception, match="CI requires pinned Git history.*fetch-depth: 0"):
+        request.getfixturevalue("pinned_history")
 
 
 def test_terms_retry_reuses_matching_artifacts_and_preserves_stale(tmp_path, monkeypatch):
@@ -332,12 +341,14 @@ def test_audit_readout_small_count_invariants():
 
 
 def test_retained_audit_readout_identity_and_counts(pinned_history):
+    readout = load("audit_readout")
     artifact = RUN / "audit-readout.json"
     data = json.loads(artifact.read_bytes())
     for path, expected in data["inputs_sha256"].items():
         assert audit.digest(audit.git_bytes(path, data["revision"])) == expected
     for path, expected in data["code_sha256"].items():
-        assert audit.digest((audit.REPO / path).read_bytes()) == expected
+        assert readout.code_digest((audit.REPO / path).read_bytes()) == expected
+    assert data["code_hash_method"] == readout.CODE_HASH_METHOD
     assert data["bootstrap"]["resamples"] == 1000
     assert data["bootstrap"]["seed"] == 0
     rare = data["rare_target_only"]
@@ -350,3 +361,11 @@ def test_retained_audit_readout_identity_and_counts(pinned_history):
         assert arm["macro_wer"]["strata"] == {"it": 1248, "en": 2691}
     with pytest.raises(FileExistsError, match="refusing to overwrite"):
         audit.require_new(artifact)
+
+
+def test_audit_code_hash_is_checkout_newline_independent():
+    readout = load("audit_readout")
+    lf = b"first line\nsecond line\n"
+    assert readout.code_digest(lf.replace(b"\n", b"\r\n")) == readout.code_digest(lf)
+    assert readout.code_digest(lf) == audit.digest(lf)
+    assert readout.code_digest(lf + b"changed\n") != readout.code_digest(lf)

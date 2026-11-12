@@ -13,14 +13,15 @@
     "runs/E-031/eval/frozen_1_2_terms/t600.hyp.jsonl": "a07fc630eccb5bdb5cf047aa242bec60ce204d77fa9377a3ac2a77635e00e828",
     "runs/E-030/eval/e028-int8/t600.hyp.jsonl": "be8d3c9b115a50bd4c6c3cf342604f3ac335a3cc20199e42113c0fe6e5406014"
   },
+  "code_hash_method": "SHA-256 of source bytes with CRLF normalized to LF",
   "code_sha256": {
-    "runs/E-031/audit_readout.py": "79cf0346f9dd3f085918e22a58371ad0bd622899c734952d46338d092f131d1a",
+    "runs/E-031/audit_readout.py": "e0be83986269cc0f3063791df34ab4b501d4e53efe0769dbe801355cf9eed423",
     "runs/E-031/audit.py": "d14ec9e16bba29a80c10042ef3c858cc4a66394caaeaebfa3e9187f7905c62f2",
-    "runs/E-031/gate.py": "92d477c0fa5381c228f27a36efcfef500913a47b8a108e5cde081778d255c2f9",
-    "runs/E-031/build_lm.py": "6729e99d8b5cfc82426f9e513f0800e95cc9bc439638d7d044fe33fe51a14995",
-    "stt/eval.py": "84a3174332172cbb243d58c2f01a2ba5f80ad54f7606e796ca121ad378478aea",
-    "stt/text.py": "bb5d86e4df1a05e612757cdfa1df852e3ad7c5ce88ba7c3a8c13171012892886",
-    "stt/data/sources.py": "d19c5ec5a1a2560d5877d7fa9e4a38ccfe85309ed9b7c13ac235c6bcb1e6d91d"
+    "runs/E-031/gate.py": "14855265750237526c75811e71a62ecb30aa4b71280ee5126e380291f60b54bd",
+    "runs/E-031/build_lm.py": "d47e34748e1e2ac73de95b989c45fb3df311491eb6e1f0254d544d92dca3e780",
+    "stt/eval.py": "5246bc242d0d15827a02840939ae701fcca01ba17ce81e4a6f2cda05dddfe121",
+    "stt/text.py": "926d2464afaf4b9a62c1da9e0d145b0530883eb1df0e4b01fe9cc9f668974f94",
+    "stt/data/sources.py": "202a2f6e8177e2093b74f1de42c65cca5904a65c6c9e69842a61eb5ab32479bf"
   },
   "versions": {
     "num2words": "0.5.14",

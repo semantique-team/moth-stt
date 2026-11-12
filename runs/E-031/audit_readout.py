@@ -8,11 +8,15 @@ from pathlib import Path
 from audit import E031_REVISION, REPO, digest, git_bytes, read_pinned_hypotheses, require_new
 from gate import target_rare_rows
 
-from stt.data.sources import sha256_file
 from stt.eval import _compare, macro_wer_bootstrap, score_rows
 
 OUT = Path(__file__).resolve().parent
 ARMS = ("A0_shipped", "A1_frozen_2_2", "A2_frozen_1_2", "A3_frozen_1_2_terms")
+CODE_HASH_METHOD = "SHA-256 of source bytes with CRLF normalized to LF"
+
+
+def code_digest(content):
+    return digest(content.replace(b"\r\n", b"\n"))
 
 
 def macro_readout(rows, metrics, bootstrap=1000, seed=0):
@@ -84,7 +88,8 @@ def readout(bootstrap=1000, seed=0):
         "evidence": "Retained development evidence, not an independent test or new decode. "
                     "T/S3 repeatedly informed development; dev selection CIs are post-hoc recomputation.",
         "revision": E031_REVISION, "inputs_sha256": inputs,
-        "code_sha256": {name: sha256_file(REPO / name) for name in (
+        "code_hash_method": CODE_HASH_METHOD,
+        "code_sha256": {name: code_digest((REPO / name).read_bytes()) for name in (
             "runs/E-031/audit_readout.py", "runs/E-031/audit.py", "runs/E-031/gate.py",
             "runs/E-031/build_lm.py", "stt/eval.py", "stt/text.py", "stt/data/sources.py")},
         "versions": {name: version(name) for name in ("num2words", "numpy")},
