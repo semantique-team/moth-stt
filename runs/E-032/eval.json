@@ -1,0 +1,395 @@
+{
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "checkpoint": "runs/E-032/checkpoints/ckpt_best.pt",
+  "lms": {
+    "shipped-0.8.0": {
+      "lm": "release/lm_bpe3.bin",
+      "sets": {
+        "t600": {
+          "wer": 0.25229357798165136,
+          "eta": 0.5321188878235859,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.005160550458715579,
+            "wer_diff_ci": [
+              -0.0017351069982649014,
+              0.012593016599885543
+            ],
+            "wer_tie": true,
+            "eta_diff": -0.009587727708533,
+            "eta_diff_ci": [
+              -0.025787965616045905,
+              0.005045408678102992
+            ],
+            "eta_tie": true
+          }
+        },
+        "t-s3": {
+          "wer": 0.2674616695059625,
+          "eta": 0.4676056338028169,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.015332197614991494,
+            "wer_diff_ci": [
+              0.0033812341504648735,
+              0.027947598253275113
+            ],
+            "wer_tie": false,
+            "eta_diff": -0.03380281690140846,
+            "eta_diff_ci": [
+              -0.06497175141242939,
+              -0.005115089514066473
+            ],
+            "eta_tie": false
+          }
+        },
+        "fleurs_it_test": {
+          "wer": 0.20661053944496413,
+          "eta": null,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.004115996258185206,
+            "wer_diff_ci": [
+              0.0008085582783928236,
+              0.007294264339152118
+            ],
+            "wer_tie": false,
+            "eta_diff": null,
+            "eta_diff_ci": null,
+            "eta_tie": false
+          }
+        },
+        "fleurs_en_test": {
+          "wer": 0.5047211050883021,
+          "eta": null,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.006644518272425237,
+            "wer_diff_ci": [
+              0.0014552302687895757,
+              0.011388913604413187
+            ],
+            "wer_tie": false,
+            "eta_diff": null,
+            "eta_diff_ci": null,
+            "eta_tie": false
+          }
+        }
+      },
+      "rare": {
+        "en_hit": 26,
+        "en_ref": 81,
+        "aligned_eta": 0.32098765432098764,
+        "baseline_en_hit": 23,
+        "vs_baseline": {
+          "other": null,
+          "other_manifest_sha256": null,
+          "wer_diff": 0.0038610038610038533,
+          "wer_diff_ci": [
+            -0.02371541501976282,
+            0.03137254901960784
+          ],
+          "wer_tie": true,
+          "eta_diff": 0.037037037037037035,
+          "eta_diff_ci": [
+            0.0,
+            0.08955223880597013
+          ],
+          "eta_tie": true
+        }
+      },
+      "terms": {
+        "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-032/eval/shipped-0.8.0/t600.hyp.jsonl",
+        "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-030/eval/e028-int8/t600.hyp.jsonl",
+        "groups": {
+          "natural": {
+            "base": {
+              "correct": 436,
+              "occurrences": 817,
+              "accuracy": 0.5336597307221542
+            },
+            "new": {
+              "correct": 424,
+              "occurrences": 817,
+              "accuracy": 0.5189718482252142
+            }
+          },
+          "gold": {
+            "base": {
+              "correct": 126,
+              "occurrences": 179,
+              "accuracy": 0.7039106145251397
+            },
+            "new": {
+              "correct": 122,
+              "occurrences": 179,
+              "accuracy": 0.6815642458100558
+            }
+          },
+          "never": {
+            "base": {
+              "correct": 11,
+              "occurrences": 47,
+              "accuracy": 0.23404255319148937
+            },
+            "new": {
+              "correct": 14,
+              "occurrences": 47,
+              "accuracy": 0.2978723404255319
+            }
+          }
+        },
+        "rare": {
+          "n": 47,
+          "base": 0.23404255319148937,
+          "new": 0.2978723404255319,
+          "delta": 0.06382978723404253,
+          "ci_low": 0.0,
+          "ci_high": 0.14893617021276595,
+          "bootstrap": 1000
+        },
+        "aligned_eta": {
+          "rare": {
+            "base": {
+              "eta": 0.2839506172839506,
+              "wer": 0.3590733590733591,
+              "en_hit": 23,
+              "en_ref": 81
+            },
+            "new": {
+              "eta": 0.32098765432098764,
+              "wer": 0.36293436293436293,
+              "en_hit": 26,
+              "en_ref": 81
+            }
+          },
+          "all": {
+            "base": {
+              "eta": 0.5417066155321189,
+              "wer": 0.24713302752293578,
+              "en_hit": 565,
+              "en_ref": 1043
+            },
+            "new": {
+              "eta": 0.5321188878235859,
+              "wer": 0.25229357798165136,
+              "en_hit": 555,
+              "en_ref": 1043
+            }
+          }
+        },
+        "gold_terms": {
+          "base": [
+            19,
+            27
+          ],
+          "new": [
+            18,
+            27
+          ]
+        }
+      }
+    },
+    "e031-a3": {
+      "lm": "runs/E-031/build/frozen_1_2_terms.bin",
+      "sets": {
+        "t600": {
+          "wer": 0.24827981651376146,
+          "eta": 0.538830297219559,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.007454128440366969,
+            "wer_diff_ci": [
+              0.0002849814762040659,
+              0.014844419069369091
+            ],
+            "wer_tie": false,
+            "eta_diff": -0.01342281879194629,
+            "eta_diff_ci": [
+              -0.028884462151394508,
+              0.0027881040892192566
+            ],
+            "eta_tie": true
+          }
+        },
+        "t-s3": {
+          "wer": 0.26405451448040884,
+          "eta": 0.476056338028169,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.01448040885860305,
+            "wer_diff_ci": [
+              0.0008474576271186307,
+              0.0289855072463768
+            ],
+            "wer_tie": false,
+            "eta_diff": -0.03661971830985916,
+            "eta_diff_ci": [
+              -0.06756756756756754,
+              -0.006472491909385092
+            ],
+            "eta_tie": false
+          }
+        },
+        "fleurs_it_test": {
+          "wer": 0.2053632678515747,
+          "eta": null,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.0037418147801683843,
+            "wer_diff_ci": [
+              0.0004864700516874487,
+              0.006789036962534578
+            ],
+            "wer_tie": false,
+            "eta_diff": null,
+            "eta_diff_ci": null,
+            "eta_tie": false
+          }
+        },
+        "fleurs_en_test": {
+          "wer": 0.502797691904179,
+          "eta": null,
+          "vs_baseline": {
+            "other": null,
+            "other_manifest_sha256": null,
+            "wer_diff": 0.004721105088302091,
+            "wer_diff_ci": [
+              -0.0001729954156215463,
+              0.00954382278259347
+            ],
+            "wer_tie": true,
+            "eta_diff": null,
+            "eta_diff_ci": null,
+            "eta_tie": false
+          }
+        }
+      },
+      "rare": {
+        "en_hit": 42,
+        "en_ref": 81,
+        "aligned_eta": 0.5185185185185185,
+        "baseline_en_hit": 38,
+        "vs_baseline": {
+          "other": null,
+          "other_manifest_sha256": null,
+          "wer_diff": -0.015444015444015413,
+          "wer_diff_ci": [
+            -0.04313725490196077,
+            0.007936507936507936
+          ],
+          "wer_tie": true,
+          "eta_diff": 0.04938271604938271,
+          "eta_diff_ci": [
+            0.0,
+            0.12
+          ],
+          "eta_tie": true
+        }
+      },
+      "terms": {
+        "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-032/eval/e031-a3/t600.hyp.jsonl",
+        "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-031/eval/frozen_1_2_terms/t600.hyp.jsonl",
+        "groups": {
+          "natural": {
+            "base": {
+              "correct": 432,
+              "occurrences": 817,
+              "accuracy": 0.5287637698898409
+            },
+            "new": {
+              "correct": 415,
+              "occurrences": 817,
+              "accuracy": 0.5079559363525091
+            }
+          },
+          "gold": {
+            "base": {
+              "correct": 127,
+              "occurrences": 179,
+              "accuracy": 0.7094972067039106
+            },
+            "new": {
+              "correct": 123,
+              "occurrences": 179,
+              "accuracy": 0.6871508379888268
+            }
+          },
+          "never": {
+            "base": {
+              "correct": 24,
+              "occurrences": 47,
+              "accuracy": 0.5106382978723404
+            },
+            "new": {
+              "correct": 29,
+              "occurrences": 47,
+              "accuracy": 0.6170212765957447
+            }
+          }
+        },
+        "rare": {
+          "n": 47,
+          "base": 0.5106382978723404,
+          "new": 0.6170212765957447,
+          "delta": 0.1063829787234043,
+          "ci_low": 0.021276595744680882,
+          "ci_high": 0.19202127659574425,
+          "bootstrap": 1000
+        },
+        "aligned_eta": {
+          "rare": {
+            "base": {
+              "eta": 0.4691358024691358,
+              "wer": 0.28185328185328185,
+              "en_hit": 38,
+              "en_ref": 81
+            },
+            "new": {
+              "eta": 0.5185185185185185,
+              "wer": 0.26640926640926643,
+              "en_hit": 42,
+              "en_ref": 81
+            }
+          },
+          "all": {
+            "base": {
+              "eta": 0.5522531160115053,
+              "wer": 0.2408256880733945,
+              "en_hit": 576,
+              "en_ref": 1043
+            },
+            "new": {
+              "eta": 0.538830297219559,
+              "wer": 0.24827981651376146,
+              "en_hit": 562,
+              "en_ref": 1043
+            }
+          }
+        },
+        "gold_terms": {
+          "base": [
+            19,
+            27
+          ],
+          "new": [
+            18,
+            27
+          ]
+        }
+      }
+    }
+  }
+}

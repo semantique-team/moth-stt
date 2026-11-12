@@ -1,0 +1,91 @@
+{
+  "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-032/eval/e031-a3/t600.hyp.jsonl",
+  "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-031/eval/frozen_1_2_terms/t600.hyp.jsonl",
+  "groups": {
+    "natural": {
+      "base": {
+        "correct": 432,
+        "occurrences": 817,
+        "accuracy": 0.5287637698898409
+      },
+      "new": {
+        "correct": 415,
+        "occurrences": 817,
+        "accuracy": 0.5079559363525091
+      }
+    },
+    "gold": {
+      "base": {
+        "correct": 127,
+        "occurrences": 179,
+        "accuracy": 0.7094972067039106
+      },
+      "new": {
+        "correct": 123,
+        "occurrences": 179,
+        "accuracy": 0.6871508379888268
+      }
+    },
+    "never": {
+      "base": {
+        "correct": 24,
+        "occurrences": 47,
+        "accuracy": 0.5106382978723404
+      },
+      "new": {
+        "correct": 29,
+        "occurrences": 47,
+        "accuracy": 0.6170212765957447
+      }
+    }
+  },
+  "rare": {
+    "n": 47,
+    "base": 0.5106382978723404,
+    "new": 0.6170212765957447,
+    "delta": 0.1063829787234043,
+    "ci_low": 0.021276595744680882,
+    "ci_high": 0.19202127659574425,
+    "bootstrap": 1000
+  },
+  "aligned_eta": {
+    "rare": {
+      "base": {
+        "eta": 0.4691358024691358,
+        "wer": 0.28185328185328185,
+        "en_hit": 38,
+        "en_ref": 81
+      },
+      "new": {
+        "eta": 0.5185185185185185,
+        "wer": 0.26640926640926643,
+        "en_hit": 42,
+        "en_ref": 81
+      }
+    },
+    "all": {
+      "base": {
+        "eta": 0.5522531160115053,
+        "wer": 0.2408256880733945,
+        "en_hit": 576,
+        "en_ref": 1043
+      },
+      "new": {
+        "eta": 0.538830297219559,
+        "wer": 0.24827981651376146,
+        "en_hit": 562,
+        "en_ref": 1043
+      }
+    }
+  },
+  "gold_terms": {
+    "base": [
+      19,
+      27
+    ],
+    "new": [
+      18,
+      27
+    ]
+  }
+}
