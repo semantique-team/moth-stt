@@ -1,0 +1,54 @@
+{
+  "selection": "paired within-language macro WER on 3,939 dev clips, greedy, no LM",
+  "control": {
+    "step": 13283,
+    "macro": 0.31010131903961546,
+    "wer": 0.3026755141538527,
+    "per_language": {
+      "it": 0.36290741703170243,
+      "en": 0.2572952210475285
+    }
+  },
+  "arm": {
+    "step": 13283,
+    "macro": 0.31035032716744926,
+    "wer": 0.3029839001254812,
+    "per_language": {
+      "it": 0.3627341797213354,
+      "en": 0.25796647461356303
+    }
+  },
+  "arm_vs_control": {
+    "pooled_wer": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": 0.000308385971628522,
+      "wer_diff_ci": [
+        -0.0009231188830261527,
+        0.0016565138399059487
+      ],
+      "wer_tie": true,
+      "eta_diff": null,
+      "eta_diff_ci": null,
+      "eta_tie": false
+    },
+    "macro": {
+      "point": 0.0002490081278337941,
+      "ci": [
+        -0.0009977693405606725,
+        0.0015565034087263174
+      ],
+      "strata": {
+        "it": 1248,
+        "en": 2691
+      },
+      "bootstrap": 1000,
+      "seed": 0,
+      "tie": true
+    }
+  },
+  "advance_rule": "macro point lower by >= 0.05 pp AND paired CI upper < 0",
+  "initial_checkpoint": "the E-024 initial checkpoint is also a candidate; its greedy dev macro is recorded in E-028 (31.01 after fine-tuning, 30.81 before) and it was not re-decoded here",
+  "arm_advances": false,
+  "decision": "no dev benefit at weight 0.3; close the option for this recipe"
+}
