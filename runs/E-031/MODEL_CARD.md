@@ -42,8 +42,8 @@ model-index:
 
 # Moth STT 0.8.1 — Italian + English code-switching, 19.7 MB, CPU-only
 
-> **Release candidate, prepared 2026-11-12; not uploaded yet.** The acoustic graph is the
-> published 0.8.0 model. Only the trigram LM and the version string changed.
+> **Published 2026-11-12** as a decode-only update. The acoustic graph is the published 0.8.0
+> model; only the trigram LM and the version string changed.
 
 A very small open **Italian + English code-switching** speech-to-text model: a Whisper-tiny
 encoder initialised from `openai/whisper-tiny` (MIT), fine-tuned behind a **linear CTC head** over
@@ -116,11 +116,12 @@ and no quantization-aware training was used. The change is the 5.4 MB browser LM
 
 ## Noise
 
-The acoustic checkpoint is unchanged, so the 0.8.0 noise result (same decoder, fp32 checkpoints,
-E-024 pool, 100 S3 clips) applies: tie at 10–30 dB, tie at 15 dB, significantly better clean.
-The **full SNR curve has not been re-run with the new LM**. The E-011 non-speech check is relative
-and shows no regression (559 vs 567 emitted words on 457 clips, no VAD in that harness). This is
-not the E-025 unseen-room curve.
+The acoustic checkpoint is unchanged. Re-measured with the **same fp32 checkpoint, decoder,
+100 S3 clips, pool and seed** as the 0.8.0 control, changing only the LM: clean 20.03 vs 20.37,
+30 dB 21.22 vs 21.90, 20 dB 24.28 vs 25.47, 15 dB 27.67 vs 27.33, 10 dB 33.79 vs 34.63, 5 dB
+40.41 vs 40.92. **Every condition is a statistical tie**; mean 5–30 dB **29.47 vs 30.05**. No
+regression. This is a same-pool upper bound, one speaker, not the E-025 unseen-room curve. The
+int8/browser path was not re-measured here; the graph is unchanged and acceptance is 4/4.
 
 ## How to use
 

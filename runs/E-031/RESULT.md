@@ -1,9 +1,9 @@
 # E-031 — RESULT: an intermediate LM clears the rare gate inside the 20 MB ceiling
 
 > Executed 2026-11-12 on the unchanged 0.8.0 int8 graph. Planned and pre-registered in `PLAN.md`
-> before the frozen corpus, the arms and any decode. **Adopted** under the pre-registered rule;
-> the browser acceptance, model card and release record are prepared. **Not published**:
-> independent natural mixed-dev is still missing.
+> before the frozen corpus, the arms and any decode. **Adopted and published as 0.8.1 on
+> 2026-11-12**, after the browser acceptance, the full noise curve and the decoder-parity check.
+> Independent natural mixed-dev is still missing and is declared as such.
 
 ## Verdict
 
@@ -37,6 +37,10 @@ closed by a decode-side change.
 
 Noise check (E-011 set, no VAD, relative only): candidate **559** emitted words vs baseline
 **567** on 457 clips; no regression. The absolute count is not the VAD-gated product metric.
+The full E-024 SNR curve was then re-run with the new LM on the same checkpoint, decoder, 100 S3
+clips and seed: clean 20.03 vs 20.37, 30/20/15/10/5 dB **21.22/24.28/27.67/33.79/40.41** vs
+**21.90/25.47/27.33/34.63/40.92**; every condition is a tie, mean 5–30 dB **29.47 vs 30.05**
+(`runs/E-031/noise-e031-lm/RESULT.md`).
 
 ## Dev selection (no T used)
 
@@ -83,19 +87,23 @@ identified, exercised at build time rather than as decode-time contextual bias (
 paired CI excluding zero. The artifact is a **decode-side release candidate**: same acoustic
 weights, same decoder settings, one new `lm_bpe3.bin`.
 
-Done after the gate readout:
+Done before publication:
 
 - browser (JS/WASM) decode: real-Chromium acceptance **4/4** on the staged bundle, and
   **decoder-level JS↔Python parity exact** on identical logits. The single 3 s fixture differs
   from Python by two words with **both** the 0.8.0 and 0.8.1 LM, so the residual is the browser
   acoustic path, not the new LM (`runs/E-031/browser-parity/RESULT.md`);
+- full E-024 noise curve with the new LM: all conditions tie, mean 5–30 dB **29.47 vs 30.05**
+  (`runs/E-031/noise-e031-lm/RESULT.md`);
 - model card `runs/E-031/MODEL_CARD.md`, release record `runs/E-031/release-0.8.1.json`
-  (`published: false`), staged bundle `runs/E-031/release/` validated at 19,706,289 B.
+  (`published: true`), staged bundle `runs/E-031/release/` validated at 19,706,289 B;
+- **published 2026-11-12**: HF rev `1257327e…`, Space rev `9dfe70df…` `RUNNING`, remote hashes
+  verified.
 
-Still required before publication, and **blocked**:
+Still required for the next evidence level, and **blocked**:
 
 - independent natural mixed-dev and a new-voice rare readout. No new speaker is available at this
-  date; until then 0.8.1 is a candidate on T/S3 evidence only.
+  date; the published card states that the evidence remains T/S3.
 
 ## Artifacts
 
@@ -103,4 +111,5 @@ Still required before publication, and **blocked**:
 the 24 MB corpus itself is gitignored and reproducible), `build_lm.py` + `build/` + `build.json`,
 `dev_sweep.py` + `dev/` + `sweep.json`, `gate.py` + `gate.json` + `gate.log`,
 `eval/frozen_1_2_terms/` (hyps, metrics, terms), `stage_release.py`, `release-0.8.1.json`,
-`MODEL_CARD.md`, `browser-acceptance/`, `browser-parity/`, `decoder-parity/`.
+`MODEL_CARD.md`, `browser-acceptance/`, `browser-parity/`, `decoder-parity/`,
+`noise-e031-lm/` + `noise_compare.py`.

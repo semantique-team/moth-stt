@@ -1,7 +1,7 @@
 {
   "release": "0.8.1",
   "date": "2026-11-12",
-  "status": "release candidate prepared 2026-11-12; not uploaded",
+  "status": "published 2026-11-12",
   "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt (step 13283, unchanged from 0.8.0)",
   "lm": "runs/E-031/build/frozen_1_2_terms.bin (frozen corpus, bigrams >= 1, trigrams >= 2, term sentences x3)",
   "reason": "Decode-side only. The 2026-10-30 LM predates the E-015/E-028 term sentences; rebuilding it from a frozen training-side corpus with all bigrams and term-sentence weighting raises rare aligned ETA 28.4% -> 46.9% and improves T-600 24.71/54.17 -> 24.08/55.23, inside the 20 MB ceiling. No acoustic weights or decoder settings changed.",
@@ -61,21 +61,80 @@
   },
   "wer": {
     "int8": {
-      "t600": {"wer": 0.2408, "eta": 0.5523},
-      "t-s3": {"wer": 0.2496, "eta": 0.5127},
-      "t-s1": {"wer": 0.2098, "eta": 0.6328},
-      "t-s2": {"wer": 0.2632, "eta": 0.5156},
-      "fleurs_it_test": {"wer": 0.2016},
-      "fleurs_en_test": {"wer": 0.4981},
-      "t600_aligned_eta": {"hits": 576, "occurrences": 1043}
+      "t600": {
+        "wer": 0.2408,
+        "eta": 0.5523
+      },
+      "t-s3": {
+        "wer": 0.2496,
+        "eta": 0.5127
+      },
+      "t-s1": {
+        "wer": 0.2098,
+        "eta": 0.6328
+      },
+      "t-s2": {
+        "wer": 0.2632,
+        "eta": 0.5156
+      },
+      "fleurs_it_test": {
+        "wer": 0.2016
+      },
+      "fleurs_en_test": {
+        "wer": 0.4981
+      },
+      "t600_aligned_eta": {
+        "hits": 576,
+        "occurrences": 1043
+      }
     },
     "vs_0.8.0": {
-      "t600_wer": {"diff": -0.0063, "ci": [-0.01111, -0.00199]},
-      "t600_eta": {"diff": 0.01055, "ci": [0.00091, 0.02035]},
-      "t_s3_wer": {"diff": -0.00256, "ci": [-0.01018, 0.00510], "tie": true},
-      "t_s3_eta": {"diff": 0.01127, "ci": [-0.00826, 0.03226], "tie": true},
-      "fleurs_it": {"diff": -0.00087, "ci": [-0.00207, 0.00037], "tie": true},
-      "fleurs_en": {"diff": 0.0, "ci": [-0.00191, 0.00204], "tie": true}
+      "t600_wer": {
+        "diff": -0.0063,
+        "ci": [
+          -0.01111,
+          -0.00199
+        ]
+      },
+      "t600_eta": {
+        "diff": 0.01055,
+        "ci": [
+          0.00091,
+          0.02035
+        ]
+      },
+      "t_s3_wer": {
+        "diff": -0.00256,
+        "ci": [
+          -0.01018,
+          0.0051
+        ],
+        "tie": true
+      },
+      "t_s3_eta": {
+        "diff": 0.01127,
+        "ci": [
+          -0.00826,
+          0.03226
+        ],
+        "tie": true
+      },
+      "fleurs_it": {
+        "diff": -0.00087,
+        "ci": [
+          -0.00207,
+          0.00037
+        ],
+        "tie": true
+      },
+      "fleurs_en": {
+        "diff": 0.0,
+        "ci": [
+          -0.00191,
+          0.00204
+        ],
+        "tie": true
+      }
     },
     "rare": {
       "presence_base": 11,
@@ -86,7 +145,10 @@
       "aligned_hits": 38,
       "aligned_occurrences": 81,
       "eta_diff": 0.18519,
-      "eta_ci": [0.09615, 0.30986],
+      "eta_ci": [
+        0.09615,
+        0.30986
+      ],
       "rare_wer_new": 0.2819
     },
     "natural": 432,
@@ -96,15 +158,51 @@
     "gold_terms_16": "19/27"
   },
   "gates": {
-    "rare_aligned_eta": {"required": 0.30, "result": 0.46914, "pass": true},
-    "t600_wer": {"required_max": 0.2521, "result": 0.2408, "pass": true},
-    "t600_eta": {"required_min": 0.5367, "result": 0.5523, "pass": true},
-    "t_s3_wer": {"required_max": 0.2571, "result": 0.2496, "pass": true},
-    "t_s3_eta": {"required_min": 0.4964, "result": 0.5127, "pass": true},
-    "natural": {"required_min": 431, "result": 432, "pass": true},
-    "fleurs_it": {"required_max": 0.2075, "result": 0.2016, "pass": true},
-    "fleurs_en": {"required_max": 0.5031, "result": 0.4981, "pass": true},
-    "package": {"required_max": 20000000, "result": 19706289, "pass": true}
+    "rare_aligned_eta": {
+      "required": 0.3,
+      "result": 0.46914,
+      "pass": true
+    },
+    "t600_wer": {
+      "required_max": 0.2521,
+      "result": 0.2408,
+      "pass": true
+    },
+    "t600_eta": {
+      "required_min": 0.5367,
+      "result": 0.5523,
+      "pass": true
+    },
+    "t_s3_wer": {
+      "required_max": 0.2571,
+      "result": 0.2496,
+      "pass": true
+    },
+    "t_s3_eta": {
+      "required_min": 0.4964,
+      "result": 0.5127,
+      "pass": true
+    },
+    "natural": {
+      "required_min": 431,
+      "result": 432,
+      "pass": true
+    },
+    "fleurs_it": {
+      "required_max": 0.2075,
+      "result": 0.2016,
+      "pass": true
+    },
+    "fleurs_en": {
+      "required_max": 0.5031,
+      "result": 0.4981,
+      "pass": true
+    },
+    "package": {
+      "required_max": 20000000,
+      "result": 19706289,
+      "pass": true
+    }
   },
   "browser": {
     "acceptance": "runs/E-031/browser-acceptance (4/4 Chromium projects)",
@@ -113,15 +211,100 @@
     "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
     "rtfx_median": {
       "isolated-4": 46.23,
-      "isolated-1": 25.10,
+      "isolated-1": 25.1,
       "isolated-auto": 46.69,
       "nonisolated-auto": 24.83
     },
     "parity": "browser and Python differ by 2/8 words on the single 3 s fixture with both 0.8.0 and 0.8.1; JS and Python decoders are exact on identical logits (runs/E-031/browser-parity/RESULT.md)",
     "notes": "Runtime acceptance and parity, not a WER benchmark."
   },
+  "noise": {
+    "protocol": "E-024 pool, 100 S3 clips, fp32 E-028 checkpoint, decoder 0.55/2.7, seed 0; only the LM changes",
+    "control": "runs/E-028/noise-0.8.0",
+    "result": "runs/E-031/noise-e031-lm/RESULT.md",
+    "mean_5_30": {
+      "new": 0.29474,
+      "control": 0.30051
+    },
+    "conditions": {
+      "clean": {
+        "new": 0.2003,
+        "control": 0.2037,
+        "diff": -0.0034,
+        "ci": [
+          -0.0136,
+          0.007
+        ],
+        "tie": true
+      },
+      "30": {
+        "new": 0.2122,
+        "control": 0.219,
+        "diff": -0.0068,
+        "ci": [
+          -0.0185,
+          0.005
+        ],
+        "tie": true
+      },
+      "20": {
+        "new": 0.2428,
+        "control": 0.2547,
+        "diff": -0.0119,
+        "ci": [
+          -0.0253,
+          0.0
+        ],
+        "tie": true
+      },
+      "15": {
+        "new": 0.2767,
+        "control": 0.2733,
+        "diff": 0.0034,
+        "ci": [
+          -0.0067,
+          0.0153
+        ],
+        "tie": true
+      },
+      "10": {
+        "new": 0.3379,
+        "control": 0.3463,
+        "diff": -0.0085,
+        "ci": [
+          -0.0222,
+          0.0034
+        ],
+        "tie": true
+      },
+      "5": {
+        "new": 0.4041,
+        "control": 0.4092,
+        "diff": -0.0051,
+        "ci": [
+          -0.0119,
+          0.0
+        ],
+        "tie": true
+      }
+    },
+    "verdict": "all conditions tie; no significant regression"
+  },
   "experiment": "E-031",
   "rejected_in_same_session": "E-032 acoustic addendum (rare 32.1% vs 0.8.0, but T-S3/FLEURS/natural regress; not part of this package)",
-  "published": false,
-  "published_note": "No HF or Space upload was performed. Publishing requires a separate explicit decision; independent natural mixed-dev is still missing."
+  "published": {
+    "date": "2026-11-12",
+    "model": "https://huggingface.co/semantique-team/moth-stt",
+    "space": "https://huggingface.co/spaces/semantique-team/moth-demo",
+    "model_revision": "1257327e3622f3ac6c5653a32f87b793049c36b7",
+    "model_release_revision": "f40b691d3fcdbf504d44723665908b67f69e30b9",
+    "model_card_revision": "455267caec2e40a8f13b1da4d3c8bde68111baa4",
+    "space_revision": "9dfe70dfd6cd4a119a2f965d129093d1c3b79b7f",
+    "remote_config_sha256": "0a5ca2243801ba7b50f53dde8165a3b899862de12fa3d2622a0872c83856b56d",
+    "remote_model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+    "remote_lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
+    "space_runtime": "RUNNING",
+    "space_config_sha256": "0a5ca2243801ba7b50f53dde8165a3b899862de12fa3d2622a0872c83856b56d"
+  },
+  "published_note": "Uploaded with the stored hf token; remote hashes and Space runtime verified live on 2026-11-12."
 }

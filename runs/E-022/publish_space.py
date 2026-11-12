@@ -71,7 +71,7 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def stage(destination: Path, record_path: Path = RECORD) -> dict:
+def stage(destination: Path, record_path: Path = RECORD, release_path: Path = RELEASE) -> dict:
     """Build the Space tree; returns a report of what went in and whether it verifies."""
     if destination.exists():
         shutil.rmtree(destination)
@@ -103,7 +103,7 @@ def stage(destination: Path, record_path: Path = RECORD) -> dict:
     # The demo loads ./release/ and verifies these sha256 values in the browser before running.
     record = json.loads(record_path.read_text(encoding="utf-8"))
     for name in RELEASE_FILES:
-        source = RELEASE / name
+        source = release_path / name
         if not source.is_file():
             problems.append(f"missing {source}")
             continue
@@ -129,10 +129,11 @@ def main() -> int:
     parser.add_argument("--dest", default=None, help="staging directory (default: a temp dir)")
     parser.add_argument("--private", action="store_true", help="create the Space private")
     parser.add_argument("--record", default=str(RECORD), help="release record with hashes")
+    parser.add_argument("--release", default=str(RELEASE), help="release directory to stage")
     args = parser.parse_args()
 
     destination = Path(args.dest) if args.dest else Path(tempfile.mkdtemp(prefix="moth-space-"))
-    report = stage(destination, Path(args.record))
+    report = stage(destination, Path(args.record), Path(args.release))
     print(json.dumps(report, indent=1))
     print(f"staged in {destination}")
     if report["problems"]:

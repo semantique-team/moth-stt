@@ -15,7 +15,7 @@ license: apache-2.0
 
 Speech-to-text for **Italian with English words mixed in**, running **entirely in your browser**.
 
-Nothing is uploaded: the 19.4 MB package (11.9 MB int8 ONNX, a 5.1 MB trigram LM, a 2.3 MB VAD)
+Nothing is uploaded: the 19.7 MB package (11.9 MB int8 ONNX, a 5.4 MB trigram LM, a 2.3 MB VAD)
 is fetched once and then runs on your machine through ONNX Runtime Web / WebAssembly. Your audio
 never leaves the tab, and the page keeps working if you disconnect after it has loaded.
 
@@ -23,11 +23,12 @@ This Space serves the same artifact that is published at
 [`semantique-team/moth-stt`](https://huggingface.co/semantique-team/moth-stt), byte for byte, and
 verifies every file's sha256 at load time before running it.
 
-**0.8.0** adds a 50-sentence term addendum from a second voice and a decoder recalibration. Rare
-English terms improve from **8/47 to 11/47** and rare aligned ETA from **22.2% to 28.4%**; the
-held-out speaker S3 improves from **27.00 to 25.21 WER**. The mixed-set aggregate is a tie
-(24.71 / 54.17 vs 25.14 / 54.65). The rare-term gate target of 30% is missed by two aligned
-occurrences; the model card states this explicitly.
+**0.8.1** is a decode-side update: the acoustic graph is unchanged, the trigram LM was rebuilt from
+a frozen training-side corpus with all bigrams and the rare-term sentences weighted. Rare aligned
+ETA rises from **28.4% to 46.9%** (23/81 → 38/81) and rare presence from **11/47 to 24/47**; the
+mixed set improves from **24.71 to 24.08 WER** and **54.17 to 55.23 ETA**, while the held-out
+speaker S3 is a tie at **24.96 / 51.27**. Natural-term presence is 432/817. The 0.8.0 rare-gate
+exception is closed.
 
 ## What it is good at, honestly
 
@@ -40,7 +41,7 @@ occurrences; the model card states this explicitly.
 
 - No punctuation, no casing: output is lowercase, unpunctuated, numbers spelled out.
 - Pure English is weak (~50% WER); this is a code-switching model, not a bilingual one.
-- **English terms remain the weak spot**, though 0.8.0 improves the rare ones: ~27% WER on a
+- **English terms remain the weak spot**, though 0.8.1 improves the rare ones: ~27% WER on a
   sentence containing a term against ~14% on a sentence without it (0.7.0 measurement). If it gets
   a term wrong, that is the known limit.
 - Speaker coverage is three people. A fourth was recruited and never recorded.
