@@ -176,6 +176,14 @@ recalibration (E-030) recovered T-600 to 24.71 / 54.17, T-S3 to 25.21 / 50.14 an
 436/817, leaving only the primary rare gate two aligned occurrences short. That is a documented
 product exception, not a clean gate pass. See `runs/E-030/RESULT.md`.
 
+## Post-release noise check (2026-11-12)
+
+The 0.7.0 noise claim was re-tested with the **same decoder** for both checkpoints on the E-024
+pool (100 S3 clips). 0.8.0 is a tie at 10–30 dB (mean WER **27.33 vs 27.76**), a tie at 15 dB
+(27.33 both), and significantly better clean (**20.37 vs 23.09, −2.72 [−4.42, −1.02]**); no
+condition is a significant regression. This is a same-pool upper bound, not the E-025 unseen-room
+curve. Full table: `runs/E-028/noise-0.8.0/RESULT.md`.
+
 ## Cost and artifacts
 
 Training **1 h 47**, evaluation ~4 min, no teacher, no downloads, 0 USD. Artifacts:

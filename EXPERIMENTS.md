@@ -1700,6 +1700,10 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   +0.43, FLEURS-IT +0.33 significant (inside the 0.5 margin), 16 gold terms −2 (`milestone`,
   `paypal`).
 - **Cost**: data prep ~2 min, training **1 h 47**, eval ~4 min; no teacher, no downloads, 0 USD.
+- **Post-release noise check (2026-11-12)**: re-ran the E-024 pool with the same decoder for
+  0.7.0 and 0.8.0 on 100 S3 clips. 0.8.0 is a tie at 10–30 dB (mean WER 27.33 vs 27.76), a tie at
+  15 dB, and significantly better clean (20.37 vs 23.09, −2.72 [−4.42, −1.02]); no significant
+  noise regression. Report: `runs/E-028/noise-0.8.0/RESULT.md`.
 - **Artifacts**: `runs/E-028/` (`PLAN.md`, `RESULT.md`, `config.yaml`, `prepare_terms.py`,
   `train.log.jsonl`, `train.out`, `eval/`), `recordings/manifests/R-S2.jsonl` (672 rows),
   `recordings/manifests/R-S2-terms.jsonl`, `data/shards/R-S2-terms`,

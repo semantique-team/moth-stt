@@ -77,11 +77,19 @@ def main() -> int:
     parser.add_argument("--out", required=True)
     parser.add_argument("--clips", type=int, default=100)
     parser.add_argument("--skip-clean", action="store_true")
+    parser.add_argument("--lm-weight", type=float, default=PARAMS["lm_weight"])
+    parser.add_argument("--token-bonus", type=float, default=PARAMS["token_bonus"])
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    params = {
+        "beam": PARAMS["beam"],
+        "top_k": PARAMS["top_k"],
+        "lm_weight": args.lm_weight,
+        "token_bonus": args.token_bonus,
+    }
     cfg = load_config(REPO / args.config)
     processor = load_tokenizer(REPO / cfg["tokenizer"])
     pieces = {i + 1: processor.id_to_piece(i) for i in range(processor.vocab_size())}
@@ -110,11 +118,11 @@ def main() -> int:
             log_probs[0],
             int(out_lengths[0]),
             pieces,
-            beam_width=PARAMS["beam"],
-            top_k=PARAMS["top_k"],
+            beam_width=params["beam"],
+            top_k=params["top_k"],
             lm=lm,
-            lm_weight=PARAMS["lm_weight"],
-            token_bonus=PARAMS["token_bonus"],
+            lm_weight=params["lm_weight"],
+            token_bonus=params["token_bonus"],
         )
 
     curve: dict[str, dict] = {}
@@ -167,6 +175,7 @@ def main() -> int:
 
     result: dict[str, object] = {
         "checkpoint": args.checkpoint,
+        "decode": params,
         "clips": len(s3),
         "noise_curve": curve,
         "mean_noise_wer_10_30": float(
@@ -199,11 +208,11 @@ def main() -> int:
                             log_probs[offset],
                             int(out_lengths[offset]),
                             pieces,
-                            beam_width=PARAMS["beam"],
-                            top_k=PARAMS["top_k"],
+                            beam_width=params["beam"],
+                            top_k=params["top_k"],
                             lm=lm,
-                            lm_weight=PARAMS["lm_weight"],
-                            token_bonus=PARAMS["token_bonus"],
+                            lm_weight=params["lm_weight"],
+                            token_bonus=params["token_bonus"],
                         )
             scored = score_rows(set_rows, hypotheses, bootstrap=1000, seed=0)
             clean_sets[name] = {

@@ -91,6 +91,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | INT8 E-028 (storico) | 2026-11-11: vecchio decoder, T-600 25,49 / 53,50; superato dall'arm E-030 |
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
 | E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **pubblicato come 0.8.0 il 2026-11-12** |
+| Rumore 0.8.0 | 2026-11-12: stesso decoder per 0.7.0/0.8.0, 100 clip S3, pool E-024; 10–30 dB **tie** (27,33 vs 27,76), 15 dB tie, clean **−2,72 [−4,42, −1,02]** significativo; nessuna regressione |
 | Prossimo passo | Monitorare 0.8.0; raccogliere un **mixed-dev naturale** e/o **dati rari mirati** per chiudere il gate raro e la selezione prodotto |
 | Dati non versionati | Release binari, checkpoint, tokenizer originale, raw audio e mel shard. Su questa macchina esistono; un clone pulito non ricostruisce il training senza dati/checkpoint |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |

@@ -114,6 +114,15 @@ inside the noise floor. This is a better quantization outcome than the earlier E
 used the 0.7.0 decoder and was 25.49 / 53.50 on T-600. No quantization-aware training was used; the
 improvement comes from the decoder recalibration, not from new weights.
 
+## Noise
+
+The 0.7.0 noise work is not undone by the 0.8.0 fine-tune. Re-measured on the same E-024 pool
+harness with the **same decoder** for both **fp32 checkpoints** (Python, 100 held-out-speaker S3
+clips, 6 conditions): 0.8.0 is a tie at 10–30 dB (mean WER **27.33 vs 27.76**), a tie at 15 dB
+(27.33 both), and **significantly better clean** (20.37 vs 23.09, **−2.72 [−4.42, −1.02]**). No
+condition is a significant regression. This is a same-pool upper bound, not the E-025 unseen-room
+curve; see `runs/E-028/noise-0.8.0/RESULT.md`.
+
 ## How to use
 
 The package is the whole runtime — no PyTorch, no Python:
