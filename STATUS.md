@@ -20,8 +20,10 @@
 > **E-032 (addendum acustico S1) è negativo** ed è respinto: rari 32,1% (LM 0.8.0) / 51,9%
 > (LM E-031) ma T-S3, FLEURS e naturali peggiori (sei FAIL nella tabella originale).
 > Browser acceptance **4/4**, parità decoder esatta, curva rumore con il nuovo LM **tutte tie**
-> (non equivalenza). Resta il **mixed-dev indipendente**,
-> bloccato finché non c'è uno speaker nuovo.
+> (non equivalenza). Il **dev su speaker noti** (S1/S2, sessioni/canali nuovi) è possibile
+> subito e non sostituisce l'holdout; il **mixed-dev indipendente** resta bloccato finché non
+> c'è uno speaker nuovo. Priorità e criteri proposti:
+> [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md).
 >
 > **Handoff precedente (2026-11-12, HEAD `3d399a4`):** leggi
 > [`docs/16-session-handoff-2026-11-12.md`](docs/16-session-handoff-2026-11-12.md). **0.8.0 è
@@ -116,7 +118,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Ultimo training accettato | **E-028 (acustica, 0.8.0/0.8.1)**: S2 + ricetta gentile + decoder E-030; 0.8.1 cambia solo il LM. E-024/E-025 restano l'evidenza rumore |
 | Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. **E-032 (S1, 50 frasi nuove, 2026-11-12):** ETA sulle frasi rare 32,1% (LM 0.8.0) / 51,9% (LM E-031), T-S3 **26,75/46,76** (LM 0.8.0) / **26,41/47,61** (LM E-031), FLEURS peggiori, naturali 424/415; **6 gate falliti** nella tabella originale. Distillazione Parakeet originaria mai eseguita |
 | Ultimo training candidato | nessuno; E-032 respinto, E-031 è decode-only e non cambia i pesi |
-| Non eseguito | E-018 gold scaling; **mixed-dev naturale indipendente** (bloccato: serve uno speaker nuovo); E-028/E-029/E-030/E-031/E-032 eseguiti. Previsioni non sono risultati |
+| Non eseguito | E-018 gold scaling; **mixed-dev naturale indipendente** (bloccato: serve uno speaker nuovo; un dev su speaker noti è proposto nel piano miglioramenti); E-028/E-029/E-030/E-031/E-032 eseguiti. Previsioni non sono risultati |
 | Runtime su main | PR #2 integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. La demo **0.8.1** è pubblicata e verificata live il 2026-11-12 (model sha `7bbfad7e…`, LM `3be1177b…`, config 0,55/2,7, Space `RUNNING`); non è una misura di qualità browser |
 | Audit/tooling su main | PR #3 mergiata 2026-11-11: audit 20/25 MB, tempo sicuro, InterCTC opt-in, preflight/resume, finalist eval, diagnostica, bias contestuale, LM builder/compaction. Nessun peso nuovo; il LM attuale risparmia 0 byte |
 | Diagnostica rari | E-026 (2026-11-11, no training): 41/47 riferimenti nel top-k, 6/47 potati; ETA allineata 47 rari 23,5% → 30,9% con E-015, ma T-600 54,17% → 53,40% |
@@ -127,7 +129,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
 | E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **pubblicato come 0.8.0 il 2026-11-12** |
 | Rumore 0.8.0 | 2026-11-12: stesso decoder per 0.7.0/0.8.0, 100 clip S3, pool E-024; 10–30 dB **tie** (27,33 vs 27,76), 15 dB tie, clean **−2,72 [−4,42, −1,02]** significativo; nessuna regressione |
-| Prossimo passo | **Mixed-dev naturale indipendente + voce nuova** (bloccato: nessuno speaker nuovo disponibile); poi un readout raro con voce nuova. 0.8.1 è pubblicato; la card dichiara che l'evidenza resta T/S3 |
+| Prossimo passo | **Dev mixed naturale su speaker noti** (S1/S2, sessioni nuove) e **InterCTC controllo vs braccio**; l'**holdout indipendente con voce nuova** resta bloccato (nessuno speaker nuovo). Criteri e ordine: [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md). 0.8.1 è pubblicato; la card dichiara che l'evidenza resta T/S3 |
 | Dati non versionati | Release binari, checkpoint, tokenizer originale, raw audio e mel shard. Su questa macchina esistono; un clone pulito non ricostruisce il training senza dati/checkpoint |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

@@ -9,8 +9,20 @@ Fonti: [stato corrente](../../STATUS.md), [audit e correzioni](../18-audit-fixes
 [audit architetturale](../14-architecture-audit-2026-11-10.md) e risultati
 [E-028](../../runs/E-028/RESULT.md), [E-029](../../runs/E-029/RESULT.md),
 [E-031](../../runs/E-031/RESULT.md), [E-032](../../runs/E-032/RESULT.md).
+
+Il codice e le ricette gia' pronti (InterCTC opt-in, preflight/resume, finalist eval,
+diagnostica, builder LM) sono descritti in
+[miglioramenti dell'audit](../guides/audit-improvements-no-training.md): quel documento dice
+cosa e' implementato e come si lancia, questo decide priorita' e criteri. Non duplicare la
+ricetta InterCTC qui.
+
 Le raccomandazioni qui sotto usano 0.8.1; i riferimenti a 0.7.0 nelle guide precedenti
 descrivono il loro contesto storico, non la baseline di nuovi esperimenti.
+
+Per la sola **selezione**, questo piano sostituisce il wording "bloccato finche' non c'e' uno
+speaker nuovo" di [`STATUS.md`](../../STATUS.md): un dev su speaker noti (S1/S2, sessioni e
+canali nuovi) e' possibile subito. L'**holdout indipendente** con voce nuova resta bloccato e
+non va confuso con quel dev.
 
 ## Obiettivo E Constraint
 
@@ -140,8 +152,9 @@ runtime e non richiede asset finali aggiuntivi se esportato correttamente.
 
 Confrontare ricetta identica con/senza loss, budget breve e predefinito. Includere il
 checkpoint iniziale tra i candidati: non obbligare la selezione a produrre un modello nuovo.
-Misurare memoria e tempo. La sonda storica circa **+4,4% per step** non e' un risultato WER
-ne' una previsione del costo sul run reale. Non abbiamo ancora prova di beneficio su Moth.
+Misurare memoria e tempo. La sonda storica circa **+4,4% per step**
+([E-024 PLAN](../../runs/E-024/PLAN.md), `probe_cost.py`) non e' un risultato WER ne' una
+previsione del costo sul run reale. Non abbiamo ancora prova di beneficio su Moth.
 
 ### Fine-Tune Che Protegge Il Generale
 
