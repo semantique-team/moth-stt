@@ -1836,3 +1836,37 @@ VAD pipeline WER 40.48% vs no-VAD 39.82%, paired delta +0.66 points (CI includes
 Four synthetic nonspeech controls suppressed; shared-logit Python/JS transcripts match
 10/10 for beam and greedy. Runtime-only dependency profile and release integrity gates added.
 New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missing data.
+
+## E-034 — Trigram coverage is a real dev lever, and it does not fit (2026-11-12)
+
+- **Question**: 0.8.1 leaves 293,711 bytes below the 20 MB ceiling. Before designing budgeted
+  pruning, does extra n-gram coverage or a higher term weight move **dev** at all? If not, there
+  is nothing worth reclaiming bytes for.
+- **Method**: decode-only, on the E-031 frozen corpus (`runs/E-031/frozen/lm-corpus.jsonl`),
+  same tokenizer, backoff 0.4 and builder path. Arms: shipped A3 control `(1,2)` term ×3,
+  `(2,1)`, `(1,1)` and `(1,2)` term ×5. Every arm decoded in this run on full dev
+  (`mls_it_dev` 1,248 + `ls_en_dev` 2,691 = 3,939 clips / 10.48 h), fp32 E-028 checkpoint,
+  decoder frozen at E-030's beam 12 / top-k 10 / 0.55 / 2.7. T, T-S3, FLEURS and noise not read.
+  Decision rule fixed in `runs/E-034/PLAN.md` before the run: lower macro, paired CI upper < 0,
+  and binary ≤ 5,675,703 B.
+- **Result — nothing adopted**:
+  - **`(2,1)`** dev macro **−0.598 pp [−0.724, −0.457]**, **`(1,1)`** **−0.644 [−0.768, −0.503]**:
+    the extra 1,477,990 trigram entries are worth ~0.6 dev points. Cost **12,034,004 B** and
+    **12,313,440 B** → packages **26,358,301 / 26,637,737 B**, over both the 20 MB ceiling and the
+    25 MB tier (binary limit 10,675,703 B). The cheap intermediate arm keeps ~93% of the gain at
+    98% of the size, so it is not a budget escape.
+  - **Term weight ×5** on unchanged pruning is a **tie** (+0.0019 pp, CI [−0.0083, +0.0120],
+    same 5,381,992 B): the shipped ×3 is saturated on dev.
+  - The control reproduces the retained E-031 sweep **byte for byte** (identical `dev.hyp.jsonl`,
+    macro 22.8494), so the harness introduced no drift. `(1,1)` matches E-023's rejected 12.31 MB
+    arm exactly, independently of that run.
+- **Verdict**: **rejected as an LM change**. Confirms E-023's dev gain and shows the middle
+  threshold does not help affordability. The follow-up the arithmetic suggests is a *budgeted*
+  arm: keep `(1,2)` and add ~65,000 of the 1,477,990 single-count trigrams (4.4%, ~4.5 B/entry)
+  inside 293,711 B, ranked by preceding-bigram count or term coverage, pre-registered against A3
+  and read once on T/FLEURS/noise if it advances. Not executed here. No product claim: dev is
+  read-speech development data and a 12 MB LM changes browser load/memory, which was not measured.
+  [Result](runs/E-034/RESULT.md).
+- **Artifacts**: `runs/E-034/` (`PLAN.md`, `build.json`, `dev_sweep.py`, `dev/dev-only/`,
+  `decide.py`, logs; binaries reproducible and gitignored).
+- **Cost**: no training, no downloads, 0 USD; build 18 s, four dev decodes ~16 min.

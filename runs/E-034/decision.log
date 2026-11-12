@@ -1,0 +1,5 @@
+arm                 macro     Δ pp  ci upper      binary     package  fits  verdict
+A3_shipped         0.2285  +0.0000             5,381,992  19,706,289  True  control
+N1_2_1             0.2225  -0.5982    -0.457  12,034,004  26,358,301 False  wins dev, over budget: follow-up only
+N2_1_1             0.2221  -0.6440    -0.503  12,313,440  26,637,737 False  wins dev, over budget: follow-up only
+N3_1_2_terms5      0.2285  +0.0019    +0.012   5,381,992  19,706,289  True  no dev gain

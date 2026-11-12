@@ -1,0 +1,26 @@
+full dev: 3939 clips, 10.48 h
+--- A3_shipped: runs/E-031/build/frozen_1_2_terms.pkl.gz
+    batch 50/219
+    batch 100/219
+    batch 150/219
+    batch 200/219
+{"lm": "runs/E-031/build/frozen_1_2_terms.pkl.gz", "lm_bytes_pickle": 3706517, "overall_wer": 0.22142112762925625, "overall_eta": null, "it": 0.2787883287549187, "en": 0.17819917584978837, "macro": 0.22849375230235353, "macro_bootstrap": {"point": 0.22849375230235353, "ci": [0.22423141234849883, 0.23264260030605216], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}, "seconds": 243.5}
+--- N1_2_1: runs/E-034/build/N1_2_1.pkl.gz
+    batch 50/219
+    batch 100/219
+    batch 150/219
+    batch 200/219
+{"lm": "runs/E-034/build/N1_2_1.pkl.gz", "lm_bytes_pickle": 6752820, "overall_wer": 0.21555116016929327, "overall_eta": null, "it": 0.27200732546340983, "en": 0.1730156066454103, "macro": 0.22251146605441008, "macro_bootstrap": {"point": 0.22251146605441008, "ci": [0.21818140048306345, 0.2267936874592491], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}, "seconds": 243.0, "vs_control": {"other": "runs/E-034/dev/dev-only/A3_shipped/dev.hyp.jsonl", "other_manifest_sha256": null, "wer_diff": -0.005869967459962988, "wer_diff_ci": [-0.007090238431856105, -0.004630416312659313], "wer_tie": false, "eta_diff": null, "eta_diff_ci": null, "eta_tie": false}, "macro_vs_control": {"point": -0.005982286247943447, "ci": [-0.007242655130011849, -0.004573258094818872], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}}
+--- N2_1_1: runs/E-034/build/N2_1_1.pkl.gz
+    batch 50/219
+    batch 100/219
+    batch 150/219
+    batch 200/219
+{"lm": "runs/E-034/build/N2_1_1.pkl.gz", "lm_bytes_pickle": 6919111, "overall_wer": 0.21517897020353474, "overall_eta": null, "it": 0.2709431534140124, "en": 0.1731647741045291, "macro": 0.22205396375927078, "macro_bootstrap": {"point": 0.22205396375927078, "ci": [0.21775972949289835, 0.22620500722663478], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}, "seconds": 251.8, "vs_control": {"other": "runs/E-034/dev/dev-only/A3_shipped/dev.hyp.jsonl", "other_manifest_sha256": null, "wer_diff": -0.006242157425721512, "wer_diff_ci": [-0.007424874924317287, -0.004996971532404609], "wer_tie": false, "eta_diff": null, "eta_diff_ci": null, "eta_tie": false}, "macro_vs_control": {"point": -0.006439788543082747, "ci": [-0.007681757045662124, -0.005026378488367539], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}}
+--- N3_1_2_terms5: runs/E-034/build/N3_1_2_terms5.pkl.gz
+    batch 50/219
+    batch 100/219
+    batch 150/219
+    batch 200/219
+{"lm": "runs/E-034/build/N3_1_2_terms5.pkl.gz", "lm_bytes_pickle": 3706934, "overall_wer": 0.22145302962632127, "overall_eta": null, "it": 0.2787140841933328, "en": 0.17831105144412746, "macro": 0.22851256781873014, "macro_bootstrap": {"point": 0.22851256781873014, "ci": [0.2242250328164171, 0.23262996293892924], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}, "seconds": 241.9, "vs_control": {"other": "runs/E-034/dev/dev-only/A3_shipped/dev.hyp.jsonl", "other_manifest_sha256": null, "wer_diff": 3.190199706501473e-05, "wer_diff_ci": [-7.397778552781231e-05, 0.00012842190877762616], "wer_tie": true, "eta_diff": null, "eta_diff_ci": null, "eta_tie": false}, "macro_vs_control": {"point": 1.8815516376613495e-05, "ci": [-8.310981570358589e-05, 0.00011990186493515687], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": true}}
+ranking by dev macro: [('N2_1_1', 0.2221), ('N1_2_1', 0.2225), ('A3_shipped', 0.2285), ('N3_1_2_terms5', 0.2285)]
