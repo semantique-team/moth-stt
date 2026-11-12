@@ -1740,6 +1740,30 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   post-training quantization and QAT are both exhausted. [Result](runs/E-029/RESULT.md).
 - **Cost**: probe ~30 min total (4 arms), no teacher, no downloads, 0 USD.
 
+## E-030 — Decoder recalibration: E-028 INT8 reaches 5 of 6 gates (2026-11-11)
+
+- **Question**: E-028 INT8 misses the E-028 gates narrowly (rare ETA 29.6, T-600 ETA 53.50,
+  natural 428). Can a decoder-only change recover the margin without touching the weights?
+- **Hypothesis**: E-028 INT8 deletes more (8.49% vs 7.88%) and inserts less (1.03% vs 1.29%) than
+  0.7.0 on T-600; the shipped arm was tuned for 0.7.0.
+- **Selection**: 12 arms over beam / top-k / LM weight / token bonus on CV-IT 600 + FLEURS-IT/EN
+  dev. The best is **beam 12 / top-k 10 / LM 0.55 / bonus 2.7**, dev WER **30.95 vs 31.14**
+  (frozen), improving all three dev sets. T was read once, after selection.
+- **T readout (E-028 INT8, same artifact)**: T-600 **24.71 / 54.17** (old arm 25.49 / 53.50;
+  0.7.0 shipped 25.14 / 54.65), T-S3 **25.21 / 50.14** (old 25.89 / 49.01), natural **436/817**
+  (old 428; gate ≥431), rare presence **11/47**, rare aligned ETA **28.4% (23/81)** vs 0.7.0's
+  22.2% (18/81): **+6.2 [+1.1, +11.8]**; vs the old E-028 arm it is a tie (one occurrence).
+  FLEURS-IT/EN +0.29 / +0.42 vs 0.7.0, both ties and inside the 0.5 margin.
+- **Gates**: **5 of 6 pass** (T-600 ETA/WER, natural, FLEURS, dev-selected checkpoint). The primary
+  rare-ETA gate is **missed by two aligned occurrences** (28.4% vs ≥30%). E-028 fp32 has 25/81,
+  so the loss is quantization; head-fp32 also stays at 23/81 and is over budget (20.62 MB).
+- **Verdict**: **not published automatically**. The artifact is a much stronger tradeoff than the
+  old E-028 INT8 (T-600 tie vs 0.7.0, T-S3 better, rare significantly better, natural within the
+  431 gate), but the pre-registered primary gate is missed. Publication is an explicit product
+  decision; otherwise keep 0.7.0 and pursue targeted rare data, a same-size LM, or a natural
+  mixed-dev. [Result](runs/E-030/RESULT.md).
+- **Cost**: dev sweep ~17 min, T/FLEURS readout ~5 min, no training, 0 USD.
+
 ## Runtime acceptance follow-up (2026-11-10, no new model)
 
 Infrastructure validation, not a new quality-optimization arm. Original 0.7.0 assets

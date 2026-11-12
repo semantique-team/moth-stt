@@ -5,7 +5,9 @@
 > E-027, dati S2, E-028 fp32/INT8, sweep di quantizzazione, decisioni D36-D37. **0.7.0 resta
 > pubblicato; 0.8.0 non è pubblicato.** **E-029 QAT eseguito e negativo** (vedi sotto): la probe
 > chiude il gap di quantizzazione su dev ma fallisce i gate prodotto; il braccio completo non è
-> stato finanziato. [Piano](runs/E-029/PLAN.md), [risultato](runs/E-029/RESULT.md).
+> stato finanziato. **E-030** (decoder, stesso artefatto INT8) porta E-028 a **5 gate su 6**:
+> manca solo l'ETA rara (28,4% vs 30%). [Piano](runs/E-029/PLAN.md),
+> [risultato QAT](runs/E-029/RESULT.md), [risultato decoder](runs/E-030/RESULT.md).
 
 > **Acceptance/preflight locale (2026-11-10, mergiato con PR #3):** Chromium/WASM reale passa
 > quattro configurazioni (isolated auto/1/4 thread, nonisolated auto); VAD, guardie,
@@ -55,6 +57,14 @@
 > **428/817**. Anche il controllo fp32 è sotto E-028 (24,97 / 54,07, naturali 434). **Braccio
 > completo non finanziato; 0.8.0 non pubblicato; 0.7.0 resta online.**
 > [Risultato](runs/E-029/RESULT.md).
+>
+> **E-030 decoder (2026-11-11, stesso artefatto INT8):** ri-calibrazione del decoder
+> (beam 12 / top-k 10 / LM 0,55 / bonus 2,7), selezionata su dev. E-028 INT8 passa a
+> T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436/817**, rari **11/47** con
+> ETA rara **28,4% (23/81)** contro 22,2% di 0.7.0 (+6,2 [+1,1, +11,8]). **5 gate su 6**:
+> manca il gate primario raro per **2 occorrenze**; head-fp32 non recupera (23/81) ed è
+> fuori budget. **Non pubblicato automaticamente**: serve una decisione prodotto.
+> [Risultato](runs/E-030/RESULT.md).
 
 ## Stato Corrente Verificato (2026-11-10)
 
@@ -81,7 +91,8 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Dati S2 | 2026-11-11: addendum 50/50 valido, R-S2 672 righe; E-028 (E-015 v2) eseguito |
 | INT8 E-028 | 2026-11-11: pacchetto 19.440.760 byte, browser 4/4; T-600 25,49 / 53,50, T-S3 25,89 / 49,01, rari 12/47, naturali 428/817; **non pubblicato** |
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
-| Prossimo passo | Tenere **0.7.0**; QAT chiuso. Se si riprende: un **mixed-dev naturale vero** per la selezione prodotto, oppure mixed precision (head fp32 + trade LM) dentro 20 MB |
+| E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **non pubblicato** |
+| Prossimo passo | **Decisione prodotto** su 0.8.0 con l'arm E-030 (eccezione rara documentata) oppure tenere **0.7.0** e proseguire con dati rari mirati, LM same-size o **mixed-dev naturale** |
 | Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

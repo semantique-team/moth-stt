@@ -1,0 +1,60 @@
+{
+  "t600_e028_new_vs": {
+    "0.7.0_same_arm": {
+      "wer_diff": -0.00229,
+      "wer_ci": [-0.01056, 0.00553],
+      "wer_tie": true,
+      "eta_diff": -0.00575,
+      "eta_ci": [-0.02362, 0.01212],
+      "eta_tie": true
+    },
+    "0.7.0_shipped_arm": {
+      "wer_diff": -0.0043,
+      "wer_ci": [-0.01282, 0.00404],
+      "wer_tie": true,
+      "eta_diff": -0.00479,
+      "eta_ci": [-0.02291, 0.01345],
+      "eta_tie": true
+    },
+    "e028_old_arm": {
+      "wer_diff": -0.00774,
+      "wer_ci": [-0.01233, -0.00316],
+      "wer_tie": false,
+      "eta_diff": 0.00671,
+      "eta_ci": [-0.00098, 0.01522],
+      "eta_tie": true
+    }
+  },
+  "rare_eta_e028_new_vs": {
+    "0.7.0_same_arm": {
+      "diff": 0.07407,
+      "ci": [0.0127, 0.1358],
+      "tie": false,
+      "counts": [23, 17, 81]
+    },
+    "0.7.0_shipped_arm": {
+      "diff": 0.06173,
+      "ci": [0.011, 0.1184],
+      "tie": false,
+      "counts": [23, 18, 81]
+    },
+    "e028_old_arm": {
+      "diff": -0.01235,
+      "ci": [-0.0441, 0.0],
+      "tie": true,
+      "counts": [23, 24, 81]
+    }
+  },
+  "fleurs_e028_new_vs_070_same_arm": {
+    "fleurs_it_test": {
+      "wer_diff": 0.00293,
+      "wer_ci": [-0.00013, 0.00604],
+      "wer_tie": true
+    },
+    "fleurs_en_test": {
+      "wer_diff": 0.0042,
+      "wer_ci": [-0.00087, 0.00922],
+      "wer_tie": true
+    }
+  }
+}

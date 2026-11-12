@@ -1,7 +1,7 @@
 {
   "release": "0.8.0",
   "date": "2026-11-11",
-  "status": "not published; INT8 tradeoff against 0.7.0; cheap post-training quantization exhausted",
+  "status": "not published; E-030 decoder arm reaches 5/6 gates (rare aligned ETA 28.4% vs >=30); product decision pending",
   "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt (step 13283, S2 + gentle fine-tune from E-024/0.7.0)",
   "lm": "unchanged from 0.7.0 (dcf1d59f075858c7e5f210804b5aabde847fb5d33e8d716e0d534f7c7886003e)",
   "reason": "S2 term addendum (50 sentences) + head 1e-4 / encoder 1e-5. Raises rare aligned ETA 23.5 -> 30.9% and rare presence 17.0 -> 27.7%, T-S3 26.92 -> 25.55; T-600 fp32 24.66 / 54.65. INT8 T-600 25.49 / 53.50, T-S3 25.89 / 49.01.",
@@ -123,5 +123,28 @@
     "dev_wer_head_fp32": 0.31059,
     "head_fp32_package_bytes": 20622845,
     "static_qdq_dev_wer": 0.9144
+  },
+  "decoder_recalibration": {
+    "experiment": "E-030",
+    "arm": {
+      "beam": 12,
+      "top_k": 10,
+      "lm_weight": 0.55,
+      "token_bonus": 2.7
+    },
+    "selection": "dev WER on CV-IT 600 + FLEURS-IT/EN; T read once",
+    "t600": {
+      "wer": 0.2471,
+      "eta": 0.5417
+    },
+    "t_s3": {
+      "wer": 0.2521,
+      "eta": 0.5014
+    },
+    "natural": 436,
+    "rare_presence": 11,
+    "rare_aligned_eta": 0.284,
+    "gates": "5/6; rare aligned ETA misses the >=30% gate by two aligned occurrences (23/81 vs 25/81)",
+    "result": "runs/E-030/RESULT.md"
   }
 }

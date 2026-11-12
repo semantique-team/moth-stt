@@ -43,6 +43,11 @@ terms and 1.15 ETA points on T-600 relative to 0.7.0 INT8 (the T-600 differences
 (fake-quantization in the forward pass / QAT), which is a new training experiment; the cheap
 post-training variants are exhausted.
 
+**Update (E-030).** A decoder-only recalibration of the same INT8 graph improves T-600 to
+**24.71 / 54.17**, T-S3 to **25.21 / 50.14**, natural to **436/817** and keeps rare aligned ETA at
+28.4% (23/81). It passes five of the six E-028 gates; the rare gate is two occurrences short.
+See `runs/E-030/RESULT.md`.
+
 ## Artifacts
 
 - `quant_sweep.py`, `sweep.json` — dynamic variants; `.onnx` files are gitignored.

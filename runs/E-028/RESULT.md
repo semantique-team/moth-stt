@@ -160,6 +160,13 @@ sweep is in `QUANTIZATION.md`: the default dynamic INT8 is the best variant insi
 per-tensor, reduce-range, QUInt8 and static QDQ are worse or broken; head-fp32 is only 0.08 dev
 points better and exceeds the budget at 20.62 MB.
 
+## Decoder follow-up (E-030)
+
+A decoder-only recalibration of this same INT8 artifact (beam 12 / top-k 10 / LM 0.55 / bonus
+2.7, selected on dev) gives T-600 **24.71 / 54.17** and T-S3 **25.21 / 50.14**, with natural
+**436/817** and rare aligned ETA **28.4% (23/81)**. That passes five of the six E-028 gates; the
+primary rare gate is two occurrences short. See `runs/E-030/RESULT.md`.
+
 ## Recommendation
 
 **Do not publish 0.8.0 as-is.** The fp32 arm is a strong candidate, but the shipped INT8 artifact

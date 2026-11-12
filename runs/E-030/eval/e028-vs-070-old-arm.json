@@ -1,0 +1,91 @@
+{
+  "hyp": "runs/E-029/decode/eval/e028-int8/t600.hyp.jsonl",
+  "baseline": "runs/E-024/eval/gate/int8/t600.hyp.jsonl",
+  "groups": {
+    "natural": {
+      "base": {
+        "correct": 441,
+        "occurrences": 817,
+        "accuracy": 0.5397796817625459
+      },
+      "new": {
+        "correct": 436,
+        "occurrences": 817,
+        "accuracy": 0.5336597307221542
+      }
+    },
+    "gold": {
+      "base": {
+        "correct": 127,
+        "occurrences": 179,
+        "accuracy": 0.7094972067039106
+      },
+      "new": {
+        "correct": 126,
+        "occurrences": 179,
+        "accuracy": 0.7039106145251397
+      }
+    },
+    "never": {
+      "base": {
+        "correct": 8,
+        "occurrences": 47,
+        "accuracy": 0.1702127659574468
+      },
+      "new": {
+        "correct": 11,
+        "occurrences": 47,
+        "accuracy": 0.23404255319148937
+      }
+    }
+  },
+  "rare": {
+    "n": 47,
+    "base": 0.1702127659574468,
+    "new": 0.23404255319148937,
+    "delta": 0.06382978723404256,
+    "ci_low": 0.0,
+    "ci_high": 0.12819148936170166,
+    "bootstrap": 1000
+  },
+  "aligned_eta": {
+    "rare": {
+      "base": {
+        "eta": 0.2222222222222222,
+        "wer": 0.4015444015444015,
+        "en_hit": 18,
+        "en_ref": 81
+      },
+      "new": {
+        "eta": 0.2839506172839506,
+        "wer": 0.3590733590733591,
+        "en_hit": 23,
+        "en_ref": 81
+      }
+    },
+    "all": {
+      "base": {
+        "eta": 0.5465004793863855,
+        "wer": 0.2514334862385321,
+        "en_hit": 570,
+        "en_ref": 1043
+      },
+      "new": {
+        "eta": 0.5417066155321189,
+        "wer": 0.24713302752293578,
+        "en_hit": 565,
+        "en_ref": 1043
+      }
+    }
+  },
+  "gold_terms": {
+    "base": [
+      22,
+      27
+    ],
+    "new": [
+      19,
+      27
+    ]
+  }
+}
