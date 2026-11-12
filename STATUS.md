@@ -43,8 +43,8 @@
 > ETA allineata rara **23,5% → 30,9%** (+7,4 [0,0, +15,4]), naturali **439 → 438**, T-600
 > **25,20 → 24,66** WER / **54,17 → 54,65** ETA, T-S3 **26,92 → 25,55**. Caveat: dev **31,01 vs
 > 30,81** (+0,20), S1 WER +0,43, FLEURS-IT **+0,33** significativo (dentro il margine 0,5), 16 gold
-> **20/27 → 18/27**. **INT8** (l'artefatto che si scarica): pacchetto 19.440.760 byte, browser 4/4,
-> ma T-600 **25,49 / 53,50** contro 25,14 / 54,65 di 0.7.0 INT8 (tie), T-S3 25,89 / 49,01, rari
+> **20/27 → 18/27**. **INT8 (export iniziale, vecchio decoder):** pacchetto 19.440.760 byte,
+> browser 4/4, ma T-600 **25,49 / 53,50** contro 25,14 / 54,65 di 0.7.0 INT8 (tie), T-S3 25,89 / 49,01, rari
 > 8/47 → 12/47, naturali **441 → 428**. Lo sweep non recupera: default migliore dentro 20 MB,
 > head-fp32 20,62 MB per +0,08 dev, statica QDQ rotta. **0.8.0 è stato poi pubblicato il
 > 2026-11-12 con l'arm E-030** (vedi sotto). [Risultato](runs/E-028/RESULT.md),
@@ -82,8 +82,8 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Ultimo training accettato | **E-028 (0.8.0)**: S2 + ricetta gentile + decoder E-030; E-024/E-025 restano l'evidenza rumore |
 | Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. Distillazione Parakeet originaria mai eseguita |
 | Ultimo training candidato | nessuno; E-028 è pubblicato come 0.8.0 con eccezione rara documentata |
-| Non eseguito | E-018 gold scaling, E-015 seconda voce/ricetta gentile, nuovi esperimenti LM; E-026 (diagnostica) e E-027 (bias) sono eseguiti, E-027 negativo. Previsioni non sono risultati |
-| Runtime su main | PR #2 gia' integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. Pesi invariati; non prova che il codice della demo pubblicata sia aggiornato |
+| Non eseguito | E-018 gold scaling, nuovi esperimenti LM, mixed-dev naturale; E-028/E-029/E-030 sono eseguiti (0.8.0 pubblicato). E-026/E-027 eseguiti, E-027 negativo. Previsioni non sono risultati |
+| Runtime su main | PR #2 integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. La demo 0.8.0 è pubblicata e verificata live il 2026-11-12 (model sha `7bbfad7e…`, config 0,55/2,7); non è una misura di qualità browser |
 | Audit/tooling su main | PR #3 mergiata 2026-11-11: audit 20/25 MB, tempo sicuro, InterCTC opt-in, preflight/resume, finalist eval, diagnostica, bias contestuale, LM builder/compaction. Nessun peso nuovo; il LM attuale risparmia 0 byte |
 | Diagnostica rari | E-026 (2026-11-11, no training): 41/47 riferimenti nel top-k, 6/47 potati; ETA allineata 47 rari 23,5% → 30,9% con E-015, ma T-600 54,17% → 53,40% |
 | Bias contestuale | E-027 (2026-11-11, no training): glossario 24 termini, 47 rari invariati (22,22%), T-600 ETA +0,10 tie; **respinto** |
@@ -92,7 +92,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
 | E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **pubblicato come 0.8.0 il 2026-11-12** |
 | Prossimo passo | Monitorare 0.8.0; raccogliere un **mixed-dev naturale** e/o **dati rari mirati** per chiudere il gate raro e la selezione prodotto |
-| Dati mancanti qui | Release, checkpoint, tokenizer originale, raw audio e mel shard. La repo contiene log/metriche/ipotesi, non un ambiente capace di ripetere subito il training |
+| Dati non versionati | Release binari, checkpoint, tokenizer originale, raw audio e mel shard. Su questa macchina esistono; un clone pulito non ricostruisce il training senza dati/checkpoint |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 
 **Percorsi autorevoli per lavorare e scrivere il paper:**
@@ -134,7 +134,7 @@ o contestate dall'audit**. Numeri di test, path Mac, blocchi "in corso", richies
 claim sui gate e prossimi passi qui sotto non descrivono automaticamente lo stato corrente.
 Per comandi e conclusioni usare le fonti sopra, non questo archivio.
 
-> **Runtime follow-up (2026-11-10, non pubblicato):** implementati caricamento release Python,
+> **Runtime follow-up (2026-11-10, nessun peso nuovo):** implementati caricamento release Python,
 > lettura LM binario, guardie/parita' decoder e budget, dipendenze runtime separate e test CI
 > leggeri. Pesi 0.7.0 invariati; nessun guadagno qualitativo dichiarato. Piano/stato:
 > [`docs/plans/2026-11-10-lightweight-it-en-runtime-plan.md`](docs/plans/2026-11-10-lightweight-it-en-runtime-plan.md).

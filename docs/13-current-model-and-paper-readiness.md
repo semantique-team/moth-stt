@@ -6,7 +6,7 @@ It complements [the corrected decision log](11-evidence-and-decisions.md); it do
 the experiment reports or model cards. Only repository evidence was audited, not live HF hosting.
 
 > **Update 2026-11-12 — 0.8.0 is now the published model.** The audit below was written on
-> 2026-11-11 against 0.7.0 and is kept as the 0.7.0 dossier. The new release is **E-028 + the
+> 2026-11-10 against 0.7.0 and is kept as the 0.7.0 dossier. The new release is **E-028 + the
 > E-030 decoder** (same 11,575,169-parameter architecture; int8 graph hash `7bbfad7e…`; package
 > 19,440,761 bytes). Published metrics: T-600 **24.71 / 54.17**, T-S3 **25.21 / 50.14**,
 > FLEURS-IT **20.25**, FLEURS-EN **49.81**, natural **436/817**, rare presence **11/47**, rare

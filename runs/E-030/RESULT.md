@@ -100,7 +100,7 @@ Both are inside the 0.5 non-inferiority margin and statistically ties.
 | Natural terms | ≥ 431/817 | 436 | PASS |
 | FLEURS-IT/EN not worse >0.5 | CI check | +0.29 / +0.42, ties | PASS |
 | Dev-selected checkpoint | not step-20 | E-028, dev-selected | PASS |
-| Package | ≤ 20,000,000 B | 19,440,760 B | PASS |
+| Package | ≤ 20,000,000 B | 19,440,761 B | PASS |
 | Browser acceptance | runtime | not run with new arm | to do if adopted |
 
 The first six rows are the E-028 gates; package and browser are release checks. Five of the six
@@ -137,5 +137,5 @@ mixed-dev for future selection.
 - `decode_sweep.py`, `sweep.json`, `sweep.out` — 12-arm dev selection.
 - `eval_decode.py`, `eval/` — T-600/T-S3/FLEURS readout for 0.7.0 and E-028 with the new arm.
 - `compare.json` — paired WER/ETA/rare and FLEURS comparisons.
-- `head_fp32/` — diagnostic head-fp32 readout; `head_fp32_release/` is gitignored (ONNX).
+- `head_fp32/` — diagnostic head-fp32 readout (the temporary `head_fp32_release/` ONNX copy is gitignored).
 - The E-028 package itself is unchanged: `runs/E-028/release/` (gitignored).

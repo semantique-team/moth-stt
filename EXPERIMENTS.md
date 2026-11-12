@@ -1686,12 +1686,13 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   (first arm) but never beats the baseline. The final checkpoint is best inside the run, so gate 6
   passes literally; under a dev-only rule that includes 0.7.0 the baseline would still win. This
   is the A1 misalignment: a real mixed-dev is still needed for product selection.
-- **INT8 artifact (what ships)**: package **19,440,760 bytes**, browser acceptance **4/4**; but
+- **INT8 artifact (initial export, old decoder)**: package **19,440,760 bytes**, browser acceptance **4/4**; but
   T-600 **25.49 / 53.50** (0.7.0 INT8 25.14 / 54.65, both ties), T-S3 **25.89 / 49.01**
   (better WER), rare presence 8/47 → 12/47 (+8.5), natural presence **441 → 428 (−13)**. The
   dynamic default is the best in-budget variant; per-tensor/reduce-range/QUInt8/static QDQ are
   worse or broken, and head-fp32 is 20.62 MB (over budget) for only 0.08 dev points. See
-  `runs/E-028/QUANTIZATION.md`.
+  `runs/E-028/QUANTIZATION.md`. The published release is 19,440,761 bytes with the E-030
+  decoder: T-600 24.71 / 54.17, T-S3 25.21 / 50.14, natural 436.
 - **Verdict**: **published 2026-11-12 as 0.8.0 with the E-030 decoder**, with a documented
   exception on the rare aligned-ETA gate. The original int8 export was a tradeoff; E-030's
   decoder recalibration recovered T-600/T-S3/natural and left only the rare gate two aligned

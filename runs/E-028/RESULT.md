@@ -145,7 +145,7 @@ comparison needs a mixed-dev (A1/A3).
 ## INT8 artifact (the thing that ships)
 
 The fp32 checkpoint is the candidate above; the browser runs INT8. The exported package is
-**19,440,760 bytes**, the same as 0.7.0, and the real Chromium/WASM acceptance passes **4/4**.
+**19,440,760 bytes** for the initial export (19,440,761 with the published 0.8.0 config), and the real Chromium/WASM acceptance passes **4/4**.
 But the INT8 model does not repeat the fp32 gains:
 
 | Set | 0.7.0 INT8 | E-028 INT8 | Δ |
