@@ -1,0 +1,7 @@
+corpus: 186942 sentences, 7265118 tokens
+tokenize: 1.8s
+(2,2)   5,117,664 B  bigrams   196,163  trigrams    805,180  fits True  4s
+(1,2)   5,396,484 B  bigrams   265,868  trigrams    805,180  fits True  4s
+(2,1)  12,034,620 B  bigrams   196,163  trigrams  2,280,427  fits False  5s
+(1,1)  12,313,440 B  bigrams   265,868  trigrams  2,280,427  fits False  5s
+total 21s -> /Users/tancredi/Desktop/semantique/moth-stt/runs/E-031/probe/probe.json

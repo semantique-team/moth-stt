@@ -1,0 +1,4 @@
+corpus 186003 sentences, 7242677 tokens, term sentences 143
+frozen_2_2         binary  5,099,304 B  pickle  3,538,331 B  5s
+frozen_1_2         binary  5,378,740 B  pickle  3,704,803 B  5s
+frozen_1_2_terms   binary  5,381,992 B  pickle  3,706,517 B  6s

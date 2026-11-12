@@ -1,0 +1,28 @@
+shipped-0.8.0  t600            wer  25.23 eta  53.21
+shipped-0.8.0  t-s3            wer  26.75 eta  46.76
+shipped-0.8.0  fleurs_it_test  wer  20.66 eta n/a
+shipped-0.8.0  fleurs_en_test  wer  50.47 eta n/a
+shipped-0.8.0  rare 26/81
+natural  base 436/ 817 new 424/ 817
+gold     base 126/ 179 new 122/ 179
+never    base  11/  47 new  14/  47
+
+47 rare utterances: base 23.4% new 29.8% delta +6.4 [+0.0, +14.9] (n=47)
+aligned ETA 47 rare: base 28.4% (23/81) new 32.1% (26/81)
+aligned ETA T-600: base 54.2% (565/1043) new 53.2% (555/1043)
+16 gold terms: base 19/27 = 70.4% new 18/27 = 66.7%
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-032/eval/shipped-0.8.0/terms.json
+e031-a3        t600            wer  24.83 eta  53.88
+e031-a3        t-s3            wer  26.41 eta  47.61
+e031-a3        fleurs_it_test  wer  20.54 eta n/a
+e031-a3        fleurs_en_test  wer  50.28 eta n/a
+e031-a3        rare 42/81
+natural  base 432/ 817 new 415/ 817
+gold     base 127/ 179 new 123/ 179
+never    base  24/  47 new  29/  47
+
+47 rare utterances: base 51.1% new 61.7% delta +10.6 [+2.1, +19.2] (n=47)
+aligned ETA 47 rare: base 46.9% (38/81) new 51.9% (42/81)
+aligned ETA T-600: base 55.2% (576/1043) new 53.9% (562/1043)
+16 gold terms: base 19/27 = 70.4% new 18/27 = 66.7%
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-032/eval/e031-a3/terms.json
