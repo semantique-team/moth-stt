@@ -48,6 +48,9 @@ Prefer several voices and independent sessions rather than many clips from one v
    boundaries without transcript-aware selection for model success. Keep disfluencies and
    spontaneous wording; log exclusions/retakes and their reasons. The guided recorder and
    builder currently support T/A/R only: do not relabel this collection as R or T to use them.
+   Long spontaneous takes are cut into 1-30 s clips with
+   [`recordings/segment_notes.py`](../../recordings/segment_notes.py) and imported as
+   `natural_mixed_dev`; see the [recordings README](../../recordings/README.md).
 4. Human-transcribe and review independently of ASR hypotheses. Normalize through
    `stt.text.normalize`, using `en` for English and `it` for Italian/mixed number expansion.
    Preserve `text` and store canonical `norm`. Annotate English-origin words, including
