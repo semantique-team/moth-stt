@@ -20,6 +20,8 @@ FIXTURES: list[tuple[str, str, str]] = [
     ("Let's deploy, it's a 3.5% change", "en", "let's deploy it's a three point five change"),
     ("“Hira‘” on the mountain", "en", "hira'on the mountain"),
     ("  doppio   spazio \n", "it", "doppio spazio"),
+    ("ciao\tcome\nstai\r\noggi", "it", "ciao come stai oggi"),
+    ("hello\vworld\fgood\u2028morning", "en", "hello world good morning"),
 ]
 
 

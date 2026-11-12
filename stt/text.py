@@ -92,7 +92,9 @@ def _number_to_words(raw: str, lang: str) -> str:
 
 def _fold(char: str) -> str:
     """Keep ``char`` if allowed, fold diacritics to ASCII, otherwise drop it."""
-    if char == " " or char in KEEP_CHARS:
+    if char.isspace():
+        return " "
+    if char in KEEP_CHARS:
         return char
     decomposed = unicodedata.normalize("NFKD", char)
     base = "".join(c for c in decomposed if not unicodedata.combining(c)).lower()

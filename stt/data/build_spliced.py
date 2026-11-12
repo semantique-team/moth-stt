@@ -27,7 +27,7 @@ from pathlib import Path
 import numpy as np
 
 from stt.data.build_mel import load_index, read_clip, write_index
-from stt.manifest import load_manifest
+from stt.manifest import load_manifest, validate_training_rows
 from stt.text import normalize
 
 __all__ = ["build_spliced", "main", "plan_pairs"]
@@ -54,11 +54,8 @@ def _sources(manifests: str, shards: str) -> list[tuple[Path, dict]]:
 
 
 def _load_rows(path: Path | str) -> list[dict]:
-    rows = [
-        json.loads(line)
-        for line in Path(path).read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
+    rows = load_manifest(path)
+    validate_training_rows(rows)
     return [row for row in rows if row.get("norm") and float(row.get("duration", 0.0)) > 0.0]
 
 
@@ -76,6 +73,8 @@ def plan_pairs(
     ``max_seconds`` defaults to 27: the 30 s encoder window leaves room for a 1.1× tempo
     stretch without cropping (the E-012 crash was a 29.7 s clip stretched past 30 s).
     """
+    validate_training_rows(it_rows)
+    validate_training_rows(en_rows)
     if not it_rows or not en_rows:
         raise ValueError("both an Italian and an English pool are required")
     rng = random.Random(seed)

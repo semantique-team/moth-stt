@@ -165,6 +165,39 @@ def test_load_sources_prefixes_shard_paths(tmp_path: Path) -> None:
     assert index["b-c1"]["shard"] == "b/shard-000.npy"
 
 
+@pytest.mark.parametrize("changes", [
+    {"split": "test"}, {"split": "dev"}, {"source": "recorded_t"},
+    {"source": "recorded_a"}, {"speaker": "S3"},
+])
+def test_train_rejects_held_out_rows(tmp_path: Path, changes: dict) -> None:
+    data = _make_data(tmp_path, clips=1)
+    path = data["manifest"]
+    row = json.loads(path.read_text(encoding="utf-8")) | changes
+    path.write_text(json.dumps(row), encoding="utf-8")
+    # Loading remains role-neutral for evaluation callers.
+    assert load_sources([data])[1][0] == row
+    with pytest.raises(ValueError, match="cannot train"):
+        train(_config([data]), device="cpu", max_steps=1, tokenize=_tokenize,
+              out_dir=tmp_path / "run")
+
+
+@pytest.mark.parametrize("key", ["dev", "dev_en"])
+@pytest.mark.parametrize("splice", [False, True])
+def test_train_rejects_dev_overlap(tmp_path: Path, key: str, splice: bool) -> None:
+    data = _make_data(tmp_path, clips=1)
+    config = _config([data])
+    if splice:
+        dev = _make_data(tmp_path, clips=1, tag="dev")
+        row = json.loads(dev["manifest"].read_text(encoding="utf-8"))
+        row.update(source="spliced_it_en", audio="a-c0+en-1", split="dev")
+        dev["manifest"].write_text(json.dumps(row), encoding="utf-8")
+    else:
+        dev = data
+    config["data"][key] = [dev]
+    with pytest.raises(ValueError, match="overlap"):
+        train(config, device="cpu", max_steps=1, tokenize=_tokenize, out_dir=tmp_path / "run")
+
+
 def test_train_one_step_and_log_schema(tmp_path: Path) -> None:
     data = _make_data(tmp_path)
     out = tmp_path / "run"
@@ -250,9 +283,10 @@ def test_nonfinite_guard_aborts(tmp_path: Path) -> None:
 
 def test_dev_evaluation_line_and_best_checkpoint(tmp_path: Path) -> None:
     data = _make_data(tmp_path, clips=3)
+    dev = _make_data(tmp_path, clips=2, tag="dev")
     config = _config([data], eval_every_steps=1)
     config["data"]["dev"] = [
-        {"manifest": str(data["manifest"]), "shards": str(data["shards"])}
+        {"manifest": str(dev["manifest"]), "shards": str(dev["shards"])}
     ]
     out = tmp_path / "run"
     summary = train(
@@ -272,8 +306,9 @@ def test_dev_evaluation_line_and_best_checkpoint(tmp_path: Path) -> None:
 
 def test_dev_en_is_scored_separately_and_selects_on_macro(tmp_path: Path) -> None:
     data = _make_data(tmp_path, clips=3)
+    dev = _make_data(tmp_path, clips=2, tag="dev")
     config = _config([data], eval_every_steps=1)
-    sources = [{"manifest": str(data["manifest"]), "shards": str(data["shards"])}]
+    sources = [{"manifest": str(dev["manifest"]), "shards": str(dev["shards"])}]
     config["data"]["dev"] = sources
     config["data"]["dev_en"] = sources
     out = tmp_path / "run"

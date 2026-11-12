@@ -6,10 +6,12 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pytest
 import soundfile as sf
 
 from stt.data.build_mel import build_shards, load_index, read_clip
 from stt.data.build_spliced import build_spliced, plan_pairs
+from stt.manifest import ManifestError
 from stt.text import normalize
 
 
@@ -115,3 +117,16 @@ def test_spliced_manifest_validates(tmp_path: Path) -> None:
     loaded = load_manifest(path)
     assert loaded[0]["norm"] == "ciao hello world"
     assert loaded[0]["en_spans"] == [[1, 3]]
+
+
+@pytest.mark.parametrize("side", ["it", "en"])
+@pytest.mark.parametrize("changes", [
+    {"split": "test"}, {"split": "dev"}, {"source": "recorded_t"},
+    {"source": "recorded_a"}, {"speaker": "S3"},
+])
+def test_plan_pairs_rejects_held_out_sources(side: str, changes: dict) -> None:
+    it = _row("it-1", "ciao", 2.0, "it")
+    en = _row("en-1", "hello", 2.0, "en")
+    (it if side == "it" else en).update(changes)
+    with pytest.raises(ManifestError, match="cannot train"):
+        plan_pairs([it], [en], hours=0.001)

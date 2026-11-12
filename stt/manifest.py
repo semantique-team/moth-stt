@@ -17,11 +17,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+from collections.abc import Sequence
 from pathlib import Path
 
 from stt.text import normalize
 
-__all__ = ["ManifestError", "load_manifest", "norm_hash"]
+__all__ = ["ManifestError", "load_manifest", "norm_hash", "validate_training_rows"]
 
 #: Keys every row must carry (``audio``/``speaker``/``category``/``en_spans`` are optional).
 REQUIRED_KEYS = ("id", "text", "norm", "duration", "source", "split", "lang")
@@ -38,6 +40,46 @@ class ManifestError(ValueError):
 def norm_hash(text: str, lang_hint: str = "it") -> str:
     """sha1 of the normalized text — the sentence-dedupe key (``docs/03-data.md`` §3)."""
     return hashlib.sha1(normalize(text, lang_hint).encode("utf-8")).hexdigest()
+
+
+def validate_training_rows(rows: list[dict], dev_rows: Sequence[dict] = ()) -> None:
+    """Reject nontrain/T/A/S3/FLEURS rows and train/dev ID, constituent-ID or audio reuse.
+
+    Transcript equality is not an overlap criterion: different recordings may share text.
+    """
+    def ids(row: dict) -> set[str]:
+        values = {row["id"], *row.get("source_ids", [])}
+        if row.get("source") == "spliced_it_en":
+            values.update(row.get("audio", "").split("+"))
+        return values
+
+    def audio(row: dict) -> str | None:
+        value = row.get("audio")
+        if not value or row.get("source") == "spliced_it_en":
+            return None
+        path = Path(value)
+        # Bare filenames are local to each source, not globally unique audio identities.
+        if not path.is_absolute() and len(path.parts) == 1 and not path.exists():
+            return None
+        return os.path.normcase(str(path.resolve()))
+
+    dev_ids = {uid for row in dev_rows for uid in ids(row)}
+    dev_audio = {value for row in dev_rows if (value := audio(row)) is not None}
+    for row in rows:
+        row_ids = ids(row)
+        if (
+            row.get("split") != "train"
+            or row.get("role", "train") != "train"
+            or str(row.get("source", "")).lower() in (
+                "recorded_t", "recorded_a", "fleurs_it", "fleurs_en"
+            )
+            or str(row.get("speaker", "")).upper() == "S3"
+            or any(uid.startswith(("T-", "A-", "R-S3-")) for uid in row_ids)
+        ):
+            raise ManifestError(f"row {row['id']!r}: held-out or nontrain data cannot train")
+        row_audio = audio(row) if dev_audio else None
+        if row_ids & dev_ids or (row_audio is not None and row_audio in dev_audio):
+            raise ManifestError(f"row {row['id']!r}: train/dev overlap (id, source id or audio)")
 
 
 def load_manifest(path: str | Path, max_errors: int = 10) -> list[dict]:

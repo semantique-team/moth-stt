@@ -105,7 +105,11 @@ def build_shards(
     process holds ≈ ``batch_size`` mels at a time — a full-trainset materialization would be
     several GB of float16 on a 16 GB machine.
     """
-    rows = rows[:limit] if limit else rows
+    if limit is not None and limit < 0:
+        raise ValueError("limit must be non-negative")
+    rows = rows[:limit] if limit is not None else rows
+    if len({row["id"] for row in rows}) != len(rows):
+        raise ValueError("duplicate ids in mel build rows")
     audio_root, out_dir = Path(audio_root), Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -232,10 +236,13 @@ def verify_sample(
         for uid in index
         if uid in rows_by_id and (Path(audio_root) / rows_by_id[uid]["audio"]).exists()
     ]
-    if not candidates:
+    if not candidates or n <= 0:
         return False
     if sample_ids:
-        candidates = [uid for uid in sample_ids if uid in candidates]
+        candidate_ids = set(candidates)
+        if any(uid not in candidate_ids for uid in sample_ids):
+            return False
+        candidates = list(sample_ids)
     rng = np.random.default_rng(seed)
     chosen = list(candidates)
     rng.shuffle(chosen)
@@ -251,9 +258,15 @@ def verify_sample(
 
 def delete_audio(rows: list[dict], audio_root: Path | str) -> int:
     """Delete the raw audio of the given rows (after a successful spot check). Returns the count."""
-    removed = 0
+    root = Path(audio_root).resolve()
+    paths = []
     for row in rows:
-        path = Path(audio_root) / row["audio"]
+        path = (root / row["audio"]).resolve()
+        if not path.is_relative_to(root) or path == root or (path.exists() and not path.is_file()):
+            raise ValueError(f"unsafe audio deletion candidate: {row['audio']!r}")
+        paths.append(path)
+    removed = 0
+    for path in paths:
         if path.exists():
             path.unlink()
             removed += 1
@@ -296,11 +309,19 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  error: {bad['id']}: {bad['error']}")
 
     if args.delete_audio:
+        if report["errors"]:
+            print("build errors - raw audio kept")
+            return 1
         index = load_index(Path(args.out_dir) / "index.json")
-        rows_by_id = {row["id"]: row for row in rows}
-        if verify_sample(index, args.out_dir, rows_by_id, args.audio_root):
-            removed = delete_audio(rows, args.audio_root)
-            print(f"spot check ok — deleted {removed} raw audio files")
+        current_rows = rows[:args.limit] if args.limit is not None else rows
+        candidates = [row for row in current_rows if row["id"] in index]
+        rows_by_id = {row["id"]: row for row in candidates}
+        if len(candidates) == len(current_rows) and verify_sample(
+            index, args.out_dir, rows_by_id, args.audio_root,
+            sample_ids=list(rows_by_id), n=len(candidates),
+        ):
+            removed = delete_audio(candidates, args.audio_root)
+            print(f"verification ok - deleted {removed} raw audio files")
         else:
             print("spot check FAILED — raw audio kept")
             return 1

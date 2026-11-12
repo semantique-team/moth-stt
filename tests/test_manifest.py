@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from stt.manifest import ManifestError, load_manifest, norm_hash
+from stt.manifest import ManifestError, load_manifest, norm_hash, validate_training_rows
 
 FIXTURES = Path(__file__).parent / "fixtures"
 SAMPLE = FIXTURES / "manifest_sample.jsonl"
@@ -93,3 +93,46 @@ def test_norm_hash_is_stable_and_normalizes() -> None:
     assert first == second
     assert len(first) == 40
     assert norm_hash("altro testo") != first
+
+
+@pytest.mark.parametrize("changes", [
+    {"split": "dev"}, {"split": "test"}, {"role": "test"}, {"source": "recorded_t"},
+    {"source": "recorded_a"}, {"speaker": "S3"}, {"id": "T-0001"},
+    {"id": "A-S1-0001"}, {"id": "R-S3-0001"},
+    {"source": "spliced_it_en", "audio": "T-0001+en-1"},
+    {"source": "fleurs_it"}, {"source": "fleurs_en"},
+])
+def test_training_rows_reject_held_out_data(changes: dict) -> None:
+    with pytest.raises(ManifestError, match="cannot train"):
+        validate_training_rows([_row(**changes)])
+
+
+@pytest.mark.parametrize("changes", [
+    {"id": "dev-1"},
+    {"source": "spliced_it_en", "audio": "it-1+dev-1"},
+    {"source_ids": ["dev-1"]},
+    {"audio": "shared/clip.wav"},
+])
+def test_training_rows_reject_overlap(changes: dict) -> None:
+    with pytest.raises(ManifestError, match="overlap"):
+        validate_training_rows([_row(**changes)], [_row(id="dev-1", audio="shared/clip.wav")])
+
+
+def test_training_rows_allow_gold_and_local_filenames() -> None:
+    validate_training_rows(
+        [_row(id="R-S1-0001", source="recorded_r", speaker="S1")], [_row(id="dev-1")]
+    )
+
+
+def test_training_rows_allow_repeated_transcripts_with_distinct_identities() -> None:
+    validate_training_rows(
+        [_row(id="train-1", audio="train/clip.wav")],
+        [_row(id="dev-1", audio="dev/clip.wav", split="dev")],
+    )
+
+
+def test_training_rows_detect_dev_splice_constituents() -> None:
+    with pytest.raises(ManifestError, match="overlap"):
+        validate_training_rows([_row(id="it-1")], [
+            _row(id="splice-1", source="spliced_it_en", audio="it-1+en-1")
+        ])
