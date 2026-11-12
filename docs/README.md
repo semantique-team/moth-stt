@@ -4,21 +4,27 @@
 
 | Need | Source |
 |---|---|
-| Current 0.8.0 release state and next steps | [16 - Session handoff 2026-11-12](16-session-handoff-2026-11-12.md) |
+| Current state: 0.8.0 published, 0.8.1 candidate, E-031/E-032 | [17 - Session handoff 2026-11-12 (E-031)](17-session-handoff-2026-11-12-e031.md) |
+| 0.8.0 release state and its session | [16 - Session handoff 2026-11-12](16-session-handoff-2026-11-12.md) |
 | Current checkout/model state and blockers | [STATUS.md](../STATUS.md), current verified section |
 | How to install, record, prepare data, train, evaluate, export or publish | [Repository workflows](guides/repository-workflows.md) |
-| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md) (E-000-E-025) and [EXPERIMENTS.md](../EXPERIMENTS.md) (E-028-E-030 and later) |
+| Every experiment, numbers, benchmark populations, adoption/rejection | [12 - Experiment ledger](12-experiment-ledger.md) (E-000-E-025) and [EXPERIMENTS.md](../EXPERIMENTS.md) (E-028-E-032 and later) |
 | Exact model, release assets, fp32/int8/baseline tables, paper caveats | [13 - Current model and paper readiness](13-current-model-and-paper-readiness.md) |
 | Executed decisions and corrected scientific interpretations | [11 - Evidence and decisions](11-evidence-and-decisions.md) |
 | Architecture audit, observed risks and 20/25 MB budget | [14 - Architecture audit](14-architecture-audit-2026-11-10.md) |
 | Earlier handoff (2026-11-11, pre-0.8.0) | [15 - Session handoff](15-session-handoff-2026-11-11.md) |
 | Audit tooling: safe tempo, InterCTC, finalist eval, diagnostics, contextual bias, LM builder | [Audit improvements guide](guides/audit-improvements-no-training.md) |
 | Portable readiness check for the other PC | [Other-PC preflight](guides/other-pc-preflight.md) |
+| 0.8.1 candidate model card and release record | [E-031 card](../runs/E-031/MODEL_CARD.md), [record](../runs/E-031/release-0.8.1.json) |
+| Real Chromium/WASM acceptance, 0.8.1 candidate | [0.8.1 acceptance](../runs/E-031/browser-acceptance/RESULT.md), [parity](../runs/E-031/browser-parity/RESULT.md) |
 | Real Chromium/WASM acceptance, 0.8.0 | [0.8.0 acceptance](../runs/E-028/browser-acceptance/RESULT.md) |
 | Real Chromium/WASM acceptance, 0.7.0 (historical) | [0.7.0 acceptance](../runs/browser-acceptance-2026-11-10/RESULT.md) |
 | Independent mixed-dev and future quality experiment safeguards | [Mixed-dev protocol](guides/mixed-dev-and-quality-experiments.md) |
 
-The audit baseline is `main` **`cd1ce1b`**. Published weights are **0.8.0 / E-028 + the E-030 decoder** (released 2026-11-12); **0.7.0 / E-024** remains the historical control. Main also contains newer runtime infrastructure. Original experiment
+The audit baseline is `main` **`cd1ce1b`**. Published weights are **0.8.0 / E-028 + the E-030
+decoder** (released 2026-11-12); **0.8.1** is a staged decode-only candidate (same int8 graph, new
+LM, 19,706,289 B) and is **not published**. **0.7.0 / E-024** remains the historical control. Main
+also contains newer runtime infrastructure. Original experiment
 JSON and cards are retained as evidence, including conflicts explicitly flagged in docs 12-14.
 These documents do not certify live hosting, recover missing weights/audio, or replace new
 experiments needed for stronger paper claims.

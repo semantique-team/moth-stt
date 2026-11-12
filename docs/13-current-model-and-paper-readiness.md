@@ -15,6 +15,16 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > [release record](../runs/E-028/release-0.8.0.json), [E-030 result](../runs/E-030/RESULT.md),
 > [model card](../runs/E-028/MODEL_CARD.md). The 0.7.0 tables below are historical, not the
 > current release.
+>
+> **Update 2026-11-12 (later) — E-031/E-032.** A decode-only candidate **0.8.1** is staged but **not
+> published**: same int8 graph, new LM (`(1,2)` + term sentences ×3), package **19,706,289 B**.
+> Published-model comparison: T-600 **24.08 / 55.23** (0.8.0 24.71 / 54.17; WER −0.63
+> [−1.11, −0.20], ETA +1.06 [+0.09, +2.04]), T-S3 24.96 / 51.27 (ties), FLEURS-IT 20.16 / EN
+> 49.81 (ties), rare aligned ETA **46.9% (38/81)** vs 28.4%, natural **432/817** (gate ≥431).
+> Browser acceptance 4/4; decoder-level JS/Python parity exact on identical logits. **E-032**,
+> the S1 acoustic addendum, is **rejected**: rare 32.1% (0.8.0 LM) / 51.9% (E-031 LM) but T-S3,
+> FLEURS and natural regress. Independent natural mixed-dev and a new-voice rare readout remain
+> missing; the candidate is not a substitute for them. See [17](17-session-handoff-2026-11-12-e031.md).
 
 ## 1. Identity and Architecture
 

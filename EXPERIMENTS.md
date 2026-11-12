@@ -1770,6 +1770,61 @@ numbers are under `stt.text.normalize` (bootstrap 1,000 where a CI is quoted).
   [Result](runs/E-030/RESULT.md).
 - **Cost**: dev sweep ~17 min, T/FLEURS readout ~5 min, no training, 0 USD.
 
+## E-031 — An intermediate LM closes the rare gate inside the 20 MB ceiling (2026-11-12)
+
+- **Question**: E-023 showed that keeping every bigram and trigram (`(1,1)`) is significantly
+  better but weighs 12.31 MB, over the 20 MB package ceiling. Does **all bigrams + trigrams with
+  count >= 2 (`(1,2)`)** recover a useful share inside the budget, and does the LM text now
+  available (the E-015/E-028 term sentences, absent from the 2026-10-30 build) change the answer?
+- **Method**: frozen corpus via `stt.data.freeze_lm_corpus` (CV/MLS/LS train + R-S1/R-S2/pool;
+  T/A and every dev/test manifest named as exclusions; 186,003 sentences, 939 duplicates collapsed,
+  36,065 exclusions, no overlap error). Arms: shipped control, `(2,2)` rebuild, `(1,2)`, and
+  `(1,2)` with the 143 term-containing sentences x3. Selection on full dev (3,939 clips) only,
+  decoder fixed at E-030's 0.55/2.7. Browser byte gate first.
+- **Selection**: `(2,2)` rebuild is a tie (−0.010 dev, CI [−0.031, +0.015]); `(1,2)` is
+  **−0.084 [−0.140, −0.035]**; `(1,2)` + terms x3 is **−0.091 [−0.147, −0.040]**, the lowest dev
+  macro and the arm read once on the gates. Binaries: 5,378,740 B and 5,381,992 B (package
+  19,703,037 / 19,706,289 B).
+- **Gate readout (same int8 graph, decoder unchanged)**: T-600 **24.08 / 55.23** (0.8.0
+  24.71 / 54.17; **WER −0.63 [−1.11, −0.20]**, **ETA +1.06 [+0.09, +2.04]**), T-S3
+  **24.96 / 51.27** (Δ ties), FLEURS-IT **20.16** (tie), FLEURS-EN 49.81 (tie), natural
+  **432/817** (gate ≥431), gold 127/179, never-seen presence **24/47**. **Rare aligned ETA
+  **28.4% (23/81) → 46.9% (38/81), +18.5 [+9.6, +31.0]**: the primary ≥30% gate passes.
+- **Verdict**: **adopted** by the pre-registered rule — all nine gates pass and both rare ETA and
+  T-600 WER improve with a CI excluding zero. Decode-only release candidate: same acoustic
+  weights, one new `lm_bpe3.bin` (5,381,992 B). Browser acceptance is **4/4** and JS↔Python
+  decoder parity is exact on identical logits; the 3 s fixture differs by two words with both the
+  0.8.0 and 0.8.1 LM (browser acoustic path). Card `runs/E-031/MODEL_CARD.md` and record
+  `runs/E-031/release-0.8.1.json` are prepared (`published: false`). Publication and the
+  independent-data readout remain. The noise check is relative (559 vs 567 emitted words on the
+  E-011 set without VAD), not the VAD-gated product metric.
+  [Result](runs/E-031/RESULT.md).
+- **Cost**: no training, no downloads, 0 USD; build seconds, dev ~16 min, gate readout ~5 min.
+
+## E-032 — Targeted rare addendum: rare terms up, product gates down (2026-11-12)
+
+- **Question**: E-026 found six terms acoustically pruned (`startup`, `prototype`, `chromecast`,
+  `charger`, `exam`, `mondays`). Does 50 new S1 sentences, with four new contexts for each pruned
+  term and one for every other never-seen term, recover rare accuracy on top of E-031's LM?
+- **Method**: 50 reviewed S1 sentences (`R-S1-0692`–`0741`, 2.8 min, x20 = 0.93 h) added to the
+  E-028 mixture; gentle fine-tune from E-028 (head 1e-4 / encoder 1e-5), 13,314 steps, dev
+  selected the final checkpoint at **31.06%** (E-028 31.01%), 0 non-finite. Readout with the two
+  LMs: shipped 0.8.0 (pre-registered baseline) and the adopted E-031 A3 candidate.
+- **Result vs 0.8.0**: rare aligned ETA **28.4% (23/81) → 32.1% (26/81), +3.7 [0.0, +9.0]**,
+  presence 14/47; but T-600 25.23 / 53.21, T-S3 **26.75 / 46.76** (+1.53 WER, −3.38 ETA,
+  significant), FLEURS-IT 20.66 (+0.41, significant), FLEURS-EN 50.47 (+0.66, significant),
+  natural **424/817** (gate ≥431).
+- **Result vs E-031**: rare **51.9% (42/81), +4.9 [0.0, +12.0]**, but T-600 24.83 / 53.88
+  (+0.75 WER, significant), T-S3 26.41 / 47.61 (+1.45 WER, −3.66 ETA, significant), FLEURS-IT
+  20.54, FLEURS-EN 50.28, natural **415/817**.
+- **Verdict**: **rejected**. Rare improves in both comparisons, but the CI touches zero, while
+  T-S3, FLEURS and natural regress; five of the pre-registered gates fail. The S1-only addendum
+  cannot separate speaker adaptation from term learning. Keep E-031 (LM only, rare gate closed at
+  46.9%) as the 0.8.1 direction; do not iterate on T. The 50 clips remain reusable for a future
+  arm with an independent selection set.
+  [Result](runs/E-032/RESULT.md).
+- **Cost**: ~2 h training + ~15 min export/eval, no downloads, 0 USD.
+
 ## Runtime acceptance follow-up (2026-11-10, no new model)
 
 Infrastructure validation, not a new quality-optimization arm. Original 0.7.0 assets

@@ -25,6 +25,15 @@ first, then `STATUS.md` and the linked experiment reports.
 
 ## Repository state
 
+> **Follow-up later on 2026-11-12.** After this handoff, **E-031** rebuilt the LM inside the
+> budget and **adopted it as the 0.8.1 candidate**: same int8 graph, rare aligned ETA
+> **28.4% → 46.9%**, T-600 **24.08 / 55.23**, package 19,706,289 B, browser acceptance 4/4.
+> **E-032** (a 50-sentence S1 acoustic addendum) was **rejected**: rare up, T-S3/FLEURS/natural
+> down. The 0.8.1 candidate is staged but **not published**; independent natural mixed-dev is
+> still missing and blocked on a new speaker. Read
+> [`docs/17-session-handoff-2026-11-12-e031.md`](17-session-handoff-2026-11-12-e031.md) for the
+> current state; this document remains the 0.8.0 session record.
+
 - HEAD at handoff: **`3d399a4`** (`test(E-028): re-measure the 0.8.0 noise curve`) plus the commit
   that adds this document. Working tree clean except two unrelated logs:
   `runs/E-016/eval-aug-lm.log`, `runs/E-016/eval-aug-sets.log`.
@@ -152,6 +161,13 @@ from HF; weights and audio are not in git.
   and `runs/`, not rewritten into the historical ledger.
 
 ## Next steps (in order)
+
+> **Status after this handoff (2026-11-12, later):** the same-size LM route was executed as
+> **E-031** and adopted as the 0.8.1 candidate (rare aligned ETA 46.9%, package 19,706,289 B,
+> browser 4/4). The targeted rare addendum was executed as **E-032** and **rejected** (rare up,
+> T-S3/FLEURS/natural down). Item 1 below, the independent natural mixed-dev, **remains to do and
+> is blocked: no new speaker is available**. See
+> [`docs/17`](17-session-handoff-2026-11-12-e031.md).
 
 1. **Independent data (audit #1):** record 2–3 new speakers, natural Italian + English terms,
    20–30 min each; consent, pseudonymous IDs, freeze roles/splits before inspecting errors. Keep
