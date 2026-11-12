@@ -24,6 +24,10 @@
 > subito e non sostituisce l'holdout; il **mixed-dev indipendente** resta bloccato finché non
 > c'è uno speaker nuovo. Priorità e criteri proposti:
 > [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md).
+> Lo stato del piano è: **E-033 (InterCTC) pre-registrato e non eseguito** (config controllo e
+> braccio validati dal preflight, `runs/E-033/`), **E-034 (LM su dev) eseguito e respinto** —
+> più trigrammi valgono ~0,6 pp su dev ma costano 12 MB, fuori da 20 e 25 MB; il kit per le
+> note vocali è pronto (`recordings/segment_notes.py`). Nessun training eseguito.
 >
 > **Handoff precedente (2026-11-12, HEAD `3d399a4`):** leggi
 > [`docs/16-session-handoff-2026-11-12.md`](docs/16-session-handoff-2026-11-12.md). **0.8.0 è
@@ -112,13 +116,14 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | Qualita' int8 pubblicata (0.8.1) | T-600 **24,08 / 55,23**; S3 **24,96 / 51,27**; FLEURS-IT **20,16**, EN **49,81**; presence rara **24/47**, ETA su tutti i token span delle 47 frasi **46,9% (38/81)** (47 target + 34 co-token); naturali **432/817**; gold 127/179; 16 termini 19/27 |
 | Delta 0.8.1 vs 0.8.0 | T-600 WER **−0,63 [−1,11, −0,20]**, ETA **+1,06 [+0,09, +2,04]**; T-S3 tie; FLEURS tie; rari **+18,5 [+9,6, +31,0]**; naturali −4 (436 → 432, gate ≥431); pacchetto +265.528 B |
 | LM E-031 | 2026-11-12: corpus congelato (186.003 frasi, 939 duplicati, 36.065 esclusioni, nessuna sovrapposizione); armi (2,2)/(1,2)/(1,2)+termini ×3; dev macro 22,946 / 22,854 / 22,849; adottata A3 (binario 5.381.992 B, sha `3be1177b…`) |
+| LM E-034 (2026-11-12, no training) | stesso corpus congelato, solo dev (3.939 clip): (2,1) **−0,598 pp** macro [−0,724, −0,457] e (1,1) **−0,644** [−0,768, −0,503], ma binari 12.034.004 / 12.313.440 B → pacchetti **26,36 / 26,64 MB**, oltre i 20 MB e il tier 25 MB; termini ×5 **tie** (+0,002 pp). Nessun braccio adottabile: il seguito e' una selezione budgeted (~65k dei 1.477.990 trigrammi extra nei 293.711 B liberi), non eseguita. Controllo A3 riprodotto byte per byte; T/FLEURS/rumore non letti |
 | Browser 0.8.1 | 2026-11-12: acceptance reale **4/4** (RTFx 46,69 / 46,23 / 25,10 / 24,83); parità decoder JS↔Python esatta sugli stessi logit; il fixture 3 s differisce da Python di 2 parole **anche con il LM 0.8.0** (path acustico browser, non il LM) |
 | Rumore 0.8.1 | 2026-11-12: stessa ricetta E-024, stesso checkpoint/decoder/100 clip S3, cambia solo il LM; clean 20,03 vs 20,37, 30/20/15/10/5 dB 21,22/24,28/27,67/33,79/40,41 vs 21,90/25,47/27,33/34,63/40,92; **tutte tie**, media descrittiva 5–30 dB **29,47 vs 30,05** senza CI della media; non equivalenza ne' upper bound |
 | Decoder adottato | beam 12 / top-k 10 / LM weight **0,55** / token bonus **2,7**, trigram aumentato, Silero VAD |
 | Ultimo training accettato | **E-028 (acustica, 0.8.0/0.8.1)**: S2 + ricetta gentile + decoder E-030; 0.8.1 cambia solo il LM. E-024/E-025 restano l'evidenza rumore |
 | Ultimo training respinto | E-015 primo addendum gold: rare-term 8/47 -> 11/47, CI include zero; S3 invariato, FLEURS peggiora. **E-032 (S1, 50 frasi nuove, 2026-11-12):** ETA sulle frasi rare 32,1% (LM 0.8.0) / 51,9% (LM E-031), T-S3 **26,75/46,76** (LM 0.8.0) / **26,41/47,61** (LM E-031), FLEURS peggiori, naturali 424/415; **6 gate falliti** nella tabella originale. Distillazione Parakeet originaria mai eseguita |
 | Ultimo training candidato | nessuno; E-032 respinto, E-031 è decode-only e non cambia i pesi |
-| Non eseguito | E-018 gold scaling; **mixed-dev naturale indipendente** (bloccato: serve uno speaker nuovo; un dev su speaker noti è proposto nel piano miglioramenti); E-028/E-029/E-030/E-031/E-032 eseguiti. Previsioni non sono risultati |
+| Non eseguito | E-018 gold scaling; **mixed-dev naturale indipendente** (bloccato: serve uno speaker nuovo; un dev su speaker noti è proposto nel piano miglioramenti); **E-033 (InterCTC) pre-registrato, non eseguito** (`runs/E-033/PLAN.md`, config controllo+braccio con preflight ok); E-028/E-029/E-030/E-031/E-032/E-034 eseguiti. Previsioni non sono risultati |
 | Runtime su main | PR #2 integrata: loader release, LM binario, budget 20/25 MB, dipendenze separate. La demo **0.8.1** è pubblicata e verificata live il 2026-11-12 (model sha `7bbfad7e…`, LM `3be1177b…`, config 0,55/2,7, Space `RUNNING`); non è una misura di qualità browser |
 | Audit/tooling su main | PR #3 mergiata 2026-11-11: audit 20/25 MB, tempo sicuro, InterCTC opt-in, preflight/resume, finalist eval, diagnostica, bias contestuale, LM builder/compaction. Nessun peso nuovo; il LM attuale risparmia 0 byte |
 | Diagnostica rari | E-026 (2026-11-11, no training): 41/47 riferimenti nel top-k, 6/47 potati; ETA allineata 47 rari 23,5% → 30,9% con E-015, ma T-600 54,17% → 53,40% |
@@ -129,7 +134,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
 | E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **pubblicato come 0.8.0 il 2026-11-12** |
 | Rumore 0.8.0 | 2026-11-12: stesso decoder per 0.7.0/0.8.0, 100 clip S3, pool E-024; 10–30 dB **tie** (27,33 vs 27,76), 15 dB tie, clean **−2,72 [−4,42, −1,02]** significativo; nessuna regressione |
-| Prossimo passo | **Dev mixed naturale su speaker noti** (S1/S2, sessioni nuove) e **InterCTC controllo vs braccio**; l'**holdout indipendente con voce nuova** resta bloccato (nessuno speaker nuovo). Criteri e ordine: [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md). 0.8.1 è pubblicato; la card dichiara che l'evidenza resta T/S3 |
+| Prossimo passo | **Dev mixed naturale su speaker noti** (S1/S2, sessioni nuove; kit di segmentazione pronto in `recordings/segment_notes.py`) e **InterCTC controllo vs braccio** (E-033, in attesa del via); l'**holdout indipendente con voce nuova** resta bloccato (nessuno speaker nuovo); un evento LM budgeted resta dietro a entrambi. Criteri e ordine: [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md). 0.8.1 è pubblicato; la card dichiara che l'evidenza resta T/S3 |
 | Dati non versionati | Release binari, checkpoint, tokenizer originale, raw audio e mel shard. Su questa macchina esistono; un clone pulito non ricostruisce il training senza dati/checkpoint |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 

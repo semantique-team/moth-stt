@@ -301,7 +301,11 @@ future holdout even though S3 has not trained acoustically.
 For natural mixed-dev or new speaker IDs, follow
 [the dedicated protocol](mixed-dev-and-quality-experiments.md). The existing guided
 recorder/builder handles only T/A/R and the recorder only S1-S4. Do not disguise a
-new development collection as R or T to get past these interfaces.
+new development collection as R or T to get past these interfaces. A long spontaneous
+note (5-10 minutes) is cut into the importer's 1-30 s clips with
+`recordings/segment_notes.py`, which writes 16 kHz mono wavs plus a transcript
+skeleton; `import_manifest.py` then produces `source="natural_mixed_dev"`, `split="dev"`,
+`lang="mix"` rows. No T/A/R script is reused and no text is guessed.
 
 ### Import And Review New Script Text
 
