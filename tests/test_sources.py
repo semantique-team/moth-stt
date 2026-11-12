@@ -102,7 +102,10 @@ def test_read_librispeech_transcripts(tmp_path: Path) -> None:
         ("ls-19-198-0001", "HELLO WORLD", "19"),
         ("ls-19-198-0002", "ANOTHER LINE", "19"),
     ]
-    assert rows[0]["audio"].endswith("19/198/19-198-0001.flac")
+    assert rows[0]["audio"] == "19/198/19-198-0001.flac"
+    out = tmp_path / "librispeech.jsonl"
+    write_records(rows, out)
+    assert json.loads(out.read_text().splitlines()[0])["audio"] == rows[0]["audio"]
 
 
 def test_read_mls_transcripts(tmp_path: Path) -> None:

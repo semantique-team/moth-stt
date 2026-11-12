@@ -2,13 +2,18 @@ import json
 import random
 from pathlib import Path
 
+import pytest
+
 from stt.data.build_tokenizer import (
     build_corpus,
     main,
     merge_report,
     oversample_to_words,
+    read_pool,
     read_terms,
+    read_transcripts,
 )
+from stt.manifest import ManifestError
 from stt.tokenizer import load_tokenizer
 
 
@@ -118,3 +123,49 @@ def test_main_builds_a_tokenizer_and_reports(tmp_path: Path) -> None:
     assert section["stats"]["tokens_per_second"] > 0
     assert section["stats"]["terms"] == 3
     assert section["sha256"][str(out.with_suffix(".model"))]
+
+
+@pytest.mark.parametrize("changes", [
+    {"split": "test"}, {"split": "dev"}, {"source": "recorded_t"},
+    {"source": "recorded_a"}, {"speaker": "S3"},
+])
+def test_read_transcripts_rejects_held_out_rows(tmp_path: Path, changes: dict) -> None:
+    path = _manifest(tmp_path / "m.jsonl", [("ciao", 1.0)], "mls_it", "it")
+    row = json.loads(path.read_text(encoding="utf-8")) | changes
+    path.write_text(json.dumps(row), encoding="utf-8")
+    with pytest.raises(ManifestError, match="cannot train"):
+        read_transcripts(path)
+
+
+@pytest.mark.parametrize("changes", [
+    {"kind": "T"}, {"kind": "A"}, {"kind": "unknown"}, {"id": "T-0001"},
+    {"id": "A-0001"}, {"speaker": "S3"}, {"split": "dev"},
+    {"source": "recorded_t"},
+])
+def test_read_pool_rejects_held_out_scripts(tmp_path: Path, changes: dict) -> None:
+    path = tmp_path / "renamed.jsonl"
+    path.write_text(json.dumps({"text": "ciao"} | changes), encoding="utf-8")
+    with pytest.raises(ManifestError, match="training-side"):
+        read_pool(path)
+
+
+@pytest.mark.parametrize("kind", [None, "pool", "R"])
+def test_read_pool_normalizes_valid_training_text(tmp_path: Path, kind: str | None) -> None:
+    path = tmp_path / "pool.jsonl"
+    row = {"text": "HELLO\tworld!"}
+    if kind is not None:
+        row["kind"] = kind
+    path.write_text(json.dumps(row), encoding="utf-8")
+    assert read_pool(path) == ["hello world"]
+
+
+def test_read_pool_rejects_anchor_filename_without_metadata(tmp_path: Path) -> None:
+    path = tmp_path / "A.jsonl"
+    path.write_text(json.dumps({"text": "ciao"}), encoding="utf-8")
+    with pytest.raises(ManifestError, match="T/A"):
+        read_pool(path)
+
+
+def test_existing_pool_script_remains_valid() -> None:
+    pool = read_pool(Path(__file__).parents[1] / "recordings/scripts/pool.jsonl")
+    assert len(pool) > 3000

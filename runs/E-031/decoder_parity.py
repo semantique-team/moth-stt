@@ -11,12 +11,14 @@ the same matrix. Exact text equality means the LM binary and decoder carry over.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import subprocess
 from pathlib import Path
 
 import numpy as np
+from audit import digest, require_new
 
 from stt.data.build_mel import load_audio_16k
 from stt.decode import beam_search, load_pieces
@@ -25,22 +27,28 @@ from stt.lm import BinaryBPELM
 from stt.onnx_runner import OnnxMoth
 
 REPO = Path(__file__).resolve().parents[2]
-OUT = Path(__file__).resolve().parent / "decoder-parity"
 RELEASE = Path(__file__).resolve().parent / "release"
 AUDIO = REPO / "web/tests/fixtures/speech.wav"
 PARAMS = {"beam": 12, "top_k": 10, "lm_weight": 0.55, "token_bonus": 2.7}
 
 
 def main() -> int:
-    OUT.mkdir(parents=True, exist_ok=True)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--name", required=True, help="new parity output directory")
+    args = parser.parse_args()
+    if Path(args.name).name != args.name or args.name in (".", ".."):
+        parser.error("--name must be one directory name")
+    out = Path(__file__).resolve().parent / "decoder-parity" / args.name
+    require_new(out)
+    out.mkdir(parents=True)
     moth = OnnxMoth(RELEASE / "model.int8.onnx", RELEASE / "vocab.json")
     pieces = load_pieces(RELEASE / "vocab.json")
     lm = BinaryBPELM.load(RELEASE / "lm_bpe3.bin")
     wav = load_audio_16k(AUDIO)
     mel = log_mel(wav, filters=load_mel_filters(RELEASE / "mel_filters.bin"))
     log_probs = np.asarray(moth.log_probs(mel), dtype=np.float32)
-    log_probs.tofile(OUT / "logits.bin")
-    (OUT / "meta.json").write_text(
+    log_probs.tofile(out / "logits.bin")
+    (out / "meta.json").write_text(
         json.dumps(
             {
                 "frames": int(log_probs.shape[0]),
@@ -67,7 +75,7 @@ def main() -> int:
         [
             "node",
             str(Path(__file__).resolve().parent / "js_beam.mjs"),
-            str(OUT / "logits.bin"),
+            str(out / "logits.bin"),
             str(RELEASE / "lm_bpe3.bin"),
             str(RELEASE / "vocab.json"),
         ],
@@ -82,10 +90,19 @@ def main() -> int:
         "exact_match": python_text == js_text,
         "frames": int(log_probs.shape[0]),
         "params": PARAMS,
+        "scope": "same-logits decoder only",
+        "assets": {"model": digest((RELEASE / "model.int8.onnx").read_bytes()),
+                   "lm": digest((RELEASE / "lm_bpe3.bin").read_bytes()),
+                   "vocab": digest((RELEASE / "vocab.json").read_bytes())},
+        "code": {name: digest((REPO / name).read_bytes()) for name in (
+            "stt/decode.py", "stt/lm.py", "web/decode.js", "web/lm.js",
+            "runs/E-031/decoder_parity.py", "runs/E-031/js_beam.mjs")},
+        "audio_sha256": digest(AUDIO.read_bytes()),
+        "logits_sha256": digest((out / "logits.bin").read_bytes()),
     }
-    (OUT / "parity.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    (out / "parity.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=2))
-    return 0
+    return 0 if result["exact_match"] else 1
 
 
 if __name__ == "__main__":

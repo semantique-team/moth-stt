@@ -26,6 +26,10 @@ async function resampleTo16k(samples, sampleRate) {
  * @returns {Promise<{stop: () => Promise<Float32Array>, stream: MediaStream, sampleRate: number}>}
  */
 export async function startMicrophone({ maxSeconds = 30, onLimit = null } = {}) {
+  if (!Number.isFinite(maxSeconds) || maxSeconds * TARGET_RATE < 1) {
+    throw new Error("maxSeconds must be finite and allow at least one sample");
+  }
+  maxSeconds = Math.min(30, maxSeconds);
   if (!navigator.mediaDevices?.getUserMedia) {
     throw new Error("getUserMedia non disponibile in questo browser");
   }
@@ -38,14 +42,16 @@ export async function startMicrophone({ maxSeconds = 30, onLimit = null } = {}) 
     },
   });
 
-  const context = new AudioContext();
+  let context;
   const chunks = [];
   let total = 0;
   let finished = false;
-  let limitFired = false;
   let stopPromise = null;
 
   try {
+    context = new AudioContext();
+    const maxSamples = Math.floor(maxSeconds * context.sampleRate);
+    const maxOutputSamples = Math.floor(maxSeconds * TARGET_RATE);
     await context.audioWorklet.addModule(new URL("./mic-worklet.js", import.meta.url));
     const source = context.createMediaStreamSource(stream);
     const node = new AudioWorkletNode(context, "moth-mic", {
@@ -63,22 +69,20 @@ export async function startMicrophone({ maxSeconds = 30, onLimit = null } = {}) 
 
     node.port.onmessage = ({ data }) => {
       if (finished) return;
-      chunks.push(data);
-      total += data.length;
-      if (
-        maxSeconds > 0 &&
-        !limitFired &&
-        total >= maxSeconds * context.sampleRate
-      ) {
-        limitFired = true;
+      const chunk = data.subarray(0, maxSamples - total);
+      chunks.push(chunk);
+      total += chunk.length;
+      if (total >= maxSamples) {
+        // Retain any cleanup error for stop(), even when no notification callback is supplied.
+        void stop().catch(() => {});
         onLimit?.();
       }
     };
 
-    async function stop() {
+    function stop() {
       if (stopPromise) return stopPromise;
       finished = true;
-      stopPromise = (async () => {
+      stopPromise = Promise.resolve().then(async () => {
         try {
           source.disconnect();
           node.disconnect();
@@ -86,9 +90,9 @@ export async function startMicrophone({ maxSeconds = 30, onLimit = null } = {}) 
           node.port.close();
         } finally {
           for (const track of stream.getTracks()) track.stop();
+          await context.close();
         }
         const sampleRate = context.sampleRate;
-        await context.close();
         if (total === 0) return new Float32Array(0);
         const merged = new Float32Array(total);
         let offset = 0;
@@ -96,8 +100,10 @@ export async function startMicrophone({ maxSeconds = 30, onLimit = null } = {}) 
           merged.set(chunk, offset);
           offset += chunk.length;
         }
-        return resampleTo16k(merged, sampleRate);
-      })();
+        chunks.length = 0;
+        const pcm = await resampleTo16k(merged, sampleRate);
+        return pcm.subarray(0, maxOutputSamples);
+      });
       return stopPromise;
     }
 
@@ -105,7 +111,7 @@ export async function startMicrophone({ maxSeconds = 30, onLimit = null } = {}) 
   } catch (error) {
     finished = true;
     for (const track of stream.getTracks()) track.stop();
-    await context.close();
+    await context?.close();
     throw error;
   }
 }

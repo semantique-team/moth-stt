@@ -16,7 +16,9 @@ variant (e.g. Whisper tiny with the language forced to Italian), and writes hypo
 from __future__ import annotations
 
 import json
+import os
 import re
+import shlex
 import subprocess
 import time
 from collections.abc import Callable
@@ -46,7 +48,9 @@ __all__ = [
 Transcriber = Callable[[Path], str]
 
 #: ``--flag {lang}`` / ``--flag={keywords}`` pairs, removed when the value is absent.
-_FLAG_PLACEHOLDER = re.compile(r"\s-{1,2}[\w-]+(?:=|\s+)\{(lang|keywords)\}")
+_FLAG_PLACEHOLDER = re.compile(
+    r"\s-{1,2}[\w-]+(?:=|\s+)(?P<quote>[\"']?)\{(?P<name>lang|keywords)\}(?P=quote)"
+)
 
 
 def resolve_audio(row: dict, audio_root: Path | str) -> Path:
@@ -65,7 +69,7 @@ def render_command(
     the audio path can never be swallowed as a flag value.
     """
     def drop(match: re.Match[str]) -> str:
-        name = match.group(1)
+        name = match["name"]
         if name == "lang" and not lang:
             return ""
         if name == "keywords" and keywords_path is None:
@@ -74,19 +78,36 @@ def render_command(
 
     command = _FLAG_PLACEHOLDER.sub(drop, command)
     command = command.replace("{lang}", lang)
-    command = command.replace("{keywords}", "" if keywords_path is None else str(keywords_path))
+    command = _substitute_path(command, "keywords", keywords_path)
     return command.strip()
+
+
+def _quote_path(path: Path | str) -> str:
+    value = str(path)
+    if os.name != "nt":
+        return shlex.quote(value)
+    # cmd expands these even inside quotes; do not interpret a filename as shell syntax.
+    if any(char in value for char in '"%!\r\n'):
+        raise ValueError("path contains characters unsafe for the Windows command shell")
+    quoted = subprocess.list2cmdline([value])
+    return quoted if quoted.startswith('"') else f'"{quoted}"'
+
+
+def _substitute_path(command: str, name: str, path: Path | str | None) -> str:
+    quoted = "" if path is None else _quote_path(path)
+    # Consume existing placeholder quotes, not the quotes inside the substituted filename.
+    return re.sub(rf"([\"'])\{{{name}\}}\1|\{{{name}\}}", lambda match: quoted, command)
 
 
 def external_transcriber(
     command: str, timeout_s: float = 600.0
 ) -> Transcriber:
-    """Wrap a CLI as a transcriber: ``{audio}`` is substituted, the last stdout line is the text."""
+    """Wrap a trusted shell CLI; ``{audio}`` gets a quoted path, last stdout line wins."""
     if "{audio}" not in command:
         command += " {audio}"
 
     def transcribe(path: Path) -> str:
-        full = command.replace("{audio}", str(path))
+        full = _substitute_path(command, "audio", path)
         proc = subprocess.run(
             full,
             shell=True,

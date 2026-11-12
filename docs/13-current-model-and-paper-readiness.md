@@ -27,6 +27,29 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > Independent natural mixed-dev and a new-voice rare readout remain missing; the release is not a
 > substitute for them. See [17](17-session-handoff-2026-11-12-e031.md).
 
+> **Documentary audit update (2026-11-12):** current release is **0.8.1**, with **19,706,289 B
+> of required assets**, not a whole-runtime footprint. The historical dossier below remains
+> the 0.7.0 snapshot, including its then-local missing files and test failures.
+> "Rare aligned ETA" for E-031/E-032 means all **81 span tokens in 47 rare-bearing utterances**
+> (47 target + 34 co-occurring tokens); 24/47 presence is separate, not target-only ETA.
+> E-031's original PLAN threshold is **0.284**, not the later historical E-028/E-030 **0.30**
+> target; 38/81 passes both. Retained dev CIs are **pooled**, not macro; corrected macro deltas
+> are in [E-031 RESULT](../runs/E-031/RESULT.md). The separately retained
+> [audit readout](../runs/E-031/audit-readout.json) reports post-hoc macro CIs and target-only
+> aligned ETA without changing the historical gate or providing independent-test confirmation.
+> x3 adds **579 retained trigrams** (801,858 → 802,437); the shipped change combines corpus,
+> pruning and weighting, not an isolated causal effect. An unchanged INT8 graph cannot establish
+> unchanged quantization WER cost without a matched fp32 comparison using the same E-031 LM.
+> Noise-condition ties and the descriptive 29.47/30.05 mean (no mean CI) establish neither
+> equivalence nor an upper bound. E-032 S3 pairs are **26.75/46.76** (0.8.0 LM) and **26.41/47.61**
+> (E-031 LM); its original table has six FAIL rows. No historical PLAN/JSON is rewritten.
+> [Audit 18](18-audit-fixes-2026-11-12.md) records other agents' no-weight code fixes with
+> verification in [audit 18](18-audit-fixes-2026-11-12.md); independent natural mixed-dev/holdout with new speakers and broader
+> browser acoustic WER remain missing. No new trained model or executed gates are claimed.
+> The Windows `resource` import blocker was fixed before this branch; CPU pytest can now collect
+> on Windows, without certifying production training. The 2026-11-10 quoted failures below remain
+> historical. No full LM build/staging, gate rerun or model release was performed by this task.
+
 ## 1. Identity and Architecture
 
 The recorded published model is **Moth 0.7.0**, acoustic checkpoint **E-024**. The release labels

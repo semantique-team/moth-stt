@@ -213,7 +213,7 @@ def import_manifest(
         rows.append(
             {
                 "id": uid,
-                "audio": str(relative),
+                "audio": relative.as_posix(),
                 "text": text,
                 "norm": norm,
                 "duration": duration,

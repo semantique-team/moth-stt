@@ -88,6 +88,7 @@ def test_speaker_subdirectory_and_audio_field(tmp_path: Path) -> None:
 
     assert result["errors"] == []
     assert [row["audio"] for row in result["rows"]] == ["S9/NM-0001.wav", "other/take.wav"]
+    assert all((audio / row["audio"]).is_file() for row in result["rows"])
 
 
 def test_refuses_exact_duplicate_within_collection(tmp_path: Path) -> None:

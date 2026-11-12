@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pytest
 import soundfile as sf
 
 from stt.data.build_mel import (
@@ -168,3 +169,123 @@ def test_cli_builds_shards_and_index(tmp_path: Path) -> None:
     index = load_index(out / "index.json")
     assert "a" in index
     assert (out / "index.json").exists()
+
+
+def _delete_args(tmp_path: Path, rows: list[dict]) -> list[str]:
+    manifest = tmp_path / "manifest.jsonl"
+    manifest.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    return [
+        "--manifest", str(manifest), "--audio-root", str(tmp_path),
+        "--out-dir", str(tmp_path / "shards"), "--workers", "1", "--delete-audio",
+    ]
+
+
+def test_cli_limit_deletes_only_current_indexed_audio(tmp_path: Path) -> None:
+    rows = [_manifest_row("a", "a.wav"), _manifest_row("b", "b.wav")]
+    for row in rows:
+        sf.write(tmp_path / row["audio"], _sine(), 16000)
+    args = _delete_args(tmp_path, rows)
+    # A previous complete index must not make the limited rebuild delete b.
+    build_shards(rows, tmp_path, tmp_path / "shards")
+    assert main(args + ["--limit", "1"]) == 0
+    assert not (tmp_path / "a.wav").exists()
+    assert (tmp_path / "b.wav").exists()
+
+
+def test_cli_errors_keep_all_audio(tmp_path: Path) -> None:
+    sf.write(tmp_path / "a.wav", _sine(), 16000)
+    (tmp_path / "bad.wav").write_bytes(b"not audio")
+    rows = [_manifest_row("a", "a.wav"), _manifest_row("bad", "bad.wav")]
+    assert main(_delete_args(tmp_path, rows)) == 1
+    assert (tmp_path / "a.wav").exists()
+    assert (tmp_path / "bad.wav").exists()
+
+
+def test_cli_verifies_every_deletion_candidate(tmp_path: Path, monkeypatch) -> None:
+    import stt.data.build_mel as module
+
+    rows = [_manifest_row(str(i), f"{i}.wav") for i in range(5)]
+    for row in rows:
+        sf.write(tmp_path / row["audio"], _sine(), 16000)
+    original = module.build_shards
+
+    def corrupt(*args, **kwargs):
+        report = original(*args, **kwargs)
+        out = tmp_path / "shards"
+        index = load_index(out / "index.json")
+        # Seed zero's first three sampled IDs do not include 0.
+        shard = out / index["0"]["shard"]
+        data = np.load(shard)
+        data[index["0"]["offset"] * 80] = 123.0
+        np.save(shard, data)
+        return report
+
+    monkeypatch.setattr(module, "build_shards", corrupt)
+    assert main(_delete_args(tmp_path, rows)) == 1
+    assert all((tmp_path / row["audio"]).exists() for row in rows)
+
+
+def test_delete_audio_prevalidates_all_paths(tmp_path: Path) -> None:
+    root = tmp_path / "audio"
+    root.mkdir()
+    (root / "safe.wav").write_bytes(b"safe")
+    outside = tmp_path / "outside.wav"
+    outside.write_bytes(b"keep")
+    with pytest.raises(ValueError, match="unsafe"):
+        delete_audio([{"audio": "safe.wav"}, {"audio": "../outside.wav"}], root)
+    assert (root / "safe.wav").exists() and outside.exists()
+
+
+def test_verify_sample_rejects_missing_requested_candidate() -> None:
+    assert not verify_sample({}, ".", {}, ".", sample_ids=["missing"], n=1)
+
+
+def test_verify_sample_cannot_silently_skip_requested_audio(tmp_path: Path) -> None:
+    sf.write(tmp_path / "a.wav", _sine(), 16000)
+    rows = [{"id": "a", "audio": "a.wav"}]
+    out = tmp_path / "shards"
+    build_shards(rows, tmp_path, out)
+    index = load_index(out / "index.json")
+    assert not verify_sample(
+        index, out, {"a": rows[0]}, tmp_path, sample_ids=["a", "missing"], n=2
+    )
+
+
+def test_verify_sample_requested_membership_is_linear(monkeypatch) -> None:
+    import stt.data.build_mel as module
+
+    class CountingId(str):
+        comparisons = 0
+        __hash__ = str.__hash__
+
+        def __eq__(self, other):
+            CountingId.comparisons += 1
+            return super().__eq__(other)
+
+    size = 512
+    ids = [CountingId(str(i)) for i in range(size)]
+    rows = {uid: {"audio": f"{uid}.wav"} for uid in ids}
+    index = {uid: {} for uid in ids}
+    mel = np.zeros((80, 1), dtype=np.float32)
+    monkeypatch.setattr(Path, "exists", lambda self: True)
+    monkeypatch.setattr(module, "load_audio_16k", lambda path: None)
+    monkeypatch.setattr(module, "log_mel", lambda wav: mel)
+    monkeypatch.setattr(module, "read_clip", lambda *args: mel)
+    assert verify_sample(index, ".", rows, ".", sample_ids=ids, n=1)
+    assert CountingId.comparisons < size * 4
+
+
+@pytest.mark.parametrize("rows,limit", [
+    ([{"id": "a", "audio": "a.wav"}], -1),
+    ([{"id": "a", "audio": "a.wav"}, {"id": "a", "audio": "b.wav"}], None),
+])
+def test_build_rejects_ambiguous_ids_and_negative_limits(tmp_path: Path, rows, limit) -> None:
+    with pytest.raises(ValueError):
+        build_shards(rows, tmp_path, tmp_path / "shards", limit=limit)
+    assert not (tmp_path / "shards").exists()
+
+
+def test_limit_zero_never_deletes_audio(tmp_path: Path) -> None:
+    sf.write(tmp_path / "a.wav", _sine(), 16000)
+    assert main(_delete_args(tmp_path, [_manifest_row("a", "a.wav")]) + ["--limit", "0"]) == 1
+    assert (tmp_path / "a.wav").exists()

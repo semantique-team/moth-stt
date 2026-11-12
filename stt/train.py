@@ -43,7 +43,7 @@ from stt.data.build_mel import load_index
 from stt.data.dataset import MAX_MEL_FRAMES, AugmentConfig, MelDataset, collate, plan_batches
 from stt.decode import greedy_ids
 from stt.eval import score_rows
-from stt.manifest import load_manifest
+from stt.manifest import load_manifest, validate_training_rows
 from stt.model import EncoderConfig, MothSTT
 from stt.tokenizer import encode as tokenizer_encode
 from stt.tokenizer import load_tokenizer
@@ -429,6 +429,14 @@ def train(
 
     vocab_size = int(config["model"]["vocab_size"])
     index, rows, shards_root = load_sources(config["data"]["train"])
+    validate_training_rows(rows)
+    dev_data = []
+    for name, key in (("it", "dev"), ("en", "dev_en")):
+        sources = config["data"].get(key)
+        if sources:
+            dev_index, dev_rows, dev_root = load_sources(sources)
+            validate_training_rows(rows, dev_rows)
+            dev_data.append((name, dev_index, dev_rows, dev_root))
     durations = [float(row["duration"]) for row in rows]
 
     augment_name = str(train_cfg.get("augment", "full"))
@@ -459,13 +467,8 @@ def train(
     # ``dev`` is the Italian group, ``dev_en`` the optional English one; the selection metric is
     # their macro-average WER so that neither language collapses while the other improves.
     dev_sets: list[tuple[str, MelDataset]] = []
-    for name, key in (("it", "dev"), ("en", "dev_en")):
-        sources = config["data"].get(key)
-        if sources:
-            dev_index, dev_rows, dev_root = load_sources(sources)
-            dev_sets.append(
-                (name, MelDataset(dev_index, dev_root, dev_rows, augment=None, seed=seed))
-            )
+    for name, dev_index, dev_rows, dev_root in dev_data:
+        dev_sets.append((name, MelDataset(dev_index, dev_root, dev_rows, augment=None, seed=seed)))
 
     steps_per_epoch = len(
         plan_batches(durations, max_seconds=max_seconds, max_clips=max_clips, seed=seed, epoch=0)

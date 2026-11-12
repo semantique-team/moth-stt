@@ -98,7 +98,31 @@ def score_rows(
     WER and are summarized in the ``noise`` block instead. Returns the core ``metrics`` dict
     (``n_utterances``, ``overall``, ``breakdown``, ``noise``, ``per_utterance``).
     """
-    missing = [str(row["id"]) for row in rows if str(row["id"]) not in hyps]
+    ids = [str(row["id"]) for row in rows]
+    if len(set(ids)) != len(ids):
+        raise ValueError("duplicate reference ids")
+    for row in rows:
+        norm = row.get("norm")
+        if norm is None and not row.get("text"):
+            norm = ""  # Historical minimal noise references omit text/norm.
+        if not isinstance(norm, str) or (not norm.strip() and row.get("text")):
+            raise ValueError(f"{row['id']}: speech reference requires nonempty norm")
+        occupied: set[int] = set()
+        spans = row.get("en_spans")
+        if spans is not None and not isinstance(spans, (list, tuple)):
+            raise ValueError(f"{row['id']}: invalid en_spans")
+        for span in spans or []:
+            if (
+                not isinstance(span, (list, tuple)) or len(span) != 2
+                or any(type(index) is not int for index in span)
+                or not 0 <= span[0] < span[1] <= len(norm.split())
+            ):
+                raise ValueError(f"{row['id']}: invalid en_spans")
+            positions = set(range(*span))
+            if occupied & positions:
+                raise ValueError(f"{row['id']}: overlapping en_spans")
+            occupied.update(positions)
+    missing = [uid for uid in ids if uid not in hyps]
     if missing:
         raise KeyError(f"hypotheses missing for {len(missing)} ids: {missing[:5]}")
 
@@ -226,7 +250,7 @@ def main(argv: list[str] | None = None) -> int:
     manifest_path = Path(args.manifest)
     hyp_path = Path(args.hyp)
     rows = _read_jsonl(manifest_path)
-    hyps = {str(row["id"]): row.get("hyp", "") for row in _read_jsonl(hyp_path)}
+    hyps = read_hypotheses(hyp_path)
 
     result = score_rows(rows, hyps, bootstrap=args.bootstrap, seed=args.seed)
     result |= {
@@ -400,6 +424,56 @@ def _compare(result: dict, other: dict, bootstrap: int, seed: int) -> dict:
 
 def _read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def read_hypotheses(path: Path) -> dict[str, str]:
+    """Load hypotheses without silently collapsing duplicate IDs."""
+    result = {}
+    for row in _read_jsonl(path):
+        uid = str(row["id"])
+        if uid in result:
+            raise ValueError(f"{path}: duplicate hypothesis id {uid}")
+        if not isinstance(row.get("hyp"), str):
+            raise TypeError(f"{path}: {uid}: hyp must be a string")
+        result[uid] = row["hyp"]
+    return result
+
+
+def macro_wer_bootstrap(
+    rows: list[dict], result: dict, other: dict | None = None,
+    bootstrap: int = 1000, seed: int = 0,
+) -> dict:
+    """Equal-language macro WER, paired utterance bootstrap within each language."""
+    groups: dict[str, list[str]] = {}
+    ours = result["per_utterance"]
+    theirs = other["per_utterance"] if other is not None else None
+    if theirs is not None and set(ours) != set(theirs):
+        raise ValueError("macro comparison requires identical utterance ids")
+    for row in rows:
+        uid = str(row["id"])
+        if uid in ours:
+            groups.setdefault(row["lang"], []).append(uid)
+    if not groups:
+        raise ValueError("macro WER requires speech language strata")
+
+    def value(samples):
+        macro = sum(_stats(ids, ours)["wer"] for ids in samples) / len(groups)
+        if theirs is not None:
+            macro -= sum(_stats(ids, theirs)["wer"] for ids in samples) / len(groups)
+        return macro
+
+    point = value(groups.values())
+    rng = random.Random(seed)
+    values = sorted(
+        value([rng.choices(ids, k=len(ids)) for ids in groups.values()])
+        for _ in range(bootstrap)
+    )
+    ci = (
+        [values[int(0.025 * bootstrap)], values[min(bootstrap - 1, int(0.975 * bootstrap))]]
+        if bootstrap > 0 else None
+    )
+    return {"point": point, "ci": ci, "strata": {k: len(v) for k, v in groups.items()},
+            "bootstrap": bootstrap, "seed": seed, "tie": ci[0] <= 0 <= ci[1] if ci else None}
 
 
 def _sha256(path: Path) -> str:

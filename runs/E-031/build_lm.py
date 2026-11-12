@@ -23,7 +23,6 @@ from collections.abc import Iterable
 from pathlib import Path
 
 from stt.lm import BPETrigramLM
-from stt.tokenizer import load_tokenizer
 
 REPO = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent
@@ -64,6 +63,8 @@ def weighted_sequences(
 
 
 def main() -> int:
+    from stt.tokenizer import load_tokenizer
+
     BUILD.mkdir(parents=True, exist_ok=True)
     receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
     if sha256(CORPUS) != receipt["corpus_sha256"]:

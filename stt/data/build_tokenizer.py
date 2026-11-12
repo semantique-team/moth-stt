@@ -30,7 +30,8 @@ import json
 import random
 from pathlib import Path
 
-from stt.manifest import load_manifest
+from stt.manifest import ManifestError, load_manifest, validate_training_rows
+from stt.text import normalize
 from stt.tokenizer import load_tokenizer, tokenizer_stats, train_tokenizer, write_vocab
 
 __all__ = [
@@ -48,7 +49,9 @@ DEFAULT_REPORT = "data/manifests/build_report.json"
 
 def read_transcripts(manifest_path: Path | str) -> list[tuple[str, float]]:
     """``[(norm_text, duration_s), ...]`` from a manifest (validated by ``load_manifest``)."""
-    return [(row["norm"], float(row.get("duration") or 0.0)) for row in load_manifest(manifest_path)]
+    rows = load_manifest(manifest_path)
+    validate_training_rows(rows)
+    return [(row["norm"], float(row.get("duration") or 0.0)) for row in rows]
 
 
 def oversample_to_words(
@@ -107,13 +110,28 @@ def build_corpus(
 
 
 def read_pool(path: Path | str) -> list[str]:
-    """The mixed pool's ``text`` fields (already normalized by the script generator)."""
+    """Normalized training-side script text; legacy pool rows have no explicit kind."""
+    stem = Path(path).stem.upper()
+    if stem in ("T", "A") or stem.startswith(("T-", "A-")):
+        raise ManifestError("T/A scripts cannot enter the tokenizer pool")
     rows = [
         json.loads(line)
         for line in Path(path).read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
-    return [row["text"] for row in rows]
+    for row in rows:
+        uid = str(row.get("id", ""))
+        kind = row.get("kind")
+        if (
+            kind is not None and kind not in ("pool", "R")
+            or uid.startswith(("T-", "A-", "R-S3-"))
+            or row.get("split", "train") != "train"
+            or row.get("role", "train") != "train"
+            or str(row.get("source", "")).lower() in ("recorded_t", "recorded_a")
+            or str(row.get("speaker", "")).upper() == "S3"
+        ):
+            raise ManifestError(f"script row {uid!r}: only training-side pool/R text is allowed")
+    return [normalize(row["text"]) for row in rows]
 
 
 def read_terms(path: Path | str) -> list[str]:
