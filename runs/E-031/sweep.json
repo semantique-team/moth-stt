@@ -1,0 +1,89 @@
+{
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "arms": {
+    "A0_shipped": {
+      "lm": "runs/E-008/lm_bpe3_aug.pkl.gz",
+      "lm_bytes_pickle": 3545251,
+      "overall_wer": 0.22233565154512006,
+      "overall_eta": null,
+      "it": 0.28014947905065957,
+      "en": 0.17877719975387368,
+      "macro": 0.22946333940226663,
+      "seconds": 242.3
+    },
+    "A1_frozen_2_2": {
+      "lm": "runs/E-031/build/frozen_2_2.pkl.gz",
+      "lm_bytes_pickle": 3538331,
+      "overall_wer": 0.222239945553925,
+      "overall_eta": null,
+      "it": 0.27992674536590195,
+      "en": 0.17877719975387368,
+      "macro": 0.22935197255988782,
+      "seconds": 242.5,
+      "vs_A0": {
+        "other": "runs/E-031/dev/A0_shipped/dev.hyp.jsonl",
+        "other_manifest_sha256": null,
+        "wer_diff": -9.57059911950442e-05,
+        "wer_diff_ci": [
+          -0.0003097463284379154,
+          0.00015133662670657744
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "A2_frozen_1_2": {
+      "lm": "runs/E-031/build/frozen_1_2.pkl.gz",
+      "lm_bytes_pickle": 3704803,
+      "overall_wer": 0.22149556562240796,
+      "overall_eta": null,
+      "it": 0.278639839631747,
+      "en": 0.17844157297085642,
+      "macro": 0.2285407063013017,
+      "seconds": 239.1,
+      "vs_A0": {
+        "other": "runs/E-031/dev/A0_shipped/dev.hyp.jsonl",
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0008400859227120916,
+        "wer_diff_ci": [
+          -0.0014021942734813997,
+          -0.0003532173949178097
+        ],
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "A3_frozen_1_2_terms": {
+      "lm": "runs/E-031/build/frozen_1_2_terms.pkl.gz",
+      "lm_bytes_pickle": 3706517,
+      "overall_wer": 0.22142112762925625,
+      "overall_eta": null,
+      "it": 0.2787883287549187,
+      "en": 0.17819917584978837,
+      "macro": 0.22849375230235353,
+      "seconds": 240.2,
+      "vs_A0": {
+        "other": "runs/E-031/dev/A0_shipped/dev.hyp.jsonl",
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0009145239158638019,
+        "wer_diff_ci": [
+          -0.001472486902335729,
+          -0.00040367986062422867
+        ],
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "corpus_bytes": 24756041,
+  "corpus_sha256": "c8d941921ad6bf7905dd486770493bf172c34c9b183ead80cf50ed450fffe720",
+  "duplicate_train_rows": 939,
+  "empty_train_rows": 0,
+  "excluded_sentences": 36065,
+  "format_version": 1,
+  "inputs": [
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/cv_it_dev.jsonl",
+      "role": "exclusion",
+      "rows": 14697,
+      "sha256": "55bd0ecefc0c5c3dd1e1ba984c0afa1986d655659849d4aa574061319b918f47"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/cv_it_test.jsonl",
+      "role": "exclusion",
+      "rows": 14643,
+      "sha256": "5d30dbfb74708fd891d0f782f65419c536b5cce7fee637c1aae2510ff7f861ee"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/fleurs_en_dev.jsonl",
+      "role": "exclusion",
+      "rows": 343,
+      "sha256": "ea16defb7ddd3cf7aeb58caa3465cbbd584bf63b3c3dd481f890c7cb65127b3e"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/fleurs_en_test.jsonl",
+      "role": "exclusion",
+      "rows": 525,
+      "sha256": "a3a52346835b287afa3cf9bcd16f16ffdbdb504e069498598e228c54d781911f"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/fleurs_it_dev.jsonl",
+      "role": "exclusion",
+      "rows": 334,
+      "sha256": "1a62f6e1bfed386005b2f9b28c555af2f5f6de0977c8f002c4c54b1415ef2965"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/fleurs_it_test.jsonl",
+      "role": "exclusion",
+      "rows": 697,
+      "sha256": "54b79c8e1520359f2403dc021fd2bff167e76d7df3db2d4ed3532de91c8ce0f1"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/ls_en_dev.jsonl",
+      "role": "exclusion",
+      "rows": 2691,
+      "sha256": "51053e0a21d561dda20dfd0f7136e9063712a9f37be97507aac125e1595de8f6"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/mls_it_dev.jsonl",
+      "role": "exclusion",
+      "rows": 1248,
+      "sha256": "e0355fa641241cffac14ae5c0f2af1f51ec564a6bc499993d8676a2b4859d602"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/mls_it_test.jsonl",
+      "role": "exclusion",
+      "rows": 1262,
+      "sha256": "dbe8addb88221834521ef9299b83e7d4e48919f4ccd3620106d6be05351ea6bc"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/manifests/A-S1.jsonl",
+      "role": "exclusion",
+      "rows": 60,
+      "sha256": "c5628ea0f86a770d1ea7d8ab5219c37fce739fbead2c080ae71a9c79cf6c9018"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/manifests/A-S2.jsonl",
+      "role": "exclusion",
+      "rows": 60,
+      "sha256": "f6f811ca222610832b9d596da46656b4a891f73892f996cc0665efb5d8cea374"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/manifests/A-S3.jsonl",
+      "role": "exclusion",
+      "rows": 60,
+      "sha256": "443ed6fd0a7c4b678779b0895826ad30942569574c40a75920ed65acf56a5788"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/manifests/T-S2.jsonl",
+      "role": "exclusion",
+      "rows": 200,
+      "sha256": "bd7b546a692440451cdb7ad6ff01ad9e8c5474560996b44f4ac42d7c69e1f17a"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/manifests/T.jsonl",
+      "role": "exclusion",
+      "rows": 600,
+      "sha256": "11e002d88dbfaee900ff24a8c3770e60eca7d683de19f7156fc7169f85497786"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/scripts/A.jsonl",
+      "role": "exclusion",
+      "rows": 60,
+      "sha256": "f8c1feabd6f64092c14116655374e40c5263e0e7f50564edc43191a596db1576"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/scripts/T.jsonl",
+      "role": "exclusion",
+      "rows": 800,
+      "sha256": "074a0733f4bc215867309bffef2fa02aa331193ed28211be2ba4ba1d9e17eeaa"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/cv_it_train.jsonl",
+      "role": "train_manifest",
+      "rows": 113118,
+      "sha256": "91c87b2187b4e18a59d2041edf592df2d1257c3bd5c5aba8804b7042ecf90388"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/ls_en_train.jsonl",
+      "role": "train_manifest",
+      "rows": 28370,
+      "sha256": "25e8209a8d7566a9bdaeb67fecc99284db9c5d738cab707e8fd77bd981ee709c"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/data/manifests/mls_it_train.jsonl",
+      "role": "train_manifest",
+      "rows": 40953,
+      "sha256": "0bc8547daf492dbcc5b48c7c14a14d8f2be457ad62adbee72373c673b6d8cf9d"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/scripts/R-S1.jsonl",
+      "role": "train_script",
+      "rows": 691,
+      "sha256": "97ce1c8dbc4b49b611a4e041a133ac8d5c96e4a6d363773358967a3275a9ea05"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/scripts/R-S2.jsonl",
+      "role": "train_script",
+      "rows": 673,
+      "sha256": "488ffdf62f8ae3ffc5e27e8e72104c94c1972f864f2bcf6c8dae75e87582a7a4"
+    },
+    {
+      "path": "/Users/tancredi/Desktop/semantique/moth-stt/recordings/scripts/pool.jsonl",
+      "role": "train_script",
+      "rows": 3137,
+      "sha256": "b3d765bee8bb34ae19593c43863d23a331fc7f43326dc871e7f287ac70215f75"
+    }
+  ],
+  "normalizer": "stt.text.normalize",
+  "normalizer_sha256": "c26c1dadf71589d918e3b43d91d3bb1394169c2f964bfbc5f9790ded13348d07",
+  "num2words_version": "0.5.14",
+  "sentences": 186003,
+  "train_rows": 186942
+}

@@ -1,0 +1,50 @@
+{
+  "corpus": "runs/E-031/frozen/lm-corpus.jsonl",
+  "corpus_sha256": "c8d941921ad6bf7905dd486770493bf172c34c9b183ead80cf50ed450fffe720",
+  "corpus_receipt": "runs/E-031/frozen/lm-corpus.receipt.json",
+  "tokenizer": "data/tokenizer/moth_bpe.model",
+  "tokenizer_sha256": "d6e1054e9273915db4e706898286f90d4b97e6b703386ed8b84f0a148caed2fd",
+  "builder_sha256": "d42d6d3432dbac9bee3a314c3a5ea48a3e036f7285e52685a3115dd721fe1097",
+  "term_sentences": 143,
+  "arms": {
+    "frozen_2_2": {
+      "name": "frozen_2_2",
+      "min_bigram": 2,
+      "min_trigram": 2,
+      "term_weight": 1,
+      "pickle_bytes": 3538331,
+      "binary_bytes": 5099304,
+      "pickle_sha256": "cefe81219b035a084a2b42e785268c118bb94857be63c602a4ce8209c309fe4b",
+      "binary_sha256": "0ccbc2f7cb136a54b5fd03f55dc686c2f4d69153e87160e46dadd60682911ad4",
+      "bigram_entries": 196009,
+      "trigram_entries": 801858,
+      "seconds": 4.7
+    },
+    "frozen_1_2": {
+      "name": "frozen_1_2",
+      "min_bigram": 1,
+      "min_trigram": 2,
+      "term_weight": 1,
+      "pickle_bytes": 3704803,
+      "binary_bytes": 5378740,
+      "pickle_sha256": "500d928e105016ebd9f96138d525af5ebd7ef1a42cea5c5919e033dca869fcb4",
+      "binary_sha256": "cac242164fff21c5b420128f354e95782d14122369dcd7dc4d1bf9ed6b4d30b3",
+      "bigram_entries": 265868,
+      "trigram_entries": 801858,
+      "seconds": 4.8
+    },
+    "frozen_1_2_terms": {
+      "name": "frozen_1_2_terms",
+      "min_bigram": 1,
+      "min_trigram": 2,
+      "term_weight": 3,
+      "pickle_bytes": 3706517,
+      "binary_bytes": 5381992,
+      "pickle_sha256": "6e35315e7751de939be035d021683677745e07d98a514fa7d8e1a1992220c8ed",
+      "binary_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
+      "bigram_entries": 265868,
+      "trigram_entries": 802437,
+      "seconds": 6.3
+    }
+  }
+}

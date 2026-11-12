@@ -1,0 +1,30 @@
+t600            reused existing decode
+t600            wer  24.08 eta  55.23
+t-s3            reused existing decode
+t-s3            wer  24.96 eta  51.27
+fleurs_it_test  reused existing decode
+fleurs_it_test  wer  20.16 eta n/a
+fleurs_en_test  reused existing decode
+fleurs_en_test  wer  49.81 eta n/a
+{"n": 47, "en_ref": 81, "en_hit": 38, "aligned_eta": 0.4691358024691358, "baseline_en_hit": 23, "baseline_aligned_eta": 0.2839506172839506, "vs_0.8.0": {"other": null, "other_manifest_sha256": null, "wer_diff": -0.07722007722007723, "wer_diff_ci": [-0.1155378486055777, -0.04365079365079366], "wer_tie": false, "eta_diff": 0.18518518518518517, "eta_diff_ci": [0.09615384615384615, 0.3098591549295775], "eta_tie": false}}
+natural  base 436/ 817 new 432/ 817
+gold     base 126/ 179 new 127/ 179
+never    base  11/  47 new  24/  47
+
+47 rare utterances: base 23.4% new 51.1% delta +27.7 [+14.9, +42.6] (n=47)
+aligned ETA 47 rare: base 28.4% (23/81) new 46.9% (38/81)
+aligned ETA T-600: base 54.2% (565/1043) new 55.2% (576/1043)
+16 gold terms: base 19/27 = 70.4% new 19/27 = 70.4%
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-031/eval/frozen_1_2_terms/terms.json
+{"clips": 457, "candidate_words": 559, "baseline_words": 567}
+{
+  "bytes": true,
+  "t600_wer": true,
+  "t600_eta": true,
+  "t-s3_wer": true,
+  "t-s3_eta": true,
+  "fleurs_it": true,
+  "fleurs_en": true,
+  "rare_eta": true,
+  "natural": true
+}

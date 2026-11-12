@@ -1,0 +1,38 @@
+{
+  "sentences": 186942,
+  "tokens": 7265118,
+  "arms": {
+    "2_2": {
+      "bytes": 5117664,
+      "fits_20mb": true,
+      "delta_vs_shipped": 1200,
+      "bigram_entries": 196163,
+      "trigram_entries": 805180,
+      "seconds": 4.3
+    },
+    "1_2": {
+      "bytes": 5396484,
+      "fits_20mb": true,
+      "delta_vs_shipped": 280020,
+      "bigram_entries": 265868,
+      "trigram_entries": 805180,
+      "seconds": 4.3
+    },
+    "2_1": {
+      "bytes": 12034620,
+      "fits_20mb": false,
+      "delta_vs_shipped": 6918156,
+      "bigram_entries": 196163,
+      "trigram_entries": 2280427,
+      "seconds": 5.1
+    },
+    "1_1": {
+      "bytes": 12313440,
+      "fits_20mb": false,
+      "delta_vs_shipped": 7196976,
+      "bigram_entries": 265868,
+      "trigram_entries": 2280427,
+      "seconds": 5.2
+    }
+  }
+}
