@@ -64,3 +64,7 @@ runs/E-028/quant/*.onnx
 # E-034: LM variants are reproducible from the pinned corpus and build_variants.py
 runs/E-034/build/*.bin
 runs/E-034/build/*.pkl.gz
+
+# E-035: budgeted LM binaries are reproducible from the pinned corpus and build_budgeted.py
+runs/E-035/build/*.bin
+runs/E-035/build/*.pkl.gz
