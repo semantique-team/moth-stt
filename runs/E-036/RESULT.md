@@ -6,15 +6,22 @@
 
 ## Verdict
 
+**Interpretation correction (2026-11-13, no new inference):** this readout decodes cached
+mel clips without VAD or segmentation. Silence emission describes that ungated acoustic/
+decoder path, not the full shipped runtime, which has a VAD guard. E-039 identifies the
+120 silence files as one byte-identical signal repeated 120 times, not independent trials.
+The historical rejection is unchanged. Music word counts below match the retained
+`eval/frozen-1/readout.json` and `eval/last2-1/readout.json`; no JSON or gate was recomputed.
+
 The protection worked where it was aimed — WER on T-600, T-S3 and FLEURS is a **tie** for both
-arms — but it did not deliver the rare-term target and it introduced a new product regression:
+arms — but it did not deliver the rare-term target and it introduced an ungated silence regression:
 
 - **Neither arm reaches 42/81 rare aligned ETA**: `frozen` gets **39/81** (+1), `last2` **41/81**
   (+3), both with a paired CI whose lower bound is exactly zero. The pre-registered target was
   42/81, the point level E-032 reached; 39–41 is insufficient and is not rounded up.
 - **Both arms emit `x` on all 120 silence clips**, where 0.8.1 emits nothing. Non-music
   non-empty clips jump from 146 to 272; the `noise_non_music` and `noise_music` gates fail. This
-  is a systematic hallucination, not the two-word music difference seen in E-035.
+  is a deterministic emission on the repeated ungated signal, not a full-runtime measurement.
 - **`last2` also loses T-S3 ETA**: 51.27 → 49.86, paired CI [−2.76, −0.28] pp, a significant
   regression. `frozen` keeps T-S3 ETA flat.
 
@@ -79,7 +86,7 @@ of the CTC loss; the teacher was E-028, hash `01b83cc3…`.
 | silence (120) | **0 / 0** | **120 / 120** (`x`) | **120 / 120** (`x`) |
 | room tone (97) | 97 / 188 | 97 / 194 | 97 / 190 |
 | MUSAN (120) | 49 / 70 | 55 / 78 | 55 / 71 |
-| music (120) | 84 / 301 | 86 / 295 | 88 / 307 |
+| music (120) | 84 / 299 | 86 / 293 | 88 / 305 |
 | non-music total (337) | 146 / 258 | **272 / 392** | **272 / 381** |
 
 The candidate emits the single token `x` on **every** silence clip. The frozen arm shows it too,
@@ -102,8 +109,8 @@ and `noise_music` gates fail for both arms.
 
 - **Freezing plus replay plus a weak KL teacher preserves WER but not silence behaviour.** The
   output stack learns to emit `x` on silence from the S1 fine-tune; the frozen encoder proves the
-  encoder is not the source. A conservative fine-tune needs a blank/silence guard, not only weight
-  anchoring.
+  encoder is not the source of this observed ungated emission. This is not a test of the
+  shipped VAD guard; weight anchoring alone does not preserve the ungated silence behavior.
 - **The rare target is not reached.** `last2` gets closer (41/81, target-only 27/47) but still
   misses 42/81, and it buys that with a significant T-S3 ETA loss. The six acoustically pruned
   terms still need a change that this recipe does not provide.

@@ -6,6 +6,7 @@
 |---|---|
 | Current state: 0.8.1 published, E-031/E-032 | [17 - Session handoff 2026-11-12 (E-031)](17-session-handoff-2026-11-12-e031.md) |
 | No-weight audit fixes and verification | [18 - Audit fixes 2026-11-12](18-audit-fixes-2026-11-12.md) |
+| Repository review and no-training correctness fixes | [19 - Repository review 2026-11-13](19-repository-review-2026-11-13.md) |
 | Proposed model improvements: mixed-dev, TTS and training-only options | [Model improvement strategy](plans/2026-11-12-model-improvement-strategy.md) (E-033/E-034 rejected; E-035 readout tie; E-036 rejected) |
 | What is left before closing the model at ≤20 MB, and the closure criteria | [Model closure 2026-11-13](plans/2026-11-13-model-closure.md) (E-035/E-036 closed negative; 0.8.1 frozen; E-037 INT8 cost measured) |
 | 0.8.0 release state and its session | [16 - Session handoff 2026-11-12](16-session-handoff-2026-11-12.md) |

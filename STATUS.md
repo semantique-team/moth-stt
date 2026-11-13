@@ -1,5 +1,16 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **Review e correzioni senza training (2026-11-13):**
+> [valutazione e scope](docs/19-repository-review-2026-11-13.md).
+> 0.8.1/pesi/release invariati. Guardie numeriche, dev/tokenizer, demo, note multi-file
+> ed E-041 corretti con test sintetici. MinHash E-039 e copertura lessicale corretti:
+> il vecchio risultato negativo near-dup e il conteggio "44 mai visti da 0.7.0" sono
+> superati e non ricalcolati; i numeri storici sotto non sono nuova evidenza.
+> I readout E-035/E-036/E-037 usano mel senza VAD: `x` sul silenzio E-036 non certifica
+> una regressione del runtime completo. Nessun training o nuovo gate qualitativo.
+> Verifica locale finale: **1170 passed / 3 skipped**, Node **38/38** seriale,
+> Ruff e diff-check puliti. Node 22/CI e acceptance WASM non rieseguiti.
+
 > **Audit no-weight PR (2026-11-12):** correzioni documentali e tooling di sicurezza/riproduzione
 > sul branch `fix/audit-release-integrity`; **pytest 1015 passed / 3 skipped** (anche con
 > `CI=true` su Windows), Ruff pulito,
