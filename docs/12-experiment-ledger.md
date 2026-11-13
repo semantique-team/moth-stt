@@ -8,7 +8,7 @@ executed runs, the November audits, runtime acceptance, and the release measurem
 It supplements, rather than silently rewrites, [EXPERIMENTS.md](../EXPERIMENTS.md) and
 [the historical decision account](11-evidence-and-decisions.md). Decisions below are
 historical adoption decisions, **not blanket certification that every product gate passed**.
-**Post-ledger experiments:** E-026–E-032 were executed after this audit; they are recorded in
+**Post-ledger experiments:** E-026–E-034 were executed after this audit; they are recorded in
 [EXPERIMENTS.md](../EXPERIMENTS.md) and `runs/`, not rewritten into this ledger.
 
 Evidence precedence is: retained per-utterance counts/hypotheses and executed code/config;
