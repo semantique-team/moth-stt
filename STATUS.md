@@ -24,6 +24,12 @@
 > subito e non sostituisce l'holdout; il **mixed-dev indipendente** resta bloccato finché non
 > c'è uno speaker nuovo. Priorità e criteri proposti:
 > [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md).
+> **Decisione (2026-11-13):** il modello resta entro **20 MB**; un modello più grande (≤50 MB) sarà
+> un'altra repo/paper. Cosa manca prima di chiudere e con quali criteri è in
+> [`docs/plans/2026-11-13-model-closure.md`](docs/plans/2026-11-13-model-closure.md): prossimi
+> esperimenti E-035 (LM budgeted nei 293.711 B, <1 h) ed E-036 (fine-tune conservativo), poi le
+> evidenze di chiusura; il dev mixed reale resta bloccato sulle registrazioni.
+>
 > Lo stato del piano è: **E-033 (InterCTC) eseguito e respinto** — controllo e braccio appaiati,
 > dev macro 31,0350% vs 31,0101% (+0,0249 pp, CI [−0,0998, +0,1557]): nessun beneficio a weight
 > 0,3, opzione chiusa per questa ricetta; **E-034 (LM su dev) eseguito e respinto** — più
@@ -135,7 +141,7 @@ La verifica di questa macchina e' riportata sotto la tabella.
 | QAT E-029 | 2026-11-11 probe: 4 bracci 200–500 step; migliore frozen-500 dev **31,13** (E-028 INT8 31,14), T-600 **25,34 / 53,21**, T-S3 **25,55 / 49,30**, rari **10/47**, naturali **428/817**; **gate falliti, braccio completo non finanziato** |
 | E-030 decoder | 2026-11-11: stesso E-028 INT8, decoder 12/10/0,55/2,7; T-600 **24,71 / 54,17**, T-S3 **25,21 / 50,14**, naturali **436**, rari **11/47** / ETA **28,4%**; **5/6 gate**, manca il raro di 2 occorrenze; **pubblicato come 0.8.0 il 2026-11-12** |
 | Rumore 0.8.0 | 2026-11-12: stesso decoder per 0.7.0/0.8.0, 100 clip S3, pool E-024; 10–30 dB **tie** (27,33 vs 27,76), 15 dB tie, clean **−2,72 [−4,42, −1,02]** significativo; nessuna regressione |
-| Prossimo passo | **Dev mixed naturale su speaker noti** (S1/S2, sessioni nuove; kit di segmentazione pronto in `recordings/segment_notes.py`); **E-033 (InterCTC) è chiuso** (tie, +0,0249 pp) e un evento LM budgeted resta dietro; l'**holdout indipendente con voce nuova** resta bloccato (nessuno speaker nuovo). Criteri e ordine: [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md). 0.8.1 è pubblicato; la card dichiara che l'evidenza resta T/S3 |
+| Prossimo passo | **E-035 (LM budgeted entro 293.711 B)** ed **E-036 (fine-tune conservativo)**, poi le evidenze di chiusura ([piano di chiusura](docs/plans/2026-11-13-model-closure.md)); in parallelo **dev mixed naturale su speaker noti** (S1/S2, sessioni nuove; kit di segmentazione pronto in `recordings/segment_notes.py`); **E-033 (InterCTC) è chiuso** (tie, +0,0249 pp) e un evento LM budgeted resta dietro; l'**holdout indipendente con voce nuova** resta bloccato (nessuno speaker nuovo). Criteri e ordine: [`docs/plans/2026-11-12-model-improvement-strategy.md`](docs/plans/2026-11-12-model-improvement-strategy.md). 0.8.1 è pubblicato; la card dichiara che l'evidenza resta T/S3 |
 | Dati non versionati | Release binari, checkpoint, tokenizer originale, raw audio e mel shard. Su questa macchina esistono; un clone pulito non ricostruisce il training senza dati/checkpoint |
 | Speaker | T registrato 600/800, S1/S2 in training, S3 senza audio in training ma test ripetutamente osservato e stesso microfono di S1; S4 non registrato. Review S4 completata |
 
