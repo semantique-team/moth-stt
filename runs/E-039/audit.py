@@ -103,6 +103,15 @@ CORPUS_SPLITS = {
     "ls_en": ("data/ls_en_train", "data/ls_en_dev"),
 }
 
+# E-014 -> E-024 -> E-028: CV's clean/noisy halves retain the parent transcripts.
+# Count the parent once, plus all other natural acoustic sources (including clean LS-EN).
+NATURAL_TRAIN_MANIFESTS = (
+    "data/manifests/cv_it_train.jsonl",
+    "data/manifests/mls_it_train.jsonl",
+    "data/manifests/ls_en_train.jsonl",
+    "data/manifests/spliced_it_en.jsonl",
+)
+
 
 def text_of(row: dict, kind: str) -> str:
     raw = row.get("norm") or row.get("text") or ""
@@ -292,19 +301,19 @@ def id_disjointness(ids_by_source: dict[str, set[str]]) -> dict:
 def term_provenance() -> dict:
     """Classify every English term of T against the training text each model actually saw.
 
-    The label "never seen" changed meaning with the term addenda: 0.7.0 never saw the 44 terms,
-    0.8.1 (E-028) trained on the S1 and S2 addenda, so the shipped model has seen them. R-S1-0692+
-    (``terms3``) entered only E-036, which was rejected.
+    The historical 44-term taxonomy omitted clean LS-EN and must be recomputed, not assumed.
+    0.8.1 (E-028) trained on the S1 and S2 addenda. R-S1-0692+ (``terms3``) was used in
+    rejected E-032/E-036 experiments, not in the shipped model.
     """
     t_rows = [json.loads(line) for line in
               (REPO / "recordings/manifests/T.jsonl").read_text(encoding="utf-8").splitlines()
               if line.strip()]
     natural = Counter()
-    for path in ("data/manifests/cv_it_train.jsonl", "data/manifests/mls_it_train.jsonl",
-                 "data/manifests/spliced_it_en.jsonl"):
+    for path in NATURAL_TRAIN_MANIFESTS:
         for line in (REPO / path).read_text(encoding="utf-8").splitlines():
             if line.strip():
-                natural.update(normalize(json.loads(line).get("norm", "")).split())
+                row = json.loads(line)
+                natural.update(normalize(row.get("norm") or row.get("text") or "").split())
 
     gold_pre = Counter()
     addendum_028 = Counter()
@@ -356,17 +365,24 @@ def term_provenance() -> dict:
     )
     return {
         "terms": len(terms),
+        "natural_manifests": list(NATURAL_TRAIN_MANIFESTS),
+        "natural_definition": "token occurrences in current natural acoustic source manifests; "
+                              "CV parent counted once instead of clean/noisy halves, "
+                              "spliced reuse counted separately; not epoch-weighted exposure "
+                              "or upstream Whisper/tokenizer/LM provenance",
         "pre_addendum": {
             "groups": {key: {"count": len(value), "terms": value[:60]}
                        for key, value in pre_groups.items()},
             "never_term_utterances": len(rare_rows),
             "never_term_ids": rare_rows,
-            "definition": "text of 0.7.0 / the E-015 eval_terms.py boundary",
+            "definition": "0.7.0 acoustic source-text coverage before E-015/E-028 addenda; "
+                          "recomputed with clean LS-EN, not the historical E-015 never44 boundary",
         },
         "shipped": {
             "groups": {key: {"count": len(value), "terms": value[:60]}
                        for key, value in shipped_groups.items()},
-            "definition": "every training text of E-028 (0.8.1), S1 and S2 addenda included",
+            "definition": "E-028 (0.8.1) acoustic source-text coverage, "
+                          "S1 and S2 addenda included; not tokenizer/LM/pretraining exposure",
         },
         "terms3_only": sorted(term for term, seen in counts.items()
                               if seen["terms3"] and not seen["natural"]

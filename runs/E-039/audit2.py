@@ -73,6 +73,7 @@ def _source_label(relative: Path) -> str:
 
 
 def audio_pass() -> dict:
+    """Hash only supported loose files currently present under data/raw, not decoded audio."""
     root = REPO / "data/raw"
     files = [
         path for path in root.rglob("*")
@@ -102,7 +103,10 @@ def audio_pass() -> dict:
         "within_source_repeats": {
             digest: paths for digest, paths in repeated.items() if digest not in cross
         },
-        "note": "duplicate content inside one source can be a legitimate mirror; cross-source is the finding",
+        "note": "byte hashes of supported loose files currently present under data/raw only; "
+                "labels are the first two path components, not manifest train/dev/test splits. "
+                "Excludes archives, missing/deleted files, recordings/audio, mel shards and "
+                "decoded-signal equivalence; not an exhaustive training/evaluation leakage check",
     }
 
 
@@ -113,11 +117,13 @@ def _shingles(text: str) -> list[int]:
     return [zlib.crc32(" ".join(words[i:i + 3]).encode("utf-8")) for i in range(len(words) - 2)]
 
 
-def _signature(text: str, seeds: np.ndarray, prime: int) -> np.ndarray:
-    hashes = np.array(_shingles(text), dtype=np.int64)
+def _signature(text: str, permutations: np.ndarray, prime: int) -> np.ndarray:
+    hashes = np.array(_shingles(text), dtype=np.uint64)
     if hashes.size == 0:
-        return np.zeros(seeds.size, dtype=np.int64)
-    values = (hashes[:, None] * 31 + seeds[None, :]) % prime
+        return np.zeros(permutations.shape[1], dtype=np.uint64)
+    # Independent affine permutations; 32-bit inputs/coefficients fit exactly in uint64.
+    multipliers, offsets = permutations
+    values = (hashes[:, None] * multipliers[None, :] + offsets[None, :]) % prime
     return values.min(axis=0)
 
 
@@ -132,9 +138,13 @@ def text_pass() -> dict:
             if norm:
                 documents.append({"source": source, "id": str(row["id"]), "norm": norm})
 
-    prime = (1 << 61) - 1
-    seeds = np.random.default_rng(0).integers(1, prime, size=PERMUTATIONS, dtype=np.int64)
-    signatures = np.stack([_signature(doc["norm"], seeds, prime) for doc in documents])
+    prime = (1 << 32) - 5
+    rng = np.random.default_rng(0)
+    permutations = np.stack([
+        rng.integers(1, prime, size=PERMUTATIONS, dtype=np.uint64),
+        rng.integers(0, prime, size=PERMUTATIONS, dtype=np.uint64),
+    ])
+    signatures = np.stack([_signature(doc["norm"], permutations, prime) for doc in documents])
 
     buckets: dict[tuple[int, ...], list[int]] = defaultdict(list)
     for index in range(len(documents)):
@@ -182,8 +192,10 @@ def text_pass() -> dict:
         "oversized_buckets_skipped": skipped,
         "by_pair": dict(sorted(pairs.items(), key=lambda item: -item[1]["count"])),
         "total_pairs": sum(entry["count"] for entry in pairs.values()),
-        "note": "shared prompts inside one corpus are speaker-disjoint by construction; "
-                "cross-source duplicates are the finding",
+        "note": "approximate cross-source candidate search, not exhaustive; oversized buckets "
+                "are skipped and LSH can miss pairs. Jaccard uses CRC32 word-trigram hashes "
+                "(whole-text hash for fewer than three words), not collision-free strings. "
+                "Text overlap alone does not establish audio leakage or speaker disjointness",
     }
 
 
