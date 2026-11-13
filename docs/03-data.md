@@ -97,7 +97,9 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 - **Size:** 800 test sentences (script T: 200 each for S1–S4), ≈ 600–1,000 sentences per training speaker (script R), and a pool of
   ≈ 3–5k further sentences for tokenizer text and later synthesis.
 - **Hygiene:** exact and near-duplicate removal across T / R / pool (normalized-text hash + word 3-gram
-  Jaccard > 0.8); T text never appears anywhere else. Provenance is logged (generator, date, reviewer).
+  Jaccard > 0.8); T text never appears in R or pool, and the anchor A repeats 60 reviewed T
+  sentences by design. Provenance is logged (generator, date, reviewer). E-039 checks this
+  mechanically and finds no unexpected text or audio overlap.
 
 ## 7. Recordings
 

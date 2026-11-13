@@ -27,7 +27,7 @@ Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../
 | Item | Stato | Evidenza / cosa manca | Costo residuo | Blocco |
 |---|---|---|---|---|
 | Dev mixed reale su speaker noti (S1/S2) | **non eseguito** | il kit e' pronto (`recordings/segment_notes.py`, import gia' supportato) | ~1 giornata umana + trascrizione; valutazione in minuti | servono le registrazioni |
-| Holdout indipendente con voce nuova | **non eseguito** | nessun audio disponibile | dipende dalla persona | speaker nuovo |
+| Holdout indipendente con voce nuova | **non ottenibile (2026-11-13)** | l'organizzatore ha solo **S1, S2 e S3**; S1/S2 sono nel training e S3 e' stato ispezionato piu' volte. **E-038** riporta T-600 per voce (S1 20,98 / S2 26,32 / S3 24,96 WER; dispersione 5,34 pp WER e 12,02 pp ETA) come sostituto descrittivo | — | nessuna quarta voce disponibile: va dichiarato come limite, non riproposto |
 | LM budgeted nei 293.711 B | **eseguito, respinto al readout** | E-035: 73.427 trigrammi count-1, binario **5.675.700 B**, pacchetto **19.999.997 B**, dev macro **22,7849% vs 22,8494%** (**−0,0645 pp**, CI [−0,1144, −0,0134]); **readout prodotto: tie su tutte le metriche primarie** (T-600 +0,0287 pp, T-S3 −0,0852, FLEURS-IT +0,0062, EN −0,0437, rari 38/81 in entrambi), `noise_music` +2 parole, nessun guadagno significativo → **non adottato, 0.8.1 resta** | — (chiuso) | tetto prodotto: nessun guadagno misurabile |
 | Fine-tune conservativo (replay + distillazione verso il Moth precedente) | **eseguito, respinto** | E-036: `frozen` 3,94M e `last2` 7,49M param mobili, KD 20; dev **30,9859% / 30,9720%** vs 31,0101 (tie); prodotto tie su WER ma rari **39/81** e **41/81** (target 42), **`x` su tutti i 120 clip di silenzio** (0.8.1: 0), `last2` T-S3 ETA **−1,41 pp** [−2,76, −0,28]. **Nessun candidato, 0.8.1 congelato** | — (chiuso) | il silenzio e i rari non sono recuperabili con questa ricetta |
 | Pilot TTS per il training | **non eseguito** | nessun generatore qualificato ne' licenza verificata | giorni (ascolto + 1 run vs controllo) | qualifica + licenze |
@@ -50,8 +50,8 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 | Multi-seed | ≥3 seed predeclarati sulle armi abbinate, con curve, dispersione e checkpoint conservati | 3 × ~2 h per arma: 1-2 giorni di macchina |
 | fp32 vs INT8 appaiati con lo **stesso** LM E-031 | **eseguito (E-037)**: dev +0,1574 pp [+0,0539, +0,2664], T-600 +0,4874 (tie), FLEURS-EN +0,4459 [+0,0087, +0,8652], rari 38/81 =, naturali 444→432; pacchetto 54.164.659 vs 19.706.289 B. INT8 resta | — (chiuso) |
 | Browser acoustic WER/ETA | oltre l'acceptance 4/4 e la parita' decoder: misura WER nel browser | ~1 giorno (harness ripetibile) |
-| Leakage audit | hash audio per fonte, near-dup testuale su train/dev/test/T/R/pool, provenienza dei termini | ~1 giorno + review |
-| Bootstrap per cluster (speaker/stanza) | richiede piu' speaker e stanze | dipende dai dati |
+| Leakage audit | **primo passaggio (E-039, 2026-11-13)**: 2.055 testi condivisi tutti strutturali o repeat di corpus, 0 coppie inattese; near-dup > 0,8 nei nostri dati **0**; 2.209 wav, 0 hash ripetuti, 0 collisioni tra set, 0 file mancanti; id train/dev/test disgiunti; 44 termini "mai visti" = **mai visti da 0.7.0**, 0.8.1 li ha visti via addenda. Restano: re-hash di `data/raw` (13 GB) e review umana dei near-dup esterni | — (primo passaggio) |
+| Bootstrap per cluster (speaker/stanza) | **parziale (E-038)**: CI per-utterance per voce, non cluster; con 3 voci la varianza tra speaker non e' stimabile | dipende da speaker/stanza aggiuntivi |
 | Annotation validity | linee guida span, secondo annotatore, accordo | serve una persona |
 | Noise generalization | stanze/transienti indipendenti, SNR su parlato attivo | nuove registrazioni |
 | Upstream contamination | disclosure overlap Whisper/Whistle/Parakeet | dichiarativo |
@@ -63,8 +63,10 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
    WER tie, rari sotto target, silenzio allucinato. **Il modello si congela a 0.8.1** con la
    motivazione scritta, non per stanchezza. fp32/INT8 e' stato misurato in E-037; multi-seed e
    browser WER restano le evidenze che rendono difendibili i numeri gia' pubblicati.
-2. **Chiusura dell'evidenza (paper):** richiede il **dev mixed reale** e, per l'affermazione piu'
-   forte, una **voce nuova**. Nessuna quantita' di compute locale sostituisce questi due.
+2. **Chiusura dell'evidenza (paper):** richiede il **dev mixed reale** sulle voci disponibili; il
+   claim su **voce nuova** non e' ottenibile (solo S1/S2/S3) e va scritto come limite. E-038 da' il
+   range per voce che sostituisce il numero pooled quale unita' di report. Nessuna quantita' di
+   compute locale sostituisce i dati mancanti.
 
 ## Ordine Proposto
 
@@ -72,7 +74,8 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
    metriche primarie e nessun guadagno significativo; **non adottato, 0.8.1 resta**.
 2. ~~**E-036 — fine-tune conservativo**~~ — **chiuso negativo**: WER tie, rari 39/81 e 41/81,
    silenzio 0→120 `x`, `last2` T-S3 ETA −1,41 pp; **0.8.1 congelato**.
-3. **Evidenze di chiusura**: ~~fp32/INT8 appaiato~~ (E-037, fatto); restano ≥3 seed e browser WER/ETA.
+3. **Evidenze di chiusura**: ~~fp32/INT8 appaiato~~ (E-037) e ~~per-speaker~~ (E-038) fatti; restano
+   ≥3 seed, browser WER/ETA e leakage audit.
 4. **Lavoro umano in parallelo**: note vocali da 5-10 minuti per il dev mixed; la prima voce nuova
    disponibile va riservata al readout di un candidato gia' congelato, non al training.
 5. **Solo se serve**: pilot TTS o audio reale di dominio, con licenze verificate prima.

@@ -38,6 +38,16 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > [audit readout](../runs/E-031/audit-readout.json) reports post-hoc macro CIs and target-only
 > aligned ETA without changing the historical gate or providing independent-test confirmation.
 
+> **Term provenance (E-039, 2026-11-13):** the **44 rare terms were never seen by 0.7.0**, not by
+> the shipped 0.8.1. Against E-028's actual training text (S1 and S2 term addenda included) the
+> 655 English terms of T split into natural 461, gold 150, **addendum 44, never 0**; the 47
+> rare-bearing utterances and the 44 terms reproduce the E-015 boundary exactly, and the
+> rejected E-036-only `terms3` adds no term. Read "rare/never terms" as a property of the
+> 0.7.0 baseline; 0.8.1 has seen all 44 through the addenda. The metric (38/81 aligned ETA on
+> the same 47 utterances) is unchanged, only its label. No unexpected text or audio overlap was
+> found: 2,209 recorded wavs, 0 repeated hashes, 0 cross-set collisions, 0 missing files, and
+> 0 near-duplicate pairs above Jaccard 0.8 within our own data.
+
 > x3 adds **579 retained trigrams** (801,858 → 802,437); the shipped change combines corpus,
 > pruning and weighting, not an isolated causal effect. An unchanged INT8 graph cannot establish
 > unchanged quantization WER cost without a matched fp32 comparison using the same E-031 LM;
@@ -283,6 +293,15 @@ S1/S2 are training speakers (400/600 clips); S3 contributes no acoustic training
 S1's microphone and has been repeatedly inspected. The card's "S3 behind both trained voices"
 is also numerically imprecise: S2 is 26.93 vs S3 26.92. Neither this ordering nor aggregate wins
 establish broad unseen-speaker generalization.
+
+> **Per-speaker T-600 of the shipped 0.8.1 (E-038, decode-free re-scoring).** S1
+> **20.9802% / 63.2836%** [18.0851, 23.7882] / [57.3134, 69.3252], S2 **26.3249% / 51.5581%**
+> [22.8669, 29.5713] / [44.7439, 57.7259], S3 **24.9574% / 51.2676%** [21.6512, 28.1488] /
+> [44.5652, 57.6803], pooled **24.0826% / 55.2253%** (identical to E-037). The voices span
+> **5.3447 pp WER** and **12.0160 pp ETA**; the per-utterance CIs overlap, so the ordering is
+> not resolved, and the never-trained S3 is **not** the worst (S2 is). Report the range with the
+> pooled figure: with three voices no between-speaker variance or speaker-cluster CI is
+> estimable, and no fourth voice exists in this repository.
 
 ### Baseline Matrix
 

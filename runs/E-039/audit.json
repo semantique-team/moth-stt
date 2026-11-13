@@ -1,0 +1,6104 @@
+{
+  "sources": {
+    "script/T": {
+      "path": "recordings/scripts/T.jsonl",
+      "rows": 800
+    },
+    "script/A": {
+      "path": "recordings/scripts/A.jsonl",
+      "rows": 60
+    },
+    "script/R-S1": {
+      "path": "recordings/scripts/R-S1.jsonl",
+      "rows": 741
+    },
+    "script/R-S2": {
+      "path": "recordings/scripts/R-S2.jsonl",
+      "rows": 673
+    },
+    "script/pool": {
+      "path": "recordings/scripts/pool.jsonl",
+      "rows": 3137
+    },
+    "rec/T": {
+      "path": "recordings/manifests/T.jsonl",
+      "rows": 600
+    },
+    "rec/T-S2": {
+      "path": "recordings/manifests/T-S2.jsonl",
+      "rows": 200
+    },
+    "rec/A-S1": {
+      "path": "recordings/manifests/A-S1.jsonl",
+      "rows": 60
+    },
+    "rec/A-S2": {
+      "path": "recordings/manifests/A-S2.jsonl",
+      "rows": 60
+    },
+    "rec/A-S3": {
+      "path": "recordings/manifests/A-S3.jsonl",
+      "rows": 60
+    },
+    "rec/R-S1": {
+      "path": "recordings/manifests/R-S1.jsonl",
+      "rows": 741
+    },
+    "rec/R-S2": {
+      "path": "recordings/manifests/R-S2.jsonl",
+      "rows": 672
+    },
+    "rec/R-S1-terms": {
+      "path": "recordings/manifests/R-S1-terms.jsonl",
+      "rows": 50
+    },
+    "rec/R-S1-terms3": {
+      "path": "recordings/manifests/R-S1-terms3.jsonl",
+      "rows": 50
+    },
+    "rec/R-S2-terms": {
+      "path": "recordings/manifests/R-S2-terms.jsonl",
+      "rows": 50
+    },
+    "data/cv_it_train": {
+      "path": "data/manifests/cv_it_train.jsonl",
+      "rows": 113118
+    },
+    "data/cv_it_dev": {
+      "path": "data/manifests/cv_it_dev.jsonl",
+      "rows": 14697
+    },
+    "data/cv_it_test": {
+      "path": "data/manifests/cv_it_test.jsonl",
+      "rows": 14643
+    },
+    "data/mls_it_train": {
+      "path": "data/manifests/mls_it_train.jsonl",
+      "rows": 40953
+    },
+    "data/mls_it_dev": {
+      "path": "data/manifests/mls_it_dev.jsonl",
+      "rows": 1248
+    },
+    "data/mls_it_test": {
+      "path": "data/manifests/mls_it_test.jsonl",
+      "rows": 1262
+    },
+    "data/ls_en_train": {
+      "path": "data/manifests/ls_en_train.jsonl",
+      "rows": 28370
+    },
+    "data/ls_en_dev": {
+      "path": "data/manifests/ls_en_dev.jsonl",
+      "rows": 2691
+    },
+    "data/spliced_it_en": {
+      "path": "data/manifests/spliced_it_en.jsonl",
+      "rows": 21205
+    },
+    "data/fleurs_it_dev": {
+      "path": "data/manifests/fleurs_it_dev.jsonl",
+      "rows": 334
+    },
+    "data/fleurs_it_test": {
+      "path": "data/manifests/fleurs_it_test.jsonl",
+      "rows": 697
+    },
+    "data/fleurs_en_dev": {
+      "path": "data/manifests/fleurs_en_dev.jsonl",
+      "rows": 343
+    },
+    "data/fleurs_en_test": {
+      "path": "data/manifests/fleurs_en_test.jsonl",
+      "rows": 525
+    },
+    "data/noise": {
+      "path": "data/manifests/noise.jsonl",
+      "rows": 457
+    }
+  },
+  "exact": {
+    "multi_source_texts": 2055,
+    "cross_source_pairs": {
+      "data/cv_it_dev|data/cv_it_test": {
+        "pairs": 42,
+        "examples": [
+          {
+            "text": "perché la cresta ossea non c'era",
+            "ids": [
+              "data/cv_it_dev:cv-common_voice_it_17861375",
+              "data/cv_it_test:cv-common_voice_it_18238982"
+            ]
+          },
+          {
+            "text": "per dileguarsi alla vista degli sconosciuti che si facevano loro incontro",
+            "ids": [
+              "data/cv_it_dev:cv-common_voice_it_18818227",
+              "data/cv_it_test:cv-common_voice_it_17868696"
+            ]
+          },
+          {
+            "text": "per evitare questo effetto può essere utile unire due periodi brevi in uno più lungo",
+            "ids": [
+              "data/cv_it_dev:cv-common_voice_it_17873742",
+              "data/cv_it_test:cv-common_voice_it_18148599"
+            ]
+          },
+          {
+            "text": "le carenze strutturali",
+            "ids": [
+              "data/cv_it_dev:cv-common_voice_it_17630403",
+              "data/cv_it_test:cv-common_voice_it_18148253"
+            ]
+          },
+          {
+            "text": "fu decorato con medaglia d'argento al valor militare",
+            "ids": [
+              "data/cv_it_dev:cv-common_voice_it_37434889",
+              "data/cv_it_test:cv-common_voice_it_28841341"
+            ]
+          }
+        ],
+        "class": "corpus_text_repeat",
+        "reason": null
+      },
+      "rec/A-S1|rec/A-S2": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "all anchors read the same 60 T sentences"
+      },
+      "rec/A-S1|rec/A-S3": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "all anchors read the same 60 T sentences"
+      },
+      "rec/A-S1|rec/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "S1 anchor reads T sentences"
+      },
+      "rec/A-S1|rec/T-S2": {
+        "pairs": 23,
+        "examples": [
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          },
+          {
+            "text": "il hosting costa troppo",
+            "ids": [
+              "script/T:T-0065",
+              "script/A:A-0007",
+              "rec/T:T-0065",
+              "rec/T-S2:T-0065"
+            ]
+          },
+          {
+            "text": "è apparso un popup fastidioso",
+            "ids": [
+              "script/T:T-0086",
+              "script/A:A-0009",
+              "rec/T:T-0086",
+              "rec/T-S2:T-0086"
+            ]
+          },
+          {
+            "text": "ho fatto logout per sicurezza",
+            "ids": [
+              "script/T:T-0107",
+              "script/A:A-0011",
+              "rec/T:T-0107",
+              "rec/T-S2:T-0107"
+            ]
+          },
+          {
+            "text": "la start up ha trovato un investitore",
+            "ids": [
+              "script/T:T-0173",
+              "script/A:A-0018",
+              "rec/T:T-0173",
+              "rec/T-S2:T-0173"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor subset overlaps the S2 T rows it repeats"
+      },
+      "rec/A-S1|script/A": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor manifest mirrors the A script"
+      },
+      "rec/A-S1|script/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "S1 anchor reads T sentences"
+      },
+      "rec/A-S2|rec/A-S3": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "all anchors read the same 60 T sentences"
+      },
+      "rec/A-S2|rec/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "S2 anchor reads T sentences"
+      },
+      "rec/A-S2|rec/T-S2": {
+        "pairs": 23,
+        "examples": [
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          },
+          {
+            "text": "il hosting costa troppo",
+            "ids": [
+              "script/T:T-0065",
+              "script/A:A-0007",
+              "rec/T:T-0065",
+              "rec/T-S2:T-0065"
+            ]
+          },
+          {
+            "text": "è apparso un popup fastidioso",
+            "ids": [
+              "script/T:T-0086",
+              "script/A:A-0009",
+              "rec/T:T-0086",
+              "rec/T-S2:T-0086"
+            ]
+          },
+          {
+            "text": "ho fatto logout per sicurezza",
+            "ids": [
+              "script/T:T-0107",
+              "script/A:A-0011",
+              "rec/T:T-0107",
+              "rec/T-S2:T-0107"
+            ]
+          },
+          {
+            "text": "la start up ha trovato un investitore",
+            "ids": [
+              "script/T:T-0173",
+              "script/A:A-0018",
+              "rec/T:T-0173",
+              "rec/T-S2:T-0173"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor subset overlaps the S2 T rows it repeats"
+      },
+      "rec/A-S2|script/A": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor manifest mirrors the A script"
+      },
+      "rec/A-S2|script/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "S2 anchor reads T sentences"
+      },
+      "rec/A-S3|rec/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "S3 anchor reads T sentences"
+      },
+      "rec/A-S3|rec/T-S2": {
+        "pairs": 23,
+        "examples": [
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          },
+          {
+            "text": "il hosting costa troppo",
+            "ids": [
+              "script/T:T-0065",
+              "script/A:A-0007",
+              "rec/T:T-0065",
+              "rec/T-S2:T-0065"
+            ]
+          },
+          {
+            "text": "è apparso un popup fastidioso",
+            "ids": [
+              "script/T:T-0086",
+              "script/A:A-0009",
+              "rec/T:T-0086",
+              "rec/T-S2:T-0086"
+            ]
+          },
+          {
+            "text": "ho fatto logout per sicurezza",
+            "ids": [
+              "script/T:T-0107",
+              "script/A:A-0011",
+              "rec/T:T-0107",
+              "rec/T-S2:T-0107"
+            ]
+          },
+          {
+            "text": "la start up ha trovato un investitore",
+            "ids": [
+              "script/T:T-0173",
+              "script/A:A-0018",
+              "rec/T:T-0173",
+              "rec/T-S2:T-0173"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor subset overlaps the S2 T rows it repeats"
+      },
+      "rec/A-S3|script/A": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor manifest mirrors the A script"
+      },
+      "rec/A-S3|script/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "S3 anchor reads T sentences"
+      },
+      "rec/R-S1|rec/R-S1-terms": {
+        "pairs": 50,
+        "examples": [
+          {
+            "text": "gli airpods si sono scaricati durante la call",
+            "ids": [
+              "script/R-S1:R-S1-0642",
+              "rec/R-S1:R-S1-0642",
+              "rec/R-S1-terms:R-S1-0642"
+            ]
+          },
+          {
+            "text": "abbiamo preso un gelato da baskin robbins",
+            "ids": [
+              "script/R-S1:R-S1-0643",
+              "rec/R-S1:R-S1-0643",
+              "rec/R-S1-terms:R-S1-0643"
+            ]
+          },
+          {
+            "text": "il codice del progetto è su bitbucket",
+            "ids": [
+              "script/R-S1:R-S1-0644",
+              "rec/R-S1:R-S1-0644",
+              "rec/R-S1-terms:R-S1-0644"
+            ]
+          },
+          {
+            "text": "la cioccolata cadbury è finita",
+            "ids": [
+              "script/R-S1:R-S1-0645",
+              "rec/R-S1:R-S1-0645",
+              "rec/R-S1-terms:R-S1-0645"
+            ]
+          },
+          {
+            "text": "ho lasciato il charger in ufficio",
+            "ids": [
+              "script/R-S1:R-S1-0646",
+              "rec/R-S1:R-S1-0646",
+              "rec/R-S1-terms:R-S1-0646"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "term addendum takes are part of the R-S1 script"
+      },
+      "rec/R-S1|rec/R-S1-terms3": {
+        "pairs": 50,
+        "examples": [
+          {
+            "text": "la startup assume un nuovo designer",
+            "ids": [
+              "script/R-S1:R-S1-0692",
+              "rec/R-S1:R-S1-0692",
+              "rec/R-S1-terms3:R-S1-0692"
+            ]
+          },
+          {
+            "text": "la startup cerca un ufficio più grande",
+            "ids": [
+              "script/R-S1:R-S1-0693",
+              "rec/R-S1:R-S1-0693",
+              "rec/R-S1-terms3:R-S1-0693"
+            ]
+          },
+          {
+            "text": "ogni startup vuole crescere in fretta",
+            "ids": [
+              "script/R-S1:R-S1-0694",
+              "rec/R-S1:R-S1-0694",
+              "rec/R-S1-terms3:R-S1-0694"
+            ]
+          },
+          {
+            "text": "la startup ha vinto un bando regionale",
+            "ids": [
+              "script/R-S1:R-S1-0695",
+              "rec/R-S1:R-S1-0695",
+              "rec/R-S1-terms3:R-S1-0695"
+            ]
+          },
+          {
+            "text": "abbiamo testato il prototype con tre utenti",
+            "ids": [
+              "script/R-S1:R-S1-0696",
+              "rec/R-S1:R-S1-0696",
+              "rec/R-S1-terms3:R-S1-0696"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "term addendum takes are part of the R-S1 script"
+      },
+      "rec/R-S1|script/R-S1": {
+        "pairs": 741,
+        "examples": [
+          {
+            "text": "la mia squadra ha perso il derby",
+            "ids": [
+              "script/R-S1:R-S1-0001",
+              "rec/R-S1:R-S1-0001"
+            ]
+          },
+          {
+            "text": "il coach ha cambiato modulo all'intervallo",
+            "ids": [
+              "script/R-S1:R-S1-0002",
+              "rec/R-S1:R-S1-0002"
+            ]
+          },
+          {
+            "text": "il goal è arrivato al novantesimo",
+            "ids": [
+              "script/R-S1:R-S1-0003",
+              "rec/R-S1:R-S1-0003"
+            ]
+          },
+          {
+            "text": "il match è iniziato con dieci minuti di ritardo",
+            "ids": [
+              "script/R-S1:R-S1-0004",
+              "rec/R-S1:R-S1-0004"
+            ]
+          },
+          {
+            "text": "il nuovo sponsor è una banca locale",
+            "ids": [
+              "script/R-S1:R-S1-0005",
+              "rec/R-S1:R-S1-0005"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "R-S1 manifest is the recorded R-S1 script"
+      },
+      "rec/R-S1-terms|script/R-S1": {
+        "pairs": 50,
+        "examples": [
+          {
+            "text": "gli airpods si sono scaricati durante la call",
+            "ids": [
+              "script/R-S1:R-S1-0642",
+              "rec/R-S1:R-S1-0642",
+              "rec/R-S1-terms:R-S1-0642"
+            ]
+          },
+          {
+            "text": "abbiamo preso un gelato da baskin robbins",
+            "ids": [
+              "script/R-S1:R-S1-0643",
+              "rec/R-S1:R-S1-0643",
+              "rec/R-S1-terms:R-S1-0643"
+            ]
+          },
+          {
+            "text": "il codice del progetto è su bitbucket",
+            "ids": [
+              "script/R-S1:R-S1-0644",
+              "rec/R-S1:R-S1-0644",
+              "rec/R-S1-terms:R-S1-0644"
+            ]
+          },
+          {
+            "text": "la cioccolata cadbury è finita",
+            "ids": [
+              "script/R-S1:R-S1-0645",
+              "rec/R-S1:R-S1-0645",
+              "rec/R-S1-terms:R-S1-0645"
+            ]
+          },
+          {
+            "text": "ho lasciato il charger in ufficio",
+            "ids": [
+              "script/R-S1:R-S1-0646",
+              "rec/R-S1:R-S1-0646",
+              "rec/R-S1-terms:R-S1-0646"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "term addendum takes read R-S1 cues"
+      },
+      "rec/R-S1-terms3|script/R-S1": {
+        "pairs": 50,
+        "examples": [
+          {
+            "text": "la startup assume un nuovo designer",
+            "ids": [
+              "script/R-S1:R-S1-0692",
+              "rec/R-S1:R-S1-0692",
+              "rec/R-S1-terms3:R-S1-0692"
+            ]
+          },
+          {
+            "text": "la startup cerca un ufficio più grande",
+            "ids": [
+              "script/R-S1:R-S1-0693",
+              "rec/R-S1:R-S1-0693",
+              "rec/R-S1-terms3:R-S1-0693"
+            ]
+          },
+          {
+            "text": "ogni startup vuole crescere in fretta",
+            "ids": [
+              "script/R-S1:R-S1-0694",
+              "rec/R-S1:R-S1-0694",
+              "rec/R-S1-terms3:R-S1-0694"
+            ]
+          },
+          {
+            "text": "la startup ha vinto un bando regionale",
+            "ids": [
+              "script/R-S1:R-S1-0695",
+              "rec/R-S1:R-S1-0695",
+              "rec/R-S1-terms3:R-S1-0695"
+            ]
+          },
+          {
+            "text": "abbiamo testato il prototype con tre utenti",
+            "ids": [
+              "script/R-S1:R-S1-0696",
+              "rec/R-S1:R-S1-0696",
+              "rec/R-S1-terms3:R-S1-0696"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "term addendum takes read R-S1 cues"
+      },
+      "rec/R-S2|rec/R-S2-terms": {
+        "pairs": 50,
+        "examples": [
+          {
+            "text": "gli airpods nuovi hanno una buona durata",
+            "ids": [
+              "script/R-S2:R-S2-0624",
+              "rec/R-S2:R-S2-0624",
+              "rec/R-S2-terms:R-S2-0624"
+            ]
+          },
+          {
+            "text": "il gelato di baskin robbins è troppo dolce",
+            "ids": [
+              "script/R-S2:R-S2-0625",
+              "rec/R-S2:R-S2-0625",
+              "rec/R-S2-terms:R-S2-0625"
+            ]
+          },
+          {
+            "text": "abbiamo spostato i repository su bitbucket",
+            "ids": [
+              "script/R-S2:R-S2-0626",
+              "rec/R-S2:R-S2-0626",
+              "rec/R-S2-terms:R-S2-0626"
+            ]
+          },
+          {
+            "text": "ho comprato una tavoletta cadbury",
+            "ids": [
+              "script/R-S2:R-S2-0627",
+              "rec/R-S2:R-S2-0627",
+              "rec/R-S2-terms:R-S2-0627"
+            ]
+          },
+          {
+            "text": "il charger del telefono è nel cassetto",
+            "ids": [
+              "script/R-S2:R-S2-0628",
+              "rec/R-S2:R-S2-0628",
+              "rec/R-S2-terms:R-S2-0628"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "term addendum takes are part of the R-S2 script"
+      },
+      "rec/R-S2|script/R-S2": {
+        "pairs": 672,
+        "examples": [
+          {
+            "text": "preferisco chattare invece di fare una telefonata",
+            "ids": [
+              "script/R-S2:R-S2-0002",
+              "rec/R-S2:R-S2-0002"
+            ]
+          },
+          {
+            "text": "inizia a chattare con il gruppo quando sei pronto",
+            "ids": [
+              "script/R-S2:R-S2-0003",
+              "rec/R-S2:R-S2-0003"
+            ]
+          },
+          {
+            "text": "lo spazio di coworking è al terzo piano",
+            "ids": [
+              "script/R-S2:R-S2-0004",
+              "rec/R-S2:R-S2-0004"
+            ]
+          },
+          {
+            "text": "cerco un coworking vicino alla stazione",
+            "ids": [
+              "script/R-S2:R-S2-0005",
+              "rec/R-S2:R-S2-0005"
+            ]
+          },
+          {
+            "text": "il coworking chiude alle otto di sera",
+            "ids": [
+              "script/R-S2:R-S2-0006",
+              "rec/R-S2:R-S2-0006"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "R-S2 manifest is the recorded R-S2 script"
+      },
+      "rec/R-S2-terms|script/R-S2": {
+        "pairs": 50,
+        "examples": [
+          {
+            "text": "gli airpods nuovi hanno una buona durata",
+            "ids": [
+              "script/R-S2:R-S2-0624",
+              "rec/R-S2:R-S2-0624",
+              "rec/R-S2-terms:R-S2-0624"
+            ]
+          },
+          {
+            "text": "il gelato di baskin robbins è troppo dolce",
+            "ids": [
+              "script/R-S2:R-S2-0625",
+              "rec/R-S2:R-S2-0625",
+              "rec/R-S2-terms:R-S2-0625"
+            ]
+          },
+          {
+            "text": "abbiamo spostato i repository su bitbucket",
+            "ids": [
+              "script/R-S2:R-S2-0626",
+              "rec/R-S2:R-S2-0626",
+              "rec/R-S2-terms:R-S2-0626"
+            ]
+          },
+          {
+            "text": "ho comprato una tavoletta cadbury",
+            "ids": [
+              "script/R-S2:R-S2-0627",
+              "rec/R-S2:R-S2-0627",
+              "rec/R-S2-terms:R-S2-0627"
+            ]
+          },
+          {
+            "text": "il charger del telefono è nel cassetto",
+            "ids": [
+              "script/R-S2:R-S2-0628",
+              "rec/R-S2:R-S2-0628",
+              "rec/R-S2-terms:R-S2-0628"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "term addendum takes read R-S2 cues"
+      },
+      "rec/T|rec/T-S2": {
+        "pairs": 200,
+        "examples": [
+          {
+            "text": "oggi ho una call con il capo",
+            "ids": [
+              "script/T:T-0002",
+              "rec/T:T-0002",
+              "rec/T-S2:T-0002"
+            ]
+          },
+          {
+            "text": "il budget del progetto è finito",
+            "ids": [
+              "script/T:T-0005",
+              "rec/T:T-0005",
+              "rec/T-S2:T-0005"
+            ]
+          },
+          {
+            "text": "il team è cresciuto quest'anno",
+            "ids": [
+              "script/T:T-0008",
+              "rec/T:T-0008",
+              "rec/T-S2:T-0008"
+            ]
+          },
+          {
+            "text": "il deploy è andato a buon fine",
+            "ids": [
+              "script/T:T-0011",
+              "rec/T:T-0011",
+              "rec/T-S2:T-0011"
+            ]
+          },
+          {
+            "text": "prepariamo una demo per il cliente",
+            "ids": [
+              "script/T:T-0014",
+              "rec/T:T-0014",
+              "rec/T-S2:T-0014"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "T-S2 is the S2 subset of T"
+      },
+      "rec/T|script/A": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor A is drawn from 60 reviewed T sentences"
+      },
+      "rec/T|script/T": {
+        "pairs": 600,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "oggi ho una call con il capo",
+            "ids": [
+              "script/T:T-0002",
+              "rec/T:T-0002",
+              "rec/T-S2:T-0002"
+            ]
+          },
+          {
+            "text": "ho aperto un ticket per il problema",
+            "ids": [
+              "script/T:T-0003",
+              "rec/T:T-0003"
+            ]
+          },
+          {
+            "text": "la deadline è fissata per venerdì",
+            "ids": [
+              "script/T:T-0004",
+              "rec/T:T-0004"
+            ]
+          },
+          {
+            "text": "il budget del progetto è finito",
+            "ids": [
+              "script/T:T-0005",
+              "rec/T:T-0005",
+              "rec/T-S2:T-0005"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "T manifest is the recorded T script"
+      },
+      "rec/T-S2|script/A": {
+        "pairs": 23,
+        "examples": [
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          },
+          {
+            "text": "il hosting costa troppo",
+            "ids": [
+              "script/T:T-0065",
+              "script/A:A-0007",
+              "rec/T:T-0065",
+              "rec/T-S2:T-0065"
+            ]
+          },
+          {
+            "text": "è apparso un popup fastidioso",
+            "ids": [
+              "script/T:T-0086",
+              "script/A:A-0009",
+              "rec/T:T-0086",
+              "rec/T-S2:T-0086"
+            ]
+          },
+          {
+            "text": "ho fatto logout per sicurezza",
+            "ids": [
+              "script/T:T-0107",
+              "script/A:A-0011",
+              "rec/T:T-0107",
+              "rec/T-S2:T-0107"
+            ]
+          },
+          {
+            "text": "la start up ha trovato un investitore",
+            "ids": [
+              "script/T:T-0173",
+              "script/A:A-0018",
+              "rec/T:T-0173",
+              "rec/T-S2:T-0173"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "T-S2 contains the S2 anchor sentences read as T"
+      },
+      "rec/T-S2|script/T": {
+        "pairs": 200,
+        "examples": [
+          {
+            "text": "oggi ho una call con il capo",
+            "ids": [
+              "script/T:T-0002",
+              "rec/T:T-0002",
+              "rec/T-S2:T-0002"
+            ]
+          },
+          {
+            "text": "il budget del progetto è finito",
+            "ids": [
+              "script/T:T-0005",
+              "rec/T:T-0005",
+              "rec/T-S2:T-0005"
+            ]
+          },
+          {
+            "text": "il team è cresciuto quest'anno",
+            "ids": [
+              "script/T:T-0008",
+              "rec/T:T-0008",
+              "rec/T-S2:T-0008"
+            ]
+          },
+          {
+            "text": "il deploy è andato a buon fine",
+            "ids": [
+              "script/T:T-0011",
+              "rec/T:T-0011",
+              "rec/T-S2:T-0011"
+            ]
+          },
+          {
+            "text": "prepariamo una demo per il cliente",
+            "ids": [
+              "script/T:T-0014",
+              "rec/T:T-0014",
+              "rec/T-S2:T-0014"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "T-S2 is the S2 subset of T"
+      },
+      "script/A|script/T": {
+        "pairs": 60,
+        "examples": [
+          {
+            "text": "ho spostato il meeting a domani",
+            "ids": [
+              "script/T:T-0001",
+              "script/A:A-0001",
+              "rec/T:T-0001",
+              "rec/A-S1:A-0001"
+            ]
+          },
+          {
+            "text": "lo sprint finisce la prossima settimana",
+            "ids": [
+              "script/T:T-0012",
+              "script/A:A-0002",
+              "rec/T:T-0012",
+              "rec/A-S1:A-0002"
+            ]
+          },
+          {
+            "text": "ho trovato un bug nel codice",
+            "ids": [
+              "script/T:T-0022",
+              "script/A:A-0003",
+              "rec/T:T-0022",
+              "rec/A-S1:A-0003"
+            ]
+          },
+          {
+            "text": "facciamo un sync veloce dopo pranzo",
+            "ids": [
+              "script/T:T-0033",
+              "script/A:A-0004",
+              "rec/T:T-0033",
+              "rec/A-S1:A-0004"
+            ]
+          },
+          {
+            "text": "ho comprato uno smartwatch per allenarmi",
+            "ids": [
+              "script/T:T-0044",
+              "script/A:A-0005",
+              "rec/T:T-0044",
+              "rec/T-S2:T-0044"
+            ]
+          }
+        ],
+        "class": "structural",
+        "reason": "anchor A is drawn from 60 reviewed T sentences"
+      }
+    },
+    "within_source_duplicate_texts": {
+      "data/cv_it_dev": 28,
+      "data/cv_it_test": 16,
+      "data/cv_it_train": 905,
+      "data/fleurs_en_dev": 127,
+      "data/fleurs_en_test": 244,
+      "data/fleurs_it_dev": 121,
+      "data/fleurs_it_test": 250,
+      "data/ls_en_dev": 1,
+      "data/ls_en_train": 2,
+      "data/mls_it_train": 8
+    }
+  },
+  "near": {
+    "threshold": 0.8,
+    "total_pairs": 0,
+    "by_pair": {},
+    "truncated_pairs_groups": 0,
+    "candidate_pairs_evaluated": 10918,
+    "highest_below_check": {
+      "jaccard": 0.8,
+      "a": "rec/R-S1:R-S1-0418",
+      "b": "script/R-S1:R-S1-0618"
+    }
+  },
+  "audio": {
+    "files": 2209,
+    "sets": {
+      "R-S1/S1": {
+        "files": 741,
+        "bytes": 201255366
+      },
+      "R-S2/S2": {
+        "files": 673,
+        "bytes": 130840768
+      },
+      "S1": {
+        "files": 200,
+        "bytes": 46225648
+      },
+      "S1_alt_2026-10-19T1724": {
+        "files": 15,
+        "bytes": 3560594
+      },
+      "S2": {
+        "files": 200,
+        "bytes": 43188464
+      },
+      "S3": {
+        "files": 200,
+        "bytes": 44093680
+      },
+      "anchor/S1": {
+        "files": 60,
+        "bytes": 14884424
+      },
+      "anchor/S2": {
+        "files": 60,
+        "bytes": 13489736
+      },
+      "anchor/S3": {
+        "files": 60,
+        "bytes": 12238408
+      }
+    },
+    "repeated_hashes": 0,
+    "cross_set_collisions": {},
+    "missing_audio": [],
+    "missing_audio_count": 0
+  },
+  "id_disjointness": {
+    "cv_it": {
+      "data/cv_it_train|data/cv_it_dev": {
+        "shared": 0,
+        "examples": []
+      },
+      "data/cv_it_train|data/cv_it_test": {
+        "shared": 0,
+        "examples": []
+      },
+      "data/cv_it_dev|data/cv_it_test": {
+        "shared": 0,
+        "examples": []
+      }
+    },
+    "mls_it": {
+      "data/mls_it_train|data/mls_it_dev": {
+        "shared": 0,
+        "examples": []
+      },
+      "data/mls_it_train|data/mls_it_test": {
+        "shared": 0,
+        "examples": []
+      },
+      "data/mls_it_dev|data/mls_it_test": {
+        "shared": 0,
+        "examples": []
+      }
+    },
+    "ls_en": {
+      "data/ls_en_train|data/ls_en_dev": {
+        "shared": 0,
+        "examples": []
+      }
+    }
+  },
+  "terms": {
+    "terms": 655,
+    "pre_addendum": {
+      "groups": {
+        "natural": {
+          "count": 461,
+          "terms": [
+            "a",
+            "about",
+            "acceptance",
+            "account",
+            "after",
+            "again",
+            "ai",
+            "alexa",
+            "am",
+            "amazing",
+            "amazon",
+            "and",
+            "another",
+            "antivirus",
+            "api",
+            "apple",
+            "are",
+            "as",
+            "audible",
+            "away",
+            "b",
+            "back",
+            "backup",
+            "balance",
+            "base",
+            "be",
+            "beach",
+            "bed",
+            "been",
+            "before",
+            "benefit",
+            "best",
+            "better",
+            "bike",
+            "block",
+            "book",
+            "booking",
+            "bored",
+            "bot",
+            "box",
+            "brain",
+            "branch",
+            "brand",
+            "break",
+            "brief",
+            "broken",
+            "browser",
+            "budget",
+            "bug",
+            "build",
+            "building",
+            "burger",
+            "bus",
+            "but",
+            "calendar",
+            "call",
+            "can",
+            "cannot",
+            "care",
+            "careful"
+          ]
+        },
+        "gold_pre": {
+          "count": 150,
+          "terms": [
+            "airbnb",
+            "asana",
+            "asap",
+            "aws",
+            "backlog",
+            "backuppato",
+            "bannato",
+            "blockato",
+            "briefato",
+            "buildato",
+            "cfo",
+            "chattare",
+            "chattato",
+            "cliccare",
+            "cliccato",
+            "cloudflare",
+            "committare",
+            "committato",
+            "coworking",
+            "cpu",
+            "criteria",
+            "crm",
+            "cto",
+            "dashboard",
+            "dazn",
+            "deadline",
+            "debriefato",
+            "decathlon",
+            "deliveroo",
+            "deploy",
+            "deployare",
+            "deployato",
+            "downloadare",
+            "downloadato",
+            "dropbox",
+            "droppato",
+            "erp",
+            "evernote",
+            "faq",
+            "figma",
+            "fixare",
+            "fixato",
+            "flaggato",
+            "flixbus",
+            "followato",
+            "formattato",
+            "forwardare",
+            "forwardato",
+            "gif",
+            "glovo",
+            "gmail",
+            "godaddy",
+            "googlato",
+            "gpu",
+            "hostato",
+            "ikea",
+            "invoice",
+            "iphone",
+            "jira",
+            "kickoff"
+          ]
+        },
+        "never": {
+          "count": 44,
+          "terms": [
+            "airpods",
+            "baskin",
+            "bitbucket",
+            "cadbury",
+            "charger",
+            "checkout",
+            "chromecast",
+            "delivery",
+            "domain",
+            "dyson",
+            "exam",
+            "folder",
+            "hosting",
+            "invision",
+            "ipad",
+            "kfc",
+            "logout",
+            "mondays",
+            "oral",
+            "popup",
+            "prototype",
+            "reset",
+            "restart",
+            "roomba",
+            "scaleup",
+            "screenshot",
+            "selfie",
+            "sharing",
+            "shutdown",
+            "shutterstock",
+            "skills",
+            "skyscanner",
+            "smartwatch",
+            "solving",
+            "starbucks",
+            "startup",
+            "subway",
+            "swipe",
+            "tripadvisor",
+            "twinings",
+            "unfollow",
+            "upload",
+            "wallpaper",
+            "website"
+          ]
+        }
+      },
+      "never_term_utterances": 47,
+      "never_term_ids": [
+        "T-0044",
+        "T-0052",
+        "T-0054",
+        "T-0055",
+        "T-0056",
+        "T-0065",
+        "T-0066",
+        "T-0067",
+        "T-0069",
+        "T-0086",
+        "T-0093",
+        "T-0094",
+        "T-0096",
+        "T-0105",
+        "T-0107",
+        "T-0109",
+        "T-0111",
+        "T-0112",
+        "T-0113",
+        "T-0121",
+        "T-0187",
+        "T-0201",
+        "T-0213",
+        "T-0214",
+        "T-0230",
+        "T-0231",
+        "T-0278",
+        "T-0309",
+        "T-0316",
+        "T-0323",
+        "T-0329",
+        "T-0331",
+        "T-0333",
+        "T-0335",
+        "T-0336",
+        "T-0338",
+        "T-0339",
+        "T-0341",
+        "T-0343",
+        "T-0345",
+        "T-0346",
+        "T-0348",
+        "T-0350",
+        "T-0544",
+        "T-0588",
+        "T-0593",
+        "T-0594"
+      ],
+      "definition": "text of 0.7.0 / the E-015 eval_terms.py boundary"
+    },
+    "shipped": {
+      "groups": {
+        "natural": {
+          "count": 461,
+          "terms": [
+            "a",
+            "about",
+            "acceptance",
+            "account",
+            "after",
+            "again",
+            "ai",
+            "alexa",
+            "am",
+            "amazing",
+            "amazon",
+            "and",
+            "another",
+            "antivirus",
+            "api",
+            "apple",
+            "are",
+            "as",
+            "audible",
+            "away",
+            "b",
+            "back",
+            "backup",
+            "balance",
+            "base",
+            "be",
+            "beach",
+            "bed",
+            "been",
+            "before",
+            "benefit",
+            "best",
+            "better",
+            "bike",
+            "block",
+            "book",
+            "booking",
+            "bored",
+            "bot",
+            "box",
+            "brain",
+            "branch",
+            "brand",
+            "break",
+            "brief",
+            "broken",
+            "browser",
+            "budget",
+            "bug",
+            "build",
+            "building",
+            "burger",
+            "bus",
+            "but",
+            "calendar",
+            "call",
+            "can",
+            "cannot",
+            "care",
+            "careful"
+          ]
+        },
+        "gold_pre": {
+          "count": 150,
+          "terms": [
+            "airbnb",
+            "asana",
+            "asap",
+            "aws",
+            "backlog",
+            "backuppato",
+            "bannato",
+            "blockato",
+            "briefato",
+            "buildato",
+            "cfo",
+            "chattare",
+            "chattato",
+            "cliccare",
+            "cliccato",
+            "cloudflare",
+            "committare",
+            "committato",
+            "coworking",
+            "cpu",
+            "criteria",
+            "crm",
+            "cto",
+            "dashboard",
+            "dazn",
+            "deadline",
+            "debriefato",
+            "decathlon",
+            "deliveroo",
+            "deploy",
+            "deployare",
+            "deployato",
+            "downloadare",
+            "downloadato",
+            "dropbox",
+            "droppato",
+            "erp",
+            "evernote",
+            "faq",
+            "figma",
+            "fixare",
+            "fixato",
+            "flaggato",
+            "flixbus",
+            "followato",
+            "formattato",
+            "forwardare",
+            "forwardato",
+            "gif",
+            "glovo",
+            "gmail",
+            "godaddy",
+            "googlato",
+            "gpu",
+            "hostato",
+            "ikea",
+            "invoice",
+            "iphone",
+            "jira",
+            "kickoff"
+          ]
+        },
+        "addendum": {
+          "count": 44,
+          "terms": [
+            "airpods",
+            "baskin",
+            "bitbucket",
+            "cadbury",
+            "charger",
+            "checkout",
+            "chromecast",
+            "delivery",
+            "domain",
+            "dyson",
+            "exam",
+            "folder",
+            "hosting",
+            "invision",
+            "ipad",
+            "kfc",
+            "logout",
+            "mondays",
+            "oral",
+            "popup",
+            "prototype",
+            "reset",
+            "restart",
+            "roomba",
+            "scaleup",
+            "screenshot",
+            "selfie",
+            "sharing",
+            "shutdown",
+            "shutterstock",
+            "skills",
+            "skyscanner",
+            "smartwatch",
+            "solving",
+            "starbucks",
+            "startup",
+            "subway",
+            "swipe",
+            "tripadvisor",
+            "twinings",
+            "unfollow",
+            "upload",
+            "wallpaper",
+            "website"
+          ]
+        },
+        "never": {
+          "count": 0,
+          "terms": []
+        }
+      },
+      "definition": "every training text of E-028 (0.8.1), S1 and S2 addenda included"
+    },
+    "terms3_only": [],
+    "counts": {
+      "a": {
+        "natural": 61148,
+        "gold_pre": 59,
+        "addendum_028": 5,
+        "terms3": 2
+      },
+      "about": {
+        "natural": 1222,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "acceptance": {
+        "natural": 2,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "account": {
+        "natural": 113,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "after": {
+        "natural": 963,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "again": {
+        "natural": 714,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ai": {
+        "natural": 2863,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "airbnb": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "airpods": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "alexa": {
+        "natural": 3,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "am": {
+        "natural": 565,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "amazing": {
+        "natural": 6,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "amazon": {
+        "natural": 7,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "and": {
+        "natural": 24439,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "another": {
+        "natural": 510,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "antivirus": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "api": {
+        "natural": 15,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "apple": {
+        "natural": 37,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "are": {
+        "natural": 1929,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "as": {
+        "natural": 5803,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "asana": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "asap": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "audible": {
+        "natural": 8,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "away": {
+        "natural": 616,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "aws": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "b": {
+        "natural": 164,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "back": {
+        "natural": 768,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "backlog": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "backup": {
+        "natural": 1,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "backuppato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "balance": {
+        "natural": 28,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bannato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "base": {
+        "natural": 510,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "baskin": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "be": {
+        "natural": 3930,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "beach": {
+        "natural": 58,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bed": {
+        "natural": 192,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "been": {
+        "natural": 1892,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "before": {
+        "natural": 962,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "benefit": {
+        "natural": 27,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "best": {
+        "natural": 277,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "better": {
+        "natural": 381,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bike": {
+        "natural": 9,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bitbucket": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "block": {
+        "natural": 16,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "blockato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "book": {
+        "natural": 153,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "booking": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bored": {
+        "natural": 7,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bot": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "box": {
+        "natural": 98,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "brain": {
+        "natural": 67,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "branch": {
+        "natural": 19,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "brand": {
+        "natural": 20,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "break": {
+        "natural": 67,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "brief": {
+        "natural": 36,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "briefato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "broken": {
+        "natural": 89,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "browser": {
+        "natural": 17,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "budget": {
+        "natural": 15,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bug": {
+        "natural": 20,
+        "gold_pre": 5,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "build": {
+        "natural": 25,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "buildato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "building": {
+        "natural": 57,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "burger": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "bus": {
+        "natural": 8,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "but": {
+        "natural": 4631,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cadbury": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "calendar": {
+        "natural": 5,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "call": {
+        "natural": 206,
+        "gold_pre": 12,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "can": {
+        "natural": 867,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cannot": {
+        "natural": 192,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "care": {
+        "natural": 248,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "careful": {
+        "natural": 37,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "case": {
+        "natural": 565,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "catch": {
+        "natural": 56,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ceo": {
+        "natural": 1,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cfo": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "charger": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 4
+      },
+      "chat": {
+        "natural": 11,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "chattare": {
+        "natural": 0,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "chattato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "check": {
+        "natural": 18,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "checkout": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "chromecast": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 4
+      },
+      "cliccare": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cliccato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "closed": {
+        "natural": 84,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cloud": {
+        "natural": 60,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cloudflare": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "club": {
+        "natural": 384,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "code": {
+        "natural": 29,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "coffee": {
+        "natural": 23,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "come": {
+        "natural": 14767,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "coming": {
+        "natural": 212,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "comment": {
+        "natural": 10,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "commentato": {
+        "natural": 10,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "commit": {
+        "natural": 11,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "committare": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "committato": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "computer": {
+        "natural": 75,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "concept": {
+        "natural": 17,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "conference": {
+        "natural": 33,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "content": {
+        "natural": 38,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "coo": {
+        "natural": 3,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cookie": {
+        "natural": 5,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "coworking": {
+        "natural": 0,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cpu": {
+        "natural": 0,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "creator": {
+        "natural": 6,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "criteria": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "crm": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "cto": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "customer": {
+        "natural": 19,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "daily": {
+        "natural": 49,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "dark": {
+        "natural": 195,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "dashboard": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "data": {
+        "natural": 369,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "database": {
+        "natural": 19,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "date": {
+        "natural": 182,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "dazn": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "deadline": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "debriefato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "decathlon": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "decision": {
+        "natural": 25,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "deck": {
+        "natural": 58,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "deep": {
+        "natural": 163,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "deliveroo": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "delivery": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "demo": {
+        "natural": 28,
+        "gold_pre": 4,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "deploy": {
+        "natural": 0,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "deployare": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "deployato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "desktop": {
+        "natural": 6,
+        "gold_pre": 1,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "did": {
+        "natural": 1281,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "digital": {
+        "natural": 8,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "director": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "disaster": {
+        "natural": 12,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "disney": {
+        "natural": 36,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "dive": {
+        "natural": 12,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "do": {
+        "natural": 1378,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "domain": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 3,
+        "terms3": 1
+      },
+      "down": {
+        "natural": 985,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "download": {
+        "natural": 20,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "downloadare": {
+        "natural": 0,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "downloadato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "drive": {
+        "natural": 54,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "dropbox": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "droppato": {
+        "natural": 0,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "dyson": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "eat": {
+        "natural": 81,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "echo": {
+        "natural": 5,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "eight": {
+        "natural": 122,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "email": {
+        "natural": 5,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "emoji": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "end": {
+        "natural": 276,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "erp": {
+        "natural": 0,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "eta": {
+        "natural": 3,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "evernote": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "everyone": {
+        "natural": 31,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "exam": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 4
+      },
+      "excel": {
+        "natural": 3,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "expensive": {
+        "natural": 16,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "experience": {
+        "natural": 81,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "faq": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "fast": {
+        "natural": 83,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "feature": {
+        "natural": 21,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "feed": {
+        "natural": 25,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "feedback": {
+        "natural": 8,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "figma": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "file": {
+        "natural": 131,
+        "gold_pre": 3,
+        "addendum_028": 3,
+        "terms3": 0
+      },
+      "film": {
+        "natural": 1872,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "find": {
+        "natural": 349,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "finish": {
+        "natural": 15,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "fire": {
+        "natural": 215,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "firewall": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "fix": {
+        "natural": 19,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "fixare": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "fixato": {
+        "natural": 0,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "flaggato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "flixbus": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "folder": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "follow": {
+        "natural": 75,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "followato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "food": {
+        "natural": 102,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "for": {
+        "natural": 5401,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "forecast": {
+        "natural": 1,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "forgot": {
+        "natural": 40,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "fork": {
+        "natural": 14,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "formattato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "forwardare": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "forwardato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "founder": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "free": {
+        "natural": 190,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "freelance": {
+        "natural": 9,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "friday": {
+        "natural": 8,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "front": {
+        "natural": 121,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "full": {
+        "natural": 290,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "garden": {
+        "natural": 153,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "get": {
+        "natural": 590,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "getting": {
+        "natural": 105,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "gif": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "github": {
+        "natural": 2,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "glovo": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "gmail": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "go": {
+        "natural": 812,
+        "gold_pre": 9,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "godaddy": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "going": {
+        "natural": 372,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "good": {
+        "natural": 870,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "googlato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "google": {
+        "natural": 27,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "gpu": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "grab": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hands": {
+        "natural": 287,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "happy": {
+        "natural": 165,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hard": {
+        "natural": 191,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "has": {
+        "natural": 1013,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "have": {
+        "natural": 3218,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "he": {
+        "natural": 9334,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "head": {
+        "natural": 520,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "heat": {
+        "natural": 50,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "her": {
+        "natural": 5188,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "him": {
+        "natural": 3634,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "home": {
+        "natural": 395,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hostato": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hostel": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hosting": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "hotel": {
+        "natural": 72,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hour": {
+        "natural": 184,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hr": {
+        "natural": 1,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hungry": {
+        "natural": 40,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "hut": {
+        "natural": 38,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "i": {
+        "natural": 29867,
+        "gold_pre": 61,
+        "addendum_028": 5,
+        "terms3": 7
+      },
+      "icloud": {
+        "natural": 2,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "idea": {
+        "natural": 230,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ikea": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "in": {
+        "natural": 52126,
+        "gold_pre": 68,
+        "addendum_028": 6,
+        "terms3": 2
+      },
+      "inside": {
+        "natural": 47,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "instagram": {
+        "natural": 2,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "instead": {
+        "natural": 88,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "investment": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "invision": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "invoice": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ipad": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "iphone": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "is": {
+        "natural": 4575,
+        "gold_pre": 10,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "it": {
+        "natural": 8020,
+        "gold_pre": 15,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "jenkins": {
+        "natural": 18,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "jira": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "job": {
+        "natural": 19,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "junior": {
+        "natural": 29,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "just": {
+        "natural": 676,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "keys": {
+        "natural": 16,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "kfc": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "kick": {
+        "natural": 6,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "kickoff": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "kids": {
+        "natural": 9,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "kindle": {
+        "natural": 2,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "king": {
+        "natural": 366,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "kpi": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "landing": {
+        "natural": 24,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "laptop": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "lastpass": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "late": {
+        "natural": 132,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "later": {
+        "natural": 146,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "launch": {
+        "natural": 4,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "lead": {
+        "natural": 56,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "learning": {
+        "natural": 25,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "left": {
+        "natural": 495,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "let": {
+        "natural": 442,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "life": {
+        "natural": 658,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "light": {
+        "natural": 290,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "likato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "like": {
+        "natural": 1139,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "lime": {
+        "natural": 7,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "line": {
+        "natural": 146,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "link": {
+        "natural": 20,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "linkare": {
+        "natural": 0,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "linkato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "list": {
+        "natural": 28,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "live": {
+        "natural": 270,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "log": {
+        "natural": 25,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "loggare": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "loggato": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "login": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "logout": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "looking": {
+        "natural": 267,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "lost": {
+        "natural": 168,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "love": {
+        "natural": 465,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "lunch": {
+        "natural": 13,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "macbook": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "machine": {
+        "natural": 46,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mail": {
+        "natural": 32,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mailato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mailchimp": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "making": {
+        "natural": 167,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "malware": {
+        "natural": 3,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "management": {
+        "natural": 27,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "manager": {
+        "natural": 60,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "map": {
+        "natural": 11,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "maps": {
+        "natural": 5,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "market": {
+        "natural": 24,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "marketing": {
+        "natural": 24,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "master": {
+        "natural": 234,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "match": {
+        "natural": 155,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "matchato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "maybe": {
+        "natural": 29,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "me": {
+        "natural": 5810,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mean": {
+        "natural": 220,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "media": {
+        "natural": 159,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "meeting": {
+        "natural": 59,
+        "gold_pre": 15,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "meme": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "merge": {
+        "natural": 0,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mergiare": {
+        "natural": 0,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mergiato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "message": {
+        "natural": 30,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "microsoft": {
+        "natural": 42,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "milestone": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mind": {
+        "natural": 415,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "miro": {
+        "natural": 13,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mode": {
+        "natural": 34,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "model": {
+        "natural": 17,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mondays": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 4
+      },
+      "mongodb": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "monitor": {
+        "natural": 10,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "more": {
+        "natural": 1453,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mouse": {
+        "natural": 56,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "moved": {
+        "natural": 116,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "movie": {
+        "natural": 12,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "music": {
+        "natural": 169,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mute": {
+        "natural": 17,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "mvp": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "my": {
+        "natural": 3195,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "need": {
+        "natural": 172,
+        "gold_pre": 9,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "needs": {
+        "natural": 33,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "netflix": {
+        "natural": 19,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "new": {
+        "natural": 846,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "next": {
+        "natural": 295,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "nice": {
+        "natural": 47,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "night": {
+        "natural": 564,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "nintendo": {
+        "natural": 10,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "not": {
+        "natural": 4502,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "note": {
+        "natural": 183,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "notes": {
+        "natural": 31,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "notion": {
+        "natural": 14,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "now": {
+        "natural": 1241,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "of": {
+        "natural": 22032,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "off": {
+        "natural": 587,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "office": {
+        "natural": 95,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "okr": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "on": {
+        "natural": 4099,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "onboardato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "onboarding": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "one": {
+        "natural": 2703,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "onedrive": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "online": {
+        "natural": 81,
+        "gold_pre": 0,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "open": {
+        "natural": 358,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "oral": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "order": {
+        "natural": 209,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "otp": {
+        "natural": 0,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "out": {
+        "natural": 1692,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "outlook": {
+        "natural": 5,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "outside": {
+        "natural": 94,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "owner": {
+        "natural": 37,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "page": {
+        "natural": 34,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "password": {
+        "natural": 6,
+        "gold_pre": 2,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "patchare": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "patchato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pause": {
+        "natural": 30,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "payment": {
+        "natural": 7,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "paypal": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pdf": {
+        "natural": 4,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "people": {
+        "natural": 589,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "personal": {
+        "natural": 100,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "phishing": {
+        "natural": 0,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "phone": {
+        "natural": 4,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "photos": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "photoshoppato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pin": {
+        "natural": 27,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pingato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pitch": {
+        "natural": 12,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pitchato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pizza": {
+        "natural": 9,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "place": {
+        "natural": 498,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "play": {
+        "natural": 173,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "playing": {
+        "natural": 54,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "playlist": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "playstation": {
+        "natural": 14,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "please": {
+        "natural": 97,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "plug": {
+        "natural": 7,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "plus": {
+        "natural": 17,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "poc": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "podcast": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "popup": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "post": {
+        "natural": 119,
+        "gold_pre": 1,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "postare": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "postato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "powerpoint": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "practice": {
+        "natural": 26,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "prime": {
+        "natural": 460,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "printato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "problem": {
+        "natural": 21,
+        "gold_pre": 1,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "product": {
+        "natural": 18,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "progress": {
+        "natural": 41,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "project": {
+        "natural": 16,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "prompt": {
+        "natural": 13,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "proof": {
+        "natural": 39,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "prototype": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 4
+      },
+      "pub": {
+        "natural": 8,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "public": {
+        "natural": 109,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pull": {
+        "natural": 27,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pushare": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "pushato": {
+        "natural": 0,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "qr": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "quick": {
+        "natural": 62,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "quiet": {
+        "natural": 76,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "raining": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ram": {
+        "natural": 5,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "real": {
+        "natural": 142,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "really": {
+        "natural": 224,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "reboot": {
+        "natural": 2,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "recap": {
+        "natural": 0,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "record": {
+        "natural": 105,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "refreshato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "refund": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "relax": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "release": {
+        "natural": 12,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "remote": {
+        "natural": 30,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "repeat": {
+        "natural": 26,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "replay": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "reply": {
+        "natural": 57,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "report": {
+        "natural": 52,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "request": {
+        "natural": 44,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "reset": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "resettare": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "resettato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "restart": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "restartato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "restaurant": {
+        "natural": 6,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "return": {
+        "natural": 140,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "review": {
+        "natural": 21,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "right": {
+        "natural": 500,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "road": {
+        "natural": 177,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "roadmap": {
+        "natural": 2,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "robbins": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "robot": {
+        "natural": 28,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "roi": {
+        "natural": 7,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "roll": {
+        "natural": 34,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "roomba": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "router": {
+        "natural": 3,
+        "gold_pre": 1,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "running": {
+        "natural": 82,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "saas": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "salesforce": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scale": {
+        "natural": 125,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scaleup": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "scannato": {
+        "natural": 9,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scanner": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "schedulare": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "schedulato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scheduled": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "science": {
+        "natural": 32,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "screen": {
+        "natural": 14,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "screenshot": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "scroll": {
+        "natural": 0,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scrollare": {
+        "natural": 11,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scrollato": {
+        "natural": 2,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "scrum": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "see": {
+        "natural": 923,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "selfie": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "send": {
+        "natural": 67,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "senior": {
+        "natural": 25,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "server": {
+        "natural": 24,
+        "gold_pre": 9,
+        "addendum_028": 1,
+        "terms3": 1
+      },
+      "set": {
+        "natural": 343,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "settare": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "settato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shampoo": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sharato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "share": {
+        "natural": 36,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sharing": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "she": {
+        "natural": 4304,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shippato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shipping": {
+        "natural": 5,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shopify": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shoppato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shopping": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "should": {
+        "natural": 842,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shoulders": {
+        "natural": 43,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "shutdown": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "shutterstock": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "side": {
+        "natural": 375,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sign": {
+        "natural": 52,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "site": {
+        "natural": 11,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "skill": {
+        "natural": 31,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "skills": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "skippato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "skype": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "skyscanner": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "slack": {
+        "natural": 2,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sleep": {
+        "natural": 136,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "slide": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "smart": {
+        "natural": 20,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "smartphone": {
+        "natural": 12,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "smartwatch": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "sms": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "so": {
+        "natural": 3627,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "social": {
+        "natural": 105,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "soft": {
+        "natural": 88,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "software": {
+        "natural": 189,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "solving": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "some": {
+        "natural": 1317,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "soundcloud": {
+        "natural": 2,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "source": {
+        "natural": 99,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "spam": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "speaker": {
+        "natural": 24,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "speaking": {
+        "natural": 87,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "spin": {
+        "natural": 29,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "split": {
+        "natural": 21,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "splittare": {
+        "natural": 0,
+        "gold_pre": 10,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "splittato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "spoiler": {
+        "natural": 5,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "spoilerato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sport": {
+        "natural": 158,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "spotify": {
+        "natural": 7,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sprint": {
+        "natural": 6,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ssd": {
+        "natural": 0,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "stack": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "stand": {
+        "natural": 134,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "standup": {
+        "natural": 0,
+        "gold_pre": 24,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "starbucks": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "start": {
+        "natural": 75,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "startato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "startup": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 4
+      },
+      "stay": {
+        "natural": 99,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "steam": {
+        "natural": 26,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "stop": {
+        "natural": 79,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "stoppato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "storage": {
+        "natural": 2,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "storming": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "story": {
+        "natural": 209,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "streaming": {
+        "natural": 31,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "streammato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "stripe": {
+        "natural": 0,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "study": {
+        "natural": 51,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "subway": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "support": {
+        "natural": 61,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "swipe": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "switch": {
+        "natural": 8,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "sync": {
+        "natural": 3,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "system": {
+        "natural": 53,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "table": {
+        "natural": 170,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tablet": {
+        "natural": 7,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "taggare": {
+        "natural": 0,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "taggato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "take": {
+        "natural": 539,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "talk": {
+        "natural": 140,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "target": {
+        "natural": 12,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "targettato": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "task": {
+        "natural": 47,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "team": {
+        "natural": 149,
+        "gold_pre": 13,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "teams": {
+        "natural": 3,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "telegram": {
+        "natural": 14,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "template": {
+        "natural": 4,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "test": {
+        "natural": 104,
+        "gold_pre": 12,
+        "addendum_028": 1,
+        "terms3": 0
+      },
+      "testare": {
+        "natural": 4,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "testato": {
+        "natural": 5,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 1
+      },
+      "than": {
+        "natural": 1200,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "that": {
+        "natural": 9154,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "the": {
+        "natural": 44088,
+        "gold_pre": 59,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "them": {
+        "natural": 2044,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "then": {
+        "natural": 1610,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "think": {
+        "natural": 637,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "this": {
+        "natural": 3129,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "ticket": {
+        "natural": 13,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tidal": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tiktok": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "time": {
+        "natural": 1234,
+        "gold_pre": 9,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tired": {
+        "natural": 50,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "to": {
+        "natural": 19784,
+        "gold_pre": 22,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "today": {
+        "natural": 18,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "token": {
+        "natural": 11,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "told": {
+        "natural": 452,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tomorrow": {
+        "natural": 19,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tonight": {
+        "natural": 20,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "too": {
+        "natural": 627,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "touch": {
+        "natural": 57,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tracking": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "trailer": {
+        "natural": 16,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "train": {
+        "natural": 60,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "trello": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tripadvisor": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "trivago": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "try": {
+        "natural": 108,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "tv": {
+        "natural": 39,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "twinings": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "twitch": {
+        "natural": 3,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "uber": {
+        "natural": 1,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "umbrella": {
+        "natural": 4,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "unfollow": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "unfollowato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "up": {
+        "natural": 1726,
+        "gold_pre": 11,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "updatato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "update": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "upgradato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "upgrade": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "upload": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 4,
+        "terms3": 1
+      },
+      "uppare": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "uppato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "url": {
+        "natural": 0,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "us": {
+        "natural": 843,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "usb": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "user": {
+        "natural": 8,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "usual": {
+        "natural": 89,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "video": {
+        "natural": 375,
+        "gold_pre": 5,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "vimeo": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wait": {
+        "natural": 114,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "walk": {
+        "natural": 114,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "walkers": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wall": {
+        "natural": 107,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wallpaper": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 2,
+        "terms3": 1
+      },
+      "want": {
+        "natural": 300,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "warranty": {
+        "natural": 0,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "was": {
+        "natural": 9704,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wash": {
+        "natural": 31,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "watch": {
+        "natural": 100,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "way": {
+        "natural": 811,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "we": {
+        "natural": 2353,
+        "gold_pre": 23,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "weather": {
+        "natural": 66,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "web": {
+        "natural": 114,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "webex": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "webinar": {
+        "natural": 1,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "website": {
+        "natural": 0,
+        "gold_pre": 0,
+        "addendum_028": 3,
+        "terms3": 1
+      },
+      "week": {
+        "natural": 115,
+        "gold_pre": 3,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "weekend": {
+        "natural": 12,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "welfare": {
+        "natural": 20,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wetransfer": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "what": {
+        "natural": 1960,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "whatsapp": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "whatsappato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "when": {
+        "natural": 2224,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "where": {
+        "natural": 775,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wifi": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "will": {
+        "natural": 1494,
+        "gold_pre": 7,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "with": {
+        "natural": 5782,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wordpress": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "work": {
+        "natural": 372,
+        "gold_pre": 6,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "working": {
+        "natural": 60,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "workshop": {
+        "natural": 3,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "wrap": {
+        "natural": 3,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "xbox": {
+        "natural": 8,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "you": {
+        "natural": 5396,
+        "gold_pre": 8,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "your": {
+        "natural": 1200,
+        "gold_pre": 0,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "youtube": {
+        "natural": 28,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "zalando": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "zendesk": {
+        "natural": 0,
+        "gold_pre": 2,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "zoom": {
+        "natural": 3,
+        "gold_pre": 4,
+        "addendum_028": 0,
+        "terms3": 0
+      },
+      "zoommato": {
+        "natural": 0,
+        "gold_pre": 1,
+        "addendum_028": 0,
+        "terms3": 0
+      }
+    }
+  },
+  "note": "read-only audit; findings require human review, nothing is fixed here",
+  "source_sha256": {
+    "script/T": "074a0733f4bc215867309bffef2fa02aa331193ed28211be2ba4ba1d9e17eeaa",
+    "script/A": "f8c1feabd6f64092c14116655374e40c5263e0e7f50564edc43191a596db1576",
+    "script/R-S1": "a4f045ccdca20df36b763e704e6b572d4bed695db53cf44f81c8050de2f15a29",
+    "script/R-S2": "488ffdf62f8ae3ffc5e27e8e72104c94c1972f864f2bcf6c8dae75e87582a7a4",
+    "script/pool": "b3d765bee8bb34ae19593c43863d23a331fc7f43326dc871e7f287ac70215f75",
+    "rec/T": "11e002d88dbfaee900ff24a8c3770e60eca7d683de19f7156fc7169f85497786",
+    "rec/T-S2": "bd7b546a692440451cdb7ad6ff01ad9e8c5474560996b44f4ac42d7c69e1f17a",
+    "rec/A-S1": "c5628ea0f86a770d1ea7d8ab5219c37fce739fbead2c080ae71a9c79cf6c9018",
+    "rec/A-S2": "f6f811ca222610832b9d596da46656b4a891f73892f996cc0665efb5d8cea374",
+    "rec/A-S3": "443ed6fd0a7c4b678779b0895826ad30942569574c40a75920ed65acf56a5788",
+    "rec/R-S1": "f137e5a67a2cb577e2958df8ad7645bf35600057912959d4d81038691057886b",
+    "rec/R-S2": "9889fe739e24ef36d787607600b1143799e753b0fddecab40a042afaec8abe09",
+    "rec/R-S1-terms": "cea9c1a54f149a3fb09a6159404e19d4e932c57852308e63bd452153eb42de09",
+    "rec/R-S1-terms3": "9a3e8bdb3b2ad5e0221e49847ec780ed50d9b5dcb1f2f4b551837bbc8c89f288",
+    "rec/R-S2-terms": "082f334563c5e5059c221763055b7cfff9134ae1c91bcd18476e2a8eb6d7af9a",
+    "data/cv_it_train": "91c87b2187b4e18a59d2041edf592df2d1257c3bd5c5aba8804b7042ecf90388",
+    "data/cv_it_dev": "55bd0ecefc0c5c3dd1e1ba984c0afa1986d655659849d4aa574061319b918f47",
+    "data/cv_it_test": "5d30dbfb74708fd891d0f782f65419c536b5cce7fee637c1aae2510ff7f861ee",
+    "data/mls_it_train": "0bc8547daf492dbcc5b48c7c14a14d8f2be457ad62adbee72373c673b6d8cf9d",
+    "data/mls_it_dev": "e0355fa641241cffac14ae5c0f2af1f51ec564a6bc499993d8676a2b4859d602",
+    "data/mls_it_test": "dbe8addb88221834521ef9299b83e7d4e48919f4ccd3620106d6be05351ea6bc",
+    "data/ls_en_train": "25e8209a8d7566a9bdaeb67fecc99284db9c5d738cab707e8fd77bd981ee709c",
+    "data/ls_en_dev": "51053e0a21d561dda20dfd0f7136e9063712a9f37be97507aac125e1595de8f6",
+    "data/spliced_it_en": "0ac47ac850c9e6e739cb1b449089d8e987460da59143d12b2e39ff027801fcab",
+    "data/fleurs_it_dev": "1a62f6e1bfed386005b2f9b28c555af2f5f6de0977c8f002c4c54b1415ef2965",
+    "data/fleurs_it_test": "54b79c8e1520359f2403dc021fd2bff167e76d7df3db2d4ed3532de91c8ce0f1",
+    "data/fleurs_en_dev": "ea16defb7ddd3cf7aeb58caa3465cbbd584bf63b3c3dd481f890c7cb65127b3e",
+    "data/fleurs_en_test": "a3a52346835b287afa3cf9bcd16f16ffdbdb504e069498598e228c54d781911f",
+    "data/noise": "a0fce07aa8daa4c3f30883d0788dc9bde9d402baf2bba0b1096b71fc36af7141"
+  }
+}
