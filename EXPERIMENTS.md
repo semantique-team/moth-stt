@@ -2037,5 +2037,11 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   **wrong for 0.8.1**: "rare terms never seen in any training text" is a **0.7.0** property. The
   metric is unchanged, the label is corrected in `docs/03` and `docs/13`. Not covered: `data/raw`
   re-hash (13 GB), external-corpus near-dups, upstream contamination, consent.
+  **Second pass (PLAN-2)**: all **287,429** raw audio files (12.8 GB) hashed, **0 cross-source
+  collisions**; the only repeats are the 120 byte-identical silence clips (the "120 clips" probe
+  is **one** signal repeated) and the held-out room tone stored under two names (absent from the
+  training noise pool, so E-025's unseen-room claim survives). MinHash over 247,510 documents:
+  5,026 + 146 + 6 near-dups are `spliced_it_en` re-using LS-EN/MLS-IT training sentences **by
+  construction**, 58 are CV prompt reuse, and **zero** involve T or FLEURS.
   [Result](runs/E-039/RESULT.md).
 - **Cost**: ~3 s of I/O plus hashing 492 MB, no training, no download, 0 USD.

@@ -47,6 +47,13 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > the same 47 utterances) is unchanged, only its label. No unexpected text or audio overlap was
 > found: 2,209 recorded wavs, 0 repeated hashes, 0 cross-set collisions, 0 missing files, and
 > 0 near-duplicate pairs above Jaccard 0.8 within our own data.
+> **Second pass (E-039 PLAN-2):** all **287,429** raw audio files (12.8 GB) hashed — **0
+> cross-source collisions**; the only repeated hashes are the **120 byte-identical silence
+> clips** (the silence probe is one signal repeated, not 120 independent silences) and the
+> held-out room tone stored under two names, which is absent from the training noise pool.
+> MinHash over 247,510 documents: 5,026 + 146 + 6 near-duplicates are `spliced_it_en` reusing
+> LS-EN/MLS-IT training sentences **by construction**, 58 are Common Voice prompt reuse, and
+> **zero** involve T or FLEURS.
 
 > x3 adds **579 retained trigrams** (801,858 → 802,437); the shipped change combines corpus,
 > pruning and weighting, not an isolated causal effect. An unchanged INT8 graph cannot establish

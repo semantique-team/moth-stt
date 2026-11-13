@@ -1,0 +1,772 @@
+{
+  "pass": "text",
+  "assets": {
+    "audit2_py_sha256": "80503cff7da3bbde10b21be67fbb000c253c57a9deddbf4b39174c8a01ad36d0"
+  },
+  "text": {
+    "documents": 247510,
+    "candidate_pairs": 136179,
+    "verified_pairs": 136179,
+    "threshold": 0.8,
+    "oversized_buckets_skipped": 0,
+    "by_pair": {
+      "ls_en_train|spliced_it_en": {
+        "count": 5026,
+        "examples": [
+          {
+            "a": "ls_en_train:ls-6925-80680-0054",
+            "b": "spliced_it_en:splice-008902",
+            "jaccard": 0.8276,
+            "text_a": "at length she persuaded him to do her bidding he nearly fainted himself with horror when he found that after the cruel blow which lopped her foot off she lay as one lifeless but he held the severed foot over the cauldron and as drops of blood fell from it",
+            "text_b": "la figlia adottiva di ipazia domiziana sarà adottata da donnino at length she persuaded him to do her bidding he nearly fainted himself with horror when he found that after the cruel blow which lopped her foot off she lay as one lifeless but he held the severed foot over the cauldron and as drops of blood fell from it"
+          },
+          {
+            "a": "ls_en_train:ls-6925-80680-0026",
+            "b": "spliced_it_en:splice-013635",
+            "jaccard": 0.8444,
+            "text_a": "and promised that he should enter his bodyguard on the condition that he would undertake any service which was especially difficult or dangerous this was just what ameer ali wanted and he agreed to do whatever the king might wish",
+            "text_b": "enunciato e postulato sono due cose diverse and promised that he should enter his bodyguard on the condition that he would undertake any service which was especially difficult or dangerous this was just what ameer ali wanted and he agreed to do whatever the king might wish"
+          },
+          {
+            "a": "ls_en_train:ls-2416-152139-0035",
+            "b": "spliced_it_en:splice-013178",
+            "jaccard": 0.8649,
+            "text_a": "a dawning look of terror in the eyes that held fascinated on jimmie dale you cur said jimmie dale again you cur with your devil's work a year ago you saw this night coming",
+            "text_b": "infine una cover di turn a dawning look of terror in the eyes that held fascinated on jimmie dale you cur said jimmie dale again you cur with your devil's work a year ago you saw this night coming"
+          },
+          {
+            "a": "ls_en_train:ls-1502-122615-0023",
+            "b": "spliced_it_en:splice-004330",
+            "jaccard": 0.8824,
+            "text_a": "ten minutes which appeared so many ages to duncan might have passed in this manner and the warriors were fairly enveloped in a cloud of white smoke before any of them spoke",
+            "text_b": "prodotto dalla biograph company ten minutes which appeared so many ages to duncan might have passed in this manner and the warriors were fairly enveloped in a cloud of white smoke before any of them spoke"
+          },
+          {
+            "a": "ls_en_train:ls-198-126831-0041",
+            "b": "spliced_it_en:splice-018885",
+            "jaccard": 0.8372,
+            "text_a": "was white and clear against the dark background of spruces we were woefully tired but we could not sit down because the grass was reeking with dew the family ghost only appears in daylight said the story girl",
+            "text_b": "tutti i brani composti da paul mccartney was white and clear against the dark background of spruces we were woefully tired but we could not sit down because the grass was reeking with dew the family ghost only appears in daylight said the story girl"
+          },
+          {
+            "a": "ls_en_train:ls-2518-154826-0038",
+            "b": "spliced_it_en:splice-018545",
+            "jaccard": 0.8333,
+            "text_a": "and in the shelter of the walls we had slept longer than we thought for the sun was westering fast and though the rest had refreshed me my leg had grown stiff and hurt the more in dangling when we started again",
+            "text_b": "pochi istanti dopo un missile abbatte la creatura and in the shelter of the walls we had slept longer than we thought for the sun was westering fast and though the rest had refreshed me my leg had grown stiff and hurt the more in dangling when we started again"
+          },
+          {
+            "a": "ls_en_train:ls-2007-132570-0006",
+            "b": "spliced_it_en:splice-009027",
+            "jaccard": 0.9074,
+            "text_a": "no no says he i will cut the way shorter than through the vaulted passage and up the marble stair case and along the north gallery and through the west wing of the castle for you shall stay here annette you shall not go out of this room to night so",
+            "text_b": "mettersi qualcuno sotto le scarpe no no says he i will cut the way shorter than through the vaulted passage and up the marble stair case and along the north gallery and through the west wing of the castle for you shall stay here annette you shall not go out of this room to night so"
+          },
+          {
+            "a": "ls_en_train:ls-5652-39938-0011",
+            "b": "spliced_it_en:splice-007381",
+            "jaccard": 0.8378,
+            "text_a": "in a similar way the psychical examination tests the hallucinations and illusions the variations and defects of memory and attention of judgment and reasoning of orientation and self consciousness of emotions and volitions",
+            "text_b": "solo sette auto completarono la gara in a similar way the psychical examination tests the hallucinations and illusions the variations and defects of memory and attention of judgment and reasoning of orientation and self consciousness of emotions and volitions"
+          },
+          {
+            "a": "ls_en_train:ls-6925-80680-0075",
+            "b": "spliced_it_en:splice-013135",
+            "jaccard": 0.918,
+            "text_a": "who thought that they had as good a chance as anyone else to gain both the throne and the princess as soon as the king was seated he called upon an usher to summon the first claimant but just then a farmer who stood in front of the crowd cried out that he had a petition to offer",
+            "text_b": "la riproduzione è poco conosciuta who thought that they had as good a chance as anyone else to gain both the throne and the princess as soon as the king was seated he called upon an usher to summon the first claimant but just then a farmer who stood in front of the crowd cried out that he had a petition to offer"
+          },
+          {
+            "a": "ls_en_train:ls-8095-274348-0001",
+            "b": "spliced_it_en:splice-005905",
+            "jaccard": 0.8696,
+            "text_a": "he dared to carry his ambitious addresses to the queen herself and he failed not to make impression on a heart not undisposed to the tender passions that attachment at least of the mind which appears so delicious and is so dangerous",
+            "text_b": "attualmente vive negli stati uniti d'america he dared to carry his ambitious addresses to the queen herself and he failed not to make impression on a heart not undisposed to the tender passions that attachment at least of the mind which appears so delicious and is so dangerous"
+          }
+        ]
+      },
+      "rec/R-S1|script/R-S1": {
+        "count": 741,
+        "examples": [
+          {
+            "a": "rec/R-S1:R-S1-0001",
+            "b": "script/R-S1:R-S1-0001",
+            "jaccard": 1.0,
+            "text_a": "la mia squadra ha perso il derby",
+            "text_b": "la mia squadra ha perso il derby"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0002",
+            "b": "script/R-S1:R-S1-0002",
+            "jaccard": 1.0,
+            "text_a": "il coach ha cambiato modulo all'intervallo",
+            "text_b": "il coach ha cambiato modulo all'intervallo"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0003",
+            "b": "script/R-S1:R-S1-0003",
+            "jaccard": 1.0,
+            "text_a": "il goal è arrivato al novantesimo",
+            "text_b": "il goal è arrivato al novantesimo"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0004",
+            "b": "script/R-S1:R-S1-0004",
+            "jaccard": 1.0,
+            "text_a": "il match è iniziato con dieci minuti di ritardo",
+            "text_b": "il match è iniziato con dieci minuti di ritardo"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0005",
+            "b": "script/R-S1:R-S1-0005",
+            "jaccard": 1.0,
+            "text_a": "il nuovo sponsor è una banca locale",
+            "text_b": "il nuovo sponsor è una banca locale"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0006",
+            "b": "script/R-S1:R-S1-0006",
+            "jaccard": 1.0,
+            "text_a": "ho comprato la jersey della nazionale",
+            "text_b": "ho comprato la jersey della nazionale"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0007",
+            "b": "script/R-S1:R-S1-0007",
+            "jaccard": 1.0,
+            "text_a": "faccio fitness tre volte a settimana",
+            "text_b": "faccio fitness tre volte a settimana"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0008",
+            "b": "script/R-S1:R-S1-0008",
+            "jaccard": 1.0,
+            "text_a": "in gym trovo sempre coda ai macchinari",
+            "text_b": "in gym trovo sempre coda ai macchinari"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0009",
+            "b": "script/R-S1:R-S1-0009",
+            "jaccard": 1.0,
+            "text_a": "il mio running è migliorato molto",
+            "text_b": "il mio running è migliorato molto"
+          },
+          {
+            "a": "rec/R-S1:R-S1-0010",
+            "b": "script/R-S1:R-S1-0010",
+            "jaccard": 1.0,
+            "text_a": "ho cambiato il workout del lunedì",
+            "text_b": "ho cambiato il workout del lunedì"
+          }
+        ]
+      },
+      "rec/R-S2|script/R-S2": {
+        "count": 672,
+        "examples": [
+          {
+            "a": "rec/R-S2:R-S2-0002",
+            "b": "script/R-S2:R-S2-0002",
+            "jaccard": 1.0,
+            "text_a": "preferisco chattare invece di fare una telefonata",
+            "text_b": "preferisco chattare invece di fare una telefonata"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0003",
+            "b": "script/R-S2:R-S2-0003",
+            "jaccard": 1.0,
+            "text_a": "inizia a chattare con il gruppo quando sei pronto",
+            "text_b": "inizia a chattare con il gruppo quando sei pronto"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0004",
+            "b": "script/R-S2:R-S2-0004",
+            "jaccard": 1.0,
+            "text_a": "lo spazio di coworking è al terzo piano",
+            "text_b": "lo spazio di coworking è al terzo piano"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0005",
+            "b": "script/R-S2:R-S2-0005",
+            "jaccard": 1.0,
+            "text_a": "cerco un coworking vicino alla stazione",
+            "text_b": "cerco un coworking vicino alla stazione"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0006",
+            "b": "script/R-S2:R-S2-0006",
+            "jaccard": 1.0,
+            "text_a": "il coworking chiude alle otto di sera",
+            "text_b": "il coworking chiude alle otto di sera"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0007",
+            "b": "script/R-S2:R-S2-0007",
+            "jaccard": 1.0,
+            "text_a": "la cpu va al massimo con questo programma",
+            "text_b": "la cpu va al massimo con questo programma"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0008",
+            "b": "script/R-S2:R-S2-0008",
+            "jaccard": 1.0,
+            "text_a": "ho cambiato la cpu del portatile",
+            "text_b": "ho cambiato la cpu del portatile"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0009",
+            "b": "script/R-S2:R-S2-0009",
+            "jaccard": 1.0,
+            "text_a": "la cpu scalda troppo durante l'esportazione",
+            "text_b": "la cpu scalda troppo durante l'esportazione"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0010",
+            "b": "script/R-S2:R-S2-0010",
+            "jaccard": 1.0,
+            "text_a": "devo downloadare il documento prima di partire",
+            "text_b": "devo downloadare il documento prima di partire"
+          },
+          {
+            "a": "rec/R-S2:R-S2-0011",
+            "b": "script/R-S2:R-S2-0011",
+            "jaccard": 1.0,
+            "text_a": "puoi downloadare la versione nuova stasera",
+            "text_b": "puoi downloadare la versione nuova stasera"
+          }
+        ]
+      },
+      "rec/T|script/T": {
+        "count": 600,
+        "examples": [
+          {
+            "a": "rec/T:T-0001",
+            "b": "script/T:T-0001",
+            "jaccard": 1.0,
+            "text_a": "ho spostato il meeting a domani",
+            "text_b": "ho spostato il meeting a domani"
+          },
+          {
+            "a": "rec/T:T-0004",
+            "b": "script/T:T-0004",
+            "jaccard": 1.0,
+            "text_a": "la deadline è fissata per venerdì",
+            "text_b": "la deadline è fissata per venerdì"
+          },
+          {
+            "a": "rec/T:T-0007",
+            "b": "script/T:T-0007",
+            "jaccard": 1.0,
+            "text_a": "mi passi il file aggiornato",
+            "text_b": "mi passi il file aggiornato"
+          },
+          {
+            "a": "rec/T:T-0010",
+            "b": "script/T:T-0010",
+            "jaccard": 1.0,
+            "text_a": "c'è un update importante da condividere",
+            "text_b": "c'è un update importante da condividere"
+          },
+          {
+            "a": "rec/T:T-0013",
+            "b": "script/T:T-0013",
+            "jaccard": 1.0,
+            "text_a": "il backlog è pieno di richieste",
+            "text_b": "il backlog è pieno di richieste"
+          },
+          {
+            "a": "rec/T:T-0016",
+            "b": "script/T:T-0016",
+            "jaccard": 1.0,
+            "text_a": "mandami il link della riunione",
+            "text_b": "mandami il link della riunione"
+          },
+          {
+            "a": "rec/T:T-0019",
+            "b": "script/T:T-0019",
+            "jaccard": 1.0,
+            "text_a": "il server non risponde da stamattina",
+            "text_b": "il server non risponde da stamattina"
+          },
+          {
+            "a": "rec/T:T-0022",
+            "b": "script/T:T-0022",
+            "jaccard": 1.0,
+            "text_a": "ho trovato un bug nel codice",
+            "text_b": "ho trovato un bug nel codice"
+          },
+          {
+            "a": "rec/T:T-0025",
+            "b": "script/T:T-0025",
+            "jaccard": 1.0,
+            "text_a": "il merge ha creato un conflitto",
+            "text_b": "il merge ha creato un conflitto"
+          },
+          {
+            "a": "rec/T:T-0028",
+            "b": "script/T:T-0028",
+            "jaccard": 1.0,
+            "text_a": "abbiamo raggiunto la prima milestone",
+            "text_b": "abbiamo raggiunto la prima milestone"
+          }
+        ]
+      },
+      "mls_it_train|spliced_it_en": {
+        "count": 146,
+        "examples": [
+          {
+            "a": "mls_it_train:mls-643_529_000078",
+            "b": "spliced_it_en:splice-010512",
+            "jaccard": 0.8636,
+            "text_a": "se fosse a punto la cera dedutta e fosse il cielo in sua virtu supprema la luce del suggel parrebbe tutta ma la natura la da sempre scema similemente operando a l'artista ch'a l'abito de l'arte ha man che trema",
+            "text_b": "se fosse a punto la cera dedutta e fosse il cielo in sua virtu supprema la luce del suggel parrebbe tutta ma la natura la da sempre scema similemente operando a l'artista ch'a l'abito de l'arte ha man che trema you're missus mary nolan said whittaker"
+          },
+          {
+            "a": "mls_it_train:mls-2019_1577_000151",
+            "b": "spliced_it_en:splice-018192",
+            "jaccard": 0.8636,
+            "text_a": "certe descrizioni infatti di stanze calde e piene di comodi che si trovano nei suoi romanzi non possono essere fatte che da un uomo che sta volentieri nel suo nido in mezzo a tutte le raffinatezze della buona vita casalinga",
+            "text_b": "certe descrizioni infatti di stanze calde e piene di comodi che si trovano nei suoi romanzi non possono essere fatte che da un uomo che sta volentieri nel suo nido in mezzo a tutte le raffinatezze della buona vita casalinga he might go back to araby"
+          },
+          {
+            "a": "mls_it_train:mls-2033_1596_000684",
+            "b": "spliced_it_en:splice-002647",
+            "jaccard": 0.881,
+            "text_a": "ora son senza famiglia non ho più figliuoli no maestro gli disse mio padre ripigliando il cammino lei ce n'ha ancora molti figliuoli sparsi per il mondo che si ricordano di lei come io me ne son sempre ricordato",
+            "text_b": "ora son senza famiglia non ho più figliuoli no maestro gli disse mio padre ripigliando il cammino lei ce n'ha ancora molti figliuoli sparsi per il mondo che si ricordano di lei come io me ne son sempre ricordato or lifeless before superior numbers"
+          },
+          {
+            "a": "mls_it_train:mls-1595_5071_000308",
+            "b": "spliced_it_en:splice-012004",
+            "jaccard": 0.9143,
+            "text_a": "di quelle niuna peggiore di queste niuna migliore giudicarete dunque da capo consiglio e ammonisco voi messer lazaro scrivere e parlare latino come quello che assai meglio scrivete e parlate latino che non volgare",
+            "text_b": "di quelle niuna peggiore di queste niuna migliore giudicarete dunque da capo consiglio e ammonisco voi messer lazaro scrivere e parlare latino come quello che assai meglio scrivete e parlate latino che non volgare you smile barbicane"
+          },
+          {
+            "a": "mls_it_train:mls-844_529_000006",
+            "b": "spliced_it_en:splice-011531",
+            "jaccard": 0.875,
+            "text_a": "su non eran mossi i pie nostri anco quand'io conobbi quella ripa intorno che dritto di salita aveva manco esser di marmo candido e addorno d'intagli si che non pur policleto ma la natura li avrebbe scorno",
+            "text_b": "su non eran mossi i pie nostri anco quand'io conobbi quella ripa intorno che dritto di salita aveva manco esser di marmo candido e addorno d'intagli si che non pur policleto ma la natura li avrebbe scorno jikininki once when muso kokushi"
+          },
+          {
+            "a": "mls_it_train:mls-4971_4125_000119",
+            "b": "spliced_it_en:splice-004691",
+            "jaccard": 0.8182,
+            "text_a": "intese alla fine la voce di lei che domandava dietro l'uscio di un'altra stanza chi è s'appressò a quell'uscio col sangue tutto rimescolato io disse io ger gerlando è pronto non posso rispose lei fate senza di me",
+            "text_b": "intese alla fine la voce di lei che domandava dietro l'uscio di un'altra stanza chi è s'appressò a quell'uscio col sangue tutto rimescolato io disse io ger gerlando è pronto non posso rispose lei fate senza di me were frisking and gambolling all over the meadow"
+          },
+          {
+            "a": "mls_it_train:mls-1595_4194_001678",
+            "b": "spliced_it_en:splice-010910",
+            "jaccard": 0.875,
+            "text_a": "povera bestiolina domandai al vecchio se la vendesse i rispose di sì e che me lavrebbe venduta anche per poco benché valesse molto ah si sarebbe fatto un bel cane un gran cane quella bestiola venticinque lire",
+            "text_b": "povera bestiolina domandai al vecchio se la vendesse i rispose di sì e che me lavrebbe venduta anche per poco benché valesse molto ah si sarebbe fatto un bel cane un gran cane quella bestiola venticinque lire didn't put in an appearance"
+          },
+          {
+            "a": "mls_it_train:mls-6380_5411_000055",
+            "b": "spliced_it_en:splice-019213",
+            "jaccard": 0.8478,
+            "text_a": "doveva correre ai ripari con una mano davanti e l'altra dietro non aveva il governo di quel suo corpaccio pareva che esso rompendo ogni freno gli scappasse via gli si precipitasse sbalestrato lasciando tutti con l'anima pericolante in atto di pararglielo",
+            "text_b": "doveva correre ai ripari con una mano davanti e l'altra dietro non aveva il governo di quel suo corpaccio pareva che esso rompendo ogni freno gli scappasse via gli si precipitasse sbalestrato lasciando tutti con l'anima pericolante in atto di pararglielo if it be lawful firmly to believe"
+          },
+          {
+            "a": "mls_it_train:mls-4974_4125_000204",
+            "b": "spliced_it_en:splice-007539",
+            "jaccard": 0.8125,
+            "text_a": "che aveva il soffitto basso basso di tela fuligginosa qua e là strappata e con lo strambello pendente in cui le mosche s'eran raccolte e dormivano a grappoli",
+            "text_b": "che aveva il soffitto basso basso di tela fuligginosa qua e là strappata e con lo strambello pendente in cui le mosche s'eran raccolte e dormivano a grappoli here is a narrow corner as"
+          },
+          {
+            "a": "mls_it_train:mls-1595_3311_000993",
+            "b": "spliced_it_en:splice-000483",
+            "jaccard": 0.8421,
+            "text_a": "sono figlio di gran signori caduti in miseria per causa della loro generosità che loro a chi davano e a chi imprestavano e quando imprestavano mi capite non riavevano più la testa d'un baiocco",
+            "text_b": "sono figlio di gran signori caduti in miseria per causa della loro generosità che loro a chi davano e a chi imprestavano e quando imprestavano mi capite non riavevano più la testa d'un baiocco no man will please me more"
+          }
+        ]
+      },
+      "rec/A-S1|rec/T": {
+        "count": 60,
+        "examples": [
+          {
+            "a": "rec/T:T-0001",
+            "b": "rec/A-S1:A-0001",
+            "jaccard": 1.0,
+            "text_a": "ho spostato il meeting a domani",
+            "text_b": "ho spostato il meeting a domani"
+          },
+          {
+            "a": "rec/T:T-0022",
+            "b": "rec/A-S1:A-0003",
+            "jaccard": 1.0,
+            "text_a": "ho trovato un bug nel codice",
+            "text_b": "ho trovato un bug nel codice"
+          },
+          {
+            "a": "rec/T:T-0097",
+            "b": "rec/A-S1:A-0010",
+            "jaccard": 1.0,
+            "text_a": "premi start per iniziare",
+            "text_b": "premi start per iniziare"
+          },
+          {
+            "a": "rec/T:T-0118",
+            "b": "rec/A-S1:A-0012",
+            "jaccard": 1.0,
+            "text_a": "ho lasciato un comment sotto la foto",
+            "text_b": "ho lasciato un comment sotto la foto"
+          },
+          {
+            "a": "rec/T:T-0139",
+            "b": "rec/A-S1:A-0014",
+            "jaccard": 1.0,
+            "text_a": "lo scanner non legge i documenti",
+            "text_b": "lo scanner non legge i documenti"
+          },
+          {
+            "a": "rec/T:T-0151",
+            "b": "rec/A-S1:A-0016",
+            "jaccard": 1.0,
+            "text_a": "mi hanno chiesto un quick update sul progetto",
+            "text_b": "mi hanno chiesto un quick update sul progetto"
+          },
+          {
+            "a": "rec/T:T-0184",
+            "b": "rec/A-S1:A-0019",
+            "jaccard": 1.0,
+            "text_a": "cerchiamo uno sviluppatore full stack",
+            "text_b": "cerchiamo uno sviluppatore full stack"
+          },
+          {
+            "a": "rec/T:T-0217",
+            "b": "rec/A-S1:A-0022",
+            "jaccard": 1.0,
+            "text_a": "il fire wall blocca il traffico",
+            "text_b": "il fire wall blocca il traffico"
+          },
+          {
+            "a": "rec/T:T-0250",
+            "b": "rec/A-S1:A-0025",
+            "jaccard": 1.0,
+            "text_a": "manca la acceptance criteria nella richiesta",
+            "text_b": "manca la acceptance criteria nella richiesta"
+          },
+          {
+            "a": "rec/T:T-0262",
+            "b": "rec/A-S1:A-0027",
+            "jaccard": 1.0,
+            "text_a": "la chat è su slack",
+            "text_b": "la chat è su slack"
+          }
+        ]
+      },
+      "rec/A-S1|script/T": {
+        "count": 60,
+        "examples": [
+          {
+            "a": "rec/A-S1:A-0001",
+            "b": "script/T:T-0001",
+            "jaccard": 1.0,
+            "text_a": "ho spostato il meeting a domani",
+            "text_b": "ho spostato il meeting a domani"
+          },
+          {
+            "a": "rec/A-S1:A-0002",
+            "b": "script/T:T-0012",
+            "jaccard": 1.0,
+            "text_a": "lo sprint finisce la prossima settimana",
+            "text_b": "lo sprint finisce la prossima settimana"
+          },
+          {
+            "a": "rec/A-S1:A-0003",
+            "b": "script/T:T-0022",
+            "jaccard": 1.0,
+            "text_a": "ho trovato un bug nel codice",
+            "text_b": "ho trovato un bug nel codice"
+          },
+          {
+            "a": "rec/A-S1:A-0004",
+            "b": "script/T:T-0033",
+            "jaccard": 1.0,
+            "text_a": "facciamo un sync veloce dopo pranzo",
+            "text_b": "facciamo un sync veloce dopo pranzo"
+          },
+          {
+            "a": "rec/A-S1:A-0005",
+            "b": "script/T:T-0044",
+            "jaccard": 1.0,
+            "text_a": "ho comprato uno smartwatch per allenarmi",
+            "text_b": "ho comprato uno smartwatch per allenarmi"
+          },
+          {
+            "a": "rec/A-S1:A-0006",
+            "b": "script/T:T-0054",
+            "jaccard": 1.0,
+            "text_a": "ho visto il prototype del nuovo prodotto",
+            "text_b": "ho visto il prototype del nuovo prodotto"
+          },
+          {
+            "a": "rec/A-S1:A-0007",
+            "b": "script/T:T-0065",
+            "jaccard": 1.0,
+            "text_a": "il hosting costa troppo",
+            "text_b": "il hosting costa troppo"
+          },
+          {
+            "a": "rec/A-S1:A-0008",
+            "b": "script/T:T-0075",
+            "jaccard": 1.0,
+            "text_a": "ho chiesto il refund per il prodotto",
+            "text_b": "ho chiesto il refund per il prodotto"
+          },
+          {
+            "a": "rec/A-S1:A-0009",
+            "b": "script/T:T-0086",
+            "jaccard": 1.0,
+            "text_a": "è apparso un popup fastidioso",
+            "text_b": "è apparso un popup fastidioso"
+          },
+          {
+            "a": "rec/A-S1:A-0010",
+            "b": "script/T:T-0097",
+            "jaccard": 1.0,
+            "text_a": "premi start per iniziare",
+            "text_b": "premi start per iniziare"
+          }
+        ]
+      },
+      "cv_it_dev|cv_it_test": {
+        "count": 44,
+        "examples": [
+          {
+            "a": "cv_it_dev:cv-common_voice_it_17861375",
+            "b": "cv_it_test:cv-common_voice_it_18238982",
+            "jaccard": 1.0,
+            "text_a": "perché la cresta ossea non c'era",
+            "text_b": "perché la cresta ossea non c'era"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_18818227",
+            "b": "cv_it_test:cv-common_voice_it_17868696",
+            "jaccard": 1.0,
+            "text_a": "per dileguarsi alla vista degli sconosciuti che si facevano loro incontro",
+            "text_b": "per dileguarsi alla vista degli sconosciuti che si facevano loro incontro"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_17873742",
+            "b": "cv_it_test:cv-common_voice_it_18148599",
+            "jaccard": 1.0,
+            "text_a": "per evitare questo effetto può essere utile unire due periodi brevi in uno più lungo",
+            "text_b": "per evitare questo effetto può essere utile unire due periodi brevi in uno più lungo"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_17630403",
+            "b": "cv_it_test:cv-common_voice_it_18148253",
+            "jaccard": 1.0,
+            "text_a": "le carenze strutturali",
+            "text_b": "le carenze strutturali"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_37434889",
+            "b": "cv_it_test:cv-common_voice_it_28841341",
+            "jaccard": 1.0,
+            "text_a": "fu decorato con medaglia d'argento al valor militare",
+            "text_b": "fu decorato con medaglia d'argento al valor militare"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_19452951",
+            "b": "cv_it_test:cv-common_voice_it_17505717",
+            "jaccard": 1.0,
+            "text_a": "c'era una fotografia con una dedica firmata betty",
+            "text_b": "c'era una fotografia con una dedica firmata betty"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_17450405",
+            "b": "cv_it_test:cv-common_voice_it_18944906",
+            "jaccard": 1.0,
+            "text_a": "indicativamente si entra a candela o a soldatino",
+            "text_b": "indicativamente si entra a candela o a soldatino"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_17873087",
+            "b": "cv_it_test:cv-common_voice_it_18278709",
+            "jaccard": 1.0,
+            "text_a": "ma anche perché hai più tempo da dedicare alle tue passioni",
+            "text_b": "ma anche perché hai più tempo da dedicare alle tue passioni"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_17454598",
+            "b": "cv_it_test:cv-common_voice_it_18799620",
+            "jaccard": 1.0,
+            "text_a": "quindi sfruttando il movimento oscillatorio della gambata",
+            "text_b": "quindi sfruttando il movimento oscillatorio della gambata"
+          },
+          {
+            "a": "cv_it_dev:cv-common_voice_it_19028679",
+            "b": "cv_it_test:cv-common_voice_it_17855478",
+            "jaccard": 1.0,
+            "text_a": "il catino sul treppiede di ferro",
+            "text_b": "il catino sul treppiede di ferro"
+          }
+        ]
+      },
+      "cv_it_test|cv_it_train": {
+        "count": 8,
+        "examples": [
+          {
+            "a": "cv_it_train:cv-common_voice_it_38324152",
+            "b": "cv_it_test:cv-common_voice_it_20013264",
+            "jaccard": 0.8333,
+            "text_a": "la fermata costituisce un importante interscambio con la stazione ferroviaria di milano cadorna",
+            "text_b": "la fermata costituisce un importante interscambio con la stazione ferroviaria di milano lambrate"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_19986133",
+            "b": "cv_it_test:cv-common_voice_it_19976160",
+            "jaccard": 0.8182,
+            "text_a": "cinque gruppi le prime due squadre classificate accedevano ai quarti di finale",
+            "text_b": "quattro gruppi le prime due squadre classificate accedevano ai quarti di finale"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_17545052",
+            "b": "cv_it_test:cv-common_voice_it_18885537",
+            "jaccard": 0.8125,
+            "text_a": "e invece attorno alle nostre case e ai nostri campi premeva un'orda smisurata d'infedeli che c'insidiavano",
+            "text_b": "e invece attorno alle nostre case e ai nostri campi premeva un'orda smisurata d'infedeli che ci insidiavano"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_25586029",
+            "b": "cv_it_test:cv-common_voice_it_20237886",
+            "jaccard": 0.8182,
+            "text_a": "armagh batté in finale kerry ottenendo la prima vittoria della sua storia",
+            "text_b": "down batté in finale kerry ottenendo la prima vittoria della sua storia"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_18924409",
+            "b": "cv_it_test:cv-common_voice_it_17895747",
+            "jaccard": 0.8182,
+            "text_a": "è consultato all'occasione mediante l'indice dei contenuti o la funzione di ricerca",
+            "text_b": "e consultato all'occasione mediante l'indice dei contenuti o la funzione di ricerca"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_19175688",
+            "b": "cv_it_test:cv-common_voice_it_18282402",
+            "jaccard": 0.8333,
+            "text_a": "è stata una esperienza fantastica per mettersi in gioco in modo cooperativo con tutta la community europea di mozilla",
+            "text_b": "e'stata una esperienza fantastica per mettersi in gioco in modo cooperativo con tutta la community europea di mozilla"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_18168843",
+            "b": "cv_it_test:cv-common_voice_it_18885537",
+            "jaccard": 0.8125,
+            "text_a": "e invece attorno alle nostre case e ai nostri campi premeva un'orda smisurata d'infedeli che c'insidiavano",
+            "text_b": "e invece attorno alle nostre case e ai nostri campi premeva un'orda smisurata d'infedeli che ci insidiavano"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_23859711",
+            "b": "cv_it_test:cv-common_voice_it_20070258",
+            "jaccard": 0.8462,
+            "text_a": "non si conosce il nome del regista del film che fu prodotto dalla selig",
+            "text_b": "non si conosce il nome del regista del film che fu prodotto dalla edison"
+          }
+        ]
+      },
+      "cv_it_dev|cv_it_train": {
+        "count": 6,
+        "examples": [
+          {
+            "a": "cv_it_train:cv-common_voice_it_20074312",
+            "b": "cv_it_dev:cv-common_voice_it_20047034",
+            "jaccard": 0.8182,
+            "text_a": "le parti superiori sono grigio scuro mentre le parti ventrali sono bianche",
+            "text_b": "le parti superiori sono grigio scuro mentre le parti ventrali sono biancastre"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_22779327",
+            "b": "cv_it_dev:cv-common_voice_it_21105626",
+            "jaccard": 0.8182,
+            "text_a": "la federazione controlla e gestisce tutte le attività delle squadre nazionali francesi",
+            "text_b": "la federazione controlla e gestisce tutte le attività delle squadre nazionali austriache"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_28647469",
+            "b": "cv_it_dev:cv-common_voice_it_27421790",
+            "jaccard": 0.875,
+            "text_a": "fu la settima partecipazione di questo paese ai giochi",
+            "text_b": "fu la settima partecipazione di questo paese ai giochi estivi"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_19175688",
+            "b": "cv_it_dev:cv-common_voice_it_17863699",
+            "jaccard": 0.8333,
+            "text_a": "è stata una esperienza fantastica per mettersi in gioco in modo cooperativo con tutta la community europea di mozilla",
+            "text_b": "e'stata una esperienza fantastica per mettersi in gioco in modo cooperativo con tutta la community europea di mozilla"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_27977144",
+            "b": "cv_it_dev:cv-common_voice_it_20013668",
+            "jaccard": 0.8182,
+            "text_a": "l'unica specie oggi attribuita a questo genere è stata reperita in sudafrica",
+            "text_b": "l'unica specie oggi attribuita a questo genere è stata reperita in argentina"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_20020959",
+            "b": "cv_it_dev:cv-common_voice_it_20055356",
+            "jaccard": 0.875,
+            "text_a": "esso è stato organizzato dalla federazione di pattinaggio della francia",
+            "text_b": "è stato organizzato dalla federazione di pattinaggio della francia"
+          }
+        ]
+      },
+      "cv_it_train|spliced_it_en": {
+        "count": 6,
+        "examples": [
+          {
+            "a": "cv_it_train:cv-common_voice_it_25836127",
+            "b": "spliced_it_en:splice-013992",
+            "jaccard": 0.8333,
+            "text_a": "tuttavia è previsto l'arrivo in treno e tram in un prossimo futuro",
+            "text_b": "tuttavia è previsto l'arrivo in treno e tram in un prossimo futuro per constructionem"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_27000076",
+            "b": "spliced_it_en:splice-010570",
+            "jaccard": 0.8182,
+            "text_a": "ha un dado coronato da modanature lisce e con zoccolo liscio",
+            "text_b": "ha un dado coronato da modanature lisce e con zoccolo liscio northanger abbey"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_37972422",
+            "b": "spliced_it_en:splice-015952",
+            "jaccard": 0.8571,
+            "text_a": "l'anno successivo nella stagione al coperto ha conquistato il suo secondo titolo nazionale indoor",
+            "text_b": "l'anno successivo nella stagione al coperto ha conquistato il suo secondo titolo nazionale indoor twenty nine"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_26033326",
+            "b": "spliced_it_en:splice-001329",
+            "jaccard": 0.8571,
+            "text_a": "il suo entusiasmo per la lettura e la scrittura era incoraggiato dai suoi genitori",
+            "text_b": "il suo entusiasmo per la lettura e la scrittura era incoraggiato dai suoi genitori the iconoclasts"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_25053038",
+            "b": "spliced_it_en:splice-019224",
+            "jaccard": 0.8462,
+            "text_a": "il brano era accompagnato dal coro delle piccole voci di angelo di mario",
+            "text_b": "il brano era accompagnato dal coro delle piccole voci di angelo di mario intense sensitiveness"
+          },
+          {
+            "a": "cv_it_train:cv-common_voice_it_26567898",
+            "b": "spliced_it_en:splice-005248",
+            "jaccard": 0.8571,
+            "text_a": "il disco presenta la caratteristica di essere stato inciso senza sovraincisioni in presa diretta",
+            "text_b": "il disco presenta la caratteristica di essere stato inciso senza sovraincisioni in presa diretta psalteries pipes"
+          }
+        ]
+      }
+    },
+    "total_pairs": 7369,
+    "note": "shared prompts inside one corpus are speaker-disjoint by construction; cross-source duplicates are the finding"
+  }
+}

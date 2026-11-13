@@ -96,3 +96,48 @@ match, which is stronger than the script importer requires.
 term counts), this report. Cost: ~3 s of I/O plus hashing 492 MB, no decode, no training, 0 USD.
 
 Reproduction: `uv run python runs/E-039/audit.py`.
+
+## Second Pass: Raw Corpus Audio And Cross-Corpus Near Duplicates
+
+Pre-registered in [PLAN-2](PLAN-2.md); the first pass had explicitly excluded both checks.
+
+### Audio (`data/raw`, 287,429 files, 12.8 GB)
+
+- **0 cross-source collisions**: no audio file appears under two different sources, so the corpus
+  downloads do not share clips across train/dev/test or with the noise pool.
+- **2 repeated hashes, both inside one source**:
+  - `noise_silence`: **120 byte-identical 10 s silence clips**. The "120 silence clips" used by
+    E-036 (and the noise gate) are therefore **one unique signal repeated 120 times**, not 120
+    independent silences. The finding (`x` on every clip) stands, but its effective sample is one.
+  - `room_holdout`: `room_16k.wav` and `room_2026-11-09_16k.wav` are the **same recording under two
+    names**. Neither hash appears in `noise_room_tone` (97 distinct files), so the E-025 held-out
+    room is genuinely absent from the training noise pool — the "unseen room" claim survives, and
+    the duplicate naming is documented instead of being mistaken for a leak.
+
+### Text (247,510 documents, 136,179 MinHash candidates, exact Jaccard verified)
+
+| Pair | Pairs > 0.8 | Class |
+|---|---:|---|
+| `ls_en_train` ↔ `spliced_it_en` | 5,026 | **by construction**: splicing concatenates MLS-IT and LS-EN clips, so the spliced training body repeats LS-EN sentences |
+| `mls_it_train` ↔ `spliced_it_en` | 146 | same construction |
+| `cv_it_train` ↔ `spliced_it_en` | 6 | same construction |
+| `cv_it_dev` ↔ `cv_it_test` | 44 | Common Voice public-domain prompts reused across speakers |
+| `cv_it_test` ↔ `cv_it_train` | 8 | same, near matches (1-word variants) |
+| `cv_it_dev` ↔ `cv_it_train` | 6 | same |
+| own structural pairs (`rec/*` ↔ `script/*`, anchor ↔ T) | 741/672/600/120 | already explained in the first pass |
+
+**Zero near-duplicate pairs between T and any external corpus**, and **zero involving FLEURS** in
+any direction. The test set is not textually close to the training corpora beyond our own scripts.
+
+The `spliced_it_en` result is not test leakage but it is a **training-signal** fact worth stating:
+the spliced mixture re-uses LS-EN and MLS-IT material that is already in the mixture, so those
+sentences are effectively counted twice (once clean, once spliced).
+
+### What The Second Pass Adds
+
+- The "no duplicated audio" claim now covers **all 287,429 raw files**, not only our recordings.
+- The E-025 held-out room claim is verified rather than assumed.
+- The silence probe's effective sample size (1) is documented before anyone quotes "120 clips".
+- Corpus prompt reuse is separated from leakage: text repeats inside a speaker-disjoint corpus are
+  a property of the corpus, not a split error.
+- It does **not** cover upstream model contamination (Whisper/Whistle/Parakeet) or consent/rights.
