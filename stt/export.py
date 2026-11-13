@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import shutil
 import warnings
 from collections.abc import Mapping, Sequence
@@ -229,7 +230,11 @@ def _logit_gap(
                 raise ExportError(
                     f"shape mismatch for {duration:g} s: {expected.shape} != {got.shape}"
                 )
+            if not np.isfinite(expected).all() or not np.isfinite(got).all():
+                raise ExportError(f"non-finite reference/output logits for {duration:g} s")
             clip_gap = float(np.abs(expected - got).max())
+            if not math.isfinite(clip_gap):
+                raise ExportError(f"non-finite logit gap for {duration:g} s")
             sweep[key].append(clip_gap)
             if draw == 0:
                 per_clip[key] = clip_gap
@@ -272,9 +277,9 @@ def verify_fp32(
     """
     report = _logit_gap(model, onnx_path, seconds, seed, seeds=seeds)
     median = report.get("median_abs", report["max_abs"])
-    if median > FP32_GATE:
+    if not math.isfinite(median) or median > FP32_GATE:
         raise ExportError(f"fp32 export gate failed: median |Δ| = {median:.3e} > {FP32_GATE:g}")
-    if report["max_abs"] > FP32_GATE_WORST:
+    if not math.isfinite(report["max_abs"]) or report["max_abs"] > FP32_GATE_WORST:
         raise ExportError(
             f"fp32 export gate failed: worst |Δ| = {report['max_abs']:.3e} > {FP32_GATE_WORST:g}"
         )
