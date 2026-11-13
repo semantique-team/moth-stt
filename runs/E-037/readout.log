@@ -1,0 +1,81 @@
+dev fp32   304.8s
+dev int8   306.3s
+t600            fp32    13.7s
+t600            int8    13.4s
+fleurs_it_test  fp32    77.2s
+fleurs_it_test  int8    74.7s
+fleurs_en_test  fp32    41.0s
+fleurs_en_test  int8    39.6s
+noise           fp32    26.6s
+noise           int8    25.7s
+natural  base 444/ 817 new 432/ 817
+gold     base 124/ 179 new 127/ 179
+never    base  24/  47 new  24/  47
+
+47 rare utterances: base 51.1% new 51.1% delta +0.0 [+0.0, +0.0] (n=47)
+aligned ETA 47 rare: base 46.9% (38/81) new 46.9% (38/81)
+aligned ETA T-600: base 56.1% (585/1043) new 55.2% (576/1043)
+16 gold terms: base 18/27 = 66.7% new 19/27 = 70.4%
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-037/readout/paired-1/terms.json
+{
+  "dev": {
+    "fp32": {
+      "macro": 0.22859613534651094,
+      "it": 0.27886257331650455,
+      "en": 0.17832969737651733,
+      "wer": 0.22152746761947298,
+      "eta": null,
+      "seconds": 304.8
+    },
+    "int8": {
+      "macro": 0.2301698498252397,
+      "it": 0.2810404137896899,
+      "en": 0.17929928586078947,
+      "wer": 0.22301622748250707,
+      "eta": null,
+      "seconds": 306.3
+    },
+    "int8_minus_fp32": {
+      "macro_delta_pp": 0.1573714478728755,
+      "macro": {
+        "point": 0.001573714478728755,
+        "ci": [
+          0.0005385860997680625,
+          0.0026643293841276394
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      },
+      "pooled": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0014887598630340948,
+        "wer_diff_ci": [
+          0.00041282509976608983,
+          0.0026202726356548134
+        ],
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    }
+  },
+  "package": {
+    "fp32_bytes": 54164659,
+    "int8_bytes": 19706289,
+    "limit": 20000000
+  },
+  "logits": {
+    "audio": "web/tests/fixtures/speech.wav",
+    "frames": 150,
+    "max_abs": 2.350250244140625,
+    "mean_abs": 0.24182341992855072,
+    "top1_agreement": 0.9866666666666667
+  }
+}

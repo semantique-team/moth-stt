@@ -18,8 +18,11 @@ import sys
 import time
 from pathlib import Path
 
+import numpy as np
+
+from stt.data.dataset import MelDataset
 from stt.data.sources import sha256_file
-from stt.decode import load_pieces
+from stt.decode import beam_search, load_pieces
 from stt.eval import _compare, macro_wer_bootstrap, score_rows
 from stt.lm import BinaryBPELM
 from stt.onnx_runner import OnnxMoth
@@ -52,6 +55,25 @@ def write_jsonl(path: Path, hypotheses: dict[str, str]) -> None:
                 for key, value in hypotheses.items()),
         encoding="utf-8",
     )
+
+
+def decode_dataset(moth, pieces, lm, dataset: MelDataset) -> dict[str, str]:
+    """Decode dev clips through an ONNX graph using the dataset's own mel arrays."""
+    hypotheses: dict[str, str] = {}
+    for position, row in enumerate(dataset.rows):
+        mel = np.asarray(dataset[position]["mel"], dtype=np.float32)
+        log_probs = moth.log_probs(mel)
+        hypotheses[row["id"]] = beam_search(
+            log_probs,
+            log_probs.shape[0],
+            pieces,
+            beam_width=PARAMS["beam"],
+            top_k=PARAMS["top_k"],
+            lm=lm,
+            lm_weight=PARAMS["lm_weight"],
+            token_bonus=PARAMS["token_bonus"],
+        )
+    return hypotheses
 
 
 def load_hyps(path: Path) -> dict[str, str]:
@@ -138,7 +160,7 @@ def main() -> int:
     dev_summary: dict[str, dict] = {}
     for name, moth in graphs.items():
         started = time.time()
-        hyps = decode_int8(moth, pieces, lm, index, rows, root, PARAMS)
+        hyps = decode_dataset(moth, pieces, lm, MelDataset(index, root, rows))
         write_jsonl(out_dir / "dev" / name / "dev.hyp.jsonl", hyps)
         scored = score_rows(rows, hyps, bootstrap=1000, seed=0)
         per_language = {}

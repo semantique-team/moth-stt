@@ -7,7 +7,7 @@ loro PLAN, la voce in `EXPERIMENTS.md` e `runs/<id>/`.
 
 > **Aggiornamento 2026-11-13:** E-035 e E-036 sono stati eseguiti e sono **entrambi negativi**.
 > **0.8.1 e' congelato**: nessun candidato acustico o LM e' stato adottato. Restano le evidenze di
-> chiusura (fp32/INT8, multi-seed, browser) e il lavoro umano sul mixed-dev/voce nuova.
+> chiusura (fp32/INT8 **fatto in E-037**, multi-seed, browser) e il lavoro umano sul mixed-dev/voce nuova.
 
 Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../../STATUS.md),
 [dossier paper](../13-current-model-and-paper-readiness.md) §7, [ledger](../12-experiment-ledger.md),
@@ -48,7 +48,7 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 | Gap | Cosa serve | Costo |
 |---|---|---|
 | Multi-seed | ≥3 seed predeclarati sulle armi abbinate, con curve, dispersione e checkpoint conservati | 3 × ~2 h per arma: 1-2 giorni di macchina |
-| fp32 vs INT8 appaiati con lo **stesso** LM E-031 | export fp32 + decode sulle stesse clip | ~mezza giornata |
+| fp32 vs INT8 appaiati con lo **stesso** LM E-031 | **eseguito (E-037)**: dev +0,1574 pp [+0,0539, +0,2664], T-600 +0,4874 (tie), FLEURS-EN +0,4459 [+0,0087, +0,8652], rari 38/81 =, naturali 444→432; pacchetto 54.164.659 vs 19.706.289 B. INT8 resta | — (chiuso) |
 | Browser acoustic WER/ETA | oltre l'acceptance 4/4 e la parita' decoder: misura WER nel browser | ~1 giorno (harness ripetibile) |
 | Leakage audit | hash audio per fonte, near-dup testuale su train/dev/test/T/R/pool, provenienza dei termini | ~1 giorno + review |
 | Bootstrap per cluster (speaker/stanza) | richiede piu' speaker e stanze | dipende dai dati |
@@ -61,8 +61,8 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 1. **Chiusura tecnica (freeze del modello):** E-035 ha mostrato che il margine di 293.711 B vale
    un piccolo guadagno dev ma **non un guadagno prodotto**. E-036 ha fallito su entrambi i bracci:
    WER tie, rari sotto target, silenzio allucinato. **Il modello si congela a 0.8.1** con la
-   motivazione scritta, non per stanchezza. fp32/INT8 appaiato, multi-seed e browser WER restano
-   le evidenze che rendono difendibili i numeri gia' pubblicati.
+   motivazione scritta, non per stanchezza. fp32/INT8 e' stato misurato in E-037; multi-seed e
+   browser WER restano le evidenze che rendono difendibili i numeri gia' pubblicati.
 2. **Chiusura dell'evidenza (paper):** richiede il **dev mixed reale** e, per l'affermazione piu'
    forte, una **voce nuova**. Nessuna quantita' di compute locale sostituisce questi due.
 
@@ -72,7 +72,7 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
    metriche primarie e nessun guadagno significativo; **non adottato, 0.8.1 resta**.
 2. ~~**E-036 — fine-tune conservativo**~~ — **chiuso negativo**: WER tie, rari 39/81 e 41/81,
    silenzio 0→120 `x`, `last2` T-S3 ETA −1,41 pp; **0.8.1 congelato**.
-3. **Evidenze di chiusura**: fp32/INT8 appaiato, ≥3 seed, browser WER/ETA.
+3. **Evidenze di chiusura**: ~~fp32/INT8 appaiato~~ (E-037, fatto); restano ≥3 seed e browser WER/ETA.
 4. **Lavoro umano in parallelo**: note vocali da 5-10 minuti per il dev mixed; la prima voce nuova
    disponibile va riservata al readout di un candidato gia' congelato, non al training.
 5. **Solo se serve**: pilot TTS o audio reale di dominio, con licenze verificate prima.
@@ -81,7 +81,7 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 
 - [x] E-035 eseguito e deciso — **dev in avanzo, readout prodotto tie: non adottato**
 - [x] E-036 eseguito e deciso — **entrambi i bracci respinti; 0.8.1 congelato**
-- [ ] fp32/INT8 appaiato con lo stesso LM registrato
+- [x] fp32/INT8 appaiato con lo stesso LM registrato — **E-037: costo +0,1574 pp dev, INT8 resta**
 - [ ] ≥3 seed predeclarati con dispersione
 - [ ] browser WER/ETA misurato, non solo acceptance
 - [ ] dev mixed reale congelato prima di guardare gli errori

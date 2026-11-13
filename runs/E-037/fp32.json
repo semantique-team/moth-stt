@@ -1,0 +1,54 @@
+{
+  "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt",
+  "checkpoint_sha256": "01b83cc3c04ddc3255b43934cf63cbbec70c9dd6243dcc8e6fb4b78cd35b2694",
+  "checkpoint_step": 13283,
+  "fp32": {
+    "path": "runs/E-037/model.fp32.onnx",
+    "bytes": 46369047,
+    "sha256": "3fd1492e46b9296d3d61e31ee4456ef67376659415509b4b9e8541eeb5a5a684"
+  },
+  "int8": {
+    "path": "runs/E-028/release/model.int8.onnx",
+    "bytes": 11910677,
+    "sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d"
+  },
+  "verification": {
+    "per_clip": {
+      "1s": 0.000308990478515625,
+      "5s": 0.00026702880859375,
+      "10s": 0.0002307891845703125,
+      "29s": 0.0002956390380859375
+    },
+    "max_abs": 0.0010128021240234375,
+    "top1_agreement": 1.0,
+    "sweep": {
+      "1s": {
+        "median": 0.00015735626220703125,
+        "max": 0.000507354736328125,
+        "over_gate": 0,
+        "draws": 20
+      },
+      "5s": {
+        "median": 0.00020599365234375,
+        "max": 0.0004405975341796875,
+        "over_gate": 0,
+        "draws": 20
+      },
+      "10s": {
+        "median": 0.0001468658447265625,
+        "max": 0.0008411407470703125,
+        "over_gate": 0,
+        "draws": 20
+      },
+      "29s": {
+        "median": 0.00022411346435546875,
+        "max": 0.0010128021240234375,
+        "over_gate": 1,
+        "draws": 20
+      }
+    },
+    "median_abs": 0.00018215179443359375,
+    "over_gate": 1,
+    "draws": 80
+  }
+}

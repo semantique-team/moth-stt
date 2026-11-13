@@ -1,0 +1,358 @@
+{
+  "name": "paired-1",
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "assets": {
+    "fp32": {
+      "path": "runs/E-037/model.fp32.onnx",
+      "bytes": 46369047,
+      "sha256": "3fd1492e46b9296d3d61e31ee4456ef67376659415509b4b9e8541eeb5a5a684"
+    },
+    "int8": {
+      "path": "runs/E-028/release/model.int8.onnx",
+      "bytes": 11910677,
+      "sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d"
+    },
+    "lm": {
+      "path": "runs/E-031/build/frozen_1_2_terms.bin",
+      "bytes": 5381992,
+      "sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    },
+    "vocab": {
+      "path": "release/vocab.json",
+      "sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    }
+  },
+  "package": {
+    "fp32_bytes": 54164659,
+    "int8_bytes": 19706289,
+    "limit": 20000000
+  },
+  "dev": {
+    "fp32": {
+      "macro": 0.22859613534651094,
+      "it": 0.27886257331650455,
+      "en": 0.17832969737651733,
+      "wer": 0.22152746761947298,
+      "eta": null,
+      "seconds": 304.8
+    },
+    "int8": {
+      "macro": 0.2301698498252397,
+      "it": 0.2810404137896899,
+      "en": 0.17929928586078947,
+      "wer": 0.22301622748250707,
+      "eta": null,
+      "seconds": 306.3
+    },
+    "int8_minus_fp32": {
+      "macro_delta_pp": 0.1573714478728755,
+      "macro": {
+        "point": 0.001573714478728755,
+        "ci": [
+          0.0005385860997680625,
+          0.0026643293841276394
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": false
+      },
+      "pooled": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0014887598630340948,
+        "wer_diff_ci": [
+          0.00041282509976608983,
+          0.0026202726356548134
+        ],
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    }
+  },
+  "product": {
+    "t600": {
+      "n": 600,
+      "fp32": {
+        "wer": 0.23595183486238533,
+        "eta": 0.5608820709491851
+      },
+      "int8": {
+        "wer": 0.2408256880733945,
+        "eta": 0.5522531160115053
+      },
+      "int8_minus_fp32": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.004873853211009166,
+        "wer_diff_ci": [
+          -0.0002895193977996702,
+          0.009962994591517227
+        ],
+        "wer_tie": true,
+        "eta_diff": -0.00862895493767979,
+        "eta_diff_ci": [
+          -0.019743336623889385,
+          0.0019102196752627254
+        ],
+        "eta_tie": true
+      }
+    },
+    "fleurs_it_test": {
+      "n": 697,
+      "fp32": {
+        "wer": 0.20318054256314313,
+        "eta": null
+      },
+      "int8": {
+        "wer": 0.2016214530714063,
+        "eta": null
+      },
+      "int8_minus_fp32": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0015590894917368314,
+        "wer_diff_ci": [
+          -0.003950373433738663,
+          0.000738552437223039
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "fleurs_en_test": {
+      "n": 525,
+      "fp32": {
+        "wer": 0.49361776534359153,
+        "eta": null
+      },
+      "int8": {
+        "wer": 0.4980765868158769,
+        "eta": null
+      },
+      "int8_minus_fp32": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.004458821472285379,
+        "wer_diff_ci": [
+          8.729812309032914e-05,
+          0.008651704642795965
+        ],
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "noise": {
+      "n": 0,
+      "fp32": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "int8": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "int8_minus_fp32": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0,
+        "wer_diff_ci": null,
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "t-s3": {
+      "n": 200,
+      "fp32": {
+        "wer": 0.2453151618398637,
+        "eta": 0.5098591549295775
+      },
+      "int8": {
+        "wer": 0.2495741056218058,
+        "eta": 0.5126760563380282
+      },
+      "int8_minus_fp32": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.004258943781942082,
+        "wer_diff_ci": [
+          -0.004159733777038266,
+          0.01215277777777779
+        ],
+        "wer_tie": true,
+        "eta_diff": 0.0028169014084507005,
+        "eta_diff_ci": [
+          -0.011904761904761862,
+          0.017857142857142905
+        ],
+        "eta_tie": true
+      }
+    },
+    "rare": {
+      "n": 47,
+      "fp32": {
+        "wer": 0.2857142857142857,
+        "eta": 0.4691358024691358
+      },
+      "int8": {
+        "wer": 0.28185328185328185,
+        "eta": 0.4691358024691358
+      },
+      "int8_minus_fp32": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0038610038610038533,
+        "wer_diff_ci": [
+          -0.018867924528301883,
+          0.007936507936507908
+        ],
+        "wer_tie": true,
+        "eta_diff": 0.0,
+        "eta_diff_ci": [
+          0.0,
+          0.0
+        ],
+        "eta_tie": true
+      }
+    }
+  },
+  "terms": {
+    "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-037/readout/paired-1/product/int8/t600.hyp.jsonl",
+    "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-037/readout/paired-1/product/fp32/t600.hyp.jsonl",
+    "groups": {
+      "natural": {
+        "base": {
+          "correct": 444,
+          "occurrences": 817,
+          "accuracy": 0.543451652386781
+        },
+        "new": {
+          "correct": 432,
+          "occurrences": 817,
+          "accuracy": 0.5287637698898409
+        }
+      },
+      "gold": {
+        "base": {
+          "correct": 124,
+          "occurrences": 179,
+          "accuracy": 0.6927374301675978
+        },
+        "new": {
+          "correct": 127,
+          "occurrences": 179,
+          "accuracy": 0.7094972067039106
+        }
+      },
+      "never": {
+        "base": {
+          "correct": 24,
+          "occurrences": 47,
+          "accuracy": 0.5106382978723404
+        },
+        "new": {
+          "correct": 24,
+          "occurrences": 47,
+          "accuracy": 0.5106382978723404
+        }
+      }
+    },
+    "rare": {
+      "n": 47,
+      "base": 0.5106382978723404,
+      "new": 0.5106382978723404,
+      "delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "bootstrap": 1000
+    },
+    "aligned_eta": {
+      "rare": {
+        "base": {
+          "eta": 0.4691358024691358,
+          "wer": 0.2857142857142857,
+          "en_hit": 38,
+          "en_ref": 81
+        },
+        "new": {
+          "eta": 0.4691358024691358,
+          "wer": 0.28185328185328185,
+          "en_hit": 38,
+          "en_ref": 81
+        }
+      },
+      "all": {
+        "base": {
+          "eta": 0.5608820709491851,
+          "wer": 0.23595183486238533,
+          "en_hit": 585,
+          "en_ref": 1043
+        },
+        "new": {
+          "eta": 0.5522531160115053,
+          "wer": 0.2408256880733945,
+          "en_hit": 576,
+          "en_ref": 1043
+        }
+      }
+    },
+    "gold_terms": {
+      "base": [
+        18,
+        27
+      ],
+      "new": [
+        19,
+        27
+      ]
+    }
+  },
+  "noise": {
+    "fp32": {
+      "clips": 457,
+      "total_words": 570,
+      "non_empty_clips": 237,
+      "non_music_clips": 337,
+      "non_music_words": 266,
+      "non_music_non_empty_clips": 153,
+      "music_clips": 120,
+      "music_words": 304,
+      "music_non_empty_clips": 84
+    },
+    "int8": {
+      "clips": 457,
+      "total_words": 557,
+      "non_empty_clips": 230,
+      "non_music_clips": 337,
+      "non_music_words": 258,
+      "non_music_non_empty_clips": 146,
+      "music_clips": 120,
+      "music_words": 299,
+      "music_non_empty_clips": 84
+    }
+  },
+  "logits": {
+    "audio": "web/tests/fixtures/speech.wav",
+    "frames": 150,
+    "max_abs": 2.350250244140625,
+    "mean_abs": 0.24182341992855072,
+    "top1_agreement": 0.9866666666666667
+  },
+  "note": "measurement only: INT8 is the shipped format and no gate changes the release"
+}

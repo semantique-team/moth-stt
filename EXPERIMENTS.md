@@ -1967,3 +1967,30 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   adaptation route would be new arms, not a re-tune of this one.
   [Result](runs/E-036/RESULT.md).
 - **Cost**: ~1 h 47 per arm, two int8 exports, two readouts, no downloads, 0 USD.
+
+## E-037 — Paired fp32/INT8 with the shipped A3 LM: a small, non-uniform cost (2026-11-13)
+
+- **Question**: the shipped 0.8.1 artifact is the INT8 graph. With the same E-028 checkpoint, the
+  same A3 LM, the same decoder and the same clips, how much WER/ETA does INT8 cost relative to its
+  fp32 export? E-028 measured +0.21 pp dev with the older 0.8.0 LM; this is the matched product
+  measurement.
+- **Method**: export fp32 from E-028 `ckpt_best.pt` (`stt.export.export_fp32`, verification median
+  1.82e-4); decode the fp32 export and the shipped INT8 graph (`7bbfad7e…`) in one session with
+  the A3 LM (beam 12 / top-k 10 / 0.55 / 2.7) on dev (3,939), T-600, T-S3, FLEURS-IT/EN, the
+  rare 47, natural/gold and noise; paired per-utterance bootstrap, seed 0.
+- **Result**:
+  - Dev macro **22.8596% → 23.0170%**, **+0.1574 pp**, CI **[+0.0539, +0.2664]** (significant);
+    pooled +0.1489 [+0.0413, +0.2620].
+  - T-600 **23.5952 → 24.0826**, +0.4874 pp [−0.0290, +0.9963] (tie; ETA −0.8629 pp
+    [−1.9743, +0.1910]); T-S3 +0.4259 [−0.4160, +1.2153] (tie); FLEURS-IT −0.1559 (tie);
+    **FLEURS-EN +0.4459 [+0.0087, +0.8652]** (significant).
+  - Rare aligned ETA unchanged at **38/81**; rare WER −0.386 pp (tie). Natural terms **444 → 432**
+    (−12), gold 124 → 127 (+3), never 24 → 24. Noise slightly better under INT8 (non-music
+    266 → 258 words, 153 → 146 non-empty).
+  - Logit gap on the fixture: max |Δ| **2.3503**, mean 0.2418, top-1 agreement **98.67%**.
+  - Package: fp32 **54,164,659 B** vs INT8 **19,706,289 B**; fp32 cannot ship under 20 MB.
+- **Verdict**: the INT8 cost is **real but small and not uniform** (+0.16 pp dev, +0.49 pp T-600
+  point, +0.45 pp FLEURS-EN significant, −12 natural terms; rare and noise unaffected/better).
+  INT8 remains the only deployable format; the measured cost goes into the card/paper caveat, not
+  into a release change. **No model or package change.** [Result](runs/E-037/RESULT.md).
+- **Cost**: one fp32 export + ~15 min of CPU decoding, no training, no download, 0 USD.

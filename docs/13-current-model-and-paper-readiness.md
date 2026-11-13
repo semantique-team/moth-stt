@@ -40,7 +40,9 @@ the experiment reports or model cards. Only repository evidence was audited, not
 
 > x3 adds **579 retained trigrams** (801,858 → 802,437); the shipped change combines corpus,
 > pruning and weighting, not an isolated causal effect. An unchanged INT8 graph cannot establish
-> unchanged quantization WER cost without a matched fp32 comparison using the same E-031 LM.
+> unchanged quantization WER cost without a matched fp32 comparison using the same E-031 LM;
+> **E-037 now provides it** (dev +0.1574 pp [0.0539, 0.2664], T-600 +0.4874 tie, FLEURS-EN
+> +0.4459 [0.0087, 0.8652], rare 38/81 in both, natural 444 → 432; INT8 remains).
 > Noise-condition ties and the descriptive 29.47/30.05 mean (no mean CI) establish neither
 > equivalence nor an upper bound. E-032 S3 pairs are **26.75/46.76** (0.8.0 LM) and **26.41/47.61**
 > (E-031 LM); its original table has six FAIL rows. No historical PLAN/JSON is rewritten.
@@ -79,6 +81,14 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > fail, and `last2` loses T-S3 ETA **−1.408 pp** [−2.762, −0.280]. No candidate, no new-voice
 > readout; the published weights, LM and package are unchanged and **the acoustic model is frozen
 > at 0.8.1**. See [E-036](../runs/E-036/RESULT.md).
+
+> **Update 2026-11-13 (E-037) — the INT8 cost is measured, not assumed.** Paired fp32/INT8 with
+> the shipped A3 LM: dev macro **22.8596% → 23.0170%** (**+0.1574 pp**, 95% CI
+> [+0.0539, +0.2664]), T-600 **+0.4874 pp** [−0.0290, +0.9963] (tie; ETA −0.8629), T-S3
+> +0.4259 (tie), FLEURS-IT −0.1559 (tie), **FLEURS-EN +0.4459** [+0.0087, +0.8652]; rare
+> aligned ETA unchanged at 38/81; natural terms **444 → 432**, gold 124 → 127. The fp32 package
+> is **54,164,659 B** against **19,706,289 B**, so INT8 remains the only deployable format; this
+> is a measured caveat, not a release change. See [E-037](../runs/E-037/RESULT.md).
 
 ## 1. Identity and Architecture
 
