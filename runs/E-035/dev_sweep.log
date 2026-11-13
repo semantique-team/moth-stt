@@ -1,0 +1,15 @@
+full dev: 3939 clips, 10.48 h
+--- A3_shipped: runs/E-035/build/A3_shipped.pkl.gz
+    batch 50/219
+    batch 100/219
+    batch 150/219
+    batch 200/219
+{"lm": "runs/E-035/build/A3_shipped.pkl.gz", "lm_bytes_pickle": 3180127, "overall_wer": 0.22142112762925625, "overall_eta": null, "it": 0.2787883287549187, "en": 0.17819917584978837, "macro": 0.22849375230235353, "macro_bootstrap": {"point": 0.22849375230235353, "ci": [0.22423141234849883, 0.23264260030605216], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}, "seconds": 243.8}
+control check: {"reference": "runs/E-034/dev/dev-only/A3_shipped/dev.hyp.jsonl", "identical": true, "differing": 0, "clips": 3939}
+--- B1_budgeted: runs/E-035/build/B1_budgeted.pkl.gz
+    batch 50/219
+    batch 100/219
+    batch 150/219
+    batch 200/219
+{"lm": "runs/E-035/build/B1_budgeted.pkl.gz", "lm_bytes_pickle": 3334029, "overall_wer": 0.2207937216869776, "overall_eta": null, "it": 0.27802113495186476, "en": 0.17767708974287258, "macro": 0.22784911234736865, "macro_bootstrap": {"point": 0.22784911234736865, "ci": [0.22350855354291732, 0.232053902266931], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}, "seconds": 255.4, "vs_control": {"other": "runs/E-035/dev/budgeted-1/A3_shipped/dev.hyp.jsonl", "other_manifest_sha256": null, "wer_diff": -0.0006274059422786415, "wer_diff_ci": [-0.0010824598632456772, -0.00018141460707729595], "wer_tie": false, "eta_diff": null, "eta_diff_ci": null, "eta_tie": false}, "macro_vs_control": {"point": -0.0006446399549848714, "ci": [-0.0011442713176511576, -0.00013409143815432123], "strata": {"it": 1248, "en": 2691}, "bootstrap": 1000, "seed": 0, "tie": false}}
+ranking by dev macro: [('B1_budgeted', 0.2278), ('A3_shipped', 0.2285)]

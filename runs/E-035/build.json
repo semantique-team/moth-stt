@@ -1,0 +1,48 @@
+{
+  "corpus": "runs/E-031/frozen/lm-corpus.jsonl",
+  "corpus_sha256": "c8d941921ad6bf7905dd486770493bf172c34c9b183ead80cf50ed450fffe720",
+  "corpus_receipt": "runs/E-031/frozen/lm-corpus.receipt.json",
+  "tokenizer": "data/tokenizer/moth_bpe.model",
+  "tokenizer_sha256": "d6e1054e9273915db4e706898286f90d4b97e6b703386ed8b84f0a148caed2fd",
+  "builder_sha256": "cb50dfc09e07c4f5b3c099cffe404c75d556d1d1b35c737f5610ebd91ef04ae4",
+  "term_weight": 3,
+  "backoff": 0.4,
+  "package_limit": 20000000,
+  "non_lm_bytes": 14324297,
+  "binary_limit": 5675703,
+  "control": {
+    "pickle": "runs/E-035/build/A3_shipped.pkl.gz",
+    "binary": "runs/E-035/build/A3_shipped.bin",
+    "pickle_bytes": 3180127,
+    "binary_bytes": 5381992,
+    "binary_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
+    "vocab": 1026,
+    "bigram_contexts": 1024,
+    "bigram_entries": 265868,
+    "trigram_contexts": 137565,
+    "trigram_entries": 802437,
+    "backoff": 0.4
+  },
+  "arms": {
+    "B1_budgeted": {
+      "ranking": "context_count_desc, then (prev2, prev1, token) asc",
+      "entries_added": 73427,
+      "new_contexts": 0,
+      "cutoff_context_count": 698,
+      "candidate_entries": 1477990,
+      "predicted_binary_bytes": 5675700,
+      "binary_bytes": 5675700,
+      "package_bytes": 19999997,
+      "headroom_bytes": 3,
+      "binary_sha256": "458441ab1887417524ab71e1995c7204abb5e6972ede62df514c3b5b86d4c1bd",
+      "pickle_bytes": 3334029,
+      "seconds": 8.8,
+      "vocab": 1026,
+      "bigram_contexts": 1024,
+      "bigram_entries": 265868,
+      "trigram_contexts": 137565,
+      "trigram_entries": 875864,
+      "backoff": 0.4
+    }
+  }
+}

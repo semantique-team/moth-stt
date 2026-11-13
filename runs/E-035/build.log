@@ -1,0 +1,3 @@
+corpus 186003 sentences, 7242677 tokens, term weight x3
+control reproduces the shipped binary: 5,381,992 B 3be1177b0ca9…
+B1_budgeted: +73,427 trigrams, 5,675,700 B binary, package 19,999,997 B, headroom 3 B, cutoff context count 698

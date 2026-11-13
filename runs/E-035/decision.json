@@ -1,0 +1,38 @@
+{
+  "rule": "macro lower AND paired CI upper < 0 AND binary <= 5,675,703 B AND package <= 20,000,000 B",
+  "control": {
+    "arm": "A3_shipped",
+    "macro": 0.22849375230235353,
+    "it": 0.2787883287549187,
+    "en": 0.17819917584978837
+  },
+  "arm": {
+    "arm": "B1_budgeted",
+    "macro": 0.22784911234736865,
+    "it": 0.27802113495186476,
+    "en": 0.17767708974287258,
+    "macro_delta_pp": -0.06446399549848714,
+    "macro_ci_pp": [
+      -0.11442713176511576,
+      -0.013409143815432123
+    ],
+    "pooled_delta_pp": -0.06274059422786415,
+    "pooled_ci_pp": [
+      -0.10824598632456772,
+      -0.018141460707729595
+    ],
+    "binary_bytes": 5675700,
+    "package_bytes": 19999997
+  },
+  "lower_macro": true,
+  "paired_ci_upper_below_zero": true,
+  "fits_budget": true,
+  "control_check": {
+    "reference": "runs/E-034/dev/dev-only/A3_shipped/dev.hyp.jsonl",
+    "identical": true,
+    "differing": 0,
+    "clips": 3939
+  },
+  "advances": true,
+  "decision": "advance to the product readout (separate, unauthorized here)"
+}

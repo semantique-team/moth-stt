@@ -52,16 +52,20 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > on Windows, without certifying production training. The 2026-11-10 quoted failures below remain
 > historical. No full LM build/staging, gate rerun or model release was performed by this task.
 
-> **Update 2026-11-13 — E-033/E-034, both rejected, no release change.** E-033 pairs a control and
-> an InterCTC arm (`weight 0.3`, training-only head) from the E-024 checkpoint with the E-028
-> recipe: dev macro **31.0350% vs 31.0101%** (**+0.0249 pp**, 95% CI [−0.0998, +0.1557]), a tie;
-> the auxiliary head learns (66.9 → 0.72 over 394,625 training-only parameters) but adds no gain,
-> so nothing is exported. E-034 decodes LM variants on dev only: keeping single-count trigrams is
-> worth **−0.598 pp** `(2,1)` and **−0.644 pp** `(1,1)` macro dev, but 12.03/12.31 MB binaries
-> give **26.36/26.64 MB** packages, over the 20 MB ceiling and the 25 MB tier; term weight ×5 is
-> a tie, so the shipped ×3 is saturated. Weights, LM and package are unchanged. A budgeted-pruning
-> arm (~65k of 1,477,990 extra trigrams inside the 293,711 B headroom) remains unexecuted. See
-> [E-033](../runs/E-033/RESULT.md) and [E-034](../runs/E-034/RESULT.md).
+> **Update 2026-11-13 — E-033/E-034 rejected; E-035 advances on dev, no release change.** E-033
+> pairs a control and an InterCTC arm (`weight 0.3`, training-only head) from the E-024 checkpoint
+> with the E-028 recipe: dev macro **31.0350% vs 31.0101%** (**+0.0249 pp**, 95% CI
+> [−0.0998, +0.1557]), a tie; the auxiliary head learns (66.9 → 0.72 over 394,625 training-only
+> parameters) but adds no gain, so nothing is exported. E-034 decodes LM variants on dev only:
+> keeping single-count trigrams is worth **−0.598 pp** `(2,1)` and **−0.644 pp** `(1,1)` macro
+> dev, but 12.03/12.31 MB binaries give **26.36/26.64 MB** packages, over the 20 MB ceiling and
+> the 25 MB tier; term weight ×5 is a tie, so the shipped ×3 is saturated. E-035 then adds
+> **73,427 single-count trigrams** ranked by context frequency inside the headroom: dev macro
+> **22.7849% vs 22.8494%** (**−0.0645 pp**, 95% CI [−0.1144, −0.0134]), binary **5,675,700 B**,
+> package **19,999,997 B**; the control reproduces the shipped binary and E-034's hypotheses. It
+> **advances to a product readout that has not been run**. The published weights, LM and package
+> are unchanged and **0.8.1 remains the release**. See [E-033](../runs/E-033/RESULT.md),
+> [E-034](../runs/E-034/RESULT.md) and [E-035](../runs/E-035/RESULT.md).
 
 ## 1. Identity and Architecture
 

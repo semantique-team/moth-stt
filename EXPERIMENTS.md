@@ -1900,3 +1900,30 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   [Result](runs/E-033/RESULT.md).
 - **Cost**: 1 h 56 (control) + 1 h 53 (arm) wall on the M5, no downloads, 0 USD. The E-024
   +4.4% step-time probe did not reproduce as a slowdown here.
+
+## E-035 — Budgeted single-count trigrams: small real dev gain inside 20 MB (2026-11-13)
+
+- **Question**: 0.8.1 leaves **293,711 B** below the 20 MB ceiling and its LM is 5,381,992 B.
+  E-034 showed that full trigram coverage helps dev but costs 12.3 MB. Can the affordable slice —
+  keeping `(1,2)` + term ×3 and adding single-count trigrams ranked by the frequency of their
+  preceding bigram — buy a measurable dev gain inside the cap?
+- **Method**: decode-only, same frozen E-031 corpus/receipt/tokenizer, same `BPETrigramLM` path,
+  same E-030 decoder (beam 12 / top-k 10 / LM 0.55 / bonus 2.7), fp32 E-028 checkpoint, full dev
+  (3,939 clips, 10.48 h). Control rebuilt and required to reproduce the shipped binary
+  (5,381,992 B, sha `3be1177b…`); its 3,939 hypotheses are identical to E-034's retained `A3`.
+  Selection rule frozen in `runs/E-035/PLAN.md`: rank count-1 trigrams by context occurrence
+  count, tie-break by ids, add while `5,381,992 + 4 × entries + 8 × new_contexts ≤ 5,675,703 B`;
+  advance only on lower macro, paired CI upper < 0 and package ≤ 20,000,000 B.
+- **Result — advances on dev**: **73,427** entries (4.97% of E-034's extra coverage), all in
+  existing contexts, cutoff context count **698**, 1,359 contexts touched; binary **5,675,700 B**
+  (sha `458441ab…`), package **19,999,997 B**. Dev macro **22.7849% vs 22.8494%**, delta
+  **−0.0645 pp**, paired 95% CI **[−0.1144, −0.0134]**; pooled **−0.0627 pp**
+  [−0.1082, −0.0181]; IT −0.0767, EN −0.0522. 442 hypotheses changed: 170 improved, 116 worsened,
+  156 same-error rewrites; net −59 errors (20,822 → 20,763).
+- **Verdict**: the headroom is **not** dead weight on dev, and 5% of the coverage recovers 10.8%
+  of E-034's gain as a rough cross-arm ratio (not a decomposition) — the frequency ranking is
+  better than proportional. **Nothing is shipped and
+  0.8.1 stays the release**: T/T-S3/FLEURS/natural/noise and the browser path were not read. The
+  next step is one product readout with the 0.8.1 assets; only a candidate that passes becomes a
+  decode-only 0.8.2. [Result](runs/E-035/RESULT.md).
+- **Cost**: build 8.8 s, dev decodes 243.8 + 255.4 s, no training, no download, 0 USD.

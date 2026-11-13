@@ -204,10 +204,16 @@ altrove; loss training-only e dati sono piu' comodi entro il tetto stretto.
 **Gia' misurato (E-034, 2026-11-12, solo dev).** Tenere i trigrammi visti una volta vale
 **−0,598 pp** di macro dev con (2,1) e **−0,644 pp** con (1,1), entrambi con CI che esclude
 zero, ma i binari pesano 12,03/12,31 MB: pacchetti 26,36/26,64 MB, fuori sia dai 20 MB sia dal
-tier 25 MB. Il peso dei termini ×5 e' un tie, quindi ×3 e' saturo. Il seguito coerente e' una
-**selezione budgeted** (~65k dei 1.477.990 trigrammi extra nei 293.711 B liberi), da
-pre-registrare contro A3; non eseguita. Dettagli:
+tier 25 MB. Il peso dei termini ×5 e' un tie, quindi ×3 e' saturo. Dettagli:
 [E-034](../../runs/E-034/RESULT.md).
+
+**Gia' misurato (E-035, 2026-11-13, solo dev).** La selezione budgeted — 73.427 trigrammi
+count-1 ordinati per frequenza del bigramma precedente, binario **5.675.700 B**, pacchetto
+**19.999.997 B** — vale **−0,0645 pp** di macro dev contro A3 (paired CI [−0,1144, −0,0134]):
+il 5% della copertura recupera il 10,8% del guadagno di E-034 come rapporto grezzo tra armi, non
+come scomposizione. Il braccio **avanza**; manca il
+readout prodotto su T/T-S3/FLEURS/naturali/rumore e browser. Dettagli:
+[E-035](../../runs/E-035/RESULT.md).
 
 ## Strade Da Rimandare
 
