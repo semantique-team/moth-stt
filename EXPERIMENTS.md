@@ -2045,3 +2045,23 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   construction**, 58 are CV prompt reuse, and **zero** involve T or FLEURS.
   [Result](runs/E-039/RESULT.md).
 - **Cost**: ~3 s of I/O plus hashing 492 MB, no training, no download, 0 USD.
+
+## E-041 — Browser acoustic WER/ETA on the shipped bundle (2026-11-13)
+
+- **Question**: every published number comes from the Python ONNX runner; acceptance measured 4
+  clips and decoder parity on identical logits, but acoustic WER/ETA had never been measured in the
+  browser. What does the deployed path cost on T-600?
+- **Method**: headless Chromium + ONNX Runtime Web (WASM threads, COOP/COEP) against the **0.8.1**
+  bundle `runs/E-031/release` (INT8 `7bbfad7e…`, A3 LM `3be1177b…`, hashes verified from
+  `config.json`), decoder 12/10/0.55/2.7, VAD gate 0.1; `web/ort.js` mel + decode; one pass over
+  the 600 T clips; paired per-utterance bootstrap against the committed E-037 Python hypotheses.
+- **Result**: browser **24.7993% / 54.3624%** vs Python **24.0826% / 55.2253%** → WER
+  **+0.7167 pp** [+0.0000, +1.4723] (tie, interval touching zero), ETA **−0.8629 pp**
+  [−2.4390, +0.6757] (tie), **151/600** hypotheses differ. Per voice: S1 +0.258 / +0.298,
+  S2 +0.348 / 0.000, **S3 +1.5331 pp WER / −2.8169 pp ETA**. Runtime 1,390.2 s audio in **36.2 s**
+  wall, RTFx median **42.30** (min 25.51, max 53.44), headless desktop only.
+- **Verdict**: the deployed path costs about **0.7 pp WER** pooled — a tie by CI but not zero — and
+  the penalty concentrates on the **never-trained voice**. This is a deployment property of the JS
+  mel front end / ORT-Web kernels, not a model change; no tuning, no release change. Not a mobile
+  or Safari claim. [Result](runs/E-041/RESULT.md).
+- **Cost**: 36 s of browser decoding, no training, no download, 0 USD.

@@ -301,6 +301,13 @@ S1's microphone and has been repeatedly inspected. The card's "S3 behind both tr
 is also numerically imprecise: S2 is 26.93 vs S3 26.92. Neither this ordering nor aggregate wins
 establish broad unseen-speaker generalization.
 
+> **Browser measurement (E-041, 2026-11-13).** T-600 decoded in headless Chromium via ONNX
+> Runtime Web with the shipped 0.8.1 bundle: **24.7993% WER / 54.3624% ETA** against
+> **24.0826% / 55.2253%** from the Python runner. WER **+0.7167 pp** [0.0000, +1.4723]
+> (tie, interval touching zero), ETA −0.8629 pp (tie), **151/600 hypotheses differ**, and the
+> penalty concentrates on **S3 (+1.5331 pp WER, −2.8169 pp ETA)**. RTFx median 42.30 on a
+> headless desktop; not a phone or Safari claim. Deployment property, release unchanged.
+
 > **Evidence boundary (2026-11-13, owner decision).** No further recordings will be made:
 > there is **no spontaneous mixed-dev** and **no unseen voice**. Every quality number rests on
 > scripted speech — T on S1/S2/S3 (reused, inspected repeatedly), the anchor A (repeats T

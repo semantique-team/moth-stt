@@ -1,0 +1,37 @@
+{
+  "name": "browser-1",
+  "release": "runs/E-031/release",
+  "provenance": {
+    "version": "0.8.1",
+    "decode": {
+      "default": "beam",
+      "beam": 12,
+      "top_k": 10,
+      "lm": "lm_bpe3.bin",
+      "lm_weight": 0.55,
+      "token_bonus": 2.7
+    },
+    "model": "model.int8.onnx",
+    "files": {
+      "model.int8.onnx": "sha256:7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+      "vocab.json": "sha256:22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb",
+      "mel_filters.bin": "sha256:4f2701b1d287d74a0dc9871026e9519d98cb76426615f2539b0d151a0ae4ec2e",
+      "silero_vad.onnx": "sha256:1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+      "lm_bpe3.bin": "sha256:3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1"
+    },
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+    "hardware_concurrency": 10,
+    "cross_origin_isolated": true
+  },
+  "clips": 600,
+  "failures": 0,
+  "wall_seconds": 36.243,
+  "audio_seconds": 1390.2055625000032,
+  "rtfx": {
+    "median": 42.30565836758476,
+    "min": 25.511191047162274,
+    "max": 53.437377346652426,
+    "mean": 42.27792672959784
+  },
+  "note": "browser-only measurement: headless Chromium + WASM, not a phone or Safari claim"
+}
