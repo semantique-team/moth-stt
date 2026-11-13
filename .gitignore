@@ -68,3 +68,7 @@ runs/E-034/build/*.pkl.gz
 # E-035: budgeted LM binaries are reproducible from the pinned corpus and build_budgeted.py
 runs/E-035/build/*.bin
 runs/E-035/build/*.pkl.gz
+
+# E-036: exported fine-tune checkpoints are reproducible from the config and stt.export
+runs/E-036/release-*/
+runs/E-036/smoke*/

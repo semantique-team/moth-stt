@@ -13,15 +13,19 @@ from torch import nn
 
 from stt.model import EncoderConfig, MothSTT
 from stt.train import (
+    DistillationObjective,
     TrainingObjective,
     _apply_model_init,
     _atomic_torch_save,
     _build_optimizer,
     _build_scheduler,
+    _distill_loss,
+    _freeze_parameters,
     _move_optimizer_state,
     _sha256_file,
     _validate_resume_recipe,
     check_training_config,
+    distill_recipe,
     interctc_recipe,
     training_recipe_fingerprint,
 )
@@ -502,3 +506,148 @@ def test_resume_fingerprint_pins_augmentation_version_and_frame_limit(tmp_path, 
     original = training_recipe_fingerprint(config)
     monkeypatch.setattr(module, "MAX_MEL_FRAMES", 2999)
     assert training_recipe_fingerprint(config) != original
+
+
+def _distill_config(path, weight=0.5):
+    return {
+        "train": {"distill": {"weight": weight, "temperature": 2.0,
+                              "checkpoint": str(path)}},
+        "optimizer": {"lr_head": 1e-3, "lr_encoder": 1e-4},
+    }
+
+
+def _teacher_checkpoint(tmp_path, model):
+    path = tmp_path / "teacher.pt"
+    torch.save({"model": copy.deepcopy(model.state_dict())}, path)
+    return path
+
+
+def test_distill_recipe_disabled_and_validation(tmp_path):
+    disabled = {"weight": 0.0, "temperature": 1.0, "checkpoint": None,
+                "checkpoint_sha256": None}
+    assert distill_recipe({}) == disabled
+    assert distill_recipe({"train": {"distill": {}}}) == disabled
+    assert distill_recipe({"train": {"distill": {"weight": 0.0}}}) == disabled
+    teacher = tmp_path / "teacher.pt"
+    teacher.write_bytes(b"teacher")
+    recipe = distill_recipe({"train": {"distill": {
+        "weight": 0.5, "temperature": 2.0, "checkpoint": str(teacher)}}})
+    assert recipe["weight"] == 0.5 and recipe["temperature"] == 2.0
+    assert recipe["checkpoint_sha256"] == _sha256_file(teacher)
+    for settings, match in (
+        ({"weight": -1, "checkpoint": str(teacher)}, "weight"),
+        ({"weight": True, "checkpoint": str(teacher)}, "weight"),
+        ({"weight": 0.5, "temperature": 0, "checkpoint": str(teacher)}, "temperature"),
+        ({"weight": 0.5}, "checkpoint"),
+        ({"weight": 0.5, "checkpoint": str(tmp_path / "missing")}, "missing"),
+        ({"weight": 0.5, "checkpoint": str(teacher), "extra": 1}, "distill"),
+    ):
+        with pytest.raises(ValueError, match=match):
+            distill_recipe({"train": {"distill": settings}})
+
+
+def test_distill_loss_zero_identical_and_masked():
+    torch.manual_seed(0)
+    log_probs = torch.log_softmax(torch.randn(2, 6, 7), dim=-1)
+    lengths = torch.tensor([6, 3])
+    assert float(_distill_loss(log_probs, log_probs, lengths, 1.0)) == pytest.approx(
+        0.0, abs=1e-7
+    )
+    teacher = torch.log_softmax(torch.randn(2, 6, 7), dim=-1)
+    value = float(_distill_loss(log_probs, teacher, lengths, 1.0))
+    assert value > 0
+    padded = teacher.clone()
+    padded[1, 3:] = torch.log_softmax(torch.randn(3, 7), dim=-1)
+    assert float(_distill_loss(log_probs, padded, lengths, 1.0)) == pytest.approx(value)
+    assert float(_distill_loss(log_probs, teacher, lengths, 2.0)) > 0
+
+
+def test_distillation_objective_teacher_is_frozen_and_not_registered(tmp_path):
+    torch.manual_seed(0)
+    model = _model()
+    path = _teacher_checkpoint(tmp_path, model)
+    objective = DistillationObjective(model, _distill_config(path))
+    assert not list(objective.parameters())
+    assert not any(key.startswith("teacher") for key in objective.state_dict())
+    assert all(not parameter.requires_grad for parameter in objective.teacher.parameters())
+    loss, main, aux = objective(model, *_inputs())
+    assert aux is None
+    assert objective.last_distill_loss is not None
+    assert objective.last_distill_loss == pytest.approx(0.0, abs=1e-6)
+    assert float(loss.detach()) == pytest.approx(float(main.detach()), abs=1e-6)
+    with torch.no_grad():
+        objective.teacher.head.weight.mul_(2.0)
+    loss2, main2, _ = objective(model, *_inputs())
+    assert objective.last_distill_loss > 0
+    assert float(loss2.detach()) > float(main2.detach())
+    loss2.backward()
+    assert model.head.weight.grad is not None
+    assert model.head.weight.grad.abs().sum() > 0
+    assert all(parameter.grad is None for parameter in objective.teacher.parameters())
+
+
+def test_freeze_parameters_modes():
+    model = _model()
+    report = _freeze_parameters(model, {"model": {}})
+    assert report["mode"] == "none"
+    assert all(parameter.requires_grad for parameter in model.encoder.parameters())
+
+    model = _model()
+    report = _freeze_parameters(model, {"model": {"freeze_encoder": True}})
+    assert report["mode"] == "encoder"
+    assert all(not parameter.requires_grad for parameter in model.encoder.parameters())
+    assert all(parameter.requires_grad for parameter in model.head_blocks.parameters())
+
+    model = MothSTT(5, EncoderConfig(width=16, n_layers=2, n_heads=2, ffn_dim=32),
+                    head_blocks=1)
+    report = _freeze_parameters(model, {"model": {"trainable_encoder_blocks": 1}})
+    assert report["mode"] == "last_1_encoder_blocks"
+    assert not model.encoder.blocks[0].query.weight.requires_grad
+    assert model.encoder.blocks[1].query.weight.requires_grad
+    assert not model.encoder.conv1.weight.requires_grad
+    assert not model.encoder.final_ln.weight.requires_grad
+    optimizer = _build_optimizer(
+        model, {"optimizer": {"lr_head": 1e-3, "lr_encoder": 1e-4}}
+    )
+    assert [group["name"] for group in optimizer.param_groups] == ["head", "encoder"]
+    assert {id(parameter) for parameter in model.encoder.blocks[1].parameters()} == {
+        id(parameter) for parameter in optimizer.param_groups[1]["params"]
+    }
+
+
+def test_preflight_partial_encoder_freeze_and_conflict(tmp_path):
+    config = _preflight_config(tmp_path)
+    config["model"]["trainable_encoder_blocks"] = 2
+    check_training_config(config)
+    config["optimizer"]["lr_encoder"] = 0
+    with pytest.raises(ValueError, match="optimizer.lr_encoder.*positive"):
+        check_training_config(config)
+    config["optimizer"]["lr_encoder"] = 1e-5
+    config["model"]["freeze_encoder"] = True
+    with pytest.raises(ValueError, match="conflicts"):
+        check_training_config(config)
+    for value in (-1, 5, True):
+        bad = _preflight_config(tmp_path)
+        bad["model"]["trainable_encoder_blocks"] = value
+        with pytest.raises(ValueError, match="trainable_encoder_blocks"):
+            check_training_config(bad)
+
+
+def test_resume_fingerprint_pins_distill_recipe_and_teacher(tmp_path):
+    config = _preflight_config(tmp_path)
+    teacher = tmp_path / "teacher.pt"
+    teacher.write_bytes(b"teacher")
+    config["train"]["distill"] = {
+        "weight": 0.5, "temperature": 2.0, "checkpoint": str(teacher)
+    }
+    sha = _sha256_file(config["tokenizer"])
+    payload = {"config": copy.deepcopy(config), "tokenizer_sha256": sha,
+               "training_recipe_fingerprint": training_recipe_fingerprint(config, sha)}
+    _validate_resume_recipe(payload, config, sha)
+    changed = copy.deepcopy(config)
+    changed["train"]["distill"]["weight"] = 0.25
+    with pytest.raises(ValueError, match="recipe changed"):
+        _validate_resume_recipe(payload, changed, sha)
+    teacher.write_bytes(b"different")
+    with pytest.raises(ValueError, match="recipe changed"):
+        _validate_resume_recipe(payload, config, sha)

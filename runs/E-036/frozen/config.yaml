@@ -1,0 +1,75 @@
+# E-036-frozen — S1 addendum, frozen encoder, real replay and E-028 distillation.
+#
+# The most conservative arm: the encoder, conv front-end and final norm are frozen; only the two
+# head blocks and the CTC head move. The full E-028 mixture is replayed, and a frozen E-028 teacher
+# distills its frame-wise distribution into the student. See runs/E-036/PLAN.md.
+run: E-036-frozen
+seed: 0
+
+model:
+  vocab_size: 1024
+  init: models/whisper_tiny_encoder.pt
+  init_checkpoint: runs/E-028/checkpoints/ckpt_best.pt
+  head_blocks: 2
+  freeze_encoder: true
+
+tokenizer: data/tokenizer/moth_bpe.model
+
+data:
+  train:
+    - manifest: data/manifests/cv_it_train_clean50.jsonl
+      shards: data/shards/cv_it_train
+    - manifest: data/manifests/cv_it_train_noisy50.jsonl
+      shards: data/shards/cv_it_noisy50
+    - manifest: data/manifests/mls_it_train.jsonl
+      shards: data/shards/mls_it_train
+    - manifest: data/manifests/ls_en_train.jsonl
+      shards: data/shards/ls_en_train
+    - manifest: data/manifests/spliced_it_en.jsonl
+      shards: data/shards/spliced_it_en
+    - manifest: data/shards/gold-x50/manifest.jsonl
+      shards: data/shards/gold-x50
+    - manifest: data/shards/gold-terms-x20/manifest.jsonl
+      shards: data/shards/gold-terms-x20
+    - manifest: data/shards/gold-terms-S2-x20/manifest.jsonl
+      shards: data/shards/gold-terms-S2-x20
+    - manifest: data/shards/gold-terms3-x20/manifest.jsonl
+      shards: data/shards/gold-terms3-x20
+  dev:
+    - manifest: data/manifests/mls_it_dev.jsonl
+      shards: data/shards/mls_it_dev
+  dev_en:
+    - manifest: data/manifests/ls_en_dev.jsonl
+      shards: data/shards/ls_en_dev
+
+batch:
+  max_seconds: 192
+  max_clips: 32
+
+optimizer:
+  lr_head: 1.0e-4
+  lr_encoder: 1.0e-5
+  betas: [0.9, 0.98]
+  eps: 1.0e-8
+  weight_decay: 0.01
+
+schedule:
+  warmup_steps: 500
+  min_factor: 0.05
+
+train:
+  epochs: 1
+  input: truncated
+  augment: full
+  autocast: bf16
+  grad_clip: 1.0
+  log_every: 50
+  checkpoint_minutes: 10
+  keep_last: 3
+  max_nonfinite_steps: 20
+  empty_cache_every: 10
+  eval_every_steps: 1000
+  distill:
+    weight: 20.0
+    temperature: 2.0
+    checkpoint: runs/E-028/checkpoints/ckpt_best.pt

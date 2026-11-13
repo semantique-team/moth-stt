@@ -325,8 +325,9 @@ def test_actual_training_validator_without_importing_training_dependencies(host,
     source = Path(preflight.__file__).with_name("train.py").read_text(encoding="utf-8")
     tree = ast.parse(source)
     tree.body = [node for node in tree.body if isinstance(node, ast.FunctionDef)
-                 and node.name in {"check_training_config", "interctc_recipe"}]
-    namespace = {"Path": Path, "math": math}
+                 and node.name in {"check_training_config", "interctc_recipe", "distill_recipe",
+                                      "_sha256_file"}]
+    namespace = {"Path": Path, "math": math, "hashlib": hashlib}
     exec(compile(tree, "stt/train.py", "exec"), namespace)  # noqa: S102 - trusted repository source
     monkeypatch.setattr(sys.modules["stt.train"], "check_training_config",
                         namespace["check_training_config"])

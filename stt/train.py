@@ -49,9 +49,11 @@ from stt.tokenizer import encode as tokenizer_encode
 from stt.tokenizer import load_tokenizer
 
 __all__ = [
+    "DistillationObjective",
     "TrainState",
     "TrainingObjective",
     "check_training_config",
+    "distill_recipe",
     "interctc_recipe",
     "iter_batches",
     "load_config",
@@ -98,12 +100,46 @@ def interctc_recipe(config: dict) -> dict:
     return {"weight": weight, "tap": tap}
 
 
+def distill_recipe(config: dict) -> dict:
+    """Validate the optional teacher-distillation recipe, without loading the teacher."""
+    settings = config.get("train", {}).get("distill", {})
+    if not isinstance(settings, dict) or set(settings) - {"weight", "temperature", "checkpoint"}:
+        raise ValueError("train.distill accepts only weight, temperature and checkpoint")
+    disabled = {"weight": 0.0, "temperature": 1.0, "checkpoint": None,
+                "checkpoint_sha256": None}
+    if not settings:
+        return disabled
+    raw_weight = settings.get("weight", 0.0)
+    if isinstance(raw_weight, bool):
+        raise ValueError("distill weight must be a number, not bool")  # noqa: TRY004
+    try:
+        weight = float(raw_weight)
+        temperature = float(settings.get("temperature", 1.0))
+    except (TypeError, ValueError) as error:
+        raise ValueError("distill weight and temperature must be finite numbers") from error
+    if not math.isfinite(weight) or weight < 0:
+        raise ValueError("distill weight must be finite and >= 0")
+    if not math.isfinite(temperature) or temperature <= 0:
+        raise ValueError("distill temperature must be finite and positive")
+    if weight == 0:
+        return disabled
+    checkpoint = settings.get("checkpoint")
+    if not checkpoint:
+        raise ValueError("distill checkpoint is required when weight > 0")
+    path = Path(checkpoint)
+    if not path.is_file():
+        raise ValueError(f"distill checkpoint is missing: {path}")
+    return {"weight": weight, "temperature": temperature,
+            "checkpoint": str(path), "checkpoint_sha256": _sha256_file(path)}
+
+
 class TrainingObjective(nn.Module):
     """Training-owned auxiliary head; never registered on the deployable model."""
 
     def __init__(self, model: MothSTT, config: dict) -> None:
         super().__init__()
         self.recipe = interctc_recipe(config)
+        self.distill = distill_recipe(config)
         self.aux_head = (
             nn.Linear(
                 model.head.in_features, model.head.out_features,
@@ -112,9 +148,8 @@ class TrainingObjective(nn.Module):
             if self.recipe["weight"] else None
         )
 
-    def forward(
+    def _forward_logits(
         self, model: MothSTT, tensor: torch.Tensor, mel_lengths: torch.Tensor,
-        targets: torch.Tensor, target_lengths: torch.Tensor, criterion: nn.CTCLoss,
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor | None]:
         encoded = []
         hook = None
@@ -130,6 +165,13 @@ class TrainingObjective(nn.Module):
         aux_probs = None
         if self.aux_head is not None:
             aux_probs = self.aux_head(encoded[0]).float().log_softmax(dim=-1)
+        return log_probs, out_lengths, aux_probs
+
+    def forward(
+        self, model: MothSTT, tensor: torch.Tensor, mel_lengths: torch.Tensor,
+        targets: torch.Tensor, target_lengths: torch.Tensor, criterion: nn.CTCLoss,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor | None]:
+        log_probs, out_lengths, aux_probs = self._forward_logits(model, tensor, mel_lengths)
         with torch.autocast(device_type=tensor.device.type, enabled=False):
             main = criterion(
                 log_probs.float().transpose(0, 1).contiguous(),
@@ -143,7 +185,8 @@ class TrainingObjective(nn.Module):
         return loss, main, aux
 
     def checkpoint_state(self) -> dict:
-        return {"recipe": dict(self.recipe), "state_dict": self.state_dict()}
+        return {"recipe": dict(self.recipe), "distill": dict(self.distill),
+                "state_dict": self.state_dict()}
 
     def restore_checkpoint(self, payload: dict) -> None:
         """Exact resume rejects changed recipes; model-only init remains independent."""
@@ -151,11 +194,85 @@ class TrainingObjective(nn.Module):
         old_recipe = interctc_recipe(payload.get("config", {}))
         if old_recipe != self.recipe or (saved is not None and saved["recipe"] != self.recipe):
             raise ValueError("interctc recipe changed on resume; use init_checkpoint for a new run")
+        old_distill = (saved or {}).get("distill")
+        if old_distill is None:
+            old_distill = distill_recipe(payload.get("config", {}))
+        if old_distill != self.distill:
+            raise ValueError("distill recipe changed on resume; use init_checkpoint for a new run")
         if saved is None:
             if self.aux_head is not None:
                 raise ValueError("resume checkpoint is missing the auxiliary training objective")
         else:
             self.load_state_dict(saved["state_dict"], strict=True)
+
+
+def _distill_loss(
+    student_log_probs: torch.Tensor,
+    teacher_log_probs: torch.Tensor,
+    out_lengths: torch.Tensor,
+    temperature: float,
+) -> torch.Tensor:
+    """KL(teacher || student) per utterance, masked to the true frames and T^2 scaled."""
+    if temperature != 1.0:
+        student_log_probs = (student_log_probs / temperature).log_softmax(dim=-1)
+        teacher_log_probs = (teacher_log_probs / temperature).log_softmax(dim=-1)
+    teacher_probs = teacher_log_probs.exp()
+    kl = (teacher_probs * (teacher_log_probs - student_log_probs)).sum(dim=-1)
+    frames = student_log_probs.shape[1]
+    mask = torch.arange(frames, device=out_lengths.device)[None, :] < out_lengths[:, None]
+    per_utterance = (kl * mask).sum(dim=-1) / mask.sum(dim=-1).clamp_min(1)
+    return per_utterance.mean() * temperature**2
+
+
+class DistillationObjective(TrainingObjective):
+    """CTC/InterCTC plus a frozen teacher's frame-wise KL; the teacher is never shipped."""
+
+    def __init__(self, model: MothSTT, config: dict) -> None:
+        super().__init__(model, config)
+        if self.distill["weight"] <= 0:
+            raise ValueError("distillation objective requires a positive weight")
+        teacher = MothSTT(
+            vocab_size=model.head.out_features - 1,
+            encoder_config=model.encoder_config,
+            head_blocks=len(model.head_blocks),
+        )
+        payload = torch.load(
+            self.distill["checkpoint"], map_location="cpu", weights_only=False
+        )
+        teacher.load_state_dict(payload["model"])
+        teacher.eval()
+        for parameter in teacher.parameters():
+            parameter.requires_grad_(False)
+        # Bypass nn.Module registration: the teacher is not a training objective parameter and
+        # must not enter checkpoints, optimizer groups or statistics.
+        object.__setattr__(self, "teacher", teacher)
+        self.last_distill_loss: float | None = None
+
+    def forward(
+        self, model: MothSTT, tensor: torch.Tensor, mel_lengths: torch.Tensor,
+        targets: torch.Tensor, target_lengths: torch.Tensor, criterion: nn.CTCLoss,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor | None]:
+        log_probs, out_lengths, aux_probs = self._forward_logits(model, tensor, mel_lengths)
+        with torch.autocast(device_type=tensor.device.type, enabled=False):
+            main = criterion(
+                log_probs.float().transpose(0, 1).contiguous(),
+                targets, out_lengths, target_lengths,
+            )
+            aux = None if aux_probs is None else criterion(
+                aux_probs.transpose(0, 1).contiguous(), targets, out_lengths, target_lengths,
+            )
+            weight = self.recipe["weight"]
+            base = main if aux is None else (1.0 - weight) * main + weight * aux
+        teacher = self.teacher
+        if next(teacher.parameters()).device != tensor.device:
+            teacher.to(tensor.device)
+        with torch.no_grad(), torch.autocast(device_type=tensor.device.type, enabled=False):
+            teacher_log_probs, _ = teacher(tensor, mel_lengths)
+        distill = _distill_loss(
+            log_probs, teacher_log_probs, out_lengths, self.distill["temperature"]
+        )
+        self.last_distill_loss = float(distill.detach())
+        return base + self.distill["weight"] * distill, main, aux
 
 
 def load_config(path: str | Path) -> dict:
@@ -181,6 +298,7 @@ def check_training_config(
         if not isinstance(config.get(key, {}), dict):
             raise TypeError(f"config.{key} must be a mapping")
     recipe = interctc_recipe(config)
+    distill = distill_recipe(config)
     settings = config.get("train", {})
     for key, default, choices in (
         ("input", "truncated", ("truncated", "padded30")),
@@ -209,7 +327,19 @@ def check_training_config(
             math.isfinite(value) and value > 0
         ):
             raise ValueError(f"{name} must be finite and positive")
-    frozen_encoder = bool(config["model"].get("freeze_encoder", False))
+    layers = 4  # Whisper-tiny encoder; the architecture is fixed in stt.model.EncoderConfig
+    trainable_blocks = config["model"].get("trainable_encoder_blocks", layers)
+    if isinstance(trainable_blocks, bool) or not isinstance(trainable_blocks, int) or not (
+        0 <= trainable_blocks <= layers
+    ):
+        raise ValueError(
+            f"model.trainable_encoder_blocks must be an integer in [0, {layers}]"
+        )
+    if config["model"].get("freeze_encoder") and trainable_blocks not in (0, layers):
+        raise ValueError(
+            "model.freeze_encoder conflicts with model.trainable_encoder_blocks"
+        )
+    frozen_encoder = bool(config["model"].get("freeze_encoder", False)) or trainable_blocks == 0
     if not frozen_encoder or "lr_encoder" in config["optimizer"]:
         value = config["optimizer"].get("lr_encoder")
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not (
@@ -234,6 +364,8 @@ def check_training_config(
     for key in ("init", "init_checkpoint"):
         if config["model"].get(key):
             inventory.append(Path(config["model"][key]))
+    if distill["checkpoint"]:
+        inventory.append(Path(distill["checkpoint"]))
     if not config["data"].get("train"):
         raise ValueError("data.train must contain at least one source")
     for key in ("train", "dev", "dev_en"):
@@ -257,7 +389,8 @@ def check_training_config(
                             missing.append(str(path))
         if missing:
             raise ValueError("missing training files (replace placeholders):\n" + "\n".join(missing))
-    return {"interctc": recipe, "files": list(dict.fromkeys(map(str, inventory)))}
+    return {"interctc": recipe, "distill": distill,
+            "files": list(dict.fromkeys(map(str, inventory)))}
 
 
 def training_recipe_fingerprint(config: dict, tokenizer_sha256: str | None = None) -> str:
@@ -272,7 +405,10 @@ def training_recipe_fingerprint(config: dict, tokenizer_sha256: str | None = Non
     for key in ("log_every", "checkpoint_minutes", "keep_last"):
         settings.pop(key, None)
     settings["interctc"] = interctc_recipe(config)
-    model = {"head_blocks": 0, "freeze_encoder": False, **config.get("model", {})}
+    settings["distill"] = distill_recipe(config)
+    model = {"head_blocks": 0, "freeze_encoder": False,
+             "trainable_encoder_blocks": EncoderConfig().n_layers,
+             **config.get("model", {})}
     for key in ("init", "init_checkpoint"):
         model.pop(key, None)  # Initializers are not read when restoring checkpoint weights.
     optimizer = {"betas": [0.9, 0.98], "eps": 1e-8, "weight_decay": 0.01,
@@ -447,9 +583,7 @@ def train(
         vocab_size=vocab_size, head_blocks=int(config["model"].get("head_blocks", 0))
     )
     _apply_model_init(model, config)
-    if bool(config["model"].get("freeze_encoder", False)):
-        for parameter in model.encoder.parameters():
-            parameter.requires_grad_(False)
+    freezing = _freeze_parameters(model, config)
 
     if tokenize is None:
         processor = load_tokenizer(config["tokenizer"])
@@ -479,7 +613,12 @@ def train(
     total_steps = epochs * steps_per_epoch
     step_cap = min(total_steps, int(max_steps)) if max_steps is not None else total_steps
 
-    objective = TrainingObjective(model, config)
+    distill = distill_recipe(config)
+    objective = (
+        DistillationObjective(model, config)
+        if distill["weight"] > 0
+        else TrainingObjective(model, config)
+    )
     optimizer = _build_optimizer(model, config, objective)
     scheduler = _build_scheduler(
         optimizer,
@@ -517,6 +656,8 @@ def train(
         )
     model.to(device)
     objective.to(device)
+    if isinstance(objective, DistillationObjective):
+        objective.teacher.to(device)
     if resumed_from is not None:
         _move_optimizer_state(optimizer, device)
 
@@ -570,6 +711,8 @@ def train(
             "input": input_mode,
             "autocast": autocast_name,
             "interctc": objective.recipe,
+            "distill": objective.distill,
+            "freezing": freezing,
             "auxiliary_params": sum(p.numel() for p in objective.parameters()),
             "resumed_from": resumed_from,
             "parity": parity,
@@ -590,6 +733,8 @@ def train(
         "last_loss": None,
         "dev": None,
         "parity": parity,
+        "freezing": freezing,
+        "distill": objective.distill,
         "resumed_from": resumed_from,
     }
 
@@ -676,6 +821,7 @@ def train(
                     "loss": loss_value,
                     "main_loss": float(main_loss.detach()),
                     "aux_loss": None if aux_loss is None else float(aux_loss.detach()),
+                    "distill_loss": getattr(objective, "last_distill_loss", None),
                     "lr": optimizer.param_groups[0]["lr"],
                     "lr_encoder": (
                         optimizer.param_groups[-1]["lr"]
@@ -818,6 +964,48 @@ def _build_scheduler(
         return min_factor + (1.0 - min_factor) * 0.5 * (1.0 + math.cos(math.pi * progress))
 
     return torch.optim.lr_scheduler.LambdaLR(optimizer, factor)
+
+
+def _freeze_parameters(model: MothSTT, config: dict) -> dict:
+    """Freeze the whole encoder, or all but its last ``N`` blocks, before the optimizer."""
+    layers = model.encoder_config.n_layers
+    freeze_encoder = bool(config["model"].get("freeze_encoder", False))
+    raw_trainable = config["model"].get("trainable_encoder_blocks", layers)
+    if isinstance(raw_trainable, bool) or not isinstance(raw_trainable, int) or not (
+        0 <= raw_trainable <= layers
+    ):
+        raise ValueError(
+            f"model.trainable_encoder_blocks must be an integer in [0, {layers}]"
+        )
+    trainable = raw_trainable
+    if freeze_encoder and trainable not in (0, layers):
+        raise ValueError(
+            "model.freeze_encoder conflicts with model.trainable_encoder_blocks"
+        )
+    if freeze_encoder or trainable == 0:
+        for parameter in model.encoder.parameters():
+            parameter.requires_grad_(False)
+        mode = "encoder"
+    elif trainable < layers:
+        keep_from = layers - trainable
+        for name, parameter in model.encoder.named_parameters():
+            if name.startswith("blocks."):
+                index = int(name.split(".")[1])
+                if index < keep_from:
+                    parameter.requires_grad_(False)
+            else:
+                # Conv front-end and final norm stay frozen: only the trailing blocks move.
+                parameter.requires_grad_(False)
+        mode = f"last_{trainable}_encoder_blocks"
+    else:
+        mode = "none"
+    return {
+        "mode": mode,
+        "trainable_encoder_blocks": trainable,
+        "trainable_params": sum(
+            parameter.numel() for parameter in model.parameters() if parameter.requires_grad
+        ),
+    }
 
 
 def _prepare_batch(
