@@ -294,6 +294,14 @@ S1's microphone and has been repeatedly inspected. The card's "S3 behind both tr
 is also numerically imprecise: S2 is 26.93 vs S3 26.92. Neither this ordering nor aggregate wins
 establish broad unseen-speaker generalization.
 
+> **Evidence boundary (2026-11-13, owner decision).** No further recordings will be made:
+> there is **no spontaneous mixed-dev** and **no unseen voice**. Every quality number rests on
+> scripted speech — T on S1/S2/S3 (reused, inspected repeatedly), the anchor A (repeats T
+> sentences), FLEURS-IT/EN, CV-IT, MLS-IT and LS-EN — plus the deployment measurements
+> (E-037 INT8 cost, E-038 per-speaker range, E-041 browser path) and the E-039 leakage audit.
+> Claims must stay at "scripted read speech, three known voices"; no generalization to
+> spontaneous dictation or unseen speakers may be written.
+
 > **Per-speaker T-600 of the shipped 0.8.1 (E-038, decode-free re-scoring).** S1
 > **20.9802% / 63.2836%** [18.0851, 23.7882] / [57.3134, 69.3252], S2 **26.3249% / 51.5581%**
 > [22.8669, 29.5713] / [44.7439, 57.7259], S3 **24.9574% / 51.2676%** [21.6512, 28.1488] /

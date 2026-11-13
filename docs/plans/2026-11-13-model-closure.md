@@ -7,7 +7,9 @@ loro PLAN, la voce in `EXPERIMENTS.md` e `runs/<id>/`.
 
 > **Aggiornamento 2026-11-13:** E-035 e E-036 sono stati eseguiti e sono **entrambi negativi**.
 > **0.8.1 e' congelato**: nessun candidato acustico o LM e' stato adottato. Restano le evidenze di
-> chiusura (fp32/INT8 **fatto in E-037**, multi-seed, browser) e il lavoro umano sul mixed-dev/voce nuova.
+> chiusura (fp32/INT8 **E-037**, per-speaker **E-038**, leakage audit **E-039**, multi-seed
+> **E-040 in corso**, browser **E-041 in coda**). **Nessuna nuova registrazione** (decisione
+> dell'organizzatore): niente dev mixed spontaneo e niente voce nuova.
 
 Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../../STATUS.md),
 [dossier paper](../13-current-model-and-paper-readiness.md) §7, [ledger](../12-experiment-ledger.md),
@@ -26,8 +28,8 @@ Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../
 
 | Item | Stato | Evidenza / cosa manca | Costo residuo | Blocco |
 |---|---|---|---|---|
-| Dev mixed reale su speaker noti (S1/S2) | **non eseguito** | il kit e' pronto (`recordings/segment_notes.py`, import gia' supportato) | ~1 giornata umana + trascrizione; valutazione in minuti | servono le registrazioni |
-| Holdout indipendente con voce nuova | **non ottenibile (2026-11-13)** | l'organizzatore ha solo **S1, S2 e S3**; S1/S2 sono nel training e S3 e' stato ispezionato piu' volte. **E-038** riporta T-600 per voce (S1 20,98 / S2 26,32 / S3 24,96 WER; dispersione 5,34 pp WER e 12,02 pp ETA) come sostituto descrittivo | — | nessuna quarta voce disponibile: va dichiarato come limite, non riproposto |
+| Dev mixed reale su speaker noti (S1/S2/S3) | **rinunciato per decisione dell'organizzatore (2026-11-13)** | il kit resterebbe pronto (`recordings/segment_notes.py`, import supportato), ma **non si registra**: nessun parlato spontaneo, nessuna nota vocale | — | decisione, non blocco tecnico: l'evidenza di dominio resta quella scripted |
+| Holdout indipendente con voce nuova | **non ottenibile e non perseguito (2026-11-13)** | l'organizzatore ha solo **S1, S2 e S3**; S1/S2 sono nel training e S3 e' stato ispezionato piu' volte. **E-038** riporta T-600 per voce (S1 20,98 / S2 26,32 / S3 24,96 WER; dispersione 5,34 pp WER e 12,02 pp ETA) come sostituto descrittivo | — | nessuna quarta voce disponibile: va dichiarato come limite, non riproposto |
 | LM budgeted nei 293.711 B | **eseguito, respinto al readout** | E-035: 73.427 trigrammi count-1, binario **5.675.700 B**, pacchetto **19.999.997 B**, dev macro **22,7849% vs 22,8494%** (**−0,0645 pp**, CI [−0,1144, −0,0134]); **readout prodotto: tie su tutte le metriche primarie** (T-600 +0,0287 pp, T-S3 −0,0852, FLEURS-IT +0,0062, EN −0,0437, rari 38/81 in entrambi), `noise_music` +2 parole, nessun guadagno significativo → **non adottato, 0.8.1 resta** | — (chiuso) | tetto prodotto: nessun guadagno misurabile |
 | Fine-tune conservativo (replay + distillazione verso il Moth precedente) | **eseguito, respinto** | E-036: `frozen` 3,94M e `last2` 7,49M param mobili, KD 20; dev **30,9859% / 30,9720%** vs 31,0101 (tie); prodotto tie su WER ma rari **39/81** e **41/81** (target 42), **`x` su tutti i 120 clip di silenzio** (0.8.1: 0), `last2` T-S3 ETA **−1,41 pp** [−2,76, −0,28]. **Nessun candidato, 0.8.1 congelato** | — (chiuso) | il silenzio e i rari non sono recuperabili con questa ricetta |
 | Pilot TTS per il training | **non eseguito** | nessun generatore qualificato ne' licenza verificata | giorni (ascolto + 1 run vs controllo) | qualifica + licenze |
@@ -63,10 +65,11 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
    WER tie, rari sotto target, silenzio allucinato. **Il modello si congela a 0.8.1** con la
    motivazione scritta, non per stanchezza. fp32/INT8 e' stato misurato in E-037; multi-seed e
    browser WER restano le evidenze che rendono difendibili i numeri gia' pubblicati.
-2. **Chiusura dell'evidenza (paper):** richiede il **dev mixed reale** sulle voci disponibili; il
-   claim su **voce nuova** non e' ottenibile (solo S1/S2/S3) e va scritto come limite. E-038 da' il
-   range per voce che sostituisce il numero pooled quale unita' di report. Nessuna quantita' di
-   compute locale sostituisce i dati mancanti.
+2. **Chiusura dell'evidenza (paper):** **nessuna nuova registrazione** (decisione 2026-11-13):
+   niente dev mixed spontaneo e nessuna voce nuova. L'evidenza resta **scripted** (T su S1/S2/S3,
+   anchor A, FLEURS-IT/EN, CV-IT, MLS-IT, LS-EN, rumore) piu' le misure di deployment (E-037
+   INT8, E-038 per voce, E-041 browser) e l'audit E-039. Il paper deve dichiarare che **non**
+   sostiene generalizzazione a parlato spontaneo ne' a voci non viste.
 
 ## Ordine Proposto
 
@@ -76,8 +79,8 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
    silenzio 0→120 `x`, `last2` T-S3 ETA −1,41 pp; **0.8.1 congelato**.
 3. **Evidenze di chiusura**: ~~fp32/INT8 appaiato~~ (E-037) e ~~per-speaker~~ (E-038) fatti; restano
    ≥3 seed, browser WER/ETA e leakage audit.
-4. **Lavoro umano in parallelo**: note vocali da 5-10 minuti per il dev mixed; la prima voce nuova
-   disponibile va riservata al readout di un candidato gia' congelato, non al training.
+4. ~~**Lavoro umano in parallelo**: note vocali per il dev mixed; voce nuova riservata al readout~~
+   — **rinunciato (2026-11-13)**: nessuna registrazione, il limite va scritto e non riproposto.
 5. **Solo se serve**: pilot TTS o audio reale di dominio, con licenze verificate prima.
 
 ## Criteri Di Chiusura
