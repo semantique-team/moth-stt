@@ -1,0 +1,43 @@
+{
+  "name": "moth-stt",
+  "version": "0.1.0",
+  "sample_rate": 16000,
+  "features": {
+    "n_fft": 400,
+    "hop": 160,
+    "n_mels": 80,
+    "window": "hann_periodic",
+    "center": true,
+    "pad_mode": "reflect",
+    "drop_last_frame": true,
+    "floor_range": 8.0,
+    "scale": "(x+4)/4",
+    "mel_filters": "mel_filters.bin"
+  },
+  "model": {
+    "file": "model.int8.onnx",
+    "input": "mel",
+    "output": "log_probs",
+    "frame_rate_hz": 50,
+    "max_seconds": 30
+  },
+  "tokenizer": {
+    "vocab": "vocab.json",
+    "blank_id": 0,
+    "space_marker": "\u2581"
+  },
+  "decode": {
+    "default": "beam",
+    "beam": 5,
+    "top_k": 8,
+    "lm_weight": 0.0,
+    "token_bonus": 0.0
+  },
+  "vad": {
+    "file": "silero_vad.onnx",
+    "window": 512,
+    "context": 64,
+    "threshold": 0.10
+  },
+  "files": {}
+}

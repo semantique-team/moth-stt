@@ -16,7 +16,7 @@
     <h1>Moth — browser smoke test (Task 3.5)</h1>
     <p id="status">loading release…</p>
     <p>
-      <input type="file" id="file" accept="audio/*" />
+      <input type="file" id="file" accept="audio/*" disabled />
       <button id="record" disabled>Registra</button>
       <button id="stop" disabled>Stop</button>
       <button id="run" disabled>Transcribe</button>
@@ -35,6 +35,7 @@
       const stopButton = document.getElementById("stop");
       const runButton = document.getElementById("run");
       const benchButton = document.getElementById("bench");
+      const fileInput = document.getElementById("file");
 
       window.moth = {
         ready: false,
@@ -48,6 +49,20 @@
 
       let pcm = null;
       let recording = null;
+      let microphoneRequest = null;
+      let stopping = false;
+      let processing = false;
+      let fileLoading = false;
+      let selection = 0;
+
+      function updateControls() {
+        const busy = !!microphoneRequest || !!recording || stopping || processing;
+        fileInput.disabled = !window.moth.ready || busy;
+        recordButton.disabled = !window.moth.ready || busy || fileLoading;
+        stopButton.disabled = !microphoneRequest && !recording;
+        runButton.disabled = benchButton.disabled =
+          !window.moth.ready || busy || fileLoading || !pcm || pcm.length < 1600;
+      }
 
       function show(value) {
         output.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
@@ -66,7 +81,7 @@
           benchmark: (samples, options) => runner.benchmark(samples, options),
           ready: true,
         });
-        recordButton.disabled = false;
+        updateControls();
         status.className = "ok";
         status.textContent =
           `release loaded in ${runner.loadMs.toFixed(0)} ms — ` +
@@ -77,35 +92,53 @@
         status.textContent = `failed to load the release: ${error}`;
       }
 
-      document.getElementById("file").addEventListener("change", async (event) => {
+      fileInput.addEventListener("change", async (event) => {
+        if (fileInput.disabled) return;
+        const current = ++selection;
+        pcm = null;
         const file = event.target.files[0];
+        fileLoading = !!file;
+        updateControls();
         if (!file) return;
         const url = URL.createObjectURL(file);
         try {
-          pcm = await decodeTo16k(url);
-          runButton.disabled = benchButton.disabled = !window.moth.ready;
+          const samples = await decodeTo16k(url);
+          if (current !== selection) return;
+          pcm = samples;
           status.className = "ok";
           status.textContent =
             `${file.name}: ${(pcm.length / 16000).toFixed(2)} s @ 16 kHz mono`;
         } catch (error) {
+          if (current !== selection) return;
           status.className = "bad";
           status.textContent = `could not decode ${file.name}: ${error}`;
         } finally {
           URL.revokeObjectURL(url);
+          if (current === selection) {
+            fileLoading = false;
+            updateControls();
+          }
         }
       });
 
       async function stopRecording() {
+        if (microphoneRequest) {
+          microphoneRequest = null;
+          status.className = "";
+          status.textContent = "richiesta microfono annullata";
+          updateControls();
+          return;
+        }
         if (!recording) return;
         const active = recording;
         recording = null;
-        stopButton.disabled = true;
+        stopping = true;
+        updateControls();
         status.className = "";
         status.textContent = "resampling to 16 kHz…";
         try {
           pcm = await active.stop();
           const ready = window.moth.ready && pcm.length >= 1600;
-          runButton.disabled = benchButton.disabled = !ready;
           if (!ready) {
             status.className = "bad";
             status.textContent = "registrazione troppo corta (serve almeno 0,1 s)";
@@ -115,32 +148,47 @@
           }
         } catch (error) {
           pcm = null;
-          runButton.disabled = benchButton.disabled = true;
           status.className = "bad";
           status.textContent = `errore microfono: ${error}`;
         } finally {
-          recordButton.disabled = !window.moth.ready;
+          stopping = false;
+          updateControls();
         }
       }
 
       recordButton.addEventListener("click", async () => {
-        if (recording || !window.moth.ready) return;
+        if (recordButton.disabled) return;
+        const request = {};
+        microphoneRequest = request;
+        ++selection;
+        pcm = null;
+        updateControls();
         try {
-          runButton.disabled = benchButton.disabled = true;
-          recordButton.disabled = true;
-          stopButton.disabled = false;
           status.className = "";
           status.textContent = "registrazione… premi Stop (max 30 s)";
-          recording = await startMicrophone({
+          const active = await startMicrophone({
             maxSeconds: 30,
             onLimit: () => {
-              void stopRecording();
+              if (microphoneRequest === request || recording === request.active) {
+                void stopRecording();
+              }
             },
           });
+          if (microphoneRequest !== request) {
+            // Permission cannot be aborted; release a late grant without publishing its PCM.
+            for (const track of active.stream.getTracks()) track.stop();
+            await active.stop();
+            return;
+          }
+          request.active = active;
+          microphoneRequest = null;
+          recording = active;
+          updateControls();
         } catch (error) {
+          if (microphoneRequest !== request) return;
+          microphoneRequest = null;
           recording = null;
-          stopButton.disabled = true;
-          recordButton.disabled = !window.moth.ready;
+          updateControls();
           status.className = "bad";
           status.textContent = `permesso microfono negato o non disponibile: ${error}`;
         }
@@ -150,17 +198,24 @@
         void stopRecording();
       });
 
-      runButton.addEventListener("click", async () => {
-        if (!pcm || !window.moth.ready) return;
-        const result = await window.moth.transcribePcm(pcm);
-        show(result);
-      });
-
-      benchButton.addEventListener("click", async () => {
-        if (!pcm || !window.moth.ready) return;
-        const result = await window.moth.benchmark(pcm, { runs: 5, warmups: 2 });
-        show(result);
-      });
+      for (const button of [runButton, benchButton]) {
+        button.addEventListener("click", async () => {
+          if (button.disabled) return;
+          processing = true;
+          updateControls();
+          try {
+            show(await (button === runButton
+              ? window.moth.transcribePcm(pcm)
+              : window.moth.benchmark(pcm, { runs: 5, warmups: 2 })));
+          } catch (error) {
+            status.className = "bad";
+            status.textContent = `processing failed: ${error}`;
+          } finally {
+            processing = false;
+            updateControls();
+          }
+        });
+      }
     </script>
   </body>
 </html>
