@@ -1,0 +1,55 @@
+t600            baseline    12.9s
+t600            candidate   12.3s
+fleurs_it_test  baseline    73.3s
+fleurs_it_test  candidate   70.9s
+fleurs_en_test  baseline    38.6s
+fleurs_en_test  candidate   38.0s
+noise           baseline    25.7s
+noise           candidate   25.1s
+natural  base 432/ 817 new 432/ 817
+gold     base 127/ 179 new 127/ 179
+never    base  24/  47 new  24/  47
+
+47 rare utterances: base 51.1% new 51.1% delta +0.0 [+0.0, +0.0] (n=47)
+aligned ETA 47 rare: base 46.9% (38/81) new 46.9% (38/81)
+aligned ETA T-600: base 55.2% (576/1043) new 55.2% (576/1043)
+16 gold terms: base 19/27 = 70.4% new 19/27 = 70.4%
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-035/readout/readout-1/terms.json
+{
+  "gates": {
+    "bytes": true,
+    "t600_wer": true,
+    "t600_eta": true,
+    "ts3_wer": true,
+    "ts3_eta": true,
+    "fleurs_it": true,
+    "fleurs_en": true,
+    "rare_eta": true,
+    "natural": true,
+    "decoder_parity": true,
+    "noise_non_music": true,
+    "noise_music": false
+  },
+  "primary": {
+    "significantly_worse": {
+      "t600_wer": false,
+      "t600_eta": false,
+      "ts3_wer": false,
+      "ts3_eta": false,
+      "fleurs_it_wer": false,
+      "fleurs_en_wer": false,
+      "rare_eta": false
+    },
+    "significantly_better": {
+      "t600_wer": false,
+      "t600_eta": false,
+      "ts3_wer": false,
+      "ts3_eta": false,
+      "fleurs_it_wer": false,
+      "fleurs_en_wer": false,
+      "rare_eta": false
+    }
+  },
+  "adopt": false,
+  "verdict": "reject: one or more absolute gates failed"
+}

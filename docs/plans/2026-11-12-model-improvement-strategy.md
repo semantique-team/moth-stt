@@ -211,9 +211,10 @@ tier 25 MB. Il peso dei termini ×5 e' un tie, quindi ×3 e' saturo. Dettagli:
 count-1 ordinati per frequenza del bigramma precedente, binario **5.675.700 B**, pacchetto
 **19.999.997 B** — vale **−0,0645 pp** di macro dev contro A3 (paired CI [−0,1144, −0,0134]):
 il 5% della copertura recupera il 10,8% del guadagno di E-034 come rapporto grezzo tra armi, non
-come scomposizione. Il braccio **avanza**; manca il
-readout prodotto su T/T-S3/FLEURS/naturali/rumore e browser. Dettagli:
-[E-035](../../runs/E-035/RESULT.md).
+come scomposizione. Il **readout prodotto** su T-600, T-S3, FLEURS-IT/EN, 47 rari e rumore e' un
+**tie** (T-600 +0,0287 pp, T-S3 −0,0852, FLEURS-IT +0,0062, EN −0,0437, rari 38/81 in entrambi),
+con `noise_music` a +2 parole e nessun guadagno significativo: **non adottato, 0.8.1 resta**.
+Dettagli: [E-035 dev](../../runs/E-035/RESULT.md) e [readout](../../runs/E-035/READOUT.md).
 
 ## Strade Da Rimandare
 

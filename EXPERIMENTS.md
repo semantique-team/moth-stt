@@ -1920,10 +1920,17 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   **−0.0645 pp**, paired 95% CI **[−0.1144, −0.0134]**; pooled **−0.0627 pp**
   [−0.1082, −0.0181]; IT −0.0767, EN −0.0522. 442 hypotheses changed: 170 improved, 116 worsened,
   156 same-error rewrites; net −59 errors (20,822 → 20,763).
-- **Verdict**: the headroom is **not** dead weight on dev, and 5% of the coverage recovers 10.8%
-  of E-034's gain as a rough cross-arm ratio (not a decomposition) — the frequency ranking is
-  better than proportional. **Nothing is shipped and
-  0.8.1 stays the release**: T/T-S3/FLEURS/natural/noise and the browser path were not read. The
-  next step is one product readout with the 0.8.1 assets; only a candidate that passes becomes a
-  decode-only 0.8.2. [Result](runs/E-035/RESULT.md).
-- **Cost**: build 8.8 s, dev decodes 243.8 + 255.4 s, no training, no download, 0 USD.
+- **Verdict — dev**: the headroom is **not** dead weight on dev, and 5% of the coverage recovers
+  10.8% of E-034's gain as a rough cross-arm ratio (not a decomposition) — the frequency ranking
+  is better than proportional. The arm advanced to the product readout.
+  [Dev result](runs/E-035/RESULT.md).
+- **Product readout (2026-11-13) — not adopted**: on the 0.8.1 int8 assets, **all seven primary
+  product metrics tie**: T-600 WER +0.0287 pp [−0.1732, +0.2300], T-600 ETA identical (55.225),
+  T-S3 WER −0.0852 [−0.5853, +0.3393], T-S3 ETA −0.2817 [−0.8902, 0.0], FLEURS-IT +0.0062,
+  FLEURS-EN −0.0437, rare aligned ETA 38/81 in both (target-only 24/47 in both); natural 432/817
+  and gold 127/179 identical. The only absolute-gate miss is `noise_music` (299 → 301 words,
+  non-empty 84 → 82); decoder-level JS/Python parity is exact. No significant gain, so the
+  adoption rule fails: **0.8.1 remains the release**, and the 293,711 B question is answered
+  negatively for this LM format. [Readout](runs/E-035/READOUT.md).
+- **Cost**: build 8.8 s, dev decodes 243.8 + 255.4 s, product readout ~5 min, no training, no
+  download, 0 USD.

@@ -62,10 +62,13 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > the 25 MB tier; term weight ×5 is a tie, so the shipped ×3 is saturated. E-035 then adds
 > **73,427 single-count trigrams** ranked by context frequency inside the headroom: dev macro
 > **22.7849% vs 22.8494%** (**−0.0645 pp**, 95% CI [−0.1144, −0.0134]), binary **5,675,700 B**,
-> package **19,999,997 B**; the control reproduces the shipped binary and E-034's hypotheses. It
-> **advances to a product readout that has not been run**. The published weights, LM and package
-> are unchanged and **0.8.1 remains the release**. See [E-033](../runs/E-033/RESULT.md),
-> [E-034](../runs/E-034/RESULT.md) and [E-035](../runs/E-035/RESULT.md).
+> package **19,999,997 B**; the control reproduces the shipped binary and E-034's hypotheses. The
+> product readout then gives a **tie on all seven primary metrics** (T-600 +0.0287 pp, T-S3
+> −0.0852, FLEURS-IT +0.0062, FLEURS-EN −0.0437, rare 38/81 in both, T-600 ETA identical), with
+> only `noise_music` failing (+2 words) and no significant gain. The candidate is **not adopted**:
+> the published weights, LM and package are unchanged and **0.8.1 remains the release**. See
+> [E-033](../runs/E-033/RESULT.md), [E-034](../runs/E-034/RESULT.md),
+> [E-035 dev](../runs/E-035/RESULT.md) and [E-035 readout](../runs/E-035/READOUT.md).
 
 ## 1. Identity and Architecture
 

@@ -1,0 +1,43 @@
+{
+  "n_utterances": 0,
+  "overall": {
+    "n": 0,
+    "ref_words": 0,
+    "sub": 0,
+    "del": 0,
+    "ins": 0,
+    "wer": 0.0,
+    "insertion_rate": 0.0,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": null
+  },
+  "breakdown": {},
+  "noise": {
+    "clips": 457,
+    "total_words": 558,
+    "non_empty_clips": 224,
+    "non_music_clips": 337,
+    "non_music_words": 257,
+    "non_music_non_empty_clips": 142,
+    "music_clips": 120,
+    "music_words": 301,
+    "music_non_empty_clips": 82
+  },
+  "per_utterance": {},
+  "provenance": {
+    "lm_sha256": "458441ab1887417524ab71e1995c7204abb5e6972ede62df514c3b5b86d4c1bd",
+    "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+    "vocab_sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb",
+    "params": {
+      "beam": 12,
+      "top_k": 10,
+      "lm_weight": 0.55,
+      "token_bonus": 2.7
+    },
+    "scoring": {
+      "bootstrap": 1000,
+      "seed": 0
+    }
+  }
+}

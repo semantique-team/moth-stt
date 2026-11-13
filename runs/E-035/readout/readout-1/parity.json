@@ -1,0 +1,21 @@
+{
+  "python_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "js_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "exact_match": true,
+  "scope": "same-logits decoder only; no browser acoustic claim",
+  "node_seconds": 0.123,
+  "assets": {
+    "model_sha256": "7bbfad7e288640538c5c0147f81738bfd63021727b8760b1f3cbbcc4f939764d",
+    "lm_sha256": "458441ab1887417524ab71e1995c7204abb5e6972ede62df514c3b5b86d4c1bd",
+    "vocab_sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+  },
+  "logits_sha256": "834fb835b102e2e48675b7f798f09814e5827420a679b60b447e1bdce26753e4",
+  "code": {
+    "stt/decode.py": "4cedf04557299babc68ac94ad2a2c44255b1a2bfd7d370fa64dafb0088e86bf4",
+    "stt/lm.py": "2d0414efc2c3f76232a8a920a5584229ccf5672d9b3affedffc15ab98113d871",
+    "web/decode.js": "40bd00ca736da1914215d976fb4351a5277b3079b0fb73ebcc547f72dd59952c",
+    "web/lm.js": "6d8e4eaed1efe371ee2bcd0e6f1ca4fd268ec72175f4837e917fab1d2be4644e",
+    "runs/E-031/js_beam.mjs": "9ad406c5c589e5c55d6cb3a2ba85b39ae3efedc3ea1843be9c9845b1e861ed1e"
+  },
+  "audio_sha256": "631f1356f23e176e0f7d902f779f780cf5344d8097644816895a87a2d3205cdb"
+}

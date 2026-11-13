@@ -1,9 +1,9 @@
 # E-035 — RESULT: the last 293,711 bytes buy a small, real dev gain
 
 > Executed 2026-11-13 from the E-028 checkpoint, decode-only. Pre-registered in `PLAN.md` before
-> the build. **The arm advances under the pre-registered rule.** Dev only: T, T-S3, FLEURS, the
-> natural set, the noise pool and the browser path were not read, and nothing is exported,
-> published or recommended for shipment yet.
+> the build. **The arm advanced on dev under the pre-registered rule**, but the later product
+> readout (`READOUT.md`) is a **tie and the candidate is not adopted**: 0.8.1 remains the release.
+> This report keeps the dev result as measured, not rewritten after the readout.
 
 ## Verdict
 
@@ -70,11 +70,16 @@ Per-language deltas: **IT −0.0767 pp**, **EN −0.0522 pp**; pooled **−0.062
 - The ranking is a heuristic, not entropy pruning; a rank-all/swapping arm, four-grams, a different
   binary layout or a lower/higher cap are separate, unexecuted questions.
 
-## Next step (not run, not authorized here)
+## Product readout (executed 2026-11-13)
 
-One product readout with the 0.8.1 assets and the `B1` browser LM: T-600, T-S3, FLEURS-IT/EN, the
-47 rare rows, the natural set, the noise pool, browser decoder parity and latency. Only a candidate
-that passes that readout becomes a decode-only **0.8.2**. Until then **0.8.1 remains the release**.
+The single readout pre-registered in `READOUT-PLAN.md` was run after this result: T-600, T-S3,
+FLEURS-IT/EN, the rare 47, the term groups, noise and same-logits JS/Python parity, both arms on
+the int8 0.8.1 assets. **All seven primary product metrics tie** (T-600 WER +0.0287 pp, T-S3 WER
+−0.0852 pp, FLEURS-IT +0.0062 pp, EN −0.0437 pp, rare aligned ETA 38/81 in both, T-600 ETA
+identical); natural/gold term counts are identical; the only absolute-gate miss is `noise_music`
+(+2 words on 120 clips); decoder parity is exact. With no significant product gain the adoption
+rule fails and **`B1` is not shipped: 0.8.1 remains the release**. The full numbers and the
+interpretation are in [`READOUT.md`](READOUT.md).
 
 ## Artifacts
 
