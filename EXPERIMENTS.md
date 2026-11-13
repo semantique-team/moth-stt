@@ -1934,3 +1934,36 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   negatively for this LM format. [Readout](runs/E-035/READOUT.md).
 - **Cost**: build 8.8 s, dev decodes 243.8 + 255.4 s, product readout ~5 min, no training, no
   download, 0 USD.
+
+## E-036 — Conservative fine-tune: protection preserves WER but not silence (2026-11-13)
+
+- **Question**: E-032's S1 addendum moved rare terms but a full fine-tune regressed T-S3,
+  FLEURS and the natural group. Can freezing the encoder (or all but its last two blocks), replaying
+  the full E-028 mixture and distilling from a frozen E-028 teacher keep the general/product
+  behaviour while retaining the rare-term gain?
+- **Method**: two arms from `runs/E-028/checkpoints/ckpt_best.pt` on the E-032 mixture (13,314
+  steps, 1 epoch): `frozen` (2 head blocks + CTC head trainable, 3,942,785 params) and `last2`
+  (last 2 of 4 encoder blocks + head blocks + head, 7,490,945 params). KD = masked
+  KL(teacher‖student) per utterance, T=2, weight 20 (a 100-step training-loss pilot showed raw
+  KL ~0.001 vs CTC ~0.5, so 0.5 would be inert); teacher E-028, hash `01b83cc3…`. Both checkpoints
+  exported to int8 and read once on T-600, T-S3, FLEURS-IT/EN, rare 47, natural/gold and noise
+  against the committed 0.8.1 baseline with the A3 LM.
+- **Result — rejected**:
+  - Dev (greedy, no LM): initial 31.0101; frozen best **30.9859** (−0.0242 pp, CI
+    [−0.0806, +0.0335]), last2 best **30.9720** (−0.0381, CI [−0.1048, +0.0263]): both ties, both
+    dev guards pass.
+  - Product: T-600, T-S3 WER and FLEURS are ties for both arms. Rare aligned ETA: frozen
+    **39/81** (+1, CI [0, +4.35]), last2 **41/81** (+3, CI [0, +8.64]): both miss the pre-registered
+    **42/81** target. Natural 435 and 434, both pass ≥431.
+  - **New regression**: both arms emit `x` on all **120 silence clips** (0.8.1 emits nothing);
+    non-music non-empty clips 146 → 272 (frozen 392 words, last2 381), and the `noise_music` gate
+    also fails. The frozen arm proves the behaviour comes from the trainable head stack, not the
+    encoder.
+  - `last2` additionally loses T-S3 ETA: 51.268 → 49.859 (**−1.408 pp**, CI [−2.762, −0.280]),
+    a significant regression. Decoder parity exact; package unchanged at 19,706,289 B.
+- **Verdict**: **both arms rejected. E-036 is negative, the acoustic model stays at 0.8.1 and
+  there is no candidate for the new-voice readout.** The protection preserves WER but not silence
+  behaviour and does not recover E-032's rare gain; a blank/silence guard and a different
+  adaptation route would be new arms, not a re-tune of this one.
+  [Result](runs/E-036/RESULT.md).
+- **Cost**: ~1 h 47 per arm, two int8 exports, two readouts, no downloads, 0 USD.

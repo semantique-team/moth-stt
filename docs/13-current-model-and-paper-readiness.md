@@ -70,6 +70,16 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > [E-033](../runs/E-033/RESULT.md), [E-034](../runs/E-034/RESULT.md),
 > [E-035 dev](../runs/E-035/RESULT.md) and [E-035 readout](../runs/E-035/READOUT.md).
 
+> **Update 2026-11-13 (E-036) — the conservative fine-tune is rejected; 0.8.1 is frozen.**
+> Two protected arms from E-028 on the E-032 S1 mixture — `frozen` (3,942,785 trainable
+> parameters) and `last2` (7,490,945), both with an E-028 teacher (KD weight 20) — tie on dev
+> (30.9859% / 30.9720% vs 31.0101%) and on product WER, but do not reach the pre-registered rare
+> target: **39/81 and 41/81** aligned ETA against 42/81. Both emit the token `x` on **all 120
+> silence clips** where 0.8.1 emits nothing (non-music non-empty 146 → 272), so the noise gates
+> fail, and `last2` loses T-S3 ETA **−1.408 pp** [−2.762, −0.280]. No candidate, no new-voice
+> readout; the published weights, LM and package are unchanged and **the acoustic model is frozen
+> at 0.8.1**. See [E-036](../runs/E-036/RESULT.md).
+
 ## 1. Identity and Architecture
 
 The recorded published model is **Moth 0.7.0**, acoustic checkpoint **E-024**. The release labels

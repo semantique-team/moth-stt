@@ -1,0 +1,51 @@
+t600              13.3s
+fleurs_it_test    76.2s
+fleurs_en_test    41.0s
+noise             26.4s
+natural  base 432/ 817 new 435/ 817
+gold     base 127/ 179 new 125/ 179
+never    base  24/  47 new  25/  47
+
+47 rare utterances: base 51.1% new 53.2% delta +2.1 [+0.0, +6.4] (n=47)
+aligned ETA 47 rare: base 46.9% (38/81) new 48.1% (39/81)
+aligned ETA T-600: base 55.2% (576/1043) new 55.4% (578/1043)
+16 gold terms: base 19/27 = 70.4% new 19/27 = 70.4%
+wrote /Users/tancredi/Desktop/semantique/moth-stt/runs/E-036/eval/frozen-1/terms.json
+{
+  "gates": {
+    "bytes": true,
+    "t600_wer": true,
+    "t600_eta": true,
+    "ts3_wer": true,
+    "ts3_eta": true,
+    "fleurs_it": true,
+    "fleurs_en": true,
+    "natural": true,
+    "rare_target": false,
+    "decoder_parity": true,
+    "noise_non_music": false,
+    "noise_music": false
+  },
+  "primary": {
+    "significantly_worse": {
+      "t600_wer": false,
+      "t600_eta": false,
+      "ts3_wer": false,
+      "ts3_eta": false,
+      "fleurs_it_wer": false,
+      "fleurs_en_wer": false,
+      "rare_eta": false
+    },
+    "significantly_better": {
+      "t600_wer": false,
+      "t600_eta": false,
+      "ts3_wer": false,
+      "ts3_eta": false,
+      "fleurs_it_wer": false,
+      "fleurs_en_wer": false,
+      "rare_eta": false
+    }
+  },
+  "candidate": false,
+  "verdict": "reject: one or more absolute gates failed"
+}

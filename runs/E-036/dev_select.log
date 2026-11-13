@@ -1,0 +1,68 @@
+dev: 3939 clips
+E-028_initial {"step": 13283, "macro": 0.31010131903961546}
+E-036-frozen {"step": 4000, "macro": 0.30985909150253416}
+E-036-last2 {"step": 8000, "macro": 0.3097204340975177}
+{
+  "E-036-frozen": {
+    "macro_delta_pp": -0.024222753708130762,
+    "macro_vs_initial": {
+      "point": -0.00024222753708130762,
+      "ci": [
+        -0.0008058169530964499,
+        0.00033492480749136577
+      ],
+      "strata": {
+        "it": 1248,
+        "en": 2691
+      },
+      "bootstrap": 1000,
+      "seed": 0,
+      "tie": true
+    },
+    "pooled_vs_initial": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": -0.0002658499755417987,
+      "wer_diff_ci": [
+        -0.0008422325641662121,
+        0.00029557066250052166
+      ],
+      "wer_tie": true,
+      "eta_diff": null,
+      "eta_diff_ci": null,
+      "eta_tie": false
+    },
+    "dev_guard": true
+  },
+  "E-036-last2": {
+    "macro_delta_pp": -0.03808849420977589,
+    "macro_vs_initial": {
+      "point": -0.0003808849420977589,
+      "ci": [
+        -0.0010477952153262193,
+        0.0002626337220597019
+      ],
+      "strata": {
+        "it": 1248,
+        "en": 2691
+      },
+      "bootstrap": 1000,
+      "seed": 0,
+      "tie": true
+    },
+    "pooled_vs_initial": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": -0.0003509219677151898,
+      "wer_diff_ci": [
+        -0.001011324730050056,
+        0.0002883537138890224
+      ],
+      "wer_tie": true,
+      "eta_diff": null,
+      "eta_diff_ci": null,
+      "eta_tie": false
+    },
+    "dev_guard": true
+  }
+}

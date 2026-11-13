@@ -179,6 +179,13 @@ Se le viste hanno tempi diversi non applicare KL framewise senza allineamento co
 E' un'ipotesi anti-forgetting, non una garanzia: anche la testa puo' perdere capacita' con
 encoder congelato. Provare una modifica alla volta, non un unico braccio con tutte le opzioni.
 
+**Gia' misurato (E-036, 2026-11-13).** Due bracci dal mix E-032 (S1 x20 + replay completo):
+`frozen` (3,94M parametri mobili) e `last2` (7,49M), KD 20 verso E-028. Entrambi **respinti**:
+dev tie (30,9859% / 30,9720% vs 31,0101), prodotto tie su WER ma rari **39/81** e **41/81**
+(target 42), **`x` su tutti i 120 clip di silenzio** (0.8.1: 0) e `last2` T-S3 ETA **−1,41 pp**.
+La protezione preserva il WER ma non il comportamento sul silenzio e non recupera il guadagno
+raro: **0.8.1 e' congelato**. Dettagli: [E-036](../../runs/E-036/RESULT.md).
+
 ### Audio Reale Di Dominio Con Diritti Chiari
 
 Cercare tutorial, presentazioni, spiegazioni tecniche o podcast con inserti inglesi,

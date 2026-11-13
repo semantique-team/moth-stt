@@ -1,0 +1,102 @@
+{
+  "selection": "greedy dev, no LM, 3,939 clips, paired within-language macro WER",
+  "initial": "E-028_initial",
+  "arms": {
+    "E-028_initial": {
+      "checkpoint": "runs/E-028/checkpoints/ckpt_best.pt",
+      "step": 13283,
+      "macro": 0.31010131903961546,
+      "it": 0.36290741703170243,
+      "en": 0.2572952210475285,
+      "wer": 0.3026755141538527,
+      "eta": null,
+      "seconds": 41.5
+    },
+    "E-036-frozen": {
+      "checkpoint": "runs/E-036/frozen/checkpoints/ckpt_best.pt",
+      "step": 4000,
+      "macro": 0.30985909150253416,
+      "it": 0.36283317247011654,
+      "en": 0.2568850105349518,
+      "wer": 0.3024096641783109,
+      "eta": null,
+      "seconds": 40.3
+    },
+    "E-036-last2": {
+      "checkpoint": "runs/E-036/last2/checkpoints/ckpt_best.pt",
+      "step": 8000,
+      "macro": 0.3097204340975177,
+      "it": 0.36231346053901553,
+      "en": 0.2571274076560198,
+      "wer": 0.3023245921861375,
+      "eta": null,
+      "seconds": 40.3
+    }
+  },
+  "comparisons": {
+    "E-036-frozen": {
+      "macro_delta_pp": -0.024222753708130762,
+      "macro_vs_initial": {
+        "point": -0.00024222753708130762,
+        "ci": [
+          -0.0008058169530964499,
+          0.00033492480749136577
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": true
+      },
+      "pooled_vs_initial": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0002658499755417987,
+        "wer_diff_ci": [
+          -0.0008422325641662121,
+          0.00029557066250052166
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      },
+      "dev_guard": true
+    },
+    "E-036-last2": {
+      "macro_delta_pp": -0.03808849420977589,
+      "macro_vs_initial": {
+        "point": -0.0003808849420977589,
+        "ci": [
+          -0.0010477952153262193,
+          0.0002626337220597019
+        ],
+        "strata": {
+          "it": 1248,
+          "en": 2691
+        },
+        "bootstrap": 1000,
+        "seed": 0,
+        "tie": true
+      },
+      "pooled_vs_initial": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0003509219677151898,
+        "wer_diff_ci": [
+          -0.001011324730050056,
+          0.0002883537138890224
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      },
+      "dev_guard": true
+    }
+  },
+  "dev_guard": "an arm with macro > initial + 0.50 pp is broken and gets no product readout",
+  "decision": "product readout in PLAN.md; dev is a guard, not the selection metric"
+}

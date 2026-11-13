@@ -5,6 +5,10 @@ Questo documento registra **cosa manca prima di concludere il modello** e i crit
 **Non registra esperimenti eseguiti e non autorizza training**: gli esperimenti reali mantengono il
 loro PLAN, la voce in `EXPERIMENTS.md` e `runs/<id>/`.
 
+> **Aggiornamento 2026-11-13:** E-035 e E-036 sono stati eseguiti e sono **entrambi negativi**.
+> **0.8.1 e' congelato**: nessun candidato acustico o LM e' stato adottato. Restano le evidenze di
+> chiusura (fp32/INT8, multi-seed, browser) e il lavoro umano sul mixed-dev/voce nuova.
+
 Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../../STATUS.md),
 [dossier paper](../13-current-model-and-paper-readiness.md) §7, [ledger](../12-experiment-ledger.md),
 [E-033](../../runs/E-033/RESULT.md), [E-034](../../runs/E-034/RESULT.md).
@@ -25,7 +29,7 @@ Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../
 | Dev mixed reale su speaker noti (S1/S2) | **non eseguito** | il kit e' pronto (`recordings/segment_notes.py`, import gia' supportato) | ~1 giornata umana + trascrizione; valutazione in minuti | servono le registrazioni |
 | Holdout indipendente con voce nuova | **non eseguito** | nessun audio disponibile | dipende dalla persona | speaker nuovo |
 | LM budgeted nei 293.711 B | **eseguito, respinto al readout** | E-035: 73.427 trigrammi count-1, binario **5.675.700 B**, pacchetto **19.999.997 B**, dev macro **22,7849% vs 22,8494%** (**−0,0645 pp**, CI [−0,1144, −0,0134]); **readout prodotto: tie su tutte le metriche primarie** (T-600 +0,0287 pp, T-S3 −0,0852, FLEURS-IT +0,0062, EN −0,0437, rari 38/81 in entrambi), `noise_music` +2 parole, nessun guadagno significativo → **non adottato, 0.8.1 resta** | — (chiuso) | tetto prodotto: nessun guadagno misurabile |
-| Fine-tune conservativo (replay + distillazione verso il Moth precedente) | **non eseguito** | E-015/E-032 dicono che aggiungere dati mirati rompe il generale; questa e' la variante protettiva | ~2 h per arma, 2-3 armi | nessuno |
+| Fine-tune conservativo (replay + distillazione verso il Moth precedente) | **eseguito, respinto** | E-036: `frozen` 3,94M e `last2` 7,49M param mobili, KD 20; dev **30,9859% / 30,9720%** vs 31,0101 (tie); prodotto tie su WER ma rari **39/81** e **41/81** (target 42), **`x` su tutti i 120 clip di silenzio** (0.8.1: 0), `last2` T-S3 ETA **−1,41 pp** [−2,76, −0,28]. **Nessun candidato, 0.8.1 congelato** | — (chiuso) | il silenzio e i rari non sono recuperabili con questa ricetta |
 | Pilot TTS per il training | **non eseguito** | nessun generatore qualificato ne' licenza verificata | giorni (ascolto + 1 run vs controllo) | qualifica + licenze |
 | Audio reale di dominio con diritti | **non eseguito** | nessuna fonte autorizzata | settimane | reperimento + diritti |
 | InterCTC | **respinto** | E-033: +0,0249 pp dev, CI [−0,0998, +0,1557], niente esportato | — | chiuso per questa ricetta |
@@ -54,12 +58,11 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 
 ## Le Due Chiusure
 
-1. **Chiusura tecnica (freeze del modello, fattibile qui):** E-035 ha mostrato che il margine di
-   293.711 B vale un piccolo guadagno dev ma **non un guadagno prodotto**: il candidato non viene
-   adottato e 0.8.1 resta. E-036 (fine-tune conservativo) decide la domanda training-side.
-   fp32/INT8 appaiato, multi-seed e browser WER rendono difendibili i numeri gia' pubblicati. Se
-   E-036 fallisce, il modello si **congela a 0.8.1** con la motivazione scritta, non per
-   stanchezza.
+1. **Chiusura tecnica (freeze del modello):** E-035 ha mostrato che il margine di 293.711 B vale
+   un piccolo guadagno dev ma **non un guadagno prodotto**. E-036 ha fallito su entrambi i bracci:
+   WER tie, rari sotto target, silenzio allucinato. **Il modello si congela a 0.8.1** con la
+   motivazione scritta, non per stanchezza. fp32/INT8 appaiato, multi-seed e browser WER restano
+   le evidenze che rendono difendibili i numeri gia' pubblicati.
 2. **Chiusura dell'evidenza (paper):** richiede il **dev mixed reale** e, per l'affermazione piu'
    forte, una **voce nuova**. Nessuna quantita' di compute locale sostituisce questi due.
 
@@ -67,8 +70,8 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 
 1. ~~**E-035 — LM budgeted**~~ — **chiuso**: dev −0,0645 pp, ma readout prodotto tie su tutte le
    metriche primarie e nessun guadagno significativo; **non adottato, 0.8.1 resta**.
-2. **E-036 — fine-tune conservativo** (encoder congelato/ultimi blocchi, replay reale,
-   distillazione verso il Moth precedente): chiude la domanda training-side senza nuovi dati.
+2. ~~**E-036 — fine-tune conservativo**~~ — **chiuso negativo**: WER tie, rari 39/81 e 41/81,
+   silenzio 0→120 `x`, `last2` T-S3 ETA −1,41 pp; **0.8.1 congelato**.
 3. **Evidenze di chiusura**: fp32/INT8 appaiato, ≥3 seed, browser WER/ETA.
 4. **Lavoro umano in parallelo**: note vocali da 5-10 minuti per il dev mixed; la prima voce nuova
    disponibile va riservata al readout di un candidato gia' congelato, non al training.
@@ -77,7 +80,7 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 ## Criteri Di Chiusura
 
 - [x] E-035 eseguito e deciso — **dev in avanzo, readout prodotto tie: non adottato**
-- [ ] E-036 eseguito e deciso
+- [x] E-036 eseguito e deciso — **entrambi i bracci respinti; 0.8.1 congelato**
 - [ ] fp32/INT8 appaiato con lo stesso LM registrato
 - [ ] ≥3 seed predeclarati con dispersione
 - [ ] browser WER/ETA misurato, non solo acceptance
@@ -87,6 +90,6 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 
 ## Limiti
 
-Nessun esperimento e' stato eseguito per questo documento. I costi sono stime dell'ordine di
+Questo documento non esegue esperimenti: i risultati E-035/E-036 vivono nei rispettivi `runs/`. I costi sono stime dell'ordine di
 grandezza, non misure. Il freeze non e' una dichiarazione di qualita': e' la dichiarazione che le
 ipotesi residue o richiedono dati nuovi o escono dal tetto di 20 MB.

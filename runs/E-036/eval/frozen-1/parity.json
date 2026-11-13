@@ -1,0 +1,12 @@
+{
+  "python_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "js_text": "le diffuseo proteste iniziate a ottobrek conte",
+  "exact_match": true,
+  "scope": "same-logits decoder only; no browser acoustic claim",
+  "node_seconds": 0.125,
+  "assets": {
+    "model_sha256": "a7210d9555863d3a95a5bbc3371014252b6adfe6d61c2ff0c339f832067c453a",
+    "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
+    "vocab_sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+  }
+}

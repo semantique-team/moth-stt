@@ -1,0 +1,348 @@
+{
+  "arm": "last2",
+  "name": "last2-1",
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "release": "runs/E-036/release-last2",
+  "package_bytes": 19706289,
+  "baseline": "runs/E-035/readout/readout-1/baseline",
+  "sets": {
+    "t600": {
+      "n": 600,
+      "baseline": {
+        "wer": 0.2408256880733945,
+        "eta": 0.5522531160115053
+      },
+      "candidate": {
+        "wer": 0.24225917431192662,
+        "eta": 0.5532118887823586
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0014334862385321223,
+        "wer_diff_ci": [
+          -0.0031782721756717647,
+          0.006592146746918881
+        ],
+        "wer_tie": true,
+        "eta_diff": 0.0009587727708533222,
+        "eta_diff_ci": [
+          -0.008780487804878057,
+          0.011948529411764719
+        ],
+        "eta_tie": true
+      }
+    },
+    "fleurs_it_test": {
+      "n": 697,
+      "baseline": {
+        "wer": 0.2016214530714063,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.20249454318677892,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0008730901153726212,
+        "wer_diff_ci": [
+          -0.0012001768681700609,
+          0.002882374586041958
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "fleurs_en_test": {
+      "n": 525,
+      "baseline": {
+        "wer": 0.4980765868158769,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.4984262983038993,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.00034971148802237506,
+        "wer_diff_ci": [
+          -0.0028561537129998538,
+          0.003543341111399201
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "noise": {
+      "n": 0,
+      "baseline": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0,
+        "wer_diff_ci": null,
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "t-s3": {
+      "n": 200,
+      "baseline": {
+        "wer": 0.2495741056218058,
+        "eta": 0.5126760563380282
+      },
+      "candidate": {
+        "wer": 0.252129471890971,
+        "eta": 0.49859154929577465
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0025553662691652212,
+        "wer_diff_ci": [
+          -0.003430531732418529,
+          0.008410428931875547
+        ],
+        "wer_tie": true,
+        "eta_diff": -0.014084507042253502,
+        "eta_diff_ci": [
+          -0.027624309392265123,
+          -0.0028011204481792618
+        ],
+        "eta_tie": false
+      }
+    }
+  },
+  "rare": {
+    "n": 47,
+    "baseline": {
+      "en_hit": 38,
+      "en_ref": 81,
+      "aligned_eta": 0.4691358024691358
+    },
+    "candidate": {
+      "en_hit": 41,
+      "en_ref": 81,
+      "aligned_eta": 0.5061728395061729
+    },
+    "vs_baseline": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": -0.019305019305019322,
+      "wer_diff_ci": [
+        -0.04150943396226414,
+        -0.003636363636363632
+      ],
+      "wer_tie": false,
+      "eta_diff": 0.03703703703703709,
+      "eta_diff_ci": [
+        0.0,
+        0.0864197530864198
+      ],
+      "eta_tie": true
+    },
+    "target_only": {
+      "baseline": {
+        "en_hit": 24,
+        "en_ref": 47,
+        "aligned_eta": 0.5106382978723404
+      },
+      "candidate": {
+        "en_hit": 27,
+        "en_ref": 47,
+        "aligned_eta": 0.574468085106383
+      }
+    }
+  },
+  "terms": {
+    "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-036/eval/last2-1/candidate/t600.hyp.jsonl",
+    "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-035/readout/readout-1/baseline/t600.hyp.jsonl",
+    "groups": {
+      "natural": {
+        "base": {
+          "correct": 432,
+          "occurrences": 817,
+          "accuracy": 0.5287637698898409
+        },
+        "new": {
+          "correct": 434,
+          "occurrences": 817,
+          "accuracy": 0.5312117503059975
+        }
+      },
+      "gold": {
+        "base": {
+          "correct": 127,
+          "occurrences": 179,
+          "accuracy": 0.7094972067039106
+        },
+        "new": {
+          "correct": 123,
+          "occurrences": 179,
+          "accuracy": 0.6871508379888268
+        }
+      },
+      "never": {
+        "base": {
+          "correct": 24,
+          "occurrences": 47,
+          "accuracy": 0.5106382978723404
+        },
+        "new": {
+          "correct": 27,
+          "occurrences": 47,
+          "accuracy": 0.574468085106383
+        }
+      }
+    },
+    "rare": {
+      "n": 47,
+      "base": 0.5106382978723404,
+      "new": 0.574468085106383,
+      "delta": 0.06382978723404265,
+      "ci_low": 0.0,
+      "ci_high": 0.14893617021276595,
+      "bootstrap": 1000
+    },
+    "aligned_eta": {
+      "rare": {
+        "base": {
+          "eta": 0.4691358024691358,
+          "wer": 0.28185328185328185,
+          "en_hit": 38,
+          "en_ref": 81
+        },
+        "new": {
+          "eta": 0.5061728395061729,
+          "wer": 0.2625482625482625,
+          "en_hit": 41,
+          "en_ref": 81
+        }
+      },
+      "all": {
+        "base": {
+          "eta": 0.5522531160115053,
+          "wer": 0.2408256880733945,
+          "en_hit": 576,
+          "en_ref": 1043
+        },
+        "new": {
+          "eta": 0.5532118887823586,
+          "wer": 0.24225917431192662,
+          "en_hit": 577,
+          "en_ref": 1043
+        }
+      }
+    },
+    "gold_terms": {
+      "base": [
+        19,
+        27
+      ],
+      "new": [
+        19,
+        27
+      ]
+    }
+  },
+  "noise": {
+    "baseline": {
+      "clips": 457,
+      "total_words": 557,
+      "non_empty_clips": 230,
+      "non_music_clips": 337,
+      "non_music_words": 258,
+      "non_music_non_empty_clips": 146,
+      "music_clips": 120,
+      "music_words": 299,
+      "music_non_empty_clips": 84
+    },
+    "candidate": {
+      "clips": 457,
+      "total_words": 686,
+      "non_empty_clips": 360,
+      "non_music_clips": 337,
+      "non_music_words": 381,
+      "non_music_non_empty_clips": 272,
+      "music_clips": 120,
+      "music_words": 305,
+      "music_non_empty_clips": 88
+    },
+    "gates": {
+      "noise_non_music": false,
+      "noise_music": false
+    }
+  },
+  "parity": {
+    "python_text": "le diffuseo proteste iniziate a ottobrek conte",
+    "js_text": "le diffuseo proteste iniziate a ottobrek conte",
+    "exact_match": true,
+    "scope": "same-logits decoder only; no browser acoustic claim",
+    "node_seconds": 0.045,
+    "assets": {
+      "model_sha256": "1220b9ebd8ec3d819ada7c751f4806e6757e72e20e387d4918ffe39b319e5333",
+      "lm_sha256": "3be1177b0ca9f18343efb8d00f0d96365226595c9de32d992720aa4e0b0f16f1",
+      "vocab_sha256": "22a1e24dbd0e5df30c7fbf300c98a8d22817799f3749f2d97ff9bdf033bc22fb"
+    }
+  },
+  "gates": {
+    "bytes": true,
+    "t600_wer": true,
+    "t600_eta": true,
+    "ts3_wer": true,
+    "ts3_eta": true,
+    "fleurs_it": true,
+    "fleurs_en": true,
+    "natural": true,
+    "rare_target": false,
+    "decoder_parity": true,
+    "noise_non_music": false,
+    "noise_music": false
+  },
+  "primary": {
+    "significantly_worse": {
+      "t600_wer": false,
+      "t600_eta": false,
+      "ts3_wer": false,
+      "ts3_eta": true,
+      "fleurs_it_wer": false,
+      "fleurs_en_wer": false,
+      "rare_eta": false
+    },
+    "significantly_better": {
+      "t600_wer": false,
+      "t600_eta": false,
+      "ts3_wer": false,
+      "ts3_eta": false,
+      "fleurs_it_wer": false,
+      "fleurs_en_wer": false,
+      "rare_eta": false
+    }
+  },
+  "absolute_ok": false,
+  "no_significant_regression": false,
+  "candidate": false,
+  "verdict": "reject: one or more absolute gates failed"
+}
