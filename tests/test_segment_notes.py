@@ -10,7 +10,7 @@ import soundfile as sf
 
 from recordings.build_manifest import MAX_SECONDS
 from recordings.import_manifest import import_manifest
-from recordings.segment_notes import plan_segments, write_segments
+from recordings.segment_notes import main, plan_segments, write_segments
 
 RATE = 16_000
 
@@ -69,6 +69,132 @@ def test_bounds_are_validated():
         plan_segments(_tone(2), min_seconds=2, max_seconds=1)
     with pytest.raises(ValueError, match="need 0 < min < max"):
         plan_segments(_tone(2), max_seconds=MAX_SECONDS + 1)
+
+
+@pytest.mark.parametrize("gap", [-1, float("nan"), float("inf")])
+def test_invalid_gap_is_rejected(gap):
+    with pytest.raises(ValueError, match="min_gap_seconds"):
+        plan_segments(_tone(2), min_gap_seconds=gap)
+
+
+@pytest.mark.parametrize("samples", [np.zeros((10, 2)), np.array([float("nan")])])
+def test_invalid_samples_are_rejected(samples):
+    with pytest.raises(ValueError, match="finite mono"):
+        plan_segments(samples)
+
+
+@pytest.mark.parametrize("segments", [[], [(0, RATE // 2)], [(0, 3 * RATE)],
+                                     [(0, RATE), (RATE // 2, 2 * RATE)]])
+def test_invalid_segments_leave_no_outputs(tmp_path, segments):
+    with pytest.raises(ValueError, match="segments"):
+        write_segments(_tone(2), segments, out_dir=tmp_path / "clips", speaker="S1",
+                       prefix="s1-note", source_stem="note",
+                       transcripts_path=tmp_path / "notes.jsonl")
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_cli_aggregates_notes_and_overwrites_once(tmp_path):
+    notes = [tmp_path / "first.wav", tmp_path / "second.wav"]
+    for path in notes:
+        sf.write(path, _tone(2), RATE)
+    out = tmp_path / "clips"
+    text = tmp_path / "notes.jsonl"
+    args = ["--audio", *map(str, notes), "--speaker", "S1", "--out-dir", str(out),
+            "--transcripts", str(text)]
+    for suffix in ([], ["--overwrite"]):
+        assert main(args + suffix) == 0
+        rows = [json.loads(line) for line in text.read_text().splitlines()]
+        assert [row["id"] for row in rows] == ["s1-note-first-001", "s1-note-second-001"]
+        assert {row["audio"] for row in rows} == {path.name for path in out.glob("*.wav")}
+
+
+@pytest.mark.parametrize("overwrite", [False, True])
+def test_cli_stem_collisions_preflight_before_decode(tmp_path, monkeypatch, overwrite):
+    monkeypatch.setattr("recordings.segment_notes.load_audio_16k",
+                        lambda _: pytest.fail("must reject before decoding"))
+    with pytest.raises(SystemExit, match="2"):
+        main(["--audio", "A B.wav", "a-b.wav", "--speaker", "S1", "--out-dir",
+              str(tmp_path / "clips"), "--transcripts", str(tmp_path / "notes.jsonl"),
+              *(["--overwrite"] if overwrite else [])])
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_cli_later_existing_clip_leaves_no_partial_outputs(tmp_path):
+    notes = [tmp_path / "first.wav", tmp_path / "second.wav"]
+    for path in notes:
+        sf.write(path, _tone(2), RATE)
+    out = tmp_path / "clips"
+    out.mkdir()
+    existing = out / "s1-note-second-001.wav"
+    existing.write_bytes(b"keep")
+    with pytest.raises(FileExistsError):
+        main(["--audio", *map(str, notes), "--speaker", "S1", "--out-dir", str(out),
+              "--transcripts", str(tmp_path / "notes.jsonl")])
+    assert list(out.iterdir()) == [existing]
+    assert existing.read_bytes() == b"keep"
+    assert not (tmp_path / "notes.jsonl").exists()
+
+
+def test_cli_later_invalid_note_leaves_no_outputs(tmp_path):
+    first, second = tmp_path / "first.wav", tmp_path / "second.wav"
+    sf.write(first, _tone(2), RATE)
+    sf.write(second, _silence(2), RATE)
+    with pytest.raises(ValueError, match="no speech"):
+        main(["--audio", str(first), str(second), "--speaker", "S1", "--out-dir",
+              str(tmp_path / "clips"), "--transcripts", str(tmp_path / "notes.jsonl")])
+    assert not (tmp_path / "clips").exists()
+    assert not (tmp_path / "notes.jsonl").exists()
+
+
+def test_cli_transcript_clip_collision_leaves_no_outputs(tmp_path):
+    note = tmp_path / "first.wav"
+    sf.write(note, _tone(2), RATE)
+    out = tmp_path / "clips"
+    with pytest.raises(SystemExit, match="2"):
+        main(["--audio", str(note), "--speaker", "S1", "--out-dir", str(out),
+              "--transcripts", str(out / "s1-note-first-001.wav")])
+    assert not out.exists()
+
+
+def test_single_note_inspection_failure_leaves_no_files(tmp_path, monkeypatch):
+    def fail(_):
+        raise ValueError("inspection failed")
+
+    monkeypatch.setattr("recordings.segment_notes.inspect_audio", fail)
+    with pytest.raises(ValueError, match="inspection failed"):
+        write_segments(_tone(2), [(0, 2 * RATE)], out_dir=tmp_path / "clips", speaker="S1",
+                       prefix="s1-note", source_stem="note",
+                       transcripts_path=tmp_path / "notes.jsonl")
+    assert list((tmp_path / "clips").iterdir()) == []
+    assert not (tmp_path / "notes.jsonl").exists()
+
+
+def test_cli_later_inspection_failure_preserves_existing_outputs(tmp_path, monkeypatch):
+    notes = [tmp_path / "first.wav", tmp_path / "second.wav"]
+    for path in notes:
+        sf.write(path, _tone(2), RATE)
+    out = tmp_path / "clips"
+    out.mkdir()
+    existing = out / "s1-note-first-001.wav"
+    existing.write_bytes(b"old audio")
+    text = tmp_path / "notes.jsonl"
+    text.write_text("old transcript")
+    from recordings import segment_notes
+
+    inspect = segment_notes.inspect_audio
+
+    def fail_second(path):
+        if "second" in path.name:
+            raise ValueError("inspection failed")
+        return inspect(path)
+
+    monkeypatch.setattr(segment_notes, "inspect_audio", fail_second)
+    with pytest.raises(ValueError, match="inspection failed"):
+        main(["--audio", *map(str, notes), "--speaker", "S1", "--out-dir", str(out),
+              "--transcripts", str(text), "--overwrite"])
+    assert list(out.iterdir()) == [existing]
+    assert existing.read_bytes() == b"old audio"
+    assert text.read_text() == "old transcript"
 
 
 def test_write_segments_makes_16k_mono_and_a_skeleton(tmp_path):
