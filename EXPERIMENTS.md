@@ -1994,3 +1994,48 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   INT8 remains the only deployable format; the measured cost goes into the card/paper caveat, not
   into a release change. **No model or package change.** [Result](runs/E-037/RESULT.md).
 - **Cost**: one fp32 export + ~15 min of CPU decoding, no training, no download, 0 USD.
+
+## E-038 — Per-speaker T-600: the pooled number hides a 5.3 pp / 12.0 pp spread (2026-11-13)
+
+- **Question**: the published T-600 figures are pooled over S1, S2 and S3. With no fourth voice
+  available, how much do the three existing voices differ on the shipped 0.8.1?
+- **Method**: decode-free re-scoring of the committed E-037 hypotheses
+  (`runs/E-037/readout/paired-1/product/int8/t600.hyp.jsonl`, sha `a07fc630eccb5bdb…`) against
+  `recordings/manifests/T.jsonl` (sha `11e002d88dbfaee9…`); per-speaker WER/ETA with per-utterance
+  bootstrap (1,000, seed 0); dispersion across voices. No decode, no training, no new audio.
+- **Result**: S1 **20.9802% / 63.2836%** [18.0851, 23.7882] / [57.3134, 69.3252]; S2
+  **26.3249% / 51.5581%** [22.8669, 29.5713] / [44.7439, 57.7259]; S3 **24.9574% / 51.2676%**
+  [21.6512, 28.1488] / [44.5652, 57.6803]; pooled **24.0826% / 55.2253%** (reproduces E-037
+  exactly). Dispersion: **WER 5.3447 pp**, **ETA 12.0160 pp**.
+- **Verdict**: the pooled figure is not a speaker-independent estimate and must be reported with
+  the per-voice range; the never-trained voice (S3) is **not** the worst (S2 is), so training
+  exposure does not explain the gap. Three voices cannot estimate between-speaker variance, so the
+  CIs stay per-utterance (not speaker-cluster) and no unseen-speaker claim is made.
+  [Result](runs/E-038/RESULT.md).
+- **Cost**: seconds of CPU, no decode, no training, 0 USD.
+
+## E-039 — Leakage audit, first pass: no literal leakage, and a false "never seen" label (2026-11-13)
+
+- **Question**: do any evaluation texts/clips also appear in training text, training scripts or
+  another evaluation set; does our recorded audio repeat across sets; are corpus train/dev/test id
+  splits disjoint; does the natural/gold/never term classification hold against the training text
+  actually used by 0.8.1? The closure plan listed this audit as never performed.
+- **Method**: read-only audit of every text source (`recordings/scripts/*`, `recordings/manifests/*`,
+  all `data/manifests/*`), exact normalized-text duplicates plus trigram near-dups (Jaccard > 0.8)
+  within our own data, sha256 registry of the 2,209 wavs under `recordings/audio/`, id
+  disjointness per corpus, and term provenance recomputed against E-028's training text including
+  the addenda boundary. No training, no decode, no data change.
+- **Result**: 2,055 texts shared across sources, **all structural** (anchor reads T, manifests are
+  the recorded scripts, R addenda are part of R) or **corpus text repeat** (42 CV-IT dev/test
+  sentences); **0 unexpected pairs**. Near-dups above 0.8 within our data: **0** of **10,918** candidate pairs evaluated
+  (highest sub-threshold 0.8000, a benign shared prefix). Audio: **0**
+  repeated hashes, **0** cross-set collisions, **0** missing files. IDs: **0** shared in CV-IT,
+  MLS-IT and LS-EN splits. Terms: 655 English terms in T = natural 461, gold 150, **never 44**
+  under the 0.7.0 boundary (47 rare-bearing utterances), but **never 0** under E-028/0.8.1, where
+  the 44 arrive through the S1/S2 addenda; E-036-only `terms3` adds none.
+- **Verdict**: no literal leakage in text, audio or ids. The load-bearing documentation claim is
+  **wrong for 0.8.1**: "rare terms never seen in any training text" is a **0.7.0** property. The
+  metric is unchanged, the label is corrected in `docs/03` and `docs/13`. Not covered: `data/raw`
+  re-hash (13 GB), external-corpus near-dups, upstream contamination, consent.
+  [Result](runs/E-039/RESULT.md).
+- **Cost**: ~3 s of I/O plus hashing 492 MB, no training, no download, 0 USD.
