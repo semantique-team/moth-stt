@@ -1,0 +1,15 @@
+[2026-11-13 17:55:04] queue starting; waiting for any in-flight E-040 training
+[2026-11-13 19:50:07] no E-040 training in flight
+[2026-11-13 19:50:07] preflight runs/E-040/seed2/frozen/config.yaml
+[2026-11-13 19:50:09] start runs/E-040/seed2/frozen/config.yaml
+[2026-11-13 21:43:27] done runs/E-040/seed2/frozen/config.yaml
+[2026-11-13 21:43:27] preflight runs/E-040/seed2/last2/config.yaml
+[2026-11-13 21:43:28] start runs/E-040/seed2/last2/config.yaml
+[2026-11-13 23:57:07] done runs/E-040/seed2/last2/config.yaml
+[2026-11-13 23:57:07] preflight runs/E-040/seed3/frozen/config.yaml
+[2026-11-13 23:57:08] start runs/E-040/seed3/frozen/config.yaml
+[2026-11-14 01:53:14] done runs/E-040/seed3/frozen/config.yaml
+[2026-11-14 01:53:14] preflight runs/E-040/seed3/last2/config.yaml
+[2026-11-14 01:53:15] start runs/E-040/seed3/last2/config.yaml
+[2026-11-14 04:06:32] done runs/E-040/seed3/last2/config.yaml
+[2026-11-14 04:06:32] queue complete

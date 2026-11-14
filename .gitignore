@@ -71,4 +71,6 @@ runs/E-035/build/*.pkl.gz
 
 # E-036: exported fine-tune checkpoints are reproducible from the config and stt.export
 runs/E-036/release-*/
+# E-040: per-replicate int8 exports are reproducible from the committed checkpoints recipe
+runs/E-040/seed*/*/release-*/
 runs/E-036/smoke*/

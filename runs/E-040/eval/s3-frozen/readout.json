@@ -1,0 +1,297 @@
+{
+  "run": "runs/E-040/seed3/frozen",
+  "name": "s3-frozen",
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "release": "runs/E-040/seed3/frozen/release-int8",
+  "model_bytes": 11910677,
+  "baseline": "runs/E-035/readout/readout-1/baseline",
+  "sets": {
+    "t600": {
+      "n": 600,
+      "baseline": {
+        "wer": 0.2408256880733945,
+        "eta": 0.5522531160115053
+      },
+      "candidate": {
+        "wer": 0.24025229357798164,
+        "eta": 0.5522531160115053
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0005733944954128545,
+        "wer_diff_ci": [
+          -0.0036931818181818177,
+          0.0023154848046309795
+        ],
+        "wer_tie": true,
+        "eta_diff": 0.0,
+        "eta_diff_ci": [
+          -0.004911591355599265,
+          0.0055710306406684396
+        ],
+        "eta_tie": true
+      }
+    },
+    "fleurs_it_test": {
+      "n": 697,
+      "baseline": {
+        "wer": 0.2016214530714063,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.20212036170876208,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0004989086373557716,
+        "wer_diff_ci": [
+          -0.0010556383507203115,
+          0.0019926520953982008
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "fleurs_en_test": {
+      "n": 525,
+      "baseline": {
+        "wer": 0.4980765868158769,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.4975520195838433,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.0005245672320335903,
+        "wer_diff_ci": [
+          -0.0026975287156282834,
+          0.0015654896503739524
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "noise": {
+      "n": 0,
+      "baseline": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0,
+        "wer_diff_ci": null,
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "t-s3": {
+      "n": 200,
+      "baseline": {
+        "wer": 0.2495741056218058,
+        "eta": 0.5126760563380282
+      },
+      "candidate": {
+        "wer": 0.2453151618398637,
+        "eta": 0.5098591549295775
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.004258943781942082,
+        "wer_diff_ci": [
+          -0.010126582278481011,
+          0.0
+        ],
+        "wer_tie": true,
+        "eta_diff": -0.0028169014084507005,
+        "eta_diff_ci": [
+          -0.008849557522123908,
+          0.0
+        ],
+        "eta_tie": true
+      }
+    }
+  },
+  "rare": {
+    "n": 47,
+    "baseline": {
+      "en_hit": 38,
+      "en_ref": 81,
+      "aligned_eta": 0.4691358024691358
+    },
+    "candidate": {
+      "en_hit": 38,
+      "en_ref": 81,
+      "aligned_eta": 0.4691358024691358
+    },
+    "vs_baseline": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": 0.0038610038610038533,
+      "wer_diff_ci": [
+        0.0,
+        0.012096774193548376
+      ],
+      "wer_tie": true,
+      "eta_diff": 0.0,
+      "eta_diff_ci": [
+        0.0,
+        0.0
+      ],
+      "eta_tie": true
+    }
+  },
+  "terms": {
+    "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-040/eval/s3-frozen/candidate/t600.hyp.jsonl",
+    "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-035/readout/readout-1/baseline/t600.hyp.jsonl",
+    "groups": {
+      "natural": {
+        "base": {
+          "correct": 432,
+          "occurrences": 817,
+          "accuracy": 0.5287637698898409
+        },
+        "new": {
+          "correct": 432,
+          "occurrences": 817,
+          "accuracy": 0.5287637698898409
+        }
+      },
+      "gold": {
+        "base": {
+          "correct": 127,
+          "occurrences": 179,
+          "accuracy": 0.7094972067039106
+        },
+        "new": {
+          "correct": 127,
+          "occurrences": 179,
+          "accuracy": 0.7094972067039106
+        }
+      },
+      "never": {
+        "base": {
+          "correct": 24,
+          "occurrences": 47,
+          "accuracy": 0.5106382978723404
+        },
+        "new": {
+          "correct": 24,
+          "occurrences": 47,
+          "accuracy": 0.5106382978723404
+        }
+      }
+    },
+    "rare": {
+      "n": 47,
+      "base": 0.5106382978723404,
+      "new": 0.5106382978723404,
+      "delta": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "bootstrap": 1000
+    },
+    "aligned_eta": {
+      "rare": {
+        "base": {
+          "eta": 0.4691358024691358,
+          "wer": 0.28185328185328185,
+          "en_hit": 38,
+          "en_ref": 81
+        },
+        "new": {
+          "eta": 0.4691358024691358,
+          "wer": 0.2857142857142857,
+          "en_hit": 38,
+          "en_ref": 81
+        }
+      },
+      "all": {
+        "base": {
+          "eta": 0.5522531160115053,
+          "wer": 0.2408256880733945,
+          "en_hit": 576,
+          "en_ref": 1043
+        },
+        "new": {
+          "eta": 0.5522531160115053,
+          "wer": 0.24025229357798164,
+          "en_hit": 576,
+          "en_ref": 1043
+        }
+      }
+    },
+    "gold_terms": {
+      "base": [
+        19,
+        27
+      ],
+      "new": [
+        19,
+        27
+      ]
+    }
+  },
+  "noise": {
+    "baseline": {
+      "clips": 457,
+      "total_words": 557,
+      "non_empty_clips": 230,
+      "non_music_clips": 337,
+      "non_music_words": 258,
+      "non_music_non_empty_clips": 146,
+      "music_clips": 120,
+      "music_words": 299,
+      "music_non_empty_clips": 84
+    },
+    "candidate": {
+      "clips": 457,
+      "total_words": 671,
+      "non_empty_clips": 351,
+      "non_music_clips": 337,
+      "non_music_words": 373,
+      "non_music_non_empty_clips": 266,
+      "music_clips": 120,
+      "music_words": 298,
+      "music_non_empty_clips": 85
+    },
+    "silence": {
+      "baseline": {
+        "silence_clips": 120,
+        "silence_non_empty": 0,
+        "silence_x": 0,
+        "empty_reference_clips": 457
+      },
+      "candidate": {
+        "silence_clips": 120,
+        "silence_non_empty": 120,
+        "silence_x": 0,
+        "empty_reference_clips": 457
+      }
+    }
+  },
+  "note": "E-040 dispersion evidence; no gate and no adoption"
+}

@@ -56,7 +56,7 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 
 | Gap | Cosa serve | Costo |
 |---|---|---|
-| Multi-seed | ≥3 seed predeclarati sulle armi abbinate, con curve, dispersione e checkpoint conservati | 3 × ~2 h per arma: 1-2 giorni di macchina |
+| Multi-seed | **eseguito (E-040)**: 4 repliche per braccio (seed 0-3), nessuno step non-finito, checkpoint conservati. Dev frozen 30,9627 [30,9237, 30,9890], last2 30,9059 [30,8638, 30,9683]; T-600 frozen 24,0539 (range **0,4587 pp**), last2 24,2116. **Rari riproducibili** (max 41/81), **silenzio no** (4/8 repliche pulite). Nessuna adozione | — (chiuso) |
 | fp32 vs INT8 appaiati con lo **stesso** LM E-031 | **eseguito (E-037)**: dev +0,1574 pp [+0,0539, +0,2664], T-600 +0,4874 (tie), FLEURS-EN +0,4459 [+0,0087, +0,8652], rari 38/81 =, naturali 444→432; pacchetto 54.164.659 vs 19.706.289 B. INT8 resta | — (chiuso) |
 | Browser acoustic WER/ETA | **eseguito (E-041)**: T-600 in Chromium headless via ORT-Web, **24,7993% / 54,3624%** vs Python 24,0826% / 55,2253% → WER +0,7167 pp [0,0000, +1,4723] (tie), ETA −0,8629 (tie), 151/600 ipotesi diverse, **S3 +1,5331 pp**; RTFx mediano 42,30. Costo di deployment, release invariata | — (chiuso) |
 | Leakage audit | **primo passaggio (E-039, 2026-11-13)**: 2.055 testi condivisi tutti strutturali o repeat di corpus, 0 coppie inattese; near-dup > 0,8 nei nostri dati **0**; 2.209 wav, 0 hash ripetuti, 0 collisioni tra set, 0 file mancanti; id train/dev/test disgiunti; 44 termini "mai visti" = **mai visti da 0.7.0**, 0.8.1 li ha visti via addenda. Restano: re-hash di `data/raw` (13 GB) e review umana dei near-dup esterni | — (primo passaggio) |
@@ -84,8 +84,9 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
    metriche primarie e nessun guadagno significativo; **non adottato, 0.8.1 resta**.
 2. ~~**E-036 — fine-tune conservativo**~~ — **chiuso negativo**: WER tie, rari 39/81 e 41/81,
    silenzio 0→120 `x`, `last2` T-S3 ETA −1,41 pp; **0.8.1 congelato**.
-3. **Evidenze di chiusura**: ~~fp32/INT8~~ (E-037), ~~per-speaker~~ (E-038), ~~leakage audit~~ (E-039)
-   e ~~browser WER/ETA~~ (E-041) fatti; resta il **multi-seed** (E-040, in corso).
+3. **Evidenze di chiusura: complete** — ~~fp32/INT8~~ (E-037), ~~per-speaker~~ (E-038),
+   ~~leakage audit~~ (E-039), ~~multi-seed~~ (E-040), ~~browser WER/ETA~~ (E-041). Resta solo la
+   scrittura del paper, con i limiti dichiarati.
 4. ~~**Lavoro umano in parallelo**: note vocali per il dev mixed; voce nuova riservata al readout~~
    — **rinunciato (2026-11-13)**: nessuna registrazione, il limite va scritto e non riproposto.
 5. **Solo se serve**: pilot TTS o audio reale di dominio, con licenze verificate prima.

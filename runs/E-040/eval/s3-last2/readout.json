@@ -1,0 +1,297 @@
+{
+  "run": "runs/E-040/seed3/last2",
+  "name": "s3-last2",
+  "params": {
+    "beam": 12,
+    "top_k": 10,
+    "lm_weight": 0.55,
+    "token_bonus": 2.7
+  },
+  "release": "runs/E-040/seed3/last2/release-int8",
+  "model_bytes": 11910677,
+  "baseline": "runs/E-035/readout/readout-1/baseline",
+  "sets": {
+    "t600": {
+      "n": 600,
+      "baseline": {
+        "wer": 0.2408256880733945,
+        "eta": 0.5522531160115053
+      },
+      "candidate": {
+        "wer": 0.24283256880733944,
+        "eta": 0.5522531160115053
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.002006880733944949,
+        "wer_diff_ci": [
+          -0.0023114706732158263,
+          0.0069444444444444475
+        ],
+        "wer_tie": true,
+        "eta_diff": 0.0,
+        "eta_diff_ci": [
+          -0.010348071495766664,
+          0.009737098344693274
+        ],
+        "eta_tie": true
+      }
+    },
+    "fleurs_it_test": {
+      "n": 697,
+      "baseline": {
+        "wer": 0.2016214530714063,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.20268163392578734,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.001060180854381032,
+        "wer_diff_ci": [
+          -0.0009857679748629111,
+          0.00304471931493816
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "fleurs_en_test": {
+      "n": 525,
+      "baseline": {
+        "wer": 0.4980765868158769,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.49772687532785453,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": -0.00034971148802237506,
+        "wer_diff_ci": [
+          -0.003778445684843257,
+          0.0026180294964656126
+        ],
+        "wer_tie": true,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "noise": {
+      "n": 0,
+      "baseline": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "candidate": {
+        "wer": 0.0,
+        "eta": null
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.0,
+        "wer_diff_ci": null,
+        "wer_tie": false,
+        "eta_diff": null,
+        "eta_diff_ci": null,
+        "eta_tie": false
+      }
+    },
+    "t-s3": {
+      "n": 200,
+      "baseline": {
+        "wer": 0.2495741056218058,
+        "eta": 0.5126760563380282
+      },
+      "candidate": {
+        "wer": 0.2512776831345826,
+        "eta": 0.49859154929577465
+      },
+      "vs_baseline": {
+        "other": null,
+        "other_manifest_sha256": null,
+        "wer_diff": 0.001703577512776805,
+        "wer_diff_ci": [
+          -0.005892255892255893,
+          0.00949913644214162
+        ],
+        "wer_tie": true,
+        "eta_diff": -0.014084507042253502,
+        "eta_diff_ci": [
+          -0.03581267217630857,
+          0.0029673590504450953
+        ],
+        "eta_tie": true
+      }
+    }
+  },
+  "rare": {
+    "n": 47,
+    "baseline": {
+      "en_hit": 38,
+      "en_ref": 81,
+      "aligned_eta": 0.4691358024691358
+    },
+    "candidate": {
+      "en_hit": 39,
+      "en_ref": 81,
+      "aligned_eta": 0.48148148148148145
+    },
+    "vs_baseline": {
+      "other": null,
+      "other_manifest_sha256": null,
+      "wer_diff": 0.011583011583011615,
+      "wer_diff_ci": [
+        -0.022556390977443608,
+        0.0431372549019608
+      ],
+      "wer_tie": true,
+      "eta_diff": 0.012345679012345678,
+      "eta_diff_ci": [
+        -0.02816901408450706,
+        0.0561797752808989
+      ],
+      "eta_tie": true
+    }
+  },
+  "terms": {
+    "hyp": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-040/eval/s3-last2/candidate/t600.hyp.jsonl",
+    "baseline": "/Users/tancredi/Desktop/semantique/moth-stt/runs/E-035/readout/readout-1/baseline/t600.hyp.jsonl",
+    "groups": {
+      "natural": {
+        "base": {
+          "correct": 432,
+          "occurrences": 817,
+          "accuracy": 0.5287637698898409
+        },
+        "new": {
+          "correct": 431,
+          "occurrences": 817,
+          "accuracy": 0.5275397796817626
+        }
+      },
+      "gold": {
+        "base": {
+          "correct": 127,
+          "occurrences": 179,
+          "accuracy": 0.7094972067039106
+        },
+        "new": {
+          "correct": 127,
+          "occurrences": 179,
+          "accuracy": 0.7094972067039106
+        }
+      },
+      "never": {
+        "base": {
+          "correct": 24,
+          "occurrences": 47,
+          "accuracy": 0.5106382978723404
+        },
+        "new": {
+          "correct": 25,
+          "occurrences": 47,
+          "accuracy": 0.5319148936170213
+        }
+      }
+    },
+    "rare": {
+      "n": 47,
+      "base": 0.5106382978723404,
+      "new": 0.5319148936170213,
+      "delta": 0.021276595744680882,
+      "ci_low": -0.042553191489361764,
+      "ci_high": 0.10638297872340419,
+      "bootstrap": 1000
+    },
+    "aligned_eta": {
+      "rare": {
+        "base": {
+          "eta": 0.4691358024691358,
+          "wer": 0.28185328185328185,
+          "en_hit": 38,
+          "en_ref": 81
+        },
+        "new": {
+          "eta": 0.48148148148148145,
+          "wer": 0.29343629343629346,
+          "en_hit": 39,
+          "en_ref": 81
+        }
+      },
+      "all": {
+        "base": {
+          "eta": 0.5522531160115053,
+          "wer": 0.2408256880733945,
+          "en_hit": 576,
+          "en_ref": 1043
+        },
+        "new": {
+          "eta": 0.5522531160115053,
+          "wer": 0.24283256880733944,
+          "en_hit": 576,
+          "en_ref": 1043
+        }
+      }
+    },
+    "gold_terms": {
+      "base": [
+        19,
+        27
+      ],
+      "new": [
+        19,
+        27
+      ]
+    }
+  },
+  "noise": {
+    "baseline": {
+      "clips": 457,
+      "total_words": 557,
+      "non_empty_clips": 230,
+      "non_music_clips": 337,
+      "non_music_words": 258,
+      "non_music_non_empty_clips": 146,
+      "music_clips": 120,
+      "music_words": 299,
+      "music_non_empty_clips": 84
+    },
+    "candidate": {
+      "clips": 457,
+      "total_words": 541,
+      "non_empty_clips": 230,
+      "non_music_clips": 337,
+      "non_music_words": 246,
+      "non_music_non_empty_clips": 145,
+      "music_clips": 120,
+      "music_words": 295,
+      "music_non_empty_clips": 85
+    },
+    "silence": {
+      "baseline": {
+        "silence_clips": 120,
+        "silence_non_empty": 0,
+        "silence_x": 0,
+        "empty_reference_clips": 457
+      },
+      "candidate": {
+        "silence_clips": 120,
+        "silence_non_empty": 0,
+        "silence_x": 0,
+        "empty_reference_clips": 457
+      }
+    }
+  },
+  "note": "E-040 dispersion evidence; no gate and no adoption"
+}

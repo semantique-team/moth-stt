@@ -47,6 +47,15 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > the same 47 utterances) is unchanged, only its label. No unexpected text or audio overlap was
 > found: 2,209 recorded wavs, 0 repeated hashes, 0 cross-set collisions, 0 missing files, and
 > 0 near-duplicate pairs above Jaccard 0.8 within our own data.
+> **Corrected after the repository review (2026-11-14):** the E-015 boundary omitted
+> `ls_en_train`, so the "never seen" label was too wide. Recomputed over the acoustic source
+> text (`runs/E-039/terms-provenance.json`): natural 475, gold 145, **never 35 terms across 37
+> T utterances**, and the 35 are exactly what the E-015/E-028 addenda introduce, so 0.8.1 has
+> seen all of them. Nine of the old 44 are in LS-EN (`charger`, `delivery`, `domain`,
+> `mondays`, `reset`, `sharing`, `skills`, `solving`, `subway`). The historical 47-utterance /
+> 81-span readout keeps its fixed definition for comparability. The corrected MinHash rerun
+> raises the near-duplicate count from 7,369 to **8,205**, all still `spliced_it_en` reuse,
+> Common Voice prompt reuse or our own structural pairs; **zero involve T or FLEURS**.
 > **Second pass (E-039 PLAN-2):** all **287,429** raw audio files (12.8 GB) hashed — **0
 > cross-source collisions**; the only repeated hashes are the **120 byte-identical silence
 > clips** (the silence probe is one signal repeated, not 120 independent silences) and the
@@ -300,6 +309,14 @@ S1/S2 are training speakers (400/600 clips); S3 contributes no acoustic training
 S1's microphone and has been repeatedly inspected. The card's "S3 behind both trained voices"
 is also numerically imprecise: S2 is 26.93 vs S3 26.92. Neither this ordering nor aggregate wins
 establish broad unseen-speaker generalization.
+
+> **Multi-seed (E-040, 2026-11-14).** Four replicates per E-036 arm: dev frozen 30.9627
+> [30.9237, 30.9890], last2 30.9059 [30.8638, 30.9683]; T-600 frozen **24.0539 mean with a
+> 0.4587 pp seed range**, last2 24.2116 (0.1434). The arm gap is smaller than the seed noise,
+> so E-036's ordering carried no information. **Rare terms reproduce** — no replicate reaches
+> 42/81 (39/38/38/38 and 41/39/38/39) — while **silence does not**: frozen 120/120/0/120 and
+> last2 120/0/0/0 non-empty silence clips, so E-036's "`x` on all 120" was the seed-0 draw.
+> No adoption; 0.8.1 remains.
 
 > **Browser measurement (E-041, 2026-11-13).** T-600 decoded in headless Chromium via ONNX
 > Runtime Web with the shipped 0.8.1 bundle: **24.7993% WER / 54.3624% ETA** against

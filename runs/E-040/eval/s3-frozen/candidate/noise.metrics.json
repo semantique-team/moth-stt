@@ -1,0 +1,28 @@
+{
+  "n_utterances": 0,
+  "overall": {
+    "n": 0,
+    "ref_words": 0,
+    "sub": 0,
+    "del": 0,
+    "ins": 0,
+    "wer": 0.0,
+    "insertion_rate": 0.0,
+    "eta": null,
+    "eta_errors": [],
+    "wer_ci": null
+  },
+  "breakdown": {},
+  "noise": {
+    "clips": 457,
+    "total_words": 671,
+    "non_empty_clips": 351,
+    "non_music_clips": 337,
+    "non_music_words": 373,
+    "non_music_non_empty_clips": 266,
+    "music_clips": 120,
+    "music_words": 298,
+    "music_non_empty_clips": 85
+  },
+  "per_utterance": {}
+}

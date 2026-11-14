@@ -2065,3 +2065,27 @@ New mixed-dev/contextual-glossary/LM-pruning experiments remain blocked on missi
   mel front end / ORT-Web kernels, not a model change; no tuning, no release change. Not a mobile
   or Safari claim. [Result](runs/E-041/RESULT.md).
 - **Cost**: 36 s of browser decoding, no training, no download, 0 USD.
+
+## E-040 — Multi-seed replication of E-036: rare terms reproduce, silence does not (2026-11-14)
+
+- **Question**: were the E-036 failure modes properties of the two conservative recipes, or
+  single-seed variation? Four replicates per arm (seed 0 = E-036, seeds 1-3 new), same mixture,
+  augmentation, optimizer, schedule and KD teacher; only `seed` changed.
+- **Method**: 6 runs × 13,314 steps (~2 h each, one at a time, preflight each, no non-finite step,
+  MPS/CPU parity ≤ 5.6e-6); per-run product readout with the shipped INT8 path and A3 LM
+  (T-600, T-S3, FLEURS-IT/EN, rare 47, natural/gold, 120-clip silence probe); `summary.json`
+  aggregates means and ranges.
+- **Result**:
+  - Dev: frozen 30.9890/30.9714/30.9237/30.9667 (mean **30.9627**, range 0.0653); last2
+    30.9683/30.8638/30.8946/30.8967 (mean **30.9059**, range 0.1045).
+  - T-600: frozen mean **24.0539**, range **0.4587 pp**; last2 mean **24.2116**, range 0.1434.
+    The arm gap (+0.1577 pp for last2) is smaller than frozen's own seed range.
+  - **Rare terms reproduce**: no replicate reaches 42/81 — frozen 39/38/38/38, last2 41/39/38/39.
+  - **Silence does not reproduce**: frozen 120/120/**0**/120 non-empty clips, last2 120/**0**/**0**/**0**.
+    E-036's "`x` on all 120 in both arms" was the seed-0 draw; half the replicates are clean.
+  - Natural terms 431-438 (0.8.1: 432); gold 123-127 (127).
+- **Verdict**: E-036's rejection **stands on rare terms** (recipe property) and its **silence claim
+  is downgraded to a seed lottery** (4/8 replicates hallucinate on every silence clip, 4/8 are
+  clean). The dev/product arm ordering carried no information. Dispersion of this recipe family is
+  ~0.46 pp T-600 WER. **No adoption; 0.8.1 remains the release.** [Result](runs/E-040/RESULT.md).
+- **Cost**: 6 × ~2 h of M5 training plus ~14 min of readouts, no downloads, 0 USD.
