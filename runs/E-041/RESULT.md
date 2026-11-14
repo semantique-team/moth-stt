@@ -60,3 +60,19 @@ decoding plus seconds of scoring, no training, no download, 0 USD.
 
 Reproduction: `node runs/E-041/browser_wer.mjs --name browser-2`, then
 `uv run python runs/E-041/score.py --name browser-2`.
+
+## Post-Merge Rerun (PR #12, 2026-11-14)
+
+The review hardened the harness: it now pins the 0.8.1 release record
+(`runs/E-031/release-0.8.1.json`), refuses a release that does not match it, and records the
+manifest, audio and runtime hashes in `metrics.json`. `browser-2` reran the full T-600 on the
+merged code:
+
+- **identical outcome**: 24.7993% WER / 54.3624% ETA, WER +0.7167 pp [0.0000, +1.4723],
+  ETA −0.8629 pp [−2.4390, +0.6757], **151/600** differing hypotheses, same per-voice split;
+- **RTFx median 44.87** (min 24.89, max 59.96), 1,390.2 s of audio in **35.4 s** — same machine,
+  less background load than the first run (median 42.30);
+- the measurement is reproducible to the hypothesis, so the earlier readout was not an artifact of
+  an unpinned bundle.
+
+`readout/browser-2/` is the authoritative artifact; `browser-1` is retained as the pre-merge run.
