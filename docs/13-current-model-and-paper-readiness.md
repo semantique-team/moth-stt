@@ -102,9 +102,11 @@ the experiment reports or model cards. Only repository evidence was audited, not
 > Two protected arms from E-028 on the E-032 S1 mixture — `frozen` (3,942,785 trainable
 > parameters) and `last2` (7,490,945), both with an E-028 teacher (KD weight 20) — tie on dev
 > (30.9859% / 30.9720% vs 31.0101%) and on product WER, but do not reach the pre-registered rare
-> target: **39/81 and 41/81** aligned ETA against 42/81. Both emit the token `x` on **all 120
-> silence clips** where 0.8.1 emits nothing (non-music non-empty 146 → 272), so the noise gates
-> fail, and `last2` loses T-S3 ETA **−1.408 pp** [−2.762, −0.280]. No candidate, no new-voice
+> target: **39/81 and 41/81** aligned ETA against 42/81. At seed 0 both emit the token `x` on
+> **all 120 silence clips** where 0.8.1 emits nothing (non-music non-empty 146 → 272), so the
+> noise gates fail — but [E-040](../runs/E-040/RESULT.md) shows that behaviour is seed-dependent
+> (4 of 8 replicates clean) while the rare shortfall reproduces. `last2` also loses T-S3 ETA
+> **−1.408 pp** [−2.762, −0.280]. No candidate, no new-voice
 > readout; the published weights, LM and package are unchanged and **the acoustic model is frozen
 > at 0.8.1**. See [E-036](../runs/E-036/RESULT.md).
 

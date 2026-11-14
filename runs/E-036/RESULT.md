@@ -13,15 +13,24 @@ decoder path, not the full shipped runtime, which has a VAD guard. E-039 identif
 The historical rejection is unchanged. Music word counts below match the retained
 `eval/frozen-1/readout.json` and `eval/last2-1/readout.json`; no JSON or gate was recomputed.
 
+**Multi-seed correction (2026-11-14, [E-040](../E-040/RESULT.md)):** the silence emission is **not**
+a property of the recipe. Replicating both arms on seeds 1-3 gives frozen **120/120/0/120** and
+last2 **120/0/0/0** non-empty silence clips, so half the replicates are clean and the sentence
+"both arms emit `x` on all 120 silence clips" describes the **seed-0 draw**. The rare-term shortfall
+**does** reproduce — no replicate reaches 42/81 (39/38/38/38 and 41/39/38/39) — so the rejection
+stands on the **rare target**, not on silence. No number or gate above is recomputed.
+
 The protection worked where it was aimed — WER on T-600, T-S3 and FLEURS is a **tie** for both
 arms — but it did not deliver the rare-term target and it introduced an ungated silence regression:
 
 - **Neither arm reaches 42/81 rare aligned ETA**: `frozen` gets **39/81** (+1), `last2` **41/81**
   (+3), both with a paired CI whose lower bound is exactly zero. The pre-registered target was
   42/81, the point level E-032 reached; 39–41 is insufficient and is not rounded up.
-- **Both arms emit `x` on all 120 silence clips**, where 0.8.1 emits nothing. Non-music
+- **Both arms emit `x` on all 120 silence clips** at seed 0, where 0.8.1 emits nothing. Non-music
   non-empty clips jump from 146 to 272; the `noise_non_music` and `noise_music` gates fail. This
-  is a deterministic emission on the repeated ungated signal, not a full-runtime measurement.
+  is a deterministic emission on the repeated ungated signal, not a full-runtime measurement —
+  and E-040 shows it is **seed-dependent** (4 of 8 replicates are clean), unlike the rare-term
+  shortfall, which reproduces across seeds.
 - **`last2` also loses T-S3 ETA**: 51.27 → 49.86, paired CI [−2.76, −0.28] pp, a significant
   regression. `frozen` keeps T-S3 ETA flat.
 
