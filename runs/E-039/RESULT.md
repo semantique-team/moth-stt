@@ -179,3 +179,56 @@ sentences are effectively counted twice (once clean, once spliced).
 - Corpus prompt reuse is separated from leakage: text repeats inside a speaker-disjoint corpus are
   a property of the corpus, not a split error.
 - It does **not** cover upstream model contamination (Whisper/Whistle/Parakeet) or consent/rights.
+
+## Post-Merge Correction (PR #12, 2026-11-14)
+
+Two numbers above were produced by code the repository review later corrected. The historical
+tables stay; these supersede them.
+
+### MinHash recall (E-039 second pass)
+
+The original signature used `31·hash + seed`, i.e. **one multiplier with different offsets**, which
+largely preserves the same shingle minimum per column and is not a set of independent permutations.
+`audit2.py` now uses 64 deterministic independent affine permutations modulo `2³²−5`.
+Rerun on the same 247,510 documents (`audit2-text-v2.json`):
+
+| Pair | Before | After |
+|---|---:|---:|
+| `ls_en_train` ↔ `spliced_it_en` | 5,026 | **5,836** |
+| `mls_it_train` ↔ `spliced_it_en` | 146 | **168** |
+| `cv_it_test` ↔ `cv_it_train` | 8 | **12** |
+| `cv_it_dev` ↔ `cv_it_test` | 44 | 44 |
+| `cv_it_dev` ↔ `cv_it_train` | 6 | 6 |
+| **total** | 7,369 | **8,205** |
+
+Candidates fell from 136,179 to 32,334 — a better signature admits fewer false candidates and
+verifies more of the true ones. The conclusion is unchanged in kind: **all near-duplicates are
+`spliced_it_en` reusing LS-EN/MLS-IT text by construction, Common Voice prompt reuse, or our own
+structural pairs; zero involve T or FLEURS.** LSH remains approximate and buckets above the cap are
+still skipped, so this is a lower bound, not an exhaustive count.
+
+### Term provenance (`terms-provenance.json`)
+
+The E-015 boundary counted natural exposure from CV-IT, MLS-IT and spliced IT+EN, and **omitted
+`ls_en_train`** although E-014/E-024/E-028 train on it. Recomputed over the acoustic source text:
+
+| Classification | Terms |
+|---|---:|
+| natural (CV-IT + MLS-IT + LS-EN + spliced) | **475** |
+| gold before the addenda | **145** |
+| never seen by 0.7.0 | **35** (37 T utterances) |
+| introduced by the E-015/E-028 addenda | **35** |
+| never seen by 0.8.1 | **0** |
+
+Nine of the E-015 "44 never seen" terms are in `ls_en_train`: `charger`, `delivery`, `domain`,
+`mondays`, `reset`, `sharing`, `skills`, `solving`, `subway`. The correct statement is therefore
+**35 terms across 37 utterances**, not 44/47. The historical readout keeps its own fixed definition
+(47 utterances, 81 span tokens, 38/81 aligned ETA) so earlier experiments stay comparable — it is
+a fixed metric, no longer a claim about unseen vocabulary.
+
+### Audio scope
+
+The first-pass "0 cross-source collisions" groups files by the first two path components, so
+`librispeech/LibriSpeech` puts train and dev together. Byte-hash equality certificates loose files
+present at that execution, **not** train/dev or training/noise disjointness. Archives, deleted
+audio, mel shards and decoded-signal equivalence remain outside the audit.
