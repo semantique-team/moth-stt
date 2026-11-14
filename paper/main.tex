@@ -21,6 +21,7 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{longtable}
+\usepackage{float}
 
 \newcommand{\moth}{Moth}
 \newcommand{\pp}{\,pp}
@@ -146,7 +147,8 @@ unified multilingual vocabularies and end-to-end models; \citet{sitaram2019surve
 area. The SEAME \citep{lyu2010seame} and ASCEND \citep{lovenia2022ascend} speech corpora made
 Chinese--English switching measurable, and LinCE \citep{aguilar2020lince} centralized text
 benchmarks across several language pairs, but Italian--English technical speech remains
-comparatively under-resourced. A recurring finding is
+comparatively under-resourced. End-to-end Mandarin--English work has examined shared subword
+units and language-aware training \citep{zeng2019endtoend}. A recurring finding is
 that a single language token or a monolingual decoder forces an unnatural decision at the
 utterance level, while a shared subword vocabulary with a frame-synchronous objective avoids
 that decision. \moth{} follows the second route: one vocabulary, one CTC output stream, no
@@ -157,8 +159,13 @@ Whisper \citep{radford2023whisper} established robust multilingual ASR from weak
 its tiny variant is a common starting point for edge systems. Distillation reduces it further \citep{gandhi2023distilwhisper}; Moonshine \citep{jeffries2024moonshine} targets live
 transcription with a compact encoder--decoder; on-device engines such as Whistle
 \citep{cactus2024whistle} and transducer models in NeMo \citep{nemo2024} provide strong
-engineering baselines. Quantization \citep{jacob2018quantization} and integer-only inference are
-what make a sub-20\,MB package practical. Most of these systems are optimized for English or for
+engineering baselines. Earlier end-to-end systems established recurrent and attention-based
+recognition \citep{amodei2016deepspeech2,chan2016las,chiu2018sota}; self-supervised pretraining
+\citep{hsu2021hubert} and large multilingual training \citep{zhang2023usm,pratap2023mms} now
+supply representations that small systems reuse, and open toolkits such as SpeechBrain
+\citep{ravanelli2021speechbrain} make these baselines reproducible. Compression and quantization
+\citep{han2016deepcompression,jacob2018quantization,krishnamoorthi2018quantizing} are what make a
+sub-20\,MB package practical. Most of these systems are optimized for English or for
 broad multilingual coverage; the Italian--English mixed-term case is usually a secondary
 condition. \moth{} is intentionally narrower.
 
@@ -166,8 +173,10 @@ condition. \moth{} is intentionally narrower.
 CTC \citep{graves2006ctc} removes the need for frame-level alignment and supports a
 non-autoregressive, frame-synchronous encoder. Prefix beam search with an external language model
 \citep{graves2012sequence,hannun2014deepspeech} remains an effective decoder for small CTC
-models, and intermediate CTC losses \citep{lee2021interctc} are a standard regularizer. Our
-architecture is a plain CTC model; the interesting result is how much of the final quality is
+models, and intermediate CTC losses \citep{lee2021interctc} are a standard regularizer. CTC was
+also extended to end-to-end recurrent models \citep{graves2014towards}, and n-gram language models
+remain practical at this scale \citep{kneser1995improved,heafield2011kenlm,sundermeyer2012lstm}.
+Our architecture is a plain CTC model; the interesting result is how much of the final quality is
 decided by decoder calibration and LM data rather than by the acoustic network.
 
 \paragraph{Evaluation validity.}
@@ -484,7 +493,8 @@ seconds per wall second, which made the project viable before any real data were
 The shared recipe is AdamW with betas $(0.9,0.98)$, $\epsilon=10^{-8}$ and weight decay 0.01, a
 500-step warm-up, cosine decay to 5\% of peak, gradient clipping at 1.0, and batches capped at
 192 audio-seconds or 32 clips. Inputs are truncated to 30\,s. Augmentation is SpecAugment
-\citep{park2019specaugment} plus tempo stretch; the first full fine-tune (E-005) had an epoch
+\citep{park2019specaugment} plus tempo stretch, a standard audio-augmentation recipe
+\citep{ko2015audio}; the first full fine-tune (E-005) had an epoch
 counter bug that repeated the same augmentation view across epochs, which was fixed afterwards.
 Checkpoints are written every 10--20 minutes and selected by dev macro WER. Seed 0 is used for the
 released lineage.
@@ -575,7 +585,8 @@ reported separately. The 81 tokens are not 81 independent terms.
 
 \paragraph{Confidence intervals.}
 Unless stated otherwise, intervals are 95\% percentile intervals from 1{,}000 paired
-utterance-level bootstrap resamples with seed 0 \citep{efron1993bootstrap}. The resampling unit is
+utterance-level bootstrap resamples with seed 0, following standard bootstrap practice for ASR and
+MT evaluation \citep{efron1993bootstrap,bisani2004bootstrap,koehn2004statistical}. The resampling unit is
 the utterance, not the speaker, seed or recording session. A CI that includes zero is called a
 \emph{tie}; this means no detected difference at this sample size, not equivalence and not
 non-inferiority. Intervals for per-speaker results are within-speaker intervals and do not
@@ -694,8 +705,8 @@ claim that decoding is more important than acoustics.
 \centering
 \includegraphics[width=\textwidth]{figures/fig_rare.pdf}
 \caption{(a) Aligned rare-term ETA over the fixed 47-utterance / 81-token readout. (b) Exact-match
-accuracy by term group on T-600. Natural and gold are occurrence-level exact-match rates; rare is utterance-level presence.
-The 0.8.1 LM rebuild raises rare-term presence from 23.4\% to 51.1\% while giving back 9
+accuracy by term group on T-600. Bars are Moth 0.7.0, 0.8.0 and 0.8.1. Natural and gold are occurrence-level exact-match rates;
+rare is utterance-level presence. The 0.8.1 LM rebuild raises rare-term presence from 23.4\% to 51.1\% while giving back 9
 natural-term occurrences; the gold group is essentially unchanged. The rare group is 47
 utterance-level checks, not 47 independent terms.}
 \label{fig:rare}
@@ -1075,7 +1086,7 @@ laptop.
 \section{Release Manifest}
 \label{app:release}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}

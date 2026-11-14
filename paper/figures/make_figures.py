@@ -388,12 +388,12 @@ def fig_rare() -> None:
                 label=release_labels[i], edgecolor="white", linewidth=0.4)
     ax2.set_xticks(x, list(groups.keys()))
     ax2.set_ylabel("Accuracy / presence (%)")
-    ax2.set_ylim(0, 86)
+    ax2.set_ylim(0, 92)
     ax2.set_title("(b) Term groups on T-600", loc="left")
     ax2.grid(axis="y", color="#ececec", linewidth=0.6)
     ax2.set_axisbelow(True)
-    ax2.legend(loc="upper right", ncol=1, title="Moth release", title_fontsize=7,
-               handlelength=1.0)
+    ax2.legend(loc="upper center", ncol=3, frameon=False, handlelength=1.0,
+               columnspacing=1.2, handletextpad=0.4)
     fig.tight_layout()
     save(fig, "fig_rare.pdf")
 
