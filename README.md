@@ -15,7 +15,8 @@ IT+EN SentencePiece BPE. **11.6 M parameters, 19.7 MB required model assets (0.8
 
 For reproducible research: [artifact-audited experiment ledger](docs/12-experiment-ledger.md),
 [current model and paper limitations](docs/13-current-model-and-paper-readiness.md), and
-[verified operational workflows](docs/guides/repository-workflows.md).
+[verified operational workflows](docs/guides/repository-workflows.md). The preprint draft is
+[`paper/main.pdf`](paper/main.pdf) ([LaTeX source](paper/main.tex)).
 
 The demo runs **in the browser**: the audio never leaves the tab.
 
