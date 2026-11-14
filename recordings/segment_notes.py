@@ -21,6 +21,7 @@ import argparse
 import json
 import re
 import sys
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -107,6 +108,12 @@ def plan_segments(
         raise ValueError(f"need 0 < min < max <= {MAX_SECONDS:g} s, got {min_seconds}/{max_seconds}")
     if not np.isfinite(silence_dbfs):
         raise ValueError("silence_dbfs must be finite")
+    if not isinstance(rate, int) or rate <= 0:
+        raise ValueError("rate must be a positive integer")
+    if not np.isfinite(min_gap_seconds) or min_gap_seconds < 0:
+        raise ValueError("min_gap_seconds must be finite and nonnegative")
+    if samples.ndim != 1 or not np.isfinite(samples).all():
+        raise ValueError("samples must be finite mono audio")
     frame = max(1, round(rate * FRAME_SECONDS))
     min_samples = round(min_seconds * rate)
     max_samples = round(max_seconds * rate)
@@ -158,9 +165,25 @@ def write_segments(
     rate: int = RATE,
     overwrite: bool = False,
 ) -> dict:
-    """Write the clips plus a transcript skeleton. Refuses to overwrite without ``overwrite``."""
+    """Stage/inspect clips before publishing; replace the skeleton atomically.
+
+    Refuses to overwrite without ``overwrite``. Final multi-file publication is not crash-atomic.
+    """
     out_dir = Path(out_dir)
     transcripts_path = Path(transcripts_path)
+    if rate != RATE or samples.ndim != 1 or not np.isfinite(samples).all():
+        raise ValueError("need finite mono audio at 16000 Hz")
+    if not segments:
+        raise ValueError("segments must not be empty")
+    previous_end = 0
+    for start, end in segments:
+        if not (previous_end <= start < end <= len(samples)) or not (
+            MIN_SECONDS <= (end - start) / rate <= MAX_SECONDS
+        ):
+            raise ValueError("segments must be ordered, disjoint, in bounds and 1-30 s")
+        previous_end = end
+    if any(not re.fullmatch(r"[A-Za-z0-9_.-]+", value) for value in (prefix, source_stem)):
+        raise ValueError("prefix/source_stem must be filename-safe")
     paths = []
     rows = []
     for index, (start, end) in enumerate(segments, start=1):
@@ -179,28 +202,37 @@ def write_segments(
             }
         )
     existing = [path for path in paths if path.exists()]
-    if existing and not overwrite:
+    if existing and (not overwrite or any(not path.is_file() for path in existing)):
         raise FileExistsError(f"{existing[0]} exists; use --overwrite to re-cut these clips")
-    if transcripts_path.exists() and not overwrite:
+    if transcripts_path.exists() and (not overwrite or not transcripts_path.is_file()):
         raise FileExistsError(f"{transcripts_path} exists; use --overwrite to re-cut this skeleton")
+    if transcripts_path.resolve() in {path.resolve() for path in paths}:
+        raise ValueError("transcripts path collides with a clip")
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    measured = []
-    for (start, end), path in zip(segments, paths, strict=True):
-        sf.write(path, samples[start:end], rate, subtype="PCM_16")
-        info = inspect_audio(path)
-        measured.append(
-            {
-                "id": path.stem,
-                "seconds": round(float(info["duration"]), 3),
-                "clipping_ratio": round(float(info["clipping_ratio"]), 6),
-                "silent": bool(info["silent"]),
-            }
-        )
     transcripts_path.parent.mkdir(parents=True, exist_ok=True)
-    transcripts_path.write_text(
-        "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8"
-    )
+    measured = []
+    with tempfile.TemporaryDirectory(dir=out_dir) as clips_temp, \
+            tempfile.TemporaryDirectory(dir=transcripts_path.parent) as text_temp:
+        for (start, end), path in zip(segments, paths, strict=True):
+            staged = Path(clips_temp) / path.name
+            sf.write(staged, samples[start:end], rate, subtype="PCM_16")
+            info = inspect_audio(staged)
+            measured.append(
+                {
+                    "id": path.stem,
+                    "seconds": round(float(info["duration"]), 3),
+                    "clipping_ratio": round(float(info["clipping_ratio"]), 6),
+                    "silent": bool(info["silent"]),
+                }
+            )
+        skeleton = Path(text_temp) / "notes.jsonl"
+        skeleton.write_text(
+            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8"
+        )
+        for path in paths:
+            (Path(clips_temp) / path.name).replace(path)
+        skeleton.replace(transcripts_path)
     return {
         "clips": len(rows),
         "seconds": round(sum(item["seconds"] for item in measured), 1),
@@ -237,6 +269,9 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--prefix must be alphanumeric/underscore/dash/dot")
 
     plans = []
+    stems = [_safe_stem(path) for path in args.audio]
+    if len(set(stems)) != len(stems):
+        parser.error("audio filenames have colliding sanitized stems")
     for path in args.audio:
         if not path.is_file():
             parser.error(f"audio not found: {path}")
@@ -266,19 +301,41 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"dry_run": True, "clips": sum(len(s) for _, _, s in plans)}, indent=2))
         return 0
 
-    summaries = [
-        write_segments(
-            samples,
-            segments,
-            out_dir=args.out_dir,
-            speaker=speaker,
-            prefix=prefix,
-            transcripts_path=args.transcripts,
-            source_stem=_safe_stem(path),
-            overwrite=args.overwrite,
-        )
-        for path, samples, segments in plans
+    destinations = [
+        args.out_dir / f"{prefix}-{_safe_stem(path)}-{index:03d}.wav"
+        for path, _, segments in plans
+        for index in range(1, len(segments) + 1)
     ]
+    if args.transcripts.resolve() in {path.resolve() for path in destinations}:
+        parser.error("transcripts path collides with a clip")
+    for path in [*destinations, args.transcripts]:
+        if path.exists() and (not args.overwrite or not path.is_file()):
+            raise FileExistsError(f"{path} exists; use --overwrite for existing files")
+
+    args.out_dir.parent.mkdir(parents=True, exist_ok=True)
+    args.transcripts.parent.mkdir(parents=True, exist_ok=True)
+    # Validate and measure every note in staging before publishing any clips or skeleton.
+    with tempfile.TemporaryDirectory(dir=args.out_dir.parent) as clips_temp, \
+            tempfile.TemporaryDirectory(dir=args.transcripts.parent) as text_temp:
+        staged_clips = Path(clips_temp)
+        staged_text = Path(text_temp)
+        summaries = []
+        skeleton = []
+        for path, samples, segments in plans:
+            note_text = staged_text / f"{_safe_stem(path)}.jsonl"
+            summary = write_segments(
+                samples, segments, out_dir=staged_clips, speaker=speaker, prefix=prefix,
+                transcripts_path=note_text, source_stem=_safe_stem(path),
+            )
+            summary.update(out_dir=str(args.out_dir), transcripts=str(args.transcripts))
+            summaries.append(summary)
+            skeleton.append(note_text.read_text(encoding="utf-8"))
+        aggregate = staged_text / "aggregate.jsonl"
+        aggregate.write_text("".join(skeleton), encoding="utf-8")
+        args.out_dir.mkdir(parents=True, exist_ok=True)
+        for destination in destinations:
+            (staged_clips / destination.name).replace(destination)
+        aggregate.replace(args.transcripts)
     print(json.dumps(summaries, indent=2))
     print(
         "next: fill text/category/en_spans in "

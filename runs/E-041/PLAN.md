@@ -21,7 +21,13 @@ measured in the browser**. The closure plan lists this as a missing closure evid
 - `runs/E-041/browser_wer.mjs` — Playwright + Chromium headless, serves the repository through
   `web/server.py` (COOP/COEP headers, WASM threads), loads `web/ort.js` in the page and calls
   `createRunner({ baseUrl: "/runs/E-031/release/" })`, i.e. the **0.8.1 bundle**
-  (`config.version == "0.8.1"`, model and LM hashes verified by `ort.js` against `config.files`).
+  (config SHA-256 and model/LM/config identities asserted against the committed immutable E-031
+  `release-0.8.1.json` record, not merely the selected bundle's self-declared `config.files`).
+- Runtime code is the **exact local runtime file snapshot**, not immutable deployed code. The run
+  records SHA-256 of the raw manifest, each actual served/decoded audio file, runner/mel/decode/LM/
+  VAD modules and the ORT JS/WASM paths actually requested, plus harness/scorer/server code. Scoring
+  requires these local files to remain byte-identical and checks E-037's retained manifest digest
+  when recorded. Existing E-037 T metrics do not record one, so historic audio equality is not proven.
 - Audio: the 600 T clips served from `recordings/audio/<speaker>/<id>.wav`; the reference is
   `recordings/manifests/T.jsonl`. The browser decodes each clip with `decodeTo16k` and transcribes
   it with the release's own config (beam 12 / top-k 10 / LM 0.55 / bonus 2.7, VAD gate 0.1).
@@ -42,7 +48,10 @@ measured in the browser**. The closure plan lists this as a missing closure evid
 ## Interpretation Rule
 
 - The browser path is a **different implementation of the same model**: a JS mel front end, JS
-  decode and ORT-Web kernels. A gap is a **deployment property**, not a model change; it must be
+  decode and ORT-Web kernels, **including the shipped VAD no-speech guard and pause segmentation**.
+  E-037 instead decodes **cached, ungated whole-clip mel features**, without that VAD/segmentation
+  path. The comparison therefore measures the end-to-end deployment gap, **not isolated acoustic
+  kernel/front-end parity**. A gap is a **deployment property**, not a model change; it must be
   reported as such and cannot be "fixed" here.
 - A Δ whose CI contains zero is a **tie**, not exact equality; the number of differing hypotheses is
   reported separately so a small WER move with many text changes is visible.

@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import onnx
@@ -132,6 +133,45 @@ def test_verify_fp32_gate_rejects_a_catastrophic_draw(
     monkeypatch.setattr("stt.export._logit_gap", lambda *args, **kwargs: fake)
     with pytest.raises(ExportError, match="worst"):
         verify_fp32(model, path)
+
+
+@pytest.mark.parametrize("field", ["median_abs", "max_abs"])
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), -float("inf")])
+def test_fp32_report_gate_rejects_nonfinite(monkeypatch, field, value):
+    report = {"median_abs": 0.0, "max_abs": 0.0, field: value}
+    monkeypatch.setattr("stt.export._logit_gap", lambda *args, **kwargs: report)
+    with pytest.raises(ExportError, match="median" if field == "median_abs" else "worst"):
+        verify_fp32(None, "unused.onnx")
+
+
+@pytest.mark.parametrize("verify", [verify_fp32, verify_int8])
+@pytest.mark.parametrize("side", ["reference", "output"])
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), -float("inf")])
+def test_verification_rejects_nonfinite_logits(monkeypatch, verify, side, value):
+    expected = torch.zeros(1, 2, 3)
+    output = np.zeros((1, 2, 3), dtype=np.float32)
+    if side == "reference":
+        expected[0, 1, 2] = value
+    else:
+        output[0, 1, 2] = value
+    monkeypatch.setattr(ExportModel, "forward", lambda *args: expected)
+    monkeypatch.setattr("onnxruntime.InferenceSession", lambda *args, **kwargs: (
+        SimpleNamespace(run=lambda *args: [output])
+    ))
+    model = MothSTT(2, EncoderConfig(width=16, n_layers=1, n_heads=2, ffn_dim=32))
+    with pytest.raises(ExportError, match="non-finite reference/output"):
+        verify(model, "unused.onnx", seconds=(0.04,))
+
+
+def test_verification_rejects_overflowing_gap_of_finite_logits(monkeypatch):
+    maximum = np.finfo(np.float32).max
+    monkeypatch.setattr(ExportModel, "forward", lambda *args: torch.full((1, 2, 3), maximum))
+    monkeypatch.setattr("onnxruntime.InferenceSession", lambda *args, **kwargs: (
+        SimpleNamespace(run=lambda *args: [np.full((1, 2, 3), -maximum, dtype=np.float32)])
+    ))
+    model = MothSTT(2, EncoderConfig(width=16, n_layers=1, n_heads=2, ffn_dim=32))
+    with np.errstate(over="ignore"), pytest.raises(ExportError, match="non-finite logit gap"):
+        verify_int8(model, "unused.onnx", seconds=(0.04,))
 
 
 def test_export_model_includes_extra_head_blocks() -> None:

@@ -1,8 +1,9 @@
 # E-031 — noise curve with the E-031 LM (0.8.1 candidate)
 
 > Run 2026-11-12. Same E-028 fp32 checkpoint, decoder 0.55/2.7, 100 held-out-speaker S3 clips,
-> E-024 pool and seed as the 0.8.0 control; **only the LM changes**. **No regression: every
-> condition is a statistical tie, and the 5–30 dB mean is slightly better.**
+> E-024 pool and seed as the 0.8.0 control; **only the LM changes**. Every condition is a
+> statistical tie; no significant regression detected. This is not equivalence or a
+> non-inferiority proof. The 5–30 dB mean is descriptively slightly better, without its own CI.
 
 ## Protocol
 
@@ -29,8 +30,9 @@ inside zero. No condition is a significant regression.
 
 ## Interpretation
 
-The LM reweighting does not trade noise robustness for rare terms. The absolute curve is the
-same-pool upper bound measured in E-028, on one speaker; it is not the E-025 unseen-room curve.
+No significant trade-off was detected under this protocol; ties do not exclude one.
+The absolute curve uses the E-028 same-pool protocol on one speaker; it is neither an
+upper bound nor the E-025 unseen-room curve.
 The int8/browser path was not re-measured here, but the acoustic graph is unchanged and the
 browser acceptance passes 4/4.
 

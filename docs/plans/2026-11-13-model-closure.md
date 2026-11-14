@@ -11,6 +11,13 @@ loro PLAN, la voce in `EXPERIMENTS.md` e `runs/<id>/`.
 > **E-040 in corso**, browser **E-041 in coda**). **Nessuna nuova registrazione** (decisione
 > dell'organizzatore): niente dev mixed spontaneo e niente voce nuova.
 
+> **Correzione della review senza training (2026-11-13):**
+> [report 19](../19-repository-review-2026-11-13.md). E-039 ha metodo/tassonomia corretti,
+> ma i vecchi conteggi non sono ricalcolati. E-036 misura silenzio senza VAD su un
+> segnale ripetuto x120, non il runtime completo. E-040 non ha log/readout conservati
+> in questa baseline; "in corso" sopra non ne certifica l'esecuzione. E-041 e' preparato,
+> non misurato; la replica E-040 riguarda E-036 respinto, non tutta la lineage 0.8.1.
+
 Fonti: [piano strategia](2026-11-12-model-improvement-strategy.md), [STATUS](../../STATUS.md),
 [dossier paper](../13-current-model-and-paper-readiness.md) §7, [ledger](../12-experiment-ledger.md),
 [E-033](../../runs/E-033/RESULT.md), [E-034](../../runs/E-034/RESULT.md).
@@ -90,8 +97,8 @@ study ingegneristico/negative-results e non un claim di generalizzazione.
 - [x] fp32/INT8 appaiato con lo stesso LM registrato — **E-037: costo +0,1574 pp dev, INT8 resta**
 - [ ] ≥3 seed predeclarati con dispersione
 - [ ] browser WER/ETA misurato, non solo acceptance
-- [ ] dev mixed reale congelato prima di guardare gli errori
-- [ ] (opzionale) readout su voce nuova
+- [x] dev mixed reale rinunciato per decisione 2026-11-13; assenza dichiarata come limite
+- [x] readout su voce nuova non perseguito; assenza dichiarata come limite
 - [ ] limiti dichiarati nella card; modello congelato; nessun claim oltre l'evidenza
 
 ## Limiti

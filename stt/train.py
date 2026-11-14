@@ -5,8 +5,9 @@ One device-agnostic loop: bf16 autocast on the encoder/head matmuls, ``log_softm
 clipping at 1.0. Checkpoints (model, optimizer, scheduler, loader position, RNG state) are
 written every ``train.checkpoint_minutes`` wall-clock minutes — the last ``train.keep_last`` plus
 the best by dev WER — and a resume restarts the same run ID mid-epoch. Guards: a non-finite loss
-skips the batch and is counted; more than ``train.max_nonfinite_steps`` consecutive ones abort
-the run. A fresh MPS run first checks the same small batch's CTC loss against CPU (gate 1e-3,
+or gradient norm skips the batch and is counted; more than ``train.max_nonfinite_steps``
+consecutive ones abort the run. A fresh MPS run first checks the same small batch's CTC loss
+against CPU (gate 1e-3,
 fp32) before training starts.
 
 Config: ``runs/<id>/config.yaml``; the JSONL log records git SHA, torch version and device.
@@ -24,6 +25,7 @@ import random
 import subprocess
 import sys
 import time
+import warnings
 from collections.abc import Callable, Iterator, Mapping
 from dataclasses import asdict, dataclass
 from functools import partial
@@ -47,6 +49,7 @@ from stt.manifest import load_manifest, validate_training_rows
 from stt.model import EncoderConfig, MothSTT
 from stt.tokenizer import encode as tokenizer_encode
 from stt.tokenizer import load_tokenizer
+from stt.training_eval import validate_dev_rows
 
 __all__ = [
     "DistillationObjective",
@@ -239,6 +242,10 @@ class DistillationObjective(TrainingObjective):
         payload = torch.load(
             self.distill["checkpoint"], map_location="cpu", weights_only=False
         )
+        if config.get("tokenizer"):
+            saved_sha = _checkpoint_tokenizer_sha256(payload)
+            if saved_sha is not None and saved_sha != _sha256_file(config["tokenizer"]):
+                raise ValueError("distill teacher tokenizer differs from student tokenizer")
         teacher.load_state_dict(payload["model"])
         teacher.eval()
         for parameter in teacher.parameters():
@@ -283,6 +290,17 @@ def load_config(path: str | Path) -> dict:
 def _sha256_file(path: str | Path) -> str:
     with Path(path).open("rb") as handle:
         return hashlib.file_digest(handle, "sha256").hexdigest()
+
+
+def _checkpoint_tokenizer_sha256(payload: dict) -> str | None:
+    saved_sha = payload.get("tokenizer_sha256")
+    if saved_sha is None:
+        warnings.warn(
+            "Checkpoint has no stored tokenizer digest: historical tokenizer compatibility "
+            "is unverifiable; preserving legacy init/KD behavior.",
+            UserWarning, stacklevel=2,
+        )
+    return saved_sha
 
 
 def check_training_config(
@@ -567,12 +585,42 @@ def train(
     index, rows, shards_root = load_sources(config["data"]["train"])
     validate_training_rows(rows)
     dev_data = []
+    dev_ids: set[str] = set()
+    dev_audio: set[str] = set()
     for name, key in (("it", "dev"), ("en", "dev_en")):
         sources = config["data"].get(key)
         if sources:
             dev_index, dev_rows, dev_root = load_sources(sources)
+            if not dev_rows:
+                raise ValueError(f"data.{key} must contain at least one dev row")
             validate_training_rows(rows, dev_rows)
+            validate_dev_rows(dev_rows, rows)
+            group_ids: set[str] = set()
+            group_audio: set[str] = set()
+            for row in dev_rows:
+                if row["lang"] != name:
+                    raise ValueError(f"data.{key}: wrong-language dev row {row['id']!r}")
+                if not row["text"].strip() or not (
+                    math.isfinite(row["duration"]) and row["duration"] > 0
+                ):
+                    raise ValueError(f"data.{key}: dev speech must have text and positive duration")
+                identities = {row["id"], *row.get("source_ids", [])}
+                audio = row.get("audio")
+                if row["source"] == "spliced_it_en":
+                    identities.update((audio or "").split("+"))
+                elif audio:
+                    path = Path(audio)
+                    # Bare filenames are source-local, as in validate_training_rows.
+                    if path.is_absolute() or len(path.parts) > 1 or path.exists():
+                        group_audio.add(os.path.normcase(str(path.resolve())))
+                group_ids.update(identities)
+            if group_ids & dev_ids or group_audio & dev_audio:
+                raise ValueError("IT/EN dev identity overlap (id, source id or audio)")
+            dev_ids.update(group_ids)
+            dev_audio.update(group_audio)
             dev_data.append((name, dev_index, dev_rows, dev_root))
+    if dev_data and tokenize is not None and pieces is None:
+        raise ValueError("dev evaluation needs decode pieces (a tokenizer vocab)")
     durations = [float(row["duration"]) for row in rows]
 
     augment_name = str(train_cfg.get("augment", "full"))
@@ -767,7 +815,18 @@ def train(
                 model, tensor, mel_lengths, targets, target_lengths, criterion
             )
 
-        if not bool(torch.isfinite(loss)):
+        optimizer.zero_grad(set_to_none=True)
+        grad_norm = None
+        if bool(torch.isfinite(loss)):
+            loss.backward()
+            grad_norm = float(
+                nn.utils.clip_grad_norm_(
+                    [p for group in optimizer.param_groups for p in group["params"]],
+                    grad_clip,
+                )
+            )
+        if grad_norm is None or not math.isfinite(grad_norm):
+            optimizer.zero_grad(set_to_none=True)
             consecutive_nonfinite += 1
             skipped += 1
             _append_log(
@@ -778,26 +837,19 @@ def train(
                     "epoch": epoch,
                     "batch": batch_index,
                     "reason": "non_finite",
+                    "stage": "loss" if grad_norm is None else "gradient",
                     "consecutive_nonfinite": consecutive_nonfinite,
                 },
             )
             if consecutive_nonfinite > max_nonfinite:
                 raise RuntimeError(
-                    f"aborting: {consecutive_nonfinite} consecutive non-finite losses "
+                    f"aborting: {consecutive_nonfinite} consecutive non-finite losses or gradients "
                     f"(max {max_nonfinite})"
                 )
             continue
 
         consecutive_nonfinite = 0
         loss_value = float(loss.detach())
-        optimizer.zero_grad(set_to_none=True)
-        loss.backward()
-        grad_norm = float(
-            nn.utils.clip_grad_norm_(
-                [p for group in optimizer.param_groups for p in group["params"]],
-                grad_clip,
-            )
-        )
         optimizer.step()
         scheduler.step()
 
@@ -1115,13 +1167,17 @@ def _apply_model_init(model: MothSTT, config: dict) -> None:
         payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
         state = payload["model"]
         current = model.state_dict()
-        # A tokenizer change (e.g. V=1024 → V=4096) changes only the CTC head shape; the encoder
-        # and the transformer blocks are still a valid initialisation. Skip shape-mismatched
-        # tensors and let them be initialised fresh, but keep every other mismatch an error.
+        # A changed vocabulary can reuse the encoder/blocks, but not the token-indexed head.
         skipped = {
             name for name, tensor in state.items()
             if name in current and current[name].shape != tensor.shape
         }
+        if skipped - {"head.weight", "head.bias"}:
+            raise RuntimeError(f"checkpoint non-head shape mismatch: {sorted(skipped)}")
+        if not skipped and config.get("tokenizer"):
+            saved_sha = _checkpoint_tokenizer_sha256(payload)
+            if saved_sha is not None and saved_sha != _sha256_file(config["tokenizer"]):
+                skipped |= {"head.weight", "head.bias"}
         filtered = {name: tensor for name, tensor in state.items() if name not in skipped}
         missing, unexpected = model.load_state_dict(filtered, strict=False)
         allowed_missing = {name for name in missing if name.startswith("head_blocks.")}
@@ -1150,6 +1206,8 @@ def _evaluate_all(
         )
         for name, dataset in dev_sets
     }
+    if any(not math.isfinite(metrics["wer"]) for metrics in per_set.values()):
+        raise ValueError("dev evaluation returned non-finite WER")
     macro = sum(metrics["wer"] for metrics in per_set.values()) / len(per_set)
     result: dict = {
         "wer": macro,
@@ -1182,6 +1240,9 @@ def _evaluate(
             items = [dataset[position] for position in positions]
             tensor, mel_lengths, rows = _prepare_batch(items, input_mode)
             log_probs, out_lengths = model(tensor.to(device), mel_lengths.to(device))
+            if not bool(torch.isfinite(log_probs).all()):
+                model.train(was_training)
+                raise ValueError("dev evaluation returned non-finite log probabilities")
             ids = log_probs.argmax(dim=-1)
             for offset, row in enumerate(rows):
                 hyps[row["id"]] = greedy_ids(

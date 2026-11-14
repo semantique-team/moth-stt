@@ -1,4 +1,40 @@
-# E-039 — RESULT: no literal leakage, and the "never seen" term label is a 0.7.0 property
+# E-039 — RESULT: retained audit with corrected scope and unverified conclusions
+
+## No-Training Correction (2026-11-13)
+
+This notice supersedes the negative cross-corpus MinHash conclusion and the `never44`
+taxonomy below. The historical tables and JSON numbers are retained unchanged, not reproduced
+by this correction. No full corpus audit, decode, training or download was run.
+
+- **MinHash negative result is unverified**: the old `31 * hash + seed` signatures used one
+  multiplier and different offsets, largely preserving the same shingle minimum in every
+  column. They were not independent permutations; absence from those candidates does not
+  establish absence of high-overlap pairs. `audit2.py` now uses 64 deterministic independently
+  drawn affine multiplier/offset pairs modulo the 32-bit prime `2**32 - 5`. CRC32 inputs and
+  bounded coefficients keep multiplication plus addition within uint64, without overflow.
+  Regression tests recover high-overlap pairs with different original minima against a small
+  exhaustive synthetic sample. This is not a corpus-level recall estimate. LSH remains
+  approximate, oversized buckets are skipped, and CRC32 shingles can collide.
+- **`never44` taxonomy is superseded/unverified**: the old natural counter omitted
+  `data/manifests/ls_en_train.jsonl`, although E-014, E-024 and E-028 explicitly train on it.
+  This is clean LibriSpeech train-clean-100, not merely the English clips sampled into splicing.
+  The corrected natural coverage includes CV-IT, MLS-IT, clean LS-EN and spliced IT+EN.
+  E-024/E-028 use CV clean/noisy halves with unchanged parent transcripts; provenance counts
+  the CV parent once and spliced reuse separately, not epoch-weighted exposures. E-024
+  initializes from E-014, which initializes from E-006, not the E-012 train360 experiment;
+  `ls_en_train360` is not part of this accepted acoustic lineage. The old 461/150/44 split
+  and claims that all 44 were unseen by 0.7.0 must not be reused as verified taxonomy until
+  recomputation. Historical fixed 47-utterance/81-span readouts are not rescored or changed.
+  This provenance concerns acoustic source text, not Whisper pretraining, tokenizer or LM
+  exposure. `terms3` was used in rejected E-032/E-036, not in shipped E-028.
+- **Raw-audio scope is limited**: the retained hashes describe supported loose audio files
+  present under `data/raw` at that execution, grouped by their first two path components.
+  In particular, `librispeech/LibriSpeech` groups train and dev together, so zero cross-source
+  collisions does not certify train/dev disjointness. Archives, deleted/missing raw audio,
+  `recordings/audio`, mel shards and decoded-signal equivalence are outside this pass.
+  No exhaustive corpus or combined training/evaluation audio-leakage claim follows.
+
+The remaining sections are the **historical execution record**, subject to this notice.
 
 > Executed 2026-11-13. Read-only audit: no training, no decode, no data change. Every finding below
 > is reported, not fixed; nothing in the repository was modified by the audit itself except this
@@ -103,8 +139,8 @@ Pre-registered in [PLAN-2](PLAN-2.md); the first pass had explicitly excluded bo
 
 ### Audio (`data/raw`, 287,429 files, 12.8 GB)
 
-- **0 cross-source collisions**: no audio file appears under two different sources, so the corpus
-  downloads do not share clips across train/dev/test or with the noise pool.
+- **0 cross-source collisions** in retained loose-file byte hashes grouped by the first two
+  path components; this does not establish train/dev/test or full training/noise disjointness.
 - **2 repeated hashes, both inside one source**:
   - `noise_silence`: **120 byte-identical 10 s silence clips**. The "120 silence clips" used by
     E-036 (and the noise gate) are therefore **one unique signal repeated 120 times**, not 120
@@ -126,8 +162,9 @@ Pre-registered in [PLAN-2](PLAN-2.md); the first pass had explicitly excluded bo
 | `cv_it_dev` ↔ `cv_it_train` | 6 | same |
 | own structural pairs (`rec/*` ↔ `script/*`, anchor ↔ T) | 741/672/600/120 | already explained in the first pass |
 
-**Zero near-duplicate pairs between T and any external corpus**, and **zero involving FLEURS** in
-any direction. The test set is not textually close to the training corpora beyond our own scripts.
+The historical candidate search returned zero pairs involving T/external corpora or FLEURS.
+That negative conclusion is **superseded/unverified** by the MinHash defect described above;
+it cannot establish textual separation from training corpora.
 
 The `spliced_it_en` result is not test leakage but it is a **training-signal** fact worth stating:
 the spliced mixture re-uses LS-EN and MLS-IT material that is already in the mixture, so those
@@ -135,7 +172,8 @@ sentences are effectively counted twice (once clean, once spliced).
 
 ### What The Second Pass Adds
 
-- The "no duplicated audio" claim now covers **all 287,429 raw files**, not only our recordings.
+- The retained pass hashed **287,429 supported loose files then present under `data/raw`**;
+  it is not an exhaustive audio-leakage audit.
 - The E-025 held-out room claim is verified rather than assumed.
 - The silence probe's effective sample size (1) is documented before anyone quotes "120 clips".
 - Corpus prompt reuse is separated from leakage: text repeats inside a speaker-disjoint corpus are
