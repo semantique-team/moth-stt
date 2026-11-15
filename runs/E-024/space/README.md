@@ -1,10 +1,11 @@
 ---
 title: Moth STT — Italian + English, in your browser
 emoji: 🦋
-colorFrom: green
+colorFrom: gray
 colorTo: gray
 sdk: static
 pinned: false
+thumbnail: https://huggingface.co/spaces/semantique-team/moth-demo/resolve/main/semantique-thumbnail.png
 short_description: A 19 MB code-switching STT model that runs on your device
 models:
   - semantique-team/moth-stt
@@ -21,7 +22,9 @@ never leaves the tab, and the page keeps working if you disconnect after it has 
 
 This Space serves the same artifact that is published at
 [`semantique-team/moth-stt`](https://huggingface.co/semantique-team/moth-stt), byte for byte, and
-verifies every file's sha256 at load time before running it.
+verifies every file's sha256 at load time before running it. The page follows the
+[Semantique](https://semantique-team.github.io/) visual language, including the wordmark and the
+square thumbnail used by the Space card.
 
 **0.8.1** is a decode-side update: the acoustic graph is unchanged, the trigram LM was rebuilt from
 a frozen training-side corpus with all bigrams and the rare-term sentences weighted. Rare aligned

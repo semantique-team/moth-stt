@@ -3,196 +3,1323 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Moth — Italian + English speech to text, in your browser</title>
-    <meta name="description" content="A 19 MB code-switching speech-to-text model that runs entirely in your browser." />
+    <title>Moth — italiano con termini inglesi, nel browser</title>
+    <meta
+      name="description"
+      content="Moth è un modello speech-to-text da 19,7 MB per l'italiano con termini inglesi dentro. Gira interamente nel browser: l'audio non lascia il dispositivo."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Moth — italiano con termini inglesi, nel browser" />
+    <meta
+      property="og:description"
+      content="19,7 MB, nessun server: Moth trascrive l'italiano con termini inglesi dentro, su CPU, in una scheda del browser."
+    />
+    <meta
+      property="og:image"
+      content="https://huggingface.co/spaces/semantique-team/moth-demo/resolve/main/semantique-thumbnail.png"
+    />
+    <meta property="og:site_name" content="Semantique" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0c0d0b" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
       :root {
-        color-scheme: light dark;
-        --bg: #fbfbfa;
-        --fg: #1a1a19;
-        --muted: #6b6b68;
-        --line: #dcdcd8;
-        --accent: #2f6f4f;
-        --accent-fg: #ffffff;
-        --box: #f2f2ef;
+        --page: #0c0d0b;
+        --surface: #141512;
+        --surface-2: #191a17;
+        --line: #292a25;
+        --line-strong: #393a33;
+        --text: #f0eee8;
+        --ink: #d6d4cb;
+        --muted: #a5a49b;
+        --quiet: #77796f;
+        --peach: #e7b99c;
+        --peach-deep: #d3a184;
+        --cream: #f0debd;
+        --mono: 'DM Mono', 'SFMono-Regular', Consolas, monospace;
+        --shell: min(1160px, calc(100% - 64px));
+
+        font-family: 'Manrope', 'Helvetica Neue', sans-serif;
+        color: var(--text);
+        background: var(--page);
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color-scheme: dark;
+
+        scroll-behavior: smooth;
+        scroll-padding-top: 94px;
       }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #16161a;
-          --fg: #ececeb;
-          --muted: #9b9b96;
-          --line: #33333a;
-          --accent: #6fbf92;
-          --accent-fg: #10201a;
-          --box: #1e1e23;
-        }
+
+      * {
+        box-sizing: border-box;
       }
-      * { box-sizing: border-box; }
+
       body {
+        min-width: 320px;
+        min-height: 100vh;
         margin: 0;
-        padding: 2.5rem 1.25rem 4rem;
-        background: var(--bg);
-        color: var(--fg);
-        font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(ellipse at 78% 15%, rgb(229 174 139 / 5%), transparent 28rem),
+          var(--page);
       }
-      main { max-width: 44rem; margin: 0 auto; }
-      header { display: flex; align-items: center; gap: 1rem; margin-bottom: .5rem; }
-      .logo { width: 56px; height: 56px; flex: 0 0 auto; }
-      h1 { font-size: 1.6rem; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
-      .sub { color: var(--muted); margin: 0 0 2rem; font-size: .95rem; }
-      .sub code { font-size: .9em; }
-      .controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+
+      body::before {
+        position: fixed;
+        z-index: -1;
+        pointer-events: none;
+        inset: 0;
+        background-image: linear-gradient(rgb(255 255 255 / 1.3%) 1px, transparent 1px),
+          linear-gradient(90deg, rgb(255 255 255 / 1.3%) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: linear-gradient(to bottom, black, transparent 76%);
+        content: '';
+      }
+
+      button,
+      a {
+        color: inherit;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
       button {
         font: inherit;
-        font-weight: 500;
-        padding: .6rem 1.1rem;
-        border-radius: .55rem;
-        border: 1px solid var(--line);
-        background: var(--box);
-        color: var(--fg);
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      label:focus-within {
+        outline: 2px solid var(--peach);
+        outline-offset: 4px;
+        border-radius: 2px;
+      }
+
+      ::selection {
+        color: #10100e;
+        background: var(--peach);
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      .page-shell {
+        width: var(--shell);
+        margin-inline: auto;
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 20;
+        top: 12px;
+        left: 12px;
+        padding: 10px 14px;
+        transform: translateY(-160%);
+        border-radius: 3px;
+        color: #10100e;
+        background: var(--peach);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .site-header {
+        position: sticky;
+        z-index: 10;
+        top: 0;
+        display: flex;
+        width: 100%;
+        height: 78px;
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: max(32px, calc((100vw - 1160px) / 2));
+        border-bottom: 1px solid rgb(255 255 255 / 5%);
+        background: rgb(12 13 11 / 88%);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: inline-flex;
+        min-width: 156px;
+        align-items: center;
+      }
+
+      .brand img {
+        display: block;
+        width: 154px;
+        height: auto;
+      }
+
+      .site-header nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(22px, 4vw, 54px);
+      }
+
+      .site-header nav a {
+        color: #c1c0b8;
+        font-size: 13px;
+        font-weight: 600;
+        transition: color 160ms ease;
+      }
+
+      .site-header nav a:hover {
+        color: var(--peach);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+        align-items: center;
+        gap: clamp(48px, 7vw, 96px);
+        padding-block: 104px 118px;
+      }
+
+      .hero-copy {
+        max-width: 650px;
+      }
+
+      .eyebrow,
+      .micro-label,
+      .panel-topline,
+      .stage-label,
+      .stage-coordinate,
+      .transcript-meta,
+      .article-count {
+        font-family: var(--mono);
+        text-transform: uppercase;
+        letter-spacing: 0.11em;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin: 0 0 27px;
+        color: #c2c0b5;
+        font-size: 10px;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #cfb782;
+        box-shadow: 0 0 14px rgb(207 183 130 / 50%);
+      }
+
+      .hero h1 {
+        max-width: 740px;
+        margin: 0;
+        color: var(--text);
+        font-size: clamp(3.2rem, 6.6vw, 5.9rem);
+        font-weight: 600;
+        letter-spacing: -0.085em;
+        line-height: 0.98;
+      }
+
+      .hero h1 em {
+        color: var(--peach);
+        font-style: normal;
+      }
+
+      .hero-lead {
+        max-width: 510px;
+        margin: 28px 0 0;
+        color: var(--muted);
+        font-size: clamp(15px, 1.4vw, 17px);
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 26px;
+        margin-top: 34px;
+      }
+
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--cream);
+        font-size: 13px;
+        font-weight: 700;
+        transition: color 160ms ease;
+      }
+
+      .text-link svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.4;
+        transition: transform 160ms ease;
+      }
+
+      .text-link:hover {
+        color: var(--peach);
+      }
+
+      .text-link:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* ------------------------------------------------------------ demo panel */
+
+      .demo {
+        position: relative;
+        width: 100%;
+        max-width: 465px;
+        justify-self: end;
+        padding: 18px;
+        border: 1px solid #35362f;
+        border-radius: 3px;
+        background: linear-gradient(145deg, #191a17, #11120f 72%);
+        box-shadow: 0 34px 100px rgb(0 0 0 / 36%);
+      }
+
+      .panel-topline {
+        display: flex;
+        min-height: 28px;
+        align-items: center;
+        justify-content: space-between;
+        color: #88897f;
+        font-size: 9px;
+      }
+
+      .panel-index {
+        color: var(--peach);
+      }
+
+      .demo-stage {
+        position: relative;
+        min-height: 218px;
+        margin-block: 16px;
+        padding: 20px;
+        border: 1px solid #30312b;
+        background:
+          radial-gradient(circle at 50% 44%, rgb(228 182 151 / 10%), transparent 45%),
+          #11120f;
+      }
+
+      .stage-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .stage-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: #d8d5ca;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      .stage-brand img {
+        display: block;
+        width: 28px;
+        height: 28px;
+        opacity: 0.92;
+      }
+
+      .stage-label,
+      .stage-coordinate {
+        color: #8a8b81;
+        font-size: 9px;
+      }
+
+      .stage-coordinate {
+        color: var(--peach);
+      }
+
+      .meter {
+        display: flex;
+        height: 66px;
+        align-items: center;
+        gap: 3px;
+        margin: 22px 0 18px;
+        overflow: hidden;
+      }
+
+      .meter span {
+        display: block;
+        width: 100%;
+        min-width: 2px;
+        height: var(--h, 20%);
+        border-radius: 1px;
+        background: #4a4b43;
+        transition: height 180ms ease, background 180ms ease;
+      }
+
+      .demo.is-recording .meter span {
+        background: var(--peach);
+        animation: meter 900ms ease-in-out infinite alternate;
+        animation-delay: var(--delay, 0ms);
+      }
+
+      @keyframes meter {
+        from {
+          height: calc(var(--h, 20%) * 0.45);
+        }
+        to {
+          height: var(--h, 20%);
+        }
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 19px;
+        border: 1px solid var(--line-strong);
+        border-radius: 3px;
+        color: var(--text);
+        background: var(--surface-2);
+        font-size: 14px;
+        font-weight: 700;
         cursor: pointer;
+        transition: background 160ms ease, border-color 160ms ease, color 160ms ease,
+          transform 160ms ease;
       }
-      button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
-      button:disabled { opacity: .45; cursor: not-allowed; }
-      label.file {
-        font: inherit; font-size: .9rem; color: var(--muted);
-        cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+
+      .button:hover:not(:disabled) {
+        border-color: #4a4b41;
+        background: #20211d;
       }
-      label.file input { display: none; }
-      #status { color: var(--muted); font-size: .9rem; margin: 1rem 0 0; min-height: 1.4em; }
-      #status.bad { color: #c0392b; }
-      #status.ok { color: var(--accent); }
-      #out {
-        margin: 1.25rem 0 0;
-        padding: 1.1rem 1.2rem;
-        background: var(--box);
-        border: 1px solid var(--line);
-        border-radius: .7rem;
-        font-size: 1.15rem;
-        line-height: 1.55;
-        min-height: 4.5rem;
+
+      .button:active:not(:disabled) {
+        transform: translateY(1px);
+      }
+
+      .button.primary {
+        border-color: var(--peach);
+        color: #10100e;
+        background: var(--peach);
+      }
+
+      .button.primary:hover:not(:disabled) {
+        border-color: #f1c9ae;
+        background: #f1c9ae;
+      }
+
+      .button:disabled {
+        opacity: 0.42;
+        cursor: not-allowed;
+      }
+
+      .status {
+        min-height: 1.4em;
+        margin: 16px 0 0;
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 9px;
+        line-height: 1.6;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .status.ok {
+        color: #a9b89e;
+      }
+
+      .status.bad {
+        color: #d99b8f;
+      }
+
+      /* --------------------------------------------------------- transcription */
+
+      .transcript {
+        padding: 17px 2px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .transcript-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .transcript-model {
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .transcript-state {
+        color: var(--quiet);
+        font-family: var(--mono);
+        font-size: 9px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .transcript-text {
+        margin: 14px 0 0;
+        color: var(--text);
+        font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        line-height: 1.35;
         white-space: pre-wrap;
         word-break: break-word;
       }
-      #out:empty::before { content: "La trascrizione appare qui."; color: var(--muted); font-size: 1rem; }
-      details { margin-top: 1.25rem; color: var(--muted); font-size: .85rem; }
-      details pre { margin: .6rem 0 0; padding: .8rem; background: var(--box); border-radius: .5rem; overflow-x: auto; }
-      footer { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
-      footer a { color: inherit; }
-      kbd { font: inherit; font-size: .85em; padding: .1em .35em; border: 1px solid var(--line); border-radius: .3em; }
+
+      .transcript-text:empty::before {
+        color: var(--quiet);
+        font-size: 0.95rem;
+        font-weight: 400;
+        letter-spacing: 0;
+        content: 'La trascrizione appare qui.';
+      }
+
+      .transcript-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 18px;
+        margin-top: 15px;
+        color: #8a8b81;
+        font-size: 8px;
+      }
+
+      .transcript-note {
+        margin: 12px 0 0;
+        color: var(--quiet);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .demo-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 16px;
+        padding-top: 15px;
+        border-top: 1px solid var(--line);
+      }
+
+      .upload {
+        position: relative;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-color: var(--line-strong);
+        text-underline-offset: 3px;
+        transition: color 160ms ease;
+      }
+
+      .upload:hover {
+        color: var(--peach);
+        text-decoration-color: var(--peach);
+      }
+
+      .upload input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      details {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      details summary {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 9px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        cursor: pointer;
+        list-style: none;
+        transition: color 160ms ease;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details summary::after {
+        margin-left: 7px;
+        color: var(--peach);
+        content: '+';
+      }
+
+      details[open] summary::after {
+        content: '−';
+      }
+
+      details summary:hover {
+        color: var(--peach);
+      }
+
+      details pre {
+        max-height: 220px;
+        margin: 12px 0 0;
+        padding: 12px;
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        color: var(--muted);
+        background: #10110e;
+        font-family: var(--mono);
+        font-size: 10px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+
+      /* -------------------------------------------------------------- sections */
+
+      .lab-section {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: clamp(60px, 11vw, 150px);
+        padding-block: 112px 120px;
+        border-top: 1px solid var(--line);
+        scroll-margin-top: 78px;
+      }
+
+      .section-slash {
+        color: var(--peach);
+      }
+
+      .section-intro h2,
+      .section-heading-row h2 {
+        max-width: 550px;
+        margin: 0;
+        color: var(--text);
+        font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+        font-weight: 500;
+        letter-spacing: -0.075em;
+        line-height: 1.06;
+      }
+
+      .section-body {
+        padding-top: 43px;
+      }
+
+      .section-body p {
+        max-width: 520px;
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.85;
+      }
+
+      .section-body .body-lead {
+        margin-bottom: 16px;
+        color: #d4d2c9;
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .focus-card {
+        margin-top: 36px;
+        padding: 25px 27px 23px;
+        border: 1px solid var(--line-strong);
+        border-radius: 3px;
+        background: linear-gradient(140deg, rgb(231 185 156 / 5%), transparent 66%), var(--surface);
+      }
+
+      .focus-card-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+      }
+
+      .micro-label {
+        color: var(--quiet);
+        font-size: 9px;
+      }
+
+      .focus-spark {
+        color: var(--peach);
+        font-size: 16px;
+      }
+
+      .focus-card h3 {
+        margin: 0;
+        color: var(--text);
+        font-size: 21px;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+      }
+
+      .focus-card p {
+        max-width: 440px;
+        margin: 9px 0 21px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .focus-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        color: #aaa99e;
+        font-family: var(--mono);
+        font-size: 8px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .focus-tags span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+      }
+
+      .numbers-section,
+      .limits-section {
+        padding-block: 104px 112px;
+        border-top: 1px solid var(--line);
+        scroll-margin-top: 78px;
+      }
+
+      .section-heading-row {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 40px;
+        margin-bottom: 44px;
+      }
+
+      .section-heading-row .eyebrow {
+        margin-bottom: 21px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 34px 28px;
+      }
+
+      .stat {
+        padding-top: 18px;
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .stat-value {
+        display: block;
+        color: var(--text);
+        font-size: clamp(2.1rem, 3.4vw, 3.1rem);
+        font-weight: 500;
+        letter-spacing: -0.06em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat-label {
+        display: block;
+        max-width: 24ch;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .numbers-note {
+        max-width: 62ch;
+        margin: 40px 0 0;
+        color: var(--quiet);
+        font-size: 12px;
+        line-height: 1.75;
+      }
+
+      .limits-list {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid var(--line);
+      }
+
+      .limit-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.45fr) minmax(0, 1fr);
+        gap: 24px;
+        padding-block: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .limit-row dt {
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .limit-row dd {
+        max-width: 64ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .site-footer {
+        display: flex;
+        min-height: 88px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--quiet);
+        font-size: 10px;
+      }
+
+      .footer-brand {
+        color: #d3d0c6;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.06em;
+      }
+
+      .site-footer a {
+        transition: color 160ms ease;
+      }
+
+      .site-footer a:hover {
+        color: var(--peach);
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      @media (max-width: 900px) {
+        :root {
+          --shell: min(720px, calc(100% - 48px));
+        }
+
+        .site-header {
+          height: 72px;
+          padding-inline: 24px;
+        }
+
+        .hero {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 48px;
+          padding-block: 92px 100px;
+        }
+
+        .hero h1 {
+          font-size: clamp(3.2rem, 7vw, 5rem);
+        }
+
+        .demo {
+          max-width: 560px;
+          justify-self: stretch;
+        }
+
+        .lab-section {
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          padding-block: 95px 105px;
+        }
+
+        .section-intro h2,
+        .section-heading-row h2 {
+          font-size: clamp(2.5rem, 5vw, 3.6rem);
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        :root {
+          --shell: calc(100% - 40px);
+        }
+
+        .site-header {
+          height: 66px;
+          padding-inline: 20px;
+        }
+
+        .brand,
+        .brand img {
+          width: 122px;
+          min-width: 122px;
+        }
+
+        .site-header nav {
+          gap: 16px;
+        }
+
+        .site-header nav a {
+          font-size: 11px;
+        }
+
+        .hero {
+          gap: 40px;
+          padding-block: 76px 86px;
+        }
+
+        .hero h1 {
+          max-width: 560px;
+          font-size: clamp(3.05rem, 14vw, 4.7rem);
+        }
+
+        .hero-lead {
+          margin-top: 23px;
+          font-size: 14px;
+        }
+
+        .hero-actions {
+          gap: 18px;
+          margin-top: 28px;
+        }
+
+        .demo {
+          padding: 14px;
+        }
+
+        .demo-stage {
+          min-height: 200px;
+          padding: 17px;
+        }
+
+        .lab-section {
+          grid-template-columns: 1fr;
+          gap: 8px;
+          padding-block: 80px 86px;
+        }
+
+        .section-intro h2,
+        .section-heading-row h2 {
+          max-width: 520px;
+          font-size: clamp(2.55rem, 11.8vw, 3.7rem);
+        }
+
+        .section-body {
+          padding-top: 18px;
+        }
+
+        .section-body .body-lead {
+          font-size: 15px;
+        }
+
+        .focus-card {
+          margin-top: 30px;
+          padding: 21px 20px;
+        }
+
+        .numbers-section,
+        .limits-section {
+          padding-block: 80px 86px;
+        }
+
+        .section-heading-row {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 21px;
+          margin-bottom: 32px;
+        }
+
+        .section-heading-row .eyebrow {
+          margin-bottom: 18px;
+        }
+
+        .stats {
+          gap: 28px 20px;
+        }
+
+        .limit-row {
+          grid-template-columns: 1fr;
+          gap: 7px;
+          padding-block: 17px;
+        }
+
+        .site-footer {
+          min-height: 78px;
+          padding-block: 22px;
+          align-items: flex-start;
+          flex-direction: column;
+          font-size: 9px;
+        }
+
+        .footer-brand {
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .site-header nav {
+          gap: 11px;
+        }
+
+        .site-header nav a {
+          font-size: 10px;
+        }
+
+        .brand,
+        .brand img {
+          width: 108px;
+          min-width: 108px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        :root {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
     </style>
   </head>
   <body>
-    <main>
-      <header>
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="logo-white.png" />
-          <img class="logo" src="logo.png" alt="" width="56" height="56" />
-        </picture>
-        <h1>Moth — italiano con termini inglesi, nel browser</h1>
-      </header>
-      <p class="sub">
-        19,4 MB, nessun server: l'audio non esce dal tuo dispositivo. Modello CTC su encoder
-        Whisper-tiny, 11,6 M parametri, int8.
-      </p>
+    <a class="skip-link" href="#main">Salta al contenuto</a>
 
-      <div class="controls">
-        <button id="record" class="primary" disabled>Registra</button>
-        <button id="stop" disabled>Stop</button>
-        <label class="file">
-          oppure carica un file
-          <input type="file" id="file" accept="audio/*" />
-        </label>
-      </div>
+    <header class="site-header">
+      <a class="brand" href="https://semantique-team.github.io/" aria-label="Semantique home">
+        <img src="semantique-logo.svg" alt="Semantique" />
+      </a>
+      <nav aria-label="Navigazione">
+        <a href="https://semantique-team.github.io/models/moth/">Model</a>
+        <a href="https://huggingface.co/semantique-team/moth-stt">Card</a>
+        <a href="https://github.com/semantique-team/moth-stt">GitHub</a>
+      </nav>
+    </header>
 
-      <p id="status">carico il modello…</p>
-      <div id="out" aria-live="polite"></div>
+    <main id="main">
+      <section class="hero page-shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot"></span> Speech-to-text · 0.8.1</p>
+          <h1 id="hero-title">Moth,<br /><em>in the browser.</em></h1>
+          <p class="hero-lead">
+            Un modello da 11,6 milioni di parametri per l'italiano con termini inglesi
+            dentro. 19,7 MB, trascrive su CPU, in una scheda del browser, e l'audio non
+            lascia il dispositivo.
+          </p>
+          <div class="hero-actions">
+            <a class="text-link" href="#how">
+              Come si usa
+              <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
+                <path d="M3.25 8h9.5M8.5 3.75 12.75 8 8.5 12.25" />
+              </svg>
+            </a>
+            <a class="text-link" href="https://github.com/semantique-team/moth-stt/blob/main/paper/main.pdf">
+              Leggi il paper
+              <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
+                <path d="M3.25 8h9.5M8.5 3.75 12.75 8 8.5 12.25" />
+              </svg>
+            </a>
+          </div>
+        </div>
 
-      <details>
-        <summary>Dettagli tecnici</summary>
-        <pre id="details">—</pre>
-      </details>
+        <div class="demo" id="demo" aria-label="Demo dal vivo di Moth">
+          <div class="panel-topline">
+            <span>Semantique / Live demo</span>
+            <span class="panel-index">M · 01</span>
+          </div>
 
-      <footer>
-        Parla italiano, con dentro le parole inglesi che usi davvero —
-        <em>"il deploy è andato bene, facciamo un quick sync dopo la call"</em>.
-        Meglio una frase alla volta: il modello spezza da sé sui silenzi, ma le pause lo aiutano.
-        Nessuna punteggiatura, output minuscolo, numeri a parole.<br /><br />
-        Modello, numeri e limiti: <a href="https://huggingface.co/semantique-team/moth-stt" target="_blank" rel="noreferrer">semantique-team/moth-stt</a>.
-        Licenza Apache-2.0; encoder iniziale da <code>openai/whisper-tiny</code> (MIT).
-      </footer>
+          <div class="demo-stage">
+            <div class="stage-head">
+              <span class="stage-brand">
+                <img src="logo-white.png" alt="" width="28" height="28" />
+                Moth 0.8.1
+              </span>
+              <span class="stage-coordinate">on-device</span>
+            </div>
+            <div class="meter" id="meter" aria-hidden="true"></div>
+            <div class="controls">
+              <button id="record" class="button primary" disabled>Registra</button>
+              <button id="stop" class="button" disabled>Stop</button>
+            </div>
+            <p class="status" id="status" role="status" aria-live="polite">carico il modello…</p>
+          </div>
+
+          <div class="transcript">
+            <div class="transcript-head">
+              <span class="transcript-model">Trascrizione</span>
+              <span class="transcript-state" id="state">in attesa</span>
+            </div>
+            <div class="transcript-text" id="out" aria-live="polite"></div>
+            <div class="transcript-meta">
+              <span>16 kHz · mono</span>
+              <span>int8 onnx</span>
+              <span>nessun server</span>
+            </div>
+            <p class="transcript-note">
+              Output minuscolo, senza punteggiatura, numeri a parole: è il modello, non un
+              errore di rendering.
+            </p>
+          </div>
+
+          <div class="demo-actions">
+            <label class="upload">
+              oppure carica un file
+              <input type="file" id="file" accept="audio/*" />
+            </label>
+            <details>
+              <summary>Dettagli tecnici</summary>
+              <pre id="details">—</pre>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-section page-shell" id="how" aria-labelledby="how-title">
+        <div class="section-intro">
+          <p class="eyebrow"><span class="section-slash">//</span> Come si usa</p>
+          <h2 id="how-title">Una frase alla volta, come parli davvero.</h2>
+        </div>
+        <div class="section-body">
+          <p class="body-lead">
+            Parla italiano, con dentro le parole inglesi che usi davvero. Registra, premi
+            Stop, leggi.
+          </p>
+          <p>
+            Meglio una frase alla volta: il modello spezza da sé sui silenzi, ma le pause lo
+            aiutano. La registrazione si ferma a 30 secondi; per un file vale lo stesso
+            limite. Tutto ciò che carichi resta nel browser.
+          </p>
+          <div class="focus-card">
+            <div class="focus-card-heading">
+              <span class="micro-label">In pratica</span>
+              <span class="focus-spark" aria-hidden="true">✳</span>
+            </div>
+            <h3>"il deploy è andato bene, facciamo un quick sync dopo la call"</h3>
+            <p>
+              Italiano con i termini inglesi al posto giusto. Anche i verbi italianizzati
+              come <em>deployato</em>, <em>pushare</em>, <em>loggare</em>.
+            </p>
+            <div class="focus-tags" aria-label="A cosa serve">
+              <span>Italiano</span>
+              <span>English terms</span>
+              <span>Nessun server</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="numbers-section page-shell" id="numbers" aria-labelledby="numbers-title">
+        <div class="section-heading-row">
+          <div>
+            <p class="eyebrow"><span class="section-slash">//</span> I numeri</p>
+            <h2 id="numbers-title">Quello che sappiamo, senza arrotondare.</h2>
+          </div>
+          <span class="micro-label">0.8.1 · int8</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">24,08</span>
+            <span class="stat-label">WER sul mixed test, 600 clip</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">24,96</span>
+            <span class="stat-label">WER sulla voce tenuta fuori, 200 clip</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">55,23</span>
+            <span class="stat-label">ETA sul mixed test, %</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">46,9%</span>
+            <span class="stat-label">ETA sui termini rari, 81 occorrenze</span>
+          </div>
+        </div>
+
+        <p class="numbers-note">
+          WER più basso è meglio; ETA è la quota di parole inglesi riprodotte esattamente.
+          Numeri, limiti e provenienza completa:
+          <a class="text-link" href="https://huggingface.co/semantique-team/moth-stt">
+            semantique-team/moth-stt
+          </a>
+          .
+        </p>
+      </section>
+
+      <section class="limits-section page-shell" id="limits" aria-labelledby="limits-title">
+        <div class="section-heading-row">
+          <div>
+            <p class="eyebrow"><span class="section-slash">//</span> I limiti</p>
+            <h2 id="limits-title">Dove il modello si ferma.</h2>
+          </div>
+          <span class="micro-label">Letto prima di fidarsi</span>
+        </div>
+
+        <dl class="limits-list">
+          <div class="limit-row">
+            <dt>Inglese puro</dt>
+            <dd>
+              Non è il caso d'uso: circa 50% WER su FLEURS-EN. Moth è un modello
+              code-switching, non un modello bilingue.
+            </dd>
+          </div>
+          <div class="limit-row">
+            <dt>Termini inglesi</dt>
+            <dd>
+              Restano il punto debole. Una frase con un termine ha circa 27% WER contro
+              circa 14% di una frase senza. Se sbaglia un termine, è il limite noto.
+            </dd>
+          </div>
+          <div class="limit-row">
+            <dt>Voci</dt>
+            <dd>
+              La copertura è di tre persone. Una quarta era stata reclutata e non è mai
+              stata registrata.
+            </dd>
+          </div>
+          <div class="limit-row">
+            <dt>Rumore</dt>
+            <dd>
+              Una stanza tranquilla va bene; un locale rumoroso no. A 15 dB SNR il WER sale
+              di 3,4 punti, a 10 dB di 9,3.
+            </dd>
+          </div>
+          <div class="limit-row">
+            <dt>Formato</dt>
+            <dd>
+              Niente punteggiatura, niente maiuscole: output minuscolo, numeri a parole.
+              Record-then-transcribe, non streaming.
+            </dd>
+          </div>
+        </dl>
+      </section>
     </main>
 
-    <script type="module">
-      import { createRunner, decodeTo16k } from "./ort.js";
-      import { startMicrophone } from "./mic.js";
+    <footer class="site-footer page-shell">
+      <a class="footer-brand" href="https://semantique-team.github.io/">semantique.</a>
+      <div class="footer-links">
+        <a href="https://huggingface.co/semantique-team/moth-stt">Model card</a>
+        <a href="https://github.com/semantique-team/moth-stt">Repository</a>
+        <a href="https://github.com/semantique-team/moth-stt/blob/main/paper/main.pdf">Paper</a>
+      </div>
+      <span>Apache-2.0 · encoder iniziale da openai/whisper-tiny (MIT)</span>
+    </footer>
 
-      const status = document.getElementById("status");
-      const output = document.getElementById("out");
-      const details = document.getElementById("details");
-      const recordButton = document.getElementById("record");
-      const stopButton = document.getElementById("stop");
-      const fileInput = document.getElementById("file");
+    <script type="module">
+      import { createRunner, decodeTo16k } from './ort.js';
+      import { startMicrophone } from './mic.js';
+
+      const demo = document.getElementById('demo');
+      const status = document.getElementById('status');
+      const state = document.getElementById('state');
+      const output = document.getElementById('out');
+      const details = document.getElementById('details');
+      const recordButton = document.getElementById('record');
+      const stopButton = document.getElementById('stop');
+      const fileInput = document.getElementById('file');
+      const meter = document.getElementById('meter');
+
+      // A deterministic waveform: it reads as audio without pretending to be a real meter.
+      const heights = [18, 26, 13, 38, 56, 44, 29, 62, 48, 34, 21, 46, 73, 58, 39, 25,
+        17, 31, 52, 68, 44, 27, 19, 36, 59, 76, 54, 33, 22, 41, 64, 49, 29, 16, 24, 45,
+        61, 42, 26, 18, 35, 57, 72, 51, 31, 20, 28, 43];
+      for (const [index, height] of heights.entries()) {
+        const bar = document.createElement('span');
+        bar.style.setProperty('--h', `${height}%`);
+        bar.style.setProperty('--delay', `${(index % 7) * 70}ms`);
+        meter.append(bar);
+      }
 
       let runner = null;
       let recording = null;
 
-      function say(text, kind = "") {
+      function say(text, kind = '') {
         status.textContent = text;
-        status.className = kind;
+        status.className = kind ? `status ${kind}` : 'status';
+        if (kind === 'bad') state.textContent = 'errore';
+        else if (kind === 'ok') state.textContent = 'pronto';
+        else state.textContent = 'in attesa';
       }
 
       function showResult(result) {
-        output.textContent = result.text || "(niente: il VAD non ha trovato parlato)";
+        output.textContent = result.text || '(niente: il VAD non ha trovato parlato)';
         details.textContent = JSON.stringify(result, null, 2);
       }
 
       async function transcribe(pcm) {
         recordButton.disabled = true;
-        say("trascrivo…");
+        say('trascrivo…');
+        state.textContent = 'in corso';
         try {
           const result = await runner.transcribe(pcm);
           showResult(result);
           const seconds = result.audioSeconds.toFixed(1);
           say(
             result.guarded
-              ? "nessun parlato rilevato"
+              ? 'nessun parlato rilevato'
               : `${seconds} s di audio in ${(result.timings.total_ms / 1000).toFixed(1)} s ` +
                   `(${result.rtfx.toFixed(0)}× realtime, ${result.segments} segmenti)`,
-            "ok",
+            'ok',
           );
         } catch (error) {
-          say(`errore: ${error}`, "bad");
+          say(`errore: ${error}`, 'bad');
         } finally {
           recordButton.disabled = !runner;
         }
       }
 
       try {
-        runner = await createRunner({ baseUrl: "./release/" });
-        const isolated = runner.crossOriginIsolated ? "4 thread" : "1 thread";
-        say(`modello caricato in ${runner.loadMs.toFixed(0)} ms — ${isolated}, SIMD`, "ok");
+        runner = await createRunner({ baseUrl: './release/' });
+        const isolated = runner.crossOriginIsolated ? '4 thread' : '1 thread';
+        say(`modello caricato in ${runner.loadMs.toFixed(0)} ms — ${isolated}, SIMD`, 'ok');
         recordButton.disabled = false;
       } catch (error) {
-        say(`non riesco a caricare il modello: ${error}`, "bad");
+        say(`non riesco a caricare il modello: ${error}`, 'bad');
       }
 
-      recordButton.addEventListener("click", async () => {
+      recordButton.addEventListener('click', async () => {
         if (recording || !runner) return;
         try {
           recordButton.disabled = true;
           stopButton.disabled = false;
-          say("registro… premi Stop quando hai finito (max 30 s)");
+          demo.classList.add('is-recording');
+          say('registro… premi Stop quando hai finito (max 30 s)');
+          state.textContent = 'registro';
           recording = await startMicrophone({
             maxSeconds: 30,
             onLimit: () => void stopRecording(),
           });
         } catch (error) {
           recording = null;
+          demo.classList.remove('is-recording');
           stopButton.disabled = true;
           recordButton.disabled = !runner;
-          say(`microfono non disponibile: ${error}`, "bad");
+          say(`microfono non disponibile: ${error}`, 'bad');
         }
       });
 
@@ -200,25 +1327,27 @@
         if (!recording) return;
         const active = recording;
         recording = null;
+        demo.classList.remove('is-recording');
         stopButton.disabled = true;
-        say("elaboro l'audio…");
+        say('elaboro l\'audio…');
+        state.textContent = 'in corso';
         try {
           const pcm = await active.stop();
           if (pcm.length < 1600) {
-            say("registrazione troppo corta", "bad");
+            say('registrazione troppo corta', 'bad');
             recordButton.disabled = !runner;
             return;
           }
           await transcribe(pcm);
         } catch (error) {
-          say(`errore microfono: ${error}`, "bad");
+          say(`errore microfono: ${error}`, 'bad');
           recordButton.disabled = !runner;
         }
       }
 
-      stopButton.addEventListener("click", () => void stopRecording());
+      stopButton.addEventListener('click', () => void stopRecording());
 
-      fileInput.addEventListener("change", async (event) => {
+      fileInput.addEventListener('change', async (event) => {
         const file = event.target.files[0];
         if (!file || !runner) return;
         const url = URL.createObjectURL(file);
@@ -226,7 +1355,7 @@
           const pcm = await decodeTo16k(url);
           await transcribe(pcm);
         } catch (error) {
-          say(`non riesco a leggere ${file.name}: ${error}`, "bad");
+          say(`non riesco a leggere ${file.name}: ${error}`, 'bad');
         } finally {
           URL.revokeObjectURL(url);
         }

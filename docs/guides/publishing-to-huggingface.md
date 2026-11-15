@@ -171,6 +171,7 @@ uv run python runs/E-021/upload_hf.py --repo semantique-team/moth-stt --push   #
 uv run python runs/E-022/publish_space.py --push                              # the demo Space
 ```
 
-Both read the release record (`runs/E-024/release-0.7.0.json` for 0.7.0), refuse if a hash or the
+Both read the release record (`runs/E-031/release-0.8.1.json` for 0.8.1), refuse if a hash or the
 card's declared version does not match, and accept the token from `hf auth login`, `HF_TOKEN`, or
-`HUGGING_FACE_HUB_TOKEN`.
+`HUGGING_FACE_HUB_TOKEN`. The Space staging also copies the Semantique wordmark and square thumbnail
+from `runs/E-024/space/`, so the published page keeps the site's header and `thumbnail` metadata.

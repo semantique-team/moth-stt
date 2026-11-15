@@ -1,9 +1,10 @@
 """Publish the static browser demo as a Hugging Face Space.
 
 Assembles a staging directory from files that are already in the repository (the demo page, the JS
-runtime, the verified `release/`, and the three ONNX Runtime files the WASM backend actually needs)
-and uploads it. Nothing is duplicated in the repo: only the page and the Space card are versioned,
-the 34 MB of binaries are copied from `release/` and `node_modules/` at build time.
+runtime, the verified `runs/E-031/release/`, and the three ONNX Runtime files the WASM backend
+actually needs) and uploads it. Nothing is duplicated in the repo: only the page, the Semantique
+brand assets and the Space card are versioned; the 34 MB of binaries are copied from the release
+and `node_modules/` at build time.
 
     uv run python runs/E-022/publish_space.py --check          # stage + verify hashes, no network
     uv run python runs/E-022/publish_space.py --serve          # also serve it locally for testing
@@ -29,8 +30,8 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 SPACE_SRC = REPO / "runs/E-024/space"
-RELEASE = REPO / "release"
-RECORD = REPO / "runs/E-028/release-0.8.0.json"
+RELEASE = REPO / "runs/E-031/release"
+RECORD = REPO / "runs/E-031/release-0.8.1.json"
 
 #: The demo page, its runtime, and the ORT build the WASM backend loads. `ort.wasm.min.mjs`
 #: dynamically imports `ort-wasm-simd-threaded.mjs`, which loads the `.wasm` — all three must sit
@@ -79,7 +80,7 @@ def stage(destination: Path, record_path: Path = RECORD, release_path: Path = RE
     (destination / ORT_DIR).mkdir(parents=True)
 
     problems: list[str] = []
-    for name in ("index.html", "README.md"):
+    for name in ("index.html", "README.md", "semantique-logo.svg", "semantique-thumbnail.png"):
         shutil.copy2(SPACE_SRC / name, destination / name)
     for name in LOGO_FILES:
         source = REPO / "docs" / "assets" / name
