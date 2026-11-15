@@ -20,10 +20,24 @@ async function sha256Hex(buffer) {
   return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+/** Hugging Face serves large Space files through a CDN redirect; the sha256 check still applies. */
+function isHuggingFaceCdn(url) {
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return false;
+  }
+  if (parsed.protocol !== "https:") return false;
+  return ["hf.co", "huggingface.co"].some(
+    (host) => parsed.hostname === host || parsed.hostname.endsWith(`.${host}`),
+  );
+}
+
 async function fetchChecked(url, expected, root) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
-  if (root && response.url && !response.url.startsWith(root)) {
+  if (root && response.url && !response.url.startsWith(root) && !isHuggingFaceCdn(response.url)) {
     throw new Error(`${url}: response escapes release root`);
   }
   const buffer = await response.arrayBuffer();

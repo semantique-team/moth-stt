@@ -247,6 +247,12 @@ test("release paths stay inside the asset root, including extras and redirects",
     }
   }
   await assert.rejects(runner({ redirect: "https://evil.test/config.json" }), /escapes release root/);
+  for (const cdn of [
+    "https://us.aws.cdn.hf.co/xet-bridge-us/repo/hash/model.onnx",
+    "https://cdn-lfs.huggingface.co/repos/repo/hash/model.onnx",
+  ]) {
+    await runner({ redirect: url => url.endsWith("model.onnx") ? cdn : url });
+  }
   await assert.rejects(runner({ mutate: config => { config.vad.file = config.model.file; } }), /distinct/);
   await assert.rejects(runner({ mutate: config => { config.files["config.json"] = "sha256:" + "0".repeat(64); } }), /hash itself/);
 });
