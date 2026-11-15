@@ -84,7 +84,7 @@ marked as such in the script.
 
 ## Before submitting to arXiv
 
-1. Confirm the author name, affiliation and email in `main.tex`.
+1. Confirm the author names and affiliation in `main.tex`.
 2. Choose the primary category (`cs.CL` or `cs.SD` are the natural choices) and
    the arXiv licence.
 3. Re-read the validity boundary and the caveats in Sections 7.6 and 9. The
