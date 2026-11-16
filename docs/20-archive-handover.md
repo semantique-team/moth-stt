@@ -113,18 +113,19 @@ disclosed and cannot be resolved from this checkout.
 
 These are deliberately left to the maintainer because they change public state.
 
-### 7.1 Tag and release
+### 7.1 Tag and release — done 2026-11-16
+
+The annotated tag `v0.8.1` and the GitHub Release are published at
+<https://github.com/semantique-team/moth-stt/releases/tag/v0.8.1>. The
+repository was archived read-only on the same date.
+
+Commands used:
 
 ```bash
 cd moth-stt
 git tag -a v0.8.1 -m "Moth 0.8.1 — 19.71 MB Italian-English code-switching ASR"
-git push origin v0.8.1
-gh release create v0.8.1 --title "Moth 0.8.1" --notes-file ARCHIVE.md
-```
-
-Then archive the repository read-only:
-
-```bash
+git push origin main --tags
+gh release create v0.8.1 --title "Moth 0.8.1" --notes-file docs/releases/0.8.1.md
 gh repo edit semantique-team/moth-stt --archive
 ```
 

@@ -1,0 +1,43 @@
+{
+  "title": "Moth: a 19.7 MB Italian-English code-switching speech recognizer (0.8.1)",
+  "description": "<p>Moth is a very small open Italian + English code-switching speech-to-text model: a pretrained Whisper-tiny encoder (MIT), two additional transformer blocks and a linear CTC head over a shared IT+EN SentencePiece BPE. Release 0.8.1 is an 11.9 MB INT8 ONNX graph in a 19,706,289-byte package and runs in the browser via ONNX Runtime Web/WASM and on CPU.</p><p>Reference results: 24.08% WER / 55.23% ETA on the 600-utterance recorded mixed test set; 20.16% WER on filtered FLEURS-IT. The code-switching evidence is scripted read speech from three known voices; the paper documents the evidence boundary, the negative results and the full experiment ledger.</p><p>The repository contains the code, experiment records, per-utterance hypotheses, release records and paper source. Audio, checkpoints and mel shards are not in the repository; the recorded dataset is published separately under CC-BY-4.0.</p>",
+  "creators": [
+    {
+      "name": "Bosi, Tancredi"
+    },
+    {
+      "name": "Zanolli, Roberto"
+    },
+    {
+      "name": "Semantique Team"
+    }
+  ],
+  "license": "Apache-2.0",
+  "upload_type": "software",
+  "access_right": "open",
+  "version": "0.8.1",
+  "publication_date": "2026-11-12",
+  "keywords": [
+    "speech recognition",
+    "code-switching",
+    "Italian",
+    "English",
+    "Whisper",
+    "CTC",
+    "ONNX",
+    "browser"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://huggingface.co/semantique-team/moth-stt",
+      "relation": "isSupplementedBy",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://huggingface.co/datasets/semantique-team/moth-cs",
+      "relation": "references",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Code Apache-2.0; Whisper and Silero notices in NOTICE. The recorded dataset is CC-BY-4.0. The paper is a preprint."
+}

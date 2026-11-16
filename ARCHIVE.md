@@ -59,15 +59,15 @@ retrain the model.
 - [x] Dataset v1.0.0 prepared and verified (2,193 clips, 1.46 h).
 - [x] `data/SOURCES.md` and `docs/20-archive-handover.md`.
 - [x] Local caches and reproducible checkpoints removed.
-- [ ] Annotated git tag `v0.8.1` and GitHub Release.
-- [ ] GitHub repository archived (read-only).
+- [x] Annotated git tag `v0.8.1` and GitHub Release (2026-11-16).
+- [x] GitHub repository archived (read-only, 2026-11-16).
 - [ ] Zenodo software DOI and dataset DOI.
 - [x] Dataset v1.0.0 published publicly at `semantique-team/moth-cs` (2026-11-16).
 - [ ] arXiv submission / v2 with the dataset DOI in the artifacts paragraph.
 
-The unchecked items are deliberate: they change public state and were left for
-the maintainer to execute. The commands are in
-`docs/20-archive-handover.md`.
+The remaining unchecked items are the Zenodo DOIs and the arXiv submission/v2.
+The software tag, the GitHub Release and the dataset publication are done; the
+commands for the remaining steps are in `docs/20-archive-handover.md`.
 
 ## Citation
 
