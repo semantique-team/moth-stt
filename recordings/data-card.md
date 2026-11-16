@@ -19,7 +19,7 @@ summary. Audio never enters git.
 | Speaker characteristics | **S1 has rhotacism ("r moscia"): a non-standard /r/.** T-S1 is both a test speaker and R-S1 (S1) training audio (×50 in E-016), so T-S1 is a **matched** speaker and any ETA/WER gain there is optimistic for speakers with a standard /r/. S2/S3 provide the cross-speaker check; S3 is held out. Speakers record naturally; no correction is applied |
 | Scripts | `recordings/scripts/*.jsonl`; all T rows human-reviewed on 2026-10-19; R-S2 addendum rows 0624–0673 recorded 2026-11-11 |
 | Dataset licence | **CC-BY 4.0** for audio and transcripts; code Apache-2.0. The consent form asks that the voice not be used for TTS or biometric identification; CC-BY does not encode that restriction — see the dataset card's ethical-use section |
-| Publication | `semantique-team/moth-cs` v1.0.0 (prepared 2026-11-16; see `../moth-cs-dataset`) |
+| Publication | `semantique-team/moth-cs` v1.0.0, public since 2026-11-16 (see `../moth-cs-dataset`) |
 
 ## Excluded files
 

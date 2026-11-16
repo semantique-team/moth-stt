@@ -105,8 +105,8 @@ disclosed and cannot be resolved from this checkout.
    is not guaranteed.
 5. **Devices were not logged for every recording session.** Do not infer them.
 6. **No speaker-disjoint test.** S3 never trained but informed development.
-7. **The dataset is not uploaded yet.** The package is ready in
-   `../moth-cs-dataset/hf/`.
+7. **The dataset is published** at `semantique-team/moth-cs` v1.0.0 (public,
+   2026-11-16). The package is also retained in `../moth-cs-dataset/hf/`.
 8. **No git tag / GitHub Release / DOI yet.** See §7.
 
 ## 7. Public-state actions still to do
@@ -128,22 +128,25 @@ Then archive the repository read-only:
 gh repo edit semantique-team/moth-stt --archive
 ```
 
-### 7.2 Dataset upload
+### 7.2 Dataset upload — done 2026-11-16
+
+The dataset is public at <https://huggingface.co/datasets/semantique-team/moth-cs>
+and tagged `v1.0.0`. The upload was verified by matching the SHA-256 of the
+`test` parquet against the local copy and by loading the tagged revision.
+The release record says `published` and carries the HF URL, tag and data commit.
+
+For a future version, repeat the same sequence:
 
 ```bash
 cd ../moth-cs-dataset
 python scripts/verify.py
-# install the client once
-uv tool install "huggingface_hub[cli]"
-hf auth login
-# create private first, upload, inspect, then flip public
-hf repo create semantique-team/moth-cs --repo-type dataset --private
-hf upload semantique-team/moth-cs hf . --repo-type dataset --private
+hf repos create semantique-team/moth-cs --type dataset --private --exist-ok
+hf upload semantique-team/moth-cs hf . --type dataset
+# inspect the private repo, then flip it public and tag the new revision
 ```
 
-Check on the Hub that the card renders, the three splits load and the audio
-plays. Then make the repository public and tag `v1.0.0`. Finally update
-`CITATION.cff` and `releases/v1.0.0.json` with the DOI.
+A DOI is still to be minted; add it to `CITATION.cff` and
+`releases/vX.Y.Z.json`.
 
 ### 7.3 Zenodo
 

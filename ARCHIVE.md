@@ -12,7 +12,7 @@ repository and will consume the recorded dataset, not this codebase.
 | Model weights, browser package, demo | <https://huggingface.co/semantique-team/moth-stt> | 0.8.1 |
 | Live browser demo | <https://semantique-team-moth-demo.static.hf.space> | 0.8.1 |
 | Code, experiments, paper source | this repository | `v0.8.1` tag (see below) |
-| Recorded dataset | `semantique-team/moth-cs` (prepared, v1.0.0) | CC-BY-4.0 |
+| Recorded dataset | [semantique-team/moth-cs](https://huggingface.co/datasets/semantique-team/moth-cs) (public, v1.0.0) | CC-BY-4.0 |
 | Paper | [`paper/main.pdf`](paper/main.pdf), LaTeX in [`paper/`](paper/) | November 2026 |
 
 The released package is **19,706,289 bytes** across seven required files; the
@@ -62,7 +62,7 @@ retrain the model.
 - [ ] Annotated git tag `v0.8.1` and GitHub Release.
 - [ ] GitHub repository archived (read-only).
 - [ ] Zenodo software DOI and dataset DOI.
-- [ ] Dataset uploaded to `semantique-team/moth-cs` (public flip after upload).
+- [x] Dataset v1.0.0 published publicly at `semantique-team/moth-cs` (2026-11-16).
 - [ ] arXiv submission / v2 with the dataset DOI in the artifacts paragraph.
 
 The unchecked items are deliberate: they change public state and were left for
