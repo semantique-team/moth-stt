@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use Moth, please cite this software record and the paper."
+type: software
+title: "Moth: a 19.7 MB Italian–English code-switching speech recognizer"
+abstract: >-
+  Moth is a very small open Italian + English code-switching speech-to-text
+  model: a pretrained Whisper-tiny encoder, two additional transformer blocks
+  and a linear CTC head over a shared IT+EN SentencePiece BPE. Release 0.8.1 is
+  an 11.9 MB INT8 ONNX graph in a 19.71 MB package and runs in the browser via
+  ONNX Runtime Web.
+authors:
+  - family-names: Bosi
+    given-names: Tancredi
+  - family-names: Zanolli
+    given-names: Roberto
+  - name: "Semantique Team"
+version: 0.8.1
+date-released: 2026-11-12
+license: Apache-2.0
+url: "https://github.com/semantique-team/moth-stt"
+repository-code: "https://github.com/semantique-team/moth-stt"
+identifiers:
+  - type: url
+    value: "https://huggingface.co/semantique-team/moth-stt"
+    description: "Model weights and browser demo package"
+  - type: url
+    value: "https://huggingface.co/datasets/semantique-team/moth-cs"
+    description: "Recorded Italian–English code-switching dataset (CC-BY-4.0)"
+keywords:
+  - speech recognition
+  - code-switching
+  - Italian
+  - English
+  - Whisper
+  - CTC
+  - ONNX
+  - browser

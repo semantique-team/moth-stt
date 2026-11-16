@@ -1,0 +1,74 @@
+Moth STT — third-party notices and attributions
+
+This is the repository-level NOTICE for the frozen 0.8.1 archive. The runtime
+export generates its own copy at release/NOTICE; both carry the same licences.
+
+The encoder of this model is derived from OpenAI's Whisper (``openai/whisper-tiny``); it is fine-tuned behind a CTC head. Whisper is
+distributed under the MIT License; the notice follows verbatim.
+
+MIT License
+
+Copyright (c) 2022 OpenAI
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The no-speech guard is Silero VAD v5 (``snakers4/silero-vad``), shipped unmodified as
+``silero_vad.onnx``. Silero VAD is distributed under the MIT License; the notice follows verbatim.
+
+MIT License
+
+Copyright (c) 2020-present Silero Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Datasets used for training and evaluation:
+- Mozilla Common Voice 27.0, Italian (CC0) — CC0 — https://commonvoice.mozilla.org/en/datasets
+- MLS Italian, OpenSLR 94 (CC-BY 4.0) — CC-BY 4.0 — https://www.openslr.org/94/
+- LibriSpeech, OpenSLR 12 (CC-BY 4.0) — CC-BY 4.0 — https://www.openslr.org/12
+- FLEURS (CC-BY 4.0) — CC-BY 4.0 — https://huggingface.co/datasets/google/fleurs
+- MUSAN (CC-BY 4.0), OpenSLR 17 — CC-BY-4.0 — https://www.openslr.org/17/
+- Moth recorded mixed sets (T, R, A; speakers S1–S3) — authors' own recordings,
+  CC-BY-4.0; dataset home `semantique-team/moth-cs` (v1.0.0, prepared 2026-11-16):
+  https://huggingface.co/datasets/semantique-team/moth-cs
+  Consent and limitations: recordings/data-card.md and the dataset card.
+
+The model repository itself is released under Apache-2.0 (see LICENSE).
+
+Documentation and paper
+-----------------------
+The paper template (paper/arxiv.sty and paper/template/) is arxiv-style by
+George Kour, distributed under the MIT License; paper/template/License.txt
+carries the full text. The paper source and the documentation are part of this
+Apache-2.0 repository unless a file says otherwise.
