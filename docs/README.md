@@ -4,6 +4,8 @@
 
 | Need | Source |
 |---|---|
+| **Frozen archive, 2026-11-16** | [ARCHIVE.md](../ARCHIVE.md), [20 - Archive handover](20-archive-handover.md) |
+| **Recorded dataset v1.0.0** | `../moth-cs-dataset` (2,193 clips, 1.46 h, CC-BY-4.0) |
 | Current state: 0.8.1 published, E-031/E-032 | [17 - Session handoff 2026-11-12 (E-031)](17-session-handoff-2026-11-12-e031.md) |
 | No-weight audit fixes and verification | [18 - Audit fixes 2026-11-12](18-audit-fixes-2026-11-12.md) |
 | Repository review and no-training correctness fixes | [19 - Repository review 2026-11-13](19-repository-review-2026-11-13.md) |

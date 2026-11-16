@@ -1,5 +1,13 @@
 # AGENTS.md — moth-stt
 
+> **Status: frozen (2026-11-16).** Moth 0.8.1 is released and the paper is
+> written. This repository is an archive: do not start new training,
+> experiments or model changes here. Archive-only edits are documentation,
+> notices, citations, handover notes and fixes to the retained evidence.
+> The recorded dataset lives in `../moth-cs-dataset`; the next model will live
+> in `../moth-large`. Read [`ARCHIVE.md`](ARCHIVE.md) and
+> [`docs/20-archive-handover.md`](docs/20-archive-handover.md) first.
+
 Instructions for AI agents working on this repository.
 
 ## Git policy (strict)

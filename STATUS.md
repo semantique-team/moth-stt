@@ -1,5 +1,11 @@
 # STATUS — snapshot per riprendere i lavori
 
+> **ARCHIVIATO 2026-11-16.** Questo checkout è congelato su **0.8.1**. Il modello
+> è pubblicato, il paper è scritto, il dataset è in `../moth-cs-dataset` (v1.0.0)
+> e il prossimo modello in `../moth-large`. Non ripartire da qui: leggi
+> [`ARCHIVE.md`](ARCHIVE.md) e [`docs/20-archive-handover.md`](docs/20-archive-handover.md).
+> Le voci sotto restano la cronologia delle decisioni, non una lista di task.
+
 > **Review e correzioni senza training (2026-11-13):**
 > [valutazione e scope](docs/19-repository-review-2026-11-13.md).
 > 0.8.1/pesi/release invariati. Guardie numeriche, dev/tokenizer, demo, note multi-file

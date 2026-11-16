@@ -9,9 +9,15 @@ IT+EN SentencePiece BPE. **11.6 M parameters, 19.7 MB required model assets (0.8
 
 <br clear="left" />
 
+> **Frozen archive (2026-11-16).** 0.8.1 is the final release in this repository.
+> The experiment record, paper source and reproduction notes are retained; new
+> work continues in `moth-large`. Start with [`ARCHIVE.md`](ARCHIVE.md) and the
+> [archive handover](docs/20-archive-handover.md).
+
 [**Live demo**](https://semantique-team-moth-demo.static.hf.space) ·
 [**Weights**](https://huggingface.co/semantique-team/moth-stt) ·
-[Design docs](docs/README.md) · [Live status](STATUS.md) · [Experiment log](EXPERIMENTS.md)
+[**Dataset**](https://huggingface.co/datasets/semantique-team/moth-cs) ·
+[Design docs](docs/README.md) · [Archive record](ARCHIVE.md) · [Experiment log](EXPERIMENTS.md)
 
 For reproducible research: [artifact-audited experiment ledger](docs/12-experiment-ledger.md),
 [current model and paper limitations](docs/13-current-model-and-paper-readiness.md), and
