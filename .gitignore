@@ -12,6 +12,7 @@ __pycache__/
 data/*
 !data/en_terms.txt
 !data/README.md
+!data/SOURCES.md
 !data/manifests/
 models/
 release/

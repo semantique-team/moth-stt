@@ -1,5 +1,10 @@
 # Recordings — protocol and sentence scripts
 
+> **Final state (2026-11-16):** S1, S2 and S3 recorded T, R and A; S4 was never
+> recorded. The canonical dataset is `../moth-cs-dataset` (v1.0.0, 2,193 clips,
+> 1.46 h, CC-BY-4.0). The tables below are the original protocol; read
+> [`data-card.md`](data-card.md) for what was actually released.
+
 > External speakers: see [`EXTERNAL-SPEAKERS.md`](EXTERNAL-SPEAKERS.md) for the Mac recorder,
 > the Windows/phone path, speaker roles and the privacy rules.
 

@@ -103,6 +103,12 @@ Tooling needed on the Mac: `ffmpeg` for Common Voice mp3 (it is not installed at
 
 ## 7. Recordings
 
+> **Final state (2026-11-16):** only S1, S2 and S3 were recorded; S4 never was.
+> The released sets are T (600 clips), R-S1 (741), R-S2 (672) and A (180):
+> 2,193 clips, 1.46 h. The canonical manifests, audio and dataset card are in
+> `../moth-cs-dataset` (v1.0.0). The table below is the design as of 2026-10;
+> read the canonical data card for what was actually released.
+
 **Speakers:** S1 (the author), S2 (the friend), S3 and S4 (**held out** from every training use).
 
 | Script | Content | Who reads | Use |
